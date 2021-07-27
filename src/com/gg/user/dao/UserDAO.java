@@ -107,16 +107,7 @@ public class UserDAO {
 		}
 		return userId;
 	}
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-
-=======
-	
-=======
->>>>>>> ef2200ee5eead63b89b39e9585b53ca6ffc7095f
->>>>>>> 1317f54531fa0ce8bfe796ed864ab6d39a122fb2
 	public boolean join(GGDto dto) throws Exception {
 		
 		boolean success = false;
@@ -141,6 +132,5 @@ public class UserDAO {
 
 		return success;
 	}
->>>>>>> b4dc72968cc9c28b3ca8dd71ef0acf2e3666f7d8
 
 }
