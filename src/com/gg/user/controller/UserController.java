@@ -33,6 +33,7 @@ public class UserController extends HttpServlet {
 		String ctx = req.getContextPath();
 		String addr = uri.substring(ctx.length());
 		req.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html charset=UTF-8"); // 한글 설정.
 		UserService service = new UserService(req,resp);
 		
 		

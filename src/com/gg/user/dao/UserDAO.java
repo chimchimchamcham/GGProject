@@ -9,6 +9,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.gg.dto.GGDto;
+
 public class UserDAO {
 
 	public Connection conn = null;
@@ -84,6 +86,15 @@ public class UserDAO {
 			// resClose()는 service에서 실행한다.
 		}
 		return success;
+	}
+
+	public boolean join(GGDto dto) {
+		
+		sql ="INSERT INTO userInfo VALUES(?,?,?)";
+		
+		
+		
+		return false;
 	}
 
 }
