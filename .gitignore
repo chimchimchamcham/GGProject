@@ -3,3 +3,4 @@ build/
 WebContent/META-INF/MANIFEST.MF
 .project
 .classpath
+WebContent/WEB-INF/lib/
