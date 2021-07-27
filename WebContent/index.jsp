@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>메인페이지</title>
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
 @charset "utf-8";
@@ -160,7 +161,7 @@ body {
 				<span><a href="#">알람</a></span>
 				<span><a href="myPage.jsp">마이페이지</a></span>
 				<span><a href="#">거래톡</a></span>
-				<span><a href="writeForm.jsp">글쓰기</a></span>
+				<span><a href="#">글쓰기</a></span>
 			</div>
 		</nav>
 		<nav  id="nav2">
