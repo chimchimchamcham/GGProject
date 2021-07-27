@@ -8,6 +8,10 @@
     body{width:100%;}
 div,input{margin:10px;
 }
+span{
+	position:relative;
+	float:left;
+}
 div#outLine{
 	background-color : gray;
 	position:absolute;
@@ -52,8 +56,8 @@ div#logo{
 	<div id ="head">로그인 페이지</div>
 	<div id = "outLine">
 		<form action ="/login" method ="post" id="loginbox">
-			<input id="idbox" type="text" name = "loginId" placeholder = "아이디"/>아이디를 입력하세요
-			<input id="pwbox"  type="password" name = "loginPw" placeholder  = "비밀번호"/>
+			<input id="idbox" type="text" name = "loginId" placeholder = "아이디"/><span>아이디를 입력하세요</span>
+			<input id="pwbox"  type="password" name = "loginPw" placeholder  = "비밀번호"/><span>비밀번호를 입력하세요</span>
 		</form>
 	</div>
 </body>

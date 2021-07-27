@@ -8,9 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.gg.user.service.UserService;
-
-@WebServlet
+@WebServlet({})
 public class UserController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

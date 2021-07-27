@@ -33,18 +33,21 @@ td {
 
 }
 #logobox {
+margin :auto;
 	width: 500px;
 	text-align: center;
 }
 </style>
 <body>
+	
 	<fieldset>
-	<legend>회원가입 페이지</legend>
 	<div id='logo'>
 		<a href='index.jsp'>
 			<img src='./img/logo4.png' id='logobox'/>
 		</a>
 	</div>
+	<legend>회원가입 페이지</legend>
+	
 	<table>
 		<tr>
 			<th>아이디</th>
@@ -115,6 +118,15 @@ td {
 			</td>
 		</tr>
 		<tr>
+			<th>주소</th>
+		</tr>
+		<tr>
+			<td>
+			<input type='text' name='addr'/>
+			<input type='text' name='detailAddr'/>
+			</td>
+		</tr>
+		<tr>
 			<td colspan="2">
 				<button onclick='join()'>회원가입</button>
 				<button onclick='location.href="index.jsp"'>되돌아가기</button>
@@ -137,7 +149,8 @@ td {
 		var $gender = $("input[name='gender']:checked");//성별
 		var $email = $("input[name='email']");//이메일아이디
 		var $mail = $('select'); // 이메일주소
-		console.log($id);
+		var $addr = $("input[name='addr']"); //주소
+		var $detailAddr = $("input[name='detailAddr']"); // 상세주소
 		//중복 체크
 		if(overChk) {
 			console.log("회원가입 체크");
@@ -168,6 +181,12 @@ td {
 			}else if($email.val() =="") {
 				alert("이메일을 입력해 주세요!!");
 				$email.focus();
+			}else if($addr.val() ==""){
+				alert("주소를 입력해 주세요!!");
+				$addr.focus();
+			}else if($detailAddr.val() == ""){
+				alert("상세 주소를 입력해 주세요!!");
+				$detailAddr.focus();
 			}else {
 				console.log("save");
 				var param = {};
@@ -179,6 +198,8 @@ td {
 				param.gender = $gender.val();
 				param.email = $email.val();
 				param.mail = $mail.val();
+				param.addr = $addr.val();
+				param.detailAddr = $detailAddr.val();
 				//저장 가능
 				$.ajax({
 					type : "POST",
