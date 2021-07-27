@@ -205,6 +205,7 @@ td {
 						$("#id_check").html("아이디가 중복됩니다!");
 						$("input[name='id']").val("");
 					}else{
+						$("#id_check").empty();
 						$("#id_check").html("사용가능한 아이디입니다!");
 						overChk = true;
 					}
