@@ -88,9 +88,18 @@ public class UserDAO {
 		return success;
 	}
 
-	public boolean join(GGDto dto) {
+	public boolean join(GGDto dto) throws Exception {
 		
-		sql ="INSERT INTO userInfo VALUES(?,?,?)";
+		// u_id, u_nname, u_email,u_name, u_addr, u_phone, u_joinTM, 
+		// u_newName, u_AdminYN, u_FollowYN, u_detailAddr 
+		sql ="INSERT INTO userInfo VALUES(?,?,?,?,?,?,SYSDATE,./img/default-profile.png,N,N,?,)";
+		
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, dto.getU_id());
+		ps.setString(2, dto.getU_nname());
+		ps.setString(3, dto.getU_email());
+		ps.setString
+		
 		
 		
 		
