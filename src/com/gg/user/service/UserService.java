@@ -33,6 +33,16 @@ public class UserService {
 		return success;
 	}
 
+	public void idOverlay() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void nNameOverlay() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 	
