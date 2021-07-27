@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gg.dto.GGDto;
 import com.gg.user.dao.UserDAO;
 import com.google.gson.Gson;
 
@@ -25,18 +26,35 @@ public class UserService {
 	public boolean join() {
 		success = false;
 		System.out.println("회원 가입 요청 확인");
-		String id = req.getParameter("id"); //아이디
-		String pw = req.getParameter("pw"); // 비밀번호
-		String name = req.getParameter("name"); //이름 
-		String nname = req.getParameter("nname"); // 닉네임
-		String age = req.getParameter("age"); // 나이
-		String email = req.getParameter("email"); //메일 앞부분
-		String mail = req.getParameter("mail"); // 메일 뒷부분(ex]naver.com)
-		String addr = req.getParameter("addr"); // 대략적 주소
-		String detailAddr = req.getParameter("detailAddr"); // 상세 주소
+		String u_id = req.getParameter("id"); //아이디
+		String u_pw = req.getParameter("pw"); // 비밀번호
+		String u_name = req.getParameter("name"); //이름 
+		String u_nname = req.getParameter("nname"); // 닉네임
+		String u_phone = req.getParameter("phone1"); // 핸드폰 앞번호
+		String u_phone2 = req.getParameter("phone2"); // 핸드폰 중간번호
+		String u_phone3 = req.getParameter("phone3"); // 핸드폰 끝번호
+		String u_email = req.getParameter("email"); //메일 앞부분
+		String u_mail = req.getParameter("mail"); // 메일 뒷부분(ex]naver.com)
+		String u_addr = req.getParameter("addr"); // 대략적 주소
+		String u_detailAddr = req.getParameter("detailAddr"); // 상세 주소
 		
 		System.out.println("들어온 인자 값 확인!");
-		System.out.println(id+"/"+pw+"/"+name+"/"+nname+"/"+age+"/"+email+"/"+mail+"/"+addr+"/"+detailAddr);
+		System.out.println(u_id+"/"+u_pw+"/"+u_name+"/"+u_nname+"/"+u_phone+"/"+u_phone2+"/"+u_phone3+"/"+u_email+"/"+u_mail+"/"+u_addr+"/"+u_detailAddr);
+		
+		// 메일 합치기
+		u_email += "@" + u_mail;
+		System.out.println("이메일 확인 : " + u_email);
+		// 주소 합치기
+		u_addr += u_detailAddr;
+		System.out.println("주소 확인 : " + u_addr);
+		
+		GGDto dto = new GGDto();
+		//DTO에 값을 넣어주기.
+		dto.setU_id(u_id);
+		dto.setU_pw(u_pw);
+		dto.setU_name(u_name);
+		dto.setU_nname(u_nname);
+		
 		
 		return success;
 	}
