@@ -77,7 +77,8 @@ td {
 </style>
 <script>
 
-function showPopup() { window.open("popup.jsp", "charge", "width=400, height=300, left=100, top=50"); }
+/*충전 팝업*/
+function showPopup() { window.open("ChargePopup.jsp", "charge", "width=400, height=300, left=100, top=50"); }
 
 	$(document).ready(function() {
 		$('textarea').hide();
