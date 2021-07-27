@@ -15,6 +15,9 @@ fieldset {
 	width : 500px;
 	height: 800px;
 }
+table {
+	margin : auto;
+}
 th {
 	text-align: left;
 }
@@ -29,10 +32,19 @@ td {
 	padding : 0 0 0 15px;
 
 }
+#logobox {
+	width: 500px;
+	text-align: center;
+}
 </style>
 <body>
 	<fieldset>
 	<legend>회원가입 페이지</legend>
+	<div id='logo'>
+		<a href='index.jsp'>
+			<img src='./img/logo4.png' id='logobox'/>
+		</a>
+	</div>
 	<table>
 		<tr>
 			<th>아이디</th>
@@ -67,7 +79,7 @@ td {
 			</td>
 		</tr>
 			<tr>
-				<td id='nname_check'>asdasd</td>
+				<td id='nname_check'></td>
 			</tr>
 		
 		<tr>
@@ -96,9 +108,9 @@ td {
 		<tr>
 			<td><input type="text" name="email">&nbsp;@
 				<select>
-					<option>naver.com</option>
-					<option>daum.net</option>
-					<option>google.com</option>
+					<option value='naver.com'>naver.com</option>
+					<option value='daum.net'>daum.net</option>
+					<option value='google.com'>google.com</option>
 				</select>
 			</td>
 		</tr>
@@ -112,7 +124,7 @@ td {
 </fieldset>
 </body>
 <script>
-	var overChk = false;
+	var overChk = true;
 	
 	function join(){
 		console.log("join");
@@ -123,7 +135,8 @@ td {
 		var $name = $("input[name='name']");//이름
 		var $age = $("input[name='age']");//나이
 		var $gender = $("input[name='gender']:checked");//성별
-		var $email = $("input[name='email']");//이메일
+		var $email = $("input[name='email']");//이메일아이디
+		var $mail = $('select'); // 이메일주소
 		console.log($id);
 		//중복 체크
 		if(overChk) {
@@ -161,10 +174,11 @@ td {
 				param.id = $id.val();
 				param.pw = $pw.val();
 				param.name = $name.val();
+				param.nname = $nname.val();
 				param.age = $age.val();
 				param.gender = $gender.val();
 				param.email = $email.val();
-				
+				param.mail = $mail.val();
 				//저장 가능
 				$.ajax({
 					type : "POST",
@@ -190,7 +204,7 @@ td {
 			alert("아이디 중복 체크를 해 주세요!");
 		}
 	}
-	/* 
+	
 	$("#id_overlay").click(function() {
 		var id = $("input[name='id']").val();
 		console.log(id);
@@ -252,6 +266,6 @@ td {
 
 		});
 		
-	}); */
+	}); 
 </script>
 </html>
