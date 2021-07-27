@@ -30,6 +30,10 @@ button {
 td {
 	padding: 5px;
 }
+#phone {
+	width: 50px;
+	text-align: center;
+}
 
 #id_check, #nname_check {
 	color: red;
@@ -92,18 +96,13 @@ td {
 				<td colspan="2"><input type="text" name="name"></td>
 			</tr>
 			<tr>
-				<th>나이</th>
+				<th>핸드폰 번호</th>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="number" name="age"></td>
-			</tr>
-			<tr>
-				<th>성별</th>
-			</tr>
-			<tr>
-				<td colspan="2"><input type="radio" name="gender" value="남">남
-					&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" name="gender"
-					value="여">여</td>
+				<td colspan="2"><input type='text' name='phone1' maxlength='3' id='phone'/>&nbsp;-
+				<input type='text' name='phone2'id='phone' maxlength='4'/>&nbsp;-
+				<input type='text' name='phone3'id='phone' maxlength='4'/>
+				</td>
 			</tr>
 			<tr>
 				<th>이메일</th>
@@ -139,6 +138,12 @@ td {
 			$(this).val(inputVal.replace(/[^a-zA-Z0-9]/gi, ''));
 		}
 	});
+	$("#phone").keyup(function(e){
+		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
+			var inputVal = $(this).val();
+			$(this).val(inputVal.replace(/[^0-9]/gi, ''));
+		}
+	});
 
 	function join() {
 		console.log("join");
@@ -147,7 +152,9 @@ td {
 		var $re_pw = $("input[name='re_pw']"); //비밀번호 확인칸
 		var $nname = $("input[name = 'nname']");
 		var $name = $("input[name='name']");//이름
-		var $age = $("input[name='age']");//나이
+		var $phone1 = $("input[name='phone1']");// 전화번호1
+		var $phone2 = $("input[name='phone2']");// 전화번호2
+		var $phone3 = $("input[name='phone3']");// 전화번호3
 		var $gender = $("input[name='gender']:checked");//성별
 		var $email = $("input[name='email']");//이메일아이디
 		var $mail = $('select'); // 이메일주소
@@ -174,10 +181,16 @@ td {
 			} else if ($name.val() == "") {
 				alert("이름 입력해 주세요!!");
 				$name.focus();
-			} else if ($age.val() == "") {
-				alert("나이를 입력해 주세요!!");
-				$age.focus();
-			} else if ($gender.val() == null) {
+			}else if($phone1.val() =="") {
+				alert("핸드폰 번호를 입력해 주세요!!");
+				$phone1.focus();
+			}else if($phone2.val() =="") {
+				alert("핸드폰 번호를 입력해 주세요!!");
+				$phone2.focus();
+			}else if($phone3.val() =="") {
+				alert("핸드폰 번호를 입력해 주세요!!");
+				$phone3.focus();
+			}else if ($gender.val() == null) {
 				alert("성별을 선택해 주세요!!");
 				$gender.focus();
 			} else if ($email.val() == "") {
@@ -196,8 +209,9 @@ td {
 				param.pw = $pw.val();
 				param.name = $name.val();
 				param.nname = $nname.val();
-				param.age = $age.val();
-				param.gender = $gender.val();
+				param.phone1 = $phone1.val();
+				param.phone2 = $phone2.val();
+				param.phone3 = $phone3.val();
 				param.email = $email.val();
 				param.mail = $mail.val();
 				param.addr = $addr.val();
