@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,8 @@
 <script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
 <script src="script/jquery-1.12.3.js"></script>
 <script>
+	var loginId = "${sessionScope.loginId}"
+
 	$(document).ready(function() {
 		
 		/*드롭다운메뉴 마우스오버, 마우스리브*/
@@ -20,6 +23,57 @@
 		$("#dropdown li").mouseleave(function() {
 			$(this).children("#sub").stop().slideUp();
 		});
+		
+		/*쪽지 로그인 체크*/
+		$("#menu1 a:nth-of-type(3)").click(function(){
+		if(loginId == ""){
+			alert("로그인이 필요한 서비스 입니다.");
+			location.href="login.jsp";
+		}else{
+			alert("쪽지목록보여주기~~~");
+		}	
+		});
+		
+		/*알람 로그인 체크*/
+		$("#menu1 a:nth-of-type(4)").click(function(){
+			if(loginId == ""){
+				alert("로그인이 필요한 서비스 입니다.");
+				location.href="login.jsp";
+			}else{
+				alert("알람목록보여주기~~~");
+			}	
+			});
+		
+		/*마이페이지 로그인 체크*/
+		$("#menu1 a:nth-of-type(5)").click(function(){
+			if(loginId == ""){
+				alert("로그인이 필요한 서비스 입니다.");
+				location.href="login.jsp";
+			}else{
+				location.href="myPage.jsp";
+			}	
+			});
+		
+		/*거래톡 로그인 체크*/
+		$("#menu1 a:nth-of-type(6)").click(function(){
+			if(loginId == ""){
+				alert("로그인이 필요한 서비스 입니다.");
+				location.href="login.jsp";
+			}else{
+				alert("거래톡보여주기~~~");
+			}	
+			});
+		
+		/*글쓰기 로그인 체크*/
+		$("#menu1 a:nth-of-type(7)").click(function(){
+			if(loginId == ""){
+				alert("로그인이 필요한 서비스 입니다.");
+				location.href="login.jsp";
+			}else{
+				location.href="writeForm.jsp";
+			}	
+			});
+		
 	});
 	
 </script>
@@ -200,12 +254,22 @@ nav ul#dropdown:after {
 				</div>
 				<div id="menu1">
 				<a href="joinForm.jsp">회원가입</a>
-				<a href="#">로그인</a>
+				
+				<!-- 로그인이 안되어있을 때 -->
+				<c:if test="${loginId eq null }"> 
+					<a href="login.jsp">로그인</a>
+				</c:if>
+				
+				<!-- 로그인이 되어있을 때 -->
+				<c:if test="${loginId ne null }"> 
+					<a href="#">로그아웃</a>
+				</c:if>
+				
 				<a href="#">쪽지</a>
 				<a href="#">알람</a>
-				<a href="myPage.jsp">마이페이지</a>
+				<a href="#">마이페이지</a>
 				<a href="#">거래톡</a>
-				<button onclick="location.href='writeForm.jsp' ">글쓰기</button>
+				<button>글쓰기</button>
 				</div>
 			</div>
 		</header>
