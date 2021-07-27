@@ -90,6 +90,7 @@ public class UserDAO {
 
 	public boolean join(GGDto dto) throws Exception {
 		
+		boolean success = false;
 		// u_id, u_nname, u_email,u_name, u_addr, u_phone, u_joinTM, 
 		// u_newName, u_AdminYN, u_FollowYN, u_detailAddr 
 		sql ="INSERT INTO userInfo VALUES(?,?,?,?,?,?,SYSDATE,./img/default-profile.png,N,N,?,)";
@@ -98,12 +99,23 @@ public class UserDAO {
 		ps.setString(1, dto.getU_id());
 		ps.setString(2, dto.getU_nname());
 		ps.setString(3, dto.getU_email());
-		ps.setString
+		ps.setString(4, dto.getU_name());
+		ps.setString(5, dto.getU_addr());
+		ps.setString(6, dto.getU_phone());
+		ps.setString(7, dto.getU_detailAddr());
+		
+		int checker = ps.executeUpdate();
+		if(checker>0) {
+			success =true;
+		}
 		
 		
-		
-		
-		return false;
+		return success;
+	}
+
+	public String login(String loginId, String loginPw) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
