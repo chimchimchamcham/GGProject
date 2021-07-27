@@ -146,7 +146,7 @@
 
     <div id="twoButton">
         <button>등록</button>
-        <button>취소</button>
+        <button onclick="location.href='./index.jsp'">취소</button>
     </div>
 </body>
 <script>
