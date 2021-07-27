@@ -160,7 +160,7 @@ body {
 				<span><a href="#">알람</a></span>
 				<span><a href="myPage.jsp">마이페이지</a></span>
 				<span><a href="#">거래톡</a></span>
-				<span><a href="#">글쓰기</a></span>
+				<span><a href="writeForm.jsp">글쓰기</a></span>
 			</div>
 		</nav>
 		<nav  id="nav2">
