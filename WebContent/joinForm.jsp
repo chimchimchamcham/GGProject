@@ -9,6 +9,12 @@
 </head>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
+
+fieldset {
+	margin : auto;
+	width : 500px;
+	height: 800px;
+}
 th {
 	text-align: left;
 }
@@ -61,7 +67,7 @@ td {
 			</td>
 		</tr>
 			<tr>
-				<td id='nname_check'></td>
+				<td id='nname_check'>asdasd</td>
 			</tr>
 		
 		<tr>
@@ -107,7 +113,6 @@ td {
 </body>
 <script>
 	var overChk = false;
-	
 	
 	function join(){
 		console.log("join");
@@ -185,7 +190,7 @@ td {
 			alert("아이디 중복 체크를 해 주세요!");
 		}
 	}
-	
+	/* 
 	$("#id_overlay").click(function() {
 		var id = $("input[name='id']").val();
 		console.log(id);
@@ -247,6 +252,6 @@ td {
 
 		});
 		
-	});
+	}); */
 </script>
 </html>
