@@ -76,7 +76,7 @@ public class UserController extends HttpServlet {
 			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);
 			break;
-			}
+		}
 		
 	}
 

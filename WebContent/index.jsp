@@ -25,11 +25,8 @@
 <div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
 		<h2>메인페이지</h2>
-<<<<<<< HEAD
-=======
 		<a href="salesDetail.jsp">타인 판매 상세보기</a>
 		<a href="salesDetailSalerPosition.jsp">내 판매글 상세보기</a>
->>>>>>> 3cbd63b886d847c7232ffdd4d94f20ceb9aa97f8
 	</div>
 </body>
 </html>
