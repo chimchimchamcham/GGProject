@@ -48,6 +48,7 @@ public class UserController extends HttpServlet {
 			break;
 		case "/id_overlay":
 			System.out.println("아이디 중복 체크 요청");
+			
 			service.idOverlay();
 			
 			

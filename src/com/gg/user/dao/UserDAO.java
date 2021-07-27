@@ -41,6 +41,27 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 	}
+
+
+	public boolean idOverlay(String id) {
+		boolean success = false;
+		
+		sql = "SELECT u_id FROM userInfo WHERE u_id = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			
+			success = rs.next();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally {
+			System.out.println("중복 여부 : " + success);
+			// resClose()는 service에서 실행한다.
+		}
+		return success;
+	}
 	
 
 }

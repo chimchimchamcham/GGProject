@@ -137,6 +137,14 @@ margin :auto;
 </body>
 <script>
 	var overChk = true;
+	$("input[name='id']").keyup(function(e){
+		if(!(e.keyCode >=37 && e.keyCode <=40)) {
+			var inputVal = $(this).val();
+			$(this).val(inputVal.replace(/[^a-zA-Z0-9]/gi,''));
+		}
+	});
+	
+	
 	
 	function join(){
 		console.log("join");
@@ -231,7 +239,7 @@ margin :auto;
 		console.log(id);
 		$.ajax({
 			type : 'get',
-			url : 'overlay',
+			url : 'id_overlay',
 			data : {
 				'id' : id
 			},
@@ -262,7 +270,7 @@ margin :auto;
 		console.log(nname);
 		$.ajax({
 			type : 'get',
-			url : 'overlay',
+			url : 'nname_overlay',
 			data : {
 				'nname' : nname
 			},
