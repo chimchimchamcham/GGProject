@@ -18,6 +18,11 @@ button {
 td {
 	padding: 5px;
 }
+#id_check, #nname_check{
+	color: red;
+	padding : 0 0 0 15px;
+
+}
 </style>
 <body>
 	<fieldset>
@@ -27,11 +32,13 @@ td {
 			<th>아이디</th>
 		</tr>
 		<tr>
-			
 			<td colspan="2">
 				<input type="text" name="id" /> 
 				<input type='button' id="id_overlay" value='중복확인'  />
 			</td>
+		</tr>
+		<tr>
+			<td id='id_check'></td>
 		</tr>
 		<tr>
 			<th>비밀 번호</th>
@@ -53,6 +60,10 @@ td {
 				<input type='button' id="nname_overlay" value='중복확인' />
 			</td>
 		</tr>
+			<tr>
+				<td id='nname_check'></td>
+			</tr>
+		
 		<tr>
 			<th>이름</th>
 		</tr>
@@ -63,7 +74,7 @@ td {
 			<th>나이</th>
 		</tr>
 		<tr>
-			<td colspan="2"><input type="text" name="age"></td>
+			<td colspan="2"><input type="number" name="age"></td>
 		</tr>
 		<tr>
 			<th>성별</th>
@@ -77,7 +88,7 @@ td {
 			<th>이메일</th>
 		</tr>
 		<tr>
-			<td><input type="text" name="email">@
+			<td><input type="text" name="email">&nbsp;@
 				<select>
 					<option>naver.com</option>
 					<option>daum.net</option>
@@ -94,13 +105,15 @@ td {
 </fieldset>
 </body>
 <script>
-	var overChk = true;
+	var overChk = false;
+	
 	
 	function join(){
 		console.log("join");
 		var $id = $("input[name='id']");//아이디 ==> 객체가 들어간다는건 $표시로 구분함.
 		var $pw = $("input[name='pw']");//비번
-		var $re_pw = $("input[name='re_pw']");
+		var $re_pw = $("input[name='re_pw']"); //비밀번호 확인칸
+		var $nname = $("input[name = 'nname']");
 		var $name = $("input[name='name']");//이름
 		var $age = $("input[name='age']");//나이
 		var $gender = $("input[name='gender']:checked");//성별
@@ -121,6 +134,9 @@ td {
 			}else if($pw.val() != $re_pw.val()){
 				alert("비밀번호가 일치하지 않습니다!")
 				$re_pw.focus();
+			}else if($nname.val() ==""){
+				alert("닉네임을 입력해 주세요!");
+				$nname.focus();
 			}else if($name.val() =="") {
 				alert("이름 입력해 주세요!!");
 				$name.focus();
@@ -185,10 +201,40 @@ td {
 					alert("처리 중 문제가 발생했습니다. 다시 시도해 주세요.");
 				}else{
 					if(data.overlay) {
-						alert("이미 사용중인 아이디 입니다.");
+						$("#id_check").html("아이디가 중복됩니다!");
 						$("input[name='id']").val("");
 					}else{
-						alert("사용 가능한 아이디 입니다.");
+						$("#id_check").html("사용가능한 아이디입니다!");
+						overChk = true;
+					}
+				}
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+	});
+	
+	$("#nname_overlay").click(function() {
+		var nname = $("input[name='nname']").val();
+		console.log(nname);
+		$.ajax({
+			type : 'get',
+			url : 'overlay',
+			data : {
+				'nname' : nname
+			},
+			dataType:'JSON',
+			success : function(data) {
+				console.log(data);
+				if(!data.success) {
+					alert("처리 중 문제가 발생했습니다. 다시 시도해 주세요.");
+				}else{
+					if(data.overlay) {
+						$("#nname_check").html("닉네임이 중복됩니다!");
+						$("input[name='nname']").val("");
+					}else{
+						$("#nname_check").html("사용가능한 닉네임입니다!");
 						overChk = true;
 					}
 				}
@@ -198,6 +244,7 @@ td {
 			}
 
 		});
+		
 	});
 </script>
 </html>
