@@ -53,7 +53,7 @@ header {
 	transition: 0.5s;
 }
 
-#headerWrap>button:nth-of-type(1) {
+#headerWrap>a:nth-of-type(1) {
 	position: absolute;
 	right: 100px;
 	top: 14px;
@@ -61,7 +61,7 @@ header {
 	color: white;
 }
 
-#headerWrap>button:nth-of-type(2) {
+#headerWrap>a:nth-of-type(2) {
 	position: absolute;
 	right: 5px;
 	top: 14px;
@@ -101,7 +101,7 @@ body {
 
 /* nav1 */
 #nav1 {
-
+height:50px;
 }
 
 /*메인메뉴*/
@@ -142,8 +142,8 @@ body {
 					<input type="text" name="search" class="searchBox" placeholder="찾고 싶은 상품을 검색해보세요!">
 					<img src="img/search-icon.png" alt="search-icon">
 				</div>
-				<button class="roundBox boxBtn">회원가입</button>
-				<button class="roundBox boxBtn">로그인</button>
+				<a href="joinForm.jsp">회원가입</a>
+				<a href="#">로그인</a>
 			</div>
 		</header>
 		<nav id="nav1">
