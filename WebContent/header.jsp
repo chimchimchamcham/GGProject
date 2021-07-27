@@ -24,26 +24,31 @@
 	
 </script>
 <style>
+
 body {
 	line-height: 1.5em;
 	font-size: 1em;
 	font-weight: normal;
 	color: #333;
+	width:1200px;
+	margin: 0px auto;
 }
 
-#wrap {
+#hWrap {
 	width: 1200px;
 	margin: 0 auto;
 	text-align: left;
+	background-color: #fff;
 }
 
 header {
 	width: 1200px;
-	height: 60px;
+	height: 90px;
 	position: fixed;
 	padding-top: 10px;
 	margin: 0px auto;
-	top: 0;
+	background-color: #fff;
+	float: top;
 }
 
 #logo {
@@ -185,10 +190,10 @@ nav ul#dropdown:after {
 
 </style>
 <body>
-	<div id="wrap">
+	<div id="hWrap">
 		<header>
-			<div id="headerWrap">
-				<div id="logo"><a href="index.jsp"><img src="img/logo2.png" width="85"></a></div>
+			<div>
+				<div id="logo"><a href="index.jsp"><img src="img/logo2.png" width="80"></a></div>
 				<div id="search">
 					<input type="text" name="search" placeholder="찾고 싶은 상품을 검색해보세요!">
 					<img src="img/search-icon.png" alt="search-icon">

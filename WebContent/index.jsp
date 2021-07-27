@@ -7,14 +7,23 @@
 <meta charset="UTF-8">
 <title>메인페이지</title>
 <style type="text/css">
-#wrap {
-	background-color: gray;
+#mainHeader{
+	z-index: 1000;
 }
+#main {
+	background-color: gray;
+	width:1200px;
+	height:2000px;
+	position: absolute;
+	top:150px;
+	z-index: -1;
+}
+
 </style>
 </head>
 <body>
-	<jsp:include page="header.jsp" />
-	<div id="wrap">
+<div id="mainHeader"><jsp:include page="header.jsp" /></div>
+	<div id="main">
 		<h2>메인페이지</h2>
 	</div>
 </body>
