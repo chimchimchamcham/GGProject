@@ -99,6 +99,7 @@ td {
 		<tr>
 			<td colspan="2">
 				<button onclick='join()'>회원가입</button>
+				<button onclick='location.href="index.jsp"'>되돌아가기</button>
 			</td>
 		</tr>
 	</table>
