@@ -65,7 +65,7 @@
 			});
 		
 		/*글쓰기 로그인 체크*/
-		$("#menu1 a:nth-of-type(7)").click(function(){
+		$("#menu1 button").click(function(){
 			if(loginId == ""){
 				alert("로그인이 필요한 서비스 입니다.");
 				location.href="login.jsp";
@@ -74,6 +74,9 @@
 			}	
 			});
 		
+		
+		/*쪽지목록 보여주기*/
+		$("#messageList").hide();		
 	});
 	
 </script>
@@ -242,6 +245,21 @@ nav ul#dropdown:after {
 	clear: both;
 }
 
+
+/*쪽지함*/
+#messageList{
+	width: 450px;
+	height:500px;
+	position: fixed;
+	background-color:blue;
+	z-index: 1000;
+	top:60px;
+	right:330px;
+	text-align: center;
+	}
+	
+
+
 </style>
 <body>
 	<div id="hWrap">
@@ -310,6 +328,9 @@ nav ul#dropdown:after {
 				</ul>
 			</div>
 		</nav>
+	</div>
+	<div id="messageList">
+		<h2>쪽지</h2>
 	</div>
 </body>
 </html>

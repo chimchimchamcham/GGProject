@@ -25,16 +25,18 @@ public class UserService {
 	public boolean join() {
 		success = false;
 		System.out.println("회원 가입 요청 확인");
-		String id = req.getParameter("id");
-		String pw = req.getParameter("pw");
-		String name = req.getParameter("name");
-		String nname = req.getParameter("nname");
-		String age = req.getParameter("age");
-		String email = req.getParameter("email");
-		String mail = req.getParameter("mail");
-		String detailAddr = req.getParameter("detailAddr");
+		String id = req.getParameter("id"); //아이디
+		String pw = req.getParameter("pw"); // 비밀번호
+		String name = req.getParameter("name"); //이름 
+		String nname = req.getParameter("nname"); // 닉네임
+		String age = req.getParameter("age"); // 나이
+		String email = req.getParameter("email"); //메일 앞부분
+		String mail = req.getParameter("mail"); // 메일 뒷부분(ex]naver.com)
+		String addr = req.getParameter("addr"); // 대략적 주소
+		String detailAddr = req.getParameter("detailAddr"); // 상세 주소
+		
 		System.out.println("들어온 인자 값 확인!");
-		System.out.println(id+"/"+pw+"/"+name+"/"+nname+"/"+age+"/"+email+"/"+mail+"/"+detailAddr);
+		System.out.println(id+"/"+pw+"/"+name+"/"+nname+"/"+age+"/"+email+"/"+mail+"/"+addr+"/"+detailAddr);
 		
 		return success;
 	}

@@ -60,7 +60,6 @@ public class UserController extends HttpServlet {
 			break;
 		}
 		
-		
 	}
 
 }
