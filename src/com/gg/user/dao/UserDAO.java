@@ -88,7 +88,6 @@ public class UserDAO {
 		return success;
 	}
 
-<<<<<<< HEAD
 	public String login(String loginId, String loginPw) {
 		String userId = null;
 		String sql = "SELECT U_id FROM UserInfo WHERE U_id=? AND U_pw=?";
@@ -108,9 +107,7 @@ public class UserDAO {
 		}
 		return userId;
 	}
-	
-=======
->>>>>>> ef2200ee5eead63b89b39e9585b53ca6ffc7095f
+
 	public boolean join(GGDto dto) throws Exception {
 		
 		boolean success = false;
@@ -121,11 +118,6 @@ public class UserDAO {
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, dto.getU_id());
 		ps.setString(2, dto.getU_nname());
-<<<<<<< HEAD
-		ps.setString(3, dto.getU_email());
-
-		return false;
-=======
 		ps.setString(3, dto.getU_pw());
 		ps.setString(4, dto.getU_email());
 		ps.setString(5, dto.getU_name());
@@ -137,15 +129,8 @@ public class UserDAO {
 		if(checker>0) {
 			success =true;
 		}
-		
-		
-		return success;
-	}
 
-	public String login(String loginId, String loginPw) {
-		// TODO Auto-generated method stub
-		return null;
->>>>>>> ef2200ee5eead63b89b39e9585b53ca6ffc7095f
+		return success;
 	}
 
 }
