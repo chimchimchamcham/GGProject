@@ -7,12 +7,22 @@
 <meta charset="UTF-8">
 <title>메인페이지</title>
 <style type="text/css">
-#wrap {
-	background-color: gray;
+#mainHeader{
+	z-index: 1000;
 }
+#main {
+	background-color: gray;
+	width:1200px;
+	height:2000px;
+	position: absolute;
+	top:150px;
+	z-index: -1;
+}
+
 </style>
 </head>
 <body>
+<<<<<<< HEAD
 	<jsp:include page="header.jsp" />
 	<div id="wrap">
 		<header>
@@ -56,6 +66,11 @@
 				</ul>
 			</div>
 		</nav>
+=======
+<div id="mainHeader"><jsp:include page="header.jsp" /></div>
+	<div id="main">
+		<h2>메인페이지</h2>
+>>>>>>> aab3c5823f27a55d33f87d21aac3a68160339904
 	</div>
 </body>
 </html>

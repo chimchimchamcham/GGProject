@@ -6,11 +6,8 @@
 <style type="text/css">
 *{margin:0;padding:0;border-width:0;list-style-type:none;}
     body{width:100%;}
-div,input{margin:10px;
-}
-span{
-	position:relative;
-	float:left;
+div,input{
+	margin:10px;
 }
 div#outLine{
 	background-color : gray;
@@ -18,6 +15,8 @@ div#outLine{
 	top:60%;
 	left:50%;
 	transform:translate(-50%, -50%);
+	overflow:visible;
+	width:270px;
 }
 div#head{
 	background-color : gray;
@@ -41,23 +40,21 @@ div#logo{
 	width:250px;
 	height: 20px;
 }
-
-#loginbox{
-	width:270px;
-	height:70px;
-}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src = "https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<div id="logo"></div>
+	<div id="logo"><a href="index.jsp"><img src="img/logo2.png" width="100"></a></div>
 	<div id ="head">로그인 페이지</div>
 	<div id = "outLine">
-		<form action ="/login" method ="post" id="loginbox">
-			<input id="idbox" type="text" name = "loginId" placeholder = "아이디"/><span>아이디를 입력하세요</span>
-			<input id="pwbox"  type="password" name = "loginPw" placeholder  = "비밀번호"/><span>비밀번호를 입력하세요</span>
+		<form action ="/login" method ="post">
+			<input id="idbox" type="text" name = "loginId" placeholder = "아이디"/>
+			<input id="pwbox"  type="password" name = "loginPw" placeholder  = "비밀번호"/>
+			<button style="margin:10px">로그인</button>
+			<input type="button" onclick="location.href='joinForm.jsp'" value="회원가입"/>
+			<a href="#" style = " font-size:12px;">아이디/비밀번호 찾기</a>
 		</form>
 	</div>
 </body>
