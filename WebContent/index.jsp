@@ -7,8 +7,20 @@
 <title>메인페이지</title>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$("#dropdown li").mouseover(function() {
+			$(this).children("#sub").stop().slideDown();
+		});
+		
+		$("#dropdown li").mouseleave(function() {
+			$(this).children("#sub").stop().slideUp();
+		});
+	});
+	
+</script>
 <style>
-
 body {
 	line-height: 1.5em;
 	font-size: 1em;
@@ -26,18 +38,17 @@ header {
 	width: 1200px;
 	height: 60px;
 	position: fixed;
-	padding-top : 10px;
-	margin : 0px auto;
-	top:0;
+	padding-top: 10px;
+	margin: 0px auto;
+	top: 0;
 }
 
-#logo{
+#logo {
 	float: left;
 }
 
 /*검색창*/
-
-#search{
+#search {
 	position: absolute;
 	left: 100px;
 	top: 20px;
@@ -53,7 +64,7 @@ header {
 	transition: 0.5s;
 }
 
-#search input{
+#search input {
 	display: block;
 	width: 568px;
 	height: 35px;
@@ -63,133 +74,100 @@ header {
 	border-radius: 3px;
 }
 
-#menu1{
-	float:right;
+#menu1 {
+	float: right;
 	padding: 10px;
 }
 
-#menu1 a{
-	padding : 5px;
+#menu1 a {
+	padding: 5px;
 	text-decoration: none;
-	color:black;
+	color: black;
 }
 
-#menu1 a:hover{
+#menu1 a:hover {
 	color: gray;
 }
 
 /*메인메뉴*/
 nav {
-width:1200px;
-	position:fixed;
-	height:40px; /* 메뉴 높이 지정 */
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
-    margin: 90px 0px 10px 0px;
-    padding-top: 15px;
-    background-color: #fff;
-    
+	width: 1200px;
+	position: fixed;
+	height: 40px; /* 메뉴 높이 지정 */
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	margin: 90px 0px 10px 0px;
+	padding-top: 15px;
+	background-color: #fff;
 }
 
 nav ul#dropdown {
-     box-sizing: border-box;
-     margin:0px auto;
-     width:1000px;
+	box-sizing: border-box;
+	margin: 0px auto;
+	width: 1000px;
+	background-color: #fff;
 }
 
 nav ul#dropdown li {
-	float:left;
-    list-style: none;
-     margin:0px auto;
+	float: left;
+	list-style: none;
+	margin: 0px auto;
+	background-color: #fff;
 }
 
 nav ul#dropdown li a {
-	color:#000;
-	padding:0 82px;
-	text-decoration: none; 
+	color: #000;
+	padding: 0 82px;
+	text-decoration: none;
 	display: block;
 }
 
-nav ul#dropdown li a:hover{
+nav ul#dropdown li a:hover {
 	color: gray;
 }
 
-nav ul#dropdown li ul	{	
-	margin:16px 0 0 41px;
-	list-style:none;
-	position: absolute; 
-	visibility:hidden; 
-	z-index:100; 
-    
+/*드롭다운 하위 메뉴*/
+
+#sub {
+	margin: 16px 0 0 -13px;
+	list-style: none;
+	position: absolute;
+	z-index: 100;
+	
 }
-		
-nav ul#dropdown li ul li {	
+
+nav ul#dropdown li ul li {
 	float: none;
-	display:inline;		
+	display: inline;
 }
 
-		
 nav ul#dropdown li ul li a {
-	width:120px;
-    height:30px;
-	padding:10px 20px 0px 10px;
-	  background-color: #ffffff;
-	font-size:0.9em;
+	width: 120px;
+	height: 30px;
+	padding: 10px 20px 0px 10px;
+	background-color: #999;
+	font-size: 0.9em;
 	text-transform: capitalize;
-    text-align:center;
+	text-align: center;
 }
 
-nav ul#dropdown li ul li a.r_corner {
-	border-bottom-left-radius:10px;
-	border-bottom-right-radius:10px;
+nav ul#dropdown li ul li a:hover {
+	background-color: #ffffff;
+	background-color: rgba(255, 255, 255, 0.9);
 }
 
-		
-nav ul#dropdown li ul li a:hover {	
-	 background-color: #ffffff;
-      background-color: rgba( 255, 255, 255, 0.9  );
+nav ul#dropdown:after {
+	content: "";
+	display: block;
+	clear: both;
 }
-nav ul#dropdown:after {content: ""; display: block; clear: both;}
+
+.sub {
+	/* display: none; */
+	
+}
 
 </style>
-<script>
-$(document).ready(function(){    
-    $('#slide').bjqs({        
-    	'width' : 1300,        
-    	'height' : 700,        
-    	 'showMarkers' : true,        
-    	 'showControls' : false,        
-    	 'centerMarkers' : false   
-    	 });
-    });
-    
-  /* Dropdown script */
-  	var timeout    = 500;
-  	var closetimer = 0;
-  	var ddmenuitem = 0;
-  	
-  	function dropdown_open()
-  	{  dropdown_canceltimer();
-  	   dropdown_close();
-  	   ddmenuitem = $(this).find('ul').css('visibility', 'visible');}
-  	
-  	function dropdown_close()
-  	{  if(ddmenuitem) ddmenuitem.css('visibility', 'hidden');}
-  	
-  	function dropdown_timer()
-  	{  closetimer = window.setTimeout(dropdown_close, timeout);}
-  	
-  	function dropdown_canceltimer()
-  	{  if(closetimer)
-  	   {  window.clearTimeout(closetimer);
-  		  closetimer = null;}}
-  	
-  	$(document).ready(function()
-  	{  $('#dropdown > li').bind('mouseover', dropdown_open)
-  	   $('#dropdown > li').bind('mouseout',  dropdown_timer)});
-  	
-  	document.onclick = dropdown_close;
-</script>
 <body>
 	<div id="wrap">
 		<header>
@@ -214,7 +192,11 @@ $(document).ready(function(){
 			<div id="navWrap">
 				<ul id="dropdown">
 					<li><a href="#">판매</a>
-						<ul>
+						<ul id="sub">
+							<li><a href="#">의류</a></li>
+							<li><a href="#">전자기기</a></li>
+							<li><a href="#">패션잡화</a></li>
+							<li><a href="#">기타</a></li>
 							<li><a href="#">의류</a></li>
 							<li><a href="#">전자기기</a></li>
 							<li><a href="#">패션잡화</a></li>
@@ -222,7 +204,7 @@ $(document).ready(function(){
 						</ul></li>
 	
 					<li><a href="#">경매</a>
-						<ul>
+						<ul id="sub">
 							<li><a href="#">의류</a></li>
 							<li><a href="#">전자기기</a></li>
 							<li><a href="#">패션잡화</a></li>
