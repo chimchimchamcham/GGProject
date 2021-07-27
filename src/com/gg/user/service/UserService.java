@@ -44,13 +44,9 @@ public class UserService {
 		// 메일 합치기
 		u_email += "@" + u_mail;
 		System.out.println("이메일 확인 : " + u_email);
-		// 주소 합치기
-		u_addr += u_detailAddr;
-		System.out.println("주소 확인 : " + u_addr);
 		// 핸드폰 번호 합치기
 		u_phone += "-"+u_phone2 +"-"+ u_phone3;
 		System.out.println("핸드폰 번호 확인 : " + u_phone);
-		
 		
 		GGDto dto = new GGDto();
 		//DTO에 값을 넣어주기.
@@ -61,10 +57,19 @@ public class UserService {
 		dto.setU_phone(u_phone);
 		dto.setU_email(u_email);
 		dto.setU_addr(u_addr);
+		dto.setU_detailAddr(u_detailAddr);
+		
 		
 		UserDAO dao = new UserDAO();
 		
-		success = dao.join(dto);
+		try {
+			success = dao.join(dto);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
 		
 		
 		

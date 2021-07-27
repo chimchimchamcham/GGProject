@@ -291,8 +291,12 @@ nav ul#dropdown:after {
 					<img src="img/search-icon.png" alt="search-icon">
 				</div>
 				<div id="menu1">
+<<<<<<< HEAD
 				<a href="joinForm.jsp">회원가입</a>
 
+=======
+				<a href="joinForm.jsp">회원가입</a>				
+>>>>>>> 5285ec0f38c522d97a2b24a5de6eb27524c22876
 				<!-- 로그인이 안되어있을 때 -->
 				<c:if test="${loginId eq null }"> 
 					<a href="login.jsp">로그인</a>
@@ -302,7 +306,10 @@ nav ul#dropdown:after {
 				<c:if test="${loginId ne null }"> 
 					<a href="#">로그아웃</a>
 				</c:if>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5285ec0f38c522d97a2b24a5de6eb27524c22876
 				<a href="#">쪽지</a>
 				<a href="#">알람</a>
 				<a href="#">마이페이지</a>

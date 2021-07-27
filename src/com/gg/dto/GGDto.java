@@ -13,11 +13,12 @@ public class GGDto {
 	private String U_addr; // 주소
 	private String U_phone; // 전화번호
 	private Date U_joinTm; // 가입날짜
-	private String U_imgLink; // 사진링크
 	private String U_intro; // 자기소개
 	private char U_adminYN; // 관리자여부
 	private char U_followYN; // 팔로워공개여부
 	private String U_newName; // 새사진 이름
+	private String U_detailAddr; // 상세 주소
+	
 
 	// 쪽지함
 	private Date M_sendTm; // 보낸시간
@@ -180,13 +181,7 @@ public class GGDto {
 		U_joinTm = u_joinTm;
 	}
 
-	public String getU_imgLink() {
-		return U_imgLink;
-	}
 
-	public void setU_imgLink(String u_imgLink) {
-		U_imgLink = u_imgLink;
-	}
 
 	public String getU_intro() {
 		return U_intro;
@@ -698,5 +693,13 @@ public class GGDto {
 
 	public void setI_newName(String i_newName) {
 		I_newName = i_newName;
+	}
+
+	public String getU_detailAddr() {
+		return U_detailAddr;
+	}
+
+	public void setU_detailAddr(String u_detailAddr) {
+		U_detailAddr = u_detailAddr;
 	}
 }
