@@ -61,9 +61,18 @@ public class UserService {
 		
 		
 		UserDAO dao = new UserDAO();
+		Gson gson = null;
+		
+		
 		
 		try {
+			HashMap<String, Object> map = new HashMap<String, Object>();
 			success = dao.join(dto);
+			map.put("success", success);
+			gson = new Gson();
+			String obj = gson.toJson(map);
+			
+			resp.getWriter().println(obj);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
