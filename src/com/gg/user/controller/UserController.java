@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gg.user.service.UserService;
+
 @WebServlet
 public class UserController extends HttpServlet {
 
@@ -22,7 +24,6 @@ public class UserController extends HttpServlet {
 	}
 
 	private void dual(HttpServletRequest req, HttpServletResponse resp) {
-		
 		
 	}
 	

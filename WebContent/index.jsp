@@ -199,13 +199,13 @@ $(document).ready(function(){
 					<img src="img/search-icon.png" alt="search-icon">
 				</div>
 				<div id="menu1">
-				<a href="joinForm.jsp">회원가입</a>
-				<a href="#">로그인</a>
-				<a href="#">쪽지</a>
-				<a href="#">알람</a>
-				<a href="myPage.jsp">마이페이지</a>
-				<a href="#">거래톡</a>
-				<a href="writeForm.jsp">글쓰기</a>
+					<a href="joinForm.jsp">회원가입</a>
+					<a href="login.jsp">로그인</a>
+					<a href="#">쪽지</a>
+					<a href="#">알람</a>
+					<a href="myPage.jsp">마이페이지</a>
+					<a href="#">거래톡</a>
+					<a href="writeForm.jsp">글쓰기</a>
 				</div>
 			</div>
 		</header>
