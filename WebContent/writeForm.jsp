@@ -32,7 +32,7 @@
     <div id="communityForm">
         <p><input type="text" name="title" value="" placeholder="제목을 입력해주세요" /></p>
         <p class="imgFileUpload">
-            <img src="img/plus.png" class="imgFileBtn" alt="plus" width="100px"/>
+            <img src="images/plus.png" class="imgFileBtn" alt="plus" width="100px"/>
             <input type="file" name="imgFile" style="display:none";/></p>
         <p><textarea name="content" rows="3" cols="40" placeholder="내용입력"></textarea></p>
         <p id="commuCategory">카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
@@ -146,7 +146,7 @@
 
     <div id="twoButton">
         <button>등록</button>
-        <button>취소</button>
+        <button onclick="location.href='./index.jsp'">취소</button>
     </div>
 </body>
 <script>

@@ -13,6 +13,8 @@ import com.gg.user.service.UserService;
 @WebServlet
 public class UserController extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		dual(req,resp);
