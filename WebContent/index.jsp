@@ -69,6 +69,12 @@ header {
 
 #menu1 a{
 	padding : 5px;
+	text-decoration: none;
+	color:black;
+}
+
+#menu1 a:hover{
+	color: gray;
 }
 
 /*메인메뉴*/
@@ -97,11 +103,14 @@ nav ul#dropdown li {
 }
 
 nav ul#dropdown li a {
-	color:#000; /* 색상 지정 */
-	padding:0 82px; /* 패딩으로 각 메뉴 사이 간격 조정 */
-	text-transform: uppercase; /* 메뉴 글자 대문자 */
-	text-decoration: none; /* 링크의 밑줄 없앰 */
+	color:#000;
+	padding:0 82px;
+	text-decoration: none; 
 	display: block;
+}
+
+nav ul#dropdown li a:hover{
+	color: gray;
 }
 
 nav ul#dropdown li ul	{	
