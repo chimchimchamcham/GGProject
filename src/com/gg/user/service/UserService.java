@@ -135,6 +135,14 @@ public class UserService {
 		
 	}
 
+	public String login() {
+		String loginId = req.getParameter("loginId");
+		String loginPw = req.getParameter("loginPw");
+		System.out.println("loginId : "+loginId+"loginPw : "+loginPw);
+		UserDAO dao = new UserDAO();
+		return dao.login(loginId,loginPw);
+	}
+
 	
 	
 	

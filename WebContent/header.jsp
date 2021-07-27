@@ -292,6 +292,9 @@ nav ul#dropdown:after {
 				</div>
 				<div id="menu1">
 				<a href="joinForm.jsp">회원가입</a>
+<<<<<<< HEAD
+				<a href="login.jsp">로그인</a>
+=======
 				
 				<!-- 로그인이 안되어있을 때 -->
 				<c:if test="${loginId eq null }"> 
@@ -303,6 +306,7 @@ nav ul#dropdown:after {
 					<a href="#">로그아웃</a>
 				</c:if>
 				
+>>>>>>> 3cbd63b886d847c7232ffdd4d94f20ceb9aa97f8
 				<a href="#">쪽지</a>
 				<a href="#">알람</a>
 				<a href="#">마이페이지</a>
