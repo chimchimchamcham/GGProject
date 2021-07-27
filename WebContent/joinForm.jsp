@@ -190,10 +190,7 @@ td {
 			}else if($phone3.val() =="") {
 				alert("핸드폰 번호를 입력해 주세요!!");
 				$phone3.focus();
-			}else if ($gender.val() == null) {
-				alert("성별을 선택해 주세요!!");
-				$gender.focus();
-			} else if ($email.val() == "") {
+			}else if ($email.val() == "") {
 				alert("이메일을 입력해 주세요!!");
 				$email.focus();
 			} else if ($addr.val() == "") {
