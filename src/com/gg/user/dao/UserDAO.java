@@ -88,7 +88,6 @@ public class UserDAO {
 		return success;
 	}
 
-<<<<<<< HEAD
 	public String login(String loginId, String loginPw) {
 		String userId = null;
 		String sql = "SELECT U_id FROM UserInfo WHERE U_id=? AND U_pw=?";
@@ -109,8 +108,6 @@ public class UserDAO {
 		return userId;
 	}
 	
-	public boolean join(GGDto dto) {
-=======
 	public boolean join(GGDto dto) throws Exception {
 		
 		// u_id, u_nname, u_email,u_name, u_addr, u_phone, u_joinTM, 
@@ -121,12 +118,7 @@ public class UserDAO {
 		ps.setString(1, dto.getU_id());
 		ps.setString(2, dto.getU_nname());
 		ps.setString(3, dto.getU_email());
-		ps.setString
->>>>>>> bd72fa20b1c7307fcf02d43ee0804083384b7fc3
-		
-		
-		
-		
+
 		return false;
 	}
 
