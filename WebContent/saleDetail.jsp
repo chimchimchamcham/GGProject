@@ -113,8 +113,6 @@
                         <button>쪽지보내기</button>
                         <button>구매요청</button>
                         <button>구매요청취소</button>
-                        
-                        
                     </div>
                     <div id="twoButton">
                         <button>상세정보</button>
