@@ -5,9 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>메인페이지</title>
-<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+<script src="script/jquery-1.12.3.js"></script>
 <script>
 	$(document).ready(function() {
 		$("#dropdown li").mouseover(function() {
@@ -89,6 +90,23 @@ header {
 	color: gray;
 }
 
+#menu1 button{
+	padding: 7px;
+	text-decoration: none;
+	background-color: #D8D8D8;
+	color:#424242;
+	border: 3px #D8D8D8;
+	border-radius: 5px;
+}
+
+#menu1 button:hover{
+	background-color: gray;
+}
+
+#menu1 button a:hover{
+	color: white;
+}
+
 /*메인메뉴*/
 nav {
 	width: 1200px;
@@ -129,11 +147,11 @@ nav ul#dropdown li a:hover {
 /*드롭다운 하위 메뉴*/
 
 #sub {
+ 	display: none;
 	margin: 16px 0 0 -13px;
 	list-style: none;
 	position: absolute;
 	z-index: 100;
-	
 }
 
 nav ul#dropdown li ul li {
@@ -145,7 +163,7 @@ nav ul#dropdown li ul li a {
 	width: 120px;
 	height: 30px;
 	padding: 10px 20px 0px 10px;
-	background-color: #999;
+	background-color: #F2F2F2;
 	font-size: 0.9em;
 	text-transform: capitalize;
 	text-align: center;
@@ -160,11 +178,6 @@ nav ul#dropdown:after {
 	content: "";
 	display: block;
 	clear: both;
-}
-
-.sub {
-	/* display: none; */
-	
 }
 
 </style>
@@ -184,7 +197,7 @@ nav ul#dropdown:after {
 				<a href="#">알람</a>
 				<a href="myPage.jsp">마이페이지</a>
 				<a href="#">거래톡</a>
-				<a href="writeForm.jsp">글쓰기</a>
+				<button><a href="writeForm.jsp" >글쓰기</a></button>
 				</div>
 			</div>
 		</header>
@@ -193,21 +206,31 @@ nav ul#dropdown:after {
 				<ul id="dropdown">
 					<li><a href="#">판매</a>
 						<ul id="sub">
-							<li><a href="#">의류</a></li>
+							<li><a href="#">패션의류</a></li>
+							<li><a href="#">뷰티잡화</a></li>
+							<li><a href="#">유아용품</a></li>
+							<li><a href="#">가구생활</a></li>
+							<li><a href="#">취미/스타굿즈</a></li>
 							<li><a href="#">전자기기</a></li>
-							<li><a href="#">패션잡화</a></li>
-							<li><a href="#">기타</a></li>
-							<li><a href="#">의류</a></li>
-							<li><a href="#">전자기기</a></li>
-							<li><a href="#">패션잡화</a></li>
+							<li><a href="#">스포츠레져</a></li>
+							<li><a href="#">자동차</a></li>
+							<li><a href="#">생활가전</a></li>
+							<li><a href="#">도서기타</a></li>
 							<li><a href="#">기타</a></li>
 						</ul></li>
 	
 					<li><a href="#">경매</a>
 						<ul id="sub">
-							<li><a href="#">의류</a></li>
+							<li><a href="#">패션의류</a></li>
+							<li><a href="#">뷰티잡화</a></li>
+							<li><a href="#">유아용품</a></li>
+							<li><a href="#">가구생활</a></li>
+							<li><a href="#">취미/스타굿즈</a></li>
 							<li><a href="#">전자기기</a></li>
-							<li><a href="#">패션잡화</a></li>
+							<li><a href="#">스포츠레져</a></li>
+							<li><a href="#">자동차</a></li>
+							<li><a href="#">생활가전</a></li>
+							<li><a href="#">도서기타</a></li>
 							<li><a href="#">기타</a></li>
 						</ul></li>
 					<li><a href="#">커뮤니티</a></li>
