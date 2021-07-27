@@ -46,6 +46,14 @@ public class UserController extends HttpServlet {
 			
 			
 			break;
+		case "/id_overlay":
+			
+			break;
+			
+		
+		case "nname_overlay":
+			
+			break;
 		}
 		
 		
