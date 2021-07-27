@@ -2,6 +2,7 @@ package com.gg.user.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gg.user.service.UserService;
 
-@WebServlet({ "/id_overlay","/nname_overlay","/join" })
+@WebServlet({ "/id_overlay","/nname_overlay","/join","/login" })
 public class UserController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -34,7 +35,7 @@ public class UserController extends HttpServlet {
 		String addr = uri.substring(ctx.length());
 		req.setCharacterEncoding("UTF-8");
 		UserService service = new UserService(req,resp);
-		
+		RequestDispatcher dis;
 		
 		
 		switch(addr) {
@@ -58,7 +59,23 @@ public class UserController extends HttpServlet {
 			service.nNameOverlay();
 			
 			break;
-		}
+			
+		case "/login":
+			System.out.println("로그인 요청");
+			String userId = service.login();
+			System.out.println(userId);
+			String msg = "아이디 또는 비밀번호를 확인 하세요";
+			String page = "login.jsp";
+			if(userId!=null) {
+				req.getSession().setAttribute("loginId", userId);
+				msg = null;
+				page = "index.jsp";
+			}
+			req.setAttribute("msg", msg);
+			dis = req.getRequestDispatcher(page);
+			dis.forward(req, resp);
+			break;
+			}
 		
 	}
 

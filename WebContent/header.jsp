@@ -200,7 +200,7 @@ nav ul#dropdown:after {
 				</div>
 				<div id="menu1">
 				<a href="joinForm.jsp">회원가입</a>
-				<a href="#">로그인</a>
+				<a href="login.jsp">로그인</a>
 				<a href="#">쪽지</a>
 				<a href="#">알람</a>
 				<a href="myPage.jsp">마이페이지</a>
