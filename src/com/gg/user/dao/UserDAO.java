@@ -88,6 +88,7 @@ public class UserDAO {
 		return success;
 	}
 
+<<<<<<< HEAD
 	public String login(String loginId, String loginPw) {
 		String userId = null;
 		String sql = "SELECT U_id FROM UserInfo WHERE U_id=? AND U_pw=?";
@@ -109,8 +110,20 @@ public class UserDAO {
 	}
 	
 	public boolean join(GGDto dto) {
+=======
+	public boolean join(GGDto dto) throws Exception {
 		
-		sql ="INSERT INTO userInfo VALUES(?,?,?)";
+		// u_id, u_nname, u_email,u_name, u_addr, u_phone, u_joinTM, 
+		// u_newName, u_AdminYN, u_FollowYN, u_detailAddr 
+		sql ="INSERT INTO userInfo VALUES(?,?,?,?,?,?,SYSDATE,./img/default-profile.png,N,N,?,)";
+		
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, dto.getU_id());
+		ps.setString(2, dto.getU_nname());
+		ps.setString(3, dto.getU_email());
+		ps.setString
+>>>>>>> bd72fa20b1c7307fcf02d43ee0804083384b7fc3
+		
 		
 		
 		
