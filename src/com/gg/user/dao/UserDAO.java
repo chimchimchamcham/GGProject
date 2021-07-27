@@ -9,6 +9,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.gg.dto.GGDto;
+
 public class UserDAO {
 
 	public Connection conn = null;
@@ -86,6 +88,7 @@ public class UserDAO {
 		return success;
 	}
 
+<<<<<<< HEAD
 	public String login(String loginId, String loginPw) {
 		String userId = null;
 		String sql = "SELECT U_id FROM UserInfo WHERE U_id=? AND U_pw=?";
@@ -104,6 +107,15 @@ public class UserDAO {
 			resClose();
 		}
 		return userId;
+=======
+	public boolean join(GGDto dto) {
+		
+		sql ="INSERT INTO userInfo VALUES(?,?,?)";
+		
+		
+		
+		return false;
+>>>>>>> 3cbd63b886d847c7232ffdd4d94f20ceb9aa97f8
 	}
 
 }

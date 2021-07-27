@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,8 @@
 <script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
 <script src="script/jquery-1.12.3.js"></script>
 <script>
+	var loginId = "${sessionScope.loginId}"
+
 	$(document).ready(function() {
 		
 		/*드롭다운메뉴 마우스오버, 마우스리브*/
@@ -20,6 +23,71 @@
 		$("#dropdown li").mouseleave(function() {
 			$(this).children("#sub").stop().slideUp();
 		});
+		
+		/*쪽지함 토글기능*/
+		$("#messageList").hide();
+		$("#menu1 a:nth-of-type(3)").click(function(){
+			$("#messageList").slideToggle('slow');
+			$("#alarmList").hide();
+		});
+		
+		/*알람 토글기능*/
+		$("#alarmList").hide();
+		$("#menu1 a:nth-of-type(4)").click(function(){
+			$("#alarmList").slideToggle('slow');
+			$("#messageList").hide();
+		});
+		
+		/*쪽지 로그인 체크*/
+		$("#menu1 a:nth-of-type(3)").click(function(){
+		if(loginId == ""){
+			$("#messageList").html("<h2>로그인이 필요한 서비스 입니다.</h2><br><a href='login.jsp'>로그인 하러가기</a>");
+		}else{
+			$("#menu1 a:nth-of-type(3)").show();
+		}	
+		});
+		
+		/*알람 로그인 체크*/
+		$("#menu1 a:nth-of-type(4)").click(function(){
+		if(loginId == ""){
+			$("#alarmList").html("<h2>로그인이 필요한 서비스 입니다.</h2><br><a href='login.jsp'>로그인 하러가기</a>");
+		}else{
+			$("#menu1 a:nth-of-type(4)").show();
+		}	
+		});
+		
+		/*마이페이지 로그인 체크*/
+		$("#menu1 a:nth-of-type(5)").click(function(){
+			if(loginId == ""){
+				alert("로그인이 필요한 서비스 입니다.");
+				location.href="login.jsp";
+			}else{
+				location.href="myPage.jsp";
+			}	
+			});
+		
+		/*거래톡 로그인 체크*/
+		$("#menu1 a:nth-of-type(6)").click(function(){
+			if(loginId == ""){
+				alert("로그인이 필요한 서비스 입니다.");
+				location.href="login.jsp";
+			}else{
+				alert("거래톡보여주기~~~");
+			}	
+			});
+		
+		/*글쓰기 로그인 체크*/
+		$("#menu1 button").click(function(){
+		 	if(loginId == ""){
+				alert("로그인이 필요한 서비스 입니다.");
+				location.href="login.jsp";
+			}else{
+				location.href="writeForm.jsp";
+			}	
+			});
+		
+
+		
 	});
 	
 </script>
@@ -188,6 +256,30 @@ nav ul#dropdown:after {
 	clear: both;
 }
 
+
+/*쪽지함*/
+#messageList{
+	width: 450px;
+	height:500px;
+	position: fixed;
+	background-color:#E6E6E6;
+	z-index: 1000;
+	top:60px;
+	right:340px;
+	text-align: center;
+	}
+	
+#alarmList{
+	width: 450px;
+	height:500px;
+	position: fixed;
+	background-color:#E6E6E6;
+	z-index: 1000;
+	top:60px;
+	right:290px;
+	text-align: center;
+}
+
 </style>
 <body>
 	<div id="hWrap">
@@ -200,12 +292,26 @@ nav ul#dropdown:after {
 				</div>
 				<div id="menu1">
 				<a href="joinForm.jsp">회원가입</a>
+<<<<<<< HEAD
 				<a href="login.jsp">로그인</a>
+=======
+				
+				<!-- 로그인이 안되어있을 때 -->
+				<c:if test="${loginId eq null }"> 
+					<a href="login.jsp">로그인</a>
+				</c:if>
+				
+				<!-- 로그인이 되어있을 때 -->
+				<c:if test="${loginId ne null }"> 
+					<a href="#">로그아웃</a>
+				</c:if>
+				
+>>>>>>> 3cbd63b886d847c7232ffdd4d94f20ceb9aa97f8
 				<a href="#">쪽지</a>
 				<a href="#">알람</a>
-				<a href="myPage.jsp">마이페이지</a>
+				<a href="#">마이페이지</a>
 				<a href="#">거래톡</a>
-				<button onclick="location.href='writeForm.jsp' ">글쓰기</button>
+				<button>글쓰기</button>
 				</div>
 			</div>
 		</header>
@@ -246,6 +352,12 @@ nav ul#dropdown:after {
 				</ul>
 			</div>
 		</nav>
+	</div>
+	<div id="messageList">
+		<h2>쪽지</h2>
+	</div>
+	<div id="alarmList">
+		<h2>알람</h2>
 	</div>
 </body>
 </html>
