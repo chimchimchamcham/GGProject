@@ -181,8 +181,6 @@ public class GGDto {
 		U_joinTm = u_joinTm;
 	}
 
-
-
 	public String getU_intro() {
 		return U_intro;
 	}
