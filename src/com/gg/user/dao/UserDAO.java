@@ -107,34 +107,6 @@ public class UserDAO {
 		}
 		return userId;
 	}
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> 5285ec0f38c522d97a2b24a5de6eb27524c22876
-	public boolean join(GGDto dto) {
-=======
-	public boolean join(GGDto dto) throws Exception {
-		
-		// u_id, u_nname, u_email,u_name, u_addr, u_phone, u_joinTM, 
-		// u_newName, u_AdminYN, u_FollowYN, u_detailAddr 
-		sql ="INSERT INTO userInfo VALUES(?,?,?,?,?,?,SYSDATE,./img/default-profile.png,N,N,?,)";
-		
-		ps = conn.prepareStatement(sql);
-		ps.setString(1, dto.getU_id());
-		ps.setString(2, dto.getU_nname());
-		ps.setString(3, dto.getU_email());
-		ps.setString
->>>>>>> bd72fa20b1c7307fcf02d43ee0804083384b7fc3
-		
-		
-		
-		
-		return false;
-<<<<<<< HEAD
-
-=======
->>>>>>> 5285ec0f38c522d97a2b24a5de6eb27524c22876
-	}
 
 }
