@@ -88,6 +88,26 @@ public class UserDAO {
 		return success;
 	}
 
+	public String login(String loginId, String loginPw) {
+		String userId = null;
+		String sql = "SELECT U_id FROM UserInfo WHERE U_id=? AND U_pw=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			ps.setString(2, loginPw);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				userId = rs.getString(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return userId;
+	}
+
 	public boolean join(GGDto dto) throws Exception {
 		
 		boolean success = false;
@@ -109,14 +129,8 @@ public class UserDAO {
 		if(checker>0) {
 			success =true;
 		}
-		
-		
-		return success;
-	}
 
-	public String login(String loginId, String loginPw) {
-		// TODO Auto-generated method stub
-		return null;
+		return success;
 	}
 
 }

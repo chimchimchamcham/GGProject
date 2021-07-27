@@ -49,7 +49,7 @@ div#logo{
 	<div id="logo"><a href="index.jsp"><img src="img/logo2.png" width="100"></a></div>
 	<div id ="head">로그인 페이지</div>
 	<div id = "outLine">
-		<form action ="/login" method ="post">
+		<form action ="login" method ="post">
 			<input id="idbox" type="text" name = "loginId" placeholder = "아이디"/>
 			<input id="pwbox"  type="password" name = "loginPw" placeholder  = "비밀번호"/>
 			<button style="margin:10px">로그인</button>
