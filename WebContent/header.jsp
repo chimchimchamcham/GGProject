@@ -24,25 +24,37 @@
 			$(this).children("#sub").stop().slideUp();
 		});
 		
+		/*쪽지함 토글기능*/
+		$("#messageList").hide();
+		$("#menu1 a:nth-of-type(3)").click(function(){
+			$("#messageList").slideToggle('slow');
+			$("#alarmList").hide();
+		});
+		
+		/*알람 토글기능*/
+		$("#alarmList").hide();
+		$("#menu1 a:nth-of-type(4)").click(function(){
+			$("#alarmList").slideToggle('slow');
+			$("#messageList").hide();
+		});
+		
 		/*쪽지 로그인 체크*/
 		$("#menu1 a:nth-of-type(3)").click(function(){
 		if(loginId == ""){
-			alert("로그인이 필요한 서비스 입니다.");
-			location.href="login.jsp";
+			$("#messageList").html("<h2>로그인이 필요한 서비스 입니다.</h2><br><a href='login.jsp'>로그인 하러가기</a>");
 		}else{
-			alert("쪽지목록보여주기~~~");
+			$("#menu1 a:nth-of-type(3)").show();
 		}	
 		});
 		
 		/*알람 로그인 체크*/
 		$("#menu1 a:nth-of-type(4)").click(function(){
-			if(loginId == ""){
-				alert("로그인이 필요한 서비스 입니다.");
-				location.href="login.jsp";
-			}else{
-				alert("알람목록보여주기~~~");
-			}	
-			});
+		if(loginId == ""){
+			$("#alarmList").html("<h2>로그인이 필요한 서비스 입니다.</h2><br><a href='login.jsp'>로그인 하러가기</a>");
+		}else{
+			$("#menu1 a:nth-of-type(4)").show();
+		}	
+		});
 		
 		/*마이페이지 로그인 체크*/
 		$("#menu1 a:nth-of-type(5)").click(function(){
@@ -66,7 +78,7 @@
 		
 		/*글쓰기 로그인 체크*/
 		$("#menu1 button").click(function(){
-			if(loginId == ""){
+		 	if(loginId == ""){
 				alert("로그인이 필요한 서비스 입니다.");
 				location.href="login.jsp";
 			}else{
@@ -74,9 +86,8 @@
 			}	
 			});
 		
+
 		
-		/*쪽지목록 보여주기*/
-		$("#messageList").hide();		
 	});
 	
 </script>
@@ -251,14 +262,23 @@ nav ul#dropdown:after {
 	width: 450px;
 	height:500px;
 	position: fixed;
-	background-color:blue;
+	background-color:#E6E6E6;
 	z-index: 1000;
 	top:60px;
-	right:330px;
+	right:340px;
 	text-align: center;
 	}
 	
-
+#alarmList{
+	width: 450px;
+	height:500px;
+	position: fixed;
+	background-color:#E6E6E6;
+	z-index: 1000;
+	top:60px;
+	right:290px;
+	text-align: center;
+}
 
 </style>
 <body>
@@ -331,6 +351,9 @@ nav ul#dropdown:after {
 	</div>
 	<div id="messageList">
 		<h2>쪽지</h2>
+	</div>
+	<div id="alarmList">
+		<h2>알람</h2>
 	</div>
 </body>
 </html>
