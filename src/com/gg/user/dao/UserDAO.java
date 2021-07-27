@@ -88,6 +88,7 @@ public class UserDAO {
 		return success;
 	}
 
+<<<<<<< HEAD
 	public String login(String loginId, String loginPw) {
 		String userId = null;
 		String sql = "SELECT U_id FROM UserInfo WHERE U_id=? AND U_pw=?";
@@ -107,6 +108,48 @@ public class UserDAO {
 		}
 		return userId;
 	}
+<<<<<<< HEAD
 
+=======
+	
+=======
+>>>>>>> ef2200ee5eead63b89b39e9585b53ca6ffc7095f
+	public boolean join(GGDto dto) throws Exception {
+		
+		boolean success = false;
+		// u_id, u_nname,u_pw, u_email,u_name, u_addr, u_phone, u_joinTM, 
+		// u_newName,U_INTRO, u_AdminYN, u_FollowYN, u_detailAddr 
+		sql ="INSERT INTO userInfo VALUES(?,?,?,?,?,?,?,SYSDATE,'./img/default-profile.png','안녕하세요','N','N',?)";
+		
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, dto.getU_id());
+		ps.setString(2, dto.getU_nname());
+<<<<<<< HEAD
+		ps.setString(3, dto.getU_email());
+
+		return false;
+=======
+		ps.setString(3, dto.getU_pw());
+		ps.setString(4, dto.getU_email());
+		ps.setString(5, dto.getU_name());
+		ps.setString(6, dto.getU_addr());
+		ps.setString(7, dto.getU_phone());
+		ps.setString(8, dto.getU_detailAddr());
+		
+		int checker = ps.executeUpdate();
+		if(checker>0) {
+			success =true;
+		}
+		
+		
+		return success;
+	}
+
+	public String login(String loginId, String loginPw) {
+		// TODO Auto-generated method stub
+		return null;
+>>>>>>> ef2200ee5eead63b89b39e9585b53ca6ffc7095f
+	}
+>>>>>>> b4dc72968cc9c28b3ca8dd71ef0acf2e3666f7d8
 
 }
