@@ -78,15 +78,10 @@ public class UserController extends HttpServlet {
 			break;
 			
 		case "/logout":
-			msg = null;
 			System.out.println("로그아웃 요청");
-			success = service.logout();
-			if(success) {
-				msg="반가웠어요 잘가용♥";
-				dis = req.getRequestDispatcher("index.jsp");
-				dis.forward(req, resp);
+			if(service.logout()) {	
+				resp.sendRedirect("index.jsp");
 			}
-			System.out.println(req.getSession().getAttribute("ioginId"));
 			break;
 		}
 		

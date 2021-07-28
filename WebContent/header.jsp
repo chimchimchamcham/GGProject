@@ -350,11 +350,5 @@ nav ul#dropdown:after {
 	<div id="alarmList">
 		<h2>알람</h2>
 	</div>
-	<script>
-	var msg = "${msg}";
-	if(msg != ""){
-		alert(msg);
-	}
-	</script>
 </body>
 </html>
