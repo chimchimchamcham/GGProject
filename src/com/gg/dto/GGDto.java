@@ -14,8 +14,8 @@ public class GGDto {
 	private String U_phone; // 전화번호
 	private Date U_joinTm; // 가입날짜
 	private String U_intro; // 자기소개
-	private char U_adminYN; // 관리자여부
-	private char U_followYN; // 팔로워공개여부
+	private String U_adminYN; // 관리자여부
+	private String U_followYN; // 팔로워공개여부
 	private String U_newName; // 새사진 이름
 	private String U_detailAddr; // 상세 주소
 	
@@ -31,9 +31,9 @@ public class GGDto {
 	private Date A_sendTm; // 알람보낸날짜
 	private Date A_checkTm;// 알람확인날짜
 	private String A_content;// 알람내용
-	private char A_readYN;// 읽음여부 (없어도 될듯)
-	private char A_delYN; // 삭제여부 (없어도 될듯)
-	private char A_impoYN;// 중요여부
+	private String A_readYN;// 읽음여부 (없어도 될듯)
+	private String A_delYN; // 삭제여부 (없어도 될듯)
+	private String A_impoYN;// 중요여부
 	private String A_path; // 알람경로
 
 	// 포인트
@@ -56,18 +56,21 @@ public class GGDto {
 	private String B_content; // 등록사유
 
 	// 판매관련
-	private char S_DeliveryYN; // 택배여부
-	private char S_followLimYN; // 팔로우 한정 판매여부
+	private String s_DeliveryYN; // 택배여부
+	private String s_followLimYN; // 팔로우 한정 판매여부
 	// 판매자 아이디의 경우 작성자 ID와 동일 하기 때문에 추가하지 않음
+	
+	private String s_name; //!!추가 필요
 
 	// 일반판매관련
-	private int NS_pr; // 판매가격
+	private int ns_pr; // 판매가격
 	// 분류코드(판매중, 거래중, 거래완료)
+	private String ns_name; //!!추가 필요
 
 	// 구매요청
 	private int RQ_no; // 구매요청 번호
 	private String RQ_id; // 구매요청 아이디
-	private char RQ_YN; // 구매요청 수락 거절
+	private String RQ_YN; // 구매요청 수락 거절
 	private Date RQ_tm;// 구매요청 날짜
 
 	// 경매글
@@ -82,6 +85,7 @@ public class GGDto {
 
 	// 경매히스토리관련
 	private int HA_bidPr; // 입찰가격
+
 	private String HA_bidUsr; // 입찰자
 
 	// 거래
@@ -101,21 +105,23 @@ public class GGDto {
 	private String RV_id; // 후기 작성자ID
 	private int RV_score; // 후기 평점
 	private String RV_content; // 후기 내용
-	private char RV_SellerYN; // 판매자 여부
+	private String RV_SellerYN; // 판매자 여부
 
 	// 게시글
-	private int P_no; // 글번호
-	private String P_id; // 작성자ID
-	private String P_title; // 제목
-	private String P_content; // 글 내용
-	private Date P_tm; // 등록날짜
-	private int P_view; // 조회수
-	private int P_likeCount; // 좋아요 횟수
-	private char P_blindYN; // 블라인드 여부
-	private String C_code; // 분류코드 (경매,판매,공지사항,커뮤니티)
+	private int p_no; // 글번호
+	private String p_id; // 작성자ID
+	private String p_title; // 제목
+	private String p_content; // 글 내용
+	private Date p_tm; // 등록날짜
+	private int p_view; // 조회수
+	private int p_likeCount; // 좋아요 횟수
+	private String p_blindYN; // 블라인드 여부 !!변경
+	private String p_code; // 분류코드 (경매,판매,공지사항,커뮤니티)
+	
+	private String p_name; //!! 추가 필요
 
 	// 사진
-	private String I_newName;// 새파일 이름
+	private String i_newName;
 
 	public String getU_id() {
 		return U_id;
@@ -189,19 +195,19 @@ public class GGDto {
 		U_intro = u_intro;
 	}
 
-	public char getU_adminYN() {
+	public String getU_adminYN() {
 		return U_adminYN;
 	}
 
-	public void setU_adminYN(char u_adminYN) {
+	public void setU_adminYN(String u_adminYN) {
 		U_adminYN = u_adminYN;
 	}
 
-	public char getU_followYN() {
+	public String getU_followYN() {
 		return U_followYN;
 	}
 
-	public void setU_followYN(char u_followYN) {
+	public void setU_followYN(String u_followYN) {
 		U_followYN = u_followYN;
 	}
 
@@ -211,6 +217,14 @@ public class GGDto {
 
 	public void setU_newName(String u_newName) {
 		U_newName = u_newName;
+	}
+
+	public String getU_detailAddr() {
+		return U_detailAddr;
+	}
+
+	public void setU_detailAddr(String u_detailAddr) {
+		U_detailAddr = u_detailAddr;
 	}
 
 	public Date getM_sendTm() {
@@ -277,27 +291,27 @@ public class GGDto {
 		A_content = a_content;
 	}
 
-	public char getA_readYN() {
+	public String getA_readYN() {
 		return A_readYN;
 	}
 
-	public void setA_readYN(char a_readYN) {
+	public void setA_readYN(String a_readYN) {
 		A_readYN = a_readYN;
 	}
 
-	public char getA_delYN() {
+	public String getA_delYN() {
 		return A_delYN;
 	}
 
-	public void setA_delYN(char a_delYN) {
+	public void setA_delYN(String a_delYN) {
 		A_delYN = a_delYN;
 	}
 
-	public char getA_impoYN() {
+	public String getA_impoYN() {
 		return A_impoYN;
 	}
 
-	public void setA_impoYN(char a_impoYN) {
+	public void setA_impoYN(String a_impoYN) {
 		A_impoYN = a_impoYN;
 	}
 
@@ -413,28 +427,44 @@ public class GGDto {
 		B_content = b_content;
 	}
 
-	public char getS_DeliveryYN() {
-		return S_DeliveryYN;
+	public String getS_DeliveryYN() {
+		return s_DeliveryYN;
 	}
 
-	public void setS_DeliveryYN(char s_DeliveryYN) {
-		S_DeliveryYN = s_DeliveryYN;
+	public void setS_DeliveryYN(String s_DeliveryYN) {
+		this.s_DeliveryYN = s_DeliveryYN;
 	}
 
-	public char getS_followLimYN() {
-		return S_followLimYN;
+	public String getS_followLimYN() {
+		return s_followLimYN;
 	}
 
-	public void setS_followLimYN(char s_followLimYN) {
-		S_followLimYN = s_followLimYN;
+	public void setS_followLimYN(String s_followLimYN) {
+		this.s_followLimYN = s_followLimYN;
 	}
 
-	public int getNS_pr() {
-		return NS_pr;
+	public String getS_name() {
+		return s_name;
 	}
 
-	public void setNS_pr(int nS_pr) {
-		NS_pr = nS_pr;
+	public void setS_name(String s_name) {
+		this.s_name = s_name;
+	}
+
+	public int getNs_pr() {
+		return ns_pr;
+	}
+
+	public void setNs_pr(int ns_pr) {
+		this.ns_pr = ns_pr;
+	}
+
+	public String getNs_name() {
+		return ns_name;
+	}
+
+	public void setNs_name(String ns_name) {
+		this.ns_name = ns_name;
 	}
 
 	public int getRQ_no() {
@@ -453,11 +483,11 @@ public class GGDto {
 		RQ_id = rQ_id;
 	}
 
-	public char getRQ_YN() {
+	public String getRQ_YN() {
 		return RQ_YN;
 	}
 
-	public void setRQ_YN(char rQ_YN) {
+	public void setRQ_YN(String rQ_YN) {
 		RQ_YN = rQ_YN;
 	}
 
@@ -605,99 +635,100 @@ public class GGDto {
 		RV_content = rV_content;
 	}
 
-	public char getRV_SellerYN() {
+	public String getRV_SellerYN() {
 		return RV_SellerYN;
 	}
 
-	public void setRV_SellerYN(char rV_SellerYN) {
+	public void setRV_SellerYN(String rV_SellerYN) {
 		RV_SellerYN = rV_SellerYN;
 	}
 
 	public int getP_no() {
-		return P_no;
+		return p_no;
 	}
 
 	public void setP_no(int p_no) {
-		P_no = p_no;
+		this.p_no = p_no;
 	}
 
 	public String getP_id() {
-		return P_id;
+		return p_id;
 	}
 
 	public void setP_id(String p_id) {
-		P_id = p_id;
+		this.p_id = p_id;
 	}
 
 	public String getP_title() {
-		return P_title;
+		return p_title;
 	}
 
 	public void setP_title(String p_title) {
-		P_title = p_title;
+		this.p_title = p_title;
 	}
 
 	public String getP_content() {
-		return P_content;
+		return p_content;
 	}
 
 	public void setP_content(String p_content) {
-		P_content = p_content;
+		this.p_content = p_content;
 	}
 
 	public Date getP_tm() {
-		return P_tm;
+		return p_tm;
 	}
 
 	public void setP_tm(Date p_tm) {
-		P_tm = p_tm;
+		this.p_tm = p_tm;
 	}
 
 	public int getP_view() {
-		return P_view;
+		return p_view;
 	}
 
 	public void setP_view(int p_view) {
-		P_view = p_view;
+		this.p_view = p_view;
 	}
 
 	public int getP_likeCount() {
-		return P_likeCount;
+		return p_likeCount;
 	}
 
 	public void setP_likeCount(int p_likeCount) {
-		P_likeCount = p_likeCount;
+		this.p_likeCount = p_likeCount;
 	}
 
-	public char getP_blindYN() {
-		return P_blindYN;
+	public String getP_blindYN() {
+		return p_blindYN;
 	}
 
-	public void setP_blindYN(char p_blindYN) {
-		P_blindYN = p_blindYN;
+	public void setP_blindYN(String p_blindYN) {
+		this.p_blindYN = p_blindYN;
 	}
 
-	public String getC_code() {
-		return C_code;
+	public String getP_code() {
+		return p_code;
 	}
 
-	public void setC_code(String c_code) {
-		C_code = c_code;
+	public void setP_code(String p_code) {
+		this.p_code = p_code;
+	}
+
+	public String getP_name() {
+		return p_name;
+	}
+
+	public void setP_name(String p_name) {
+		this.p_name = p_name;
 	}
 
 	public String getI_newName() {
-		return I_newName;
+		return i_newName;
 	}
 
 	public void setI_newName(String i_newName) {
-		I_newName = i_newName;
-	}
-
-	public String getU_detailAddr() {
-		return U_detailAddr;
-	}
-
-	public void setU_detailAddr(String u_detailAddr) {
-		U_detailAddr = u_detailAddr;
-	}
+		this.i_newName = i_newName;
+	}// 새파일 이름
 }
+
