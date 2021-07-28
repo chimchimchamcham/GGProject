@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gg.user.service.UserService;
 
-@WebServlet({ "/id_overlay","/nname_overlay","/join","/login" })
+@WebServlet({ "/id_overlay","/nname_overlay","/join","/login","/logout" })
 public class UserController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -75,6 +75,13 @@ public class UserController extends HttpServlet {
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);
+			break;
+			
+		case "/logout":
+			System.out.println("로그아웃 요청");
+			if(service.logout()) {	
+				resp.sendRedirect("index.jsp");
+			}
 			break;
 		}
 		

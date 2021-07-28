@@ -12,11 +12,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gg.board.service.BoardService;
 import com.gg.dto.GGDto;
+<<<<<<< HEAD
 
 @WebServlet({"/salesDetail"})
 public class BoardController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
+=======
+
+@WebServlet({"/salesDetail"})
+public class BoardController extends HttpServlet {
+>>>>>>> 493563b1c95430b4ecf8fdf0d23b7f4807895876
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

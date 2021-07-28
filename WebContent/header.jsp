@@ -9,7 +9,6 @@
 </head>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
-<script src="script/jquery-1.12.3.js"></script>
 <script>
 	var loginId = "${sessionScope.loginId}"
 
@@ -296,7 +295,7 @@ nav ul#dropdown:after {
 				
 				<!-- 로그인이 되어있을 때 -->
 				<c:if test="${loginId ne null }"> 
-					<a href="#"  class="logoutA">로그아웃</a>
+					<a href="logout"  class="logoutA">로그아웃</a>
 				</c:if>
 
 				<a href="#"  class="messageA">쪽지</a>

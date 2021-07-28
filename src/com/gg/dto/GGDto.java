@@ -10,7 +10,7 @@ public class GGDto {
 	private String U_pw; // 패스워드
 	private String U_email; // 이메일
 	private String U_name; // 이름
-	private String U_addr; // 주소
+	private String u_addr; // 주소
 	private String U_phone; // 전화번호
 	private Date U_joinTm; // 가입날짜
 	private String U_intro; // 자기소개
@@ -164,11 +164,11 @@ public class GGDto {
 	}
 
 	public String getU_addr() {
-		return U_addr;
+		return u_addr;
 	}
 
 	public void setU_addr(String u_addr) {
-		U_addr = u_addr;
+		u_addr = u_addr;
 	}
 
 	public String getU_phone() {
