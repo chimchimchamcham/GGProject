@@ -121,8 +121,8 @@
                         <div><a href="#">신고하기</a></div>
                     </div>
                     <div id="threeButton">
-                        <button onclick="location.href='./lovePlus?P_no=${dto.P_no }'">찜</button><!-- +1 -->
-                        <button onclick="location.href='./loveMinus?P_no=${dto.P_no }'">찜</button><!-- -1 -->
+                        <button onclick="location.href='./lovePlus?P_no=${dto.p_no }'">찜</button><!-- +1 -->
+                        <button onclick="location.href='./loveMinus?P_no=${dto.p_no }'">찜</button><!-- -1 -->
                         <button>쪽지보내기</button>
                         <button>구매요청</button>
                         <button>구매요청취소</button>

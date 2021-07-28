@@ -32,6 +32,10 @@
         margin: 0 auto;
         text-align:left;
     }
+    
+    textarea{
+    	 resize:none;
+    }
     </style>
     
     
@@ -57,7 +61,7 @@
 	            <input type="file" name="imgFile" style="display:none"/></p>
 	        <p><textarea name="content" rows="30" cols="100" placeholder="내용입력" style="overflow-y:scroll"></textarea></p>
 	        <p id="commuCategory">카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
-	            <select name="saleCat">
+	            <select name="commuCat">
 	                <option value="">카테고리 선택</option>
 	                <option value="purchSub">구매대행</option>
 	                <option value="neighb">동네이야기</option>
@@ -72,7 +76,7 @@
 	
 	    <div id="saleForm">
 	        <p><input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point</p>
-	        <p>거래방식(필수선택) &nbsp;&nbsp;&nbsp;<button>택배</button>&nbsp;<button>직거래</button>&nbsp;<button>상의 후 결정</button></p>
+	        <p>거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN" value="delivery">택배&nbsp;<input type="radio" name="deliveryYN" value="direct">직거래&nbsp;<input type="radio" name="deliveryYN" value="after">상의 후 결정</button></p>
 	        <p id="category">카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
 	            <select name="saleCat">
 	                <option value="">카테고리 선택</option>
@@ -210,7 +214,9 @@ $("#datepicker").datepicker({
 
 		//초기상태 - 판매폼만 보이는 상태
 		//폼 선택 버튼  클릭시 해당 값이 달라짐
-		var param={};
+		var param={};//넘길 파라미터 그릇
+		
+		
 		//경매하단부분 숨겨져있음
 		$("#saleForm").show();
 		$("#communityForm").show();
@@ -221,6 +227,7 @@ $("#datepicker").datepicker({
 		//경매버튼클릭시
 		$("#trade").click(function() {
 			param.select ="trade";
+			
 			console.log(param.select);
 			$("#tradeForm").show();
 			$("#reservForm").hide();
@@ -253,10 +260,30 @@ $("#datepicker").datepicker({
 			$("#reservForm").toggle();
 		})
 		
+		//param << 기본적으로 제목 내용을 담아준다.
+		param.title = $("input[name='title']").val();
+		param.content = $("textarea[name='content']").val();
+		
 		//등록버튼 클릭시 
 		$("#submit").click(function(){
+			if(param.select == "community"){ //커뮤니티글 선택시
+				param.category = $("select[name='commuCat']").val();//select name으로 값 받기			
+				console.log(param);
+				
+			}else if(param.select == "sale"){
+				param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
+				param.price = $("input[name='price']").val();
+				param.deliveryYN = $("input[name='deliveryYN']")
+				
+			}else if(param.select == "trade"){
+				
+			}else{
+				alert("폼을 선택해주세요!");
+			}
 			
-		})
+				
+			
+			});
 		
 	
 </script>
