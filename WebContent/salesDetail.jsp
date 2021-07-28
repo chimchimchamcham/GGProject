@@ -1,5 +1,6 @@
+<%@ page import="com.gg.dto.GGDto" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    --%> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,10 +28,12 @@
     button{margin:3px;width:190px;height:80px;}
     
     #threeButton>button{color:white;font-size:1.5rem;font-weight:700}
-    #threeButton>button:nth-last-of-type(1){background-color: red;}
-    #threeButton>button:nth-last-of-type(2){background-color: green;}
-    #threeButton>button:nth-last-of-type(3){background-color: orange;}
+    #threeButton>button:nth-last-of-type(5){background-color: red;}
     #threeButton>button:nth-last-of-type(4){background-color: gray;}
+    #threeButton>button:nth-last-of-type(3){background-color: green;}
+    #threeButton>button:nth-last-of-type(2){background-color: orange;}
+    #threeButton>button:nth-last-of-type(1){background-color: gray;}
+    
     
     #twoButton>button{height:50px;font-size:1.2rem;}
     #twoButton{overflow:hidden;clear:both;}
@@ -43,12 +46,15 @@
 <script>
  
  $(document).ready(function(){
-    //구매요청 취소버튼을 숨김
+    //이전에 해당 판매글에 대해 구매요청을 누른적이 있는지 확인
     $("#threeButton>button:nth-last-of-type(1)").hide();
     //댓글 창을 숨김
     $("#second").hide();
     //상세정보 버튼 초기설정
     $("#twoButton>button:nth-of-type(1)").css({"background-color":"gray","color":"white"});
+    //이전에 해당 판매글에 대해 좋아요를 누른적이 있는지 확인
+    <c:if test="${isLiked eq true}">$("#threeButton>button:nth-last-of-type(4)").hide();</c:if>
+    <c:if test="${isLiked eq false}">$("#threeButton>button:nth-last-of-type(5)").hide();</c:if>
 
     //상세정보 버튼 클릭시 창이 표시
     $("#twoButton>button:nth-of-type(2)").click(function(){
@@ -77,17 +83,17 @@
         $("#threeButton>button:nth-last-of-type(2)").show();
     });
     
-    //찜버튼 클릭시 빨간색으로 변경
-    var isLove = false;
-    $("#threeButton>button:nth-last-of-type(4)").click(function(){
-    	if(!isLove){
-    		$("#threeButton>button:nth-last-of-type(4)").css({"background-color":"red"});
-    		isLove = true;
-    	}else{
-    		$("#threeButton>button:nth-last-of-type(4)").css({"background-color":"gray"});
-    		isLove = false;
-    	} 
+    //찜1버튼 클릭시 숨겨짐
+    $("#threeButton>button:nth-last-of-type(5)").click(function(){
+    	$("#threeButton>button:nth-last-of-type(5)").hide();
+    	$("#threeButton>button:nth-last-of-type(4)").show();
     });
+    
+    //찜2버튼 클릭시 숨겨짐
+    $("#threeButton>button:nth-last-of-type(4)").click(function(){
+    	$("#threeButton>button:nth-last-of-type(4)").hide();
+    	$("#threeButton>button:nth-last-of-type(5)").show();
+    });    
  });
 </script>
 </head>
@@ -98,18 +104,25 @@
                 <article>
                     <div id="imgWrap">
                         <img src="img/notebook.PNG" width="400px" height="400px">
+                    	<p>i_newName ${dto.i_newName }</p>
                     </div>
                     <div id="description">
-                        <h1>아이패드 파우치<sup>판매중</sup></h1>
-                        <p id="salePrice">5000P</p>
-                        <p>2021-07-13<p>
-                        <p>거래방식 : 택배<p>
-                        <p>거래지역 : 광명동<p>
-                        <p>하트 21  조회수 42<p>
+                        <h1>${dto.p_title }<sup>${dto.ns_name }</sup></h1>
+                        <p id="salePrice">${dto.ns_pr } P</p>
+                        <p>${dto.p_tm }<p>
+                        <p>거래방식 :              
+                       		<c:if test="${dto.s_DeliveryYN eq 'Y' }">택배</c:if>
+                       		<c:if test="${dto.s_DeliveryYN eq 'N' }">직거래</c:if>                       		
+                       	</p>
+                       	<% GGDto dto = (GGDto) request.getAttribute("dto"); %>
+                        <%-- <p>거래주소 : ${dto.u_addr }</p> --%>
+                        <p>거래주소 : <%=dto.getU_addr() %></p><!-- 주소가 넘어오지를 않음 dao에서는 정상적으로 받아옴 -->
+                        <p>하트 ${dto.p_likeCount }  조회수 ${dto.p_view }</p>
                         <div><a href="#">신고하기</a></div>
                     </div>
                     <div id="threeButton">
-                        <button>찜</button>
+                        <button onclick="location.href='./lovePlus?P_no=${dto.P_no }'">찜</button><!-- +1 -->
+                        <button onclick="location.href='./loveMinus?P_no=${dto.P_no }'">찜</button><!-- -1 -->
                         <button>쪽지보내기</button>
                         <button>구매요청</button>
                         <button>구매요청취소</button>
@@ -119,6 +132,7 @@
                         <button>댓글</button>
                     </div>
                     <div id="first">
+                    	${dto.p_content }
                     </div>
                     <div id="second">
                     </div>
