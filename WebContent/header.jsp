@@ -9,7 +9,6 @@
 </head>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
-<script src="script/jquery-1.12.3.js"></script>
 <script>
 	var loginId = "${sessionScope.loginId}"
 
