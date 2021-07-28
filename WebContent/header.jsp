@@ -295,7 +295,7 @@ nav ul#dropdown:after {
 				
 				<!-- 로그인이 되어있을 때 -->
 				<c:if test="${loginId ne null }"> 
-					<a href="#"  class="logoutA">로그아웃</a>
+					<a href="logout"  class="logoutA">로그아웃</a>
 				</c:if>
 
 				<a href="#"  class="messageA">쪽지</a>
@@ -350,5 +350,11 @@ nav ul#dropdown:after {
 	<div id="alarmList">
 		<h2>알람</h2>
 	</div>
+	<script>
+	var msg = "${msg}";
+	if(msg != ""){
+		alert(msg);
+	}
+	</script>
 </body>
 </html>

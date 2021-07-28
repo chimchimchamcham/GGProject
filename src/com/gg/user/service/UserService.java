@@ -152,8 +152,14 @@ public class UserService {
 		return dao.login(loginId,loginPw);
 	}
 
-	
-	
-	
-	
+	public boolean logout() {
+		success = false;
+		req.getSession().removeAttribute("loginId");
+		if(req.getSession().getAttribute("loginId") == null) {
+			success = true;
+			System.out.println("로그아웃 성공");
+		}
+		return success;
+	}
+
 }
