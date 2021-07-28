@@ -66,6 +66,8 @@ public class GGDto {
 	private int ns_pr; // 판매가격
 	// 분류코드(판매중, 거래중, 거래완료)
 	private String ns_name; //!!추가 필요
+	private String ns_code;
+	
 
 	// 구매요청
 	private int rq_no; // 구매요청 번호
@@ -729,6 +731,14 @@ public class GGDto {
 
 	public void setI_newName(String i_newName) {
 		this.i_newName = i_newName;
+	}
+
+	public String getNs_code() {
+		return ns_code;
+	}
+
+	public void setNs_code(String ns_code) {
+		this.ns_code = ns_code;
 	}
 
 }
