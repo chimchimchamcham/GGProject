@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gg.user.service.UserService;
 
-@WebServlet({ "/id_overlay","/nname_overlay","/join","/login","/logout" })
+@WebServlet({ "/id_overlay","/nname_overlay","/join","/login","/logout","/idsearch"})
 public class UserController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -78,10 +78,20 @@ public class UserController extends HttpServlet {
 			break;
 			
 		case "/logout":
+			msg="";
+			success = service.logout();
 			System.out.println("로그아웃 요청");
-			if(service.logout()) {	
-				resp.sendRedirect("index.jsp");
+			if(success) {	
+				msg = "로그아웃 되었습니다.";
+				req.setAttribute("msg", msg);
+				dis = req.getRequestDispatcher("index.jsp");
+				dis.forward(req, resp);
 			}
+			break;
+			
+		case "/idsearch":
+			System.out.println("아이디 찾기 요청");
+			String id = service.idsearch();
 			break;
 		}
 		

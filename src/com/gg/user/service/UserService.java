@@ -154,12 +154,21 @@ public class UserService {
 
 	public boolean logout() {
 		success = false;
-		req.getSession().removeAttribute("loginId");
-		if(req.getSession().getAttribute("loginId") == null) {
+		if(req.getSession().getAttribute("loginId") != null) {
+			req.getSession().removeAttribute("loginId");
 			success = true;
 			System.out.println("로그아웃 성공");
 		}
 		return success;
+	}
+
+	public String idsearch() {
+		String name = req.getParameter("name");
+		String email = req.getParameter("email")+"@"+req.getParameter("mail");
+		System.out.println("name : "+name+" email : "+email);
+		UserDAO dao = new UserDAO();
+		dao.idsearch(String name, String email);
+		return null;
 	}
 
 }

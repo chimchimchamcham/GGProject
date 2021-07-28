@@ -134,4 +134,22 @@ public class UserDAO {
 	      return userId;
 	   }
 
+public String idsearch(String name, String email) {
+	String id=null;
+	String sql = "SELECT id FROM WHERE name=? AND email=?";
+	try {
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, name);
+		ps.setString(2, email);
+		rs = ps.executeQuery();
+		if(rs.next()) {
+			
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return null;
+}
+
 }
