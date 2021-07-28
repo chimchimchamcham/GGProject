@@ -49,9 +49,9 @@
 	 
 	    <!--글쓰기 폼 선택 버튼-->
 	    <div id="selectForm">
-	        <button id="sale">판매</button>
-	        <button id="trade">경매</button>
-	        <button id="community">커뮤니티</button>
+	        <button id="P002">판매</button>
+	        <button id="P001">경매</button>
+	        <button id="P004">커뮤니티</button>
 	    </div>
 	
 	    <div id="communityForm">
@@ -63,38 +63,38 @@
 	        <p id="commuCategory">카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
 	            <select name="commuCat">
 	                <option value="">카테고리 선택</option>
-	                <option value="purchSub">구매대행</option>
-	                <option value="neighb">동네이야기</option>
-	                <option value="together">같이해요</option>
-	                <option value="boast">자랑해요</option>
-	                <option value="share">공유해요</option>
-	                <option value="talk">잡담해요</option>
-	                <option value="adver">홍보해요</option>
+	                <option value="C001">구매대행</option>
+	                <option value="C002">동네이야기</option>
+	                <option value="C003">같이해요</option>
+	                <option value="C004">자랑해요</option>
+	                <option value="C005">공유해요</option>
+	                <option value="C006">잡담해요</option>
+	                <option value="C007">홍보해요</option>
 	            </select>
 	        </p>    
 	    </div>
 	
 	    <div id="saleForm">
 	        <p><input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point</p>
-	        <p>거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN" value="delivery">택배&nbsp;<input type="radio" name="deliveryYN" value="direct">직거래&nbsp;<input type="radio" name="deliveryYN" value="after">상의 후 결정</button></p>
+	        <p>거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN" value="delivery">택배</p>
 	        <p id="category">카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
 	            <select name="saleCat">
 	                <option value="">카테고리 선택</option>
-	                <option value="fashion">패션의류</option>
-	                <option value="beauty">뷰티잡화</option>
-	                <option value="furniture">가구생활</option>
-	                <option value="hobby">취미컬렉션</option>
-	                <option value="computer">컴퓨터</option>
-	                <option value="sport">스포츠레져</option>
-	                <option value="cartool">자동차공구</option>
-	                <option value="houseapp">생활가전</option>
-	                <option value="furniture">도서기타</option>
-	                <option value="etc">기타</option>
+	                <option value="S001">패션의류</option>
+	                <option value="S002">뷰티잡화</option>
+	                <option value="S003">유아용품</option>
+	                <option value="S004">가구생활</option>
+	                <option value="S005">취미컬렉션</option>
+	                <option value="S006">컴퓨터</option>
+	                <option value="S007">스포츠레져</option>
+	                <option value="S008">자동차공구</option>
+	                <option value="S009">생활가전</option>
+	                <option value="S010">도서기타</option>
 	            </select>
 	        </p>
 	        <p>공개범위&nbsp;&nbsp;&nbsp;
-	            <input type="radio" name="disclosure" value="all">전체공개
-	            <input type="radio" name="disclosure" value="follow">팔로우한정
+	            <input type="radio" name="disclosure" value="0">전체공개
+	            <input type="radio" name="disclosure" value="1">팔로우한정
 	        </p>
 	    </div>
 	    <!--경매선택시 하단부분-->
@@ -254,9 +254,16 @@ $("#datepicker").datepicker({
 			$("#reservForm").hide();
 			$("#commuCategory").hide();
 		});
-
+		
+		param.reserve = 0;
 		//경매폼에서 예약경매하기 버튼 클릭시
 		$("#reservBtn").click(function() {
+			if(param.reserve==0){
+			param.reserve += 1;
+			}else{
+				param.reserve -= 1;
+			}
+			console.log(param.reserve); //값 찍어보기
 			$("#reservForm").toggle();
 		})
 		
@@ -273,10 +280,16 @@ $("#datepicker").datepicker({
 			}else if(param.select == "sale"){
 				param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
 				param.price = $("input[name='price']").val();
-				param.deliveryYN = $("input[name='deliveryYN']")
-				
+				param.deliveryYN = $("input[name='deliveryYN']:checked"); 
+				param.disclosure =$('input[name="disclosure"]:checked');
 			}else if(param.select == "trade"){
-				
+				param.category = $("select[name='saleCat']").val();
+				param.price = $("input[name='price']").val();
+				param.deliveryYN = $("input[name='deliveryYN']:checked"); 
+				param.disclosure =$('input[name="disclosure"]:checked');
+				if(param.reserve == "reserve"){
+					
+				}
 			}else{
 				alert("폼을 선택해주세요!");
 			}
