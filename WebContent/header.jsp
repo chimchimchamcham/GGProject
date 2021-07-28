@@ -26,38 +26,34 @@
 		
 		/*쪽지함 토글기능*/
 		$("#messageList").hide();
-		$("#menu1 a:nth-of-type(3)").click(function(){
+		$(".messageA").click(function(){
 			$("#messageList").slideToggle('slow');
 			$("#alarmList").hide();
 		});
 		
 		/*알람 토글기능*/
 		$("#alarmList").hide();
-		$("#menu1 a:nth-of-type(4)").click(function(){
+		$(".alarmA").click(function(){
 			$("#alarmList").slideToggle('slow');
 			$("#messageList").hide();
 		});
 		
 		/*쪽지 로그인 체크*/
-		$("#menu1 a:nth-of-type(3)").click(function(){
+		$(".messageA").click(function(){
 		if(loginId == ""){
 			$("#messageList").html("<h2>로그인이 필요한 서비스 입니다.</h2><br><a href='login.jsp'>로그인 하러가기</a>");
-		}else{
-			$("#menu1 a:nth-of-type(3)").show();
-		}	
+		}
 		});
 		
 		/*알람 로그인 체크*/
-		$("#menu1 a:nth-of-type(4)").click(function(){
+		$(".alarmA").click(function(){
 		if(loginId == ""){
 			$("#alarmList").html("<h2>로그인이 필요한 서비스 입니다.</h2><br><a href='login.jsp'>로그인 하러가기</a>");
-		}else{
-			$("#menu1 a:nth-of-type(4)").show();
-		}	
+		}
 		});
 		
 		/*마이페이지 로그인 체크*/
-		$("#menu1 a:nth-of-type(5)").click(function(){
+		$(".myPageA").click(function(){
 			if(loginId == ""){
 				alert("로그인이 필요한 서비스 입니다.");
 				location.href="login.jsp";
@@ -67,7 +63,7 @@
 			});
 		
 		/*거래톡 로그인 체크*/
-		$("#menu1 a:nth-of-type(6)").click(function(){
+		$(".tradeA").click(function(){
 			if(loginId == ""){
 				alert("로그인이 필요한 서비스 입니다.");
 				location.href="login.jsp";
@@ -77,7 +73,7 @@
 			});
 		
 		/*글쓰기 로그인 체크*/
-		$("#menu1 button").click(function(){
+		$(".writeA").click(function(){
 		 	if(loginId == ""){
 				alert("로그인이 필요한 서비스 입니다.");
 				location.href="login.jsp";
@@ -85,7 +81,6 @@
 				location.href="writeForm.jsp";
 			}	
 			});
-		
 
 		
 	});
@@ -291,29 +286,24 @@ nav ul#dropdown:after {
 					<img src="img/search-icon.png" alt="search-icon">
 				</div>
 				<div id="menu1">
-				<a href="joinForm.jsp">회원가입</a>
-<<<<<<< HEAD
+				
 
-=======
->>>>>>> e098e03325ce7a211f550d37cfc0c6f20da6969f
 				<!-- 로그인이 안되어있을 때 -->
-				<c:if test="${loginId eq null }"> 
-					<a href="login.jsp">로그인</a>
+				<c:if test="${loginId eq null }">
+				<a href="joinForm.jsp" class="joinA">회원가입</a>
+					<a href="login.jsp"  class="loginA">로그인</a>
 				</c:if>
 				
 				<!-- 로그인이 되어있을 때 -->
 				<c:if test="${loginId ne null }"> 
-					<a href="#">로그아웃</a>
+					<a href="#"  class="logoutA">로그아웃</a>
 				</c:if>
-<<<<<<< HEAD
 
-=======
->>>>>>> e098e03325ce7a211f550d37cfc0c6f20da6969f
-				<a href="#">쪽지</a>
-				<a href="#">알람</a>
-				<a href="#">마이페이지</a>
-				<a href="#">거래톡</a>
-				<button>글쓰기</button>
+				<a href="#"  class="messageA">쪽지</a>
+				<a href="#"  class="alarmA">알람</a>
+				<a href="#"  class="myPageA">마이페이지</a>
+				<a href="#"  class="tradeA">거래톡</a>
+				<button class="writeA">글쓰기</button>
 				</div>
 			</div>
 		</header>
