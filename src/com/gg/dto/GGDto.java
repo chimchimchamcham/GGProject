@@ -5,55 +5,55 @@ import java.util.Date;
 public class GGDto {
 
 	// 회원정보
-	private String U_id; // 아이디
-	private String U_nname; // 닉네임
-	private String U_pw; // 패스워드
-	private String U_email; // 이메일
-	private String U_name; // 이름
+	private String u_id; // 아이디
+	private String u_nname; // 닉네임
+	private String u_pw; // 패스워드
+	private String u_email; // 이메일
+	private String u_name; // 이름
 	private String u_addr; // 주소
-	private String U_phone; // 전화번호
-	private Date U_joinTm; // 가입날짜
-	private String U_intro; // 자기소개
-	private String U_adminYN; // 관리자여부
-	private String U_followYN; // 팔로워공개여부
-	private String U_newName; // 새사진 이름
-	private String U_detailAddr; // 상세 주소
+	private String u_phone; // 전화번호
+	private Date u_joinTm; // 가입날짜
+	private String u_intro; // 자기소개
+	private String u_adminYN; // 관리자여부
+	private String u_followYN; // 팔로워공개여부
+	private String u_newName; // 새사진 이름
+	private String u_detailAddr; // 상세 주소
 	
 
 	// 쪽지함
-	private Date M_sendTm; // 보낸시간
-	private String M_sendId;// 보낸아이디
-	private String M_receiveId;// 받은아이디
-	private String M_content;// 쪽지내용
+	private Date m_sendTm; // 보낸시간
+	private String m_sendId;// 보낸아이디
+	private String m_receiveId;// 받은아이디
+	private String m_content;// 쪽지내용
 
 	// 알람 (잘모르겠어...)
-	private int A_no; // 알람번호
-	private Date A_sendTm; // 알람보낸날짜
-	private Date A_checkTm;// 알람확인날짜
-	private String A_content;// 알람내용
-	private String A_readYN;// 읽음여부 (없어도 될듯)
-	private String A_delYN; // 삭제여부 (없어도 될듯)
-	private String A_impoYN;// 중요여부
-	private String A_path; // 알람경로
+	private int a_no; // 알람번호
+	private Date a_sendTm; // 알람보낸날짜
+	private Date a_checkTm;// 알람확인날짜
+	private String a_content;// 알람내용
+	private String a_readYN;// 읽음여부 (없어도 될듯)
+	private String a_delYN; // 삭제여부 (없어도 될듯)
+	private String a_impoYN;// 중요여부
+	private String a_path; // 알람경로
 
 	// 포인트
-	private int PNT_point; // 포인트 값
-	private Date PNT_tm; // 날짜
-	private String PNT_otherId; // 상대 ID
+	private int pnt_point; // 포인트 값
+	private Date pnt_tm; // 날짜
+	private String pnt_otherId; // 상대 ID
 
 	// 신고
-	private int N_no;// 신고번호
-	private String N_receivedId; // 신고 받은 아이디
-	private String N_sendId; // 신고한 아이디
-	private String N_content; // 신고내용
-	private String N1_code; // 대분류코드
-	private String N2_code; // 중분류코드
+	private int n_no;// 신고번호
+	private String n_receivedId; // 신고 받은 아이디
+	private String n_sendId; // 신고한 아이디
+	private String n_content; // 신고내용
+	private String n1_code; // 대분류코드
+	private String n2_code; // 중분류코드
 
 	// 블랙리스트
-	private Date B_startTm; // 블랙리스트 등록날짜
-	private Date B_endTm; // 블랙리스트 등록날짜
-	private String D_adminId; // 관리자ID
-	private String B_content; // 등록사유
+	private Date b_startTm; // 블랙리스트 등록날짜
+	private Date b_endTm; // 블랙리스트 등록날짜
+	private String b_adminId; // 관리자ID
+	private String b_content; // 등록사유
 
 	// 판매관련
 	private String s_DeliveryYN; // 택배여부
@@ -68,44 +68,44 @@ public class GGDto {
 	private String ns_name; //!!추가 필요
 
 	// 구매요청
-	private int RQ_no; // 구매요청 번호
-	private String RQ_id; // 구매요청 아이디
-	private String RQ_YN; // 구매요청 수락 거절
-	private Date RQ_tm;// 구매요청 날짜
+	private int rq_no; // 구매요청 번호
+	private String rq_id; // 구매요청 아이디
+	private String rq_YN; // 구매요청 수락 거절
+	private Date rq_tm;// 구매요청 날짜
 
 	// 경매글
 	// 분류코드(경매중, 거래중, 거래완료)
-	private int Au_startPr; // 시작가격
-	private int Au_instantPr; // 즉결가격
-	private Date Au_startTm;// 경매시작시간
-	private Date Au_endTm; // 경매 마감시간
-	private Date Au_sucTm; // 경매 낙찰시간
-	private int Au_count; // 입찰횟수
-	private String Au_successer; // 낙찰자
+	private int au_startPr; // 시작가격
+	private int au_instantPr; // 즉결가격
+	private Date au_startTm;// 경매시작시간
+	private Date au_endTm; // 경매 마감시간
+	private Date au_sucTm; // 경매 낙찰시간
+	private int au_count; // 입찰횟수
+	private String au_successer; // 낙찰자
 
 	// 경매히스토리관련
-	private int HA_bidPr; // 입찰가격
+	private int ha_bidPr; // 입찰가격
 
-	private String HA_bidUsr; // 입찰자
+	private String ha_bidUsr; // 입찰자
 
 	// 거래
-	private int T_no; // 거래번호
-	private String T_saler; // 판매자ID
-	private String T_buyer; // 구매자ID
+	private int t_no; // 거래번호
+	private String t_saler; // 판매자ID
+	private String t_buyer; // 구매자ID
 	// 거래취소ID의 경우 불러올일이 없을거같아서 안넣음
 	// 관리자 접근 가능여부 .... 안넣었음
 
 	// 거래 히스토리
-	private int HT_point; // 포인트값
+	private int ht_point; // 포인트값
 
 	// 거래댓글
-	private String TC_content; // 거래 댓글 내용
+	private String tc_content; // 거래 댓글 내용
 
 	// 후기
-	private String RV_id; // 후기 작성자ID
-	private int RV_score; // 후기 평점
-	private String RV_content; // 후기 내용
-	private String RV_SellerYN; // 판매자 여부
+	private String rv_id; // 후기 작성자ID
+	private int rv_score; // 후기 평점
+	private String rv_content; // 후기 내용
+	private String rv_SellerYN; // 판매자 여부
 
 	// 게시글
 	private int p_no; // 글번호
@@ -124,43 +124,43 @@ public class GGDto {
 	private String i_newName;
 
 	public String getU_id() {
-		return U_id;
+		return u_id;
 	}
 
 	public void setU_id(String u_id) {
-		U_id = u_id;
+		this.u_id = u_id;
 	}
 
 	public String getU_nname() {
-		return U_nname;
+		return u_nname;
 	}
 
 	public void setU_nname(String u_nname) {
-		U_nname = u_nname;
+		this.u_nname = u_nname;
 	}
 
 	public String getU_pw() {
-		return U_pw;
+		return u_pw;
 	}
 
 	public void setU_pw(String u_pw) {
-		U_pw = u_pw;
+		this.u_pw = u_pw;
 	}
 
 	public String getU_email() {
-		return U_email;
+		return u_email;
 	}
 
 	public void setU_email(String u_email) {
-		U_email = u_email;
+		this.u_email = u_email;
 	}
 
 	public String getU_name() {
-		return U_name;
+		return u_name;
 	}
 
 	public void setU_name(String u_name) {
-		U_name = u_name;
+		this.u_name = u_name;
 	}
 
 	public String getU_addr() {
@@ -168,263 +168,263 @@ public class GGDto {
 	}
 
 	public void setU_addr(String u_addr) {
-		u_addr = u_addr;
+		this.u_addr = u_addr;
 	}
 
 	public String getU_phone() {
-		return U_phone;
+		return u_phone;
 	}
 
 	public void setU_phone(String u_phone) {
-		U_phone = u_phone;
+		this.u_phone = u_phone;
 	}
 
 	public Date getU_joinTm() {
-		return U_joinTm;
+		return u_joinTm;
 	}
 
 	public void setU_joinTm(Date u_joinTm) {
-		U_joinTm = u_joinTm;
+		this.u_joinTm = u_joinTm;
 	}
 
 	public String getU_intro() {
-		return U_intro;
+		return u_intro;
 	}
 
 	public void setU_intro(String u_intro) {
-		U_intro = u_intro;
+		this.u_intro = u_intro;
 	}
 
 	public String getU_adminYN() {
-		return U_adminYN;
+		return u_adminYN;
 	}
 
 	public void setU_adminYN(String u_adminYN) {
-		U_adminYN = u_adminYN;
+		this.u_adminYN = u_adminYN;
 	}
 
 	public String getU_followYN() {
-		return U_followYN;
+		return u_followYN;
 	}
 
 	public void setU_followYN(String u_followYN) {
-		U_followYN = u_followYN;
+		this.u_followYN = u_followYN;
 	}
 
 	public String getU_newName() {
-		return U_newName;
+		return u_newName;
 	}
 
 	public void setU_newName(String u_newName) {
-		U_newName = u_newName;
+		this.u_newName = u_newName;
 	}
 
 	public String getU_detailAddr() {
-		return U_detailAddr;
+		return u_detailAddr;
 	}
 
 	public void setU_detailAddr(String u_detailAddr) {
-		U_detailAddr = u_detailAddr;
+		this.u_detailAddr = u_detailAddr;
 	}
 
 	public Date getM_sendTm() {
-		return M_sendTm;
+		return m_sendTm;
 	}
 
 	public void setM_sendTm(Date m_sendTm) {
-		M_sendTm = m_sendTm;
+		this.m_sendTm = m_sendTm;
 	}
 
 	public String getM_sendId() {
-		return M_sendId;
+		return m_sendId;
 	}
 
 	public void setM_sendId(String m_sendId) {
-		M_sendId = m_sendId;
+		this.m_sendId = m_sendId;
 	}
 
 	public String getM_receiveId() {
-		return M_receiveId;
+		return m_receiveId;
 	}
 
 	public void setM_receiveId(String m_receiveId) {
-		M_receiveId = m_receiveId;
+		this.m_receiveId = m_receiveId;
 	}
 
 	public String getM_content() {
-		return M_content;
+		return m_content;
 	}
 
 	public void setM_content(String m_content) {
-		M_content = m_content;
+		this.m_content = m_content;
 	}
 
 	public int getA_no() {
-		return A_no;
+		return a_no;
 	}
 
 	public void setA_no(int a_no) {
-		A_no = a_no;
+		this.a_no = a_no;
 	}
 
 	public Date getA_sendTm() {
-		return A_sendTm;
+		return a_sendTm;
 	}
 
 	public void setA_sendTm(Date a_sendTm) {
-		A_sendTm = a_sendTm;
+		this.a_sendTm = a_sendTm;
 	}
 
 	public Date getA_checkTm() {
-		return A_checkTm;
+		return a_checkTm;
 	}
 
 	public void setA_checkTm(Date a_checkTm) {
-		A_checkTm = a_checkTm;
+		this.a_checkTm = a_checkTm;
 	}
 
 	public String getA_content() {
-		return A_content;
+		return a_content;
 	}
 
 	public void setA_content(String a_content) {
-		A_content = a_content;
+		this.a_content = a_content;
 	}
 
 	public String getA_readYN() {
-		return A_readYN;
+		return a_readYN;
 	}
 
 	public void setA_readYN(String a_readYN) {
-		A_readYN = a_readYN;
+		this.a_readYN = a_readYN;
 	}
 
 	public String getA_delYN() {
-		return A_delYN;
+		return a_delYN;
 	}
 
 	public void setA_delYN(String a_delYN) {
-		A_delYN = a_delYN;
+		this.a_delYN = a_delYN;
 	}
 
 	public String getA_impoYN() {
-		return A_impoYN;
+		return a_impoYN;
 	}
 
 	public void setA_impoYN(String a_impoYN) {
-		A_impoYN = a_impoYN;
+		this.a_impoYN = a_impoYN;
 	}
 
 	public String getA_path() {
-		return A_path;
+		return a_path;
 	}
 
 	public void setA_path(String a_path) {
-		A_path = a_path;
+		this.a_path = a_path;
 	}
 
-	public int getPNT_point() {
-		return PNT_point;
+	public int getPnt_point() {
+		return pnt_point;
 	}
 
-	public void setPNT_point(int pNT_point) {
-		PNT_point = pNT_point;
+	public void setPnt_point(int pnt_point) {
+		this.pnt_point = pnt_point;
 	}
 
-	public Date getPNT_tm() {
-		return PNT_tm;
+	public Date getPnt_tm() {
+		return pnt_tm;
 	}
 
-	public void setPNT_tm(Date pNT_tm) {
-		PNT_tm = pNT_tm;
+	public void setPnt_tm(Date pnt_tm) {
+		this.pnt_tm = pnt_tm;
 	}
 
-	public String getPNT_otherId() {
-		return PNT_otherId;
+	public String getPnt_otherId() {
+		return pnt_otherId;
 	}
 
-	public void setPNT_otherId(String pNT_otherId) {
-		PNT_otherId = pNT_otherId;
+	public void setPnt_otherId(String pnt_otherId) {
+		this.pnt_otherId = pnt_otherId;
 	}
 
 	public int getN_no() {
-		return N_no;
+		return n_no;
 	}
 
 	public void setN_no(int n_no) {
-		N_no = n_no;
+		this.n_no = n_no;
 	}
 
 	public String getN_receivedId() {
-		return N_receivedId;
+		return n_receivedId;
 	}
 
 	public void setN_receivedId(String n_receivedId) {
-		N_receivedId = n_receivedId;
+		this.n_receivedId = n_receivedId;
 	}
 
 	public String getN_sendId() {
-		return N_sendId;
+		return n_sendId;
 	}
 
 	public void setN_sendId(String n_sendId) {
-		N_sendId = n_sendId;
+		this.n_sendId = n_sendId;
 	}
 
 	public String getN_content() {
-		return N_content;
+		return n_content;
 	}
 
 	public void setN_content(String n_content) {
-		N_content = n_content;
+		this.n_content = n_content;
 	}
 
 	public String getN1_code() {
-		return N1_code;
+		return n1_code;
 	}
 
 	public void setN1_code(String n1_code) {
-		N1_code = n1_code;
+		this.n1_code = n1_code;
 	}
 
 	public String getN2_code() {
-		return N2_code;
+		return n2_code;
 	}
 
 	public void setN2_code(String n2_code) {
-		N2_code = n2_code;
+		this.n2_code = n2_code;
 	}
 
 	public Date getB_startTm() {
-		return B_startTm;
+		return b_startTm;
 	}
 
 	public void setB_startTm(Date b_startTm) {
-		B_startTm = b_startTm;
+		this.b_startTm = b_startTm;
 	}
 
 	public Date getB_endTm() {
-		return B_endTm;
+		return b_endTm;
 	}
 
 	public void setB_endTm(Date b_endTm) {
-		B_endTm = b_endTm;
+		this.b_endTm = b_endTm;
 	}
 
-	public String getD_adminId() {
-		return D_adminId;
+	public String getB_adminId() {
+		return b_adminId;
 	}
 
-	public void setD_adminId(String d_adminId) {
-		D_adminId = d_adminId;
+	public void setB_adminId(String b_adminId) {
+		this.b_adminId = b_adminId;
 	}
 
 	public String getB_content() {
-		return B_content;
+		return b_content;
 	}
 
 	public void setB_content(String b_content) {
-		B_content = b_content;
+		this.b_content = b_content;
 	}
 
 	public String getS_DeliveryYN() {
@@ -467,180 +467,180 @@ public class GGDto {
 		this.ns_name = ns_name;
 	}
 
-	public int getRQ_no() {
-		return RQ_no;
+	public int getRq_no() {
+		return rq_no;
 	}
 
-	public void setRQ_no(int rQ_no) {
-		RQ_no = rQ_no;
+	public void setRq_no(int rq_no) {
+		this.rq_no = rq_no;
 	}
 
-	public String getRQ_id() {
-		return RQ_id;
+	public String getRq_id() {
+		return rq_id;
 	}
 
-	public void setRQ_id(String rQ_id) {
-		RQ_id = rQ_id;
+	public void setRq_id(String rq_id) {
+		this.rq_id = rq_id;
 	}
 
-	public String getRQ_YN() {
-		return RQ_YN;
+	public String getRq_YN() {
+		return rq_YN;
 	}
 
-	public void setRQ_YN(String rQ_YN) {
-		RQ_YN = rQ_YN;
+	public void setRq_YN(String rq_YN) {
+		this.rq_YN = rq_YN;
 	}
 
-	public Date getRQ_tm() {
-		return RQ_tm;
+	public Date getRq_tm() {
+		return rq_tm;
 	}
 
-	public void setRQ_tm(Date rQ_tm) {
-		RQ_tm = rQ_tm;
+	public void setRq_tm(Date rq_tm) {
+		this.rq_tm = rq_tm;
 	}
 
 	public int getAu_startPr() {
-		return Au_startPr;
+		return au_startPr;
 	}
 
 	public void setAu_startPr(int au_startPr) {
-		Au_startPr = au_startPr;
+		this.au_startPr = au_startPr;
 	}
 
 	public int getAu_instantPr() {
-		return Au_instantPr;
+		return au_instantPr;
 	}
 
 	public void setAu_instantPr(int au_instantPr) {
-		Au_instantPr = au_instantPr;
+		this.au_instantPr = au_instantPr;
 	}
 
 	public Date getAu_startTm() {
-		return Au_startTm;
+		return au_startTm;
 	}
 
 	public void setAu_startTm(Date au_startTm) {
-		Au_startTm = au_startTm;
+		this.au_startTm = au_startTm;
 	}
 
 	public Date getAu_endTm() {
-		return Au_endTm;
+		return au_endTm;
 	}
 
 	public void setAu_endTm(Date au_endTm) {
-		Au_endTm = au_endTm;
+		this.au_endTm = au_endTm;
 	}
 
 	public Date getAu_sucTm() {
-		return Au_sucTm;
+		return au_sucTm;
 	}
 
 	public void setAu_sucTm(Date au_sucTm) {
-		Au_sucTm = au_sucTm;
+		this.au_sucTm = au_sucTm;
 	}
 
 	public int getAu_count() {
-		return Au_count;
+		return au_count;
 	}
 
 	public void setAu_count(int au_count) {
-		Au_count = au_count;
+		this.au_count = au_count;
 	}
 
 	public String getAu_successer() {
-		return Au_successer;
+		return au_successer;
 	}
 
 	public void setAu_successer(String au_successer) {
-		Au_successer = au_successer;
+		this.au_successer = au_successer;
 	}
 
-	public int getHA_bidPr() {
-		return HA_bidPr;
+	public int getHa_bidPr() {
+		return ha_bidPr;
 	}
 
-	public void setHA_bidPr(int hA_bidPr) {
-		HA_bidPr = hA_bidPr;
+	public void setHa_bidPr(int ha_bidPr) {
+		this.ha_bidPr = ha_bidPr;
 	}
 
-	public String getHA_bidUsr() {
-		return HA_bidUsr;
+	public String getHa_bidUsr() {
+		return ha_bidUsr;
 	}
 
-	public void setHA_bidUsr(String hA_bidUsr) {
-		HA_bidUsr = hA_bidUsr;
+	public void setHa_bidUsr(String ha_bidUsr) {
+		this.ha_bidUsr = ha_bidUsr;
 	}
 
 	public int getT_no() {
-		return T_no;
+		return t_no;
 	}
 
 	public void setT_no(int t_no) {
-		T_no = t_no;
+		this.t_no = t_no;
 	}
 
 	public String getT_saler() {
-		return T_saler;
+		return t_saler;
 	}
 
 	public void setT_saler(String t_saler) {
-		T_saler = t_saler;
+		this.t_saler = t_saler;
 	}
 
 	public String getT_buyer() {
-		return T_buyer;
+		return t_buyer;
 	}
 
 	public void setT_buyer(String t_buyer) {
-		T_buyer = t_buyer;
+		this.t_buyer = t_buyer;
 	}
 
-	public int getHT_point() {
-		return HT_point;
+	public int getHt_point() {
+		return ht_point;
 	}
 
-	public void setHT_point(int hT_point) {
-		HT_point = hT_point;
+	public void setHt_point(int ht_point) {
+		this.ht_point = ht_point;
 	}
 
-	public String getTC_content() {
-		return TC_content;
+	public String getTc_content() {
+		return tc_content;
 	}
 
-	public void setTC_content(String tC_content) {
-		TC_content = tC_content;
+	public void setTc_content(String tc_content) {
+		this.tc_content = tc_content;
 	}
 
-	public String getRV_id() {
-		return RV_id;
+	public String getRv_id() {
+		return rv_id;
 	}
 
-	public void setRV_id(String rV_id) {
-		RV_id = rV_id;
+	public void setRv_id(String rv_id) {
+		this.rv_id = rv_id;
 	}
 
-	public int getRV_score() {
-		return RV_score;
+	public int getRv_score() {
+		return rv_score;
 	}
 
-	public void setRV_score(int rV_score) {
-		RV_score = rV_score;
+	public void setRv_score(int rv_score) {
+		this.rv_score = rv_score;
 	}
 
-	public String getRV_content() {
-		return RV_content;
+	public String getRv_content() {
+		return rv_content;
 	}
 
-	public void setRV_content(String rV_content) {
-		RV_content = rV_content;
+	public void setRv_content(String rv_content) {
+		this.rv_content = rv_content;
 	}
 
-	public String getRV_SellerYN() {
-		return RV_SellerYN;
+	public String getRv_SellerYN() {
+		return rv_SellerYN;
 	}
 
-	public void setRV_SellerYN(String rV_SellerYN) {
-		RV_SellerYN = rV_SellerYN;
+	public void setRv_SellerYN(String rv_SellerYN) {
+		this.rv_SellerYN = rv_SellerYN;
 	}
 
 	public int getP_no() {
@@ -729,6 +729,6 @@ public class GGDto {
 
 	public void setI_newName(String i_newName) {
 		this.i_newName = i_newName;
-	}// 새파일 이름
-}
+	}
 
+}
