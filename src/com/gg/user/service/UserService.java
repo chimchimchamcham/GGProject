@@ -162,13 +162,22 @@ public class UserService {
 		return success;
 	}
 
-	public String idsearch() {
+	public void idsearch() {
 		String name = req.getParameter("name");
 		String email = req.getParameter("email")+"@"+req.getParameter("mail");
 		System.out.println("name : "+name+" email : "+email);
 		UserDAO dao = new UserDAO();
-		dao.idsearch(String name, String email);
-		return null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("id", dao.idsearch(name, email));
+		Gson gson = new Gson();
+		
+		String id = gson.toJson(map);
+		try {
+			resp.getWriter().println();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

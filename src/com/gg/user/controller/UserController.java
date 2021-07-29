@@ -91,7 +91,7 @@ public class UserController extends HttpServlet {
 			
 		case "/idsearch":
 			System.out.println("아이디 찾기 요청");
-			String id = service.idsearch();
+			service.idsearch();
 			break;
 		}
 		
