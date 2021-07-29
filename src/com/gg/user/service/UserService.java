@@ -1,6 +1,7 @@
 package com.gg.user.service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +19,15 @@ public class UserService {
 	
 	
 	public UserService(HttpServletRequest req, HttpServletResponse resp) {
-		this.req = req;
-		this.resp = resp;
+		try {
+			req.setCharacterEncoding("UTF-8");
+			this.req = req;
+			this.resp = resp;
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public boolean join() {
@@ -202,66 +210,7 @@ public class UserService {
 		return dto;
 	}
 	
-	public int userUpdate(String id) {
-	      
-	      int success = 0;
-	      System.out.println("회원정보수정 요청 확인");
 
-	      String u_id = (String)req.getSession().getAttribute("loginId"); //세션아이디
-	      
-	      String u_pw = req.getParameter("pw"); // 비밀번호
-	      String u_name = req.getParameter("name"); //이름 
-	      String u_nname = req.getParameter("nname"); // 닉네임
-	      String u_phone = req.getParameter("phone1"); // 핸드폰 앞번호
-	      String u_phone2 = req.getParameter("phone2"); // 핸드폰 중간번호
-	      String u_phone3 = req.getParameter("phone3"); // 핸드폰 끝번호
-	      String u_email = req.getParameter("email"); //메일 앞부분
-	      String u_mail = req.getParameter("mail"); // 메일 뒷부분(ex]naver.com)
-	      String u_addr = req.getParameter("addr"); // 대략적 주소
-	      String u_detailAddr = req.getParameter("detailAddr"); // 상세 주소
-	      
-	      System.out.println("회원정보 수정값 확인");
-	      System.out.println(u_id+"/"+u_pw+"/"+u_name+"/"+u_nname+"/"+u_phone+"/"+u_phone2+"/"+u_phone3+"/"+u_email+"/"+u_mail+"/"+u_addr+"/"+u_detailAddr);
-	      
-	      // 메일 합치기
-	      u_email += "@" + u_mail;
-	      System.out.println("이메일 확인 : " + u_email);
-	      // 핸드폰 번호 합치기
-	      u_phone += "-"+u_phone2 +"-"+ u_phone3;
-	      System.out.println("핸드폰 번호 확인 : " + u_phone);
-	      
-	      GGDto dto = new GGDto();
-	      //DTO에 값을 넣어주기.
-	      dto.setU_id(u_id);
-	      dto.setU_pw(u_pw);
-	      dto.setU_name(u_name);
-	      dto.setU_nname(u_nname);
-	      dto.setU_phone(u_phone);
-	      dto.setU_email(u_email);
-	      dto.setU_addr(u_addr);
-	      dto.setU_detailAddr(u_detailAddr);
-	      
-	      UserDAO dao = new UserDAO();
-	      Gson gson = null;
-
-	      try {
-	         HashMap<String, Object> map = new HashMap<String, Object>();
-	         success = dao.userUpdate(dto);
-	         System.out.println("회원정보 수정 :"+success);
-	         map.put("success", success);
-	         gson = new Gson();
-	         String obj = gson.toJson(map);
-	         
-	         resp.getWriter().println(obj);
-	      } catch (Exception e) {
-	         e.printStackTrace();
-	      }finally {
-	         dao.resClose();
-	      }
-	      
-	      return success;
-	   }
-	
 	public boolean chkpw() {
 		UserDAO dao = new UserDAO();
 		GGDto dto = new GGDto();
@@ -276,5 +225,66 @@ public class UserService {
 		req.getParameter("");
 		return false;
 	}
-	
+public int userUpdate(String id) {
+		
+		int success = 0;
+		
+		com.gg.board.service.UploadService upload = new com.gg.board.service.UploadService(req);
+		GGDto dto = upload.PhotoUpload();//새로운 파일 저장(변경한 사진)
+		
+		System.out.println("회원정보수정 요청 확인");
+
+		String u_id = (String)req.getSession().getAttribute("loginId"); //세션아이디
+		
+		String u_pw = req.getParameter("pw"); // 비밀번호
+		String u_name = req.getParameter("name"); //이름 
+		String u_nname = req.getParameter("nname"); // 닉네임
+		String u_phone = req.getParameter("phone1"); // 핸드폰 앞번호
+		String u_phone2 = req.getParameter("phone2"); // 핸드폰 중간번호
+		String u_phone3 = req.getParameter("phone3"); // 핸드폰 끝번호
+		String u_email = req.getParameter("email"); //메일 앞부분
+		String u_mail = req.getParameter("mail"); // 메일 뒷부분(ex]naver.com)
+		String u_addr = req.getParameter("addr"); // 대략적 주소
+		String u_detailAddr = req.getParameter("detailAddr"); // 상세 주소
+		
+		System.out.println("회원정보 수정값 확인");
+		System.out.println(u_id+"/"+u_pw+"/"+u_name+"/"+u_nname+"/"+u_phone+"/"+u_phone2+"/"+u_phone3+"/"+u_email+"/"+u_mail+"/"+u_addr+"/"+u_detailAddr);
+		
+		// 메일 합치기
+		u_email += "@" + u_mail;
+		System.out.println("이메일 확인 : " + u_email);
+		// 핸드폰 번호 합치기
+		u_phone += "-"+u_phone2 +"-"+ u_phone3;
+		System.out.println("핸드폰 번호 확인 : " + u_phone);
+		
+		//DTO에 값을 넣어주기.
+		dto.setU_id(u_id);
+		dto.setU_pw(u_pw);
+		dto.setU_name(u_name);
+		dto.setU_nname(u_nname);
+		dto.setU_phone(u_phone);
+		dto.setU_email(u_email);
+		dto.setU_addr(u_addr);
+		dto.setU_detailAddr(u_detailAddr);
+		
+		UserDAO dao = new UserDAO();
+		Gson gson = null;
+
+		try {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			success = dao.userUpdate(dto);
+			System.out.println("회원정보 수정 :"+success);
+			map.put("success", success);
+			gson = new Gson();
+			String obj = gson.toJson(map);
+			
+			resp.getWriter().println(obj);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		return success;
+	}
 }
