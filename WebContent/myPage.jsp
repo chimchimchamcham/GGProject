@@ -82,14 +82,8 @@ var $index_button;
 /*충전 팝업*/
 function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
 
-<<<<<<< HEAD
+	$(document).ready(function() {
 
-	
-	$(document).ready(function() {
-		
-=======
-	$(document).ready(function() {
->>>>>>> 5320dc53fec58f21d2ee21e7c5f00841afc98307
 
 
 		//초기상태 판매목록만 보여짐
@@ -359,7 +353,6 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 			</tr>
 		</table>
 	</div>
->>>>>>> 5320dc53fec58f21d2ee21e7c5f00841afc98307
 	
 	   <div id="twoButton">
       <button>판매목록	</button>

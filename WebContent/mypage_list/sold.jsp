@@ -158,7 +158,7 @@
 	    $index = $button.index(this);
 	    $index_button = $(".button-layout button:eq(" + $index + ")");
 		console.log("$center_index:"+$index);
-		$index_button.removeClass('.clicked');
+		$(".button-layout button").removeClass('.clicked');
 		$index_button.addClass('.clicked');
 		
 		
