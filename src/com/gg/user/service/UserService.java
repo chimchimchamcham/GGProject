@@ -270,5 +270,11 @@ public class UserService {
 		dto.setU_email(req.getParameter("email"));
 		return dao.chkpw(dto);
 	}
+
+	public boolean changePw() {
+		UserDAO dao = new UserDAO();
+		
+		return false;
+	}
 	
 }

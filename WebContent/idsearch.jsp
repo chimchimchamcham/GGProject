@@ -212,7 +212,7 @@
 	
 	$("#chkpw").click(function(){
 		if(chkpw=true){
-			location.href("/");
+			location.href("/changePw");
 		}
 	});
 </script>
