@@ -38,17 +38,18 @@ public class BoardController extends HttpServlet {
 		RequestDispatcher dis = null;
 		String page = "";
 		String msg = "";
-		BoardService service = new BoardService(req);
+		BoardService service = new BoardService(req,resp);
 		GGDto bdto = null;
 		boolean success = false;
 		int p_no;
 		
 		switch(addr) {
-		case "/salesDetail" : 
+		case "/salesDetail" :
 			System.out.println("판매글 상세보기");
 			GGDto dto = service.salesDetail();
 			System.out.println("Controller salesDetail dto : "+dto);
 			String u_id = (String) req.getSession().getAttribute("loginId");
+			System.out.println("loginId : "+u_id);
 			//String u_id = "user1"; //임시로 저장
 			p_no = Integer.parseInt(req.getParameter("p_no"));
 			boolean isLiked = false;
