@@ -134,7 +134,6 @@ public class UserDAO {
 	      return userId;
 	   }
 
-<<<<<<< HEAD
 public String idsearch(String name, String email) {
 	String id=null;
 	String sql = "SELECT U_id FROM UserInfo WHERE U_name=? AND U_email=?";
@@ -153,7 +152,8 @@ public String idsearch(String name, String email) {
 		resClose();
 	}
 	return id;
-=======
+}
+
 public GGDto myPage(String id) {
 	
 	GGDto dto = null;
@@ -189,7 +189,6 @@ public GGDto myPage(String id) {
 	}
 	
 	return dto;
->>>>>>> 1c50c463f51e0bf0a4b2fc73b5a3e723e9f88edc
 }
 
 }
