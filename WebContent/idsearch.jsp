@@ -185,7 +185,9 @@
 			},
 			dataType:"JSON",
 			success:function(data){
-				console.log(data);
+				if(data.success){
+					$("#resetpw").show();
+				}
 			},
 			error:function(e){
 				console.log(e);

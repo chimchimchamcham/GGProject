@@ -204,4 +204,13 @@ public class UserService {
 		return dto;
 	}
 
+	public boolean chkpw() {
+		UserDAO dao = new UserDAO();
+		GGDto dto = new GGDto();
+		dto.setU_id(req.getParameter("id"));
+		dto.setU_name(req.getParameter("name"));
+		dto.setU_email(req.getParameter("email"));
+		return dao.chkpw(dto);
+	}
+
 }

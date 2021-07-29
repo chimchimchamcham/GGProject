@@ -201,4 +201,23 @@ public GGDto myPage(String id) {
 	return dto;
 }
 
+public boolean chkpw(GGDto dto) {
+	String sql = "SELECT u_id FROM UserInfo WHERE u_id=? AND u_name=? AND u_email=?";
+	boolean success = false;
+	try {
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, dto.getU_id());
+		ps.setString(2, dto.getU_name());
+		ps.setString(3, dto.getU_email());
+		rs = ps.executeQuery();
+		if(rs.next()) {
+			success = true;
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return success;
+}
+
 }
