@@ -41,17 +41,18 @@ public class BoardController extends HttpServlet {
 		BoardService service = new BoardService(req);
 		GGDto bdto = null;
 		boolean success = false;
+		int p_no;
 		
 		switch(addr) {
 		case "/salesDetail" : 
 			System.out.println("판매글 상세보기");
 			GGDto dto = service.salesDetail();
-			
-			//String U_id = (String) req.getSession().getAttribute("loginId");
-			String U_id = "user1"; //임시로 저장
-			int P_no = Integer.parseInt(req.getParameter("P_no"));
+			System.out.println("Controller salesDetail dto : "+dto);
+			String u_id = (String) req.getSession().getAttribute("loginId");
+			//String u_id = "user1"; //임시로 저장
+			p_no = Integer.parseInt(req.getParameter("p_no"));
 			boolean isLiked = false;
-			isLiked = service.isLiked(U_id, P_no);
+			isLiked = service.isLiked(u_id, p_no);
 			req.setAttribute("dto", dto);
 			req.setAttribute("isLiked", isLiked);
 			dis = req.getRequestDispatcher("salesDetail.jsp");
@@ -62,15 +63,33 @@ public class BoardController extends HttpServlet {
 			System.out.println("찜 +1 추가");
 			success = service.lovePlus();
 			System.out.println("[Controller ] lovePluse success : "+success);
-			
-		
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			dis = req.getRequestDispatcher("/salesDetail?p_no="+p_no);
+			dis.forward(req, resp);
 			break;
+			
 		case "/loveMinus" : 
-			System.out.println("찜 -1 추가");
+			System.out.println("찜 -1 제거");
 			success = service.loveMinus();
 			System.out.println("[Controller ] loveMinus success : "+success);
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			//resp.sendRedirect("./salesDetail?p_no="+p_no);
+			dis = req.getRequestDispatcher("/salesDetail?p_no="+p_no);
+			dis.forward(req, resp);
 			break;
 			
+		//Ajax를 사용한 lovePlus	
+		case "/lovePlus2" :
+			System.out.println("찜 +1 추가");
+			service.lovePlus2();
+			break;
+		//Ajax를 사용함 loveMinus
+		case "/loveMinus2" :
+			System.out.println("찜 -1 추가");
+			service.loveMinus2();
+			break;
+			
+		/* ===========================================================================*/	
 		case "/sold":
 			System.out.println("리스트 요청");				
 			service.list();

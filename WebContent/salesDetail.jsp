@@ -53,8 +53,8 @@
     //상세정보 버튼 초기설정
     $("#twoButton>button:nth-of-type(1)").css({"background-color":"gray","color":"white"});
     //이전에 해당 판매글에 대해 좋아요를 누른적이 있는지 확인
-    <c:if test="${isLiked eq true}">$("#threeButton>button:nth-last-of-type(4)").hide();</c:if>
-    <c:if test="${isLiked eq false}">$("#threeButton>button:nth-last-of-type(5)").hide();</c:if>
+    <c:if test="${isLiked eq true}">$("#threeButton>button:nth-last-of-type(5)").hide();</c:if>
+    <c:if test="${isLiked eq false}">$("#threeButton>button:nth-last-of-type(4)").hide();</c:if>
 
     //상세정보 버튼 클릭시 창이 표시
     $("#twoButton>button:nth-of-type(2)").click(function(){
@@ -117,12 +117,15 @@
                        	<% GGDto dto = (GGDto) request.getAttribute("dto"); %>
                         <%-- <p>거래주소 : ${dto.u_addr }</p> --%>
                         <p>거래주소 : <%=dto.getU_addr() %></p><!-- 주소가 넘어오지를 않음 dao에서는 정상적으로 받아옴 -->
-                        <p>하트 ${dto.p_likeCount }  조회수 ${dto.p_view }</p>
+                        <p>하트<span>${dto.p_likeCount }</span>조회수<span>${dto.p_view }</span></p>
                         <div><a href="#">신고하기</a></div>
                     </div>
                     <div id="threeButton">
-                        <button onclick="location.href='./lovePlus?P_no=${dto.p_no }'">찜</button><!-- +1 -->
-                        <button onclick="location.href='./loveMinus?P_no=${dto.p_no }'">찜</button><!-- -1 -->
+                        <%--<button onclick="location.href='lovePlus2?p_no=${dto.p_no }'">찜</button>--%><!-- +1 -->
+                        <%--<button onclick="location.href='loveMinus2?p_no=${dto.p_no }'">찜</button>--%><!-- -1 -->
+                        <button>찜+</button><!-- +1 -->
+                        <button>찜-</button><!-- -1 -->
+                        
                         <button>쪽지보내기</button>
                         <button>구매요청</button>
                         <button>구매요청취소</button>
@@ -142,4 +145,48 @@
         </section>
     </div>
 </body>
+<script>
+	$("#threeButton>button:nth-of-type(1)").click(function(){
+		$.ajax({
+			type : 'get',
+			url : 'lovePlus2',
+			data : {'p_no' : ${dto.p_no}},
+			dataType : 'JSON',
+			success : function(data){
+				console.log(data);
+				if(data.success){
+					var love = $("#description>p:nth-of-type(6)>span:nth-of-type(1)").text();
+					$("#description>p:nth-of-type(6)>span:nth-of-type(1)").text(++love);
+					alert('좋아요 등록 성공.');
+				}else{
+					alert('좋아요 등록 실패.');
+				}
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
+	});
+	$("#threeButton>button:nth-of-type(2)").click(function(){
+		$.ajax({
+			type : 'get',
+			url : 'loveMinus2',
+			data : {'p_no' : ${dto.p_no}},
+			dataType : 'JSON',
+			success : function(data){
+				console.log(data);
+				if(data.success){
+					var love = $("#description>p:nth-of-type(6)>span:nth-of-type(1)").text();
+					$("#description>p:nth-of-type(6)>span:nth-of-type(1)").text(--love);
+					alert('좋아요 해제 성공');
+				}else{
+					alert('좋아요 해제 실패');
+				}
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
+	});
+</script>
 </html>
