@@ -82,10 +82,14 @@ var $index_button;
 /*충전 팝업*/
 function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
 
+<<<<<<< HEAD
 
 	
 	$(document).ready(function() {
 		
+=======
+	$(document).ready(function() {
+>>>>>>> 5320dc53fec58f21d2ee21e7c5f00841afc98307
 
 
 		//초기상태 판매목록만 보여짐
@@ -320,41 +324,42 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 <body>
 	<h2>마이페이지</h2>
 	<div id="div1">
-      <table style="text-align: center; width: 40%;">
-         <tr>
-            <td><img src="${myPageInfo.u_newName }" width="150"></td>
-         </tr>
-         <tr>
-            <td>${myPageInfo.u_nname} </td>
-         </tr>
-         <tr>
-            <td>${myPageInfo.u_addr }</td>
-         </tr>
-         <tr>
-            <td><a href="profileModify.jsp">회원정보 수정</a></td>
-         </tr>
-      </table>
+		<table style="text-align: center; width: 40%;">
+			<tr>
+				<td><img src="${myPageInfo.u_newName }" width="150"></td>
+			</tr>
+			<tr>
+				<td>${myPageInfo.u_nname} </td>
+			</tr>
+			<tr>
+				<td>${myPageInfo.u_addr }</td>
+			</tr>
+			<tr>
+				<td><a href="profileModify.jsp">회원정보 수정</a></td>
+			</tr>
+		</table>
 
-      <table style="width: 60%;">
-         <tr>
-            <td>현재 포인트</td>
-            <td>${myPageInfo.pnt_point }P</td>   
-            <td><input type="button" value="충전" onclick="showPopup();" /></td>
-         </tr>
-         <tr>
-            <td>평점</td>
-            <td colspan="2"></td>
-         </tr>
-         <tr>
-            <td colspan="3">자기소개</td>
-         </tr>
-         <tr>
-            <td colspan="3">
-               <p>${myPageInfo.u_intro }</p>
-            </td>
-         </tr>
-      </table>
-   </div>
+		<table style="width: 60%;">
+			<tr>
+				<td>현재 포인트</td>
+				<td>${myPageInfo.pnt_point }P</td>	
+				<td><input type="button" value="충전" onclick="showPopup();" /></td>
+			</tr>
+			<tr>
+				<td>평점</td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<td colspan="3">자기소개</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<p>${myPageInfo.u_intro }</p>
+				</td>
+			</tr>
+		</table>
+	</div>
+>>>>>>> 5320dc53fec58f21d2ee21e7c5f00841afc98307
 	
 	   <div id="twoButton">
       <button>판매목록	</button>

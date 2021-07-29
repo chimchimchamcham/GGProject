@@ -175,6 +175,7 @@ public GGDto myPage(String id) {
 		System.out.println("자기소개 : " + dto.getU_intro());
 		System.out.println("주소 : " + dto.getU_addr());
 		System.out.println("사진경로 : " + dto.getU_newName());
+		
 		sql = "SELECT pnt_point FROM point WHERE pnt_id =?";
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, id);
@@ -184,7 +185,6 @@ public GGDto myPage(String id) {
 		}
 		System.out.println("포인트 : " + dto.getPnt_point());
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	
