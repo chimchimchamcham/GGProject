@@ -329,7 +329,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 				<td>${myPageInfo.u_addr }</td>
 			</tr>
 			<tr>
-				<td><button onclick="location.href='./UserUpdateForm?id=${loginId}'">회원정보 수정</button></td>
+				<td><button onclick="location.href='./userUpdateForm?id=${loginId}'">회원정보 수정</button></td>
 			</tr>
 		</table>
 

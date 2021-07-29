@@ -99,7 +99,7 @@ public class UserController extends HttpServlet {
 			dis.forward(req, resp);
 			break;
 			
-		case "/UserUpdateForm":
+		case "/userUpdateForm":
 			System.out.println("회원정보 수정 요청");
 			req.setAttribute("userUpdate", service.userUpdateForm());
 			dis = req.getRequestDispatcher("userUpdate.jsp");

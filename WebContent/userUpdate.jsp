@@ -47,49 +47,37 @@ td {
 }
 </style>
 <body>
-<h2>${loginId }회원정보 수정</h2>
-
-		<table>
-			<tr>
-				<th>아이디</th>
-			</tr>
-			<tr>
-				<td colspan="2"><input type="text" name="id" /> <input
-					type='button' id="id_overlay" value='중복확인' /></td>
-			</tr>
-			<tr>
-				<td id='id_check'></td>
-			</tr>
-			<tr>
-				<th>비밀 번호</th>
-			</tr>
-			<tr>
-				<td colspan="2"><input type="password" name="pw"></td>
-			</tr>
-			<tr>
-				<th>비밀 번호 확인</th>
-			</tr>
-			<tr>
-				<td colspan="2"><input type="password" name="re_pw"></td>
-			</tr>
-			<tr>
+<h2>${userUpdate.u_nname}님의 회원정보 수정</h2>
+<form action="update" method="POST" enctype="multipart/form-data">
+	<table>
+		<tr>
 				<th>닉네임</th>
 			</tr>
 			<tr>
-				<td colspan="2"><input type='text' name='nname' /> 
-				<input type='button' id="nname_overlay" value='중복확인' /></td>
+				<td colspan="2">
+					<input type="text" name="nname" value="${userUpdate.u_nname}"/>
+					<input type='button' id="nname_overlay" value='중복확인' />
+				</td>
 			</tr>
 			<tr>
 				<td id='nname_check'></td>
 			</tr>
-
-			<tr>
-				<th>이름</th>
-			</tr>
-			<tr>
-				<td colspan="2"><input type="text" name="name"></td>
-			</tr>
-			<tr>
+		<tr>
+			<th>이름</th>
+			<td><input type="text" name="name" value="${userUpdate.u_name}"></td>
+		</tr>
+		<tr>
+			<th>자기소개 수정</th>
+			<td><textarea name="intro">${userUpdate.u_intro}</textarea></td>
+		</tr>
+		<tr>
+			<th>사진</th>
+			<td>
+			<p><input type="file" name="photo"/></p>
+			<img src="${userUpdate.u_newName }" width="100px"/>
+			</td>
+		</tr>
+		<tr>
 				<th>핸드폰 번호</th>
 			</tr>
 			<tr>
@@ -115,14 +103,14 @@ td {
 				<td><input type='text' name='addr' /> <input type='text'
 					name='detailAddr' /></td>
 			</tr>
-			<tr>
-				<td colspan="2">
-					<button onclick='join()'>회원가입</button>
-					<button onclick='location.href="index.jsp"'>되돌아가기</button>
-				</td>
-			</tr>
-		</table>
-
+		<tr>
+			<td colspan="2">
+				<input type="button" onclick="location.href='./'" value="리스트"/>
+				<button>저장</button>			
+			</td>
+		</tr>
+	</table>
+</form>
 </body>
 <script>
 	var overChk = true;
