@@ -276,9 +276,7 @@ public class BoardService {
 		
 		
 		
-		int success = 0;
-		dao.writeSale();
-		 
+		int success = dao.writeSale(dto);
 		 
 		return success;
 	}
