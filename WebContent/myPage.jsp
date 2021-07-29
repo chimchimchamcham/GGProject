@@ -78,19 +78,9 @@ td {
 <script>
 
 /*충전 팝업*/
-function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
+function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
 
 	$(document).ready(function() {
-		$('textarea').hide();
-		$('#save').hide();
-
-		$('#profileModify').click(function() {
-			$('textarea').show();
-			$('#save').show();
-			$('#profileModify').hide();
-			$('p').hide();
-
-		});
 
 
 		//초기상태 판매목록만 보여짐
@@ -261,7 +251,7 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
 	<div id="div1">
 		<table style="text-align: center; width: 40%;">
 			<tr>
-				<td><img src="images/user.png" width="150"></td>
+				<td><img src="${myPageInfo.u_newName }" width="150"></td>
 			</tr>
 			<tr>
 				<td>${myPageInfo.u_nname} </td>
@@ -270,7 +260,7 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
 				<td>${myPageInfo.u_addr }</td>
 			</tr>
 			<tr>
-				<td><a href="#">프로필 수정</a></td>
+				<td><a href="profileModify.jsp">회원정보 수정</a></td>
 			</tr>
 		</table>
 
@@ -290,13 +280,6 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
 			<tr>
 				<td colspan="3">
 					<p>${myPageInfo.u_intro }</p>
-					<textarea rows="9" cols="80" style="resize: none;"></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="3">
-					<button id="profileModify">소개글 수정</button>
-					<button id="save">저장</button>
 				</td>
 			</tr>
 		</table>
