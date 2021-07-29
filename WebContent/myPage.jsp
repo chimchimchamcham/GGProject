@@ -76,6 +76,8 @@ td {
 }
 </style>
 <script>
+var loginId = "${sessionScope.loginId}";
+
 var $button;
 var $index;
 var $index_button;
@@ -329,7 +331,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 				<td>${myPageInfo.u_addr }</td>
 			</tr>
 			<tr>
-				<td><a href="profileModify.jsp">회원정보 수정</a></td>
+				<td><button onclick="location.href='./UserUpdateForm?id='">수정</button></td>
 			</tr>
 		</table>
 

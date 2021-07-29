@@ -9,12 +9,9 @@
 </head>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-fieldset {
-	margin: auto;
-	width: 500px;
-	height: 800px;
+h2{
+	text-align:center;
 }
-
 table {
 	margin: auto;
 }
@@ -76,8 +73,8 @@ td {
 				<th>닉네임</th>
 			</tr>
 			<tr>
-				<td colspan="2"><input type='text' name='nname' /> <input
-					type='button' id="nname_overlay" value='중복확인' /></td>
+				<td colspan="2"><input type='text' name='nname' /> 
+				<input type='button' id="nname_overlay" value='중복확인' /></td>
 			</tr>
 			<tr>
 				<td id='nname_check'></td>
