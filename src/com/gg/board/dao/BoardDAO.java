@@ -245,4 +245,9 @@ public class BoardDAO {
 		
 		return map;
 	}
+
+	public void writeSale() {
+		// TODO Auto-generated method stub
+		
+	}
 }

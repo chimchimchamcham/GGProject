@@ -61,6 +61,7 @@ public class GGDto {
 	// 판매자 아이디의 경우 작성자 ID와 동일 하기 때문에 추가하지 않음
 	
 	private String s_name; //!!추가 필요
+	private String s_code; //일반 판매 카테고리
 
 	// 일반판매관련
 	private int ns_pr; // 판매가격
@@ -759,6 +760,14 @@ public class GGDto {
 
 	public void setC_name(String c_name) {
 		this.c_name = c_name;
+	}
+
+	public String getS_code() {
+		return s_code;
+	}
+
+	public void setS_code(String s_code) {
+		this.s_code = s_code;
 	}
 
 }
