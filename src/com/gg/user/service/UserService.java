@@ -207,19 +207,6 @@ public class UserService {
 		return dto;
 	}
 
-<<<<<<< HEAD
-	public String userUpdate() {
-		
-		String id = null;
-		
-		com.gg.board.service.UploadService upload = new com.gg.board.service.UploadService(req);
-		GGDto dto = upload.PhotoUpload();//새로운 파일 저장(변경한 사진)
-		
-		UserDAO dao = new UserDAO();
-
-		
-		return id;
-	}
 
 public int userUpdate(String id) {
 		
@@ -280,7 +267,7 @@ public int userUpdate(String id) {
 		
 		return success;
 	}
-=======
+
 	public boolean chkpw() {
 		UserDAO dao = new UserDAO();
 		GGDto dto = new GGDto();
@@ -290,5 +277,4 @@ public int userUpdate(String id) {
 		return dao.chkpw(dto);
 	}
 
->>>>>>> 37d6ef2d25088532bec14720a0242ca20137f2ba
 }
