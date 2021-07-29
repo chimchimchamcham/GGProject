@@ -162,6 +162,7 @@ public class UserService {
 		return success;
 	}
 
+<<<<<<< HEAD
 	public void idsearch() {
 		String name = req.getParameter("name");
 		String email = req.getParameter("email")+"@"+req.getParameter("mail");
@@ -178,6 +179,18 @@ public class UserService {
 			e.printStackTrace();
 		}
 		
+=======
+	public GGDto myPage() {
+		
+		String id = (String)req.getSession().getAttribute("loginId");
+		System.out.println("서비스 진입 : " + id);
+		UserDAO dao = new UserDAO();
+		GGDto dto = new GGDto();
+		dto = dao.myPage(id);
+		dao.resClose();
+		
+		return dto;
+>>>>>>> 1c50c463f51e0bf0a4b2fc73b5a3e723e9f88edc
 	}
 
 }
