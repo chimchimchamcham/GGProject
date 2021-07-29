@@ -197,13 +197,13 @@ public class BoardDAO {
 		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1,p_no);
-			ps.setString(2,u_id);
+			ps.setInt(1, p_no);
+			ps.setString(2, u_id);
 			success = ps.executeUpdate();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return success>0?true:false;
+		return success > 0 ? true : false;
 	}
 
 	public boolean buyRequestCancel(int p_no, String u_id) {
@@ -211,13 +211,13 @@ public class BoardDAO {
 		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1,p_no);
-			ps.setString(2,u_id);
+			ps.setInt(1, p_no);
+			ps.setString(2, u_id);
 			success = ps.executeUpdate();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return success>0?true:false;
+		return success > 0 ? true : false;
 	}
 
 	public boolean isBuyRequested(int p_no, String u_id) {
@@ -225,15 +225,16 @@ public class BoardDAO {
 		boolean success = false;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1,p_no);
-			ps.setString(2,u_id);
+			ps.setInt(1, p_no);
+			ps.setString(2, u_id);
 			rs = ps.executeQuery();
 			success = rs.next();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return success;
 	}
+
 	/* ================================================ */
 	public ArrayList<GGDto> list() throws SQLException {
 		String sql = "SELECT p.p_id,p.p_no,p.p_title,p.p_likecount,p.p_tm,n.ns_pr,n.ns_code,i.i_newname,p.p_code FROM  post p,N_Sale n,img i,userinfo u WHERE p.p_no = n.p_no and p.p_no = i.p_no and p.p_code = 'P002' and (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_id = u.u_id";
@@ -312,8 +313,10 @@ public class BoardDAO {
 			ps.setString(5, dto.getP_code());
 
 			success += ps.executeUpdate();
+			System.out.println("게시판 테이블 작성 성공: " + success);
+
 			rs = ps.getGeneratedKeys();
-			
+
 			if (rs.next()) {
 				sql = "INSERT INTO sale VALUES(?,?,?,?,?)";
 				ps = conn.prepareStatement(sql);
@@ -322,24 +325,22 @@ public class BoardDAO {
 				ps.setString(2, dto.getS_DeliveryYN());
 				ps.setString(3, dto.getS_followLimYN());
 				ps.setString(4, dto.getP_id());
-				
+				ps.setString(5, dto.getS_code());
+
 				success += ps.executeUpdate();
-				rs = ps.getGeneratedKeys();
-				if(rs.next()) {
-					sql = "INSERT INTO N_sale VALUES(?,?,?)";
+				System.out.println("판매 테이블 작성 성공: " + success);
+				if (success==2) {
+					sql = "INSERT INTO n_sale VALUES(?,?,?)";
 					ps = conn.prepareStatement(sql);
-					p_no = rs.getInt(1);
 					ps.setInt(1, p_no);
-					ps.setInt(2,dto.getNs_pr());
+					ps.setInt(2, dto.getNs_pr());
 					ps.setString(3, "NS_001");
-					
+
 					success += ps.executeUpdate();
-					rs = ps.getGeneratedKeys();
+					System.out.println("일반 판매 테이블 작성 성공: " + success);
 				}
-				if(success >2) {
-					rs.next();
-					p_no = rs.getInt(1);
-					System.out.println("판매글 작성 번호 : "+p_no);
+				if (success ==3) {
+					System.out.println("판매글 작성 번호 : " + p_no);
 					System.out.println("판매글 작성 성공");
 				}
 			}
@@ -370,7 +371,7 @@ public class BoardDAO {
 		if (checker > 0) {
 			rs.next();
 			int pk = rs.getInt(1);
-			success= true;
+			success = true;
 			System.out.println("글 작성 번호 : " + pk);
 			System.out.println("글 작성 성공");
 		}

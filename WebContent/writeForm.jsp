@@ -89,8 +89,8 @@ textarea {
 			</p>
 			<p>
 				거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
-					value="delivery">택배<input type="radio" name="deliveryYN"
-					value="direct">직거래
+					value="Y">택배<input type="radio" name="deliveryYN"
+					value="N">직거래
 			</p>
 			<p id="category">
 				카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
@@ -101,8 +101,8 @@ textarea {
 			</p>
 			<p>
 				공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
-					value="all">전체공개 <input type="radio" name="disclosure"
-					value="follow">팔로우한정
+					value="N">전체공개 <input type="radio" name="disclosure"
+					value="Y">팔로우한정
 			</p>
 		</div>
 		<!--경매선택시 하단부분-->
@@ -315,6 +315,7 @@ $("#datepicker").datepicker({
 				param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
 				param.deliveryYN = $("input[name='deliveryYN']:checked").val();
 				param.price = $("input[name='price']").val();
+				param.disclosure = $("input[name='disclosure']:checked").val();
 				//ajax url="sale"
 				console.log(param);
 				$.ajax({
@@ -323,7 +324,13 @@ $("#datepicker").datepicker({
 					data:param,
 					dataType:'JSON',
 					success:function(data){
-						console.log(data);
+						if(data.success){
+							alert("판매글 작성 성공했습니다.");
+							location.href='index.jsp';
+							
+						}else {
+							alert("판매 글 작성을 실패하였습니다! ");
+						}
 					},
 					error:function(e){
 						console.log(e);
