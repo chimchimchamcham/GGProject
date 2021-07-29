@@ -193,7 +193,7 @@ public class UserService {
 	}
 
 	public Object userUpdateForm() {
-		String id = req.getParameter("id");
+		String id = (String)req.getSession().getAttribute("loginId");
 		System.out.println("회원정보 수정 id : " + id);
 		
 		UserDAO dao = new UserDAO();

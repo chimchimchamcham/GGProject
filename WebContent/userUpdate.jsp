@@ -8,6 +8,9 @@
 <title>Insert title here</title>
 </head>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+var loginId = "${sessionScope.loginId}";
+</script>
 <style>
 h2{
 	text-align:center;
@@ -44,7 +47,7 @@ td {
 }
 </style>
 <body>
-<h2>회원정보 수정</h2>
+<h2>${loginId }회원정보 수정</h2>
 
 		<table>
 			<tr>

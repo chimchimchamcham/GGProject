@@ -110,7 +110,15 @@ public class UserDAO {
       if(checker>0) {
          success =true;
       }
+      sql = "INSERT INTO point(pnt_id,pnt_point,pnt_tm) VALUES(?,?,SYSDATE)";
       
+      ps = conn.prepareStatement(sql);
+      ps.setString(1, dto.getU_id());
+      ps.setInt(2, 10);
+      
+      
+      ps.executeUpdate();
+      System.out.println("회원가입 포인트 10원 지급.");
       
       return success;
    }
