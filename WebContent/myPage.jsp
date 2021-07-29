@@ -289,7 +289,7 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
 			</tr>
 			<tr>
 				<td colspan="3">
-					<p>${myPageInfo.info }</p>
+					<p>${myPageInfo.u_intro }</p>
 					<textarea rows="9" cols="80" style="resize: none;"></textarea>
 				</td>
 			</tr>
