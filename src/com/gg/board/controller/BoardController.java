@@ -2,6 +2,7 @@ package com.gg.board.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.gg.board.service.BoardService;
 import com.gg.dto.GGDto;
 
-@WebServlet({"/salesDetail","/sold"})
+@WebServlet({"/salesDetail","/sold","/writeForm","/writeTrade","/writeSale","/writeCommunity"})
 public class BoardController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -74,6 +75,33 @@ public class BoardController extends HttpServlet {
 			System.out.println("리스트 요청");				
 			service.list();
 			break;
+			
+		case "/writeForm":
+			System.out.println("글쓰기 폼 요청");
+			HashMap<String,ArrayList<GGDto>>map = service.category();
+			System.out.println("[Controller ] category success : "+map);
+			ArrayList<GGDto> commuCat =map.get("commuCat");
+			ArrayList<GGDto> saleCat =map.get("saleCat");
+			System.out.println("saleCat list size : "+saleCat.size());
+			System.out.println("commuCat list size : "+commuCat.size());
+			req.setAttribute("saleCat", saleCat);
+			req.setAttribute("commuCat", commuCat);
+			dis = req.getRequestDispatcher("writeForm.jsp");
+			dis.forward(req, resp);
+			 break;
+			 
+		case "/writeSale":
+			System.out.println("판매글 쓰기 요청");
+			break;
+			
+		case "/writeTrade":
+			System.out.println("경매글 쓰기 요청");
+			break;
+			
+		case "/writeCommunity":
+			System.out.println("커뮤니티글 쓰기 요청");
+			break;
+			
 		}
 		
 		

@@ -125,6 +125,10 @@ public class GGDto {
 	// 사진
 	private String i_newName;
 
+	//코드분류
+	private String c_code;
+	private String c_name;
+	
 	public String getU_id() {
 		return u_id;
 	}
@@ -739,6 +743,22 @@ public class GGDto {
 
 	public void setNs_code(String ns_code) {
 		this.ns_code = ns_code;
+	}
+
+	public String getC_code() {
+		return c_code;
+	}
+
+	public void setC_code(String c_code) {
+		this.c_code = c_code;
+	}
+
+	public String getC_name() {
+		return c_name;
+	}
+
+	public void setC_name(String c_name) {
+		this.c_name = c_name;
 	}
 
 }
