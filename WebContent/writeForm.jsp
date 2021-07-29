@@ -84,8 +84,8 @@ textarea {
 		</div>
 
 		<div id="saleForm">
-			<p>
-				<input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point
+			<p id="salePr">
+				<input type="text" name="price" value=""  placeholder="가격 입력(숫자입력)" />&nbsp;Point
 			</p>
 			<p>
 				거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
@@ -108,7 +108,7 @@ textarea {
 		<!--경매선택시 하단부분-->
 		<div id="tradeForm">
 			<p>경매시간 설정</p>
-			<p>
+			<p id="endDate">
 				현재시간 ~ 종료시간<input type="text" name="endDate" value=""
 					id="datepicker" readonly>
 			</p>
@@ -251,7 +251,7 @@ $("#datepicker").datepicker({
 			
 			console.log(param.select);
 			$("#tradeForm").show();
-			$("#reservForm,#commuCategory").hide();
+			$("#reservForm,#commuCategory,#salePr").hide();
 			
 		});
 
@@ -268,7 +268,7 @@ $("#datepicker").datepicker({
 			param.select = "P002";
 			console.log(param.select);
 			$("#tradeForm,#reservForm,#commuCategory").hide();
-			$("#saleForm").show();
+			$("#saleForm,#salePr").show();
 		});
 
 		//경매폼에서 예약경매하기 버튼 클릭시
