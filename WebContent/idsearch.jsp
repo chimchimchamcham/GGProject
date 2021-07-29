@@ -129,7 +129,7 @@
 					</tr>
 					<tr>
 						<td><input type="text" id="pwchk2"/>&nbsp
-							<c:if text="${'(#pwchk1)' ne $()"/>
+							
 							<span id ="alert" style="color:red">* 비밀번호가 일치하지 않습니다.</span>
 						</td>
 					</tr>
