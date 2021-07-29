@@ -5,10 +5,8 @@ import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import com.gg.board.dao.BoardDAO;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
