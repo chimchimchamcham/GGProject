@@ -29,4 +29,11 @@
 		<a href="salesDetailSalerPosition.jsp">내 판매글 상세보기</a>
 	</div>
 </body>
+<script>
+	var msg = "${msg}";
+	if(msg != ""){
+		alert(msg);
+		msg = "";
+	}
+</script>
 </html>

@@ -54,7 +54,7 @@ div#logo{
 			<input id="pwbox"  type="password" name = "loginPw" placeholder  = "비밀번호"/>
 			<button style="margin:10px">로그인</button>
 			<input type="button" onclick="location.href='joinForm.jsp'" value="회원가입"/>
-			<a href="#" style = " font-size:12px;">아이디/비밀번호 찾기</a>
+			<a href="idsearch.jsp" style = " font-size:12px;">아이디/비밀번호 찾기</a>
 		</form>
 	</div>
 </body>

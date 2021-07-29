@@ -134,6 +134,26 @@ public class UserDAO {
 	      return userId;
 	   }
 
+public String idsearch(String name, String email) {
+	String id=null;
+	String sql = "SELECT U_id FROM UserInfo WHERE U_name=? AND U_email=?";
+	try {
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, name);
+		ps.setString(2, email);
+		rs = ps.executeQuery();
+		if(rs.next()) {
+			id = rs.getString(1);
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}finally {
+		resClose();
+	}
+	return id;
+}
+
 public GGDto myPage(String id) {
 	
 	GGDto dto = null;
