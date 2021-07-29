@@ -209,5 +209,7 @@
 			$("#alert").show();
 		}
 	})
+	
+	$("#chkpw").click();
 </script>
 </html>
