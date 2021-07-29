@@ -236,7 +236,8 @@ $("#datepicker").datepicker({
 		//초기상태 - 판매폼만 보이는 상태
 		//폼 선택 버튼  클릭시 해당 값이 달라짐
 		var param={};
-		param.userId = '<%=(String)session.getAttribute("uid")%>';
+		param.userId ="${sessionScope.loginId}";
+		
 		//경매하단부분 숨겨져있음
 		$("#saleForm").show();
 		$("#communityForm").show();

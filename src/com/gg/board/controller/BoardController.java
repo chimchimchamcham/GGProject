@@ -111,14 +111,17 @@ public class BoardController extends HttpServlet {
 			 
 		case "/writeSale":
 			System.out.println("판매글 쓰기 요청");
+			success = service.writeSale();
 			break;
 			
 		case "/writeTrade":
 			System.out.println("경매글 쓰기 요청");
+			success = service.writeTrade();
 			break;
 			
 		case "/writeCommunity":
 			System.out.println("커뮤니티글 쓰기 요청");
+			success = service.writeCommu();
 			break;
 			
 		}

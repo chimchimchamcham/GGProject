@@ -212,6 +212,35 @@ public class BoardService {
 		
 	}
 
+	public boolean writeCommu() {
+		
+		return false;
+	}
+
+	public boolean writeTrade() {
+
+		return false;
+	}
+
+	public boolean writeSale() {
+		BoardDAO dao = new BoardDAO();
+		
+		String p_title = req.getParameter("title");
+		String p_content = req.getParameter("name");
+		String s_deliveryYN = req.getParameter("deliveryYN");
+		String s_code=req.getParameter("category");
+		String ns_pr = req.getParameter("price");
+		
+		GGDto dto = new GGDto();
+		dto.setP_title(p_title);
+		dto.setP_content(p_content);
+		dto.setS_DeliveryYN(s_deliveryYN);
+		dto.setS_
+		
+		dao.writeSale();
+		return false;
+	}
+
 	
 	
 }
