@@ -125,7 +125,13 @@ public class GGDto {
 
 	// 사진
 	private String i_newName;
-
+	
+	//게시글 카테고리
+	private String p_cate;
+	private String p_cateName;
+	
+	
+	
 	//코드분류
 	private String c_code;
 	private String c_name;
@@ -768,6 +774,22 @@ public class GGDto {
 
 	public void setS_code(String s_code) {
 		this.s_code = s_code;
+	}
+
+	public String getP_cate() {
+		return p_cate;
+	}
+
+	public void setP_cate(String p_cate) {
+		this.p_cate = p_cate;
+	}
+
+	public String getP_cateName() {
+		return p_cateName;
+	}
+
+	public void setP_cateName(String p_cateName) {
+		this.p_cateName = p_cateName;
 	}
 
 }

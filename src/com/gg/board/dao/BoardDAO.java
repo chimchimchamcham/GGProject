@@ -18,23 +18,29 @@ public class BoardDAO {
 	public Connection conn = null;
 	public ResultSet rs = null;
 	public PreparedStatement ps = null;
-	
+
 	public BoardDAO() {
 		try {
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle");
 			conn = ds.getConnection();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void resClose() {
 		try {
-			if(rs != null && !rs.isClosed()) {rs.close();}
-			if(ps != null && !ps.isClosed()) {ps.close();}
-			if(conn != null && !conn.isClosed()) {conn.close();}
-		}catch(Exception e) {
+			if (rs != null && !rs.isClosed()) {
+				rs.close();
+			}
+			if (ps != null && !ps.isClosed()) {
+				ps.close();
+			}
+			if (conn != null && !conn.isClosed()) {
+				conn.close();
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -42,18 +48,23 @@ public class BoardDAO {
 	public GGDto salesDetail(int p_no) {
 		System.out.println("DAO salesDetail 호출");
 		GGDto dto = null;
-		/*String sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME,"+
-			    	 "S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME,"+
-			    	 "N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME,"+
-			    	 "I.I_NEWNAME,"+
-			    	 "LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR"+
-			    	 "FROM POST P, SALE S, N_SALE N, IMG I WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND P.P_NO = ?";*/
+		/*
+		 * String sql =
+		 * "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME,"
+		 * +
+		 * "S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME,"
+		 * + "N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME,"+
+		 * "I.I_NEWNAME,"+
+		 * "LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR"+
+		 * "FROM POST P, SALE S, N_SALE N, IMG I WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND P.P_NO = ?"
+		 * ;
+		 */
 		String sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME, S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME, N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME, I.I_NEWNAME, LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR FROM POST P, SALE S, N_SALE N, IMG I WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND P.P_NO = ?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				dto = new GGDto();
 				dto.setP_no(rs.getInt("P_no"));
 				dto.setP_id(rs.getString("P_id"));
@@ -64,23 +75,23 @@ public class BoardDAO {
 				dto.setP_likeCount(rs.getInt("P_likeCount"));
 				dto.setP_blindYN(rs.getString("P_blindYN"));
 				dto.setP_name(rs.getString("P_name"));
-				
+
 				dto.setS_DeliveryYN(rs.getString("S_DeliveryYN"));
 				dto.setS_followLimYN(rs.getString("S_followLimYN"));
 				dto.setS_name(rs.getString("S_name"));
-				
+
 				dto.setNs_pr(rs.getInt("NS_pr"));
 				dto.setNs_name(rs.getString("NS_name"));
-				
+
 				dto.setI_newName(rs.getString("I_newName"));
-				
+
 				dto.setU_addr(rs.getString("U_addr"));
-				System.out.println("u_addr : "+dto.getU_addr());
+				System.out.println("u_addr : " + dto.getU_addr());
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return dto;
 	}
 
@@ -90,9 +101,9 @@ public class BoardDAO {
 		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1,p_no);
+			ps.setInt(1, p_no);
 			success = ps.executeUpdate();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println("DAO upP_view4");
@@ -102,20 +113,20 @@ public class BoardDAO {
 	public boolean isLiked(String u_id, int p_no) {
 		System.out.println("DAO isLiked");
 		String sql = "SELECT * FROM LOVE WHERE L_ID = ? AND P_NO = ?";
-		System.out.println("u_id : "+u_id);
-		System.out.println("p_no : "+p_no);
-		
+		System.out.println("u_id : " + u_id);
+		System.out.println("p_no : " + p_no);
+
 		boolean isLiked = false;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1,u_id);
-			ps.setInt(2,p_no);
+			ps.setString(1, u_id);
+			ps.setInt(2, p_no);
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				isLiked = true;
 			}
-			System.out.println("[DAO] isLiked : "+isLiked);
-		}catch(Exception e) {
+			System.out.println("[DAO] isLiked : " + isLiked);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return isLiked;
@@ -127,29 +138,29 @@ public class BoardDAO {
 		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1,p_no);
-			ps.setString(2,u_id);
+			ps.setInt(1, p_no);
+			ps.setString(2, u_id);
 			success = ps.executeUpdate();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return success>0?true:false;
+		return success > 0 ? true : false;
 
 	}
-	
+
 	public boolean loveMinus(String u_id, int p_no) {
 		System.out.println("DAO loveMinus");
 		String sql = "DELETE FROM LOVE WHERE L_ID = ? AND P_NO = ?";
 		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1,u_id);
-			ps.setInt(2,p_no);
+			ps.setString(1, u_id);
+			ps.setInt(2, p_no);
 			success = ps.executeUpdate();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return success>0?true:false;
+		return success > 0 ? true : false;
 
 	}
 
@@ -159,28 +170,28 @@ public class BoardDAO {
 		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1,p_no);
+			ps.setInt(1, p_no);
 			success = ps.executeUpdate();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return success;
 	}
-	
+
 	public int loveCountMinus(int p_no) {
 		System.out.println("DAO loveCountMinus");
 		String sql = "UPDATE POST SET P_LIKECOUNT = P_LIKECOUNT - 1 WHERE P_NO = ?";
 		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1,p_no);
+			ps.setInt(1, p_no);
 			success = ps.executeUpdate();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return success;
 	}
-	
+
 	public boolean buyRequest(int p_no, String u_id) {
 		String sql = "INSERT INTO REQUEST VALUES(RQ_no_seq.NEXTVAL,?,?,NULL,SYSDATE)";
 		int success = 0;
@@ -229,11 +240,11 @@ public class BoardDAO {
 		ArrayList<GGDto> list = new ArrayList<GGDto>();
 		System.out.println(list);
 		ps = conn.prepareStatement(sql);
-		//ps.setString(1, "");
-		System.out.println("ps:"+ps);
+		// ps.setString(1, "");
+		System.out.println("ps:" + ps);
 		rs = ps.executeQuery();
-		System.out.println("rs:"+rs);
-		
+		System.out.println("rs:" + rs);
+
 		while (rs.next()) {
 			GGDto dto = new GGDto();
 			dto.setP_no(rs.getInt("P_no"));
@@ -248,7 +259,7 @@ public class BoardDAO {
 		}
 		return list;
 	}
-	
+
 	public HashMap<String, ArrayList<GGDto>> category() {
 		String sql = "select * from codes where c_code like 'S%'";
 		HashMap<String, ArrayList<GGDto>> map = new HashMap<String, ArrayList<GGDto>>();
@@ -257,7 +268,7 @@ public class BoardDAO {
 		try {
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				GGDto dto = new GGDto();
 				dto.setC_code(rs.getString("c_code"));
 				dto.setC_name(rs.getString("c_name"));
@@ -268,15 +279,14 @@ public class BoardDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		sql = "select * from codes where c_code like 'C%'";
+		sql = "select * from post_codes where p_cate like 'C%'";
 		try {
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				GGDto dto = new GGDto();
-				
-				dto.setC_code(rs.getString("c_code"));
-				dto.setC_name(rs.getString("c_name"));
+				dto.setP_cate(rs.getString("p_cate"));
+				dto.setP_cateName(rs.getString("p_cateName"));
 				list2.add(dto);
 			}
 			map.put("commuCat", list2);
@@ -284,12 +294,12 @@ public class BoardDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return map;
 	}
 
 	public int writeSale(GGDto dto) {
-		
+
 		String sql = "INSERT INTO post(p_no,p_id,p_title,p_content,p_tm,p_view,p_likeCount,p_blindYN,p_code) VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
 		int success = 0;
 		int p_no = 0;
@@ -300,45 +310,50 @@ public class BoardDAO {
 			ps.setString(3, dto.getP_content());
 			ps.setString(4, "N");
 			ps.setString(5, dto.getP_code());
-			
+
 			success += ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
-			if(rs.next()) {
-				sql="INSERT INTO sale VALUES(?,?,?,?,?)";
+			if (rs.next()) {
+				sql = "INSERT INTO sale VALUES(?,?,?,?,?)";
 				ps = conn.prepareStatement(sql);
-				p_no= rs.getInt(1);
+				p_no = rs.getInt(1);
 				ps.setInt(1, p_no);
 				ps.setString(2, dto.getS_DeliveryYN());
-				ps.setString(3,dto.getS_followLimYN());
+				ps.setString(3, dto.getS_followLimYN());
 				ps.setString(4, dto.getP_id());
-				
-				
+
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		sql = "INSERT INTO sale VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
-		
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, dto.getP_id());
-			ps.setString(2, dto.getP_title());
-			ps.setString(3, dto.getP_content());
-			ps.setString(4, "N");
-			ps.setString(5, dto.getS_code());
-			
-			success = ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
 		return success;
-		
+	}
+
+	public boolean writeCommu(GGDto dto) throws SQLException {
+
+		boolean success = false;
+		int checker = 0;
+
+		String sql = "INSERT INTO post VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?,?)";
+
+		ps = conn.prepareStatement(sql, new String[] { "p_no" });
+		ps.setString(1, dto.getP_id());
+		ps.setString(2, dto.getP_title());
+		ps.setString(3, dto.getP_content());
+		ps.setString(4, "N");
+		ps.setString(5, dto.getP_code());
+		ps.setString(6, dto.getP_cate());
+		checker = ps.executeUpdate();
+		rs = ps.getGeneratedKeys();
+		if (checker > 0) {
+			rs.next();
+			int pk = rs.getInt(1);
+			System.out.println("글 작성 번호 : " + pk);
+			System.out.println("글 작성 성공");
+		}
+
+		return success;
 	}
 }
