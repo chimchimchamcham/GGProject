@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 <script src = "https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-	*{margin:0;padding:0;border-width:0;list-style-type:none;}
     body{width:100%;}
 	div{
 		background-color:gray;
@@ -31,6 +30,10 @@
 	}
 	tr,th,td{
 		padding:10px;
+	}
+	#pwar *{
+		padding:3px;
+		font-size:10px;
 	}
 </style>
 </head>
@@ -75,12 +78,52 @@
 				</tr>
 			</table>
 		</div>
-			<div id = "pwarea">비밀번호 재설정
+		<!-- --여기서 부터는 비밀번호 재설정 창-- -->
+			<div id = "pwarea">
+			<table id = "pwar">
+				<tr>
+					<th>아이디</th>
+				</tr>
+				<tr>
+					<td>
+						<input type="text"/>
+					</td>
+				</tr>
+				<tr>
+					<th>이름</th>
+				</tr>
+				<tr>
+					<td>
+						<input type="text"/>
+					</td>
+				</tr>
+				<tr>
+					<th>이메일</th>
+				</tr>
+				<tr>
+					<td>
+						<input type="text"/>
+					</td>
+				</tr>
+				<tr>
+					<td align="right">	
+						<input type="button" value="비밀번호 확인"/>
+					</td>
+				</tr>
+			</table>
+			<div id="resetpw">
+				<table>
+					<tr>
+						<th>비밀번호 재설정</th>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 </body>
 <script>
 	$("#pwarea").hide();
+	//$("#resetpw").hide();
 	$("#findId").click(function(){
 		$("#pwarea").hide();
 		$("#idarea").show();
@@ -113,5 +156,8 @@
 		}
 	});	
 	})
+	$.ajax({
+		
+	});
 </script>
 </html>
