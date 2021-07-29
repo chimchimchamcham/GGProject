@@ -9,6 +9,7 @@
 <style>
     body{width:100%;}
 	div{
+		border:1px solid black;
 		background-color:gray;
 	}
 	#wrap{
@@ -27,11 +28,13 @@
 		text-align:left;
 		width:500px;
 		padding:10px;
+		border:1px solid black;
 	}
 	tr,th,td{
 		padding:10px;
+		border:1px solid black;
 	}
-	#pwar *{
+	#pwarea *{
 		padding:3px;
 		font-size:10px;
 	}
@@ -120,7 +123,10 @@
 						<td>새 비밀번호 확인</td>
 					</tr>
 					<tr>
-						<td><input type="text"/>&nbsp<span>비밀번호가 일치하지 않습니다.</span></td>
+						<td><input type="text"/>&nbsp<span id ="alert" style="color:red">* 비밀번호가 일치하지 않습니다.</span></td>
+					</tr>
+					<tr>
+						<td align="right"><input type="button" value="비밀번호 변경하기"/></td>
 					</tr>
 				</table>
 			</div>
