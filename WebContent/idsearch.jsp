@@ -88,30 +88,35 @@
 					<th>아이디</th>
 				</tr>
 				<tr>
-					<td><input type="text"/></td>
+					<td><input type="text" id="chkid"/></td>
 				</tr>
 				<tr>
 					<th>이름</th>
 				</tr>
 				<tr>
-					<td><input type="text"/></td>
+					<td><input type="text" id="chkname"/></td>
 				</tr>
 				<tr>
 					<th>이메일</th>
 				</tr>
 				<tr>
 					<td>
-						<input type="text"/>
+						<input type="text" id="chkemail"/>@
+						<select name="mail">
+							<option value='naver.com'>naver.com</option>
+							<option value='daum.net'>daum.net</option>
+							<option value='google.com'>google.com</option>
+						</select>
 					</td>
 				</tr>
 				<tr>
 					<td align="right">	
-						<input type="button" value="비밀번호 확인"/>
+						<input type="button" value="비밀번호 확인" id="chkpw"/>
 					</td>
 				</tr>
 			</table>
 			<div id="resetpw">
-				<span>비밀번호 재설정</span>
+				<span style="font-weight:bold">비밀번호 재설정</span>
 				<table>
 					<tr>
 						<td>새 비밀번호</td>
@@ -135,7 +140,7 @@
 </body>
 <script>
 	$("#pwarea").hide();
-	//$("#resetpw").hide();
+	$("#resetpw").hide();
 	$("#findId").click(function(){
 		$("#pwarea").hide();
 		$("#idarea").show();
@@ -168,8 +173,24 @@
 		}
 	});	
 	})
-	$.ajax({
-		
-	});
+	$("#chkpw").click(function(){
+		var email = $("#chkemail").val()+"@"+$("select[name=mail]").val();
+		$.ajax({
+			type:"post",
+			url:"chkpw",
+			data:{
+				"id":$("#chkid").val(),
+				"name":$("#chkname").val(),
+				"email":email
+			},
+			dataType:"JSON",
+			success:function(data){
+				console.log(data);
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+	})
 </script>
 </html>

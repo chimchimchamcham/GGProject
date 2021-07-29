@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gg.user.service.UserService;
 
-@WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage","/userUpdate","/userUpdateForm" })
+@WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage","/userUpdate","/userUpdateForm","/chkpw"})
 public class UserController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -109,7 +109,10 @@ public class UserController extends HttpServlet {
 		case "/UserUpdate":
 			
 			break;
-			
+		
+		case "/chkpw":
+			System.out.println(req.getParameter("email"));
+			break;
 		}
 		
 	
