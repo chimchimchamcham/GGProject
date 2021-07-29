@@ -99,6 +99,15 @@ public class BoardService {
 	resp.setContentType("text/html; charset=UTF-8");		
 	resp.getWriter().println(new Gson().toJson(map));
 }
+	
+	public HashMap<String, ArrayList<GGDto>> category() {
+		BoardDAO dao = new BoardDAO();
+		HashMap<String, ArrayList<GGDto>> map = dao.category();
+		System.out.println("[Service ] category success : "+map);
+		return map;
+		
+		
+	}
 
 	
 	
