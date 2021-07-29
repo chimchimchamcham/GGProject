@@ -142,67 +142,16 @@
             <button>판매중</button>
             <button>판매완료</button>
         </div>
+        
         <div class="alien_list">
-                <button class="clicked">최신</button>/
+                <button class="clicked" >최신</button>/
                 <button>인기</button>/
                 <button>저가</button>/
                 <button>고가</button>
         </div>
+        
         <div class="content-zoon">
             <div class="item-box">
-                <div class="item-one">
-                    <div class="img-zoon"> 
-                        <img src="test.jpg" alt="#">
-                    </div>
-                    <div class="dretion-zoon">
-                        <div>제목</div>
-                        <div>5000p</div>
-                    </div>
-                    <div class="love-time">
-                        <div>♥:22</div>
-                        <div>1일 전</div>
-                    </div>
-                </div>
-                <div class="item-one">
-                    <div class="img-zoon"> 
-                        <img src="test.jpg" alt="#">
-                    </div>
-                    <div class="dretion-zoon">
-                        <div>제목</div>
-                        <div>5000p</div>
-                    </div>
-                    <div class="love-time">
-                        <div>♥:22</div>
-                        <div>1일 전</div>
-                    </div>
-                </div>
-                <div class="item-one">
-                    <div class="img-zoon"> 
-                        <img src="test.jpg" alt="#">
-                    </div>
-                    <div class="dretion-zoon">
-                        <div>제목</div>
-                        <div>5000p</div>
-                    </div>
-                    <div class="love-time">
-                        <div>♥:22</div>
-                        <div>1일 전</div>
-                    </div>
-                </div>
-                <div class="item-one">
-                    <div class="img-zoon"> 
-                        <img src="test.jpg" alt="#">
-                    </div>
-                    <div class="dretion-zoon">
-                        <div>제목</div>
-                        <div>5000p</div>
-                    </div>
-                    <div class="love-time">
-                        <div>♥:22</div>
-                        <div>1일 전</div>
-                    </div>
-                </div>
-            </div>
                 
             </div>
         </div>
@@ -210,7 +159,7 @@
 </body>
     <script>
 
-
+    listCall();
     var $button;
     var $index;
     var $index_button;
@@ -220,9 +169,10 @@
         $button = $(".button-layout button");
         $index = $button.index(this);
         $index_button = $(".button-layout button:eq(" + $index + ")");
-
+		console.log("$index:"+$index);
         $button.removeClass('clicked');
         $index_button.toggleClass( 'clicked' );
+        listCall();
     })
 
 
@@ -231,12 +181,55 @@
         $button = $(".alien_list button");
         $index = $button.index(this);
         $index_button = $(".alien_list button:eq(" + $index + ")");
-
+        console.log("$index:"+$index);
         $button.removeClass('clicked');
         $index_button.toggleClass( 'clicked' );
-            
+        listCall();
         
     })
 
+    function listCall(){
+	$.ajax({
+		type:'get',
+		url:'./sold',
+		data:{},
+		dataType:'JSON',
+		success:function(data){
+			console.log("data:"+data);
+			if(data.list != null){
+				soled(data.list);
+			}
+		},
+		error:function(e){
+			console.log("e:"+e);
+		}
+	});
+}
+    
+    
+    	function soled(list){	
+    	
+    	console.log("list:"+list);
+    	var content="";
+    	
+    	list.forEach(function(item,idx){
+    		console.log(idx,item);
+    		content +="<div class='item-one'>";
+    		content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg'></div>";
+    		content += "<div class='dretion-zoon'>";
+    		content += "	<div class='itemindex'>"+item.p_title+"</div>";
+    		content += "	<div class='itempoint'>"+item.ns_pr+"p"+"</div>";
+    		content += "</div>";
+    		content += "<div class='love-time'>";
+    		content += "	<div class='love'>"+item.p_likeCount+"</div>";
+    		content += "	<div class='time'>"+item.p_tm+"</div>";	
+    		content += "</div>";	
+    		content += "</div>";
+    	});	
+    	$(".item-box").empty();
+    	$(".item-box").append(content);
+    	
+	}
+    
 </script>
 </html>
