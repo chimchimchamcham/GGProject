@@ -16,7 +16,7 @@ public class BoardService {
 	HttpServletRequest req = null;
 	HttpServletResponse resp = null;
 	
-	public BoardService(HttpServletRequest req) {
+	public BoardService(HttpServletRequest req,HttpServletResponse resp) {
 		this.req = req;
 		this.resp = resp;
 		
@@ -51,6 +51,7 @@ public class BoardService {
 
 	//찜을 눌렀는지 확인
 	public boolean isLiked(String u_id, int p_no) {
+		System.out.println("service isLiked");
 		boolean isLiked = false;
 		BoardDAO dao = new BoardDAO();
 		isLiked = dao.isLiked(u_id, p_no);
@@ -115,6 +116,7 @@ public class BoardService {
 
 	//ajax로 lovePlus2 처리
 		public void lovePlus2() throws IOException{
+			System.out.println("service lovePlus2");
 			int p_no = Integer.parseInt(req.getParameter("p_no"));
 			String u_id = (String) req.getSession().getAttribute("loginId");
 			//String u_id = "user1"; //임시로 저장
@@ -149,6 +151,7 @@ public class BoardService {
 		
 	//ajax로 lovePlus2 처리
 	public void loveMinus2() throws IOException{
+		System.out.println("service loveMinus2");
 		int p_no = Integer.parseInt(req.getParameter("p_no"));
 		String u_id = (String) req.getSession().getAttribute("loginId");
 		//String u_id = "user1"; //임시로 저장
