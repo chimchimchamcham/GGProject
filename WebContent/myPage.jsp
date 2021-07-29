@@ -86,6 +86,8 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 	$(document).ready(function() {
 
 		/*알림*/
+		firstcall();//처음에만 뿌려주는 거
+		
 		var msg = "${msg}";
 		if(msg != ""){
 			alert(msg);
@@ -267,22 +269,45 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		
 	});
 	
+	function firstcall(){
+		$.ajax({
+			type:'post',
+			url:'./sold',
+			data:{},
+			dataType:'JSON',
+			success:function(data){
+				console.log("data",data);
+				if(data.list != null){
+					soled(data.list);
+				}
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+	}
+	
+	
 	
 	function call(){
+	
 		console.log('call');
+		listCall();
 		$("#twoButton>button").click(function(){
+			console.log('call');
 		    $button = $("#twoButton>button");
 		    $index = $button.index(this);
+		    console.log("#twoButton>button:"+$index);
 		    $index_button = $("#twoButton>button:eq(" + $index + ")");
 			console.log("$index:"+$index);
-			listCall();
+			listCall($index);
 		})
 	}
 	
-	function listCall(){
+	function listCall($index){
 		$.ajax({
-			type:'get',
-			url:'/sold',
+			type:'post',
+			url:'./sold',
 			data:{},
 			dataType:'JSON',
 			success:function(data){
@@ -292,13 +317,14 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 				}
 			},
 			error:function(e){
-				console.log("e:"+e);
+				console.log(e);
 			}
 		});
 		}
+			//데이터 가져와서 뿌려주는 함수
 			function soled(list){	
 			
-			console.log("list:"+list);
+			console.log("list:", list);
 			var content="";
 			
 			list.forEach(function(item,idx){
@@ -315,8 +341,8 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 				content += "</div>";	
 				content += "</div>";
 			});	
-			$("#sale").empty();
-			$("#sale").append(content);
+			$("#sale .item-box").empty();
+			$("#sale .item-box").append(content);
 			
 		}
 </script>

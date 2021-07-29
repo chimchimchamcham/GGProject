@@ -111,8 +111,9 @@ public class BoardController extends HttpServlet {
 			break;		
 		/* ===========================================================================*/	
 		case "/sold":
-			System.out.println("리스트 요청");				
-			service.list();
+			System.out.println("리스트 요청");	
+			String userid = (String) req.getSession().getAttribute("loginId");
+			service.list(userid);
 			break;
 			
 		case "/writeForm":
