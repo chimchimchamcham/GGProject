@@ -171,9 +171,9 @@ public class UserService {
 		map.put("id", dao.idsearch(name, email));
 		Gson gson = new Gson();
 		
-		String data = gson.toJson(map);
+		String obj = gson.toJson(map);
 		try {
-			resp.getWriter().println();
+			resp.getWriter().println(obj);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

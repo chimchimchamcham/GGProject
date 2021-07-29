@@ -64,7 +64,7 @@
 				</tr>
 				<tr>
 					<td align="right">
-						<input type="button" name="searchId" value="아이디찾기"/>
+						<input type="button" id="searchId" value="아이디찾기"/>
 					</td>
 				</tr>
 				<tr>
@@ -75,7 +75,7 @@
 				</tr>
 			</table>
 		</div>
-		<div id = "pwarea">비밀번호 재설정
+			<div id = "pwarea">비밀번호 재설정
 		</div>
 	</div>
 </body>
@@ -100,10 +100,12 @@
 		},
 		dataType:"JSON",
 		success:function(data){
+			console.log(data.id);
 			if(data.id == null){
-				$("td[id=resultprint]").html("일치하는 아이디가 없습니다.");
+				$("#resultprint").html("일치하는 아이디가 없습니다.");
 			}else{
-				$("td[id=resultprint]").html("고객님의 ID는 "+data.id+"입니다.");
+				var stn = "고객님의 ID는 "+data.id+"입니다.";
+				$("#resultprint").html(stn);
 			}
 		},
 		error:function(e){
