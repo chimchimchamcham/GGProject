@@ -58,7 +58,6 @@ public class UserController extends HttpServlet {
 		case "/login":
 			System.out.println("로그인 요청");
 			String userId = service.login();
-			System.out.println(userId);
 			String msg = "아이디 또는 비밀번호를 확인 하세요";
 			String page = "login.jsp";
 			if (userId != null) {
