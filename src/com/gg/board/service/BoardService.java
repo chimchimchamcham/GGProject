@@ -240,6 +240,7 @@ public class BoardService {
 		BoardDAO dao = new BoardDAO();
 		HashMap<String, ArrayList<GGDto>> map = dao.category();
 		System.out.println("[Service ] category success : "+map);
+		dao.resClose();
 		return map;
 		
 		
@@ -291,7 +292,7 @@ public class BoardService {
 		String s_followLimYN = req.getParameter("followLimYN");
 		String s_code=req.getParameter("category");
 		String ns_pr = req.getParameter("price");
-		String p_code = req.getParameter("p_code");
+		String p_code = req.getParameter("select");
 		
 
 		System.out.println(p_title+"/"+p_content+"/"+s_deliveryYN+"/"+s_code+"/"+ns_pr+"/"+p_code);
@@ -305,9 +306,7 @@ public class BoardService {
 		dto.setS_code(s_code);
 		dto.setNs_pr(Integer.parseInt(ns_pr));
 		dto.setP_code(p_code);
-		
-		
-		
+
 		int success = dao.writeSale(dto);
 		 
 		return success;

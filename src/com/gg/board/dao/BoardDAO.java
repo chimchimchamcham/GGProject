@@ -313,6 +313,7 @@ public class BoardDAO {
 
 			success += ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
+			
 			if (rs.next()) {
 				sql = "INSERT INTO sale VALUES(?,?,?,?,?)";
 				ps = conn.prepareStatement(sql);
@@ -321,7 +322,26 @@ public class BoardDAO {
 				ps.setString(2, dto.getS_DeliveryYN());
 				ps.setString(3, dto.getS_followLimYN());
 				ps.setString(4, dto.getP_id());
-
+				
+				success += ps.executeUpdate();
+				rs = ps.getGeneratedKeys();
+				if(rs.next()) {
+					sql = "INSERT INTO N_sale VALUES(?,?,?)";
+					ps = conn.prepareStatement(sql);
+					p_no = rs.getInt(1);
+					ps.setInt(1, p_no);
+					ps.setInt(2,dto.getNs_pr());
+					ps.setString(3, "NS_001");
+					
+					success += ps.executeUpdate();
+					rs = ps.getGeneratedKeys();
+				}
+				if(success >2) {
+					rs.next();
+					p_no = rs.getInt(1);
+					System.out.println("판매글 작성 번호 : "+p_no);
+					System.out.println("판매글 작성 성공");
+				}
 			}
 
 		} catch (SQLException e) {
