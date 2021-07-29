@@ -293,7 +293,13 @@ $("#datepicker").datepicker({
 					data:param,
 					dataType:'JSON',
 					success:function(data){
-						console.log(data);
+						if(data.success){
+							alert("글 작성 성공했습니다.");
+							location.href='index.jsp';
+							
+						}else {
+							alert("커뮤니티 글 작성을 실패하였습니다! ");
+						}
 					},
 					error:function(e){
 						console.log(e);
