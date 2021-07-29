@@ -183,6 +183,38 @@ public class BoardService {
 		resp.getWriter().println(new Gson().toJson(map));	
 			
 	}
+	public boolean buyRequest() {
+		int p_no = Integer.parseInt(req.getParameter("p_no"));
+		String u_id = (String) req.getSession().getAttribute("loginId");
+		//String u_id = "user1"; //임시로 저장
+		BoardDAO dao = new BoardDAO();
+		boolean buyRequest = dao.buyRequest(p_no, u_id);
+		System.out.println("buyRequest : "+buyRequest);
+		dao.resClose();
+		return buyRequest;
+	}
+
+	public boolean buyRequestCancel() {
+		int p_no = Integer.parseInt(req.getParameter("p_no"));
+		String u_id = (String) req.getSession().getAttribute("loginId");
+		//String u_id = "user1"; //임시로 저장
+		BoardDAO dao = new BoardDAO();
+		boolean buyRequestCancel = dao.buyRequestCancel(p_no, u_id);
+		System.out.println("buyRequestCancel : "+buyRequestCancel);
+		dao.resClose();
+		return buyRequestCancel;
+	}
+
+	public boolean isBuyRequested() {
+		int p_no = Integer.parseInt(req.getParameter("p_no"));
+		String u_id = (String) req.getSession().getAttribute("loginId");
+		//String u_id = "user1";
+		BoardDAO dao = new BoardDAO();
+		boolean isBuyRequested = dao.isBuyRequested(p_no, u_id);
+		System.out.println("isBuyRequested : "+isBuyRequested);
+		dao.resClose();
+		return isBuyRequested;
+	}
 	/* ====================================================== */
 	public void list()	throws IOException {
 		
