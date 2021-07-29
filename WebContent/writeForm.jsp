@@ -24,16 +24,6 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <!--------------//////////////////////////////------------->
 
-<!-- 종료시간/예약경매시간 설정 달력 -->
-<link href="./air-datepicker/dist/css/datepicker.min.css"
-	rel="stylesheet" type="text/css" media="all">
-<!-- Air datepicker css -->
-<script src="./air-datepicker/dist/js/datepicker.js"></script>
-<!-- Air datepicker js -->
-<script src="./air-datepicker/dist/js/i18n/datepicker.ko.js"></script>
-<!-- 달력 한글 추가를 위해 커스텀 -->
-
-
 <style>
 #wrap {
 	width: 1200px;
@@ -45,10 +35,6 @@ textarea {
 	resize: none;
 }
 </style>
-
-
-
-
 
 </head>
 <body>
@@ -67,8 +53,9 @@ textarea {
 					style='width: "1000px"' />
 			</p>
 			<p class="imgFileUpload">
-				<label for ='test'><img src="img/plus.png" class="imgFileBtn" alt="plus" width="100px" /></label>
-				<input type="file" name="imgFile" style="display: none"  id="test"/>
+				<label for='test'><img src="img/plus.png" class="imgFileBtn"
+					alt="plus" width="100px" /></label> <input type="file" name="imgFile"
+					style="display: none" id="test" />
 			</p>
 			<p>
 				<textarea name="content" rows="30" cols="100" placeholder="내용입력"
@@ -85,12 +72,15 @@ textarea {
 
 		<div id="saleForm">
 			<p id="salePr">
+<<<<<<< HEAD
 				<input type="text" name="price" value=""  placeholder="가격 입력(숫자입력)" />&nbsp;Point
+=======
+				<input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point
+>>>>>>> f8269185af4c7f41fac9f21d933d9b60b8495422
 			</p>
 			<p>
 				거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
-					value="Y">택배<input type="radio" name="deliveryYN"
-					value="N">직거래
+					value="Y">택배<input type="radio" name="deliveryYN" value="N">직거래
 			</p>
 			<p id="category">
 				카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
@@ -118,9 +108,9 @@ textarea {
 			<button id="reservBtn">예약경매하기</button>
 			<div id="reservForm">
 				<p>
-					<input type="text" id="datepicker1" placeholder="시작시간"
+					<input type="text" id="from" placeholder="시작시간"
 						style="width: 80px;" readonly> ~ <input type="text"
-						id="datepicker2" placeholder="종료시간" style="width: 80px;" readonly>
+						id="to" placeholder="종료시간" style="width: 80px;" readonly>
 				</p>
 				<!--아래에 선택 일자 표시-->
 				<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
@@ -142,79 +132,223 @@ textarea {
 	</div>
 </body>
 <script>
+	//종료 날짜 설정 달력/////////////////////////////////////////////////////////////////
+$(function(){
+var option = {
+			// datepicker 애니메이션 타입
+			// option 종류 : "show" , "slideDown", "fadeIn", "blind", "bounce", "clip", "drop", "fold", "slide"
+			showAnim : "slideDown",
+			// 해당 월의 다른 월의 날짜가 보이는 여부, 예를 들면 10월이면 전후에 9월 마지막과 11월의 시작 일이 보이는 여부입니다. 즉, 달력이 꽉 차 보이게 하는 것
+			showOtherMonths : true,
+			// 선택 여부 (showOtherMonths 옵션과 같이 일치시키지 않으면 에러가 발생합니다.)
+			selectOtherMonths : true,
+			// 달력 밑에 오늘과 닫기 버튼이 보인다.
+			showButtonPanel : true,
+			// 년 월이 셀렉트 박스로 표현 되어서 선택할 수 있다.
+			changeMonth : true,
+			changeYear : true,
+			// 한번에 보이는 개월 수
+			numberOfMonths : 3,
+			// 데이터 포멧
+			dateFormat : "yy-mm-dd",
+			// 텍스트 박스 옆의 달력 포시
+			showOn : "button",
+			//이미지 타입인지 버튼 타입인지 설정
+			buttonImageOnly : true,
+			// 이미지 경로
+			buttonImage : "https://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+			// 버튼 타입이면 버튼 값
+			buttonText : "Select date",
+			// alt 데이터 포멧
+			altFormat : "DD, d MM, yy",
+			// 선택 가능한 날짜(수 형식) - 현재 기준 -20일
+			minDate : 0,
+			// 선택 가능한 최대 날짜(문자 형식) - 현재 기준 +1월 +20일
+			maxDate : "+1M",
+			// 주 표시
+			showWeek : true
+		};
+var option1 = {
+		// datepicker 애니메이션 타입
+		// option 종류 : "show" , "slideDown", "fadeIn", "blind", "bounce", "clip", "drop", "fold", "slide"
+		showAnim : "slideDown",
+		// 해당 월의 다른 월의 날짜가 보이는 여부, 예를 들면 10월이면 전후에 9월 마지막과 11월의 시작 일이 보이는 여부입니다. 즉, 달력이 꽉 차 보이게 하는 것
+		showOtherMonths : true,
+		// 선택 여부 (showOtherMonths 옵션과 같이 일치시키지 않으면 에러가 발생합니다.)
+		selectOtherMonths : true,
+		// 달력 밑에 오늘과 닫기 버튼이 보인다.
+		showButtonPanel : true,
+		// 년 월이 셀렉트 박스로 표현 되어서 선택할 수 있다.
+		changeMonth : true,
+		changeYear : true,
+		// 한번에 보이는 개월 수
+		numberOfMonths : 3,
+		// 데이터 포멧
+		dateFormat : "yy-mm-dd",
+		// 텍스트 박스 옆의 달력 포시
+		showOn : "button",
+		//이미지 타입인지 버튼 타입인지 설정
+		buttonImageOnly : true,
+		// 이미지 경로
+		buttonImage : "https://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+		// 버튼 타입이면 버튼 값
+		buttonText : "Select date",
+		// alt 데이터 포멧
+		altFormat : "DD, d MM, yy",
+		// 선택 가능한 날짜(수 형식) - 현재 기준 -20일
+		minDate : 0,
+		// 선택 가능한 최대 날짜(문자 형식) - 현재 기준 +1월 +20일
+		maxDate : "+2M",
+		// 주 표시
+		showWeek : true
+	};
+		var optionFrom = option;
+		optionFrom.altField = "#alternateFrom";
+		var dateFormat = "mm/dd/yy";
+		// 시작일이 선택이 되면 종료일은 시작일 보다 앞을 선택할 수 없다.
+		var from = $("#from").datepicker(optionFrom).on("change", function() {
+			to.datepicker("option", "minDate", getDate(this));
+		});
+		var optionTo = option1;
+		optionTo.altField = "#alternateTo";
+		// 종료일이 선택이 되면 시작일은 시작일 보다 앞을 선택할 수 없다.
+		var to = $("#to").datepicker(optionTo).on("change", function() {
+			from.datepicker("option1", "maxDate", getDate(this));
+		});
+		function getDate(element) {
+			return moment(element.value).toDate();
+		}
+	});
 
+	/////////////////////////////////////////////////////////////////////////////////////
 
+	//초기상태 - 판매폼만 보이는 상태
+	//폼 선택 버튼  클릭시 해당 값이 달라짐
+	var param = {};
+	param.userId = "${sessionScope.loginId}";
 
+	//경매하단부분 숨겨져있음
+	$("#saleForm").show();
+	$("#communityForm").show();
+	$("#tradeForm").hide();
+	$("#reservForm").hide();
+	$("#commuCategory").hide();
 
-//종료 날짜 설정 달력/////////////////////////////////////////////////////////////////
-$("#datepicker").datepicker({
-	language: 'ko'
-}); 
+	//경매버튼클릭시
+	$("#trade").click(function() {
+		param.select = "P001";
 
+		console.log(param.select);
+		$("#tradeForm").show();
+		$("#reservForm,#commuCategory,#salePr").hide();
 
-	datePickerSet($("#datepicker1"), $("#datepicker2"), true); //다중은 시작하는 달력 먼저, 끝달력 2번째
+	});
 
-		/*
-		 * 달력 생성기
-		 * @param sDate 파라미터만 넣으면 1개짜리 달력 생성
-		 * @example   datePickerSet($("#datepicker"));
-		 * 
-		 * 
-		 * @param sDate, 
-		 * @param eDate 2개 넣으면 연결달력 생성되어 서로의 날짜를 넘어가지 않음
-		 * @example   datePickerSet($("#datepicker1"), $("#datepicker2"));
-		 */
-		function datePickerSet(sDate, eDate, flag) {
+	//커뮤니티버튼 클릭시
+	$("#community").click(function() {
+		param.select = "P004";
+		console.log(param.select);
+		$("#tradeForm,#saleForm,#reservForm").hide();
+		$("#commuCategory").show();
+	});
 
-			//시작 ~ 종료 2개 짜리 달력 datepicker	
-			if (!isValidStr(sDate) && !isValidStr(eDate) && sDate.length > 0
-					&& eDate.length > 0) {
-				var sDay = sDate.val();
-				var eDay = eDate.val();
+	//판매버튼 클릭시
+	$("#sale").click(function() {
+		param.select = "P002";
+		console.log(param.select);
+		$("#tradeForm,#reservForm,#commuCategory").hide();
+		$("#saleForm,#salePr").show();
+	});
 
-				if (flag && !isValidStr(sDay) && !isValidStr(eDay)) { //처음 입력 날짜 설정, update...			
-					var sdp = sDate.datepicker().data("datepicker");
-					sdp.selectDate(new Date(sDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+	//경매폼에서 예약경매하기 버튼 클릭시
+	$("#reservBtn").click(function() {
+		$("#endDate").toggle();
+		$("#reservForm").toggle();
 
-					var edp = eDate.datepicker().data("datepicker");
-					edp.selectDate(new Date(eDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
-				}
+	})
 
-				//시작일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
-				if (!isValidStr(eDay)) {
-					sDate.datepicker({
-						maxDate : new Date(eDay.replace(/-/g, "/"))
-					});
-				}
-				sDate.datepicker({
-					language : 'ko',
-					autoClose : true,
-					onSelect : function() {
-						datePickerSet(sDate, eDate);
+	//등록버튼 클릭시 
+	$("#submit").click(function() {
+
+		if (param.select == "P004") { //커뮤니티글 선택시
+			param.title = $("input[name='title']").val();
+			param.content = $("textarea[name='content']").val();
+			param.category = $("select[name='commuCat']").val();//select name으로 값 받기			
+			console.log(param);
+			//ajax url="community"
+			$.ajax({
+				type : 'POST',
+				url : 'writeCommunity',
+				data : param,
+				dataType : 'JSON',
+				success : function(data) {
+					if (data.success) {
+						alert("글 작성 성공했습니다.");
+						location.href = 'index.jsp';
+
+					} else {
+						alert("커뮤니티 글 작성을 실패하였습니다! ");
 					}
-				});
-
-				//종료일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
-				if (!isValidStr(sDay)) {
-					eDate.datepicker({
-						minDate : new Date(sDay.replace(/-/g, "/"))
-					});
+				},
+				error : function(e) {
+					console.log(e);
 				}
-				eDate.datepicker({
-					language : 'ko',
-					autoClose : true,
-					onSelect : function() {
-						datePickerSet(sDate, eDate);
+
+			})
+
+		} else if (param.select == "P002") { //판매글 선택시
+			param.title = $("input[name='title']").val();
+			param.content = $("textarea[name='content']").val();
+			param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
+			param.deliveryYN = $("input[name='deliveryYN']:checked").val();
+			param.price = $("input[name='price']").val();
+			param.disclosure = $("input[name='disclosure']:checked").val();
+			//ajax url="sale"
+			console.log(param);
+			$.ajax({
+				type : 'POST',
+				url : 'writeSale',
+				data : param,
+				dataType : 'JSON',
+				success : function(data) {
+					if (data.success) {
+						alert("판매글 작성 성공했습니다.");
+						location.href = 'index.jsp';
+
+					} else {
+						alert("판매 글 작성을 실패하였습니다! ");
 					}
-				});
-
-				//한개짜리 달력 datepicker
-			} else if (!isValidStr(sDate)) {
-				var sDay = sDate.val();
-				if (flag && !isValidStr(sDay)) { //처음 입력 날짜 설정, update...			
-					var sdp = sDate.datepicker().data("datepicker");
-					sdp.selectDate(new Date(sDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+				},
+				error : function(e) {
+					console.log(e);
 				}
+
+			})
+		} else if (param.select == "P001") {//경매글 선택시
+			param.title = $("input[name='title']").val();// 제목
+			param.content = $("textarea[name='content']").val(); //내용
+			param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
+			param.startPr = $("input[name='startPrice']").val(); //시작가
+			param.instantPr = $("input[name='promptPrice']").val(); // 즉결가
+			param.deliveryYN = $("input[name='deliveryYN']:checked").val(); //택배여부
+			param.disclosure = $("input[name='disclosure']:checked").val(); // 팔로워 한정 여부
+			param.s_date = $("input[name='endDate']").val(); // 시작 날짜?
+			console.log(param);
+
+			//ajax url="trade"
+			/*
+			$.ajax({
+				type:'POST',
+				url:'writeTrade',
+				data:param,
+				dataType:'JSON',
+				success:function(data){
+					console.log(data);
+				},
+				error:function(e){
+					console.log(e);
+				}
+<<<<<<< HEAD
 
 				sDate.datepicker({
 					language : 'ko',
@@ -336,36 +470,17 @@ $("#datepicker").datepicker({
 						console.log(e);
 					}
 					
+=======
+>>>>>>> f8269185af4c7f41fac9f21d933d9b60b8495422
 				
-				})
-			}else if(param.select == "P001"){//경매글 선택시
-				param.title = $("input[name='title']").val();
-				param.content = $("textarea[name='content']").val();
-				param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
-				param.price = $("input[name='price']").val();
-				//ajax url="trade"
-				$.ajax({
-					type:'POST',
-					url:'writeTrade',
-					data:param,
-					dataType:'JSON',
-					success:function(data){
-						console.log(data);
-					},
-					error:function(e){
-						console.log(e);
-					}
-					
-				
-				})
-			}else{
-				alert("폼을 선택해주세요!");
-			}
-			});
-		$("#test123123").click(function(){
 			
-			
-		});
-	
+			})*/
+		} else {
+			alert("폼을 선택해주세요!");
+		}
+	});
+	$("#test123123").click(function() {
+
+	});
 </script>
 </html>
