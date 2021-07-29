@@ -76,6 +76,7 @@ td {
 }
 </style>
 <script>
+var loginId = "${sessionScope.loginId}";
 var $button;
 var $index;
 var $index_button;
