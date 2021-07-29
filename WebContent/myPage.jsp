@@ -282,14 +282,14 @@ function showPopup() { window.open("ChargePopup.jsp", "charge", "width=600, heig
 			</tr>
 			<tr>
 				<td>평점</td>
-				<td colspan="2">★★★★★ 5.0(50)</td>
+				<td colspan="2"></td>
 			</tr>
 			<tr>
 				<td colspan="3">자기소개</td>
 			</tr>
 			<tr>
 				<td colspan="3">
-					<p>안녕하세요 자기소개글하세요 자기소개글~안녕하세요 자기소개글~안녕하세요 자기소개글~안녕하세요 자기소개글~</p>
+					<p>${myPageInfo.info }</p>
 					<textarea rows="9" cols="80" style="resize: none;"></textarea>
 				</td>
 			</tr>
