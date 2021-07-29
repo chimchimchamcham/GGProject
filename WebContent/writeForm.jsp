@@ -67,8 +67,8 @@ textarea {
 					style='width: "1000px"' />
 			</p>
 			<p class="imgFileUpload">
-				<img src="img/plus.png" class="imgFileBtn" alt="plus" width="100px" />
-				<input type="file" name="imgFile" style="display: none" />
+				<label for ='test'><img src="img/plus.png" class="imgFileBtn" alt="plus" width="100px" /></label>
+				<input type="file" name="imgFile" style="display: none"  id="test"/>
 			</p>
 			<p>
 				<textarea name="content" rows="30" cols="100" placeholder="내용입력"
@@ -355,7 +355,10 @@ $("#datepicker").datepicker({
 				alert("폼을 선택해주세요!");
 			}
 			});
-		
+		$("#test123123").click(function(){
+			
+			
+		});
 	
 </script>
 </html>
