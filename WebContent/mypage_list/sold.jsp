@@ -166,7 +166,7 @@
     $(".alien_list button").click(function(){
 	    $button = $(".alien_list button");
 	    $index = $button.index(this);
-	    $index_button = $("alien_list button:eq(" + $index + ")");
+	    $index_button = $(".alien_list button:eq(" + $index + ")");
 		console.log("$alien_list:"+$index);
 		$button.removeClass('clicked');
 		$index_button.addClass('clicked');
