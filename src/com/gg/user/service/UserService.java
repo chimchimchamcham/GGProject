@@ -1,6 +1,7 @@
 package com.gg.user.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -144,10 +145,9 @@ public class UserService {
 		
 	}
 
-	public String login() {
+	public ArrayList<String> login() {
 		String loginId = req.getParameter("loginId");
 		String loginPw = req.getParameter("loginPw");
-		System.out.println("loginId : "+loginId+"loginPw : "+loginPw);
 		UserDAO dao = new UserDAO();
 		return dao.login(loginId,loginPw);
 	}
@@ -157,7 +157,6 @@ public class UserService {
 		if(req.getSession().getAttribute("loginId") != null) {
 			req.getSession().removeAttribute("loginId");
 			success = true;
-			System.out.println("로그아웃 성공");
 		}
 		return success;
 	}
@@ -172,9 +171,9 @@ public class UserService {
 		map.put("id", dao.idsearch(name, email));
 		Gson gson = new Gson();
 		
-		String id = gson.toJson(map);
+		String obj = gson.toJson(map);
 		try {
-			resp.getWriter().println();
+			resp.getWriter().println(obj);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
