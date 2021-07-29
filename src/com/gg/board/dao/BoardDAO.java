@@ -171,7 +171,8 @@ public class BoardDAO {
 	public HashMap<String, ArrayList<GGDto>> category() {
 		String sql = "select * from codes where c_code like 'S%'";
 		HashMap<String, ArrayList<GGDto>> map = new HashMap<String, ArrayList<GGDto>>();
-		ArrayList<GGDto> list = new ArrayList<GGDto>();
+		ArrayList<GGDto> list1 = new ArrayList<GGDto>();
+		ArrayList<GGDto> list2 = new ArrayList<GGDto>();
 		try {
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -179,9 +180,9 @@ public class BoardDAO {
 				GGDto dto = new GGDto();
 				dto.setC_code(rs.getString("c_code"));
 				dto.setC_name(rs.getString("c_name"));
-				list.add(dto);
+				list1.add(dto);
 			}
-			map.put("saleCat", list);
+			map.put("saleCat", list1);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -192,11 +193,12 @@ public class BoardDAO {
 			rs = ps.executeQuery();
 			while(rs.next()) {
 				GGDto dto = new GGDto();
+				
 				dto.setC_code(rs.getString("c_code"));
 				dto.setC_name(rs.getString("c_name"));
-				list.add(dto);
+				list2.add(dto);
 			}
-			map.put("commuCat", list);
+			map.put("commuCat", list2);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
