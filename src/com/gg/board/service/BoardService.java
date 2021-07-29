@@ -1,19 +1,27 @@
 package com.gg.board.service;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.gg.board.dao.BoardDAO;
 import com.gg.dto.GGDto;
+import com.google.gson.Gson;
 
 public class BoardService {
 
 	HttpServletRequest req = null;
+	HttpServletResponse resp = null;
 	
 	public BoardService(HttpServletRequest req) {
 		this.req = req;
+		this.resp = resp;
+		
 		try {
 			req.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
@@ -72,6 +80,25 @@ public class BoardService {
 		return success;
 	}
 	
+	public void list()	throws IOException {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		BoardDAO dao = new BoardDAO();
+		ArrayList<GGDto> list = null;
+		
+		try {
+			list = dao.list();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+			map.put("list", list);
+		}
+		System.out.println(map);
+	resp.setContentType("text/html; charset=UTF-8");		
+	resp.getWriter().println(new Gson().toJson(map));
+}
 
 	
 	
