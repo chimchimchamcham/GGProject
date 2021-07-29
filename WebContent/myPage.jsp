@@ -76,21 +76,16 @@ td {
 }
 </style>
 <script>
-
+var $button;
+var $index;
+var $index_button;
 /*충전 팝업*/
-function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
+function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
 
+
+	
 	$(document).ready(function() {
-		$('textarea').hide();
-		$('#save').hide();
-
-		$('#profileModify').click(function() {
-			$('textarea').show();
-			$('#save').show();
-			$('#profileModify').hide();
-			$('p').hide();
-
-		});
+		
 
 
 		//초기상태 판매목록만 보여짐
@@ -105,7 +100,9 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
 
 		//초기 버튼이눌린 상태
 		$("#twoButton>button:nth-of-type(1)").css({"background-color":"gray","color":"white"});
-
+		
+		//판매상새목록 include
+		
 
 		//상세정보 버튼 클릭시 
 		$("#twoButton>button:nth-of-type(2)").click(function(){
@@ -125,6 +122,9 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
+		    call();
+		    
+		    
 		});
 		$("#twoButton>button:nth-of-type(1)").click(function(){
 		    $("#twoButton>button:nth-of-type(1)").css({"background-color":"gray","color":"white"});
@@ -144,6 +144,8 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
+		    call();
+		    
 		});
 		$("#twoButton>button:nth-of-type(3)").click(function(){
 		    $("#twoButton>button:nth-of-type(3)").css({"background-color":"gray","color":"white"});
@@ -162,6 +164,7 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
+		    call();
 		});
 		$("#twoButton>button:nth-of-type(4)").click(function(){
 		    $("#twoButton>button:nth-of-type(4)").css({"background-color":"gray","color":"white"});
@@ -180,6 +183,7 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
+		    call();
 		});
 		$("#twoButton>button:nth-of-type(5)").click(function(){
 		    $("#twoButton>button:nth-of-type(5)").css({"background-color":"gray","color":"white"});
@@ -198,6 +202,7 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
+		    call();
 		});
 		$("#twoButton>button:nth-of-type(6)").click(function(){
 		    $("#twoButton>button:nth-of-type(6)").css({"background-color":"gray","color":"white"});
@@ -216,6 +221,7 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
 		    $("#want").show();
 		    $("#like").hide();
 		    $("#alarm").hide();
+		    call();
 		});
 		$("#twoButton>button:nth-of-type(7)").click(function(){
 		    $("#twoButton>button:nth-of-type(7)").css({"background-color":"gray","color":"white"});
@@ -234,6 +240,7 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
 		    $("#want").hide();
 		    $("#like").show();
 		    $("#alarm").hide();
+		    call();
 		});
 		$("#twoButton>button:nth-of-type(8)").click(function(){
 		    $("#twoButton>button:nth-of-type(8)").css({"background-color":"gray","color":"white"});
@@ -252,59 +259,106 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").show();
+		    call();
 		});
 		
 	});
+	
+	
+	function call(){
+		console.log('call');
+		$("#twoButton>button").click(function(){
+		    $button = $("#twoButton>button");
+		    $index = $button.index(this);
+		    $index_button = $("#twoButton>button:eq(" + $index + ")");
+			console.log("$index:"+$index);
+			listCall();
+		})
+	}
+	
+	function listCall(){
+		$.ajax({
+			type:'get',
+			url:'/sold',
+			data:{},
+			dataType:'JSON',
+			success:function(data){
+				console.log("data:"+data);
+				if(data.list != null){
+					soled(data.list);
+				}
+			},
+			error:function(e){
+				console.log("e:"+e);
+			}
+		});
+		}
+			function soled(list){	
+			
+			console.log("list:"+list);
+			var content="";
+			
+			list.forEach(function(item,idx){
+				console.log(idx,item);
+				content +="<div class='item-one'>";
+				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg'></div>";
+				content += "<div class='dretion-zoon'>";
+				content += "	<div class='itemindex'>"+item.p_title+"</div>";
+				content += "	<div class='itempoint'>"+item.ns_pr+"p"+"</div>";
+				content += "</div>";
+				content += "<div class='love-time'>";
+				content += "	<div class='love'>"+item.p_likeCount+"</div>";
+				content += "	<div class='time'>"+item.p_tm+"</div>";	
+				content += "</div>";	
+				content += "</div>";
+			});	
+			$("#sale").empty();
+			$("#sale").append(content);
+			
+		}
 </script>
 <body>
 	<h2>마이페이지</h2>
 	<div id="div1">
-		<table style="text-align: center; width: 40%;">
-			<tr>
-				<td><img src="images/user.png" width="150"></td>
-			</tr>
-			<tr>
-				<td>${myPageInfo.u_nname} </td>
-			</tr>
-			<tr>
-				<td>${myPageInfo.u_addr }</td>
-			</tr>
-			<tr>
-				<td><a href="#">프로필 수정</a></td>
-			</tr>
-		</table>
+      <table style="text-align: center; width: 40%;">
+         <tr>
+            <td><img src="${myPageInfo.u_newName }" width="150"></td>
+         </tr>
+         <tr>
+            <td>${myPageInfo.u_nname} </td>
+         </tr>
+         <tr>
+            <td>${myPageInfo.u_addr }</td>
+         </tr>
+         <tr>
+            <td><a href="profileModify.jsp">회원정보 수정</a></td>
+         </tr>
+      </table>
 
-		<table style="width: 60%;">
-			<tr>
-				<td>현재 포인트</td>
-				<td>${myPageInfo.pnt_point }P</td>	
-				<td><input type="button" value="충전" onclick="showPopup();" /></td>
-			</tr>
-			<tr>
-				<td>평점</td>
-				<td colspan="2"></td>
-			</tr>
-			<tr>
-				<td colspan="3">자기소개</td>
-			</tr>
-			<tr>
-				<td colspan="3">
-					<p>${myPageInfo.u_intro }</p>
-					<textarea rows="9" cols="80" style="resize: none;"></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="3">
-					<button id="profileModify">소개글 수정</button>
-					<button id="save">저장</button>
-				</td>
-			</tr>
-		</table>
-	</div>
+      <table style="width: 60%;">
+         <tr>
+            <td>현재 포인트</td>
+            <td>${myPageInfo.pnt_point }P</td>   
+            <td><input type="button" value="충전" onclick="showPopup();" /></td>
+         </tr>
+         <tr>
+            <td>평점</td>
+            <td colspan="2"></td>
+         </tr>
+         <tr>
+            <td colspan="3">자기소개</td>
+         </tr>
+         <tr>
+            <td colspan="3">
+               <p>${myPageInfo.u_intro }</p>
+            </td>
+         </tr>
+      </table>
+   </div>
 	
 	   <div id="twoButton">
-      <button >판매목록</button>
-      <button >경매목록</button> 
+      <button>판매목록	</button>
+      <button>경매목록</button> 
       <button>구매목록</button>
       <button>커뮤니티</button> 
       <button>팔로우</button>
@@ -312,7 +366,8 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
       <button>좋아요</button> 
       <button>신고목록</button>
    </div>
-   <div id="sale" style="background-color:red; padding:20px;">판매목록입니다.</div>
+   
+   <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
    <div id="trade" style="background-color:orange; padding:20px;">경매목록입니다.</div>
    <div id="sell" style="background-color:yellow; padding:20px;">구매목록입니다.</div>
    <div id="commu" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
@@ -322,4 +377,9 @@ function showPopup() { window.open("chargePopup.jsp", "charge", "width=600, heig
    <div id="alarm" style="background-color:lime; padding:20px;">신고목록입니다.</div>
 	
 </body>
+<script type="text/javascript">
+
+
+
+</script>
 </html>

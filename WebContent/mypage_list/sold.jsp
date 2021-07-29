@@ -2,14 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>Document</title>
-</head>
+<html>
 <style>
 /* 초기화 */
 *{
@@ -159,77 +152,25 @@
 </body>
     <script>
 
-    listCall();
-    var $button;
-    var $index;
-    var $index_button;
-
-    //토글로 click클래스 추가,제거   최상단 버튼  
     $(".button-layout button").click(function(){
-        $button = $(".button-layout button");
-        $index = $button.index(this);
-        $index_button = $(".button-layout button:eq(" + $index + ")");
-		console.log("$index:"+$index);
-        $button.removeClass('clicked');
-        $index_button.toggleClass( 'clicked' );
-        listCall();
+	    $button = $(".button-layout button");
+	    console.log()
+	    $index = $button.index(this);
+	    $index_button = $(".button-layout button:eq(" + $index + ")");
+		console.log("$center_index:"+$index);
+		$index_button.removeClass('.clicked');
+		$index_button.addClass('.clicked');
+		
+		
     })
-
-
-    //토글로 click클래스 추가,제거    정렬 버튼
+    
     $(".alien_list button").click(function(){
-        $button = $(".alien_list button");
-        $index = $button.index(this);
-        $index_button = $(".alien_list button:eq(" + $index + ")");
-        console.log("$index:"+$index);
-        $button.removeClass('clicked');
-        $index_button.toggleClass( 'clicked' );
-        listCall();
-        
+	    $button = $(".alien_list button");
+	    $index = $button.index(this);
+	    $index_button = $("alien_list button:eq(" + $index + ")");
+		console.log("$alien_list:"+$index);
+		$(".button-layout button").removeClass('.clicked');
+		$index_button.addClass('.clicked');
     })
-
-    function listCall(){
-	$.ajax({
-		type:'get',
-		url:'./sold',
-		data:{},
-		dataType:'JSON',
-		success:function(data){
-			console.log("data:"+data);
-			if(data.list != null){
-				soled(data.list);
-			}
-		},
-		error:function(e){
-			console.log("e:"+e);
-		}
-	});
-}
-    
-    
-    	function soled(list){	
-    	
-    	console.log("list:"+list);
-    	var content="";
-    	
-    	list.forEach(function(item,idx){
-    		console.log(idx,item);
-    		content +="<div class='item-one'>";
-    		content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg'></div>";
-    		content += "<div class='dretion-zoon'>";
-    		content += "	<div class='itemindex'>"+item.p_title+"</div>";
-    		content += "	<div class='itempoint'>"+item.ns_pr+"p"+"</div>";
-    		content += "</div>";
-    		content += "<div class='love-time'>";
-    		content += "	<div class='love'>"+item.p_likeCount+"</div>";
-    		content += "	<div class='time'>"+item.p_tm+"</div>";	
-    		content += "</div>";	
-    		content += "</div>";
-    	});	
-    	$(".item-box").empty();
-    	$(".item-box").append(content);
-    	
-	}
-    
 </script>
 </html>
