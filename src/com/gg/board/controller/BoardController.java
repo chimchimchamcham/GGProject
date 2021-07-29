@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.gg.board.service.BoardService;
 import com.gg.dto.GGDto;
 
-@WebServlet({"/salesDetail"})
+@WebServlet({"/salesDetail","/sold"})
 public class BoardController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -68,6 +68,11 @@ public class BoardController extends HttpServlet {
 			System.out.println("찜 -1 추가");
 			success = service.loveMinus();
 			System.out.println("[Controller ] loveMinus success : "+success);
+			break;
+			
+		case "/sold":
+			System.out.println("리스트 요청");				
+			service.list();
 			break;
 		}
 		
