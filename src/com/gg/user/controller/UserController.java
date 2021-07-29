@@ -35,7 +35,7 @@ public class UserController extends HttpServlet {
 		String ctx = req.getContextPath();
 		String addr = uri.substring(ctx.length());
 		req.setCharacterEncoding("UTF-8");
-		resp.setContentType("text/html charset=UTF-8"); // 한글 설정.
+		resp.setContentType("text/html charset=UTF-8"); // 한글 설정
 		UserService service = new UserService(req, resp);
 		RequestDispatcher dis;
 
@@ -111,6 +111,8 @@ public class UserController extends HttpServlet {
 		case "/userUpdate":
 			System.out.println("수정 요청");
 
+			resp.setContentType("text/html; charset=UTF-8");
+			req.setCharacterEncoding("UTF-8"); 
 			String id = (String)req.getSession().getAttribute("loginId");
 			msg = "회원정보 수정에 실패 했습니다.";
 			page = "userUpdateForm?id="+id;
@@ -118,6 +120,7 @@ public class UserController extends HttpServlet {
 				msg="회원정보 수정에 성공 했습니다.";
 				page = "myPage?id="+id;
 			} 
+
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);

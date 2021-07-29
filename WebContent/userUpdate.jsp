@@ -88,7 +88,7 @@ td {
 				<th>이메일</th>
 			</tr>
 			<tr>
-				<td><input type="text" name="email" value="">&nbsp;@ <select>
+				<td><input type="text" name="email" value="">&nbsp;@ <select name="mail">
 						<option value='naver.com'>naver.com</option>
 						<option value='daum.net'>daum.net</option>
 						<option value='google.com'>google.com</option>

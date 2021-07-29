@@ -1,6 +1,7 @@
 package com.gg.user.service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -22,8 +23,15 @@ public class UserService {
 	
 	
 	public UserService(HttpServletRequest req, HttpServletResponse resp) {
-		this.req = req;
-		this.resp = resp;
+		try {
+			req.setCharacterEncoding("UTF-8");
+			this.req = req;
+			this.resp = resp;
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public boolean join() {
@@ -211,6 +219,10 @@ public class UserService {
 public int userUpdate(String id) {
 		
 		int success = 0;
+		
+		com.gg.board.service.UploadService upload = new com.gg.board.service.UploadService(req);
+		GGDto dto = upload.PhotoUpload();//새로운 파일 저장(변경한 사진)
+		
 		System.out.println("회원정보수정 요청 확인");
 
 		String u_id = (String)req.getSession().getAttribute("loginId"); //세션아이디
@@ -236,7 +248,6 @@ public int userUpdate(String id) {
 		u_phone += "-"+u_phone2 +"-"+ u_phone3;
 		System.out.println("핸드폰 번호 확인 : " + u_phone);
 		
-		GGDto dto = new GGDto();
 		//DTO에 값을 넣어주기.
 		dto.setU_id(u_id);
 		dto.setU_pw(u_pw);
