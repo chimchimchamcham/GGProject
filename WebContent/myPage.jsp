@@ -264,10 +264,10 @@ function showPopup() { window.open("ChargePopup.jsp", "charge", "width=600, heig
 				<td><img src="images/user.png" width="150"></td>
 			</tr>
 			<tr>
-				<td>닉네임</td>
+				<td>${myPageInfo.u_nname} </td>
 			</tr>
 			<tr>
-				<td>서울시 금천구 가산동</td>
+				<td>${myPageInfo.u_addr }</td>
 			</tr>
 			<tr>
 				<td><a href="#">프로필 수정</a></td>
@@ -277,7 +277,7 @@ function showPopup() { window.open("ChargePopup.jsp", "charge", "width=600, heig
 		<table style="width: 60%;">
 			<tr>
 				<td>현재 포인트</td>
-				<td>5000P</td>	
+				<td>${myPageInfo.pnt_point }P</td>	
 				<td><input type="button" value="충전" onclick="showPopup();" /></td>
 			</tr>
 			<tr>
