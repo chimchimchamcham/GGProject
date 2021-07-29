@@ -30,14 +30,14 @@ public class BoardService {
 	}
 
 	public GGDto salesDetail() {
-		int P_no = Integer.parseInt(req.getParameter("P_no"));
-		System.out.println("P_no : "+P_no);
+		int p_no = Integer.parseInt(req.getParameter("p_no"));
+		System.out.println("p_no : "+p_no);
 		BoardDAO dao = new BoardDAO();
-		GGDto dto = null;		
+		GGDto dto = null;	
 		try {
 			dao.conn.setAutoCommit(false);
-			if(dao.upP_view(P_no)>0) {
-				dto = dao.salesDetail(P_no);
+			if(dao.upP_view(p_no)>0) {
+				dto = dao.salesDetail(p_no);
 			}
 			if(dto == null) {
 				dao.conn.rollback();
@@ -51,35 +51,138 @@ public class BoardService {
 		return dto;
 	}
 
-	public boolean isLiked(String U_id, int P_no) {
+	//찜을 눌렀는지 확인
+	public boolean isLiked(String u_id, int p_no) {
 		boolean isLiked = false;
 		BoardDAO dao = new BoardDAO();
-		isLiked = dao.isLiked(U_id, P_no);
+		isLiked = dao.isLiked(u_id, p_no);
+		System.out.println("[DAO] isLiked : "+isLiked);
 		dao.resClose();
 		return isLiked;
 	}
 
+	//찜 테이블에 정보 추가 + 게시글에 좋아요 수 추가
 	public boolean lovePlus() {
-		int P_no = Integer.parseInt(req.getParameter("P_no"));
-		//String U_id = (String) req.getSession().getAttribute("loginId");
-		String U_id = "user1"; //임시로 저장
+		int p_no = Integer.parseInt(req.getParameter("p_no"));
+		String u_id = (String) req.getSession().getAttribute("loginId");
+		//String u_id = "user1"; //임시로 저장
 		BoardDAO dao = new BoardDAO();
 		boolean success = false;
-		success = dao.lovePlus(U_id, P_no);
-		
-		return success;
-	}
-
-	public boolean loveMinus() {
-		int P_no = Integer.parseInt(req.getParameter("P_no"));
-		//String U_id = (String) req.getSession().getAttribute("loginId");
-		String U_id = "user1"; //임시로 저장
-		BoardDAO dao = new BoardDAO();
-		boolean success = false;
-		success = dao.loveMinus(U_id, P_no);
+		int result = 0;
+		try {
+			dao.conn.setAutoCommit(false);
+			if(dao.lovePlus(u_id, p_no)) {
+				result = dao.loveCountPlus(p_no);
+				System.out.println("[DAO] loveCountPlus result : "+result);
+			}
+			if(result>0) {
+				dao.conn.commit();
+				success = true;
+			}else {
+				dao.conn.rollback();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		dao.resClose();
 		return success;
 	}
 	
+	//찜 테이블에 정보 제거 + 게시글에 좋아요 수 제거
+	public boolean loveMinus() {
+		int p_no = Integer.parseInt(req.getParameter("p_no"));
+		String u_id = (String) req.getSession().getAttribute("loginId");
+		//String u_id = "user1"; //임시로 저장
+		BoardDAO dao = new BoardDAO();
+		boolean success = false;
+		int result = 0;
+		try {
+			dao.conn.setAutoCommit(false);
+			if(dao.loveMinus(u_id, p_no)) {
+				result = dao.loveCountMinus(p_no);
+				System.out.println("[DAO] loveCountMinus result : "+result);
+			}
+			if(result>0) {
+				dao.conn.commit();
+				success = true;
+			}else {
+				dao.conn.rollback();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		dao.resClose();
+		return success;
+	}
+
+	//ajax로 lovePlus2 처리
+		public void lovePlus2() throws IOException{
+			int p_no = Integer.parseInt(req.getParameter("p_no"));
+			String u_id = (String) req.getSession().getAttribute("loginId");
+			//String u_id = "user1"; //임시로 저장
+			BoardDAO dao = new BoardDAO();
+			boolean success = false;
+			int result = 0;
+			try {
+				dao.conn.setAutoCommit(false);
+				if(dao.lovePlus(u_id, p_no)) {
+					result = dao.loveCountPlus(p_no);
+					System.out.println("[DAO] loveCountPlus result : "+result);
+				}
+				if(result>0) {
+					dao.conn.commit();
+					success = true;
+				}else {
+					dao.conn.rollback();
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			dao.resClose();
+			
+			//여기서 Ajax로 데이터를 던져줌
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("success", success);
+			//resp.setContextType("text/html" charset=UTF-8"); //한글 없으면 생략 가능
+			//resp.setHeader("Access-Control-Allow-origin", "*"); //View 가 같으면 서버에 있으면 생략 가능
+			resp.getWriter().println(new Gson().toJson(map));
+			
+		}
+		
+	//ajax로 lovePlus2 처리
+	public void loveMinus2() throws IOException{
+		int p_no = Integer.parseInt(req.getParameter("p_no"));
+		String u_id = (String) req.getSession().getAttribute("loginId");
+		//String u_id = "user1"; //임시로 저장
+		BoardDAO dao = new BoardDAO();
+		boolean success = false;
+		int result = 0;
+		try {
+			dao.conn.setAutoCommit(false);
+			if(dao.loveMinus(u_id, p_no)) {
+				result = dao.loveCountMinus(p_no);
+				System.out.println("[DAO] loveCountPlus result : "+result);
+			}
+			if(result>0) {
+				dao.conn.commit();
+				success = true;
+			}else {
+				dao.conn.rollback();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		dao.resClose();
+		
+		//여기서 Ajax로 데이터를 던져줌
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("success", success);
+		//resp.setContextType("text/html" charset=UTF-8"); //한글 없으면 생략 가능
+		//resp.setHeader("Access-Control-Allow-origin", "*"); //View 가 같으면 서버에 있으면 생략 가능
+		resp.getWriter().println(new Gson().toJson(map));	
+			
+	}
+	/* ====================================================== */
 	public void list()	throws IOException {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
