@@ -350,6 +350,7 @@ public class BoardDAO {
 		if (checker > 0) {
 			rs.next();
 			int pk = rs.getInt(1);
+			success= true;
 			System.out.println("글 작성 번호 : " + pk);
 			System.out.println("글 작성 성공");
 		}

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.gg.board.service.BoardService;
 import com.gg.dto.GGDto;
+import com.google.gson.Gson;
 
 @WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/sold","/writeForm","/writeSale","/writeTrade","/writeCommunity"})
 public class BoardController extends HttpServlet {
@@ -144,6 +145,11 @@ public class BoardController extends HttpServlet {
 		case "/writeCommunity":
 			System.out.println("커뮤니티글 쓰기 요청");
 			success = service.writeCommu();
+			HashMap<String, Object> jo_map = new  HashMap<String, Object>();
+			
+			jo_map.put("success",success);
+			resp.getWriter().println(new Gson().toJson(jo_map));
+			
 			break;
 			
 		}
