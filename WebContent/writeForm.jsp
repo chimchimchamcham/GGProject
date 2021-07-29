@@ -77,7 +77,7 @@ textarea {
 			<p id="commuCategory">
 				카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="commuCat">
 					<c:forEach items="${commuCat }" var="CommuCategory">
-						<option value="${CommuCategory.c_code}">${CommuCategory.c_name}</option>
+						<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
 					</c:forEach>
 				</select>
 			</p>
@@ -348,9 +348,6 @@ $("#datepicker").datepicker({
 			}else{
 				alert("폼을 선택해주세요!");
 			}
-			
-				
-			
 			});
 		
 	

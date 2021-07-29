@@ -214,8 +214,35 @@ public class BoardService {
 	}
 
 	public boolean writeCommu() {
+		boolean success= false;
 		
-		return false;
+		String p_id = (String)req.getSession().getAttribute("loginId");
+		String p_title = req.getParameter("title");
+		String p_content = req.getParameter("content");
+		String p_cate = req.getParameter("category");
+		String p_code = req.getParameter("select");
+		System.out.println("아이디 : " + p_id);
+		System.out.println("p_code : " + p_code);
+		System.out.println("커뮤니티글쓰기 제목 : " + p_title + " 내용 : " + p_content + " 카테고리 :" + p_cate);
+		BoardDAO dao = new BoardDAO();
+		GGDto dto = new GGDto();
+		dto.setP_id(p_id);
+		dto.setP_title(p_title);
+		dto.setP_content(p_content);
+		dto.setP_cate(p_cate);
+		dto.setP_code(p_code);
+		
+		try {
+			 success =  dao.writeCommu(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		
+		return success;
 	}
 
 	public boolean writeTrade() {
