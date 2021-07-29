@@ -8,9 +8,7 @@
 <title>Insert title here</title>
 </head>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script type="text/javascript">
-var loginId = "${sessionScope.loginId}";
-</script>
+
 <style>
 h2{
 	text-align:center;
@@ -48,7 +46,7 @@ td {
 </style>
 <body>
 <h2>${userUpdate.u_nname}님의 회원정보 수정</h2>
-<form action="update" method="POST" enctype="multipart/form-data">
+<form action="userUpdate" method="POST" enctype="multipart/form-data">
 	<table>
 		<tr>
 				<th>닉네임</th>
@@ -71,7 +69,7 @@ td {
 			<td><textarea name="intro">${userUpdate.u_intro}</textarea></td>
 		</tr>
 		<tr>
-			<th>사진</th>
+			<th>프로필 사진</th>
 			<td>
 			<p><input type="file" name="photo"/></p>
 			<img src="${userUpdate.u_newName }" width="100px"/>
@@ -81,16 +79,16 @@ td {
 				<th>핸드폰 번호</th>
 			</tr>
 			<tr>
-				<td colspan="2"><input type='text' name='phone1' maxlength='3' id='phone'/>&nbsp;-
-				<input type='text' name='phone2'id='phone' maxlength='4'/>&nbsp;-
-				<input type='text' name='phone3'id='phone' maxlength='4'/>
+				<td colspan="2"><input type='text' name='phone1' maxlength='3' id='phone1' value=""/>&nbsp;-
+				<input type='text' name='phone2'id='phone2' maxlength='4' value=""/>&nbsp;-
+				<input type='text' name='phone3'id='phone3' maxlength='4' value=""/>
 				</td>
 			</tr>
 			<tr>
 				<th>이메일</th>
 			</tr>
 			<tr>
-				<td><input type="text" name="email">&nbsp;@ <select>
+				<td><input type="text" name="email" value="">&nbsp;@ <select>
 						<option value='naver.com'>naver.com</option>
 						<option value='daum.net'>daum.net</option>
 						<option value='google.com'>google.com</option>
@@ -100,19 +98,38 @@ td {
 				<th>주소</th>
 			</tr>
 			<tr>
-				<td><input type='text' name='addr' /> <input type='text'
-					name='detailAddr' /></td>
+				<td><input type='text' name='addr' value="${userUpdate.u_addr}"/>
+				<input type='text' name='detailAddr' value="${userUpdate.u_detailAddr}"/></td>
 			</tr>
 		<tr>
 			<td colspan="2">
-				<input type="button" onclick="location.href='./'" value="리스트"/>
-				<button>저장</button>			
+				<input type="button" onclick="location.href='myPage.jsp'" value="취소"/>
+				<button>저장</button>
 			</td>
 		</tr>
 	</table>
 </form>
 </body>
 <script>
+
+	/*세션아이디 가져오기*/
+	var loginId = "${sessionScope.loginId}";
+	
+	/*전화번호 - 를 기준으로 자르기*/
+	var phone = "${userUpdate.u_phone}";
+	var arr = phone.split("-");
+	
+	console.log(arr);
+	$('#phone1').attr('value',arr[0]);
+	$('#phone2').attr('value',arr[1]);
+	$('#phone3').attr('value',arr[2]);
+	
+	/*이메일 @기준으로 나누기*/
+	var email = "${userUpdate.u_email}";
+	var arr2 = email.split("@");
+	console.log(arr2);
+	$('input[name=email]').attr('value',arr2[0]);
+
 	var overChk = true;
 	$("input[name='id']").keyup(function(e) {
 		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {

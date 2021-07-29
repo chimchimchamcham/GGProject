@@ -100,13 +100,16 @@ public class UserController extends HttpServlet {
 			break;
 			
 		case "/userUpdateForm":
-			System.out.println("회원정보 수정 요청");
+			System.out.println("회원정보 수정 폼 요청");
 			req.setAttribute("userUpdate", service.userUpdateForm());
 			dis = req.getRequestDispatcher("userUpdate.jsp");
 			dis.forward(req, resp);
 			break;
 			
 		case "/UserUpdate":
+			System.out.println("회원정보 수정 요청");
+			String id = service.userUpdate();
+			System.out.println("수정요청 id : "+id);
 			
 			break;
 			
