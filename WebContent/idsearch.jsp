@@ -64,12 +64,12 @@
 				</tr>
 				<tr>
 					<td align="right">
-						<input type="button" id="findId" value="아이디찾기"/>
+						<input type="button" name="searchId" value="아이디찾기"/>
 					</td>
 				</tr>
 				<tr>
-					<td class="findedId">귀하의 아이디는 입니다.</td>
-				</tr>		
+					<td id ="resultprint"></td>
+				</tr>
 				<tr>
 					<td align="right"><input type="button" value="로그인 하러가기" onclick="location.href='login.jsp'"></td>
 				</tr>
@@ -89,7 +89,7 @@
 		$("#idarea").hide();
 		$("#pwarea").show();
 	})
-	$("#findId").click(function(){
+	$("#searchId").click(function(){
 	$.ajax({
 		type:'post',
 		url:'idsearch',
@@ -100,7 +100,11 @@
 		},
 		dataType:"JSON",
 		success:function(data){
-			console.log(data);
+			if(data.id == null){
+				$("td[id=resultprint]").html("일치하는 아이디가 없습니다.");
+			}else{
+				$("td[id=resultprint]").html("고객님의 ID는 "+data.id+"입니다.");
+			}
 		},
 		error:function(e){
 			console.log(e);

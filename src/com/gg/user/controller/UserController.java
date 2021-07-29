@@ -1,6 +1,7 @@
 package com.gg.user.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -57,12 +58,14 @@ public class UserController extends HttpServlet {
 
 		case "/login":
 			System.out.println("로그인 요청");
-			String userId = service.login();
+			ArrayList<String> idYN = service.login();
 			String msg = "아이디 또는 비밀번호를 확인 하세요";
 			String page = "login.jsp";
-			if (userId != null) {
-				req.getSession().setAttribute("loginId", userId);
+			if (idYN.get(1) != null) {
+				req.getSession().setAttribute("loginId", idYN.get(0));
+				req.getSession().setAttribute("adminYN", idYN.get(1));
 				msg = null;
+				System.out.println(idYN.get(1));
 				page = "index.jsp";
 			}
 			req.setAttribute("msg", msg);

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -114,16 +115,17 @@ public class UserDAO {
       return success;
    }
 
-   public String login(String loginId, String loginPw) {
-	      String userId = null;
-	      String sql = "SELECT U_id FROM UserInfo WHERE U_id=? AND U_pw=?";
+   public ArrayList<String> login(String loginId, String loginPw) {
+	   	  ArrayList<String> idYN = new ArrayList<String>();
+	      String sql = "SELECT U_id,U_adminYN  FROM UserInfo WHERE U_id=? AND U_pw=?";
 	      try {
 	         ps = conn.prepareStatement(sql);
 	         ps.setString(1, loginId);
 	         ps.setString(2, loginPw);
 	         rs = ps.executeQuery();
 	         if(rs.next()) {
-	            userId = rs.getString(1);
+	        	 idYN.add(rs.getString(1)); // id값 저장
+	        	 idYN.add(rs.getString(2)); // 관리자 여부 저장
 	         }
 	      } catch (SQLException e) {
 	         // TODO Auto-generated catch block
@@ -131,7 +133,7 @@ public class UserDAO {
 	      }finally {
 	         resClose();
 	      }
-	      return userId;
+	      return idYN;
 	   }
 
 public String idsearch(String name, String email) {
