@@ -273,7 +273,7 @@ public class UserService {
 
 	public boolean changePw() {
 		UserDAO dao = new UserDAO();
-		
+		req.getParameter("");
 		return false;
 	}
 	
