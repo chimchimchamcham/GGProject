@@ -111,7 +111,7 @@
 				</tr>
 				<tr>
 					<td align="right">	
-						<input type="button" value="비밀번호 확인" id="chkpw"/>
+						<input type="button" value="개인정보 확인" id="chkinfo"/>
 					</td>
 				</tr>
 			</table>
@@ -128,13 +128,10 @@
 						<td>새 비밀번호 확인</td>
 					</tr>
 					<tr>
-						<td><input type="text" id="pwchk2"/>&nbsp
-							
-							<span id ="alert" style="color:red">* 비밀번호가 일치하지 않습니다.</span>
-						</td>
+						<td><input type="text" id="pwchk2"/>&nbsp<span id ="alert" style="color:red">* 비밀번호가 일치하지 않습니다.</span></td>
 					</tr>
 					<tr>
-						<td align="right"><input type="button" value="비밀번호 변경하기"/></td>
+						<td align="right"><input type="button" value="비밀번호 확인" id="chkpw"/><input type="button" value="비밀번호 변경하기"/></td>
 					</tr>
 				</table>
 			</div>
@@ -142,16 +139,21 @@
 	</div>
 </body>
 <script>
+	var chkpw = false;
 	$("#pwarea").hide();
 	$("#resetpw").hide();
+	$("#alert").hide();
+	
 	$("#findId").click(function(){
 		$("#pwarea").hide();
 		$("#idarea").show();
 	})
+	
 	$("#rewritePw").click(function(){
 		$("#idarea").hide();
 		$("#pwarea").show();
 	})
+	
 	$("#searchId").click(function(){
 	$.ajax({
 		type:'post',
@@ -176,7 +178,8 @@
 		}
 	});	
 	})
-	$("#chkpw").click(function(){
+	
+	$("#chkinfo").click(function(){
 		var email = $("#chkemail").val()+"@"+$("select[name=mail]").val();
 		$.ajax({
 			type:"post",
@@ -197,5 +200,20 @@
 			}
 		});
 	})
+	
+	$("#chkpw").click(function(){
+		if($("#pwchk1").val() != "" && $("#pwchk1").val() == $("#pwchk2").val()){	
+			chkpw=true;
+			$("#alert").hide();
+		}else{
+			$("#alert").show();
+		}
+	})
+	
+	$("#chkpw").click(function(){
+		if(chkpw=true){
+			location.href("/changePw");
+		}
+	});
 </script>
 </html>
