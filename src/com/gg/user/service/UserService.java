@@ -192,4 +192,16 @@ public class UserService {
 
 	}
 
+	public Object userUpdateForm() {
+		String id = (String)req.getSession().getAttribute("loginId");
+		System.out.println("회원정보 수정 id : " + id);
+		
+		UserDAO dao = new UserDAO();
+		GGDto dto = dao.myPage(id);
+		System.out.println("회원정보 수정 dto : " + dto);
+		dao.resClose();
+		
+		return dto;
+	}
+
 }
