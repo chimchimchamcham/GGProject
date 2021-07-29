@@ -46,7 +46,7 @@ td {
 </style>
 <body>
 <h2>${userUpdate.u_nname}님의 회원정보 수정</h2>
-<form action="userUpdate" method="POST" enctype="multipart/form-data">
+<form action="userUpdate" method="POST" >
 	<table>
 		<tr>
 				<th>닉네임</th>
@@ -115,6 +115,12 @@ td {
 	/*세션아이디 가져오기*/
 	var loginId = "${sessionScope.loginId}";
 	
+	/*알람창*/
+	var msg = "${msg}";
+	if(msg != ""){
+		alert(msg);
+	}
+	
 	/*전화번호 - 를 기준으로 자르기*/
 	var phone = "${userUpdate.u_phone}";
 	var arr = phone.split("-");
@@ -159,6 +165,7 @@ td {
 		var $mail = $('select'); // 이메일주소
 		var $addr = $("input[name='addr']"); //주소
 		var $detailAddr = $("input[name='detailAddr']"); // 상세주소
+		
 		//중복 체크
 		if (overChk) {
 			console.log("회원가입 체크");

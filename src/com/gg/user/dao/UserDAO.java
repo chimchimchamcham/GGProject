@@ -210,4 +210,28 @@ public GGDto myPage(String id) {
 	return dto;
 }
 
+
+public int userUpdate(GGDto dto) {
+	
+	int success = 0;
+	String sql = "UPDATE userinfo SET u_id=?, u_name=?, u_nname=?, u_phone=?,u_email=?,u_addr=? WHERE u_id=?";
+	
+	try {
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, dto.getU_id());
+		ps.setString(2, dto.getU_name());
+		ps.setString(3, dto.getU_nname());
+		ps.setString(4, dto.getU_phone());
+		ps.setString(5, dto.getU_email());
+		ps.setString(6, dto.getU_addr());
+		ps.setString(7, dto.getU_id());
+		
+		success = ps.executeUpdate();
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	return success;
+}
+
 }
