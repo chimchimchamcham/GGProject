@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.gg.board.service.BoardService;
 import com.gg.dto.GGDto;
 
-@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2"})
+@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/writeForm","/writeSale","/writeTrade","/writeCommunity"})
 public class BoardController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -112,14 +112,17 @@ public class BoardController extends HttpServlet {
 			 
 		case "/writeSale":
 			System.out.println("판매글 쓰기 요청");
+			success = service.writeSale();
 			break;
 			
 		case "/writeTrade":
 			System.out.println("경매글 쓰기 요청");
+			success = service.writeTrade();
 			break;
 			
 		case "/writeCommunity":
 			System.out.println("커뮤니티글 쓰기 요청");
+			success = service.writeCommu();
 			break;
 			
 		}

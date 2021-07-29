@@ -236,7 +236,8 @@ $("#datepicker").datepicker({
 		//초기상태 - 판매폼만 보이는 상태
 		//폼 선택 버튼  클릭시 해당 값이 달라짐
 		var param={};
-		param.userId = '<%=(String)session.getAttribute("uid")%>';
+		param.userId ="${sessionScope.loginId}";
+		
 		//경매하단부분 숨겨져있음
 		$("#saleForm").show();
 		$("#communityForm").show();
@@ -306,6 +307,7 @@ $("#datepicker").datepicker({
 				param.title = $("input[name='title']").val();
 				param.content = $("textarea[name='content']").val();
 				param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
+				param.deliveryYN = $("input[name='deliveryYN']:checked").val();
 				param.price = $("input[name='price']").val();
 				//ajax url="sale"
 				console.log(param);
