@@ -229,7 +229,7 @@ public class BoardService {
 		BoardDAO dao = new BoardDAO();
 		
 		String p_title = req.getParameter("title");
-		String p_content = req.getParameter("name");
+		String p_content = req.getParameter("content");
 		String s_deliveryYN = req.getParameter("deliveryYN");
 		String s_code=req.getParameter("category");
 		String ns_pr = req.getParameter("price");
@@ -238,7 +238,10 @@ public class BoardService {
 		dto.setP_title(p_title);
 		dto.setP_content(p_content);
 		dto.setS_DeliveryYN(s_deliveryYN);
-		dto.setS_
+		dto.setS_code(s_code);
+		dto.setNs_pr(Integer.parseInt(ns_pr));
+		
+		System.out.println(p_title+"/"+p_content+"/"+s_deliveryYN+"/"+s_code+"/"+ns_pr);
 		
 		dao.writeSale();
 		return false;

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.gg.board.service.BoardService;
 import com.gg.dto.GGDto;
 
-@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2"})
+@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/writeForm","/writeSale","/writeTrade","/writeCommunity"})
 public class BoardController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

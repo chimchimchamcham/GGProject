@@ -307,6 +307,7 @@ $("#datepicker").datepicker({
 				param.title = $("input[name='title']").val();
 				param.content = $("textarea[name='content']").val();
 				param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
+				param.deliveryYN = $("input[name='deliveryYN']:checked").val();
 				param.price = $("input[name='price']").val();
 				//ajax url="sale"
 				console.log(param);
