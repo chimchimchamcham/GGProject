@@ -210,6 +210,10 @@
 		}
 	})
 	
-	$("#chkpw").click();
+	$("#chkpw").click(function(){
+		if(chkpw=true){
+			location.href("/");
+		}
+	});
 </script>
 </html>
