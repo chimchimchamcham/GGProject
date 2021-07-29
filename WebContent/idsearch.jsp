@@ -122,13 +122,16 @@
 						<td>새 비밀번호</td>
 					</tr>
 					<tr>
-						<td><input type="text"/></td>
+						<td><input type="text" id="pwchk1"/></td>
 					</tr>
 					<tr>
 						<td>새 비밀번호 확인</td>
 					</tr>
 					<tr>
-						<td><input type="text"/>&nbsp<span id ="alert" style="color:red">* 비밀번호가 일치하지 않습니다.</span></td>
+						<td><input type="text" id="pwchk2"/>&nbsp
+							<c:if text="${'(#pwchk1)' ne $()"/>
+							<span id ="alert" style="color:red">* 비밀번호가 일치하지 않습니다.</span>
+						</td>
 					</tr>
 					<tr>
 						<td align="right"><input type="button" value="비밀번호 변경하기"/></td>
