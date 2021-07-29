@@ -223,26 +223,36 @@ public class BoardService {
 		return false;
 	}
 
-	public boolean writeSale() {
+	public int writeSale() {
 		BoardDAO dao = new BoardDAO();
 		
 		String p_title = req.getParameter("title");
 		String p_content = req.getParameter("content");
 		String s_deliveryYN = req.getParameter("deliveryYN");
+		String s_followLimYN = req.getParameter("followLimYN");
 		String s_code=req.getParameter("category");
 		String ns_pr = req.getParameter("price");
+		String p_code = req.getParameter("p_code");
+		
+
+		System.out.println(p_title+"/"+p_content+"/"+s_deliveryYN+"/"+s_code+"/"+ns_pr+"/"+p_code);
 		
 		GGDto dto = new GGDto();
+		dto.setP_id((String)req.getSession().getAttribute("loginId"));
 		dto.setP_title(p_title);
 		dto.setP_content(p_content);
 		dto.setS_DeliveryYN(s_deliveryYN);
+		dto.setS_followLimYN(s_followLimYN);
 		dto.setS_code(s_code);
 		dto.setNs_pr(Integer.parseInt(ns_pr));
+		dto.setP_code(p_code);
 		
-		System.out.println(p_title+"/"+p_content+"/"+s_deliveryYN+"/"+s_code+"/"+ns_pr);
 		
-		dao.writeSale();
-		return false;
+		
+		 int success = dao.writeSale(dto);
+		 
+		 
+		return success;
 	}
 
 	
