@@ -13,7 +13,7 @@ import com.gg.board.service.BoardService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
-@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/sold","/writeForm","/writeSale","/writeTrade","/writeCommunity"})
+@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/list","/writeForm","/writeSale","/writeTrade","/writeCommunity"})
 public class BoardController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -110,7 +110,7 @@ public class BoardController extends HttpServlet {
 			dis.forward(req, resp);
 			break;		
 		/* ===========================================================================*/	
-		case "/sold":
+		case "/list":
 			System.out.println("리스트 요청");	
 			String userid = (String) req.getSession().getAttribute("loginId");
 			service.list(userid);
