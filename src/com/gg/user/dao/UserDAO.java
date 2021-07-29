@@ -177,14 +177,23 @@ public GGDto myPage(String id) {
 		if(rs.next()) {
 			dto.setU_id(rs.getString("u_id"));
 			dto.setU_nname(rs.getString("u_nname"));
+			dto.setU_name(rs.getString("u_name"));
 			dto.setU_intro(rs.getString("u_intro"));
 			dto.setU_addr(rs.getString("u_addr"));
+			dto.setU_detailAddr(rs.getString("u_detailAddr"));
 			dto.setU_newName(rs.getString("u_newName"));
+			dto.setU_phone(rs.getString("u_phone"));
+			dto.setU_email(rs.getString("u_email"));
 		}
 		System.out.println("닉네임 : " + dto.getU_nname());
+		System.out.println("이름 : " + dto.getU_name());
 		System.out.println("자기소개 : " + dto.getU_intro());
 		System.out.println("주소 : " + dto.getU_addr());
+		System.out.println("상세주소 : " + dto.getU_detailAddr());
 		System.out.println("사진경로 : " + dto.getU_newName());
+		System.out.println("전화번호 : " + dto.getU_phone());
+		System.out.println("이메일 : " + dto.getU_email());
+		
 		
 		sql = "SELECT pnt_point FROM point WHERE pnt_id =?";
 		ps = conn.prepareStatement(sql);
@@ -201,9 +210,10 @@ public GGDto myPage(String id) {
 	return dto;
 }
 
-public boolean chkpw(GGDto dto) {
-	String sql = "SELECT u_id FROM UserInfo WHERE u_id=? AND u_name=? AND u_email=?";
-	boolean success = false;
+	public boolean chkpw(GGDto dto) {
+		String sql = "SELECT u_id FROM UserInfo WHERE u_id=? AND u_name=? AND u_email=?";
+		boolean success = false;
+	
 	try {
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, dto.getU_id());
@@ -215,6 +225,27 @@ public boolean chkpw(GGDto dto) {
 		}
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return success;
+	}
+
+public int userUpdate(GGDto dto) {
+	
+	int success = 0;
+	String sql = "UPDATE userinfo SET u_id=?, u_name=?, u_nname=?, u_phone=?,u_email=?,u_addr=? WHERE u_id=?";
+	try {
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, dto.getU_id());
+		ps.setString(2, dto.getU_name());
+		ps.setString(3, dto.getU_nname());
+		ps.setString(4, dto.getU_phone());
+		ps.setString(5, dto.getU_email());
+		ps.setString(6, dto.getU_addr());
+		ps.setString(7, dto.getU_id());
+		
+		success = ps.executeUpdate();
+	} catch (SQLException e) {
 		e.printStackTrace();
 	}
 	return success;
