@@ -85,8 +85,6 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 
 	$(document).ready(function() {
 
-
-
 		//초기상태 판매목록만 보여짐
 		$("#sale").show();
 		$("#trade").hide();
@@ -330,7 +328,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 				<td>${myPageInfo.u_addr }</td>
 			</tr>
 			<tr>
-				<td><a href="userUpdate.jsp">회원정보 수정</a></td>
+				<td><button onclick="location.href='./UserUpdateForm?id=${loginId}'">회원정보 수정</button></td>
 			</tr>
 		</table>
 

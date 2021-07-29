@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gg.user.service.UserService;
 
-@WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage" })
+@WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage","/userUpdate","/userUpdateForm" })
 public class UserController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -98,7 +98,21 @@ public class UserController extends HttpServlet {
 			dis = req.getRequestDispatcher("myPage.jsp");
 			dis.forward(req, resp);
 			break;
+			
+		case "/UserUpdateForm":
+			System.out.println("회원정보 수정 요청");
+			req.setAttribute("userUpdate", service.userUpdateForm());
+			dis = req.getRequestDispatcher("userUpdate.jsp");
+			dis.forward(req, resp);
+			break;
+			
+		case "/UserUpdate":
+			
+			break;
+			
 		}
+		
+	
 
 	}
 
