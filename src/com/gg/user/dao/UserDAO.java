@@ -93,7 +93,7 @@ public class UserDAO {
       boolean success = false;
       // u_id, u_nname,u_pw, u_email,u_name, u_addr, u_phone, u_joinTM, 
       // u_newName,U_INTRO, u_AdminYN, u_FollowYN, u_detailAddr 
-      sql ="INSERT INTO userInfo VALUES(?,?,?,?,?,?,?,SYSDATE,'./img/default-profile.png','안녕하세요"+dto.getI_newName()+"입니다','N','N',?)";
+      sql ="INSERT INTO userInfo VALUES(?,?,?,?,?,?,?,SYSDATE,'./img/default-profile.png','안녕하세요"+dto.getU_nname()+"입니다','N','N',?)";
       // 
       ps = conn.prepareStatement(sql);
       ps.setString(1, dto.getU_id());
