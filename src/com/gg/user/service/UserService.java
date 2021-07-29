@@ -162,4 +162,16 @@ public class UserService {
 		return success;
 	}
 
+	public GGDto myPage() {
+		
+		String id = (String)req.getSession().getAttribute("loginId");
+		System.out.println("서비스 진입 : " + id);
+		UserDAO dao = new UserDAO();
+		GGDto dto = new GGDto();
+		dto = dao.myPage(id);
+		dao.resClose();
+		
+		return dto;
+	}
+
 }

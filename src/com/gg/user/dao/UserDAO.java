@@ -134,4 +134,41 @@ public class UserDAO {
 	      return userId;
 	   }
 
+public GGDto myPage(String id) {
+	
+	GGDto dto = null;
+	sql ="SELECT * FROM userInfo WHERE u_id = ?"; 
+	try {
+		dto = new GGDto();
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, id);
+		rs = ps.executeQuery();
+		
+		if(rs.next()) {
+			dto.setU_id(rs.getString("u_id"));
+			dto.setU_nname(rs.getString("u_nname"));
+			dto.setU_intro(rs.getString("u_intro"));
+			dto.setU_addr(rs.getString("u_addr"));
+			dto.setU_newName(rs.getString("u_newName"));
+		}
+		System.out.println("닉네임 : " + dto.getU_nname());
+		System.out.println("자기소개 : " + dto.getU_intro());
+		System.out.println("주소 : " + dto.getU_addr());
+		System.out.println("사진경로 : " + dto.getU_newName());
+		sql = "SELECT pnt_point FROM point WHERE pnt_id =?";
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, id);
+		rs = ps.executeQuery();
+		if(rs.next()) {
+			dto.setPnt_point(rs.getInt("pnt_point"));
+		}
+		System.out.println("포인트 : " + dto.getPnt_point());
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return dto;
+}
+
 }
