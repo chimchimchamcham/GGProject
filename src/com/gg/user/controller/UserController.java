@@ -101,16 +101,29 @@ public class UserController extends HttpServlet {
 			dis.forward(req, resp);
 			break;
 			
-		case "/UserUpdateForm":
-			System.out.println("회원정보 수정 요청");
+		case "/userUpdateForm":
+			System.out.println("회원정보 수정 폼 요청");
 			req.setAttribute("userUpdate", service.userUpdateForm());
 			dis = req.getRequestDispatcher("userUpdate.jsp");
 			dis.forward(req, resp);
 			break;
 			
-		case "/UserUpdate":
+		case "/userUpdate":
+			System.out.println("수정 요청");
+
+			String id = (String)req.getSession().getAttribute("loginId");
+			msg = "회원정보 수정에 실패 했습니다.";
+			page = "userUpdateForm?id="+id;
+			if(service.userUpdate(id) >0) {
+				msg="회원정보 수정에 성공 했습니다.";
+				page = "myPage?id="+id;
+			} 
+			req.setAttribute("msg", msg);
+			dis = req.getRequestDispatcher(page);
+			dis.forward(req, resp);
 			
-			break;
+			break;		
+
 		
 		case "/chkpw":
 			HashMap<String, Object> map = new HashMap<String, Object>();
@@ -118,6 +131,7 @@ public class UserController extends HttpServlet {
 			String obj = new Gson().toJson(map);
 			resp.getWriter().println(obj);
 			break;
+
 		}
 		
 	

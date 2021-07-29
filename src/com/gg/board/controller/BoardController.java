@@ -54,8 +54,11 @@ public class BoardController extends HttpServlet {
 			p_no = Integer.parseInt(req.getParameter("p_no"));
 			boolean isLiked = false;
 			isLiked = service.isLiked(u_id, p_no);
+			boolean isBuyRequested = false;
+			isBuyRequested = service.isBuyRequested();
 			req.setAttribute("dto", dto);
 			req.setAttribute("isLiked", isLiked);
+			req.setAttribute("isBuyRequested", isBuyRequested);
 			dis = req.getRequestDispatcher("salesDetail.jsp");
 			dis.forward(req, resp);
 			break;
@@ -90,6 +93,23 @@ public class BoardController extends HttpServlet {
 			service.loveMinus2();
 			break;
 			
+		case "/buyRequest" :
+			System.out.println("구매요청");
+			success = service.buyRequest();
+			System.out.println("Controller buyRequest success : "+success);
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			dis = req.getRequestDispatcher("/salesDetail?p_no="+p_no);
+			dis.forward(req, resp);
+			break;
+			
+		case "/buyRequestCancel" : 
+			System.out.println("구매요청 취소");
+			success = service.buyRequestCancel();
+			System.out.println("Controller buyRequest success : "+success);
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			dis = req.getRequestDispatcher("/salesDetail?p_no="+p_no);
+			dis.forward(req, resp);
+			break;		
 		/* ===========================================================================*/	
 		case "/sold":
 			System.out.println("리스트 요청");				
