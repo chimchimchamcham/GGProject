@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -165,5 +166,42 @@ public class BoardDAO {
 			list.add(dto);
 		}
 		return list;
+	}
+	
+	public HashMap<String, ArrayList<GGDto>> category() {
+		String sql = "select * from codes where c_code like 'S%'";
+		HashMap<String, ArrayList<GGDto>> map = new HashMap<String, ArrayList<GGDto>>();
+		ArrayList<GGDto> list = new ArrayList<GGDto>();
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				GGDto dto = new GGDto();
+				dto.setC_code(rs.getString("c_code"));
+				dto.setC_name(rs.getString("c_name"));
+				list.add(dto);
+			}
+			map.put("saleCat", list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		sql = "select * from codes where c_code like 'C%'";
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				GGDto dto = new GGDto();
+				dto.setC_code(rs.getString("c_code"));
+				dto.setC_name(rs.getString("c_name"));
+				list.add(dto);
+			}
+			map.put("commuCat", list);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return map;
 	}
 }
