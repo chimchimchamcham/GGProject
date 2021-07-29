@@ -246,8 +246,74 @@ public class BoardDAO {
 		return map;
 	}
 
-	public void writeSale() {
-		// TODO Auto-generated method stub
+	public int writeSale(GGDto dto) {
+		
+		String sql = "INSERT INTO post(p_no,p_id,p_title,p_content,p_tm,p_view,p_likeCount,p_blindYN,p_code) VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
+		int success = 0;
+		int p_no = 0;
+		try {
+			ps = conn.prepareStatement(sql, new String[] { "p_no" });
+			ps.setString(1, dto.getP_id());
+			ps.setString(2, dto.getP_title());
+			ps.setString(3, dto.getP_content());
+			ps.setString(4, "N");
+			ps.setString(5, dto.getP_code());
+			
+			success += ps.executeUpdate();
+			rs = ps.getGeneratedKeys();
+			if(rs.next()) {
+				sql="INSERT INTO sale VALUES(?,?,?,?,?)";
+				ps = conn.prepareStatement(sql);
+				p_no= rs.getInt(1);
+				ps.setInt(1, p_no);
+				ps.setString(2, dto.getS_DeliveryYN());
+				ps.setString(3,dto.getS_followLimYN());
+				ps.setString(4, dto.getP_id());
+				ps.setString(5, );
+				
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		sql = "INSERT INTO sale VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, dto.getP_id());
+			ps.setString(2, dto.getP_title());
+			ps.setString(3, dto.getP_content());
+			ps.setString(4, "N");
+			ps.setString(5, dto.getS_code());
+			
+			success = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		sql = "INSERT INTO post VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
+		int success = 0;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, dto.getP_id());
+			ps.setString(2, dto.getP_title());
+			ps.setString(3, dto.getP_content());
+			ps.setString(4, "N");
+			ps.setString(5, dto.getS_code());
+			
+			success = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return success;
 		
 	}
 }

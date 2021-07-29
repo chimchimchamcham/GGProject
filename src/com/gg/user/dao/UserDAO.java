@@ -210,16 +210,23 @@ public GGDto myPage(String id) {
 	return dto;
 }
 
+<<<<<<< HEAD
 
 public int userUpdate(GGDto dto) {
 	
 	int success = 0;
 	String sql = "UPDATE userinfo SET u_id=?, u_name=?, u_nname=?, u_phone=?,u_email=?,u_addr=? WHERE u_id=?";
 	
+=======
+public boolean chkpw(GGDto dto) {
+	String sql = "SELECT u_id FROM UserInfo WHERE u_id=? AND u_name=? AND u_email=?";
+	boolean success = false;
+>>>>>>> 37d6ef2d25088532bec14720a0242ca20137f2ba
 	try {
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, dto.getU_id());
 		ps.setString(2, dto.getU_name());
+<<<<<<< HEAD
 		ps.setString(3, dto.getU_nname());
 		ps.setString(4, dto.getU_phone());
 		ps.setString(5, dto.getU_email());
@@ -231,6 +238,17 @@ public int userUpdate(GGDto dto) {
 		e.printStackTrace();
 	}
 	
+=======
+		ps.setString(3, dto.getU_email());
+		rs = ps.executeQuery();
+		if(rs.next()) {
+			success = true;
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+>>>>>>> 37d6ef2d25088532bec14720a0242ca20137f2ba
 	return success;
 }
 

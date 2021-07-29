@@ -207,6 +207,7 @@ public class UserService {
 		return dto;
 	}
 
+<<<<<<< HEAD
 	public String userUpdate() {
 		
 		String id = null;
@@ -279,4 +280,15 @@ public int userUpdate(String id) {
 		
 		return success;
 	}
+=======
+	public boolean chkpw() {
+		UserDAO dao = new UserDAO();
+		GGDto dto = new GGDto();
+		dto.setU_id(req.getParameter("id"));
+		dto.setU_name(req.getParameter("name"));
+		dto.setU_email(req.getParameter("email"));
+		return dao.chkpw(dto);
+	}
+
+>>>>>>> 37d6ef2d25088532bec14720a0242ca20137f2ba
 }

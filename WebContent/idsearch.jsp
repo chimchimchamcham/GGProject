@@ -7,9 +7,9 @@
 <title>Insert title here</title>
 <script src = "https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-	*{margin:0;padding:0;border-width:0;list-style-type:none;}
     body{width:100%;}
 	div{
+		border:1px solid black;
 		background-color:gray;
 	}
 	#wrap{
@@ -28,9 +28,15 @@
 		text-align:left;
 		width:500px;
 		padding:10px;
+		border:1px solid black;
 	}
 	tr,th,td{
 		padding:10px;
+		border:1px solid black;
+	}
+	#pwarea *{
+		padding:3px;
+		font-size:10px;
 	}
 </style>
 </head>
@@ -75,12 +81,69 @@
 				</tr>
 			</table>
 		</div>
-			<div id = "pwarea">비밀번호 재설정
+		<!-- --여기서 부터는 비밀번호 재설정 창-- -->
+			<div id = "pwarea">
+			<table id = "pwar">
+				<tr>
+					<th>아이디</th>
+				</tr>
+				<tr>
+					<td><input type="text" id="chkid"/></td>
+				</tr>
+				<tr>
+					<th>이름</th>
+				</tr>
+				<tr>
+					<td><input type="text" id="chkname"/></td>
+				</tr>
+				<tr>
+					<th>이메일</th>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" id="chkemail"/>@
+						<select name="mail">
+							<option value='naver.com'>naver.com</option>
+							<option value='daum.net'>daum.net</option>
+							<option value='google.com'>google.com</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td align="right">	
+						<input type="button" value="비밀번호 확인" id="chkpw"/>
+					</td>
+				</tr>
+			</table>
+			<div id="resetpw">
+				<span style="font-weight:bold">비밀번호 재설정</span>
+				<table>
+					<tr>
+						<td>새 비밀번호</td>
+					</tr>
+					<tr>
+						<td><input type="text" id="pwchk1"/></td>
+					</tr>
+					<tr>
+						<td>새 비밀번호 확인</td>
+					</tr>
+					<tr>
+						<td><input type="text" id="pwchk2"/>&nbsp
+							
+							<span id ="alert" style="color:red">* 비밀번호가 일치하지 않습니다.</span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right"><input type="button" value="비밀번호 변경하기"/></td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 </body>
 <script>
 	$("#pwarea").hide();
+	$("#resetpw").hide();
 	$("#findId").click(function(){
 		$("#pwarea").hide();
 		$("#idarea").show();
@@ -112,6 +175,27 @@
 			console.log(e);
 		}
 	});	
+	})
+	$("#chkpw").click(function(){
+		var email = $("#chkemail").val()+"@"+$("select[name=mail]").val();
+		$.ajax({
+			type:"post",
+			url:"chkpw",
+			data:{
+				"id":$("#chkid").val(),
+				"name":$("#chkname").val(),
+				"email":email
+			},
+			dataType:"JSON",
+			success:function(data){
+				if(data.success){
+					$("#resetpw").show();
+				}
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
 	})
 </script>
 </html>

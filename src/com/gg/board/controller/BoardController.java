@@ -112,7 +112,10 @@ public class BoardController extends HttpServlet {
 			 
 		case "/writeSale":
 			System.out.println("판매글 쓰기 요청");
-			success = service.writeSale();
+			int writeSuccess = service.writeSale();
+			
+			
+			
 			break;
 			
 		case "/writeTrade":
