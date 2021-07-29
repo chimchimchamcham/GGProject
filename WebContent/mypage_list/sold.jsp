@@ -154,12 +154,11 @@
 
     $(".button-layout button").click(function(){
 	    $button = $(".button-layout button");
-	    console.log()
 	    $index = $button.index(this);
 	    $index_button = $(".button-layout button:eq(" + $index + ")");
 		console.log("$center_index:"+$index);
-		$(".button-layout button").removeClass('.clicked');
-		$index_button.addClass('.clicked');
+		$button.removeClass('clicked');
+		$index_button.addClass('clicked');
 		
 		
     })
@@ -169,8 +168,8 @@
 	    $index = $button.index(this);
 	    $index_button = $("alien_list button:eq(" + $index + ")");
 		console.log("$alien_list:"+$index);
-		$(".button-layout button").removeClass('.clicked');
-		$index_button.addClass('.clicked');
+		$button.removeClass('clicked');
+		$index_button.addClass('clicked');
     })
 </script>
 </html>
