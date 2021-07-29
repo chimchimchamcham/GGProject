@@ -269,7 +269,6 @@ public class BoardDAO {
 				ps.setString(2, dto.getS_DeliveryYN());
 				ps.setString(3,dto.getS_followLimYN());
 				ps.setString(4, dto.getP_id());
-				ps.setString(5, );
 				
 				
 			}
@@ -296,22 +295,6 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		
-		sql = "INSERT INTO post VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
-		int success = 0;
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, dto.getP_id());
-			ps.setString(2, dto.getP_title());
-			ps.setString(3, dto.getP_content());
-			ps.setString(4, "N");
-			ps.setString(5, dto.getS_code());
-			
-			success = ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		return success;
 		
