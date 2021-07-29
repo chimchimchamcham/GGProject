@@ -47,7 +47,9 @@
  
  $(document).ready(function(){
     //이전에 해당 판매글에 대해 구매요청을 누른적이 있는지 확인
-    $("#threeButton>button:nth-last-of-type(1)").hide();
+    <c:if test="${isBuyRequested eq true}">$("#threeButton>button:nth-last-of-type(2)").hide();</c:if>
+    <c:if test="${isBuyRequested eq false}">$("#threeButton>button:nth-last-of-type(1)").hide();</c:if>
+    
     //댓글 창을 숨김
     $("#second").hide();
     //상세정보 버튼 초기설정
@@ -125,10 +127,9 @@
                         <%--<button onclick="location.href='loveMinus2?p_no=${dto.p_no }'">찜</button>--%><!-- -1 -->
                         <button>찜+</button><!-- +1 -->
                         <button>찜-</button><!-- -1 -->
-                        
                         <button>쪽지보내기</button>
-                        <button>구매요청</button>
-                        <button>구매요청취소</button>
+                        <button onclick="location.href='buyRequest?p_no=${dto.p_no }'">구매요청</button>
+                        <button onclick="location.href='buyRequestCancel?p_no=${dto.p_no }'">구매요청취소</button>
                     </div>
                     <div id="twoButton">
                         <button>상세정보</button>
@@ -146,6 +147,7 @@
     </div>
 </body>
 <script>
+	//좋아요 등록
 	$("#threeButton>button:nth-of-type(1)").click(function(){
 		$.ajax({
 			type : 'get',
@@ -167,6 +169,8 @@
 			}
 		});
 	});
+	
+	//좋아요 해제
 	$("#threeButton>button:nth-of-type(2)").click(function(){
 		$.ajax({
 			type : 'get',
@@ -188,5 +192,6 @@
 			}
 		});
 	});
+
 </script>
 </html>

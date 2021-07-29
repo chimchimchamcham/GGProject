@@ -181,6 +181,48 @@ public class BoardDAO {
 		return success;
 	}
 	
+	public boolean buyRequest(int p_no, String u_id) {
+		String sql = "INSERT INTO REQUEST VALUES(RQ_no_seq.NEXTVAL,?,?,NULL,SYSDATE)";
+		int success = 0;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1,p_no);
+			ps.setString(2,u_id);
+			success = ps.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return success>0?true:false;
+	}
+
+	public boolean buyRequestCancel(int p_no, String u_id) {
+		String sql = "DELETE FROM REQUEST WHERE P_NO = ? AND RQ_ID = ?";
+		int success = 0;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1,p_no);
+			ps.setString(2,u_id);
+			success = ps.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return success>0?true:false;
+	}
+
+	public boolean isBuyRequested(int p_no, String u_id) {
+		String sql = "SELECT * FROM REQUEST WHERE P_NO = ? AND RQ_ID = ?";
+		boolean success = false;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1,p_no);
+			ps.setString(2,u_id);
+			rs = ps.executeQuery();
+			success = rs.next();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return success;
+	}
 	/* ================================================ */
 	public ArrayList<GGDto> list() throws SQLException {
 		String sql = "SELECT p.p_id,p.p_no,p.p_title,p.p_likecount,p.p_tm,n.ns_pr,n.ns_code,i.i_newname,p.p_code FROM  post p,N_Sale n,img i,userinfo u WHERE p.p_no = n.p_no and p.p_no = i.p_no and p.p_code = 'P002' and (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_id = u.u_id";
@@ -269,7 +311,6 @@ public class BoardDAO {
 				ps.setString(2, dto.getS_DeliveryYN());
 				ps.setString(3,dto.getS_followLimYN());
 				ps.setString(4, dto.getP_id());
-				ps.setString(5, );
 				
 				
 			}
@@ -296,22 +337,6 @@ public class BoardDAO {
 			e.printStackTrace();
 		}
 		
-		sql = "INSERT INTO post VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
-		int success = 0;
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, dto.getP_id());
-			ps.setString(2, dto.getP_title());
-			ps.setString(3, dto.getP_content());
-			ps.setString(4, "N");
-			ps.setString(5, dto.getS_code());
-			
-			success = ps.executeUpdate();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		return success;
 		
