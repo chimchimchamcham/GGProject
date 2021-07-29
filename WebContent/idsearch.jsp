@@ -85,17 +85,13 @@
 					<th>아이디</th>
 				</tr>
 				<tr>
-					<td>
-						<input type="text"/>
-					</td>
+					<td><input type="text"/></td>
 				</tr>
 				<tr>
 					<th>이름</th>
 				</tr>
 				<tr>
-					<td>
-						<input type="text"/>
-					</td>
+					<td><input type="text"/></td>
 				</tr>
 				<tr>
 					<th>이메일</th>
@@ -112,9 +108,19 @@
 				</tr>
 			</table>
 			<div id="resetpw">
+				<span>비밀번호 재설정</span>
 				<table>
 					<tr>
-						<th>비밀번호 재설정</th>
+						<td>새 비밀번호</td>
+					</tr>
+					<tr>
+						<td><input type="text"/></td>
+					</tr>
+					<tr>
+						<td>새 비밀번호 확인</td>
+					</tr>
+					<tr>
+						<td><input type="text"/>&nbsp<span>비밀번호가 일치하지 않습니다.</span></td>
 					</tr>
 				</table>
 			</div>
