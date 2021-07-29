@@ -76,11 +76,14 @@ td {
 }
 </style>
 <script>
-
+var $button;
+var $index;
+var $index_button;
 /*충전 팝업*/
 function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
 
 	$(document).ready(function() {
+
 
 
 		//초기상태 판매목록만 보여짐
@@ -95,7 +98,9 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 
 		//초기 버튼이눌린 상태
 		$("#twoButton>button:nth-of-type(1)").css({"background-color":"gray","color":"white"});
-
+		
+		//판매상새목록 include
+		
 
 		//상세정보 버튼 클릭시 
 		$("#twoButton>button:nth-of-type(2)").click(function(){
@@ -115,6 +120,9 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
+		    call();
+		    
+		    
 		});
 		$("#twoButton>button:nth-of-type(1)").click(function(){
 		    $("#twoButton>button:nth-of-type(1)").css({"background-color":"gray","color":"white"});
@@ -134,6 +142,8 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
+		    call();
+		    
 		});
 		$("#twoButton>button:nth-of-type(3)").click(function(){
 		    $("#twoButton>button:nth-of-type(3)").css({"background-color":"gray","color":"white"});
@@ -152,6 +162,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
+		    call();
 		});
 		$("#twoButton>button:nth-of-type(4)").click(function(){
 		    $("#twoButton>button:nth-of-type(4)").css({"background-color":"gray","color":"white"});
@@ -170,6 +181,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
+		    call();
 		});
 		$("#twoButton>button:nth-of-type(5)").click(function(){
 		    $("#twoButton>button:nth-of-type(5)").css({"background-color":"gray","color":"white"});
@@ -188,6 +200,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
+		    call();
 		});
 		$("#twoButton>button:nth-of-type(6)").click(function(){
 		    $("#twoButton>button:nth-of-type(6)").css({"background-color":"gray","color":"white"});
@@ -206,6 +219,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").show();
 		    $("#like").hide();
 		    $("#alarm").hide();
+		    call();
 		});
 		$("#twoButton>button:nth-of-type(7)").click(function(){
 		    $("#twoButton>button:nth-of-type(7)").css({"background-color":"gray","color":"white"});
@@ -224,6 +238,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").show();
 		    $("#alarm").hide();
+		    call();
 		});
 		$("#twoButton>button:nth-of-type(8)").click(function(){
 		    $("#twoButton>button:nth-of-type(8)").css({"background-color":"gray","color":"white"});
@@ -242,9 +257,63 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").show();
+		    call();
 		});
 		
 	});
+	
+	
+	function call(){
+		console.log('call');
+		$("#twoButton>button").click(function(){
+		    $button = $("#twoButton>button");
+		    $index = $button.index(this);
+		    $index_button = $("#twoButton>button:eq(" + $index + ")");
+			console.log("$index:"+$index);
+			listCall();
+		})
+	}
+	
+	function listCall(){
+		$.ajax({
+			type:'get',
+			url:'/sold',
+			data:{},
+			dataType:'JSON',
+			success:function(data){
+				console.log("data:"+data);
+				if(data.list != null){
+					soled(data.list);
+				}
+			},
+			error:function(e){
+				console.log("e:"+e);
+			}
+		});
+		}
+			function soled(list){	
+			
+			console.log("list:"+list);
+			var content="";
+			
+			list.forEach(function(item,idx){
+				console.log(idx,item);
+				content +="<div class='item-one'>";
+				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg'></div>";
+				content += "<div class='dretion-zoon'>";
+				content += "	<div class='itemindex'>"+item.p_title+"</div>";
+				content += "	<div class='itempoint'>"+item.ns_pr+"p"+"</div>";
+				content += "</div>";
+				content += "<div class='love-time'>";
+				content += "	<div class='love'>"+item.p_likeCount+"</div>";
+				content += "	<div class='time'>"+item.p_tm+"</div>";	
+				content += "</div>";	
+				content += "</div>";
+			});	
+			$("#sale").empty();
+			$("#sale").append(content);
+			
+		}
 </script>
 <body>
 	<h2>마이페이지</h2>
@@ -286,8 +355,8 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 	</div>
 	
 	   <div id="twoButton">
-      <button >판매목록</button>
-      <button >경매목록</button> 
+      <button>판매목록	</button>
+      <button>경매목록</button> 
       <button>구매목록</button>
       <button>커뮤니티</button> 
       <button>팔로우</button>
@@ -295,7 +364,8 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
       <button>좋아요</button> 
       <button>신고목록</button>
    </div>
-   <div id="sale" style="background-color:red; padding:20px;">판매목록입니다.</div>
+   
+   <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
    <div id="trade" style="background-color:orange; padding:20px;">경매목록입니다.</div>
    <div id="sell" style="background-color:yellow; padding:20px;">구매목록입니다.</div>
    <div id="commu" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
@@ -305,4 +375,9 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
    <div id="alarm" style="background-color:lime; padding:20px;">신고목록입니다.</div>
 	
 </body>
+<script type="text/javascript">
+
+
+
+</script>
 </html>
