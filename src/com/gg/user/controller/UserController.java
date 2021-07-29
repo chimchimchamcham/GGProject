@@ -133,7 +133,7 @@ public class UserController extends HttpServlet {
 			break;
 		
 		case "/changePw":
-			
+			success = service.changePw();
 			break;
 
 		}
@@ -141,5 +141,6 @@ public class UserController extends HttpServlet {
 	
 
 	}
+
 
 }
