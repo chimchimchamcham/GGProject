@@ -39,7 +39,8 @@ public class BoardDAO {
 		}
 	}
 
-	public GGDto salesDetail(int P_no) {
+	public GGDto salesDetail(int p_no) {
+		System.out.println("DAO salesDetail 호출");
 		GGDto dto = null;
 		/*String sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME,"+
 			    	 "S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME,"+
@@ -50,7 +51,7 @@ public class BoardDAO {
 		String sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME, S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME, N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME, I.I_NEWNAME, LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR FROM POST P, SALE S, N_SALE N, IMG I WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND P.P_NO = ?";
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, P_no);
+			ps.setInt(1, p_no);
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				dto = new GGDto();
@@ -83,66 +84,104 @@ public class BoardDAO {
 		return dto;
 	}
 
-	public int upP_view(int P_no) {
+	public int upP_view(int p_no) {
+		System.out.println("DAO upP_view");
 		String sql = "UPDATE POST SET P_VIEW = P_VIEW + 1 WHERE P_NO = ?";
 		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1,P_no);
+			ps.setInt(1,p_no);
 			success = ps.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("DAO upP_view4");
 		return success;
 	}
 
-	public boolean isLiked(String u_id, int P_no) {
+	public boolean isLiked(String u_id, int p_no) {
+		System.out.println("DAO isLiked");
 		String sql = "SELECT * FROM LOVE WHERE L_ID = ? AND P_NO = ?";
+		System.out.println("u_id : "+u_id);
+		System.out.println("p_no : "+p_no);
+		
 		boolean isLiked = false;
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1,u_id);
-			ps.setInt(2,P_no);
+			ps.setInt(2,p_no);
 			rs = ps.executeQuery();
-			isLiked = rs.next();
+			if(rs.next()) {
+				isLiked = true;
+			}
+			System.out.println("[DAO] isLiked : "+isLiked);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return isLiked;
 	}
 
-	public boolean lovePlus(String u_id, int P_no) {
+	public boolean lovePlus(String u_id, int p_no) {
+		System.out.println("DAO lovePlus");
 		String sql = "INSERT INTO LOVE VALUES(?,?,SYSDATE)";
-		boolean success = false;
+		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1,u_id);
-			ps.setInt(2,P_no);
-			rs = ps.executeQuery();
-			success = rs.next();
+			ps.setInt(1,p_no);
+			ps.setString(2,u_id);
+			success = ps.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return success;
+		return success>0?true:false;
 
 	}
 	
-	public boolean loveMinus(String u_id, int P_no) {
+	public boolean loveMinus(String u_id, int p_no) {
+		System.out.println("DAO loveMinus");
 		String sql = "DELETE FROM LOVE WHERE L_ID = ? AND P_NO = ?";
-		boolean success = false;
+		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1,u_id);
-			ps.setInt(2,P_no);
-			rs = ps.executeQuery();
-			success = rs.next();
+			ps.setInt(2,p_no);
+			success = ps.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return success>0?true:false;
+
+	}
+
+	public int loveCountPlus(int p_no) {
+		System.out.println("DAO loveCountPlus");
+		String sql = "UPDATE POST SET P_LIKECOUNT = P_LIKECOUNT + 1 WHERE P_NO = ?";
+		int success = 0;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1,p_no);
+			success = ps.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return success;
-
 	}
 	
+	public int loveCountMinus(int p_no) {
+		System.out.println("DAO loveCountMinus");
+		String sql = "UPDATE POST SET P_LIKECOUNT = P_LIKECOUNT - 1 WHERE P_NO = ?";
+		int success = 0;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1,p_no);
+			success = ps.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return success;
+	}
+	
+	/* ================================================ */
 	public ArrayList<GGDto> list() throws SQLException {
 		String sql = "SELECT p.p_id,p.p_no,p.p_title,p.p_likecount,p.p_tm,n.ns_pr,n.ns_code,i.i_newname,p.p_code FROM  post p,N_Sale n,img i,userinfo u WHERE p.p_no = n.p_no and p.p_no = i.p_no and p.p_code = 'P002' and (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_id = u.u_id";
 		ArrayList<GGDto> list = new ArrayList<GGDto>();
