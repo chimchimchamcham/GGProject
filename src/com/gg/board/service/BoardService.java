@@ -216,6 +216,15 @@ public class BoardService {
 		dao.resClose();
 		return isBuyRequested;
 	}
+	
+	public ArrayList<GGDto> sale3List(String p_id) {
+		System.out.println("service sale3List");
+		BoardDAO dao = new BoardDAO();
+		ArrayList<GGDto> sale3List = dao.sale3List(p_id);
+		System.out.println("dao sale3List");
+		dao.resClose();
+		return sale3List;
+	}
 	/* ====================================================== */
 public void list(String userid)	throws IOException {
 		

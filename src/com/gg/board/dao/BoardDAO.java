@@ -235,6 +235,36 @@ public class BoardDAO {
 		return success;
 	}
 
+	public ArrayList<GGDto> sale3List(String p_id) {
+		String sql = "SELECT COUNT(*) FROM POST P, SALE S, N_SALE N, IMG I WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND P.P_ID = ?";
+		String sql2 = "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME, S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME, N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME, I.I_NEWNAME, LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR FROM POST P, SALE S, N_SALE N, IMG I WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND P.P_ID = ?";
+		ArrayList<GGDto> sale3List = new ArrayList<>();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,p_id);
+			rs = ps.executeQuery();
+			int rowCnt = rs.next()?rs.getInt(1):0;
+			System.out.println("rowCnt : "+rowCnt);
+			int forCnt = rowCnt>=3?3:rowCnt;
+			System.out.println("forCnt : "+forCnt);
+			ps = conn.prepareStatement(sql2);
+			ps.setString(1,p_id);
+			rs = ps.executeQuery();
+			for(int i=0;i<forCnt;i++) {
+				rs.next();
+				GGDto dto = new GGDto();
+				dto.setP_no(rs.getInt("P_no"));
+				dto.setP_title(rs.getString("P_title"));
+				dto.setNs_pr(rs.getInt("NS_pr"));
+				dto.setI_newName(rs.getString("I_newName"));
+				sale3List.add(dto);
+				}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return sale3List;
+	}
 	/* ================================================ */
 	public ArrayList<GGDto> list(String userid) throws SQLException {
 		String sql = "select * FROM  post p,N_Sale n where (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_code = 'P002' and p.p_id = ? and p.p_no = n.p_no";
