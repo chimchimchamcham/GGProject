@@ -337,7 +337,8 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 				content += "<div class='item-one'>";
 				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg'></div>";
 				content += "<div class='dretion-zoon'>";
-				content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no="+item.p_no+">"+item.p_title+"</a>"+"</div>";
+				//content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no="+item.p_no+">"+item.p_title+"</a>"+"</div>";
+				content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no=11>"+item.p_title+"</a>"+"</div>";
 				content += "	<div class='itempoint'>"+item.ns_pr+"p"+"</div>";
 				content += "</div>";
 				content += "<div class='love-time'>";
