@@ -79,16 +79,18 @@ td {
 var loginId = "${sessionScope.loginId}";
 
 
+
 /*충전 팝업*/
 function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
 
 	$(document).ready(function() {
 
+		let $index1 = 0;
+		let $index2 = 0;
+		
 		/*알림*/
 		firstcall();//처음에만 뿌려주는 거
-		var	$what_index = 0;
-		var $how_index = 0;
-		var $how_aline_list	= 0;
+		
 		
 		
 		var msg = "${msg}";
@@ -130,7 +132,9 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
-		    WhatListcall();
+
+
+		    
 		    
 		    
 		});
@@ -152,7 +156,8 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
-		    WhatListcall();
+		    
+
 		    
 		});
 		$("#twoButton>button:nth-of-type(3)").click(function(){
@@ -172,7 +177,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
-		    WhatListcall();
+		    
 		});
 		$("#twoButton>button:nth-of-type(4)").click(function(){
 		    $("#twoButton>button:nth-of-type(4)").css({"background-color":"gray","color":"white"});
@@ -191,7 +196,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
-		    WhatListcall();
+		    
 		});
 		$("#twoButton>button:nth-of-type(5)").click(function(){
 		    $("#twoButton>button:nth-of-type(5)").css({"background-color":"gray","color":"white"});
@@ -210,7 +215,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
-		    WhatListcall();
+		    
 		});
 		$("#twoButton>button:nth-of-type(6)").click(function(){
 		    $("#twoButton>button:nth-of-type(6)").css({"background-color":"gray","color":"white"});
@@ -229,7 +234,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").show();
 		    $("#like").hide();
 		    $("#alarm").hide();
-		    WhatListcall();
+		    
 		});
 		$("#twoButton>button:nth-of-type(7)").click(function(){
 		    $("#twoButton>button:nth-of-type(7)").css({"background-color":"gray","color":"white"});
@@ -248,7 +253,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").show();
 		    $("#alarm").hide();
-		    WhatListcall();
+		   
 		});
 		$("#twoButton>button:nth-of-type(8)").click(function(){
 		    $("#twoButton>button:nth-of-type(8)").css({"background-color":"gray","color":"white"});
@@ -267,7 +272,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").show();
-		    WhatListcall();
+		    
 		});
 		
 	});
@@ -277,7 +282,8 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		$.ajax({
 			type:'post',
 			url:'./list',
-			data:{},
+			data:{  index1 : 0,
+					index2 : 0 },
 			dataType:'JSON',
 			success:function(data){
 				console.log("data",data);
@@ -290,63 +296,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 			}
 		});
 	}
-	
-	
-	
-	
-	
-	function ListWhatHowAline(){
-		$what_index = WhatListcall();
-		$how_index = howListcall();
-		$how_aline_list	= howAlineListcall();
-		
-		//listCall($what_index,$how_index);
-	}
-	
-	
-	
-	
-	
-	
-	/*_______________________________	 WhatListcall	목록의 종류는? 	______________________________*/	
-	function WhatListcall(){//top == 목록 종류 :		0 = 판매 목록
-	
-		var $button_what;
-		var $index_what;
-		var index_button_what;
-		
-		
-		console.log('WhatListcall 판매 목록');
-		$("#twoButton>button").click(function(){
-			
-			$button_what = $("#twoButton>button");
-			//console.log("$button_what:",$button_what);
-			
-		    $index_what = $button_what.index(this);
-		    //console.log("$index_what:",$index_what);
-		    
-		    $index_button_what = $("#twoButton>button:eq(" +  $index_what + ")");
-		    //console.log("$index_button_what:",$index_button_what);
-		    
-			console.log("$index:"+$index_what);
-			
-			
-			return $index_what;
-		})
-	}
 
-	
-	
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 			
 			
 	function listCall($index_top){
@@ -460,7 +410,14 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 </body>
 <script type="text/javascript">
 
+$("#twoButton>button").click(function(){
+	
+$button = $("#twoButton>button");
+$index = $button.index(this);
+$index_button = $("#twoButton>button:eq(" + $index + ")");
+console.log("#twoButton>button:"+$index);
 
+})
 
 </script>
 </html>
