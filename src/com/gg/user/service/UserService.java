@@ -211,7 +211,7 @@ public class UserService {
 	}
 	
 
-	public boolean chkpw() {
+	public String chkpw() {
 		UserDAO dao = new UserDAO();
 		GGDto dto = new GGDto();
 		dto.setU_id(req.getParameter("id"));
@@ -220,22 +220,18 @@ public class UserService {
 		return dao.chkpw(dto);
 	}
 
-	public boolean changePw() {
-		UserDAO dao = new UserDAO();
-		req.getParameter("");
-		return false;
-	}
 public int userUpdate(String id) {
 		
 		int success = 0;
+		UserDAO dao = new UserDAO();
 		
-		com.gg.board.service.UploadService upload = new com.gg.board.service.UploadService(req);
-		GGDto dto = upload.PhotoUpload();//새로운 파일 저장(변경한 사진)
-		
+		UserUploadService upload = new UserUploadService(req);
+		//회원정보 받아옴 파라미터
+		GGDto dto = upload.PhotoUpload(); //새로운 사진 이름만 바꿔서 dto에 저장한거임
+		success = dao.userUpdate(dto); //회원정보 수정(사진제외)
 		System.out.println("회원정보수정 요청 확인");
-
 		String u_id = (String)req.getSession().getAttribute("loginId"); //세션아이디
-		
+
 		String u_pw = req.getParameter("pw"); // 비밀번호
 		String u_name = req.getParameter("name"); //이름 
 		String u_nname = req.getParameter("nname"); // 닉네임
@@ -267,24 +263,34 @@ public int userUpdate(String id) {
 		dto.setU_addr(u_addr);
 		dto.setU_detailAddr(u_detailAddr);
 		
-		UserDAO dao = new UserDAO();
+		dao = new UserDAO();
 		Gson gson = null;
 
-		try {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			success = dao.userUpdate(dto);
-			System.out.println("회원정보 수정 :"+success);
-			map.put("success", success);
-			gson = new Gson();
-			String obj = gson.toJson(map);
+			//기존사진 이름 가져와서 delFileName에 넣음
+			String delFileName = dao.getFileName(id).getU_newName();
+			System.out.println("삭제할 사진 파일 : "+ delFileName);
 			
-			resp.getWriter().println(obj);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
+			//새로 업로드한 파일을 photo에 업데이트
+			if(dto.getU_newName() !=null) {
+				dao.updateFileName(delFileName, dto);
+				
+				//기존 파일을 지우고
+				upload.del(delFileName);
+			}
+
+
+			
 			dao.resClose();
-		}
+
 		
 		return success;
 	}
+
+public int changePw() {
+	String id = req.getParameter("id");
+	String pw = req.getParameter("newPw");
+	System.out.println("id : "+id+"newPw : "+pw);
+	UserDAO dao = new UserDAO();
+	return dao.changePw(id,pw);
+}
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -287,14 +288,14 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		console.log('call 처음 목록');
 		$.ajax({
 			type:'post',
-			url:'./list',
+			url:'./soldlist',
 			data:{  index1 : 0,
 					index2 : 0 },
 			dataType:'JSON',
 			success:function(data){
 				console.log("data",data);
-				if(data.list != null){
-					soled_list(data.list);
+				if(data.soldlist != null){
+					soled_list(data.soldlist);
 				}
 			},
 			error:function(e){
@@ -306,33 +307,33 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 			
 			
 	function listCall($index_top){
-		if ($index_top==0) {//전체
+		
 		$.ajax({
 			type:'post',
-			url:'./list',
+			url:'./soldlist',
 			data:{},
 			dataType:'JSON',
 			success:function(data){
 				console.log("data:"+data);
-				if(data.list != null){
-					soled_list(data.list);
+				if(data.soldlist != null){
+					soled_list(data.soldlist);
 				}
 			},
 			error:function(e){
 				console.log(e);
 			}
 		});			
-		}
+		
 		
 		
 		}
 			//데이터 가져와서 뿌려주는 함수 판매 리스트
-			function soled_list(list){	
+			function soled_list(soldlist){	
 			
-			console.log("list:", list);
+			console.log("soldlist:", soldlist);
 			var content="";
 			
-			list.forEach(function(item,idx){
+			soldlist.forEach(function(item,idx){
 				console.log(idx,item);
 				content += "<div class='item-one'>";
 				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg'></div>";
@@ -360,13 +361,28 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 	<div id="div1">
 		<table style="text-align: center; width: 40%;">
 			<tr>
-				<td><img src="${myPageInfo.u_newName }" width="150"></td>
+				<td>
+			<c:if test="${myPageInfo.u_newName  eq 'default-profile.png'}">
+				<img src="./img/default-profile.png" width="150px"/>
+			</c:if>
+			<c:if test="${myPageInfo.u_newName  ne 'default-profile.png'}">
+				<img src="/ProfilePhoto/${myPageInfo.u_newName }" width="150px"/>
+			</c:if>
 			</tr>
 			<tr>
-				<td>${myPageInfo.u_nname} </td>
+				<td>${myPageInfo.u_nname}</td>
 			</tr>
 			<tr>
-				<td>${myPageInfo.u_addr }</td>
+				<td>${myPageInfo.u_addr }&nbsp;${myPageInfo.u_detailAddr }</td>
+			</tr>
+			<tr>
+				<td>이름 : ${myPageInfo.u_name }</td>
+			</tr>
+			<tr>
+				<td>이메일 : ${myPageInfo.u_email }</td>
+			</tr>
+			<tr>
+				<td>전화번호 : ${myPageInfo.u_phone }</td>
 			</tr>
 			<tr>
 				<td><button onclick="location.href='./userUpdateForm?id=${loginId}'">회원정보 수정</button></td>
@@ -388,7 +404,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 			</tr>
 			<tr>
 				<td colspan="3">
-					<p>${myPageInfo.u_intro }</p>
+					<p>${myPageInfo.u_intro}</p>
 				</td>
 			</tr>
 		</table>
@@ -406,7 +422,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
    </div>
    
    <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
-   <div id="trade" style="background-color:orange; padding:20px;">경매목록입니다.</div>
+   <div id="trade" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
    <div id="sell" style="background-color:yellow; padding:20px;">구매목록입니다.</div>
    <div id="commu" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
    <div id="follow" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
@@ -425,6 +441,9 @@ $index_button = $("#twoButton>button:eq(" + $index + ")");
 console.log("#twoButton>button:"+$index);
 
 })
+
+
+
 
 </script>
 </html>

@@ -16,7 +16,9 @@ import com.gg.board.service.UploadService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
-@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/list","/writeForm","/writeSale","/writeTrade","/writeCommunity","/upload"})
+
+@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auction_list","/writeForm","/writeSale","/writeTrade","/writeCommunity"})
+
 public class BoardController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -127,8 +129,8 @@ public class BoardController extends HttpServlet {
 			break;	
 			
 		/* ===========================================================================*/	
-		case "/list":
-			System.out.println("리스트 요청");	
+		case "/soldlist":
+			System.out.println("판매 리스트 요청");	
 			String userid = (String) req.getSession().getAttribute("loginId");
 			int listwhatadd = Integer.parseInt(req.getParameter("index1"));
 			int listhowaline = Integer.parseInt(req.getParameter("index2"));
@@ -138,6 +140,19 @@ public class BoardController extends HttpServlet {
 			System.out.println("listhowaline:"+listhowaline);
 
 			service.list(userid,listwhatadd,listhowaline);
+			
+			break;
+			
+		case "/auction_list":
+			System.out.println("경매 리스트 요청");
+			
+			userid = (String) req.getSession().getAttribute("loginId");
+			int auctionlistwhatadd = Integer.parseInt(req.getParameter("index1"));
+			
+			
+			System.out.println("listwhatadd:"+auctionlistwhatadd);
+
+			service.list(userid,auctionlistwhatadd);
 			
 			break;
 			

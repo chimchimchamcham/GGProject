@@ -46,23 +46,35 @@ td {
 </style>
 <body>
 <h2>${userUpdate.u_nname}님의 회원정보 수정</h2>
-<form action="userUpdate" method="POST" >
+<form action="userUpdate" method="POST" enctype="multipart/form-data">
 	<table>
 		<tr>
 				<th>닉네임</th>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="text" name="nname" value="${userUpdate.u_nname}"/>
+					<input type="text" name="nname" value="${userUpdate.u_nname}" required/>
 					<input type='button' id="nname_overlay" value='중복확인' />
 				</td>
 			</tr>
 			<tr>
 				<td id='nname_check'></td>
 			</tr>
+			<tr>
+				<th>비밀 번호</th>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="password" name="pw" value="${userUpdate.u_pw}" required></td>
+			</tr>
+			<tr>
+				<th>비밀 번호 확인</th>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="password" name="re_pw" value="${userUpdate.u_pw}" required></td>
+			</tr>
 		<tr>
 			<th>이름</th>
-			<td><input type="text" name="name" value="${userUpdate.u_name}"></td>
+			<td><input type="text" name="name" value="${userUpdate.u_name}" required></td>
 		</tr>
 		<tr>
 			<th>자기소개 수정</th>
@@ -71,24 +83,31 @@ td {
 		<tr>
 			<th>프로필 사진</th>
 			<td>
-			<p><input type="file" name="photo"/></p>
-			<img src="${userUpdate.u_newName }" width="100px"/>
+			<p><input type="file" name="photo" accept=".gif, .jpg, .png, .jpeg"/></p>
+			
+			<c:if test="${userUpdate.u_newName  eq 'default-profile.png'}">
+				<img src="./img/default-profile.png" width="100px"/>
+			</c:if>
+			<c:if test="${userUpdate.u_newName  ne 'default-profile.png'}">
+				<img src="/ProfilePhoto/${userUpdate.u_newName}" width="100px"/>
+			</c:if>
+			
 			</td>
 		</tr>
 		<tr>
 				<th>핸드폰 번호</th>
 			</tr>
 			<tr>
-				<td colspan="2"><input type='text' name='phone1' maxlength='3' id='phone1' value=""/>&nbsp;-
-				<input type='text' name='phone2'id='phone2' maxlength='4' value=""/>&nbsp;-
-				<input type='text' name='phone3'id='phone3' maxlength='4' value=""/>
+				<td colspan="2"><input type='text' name='phone1' maxlength='3' id='phone1' value="" required/>&nbsp;-
+				<input type='text' name='phone2'id='phone2' maxlength='4' value="" required/>&nbsp;-
+				<input type='text' name='phone3'id='phone3' maxlength='4' value="" required/>
 				</td>
 			</tr>
 			<tr>
 				<th>이메일</th>
 			</tr>
 			<tr>
-				<td><input type="text" name="email" value="">&nbsp;@ <select name="mail">
+				<td><input type="text" name="email" value="" required>&nbsp;@ <select name="mail">
 						<option value='naver.com'>naver.com</option>
 						<option value='daum.net'>daum.net</option>
 						<option value='google.com'>google.com</option>
@@ -98,8 +117,8 @@ td {
 				<th>주소</th>
 			</tr>
 			<tr>
-				<td><input type='text' name='addr' value="${userUpdate.u_addr}"/>
-				<input type='text' name='detailAddr' value="${userUpdate.u_detailAddr}"/></td>
+				<td><input type='text' name='addr' value="${userUpdate.u_addr}" required/>
+				<input type='text' name='detailAddr' value="${userUpdate.u_detailAddr}" required/></td>
 			</tr>
 		<tr>
 			<td colspan="2">
@@ -112,19 +131,18 @@ td {
 </body>
 <script>
 
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);
+}
+
 	/*세션아이디 가져오기*/
 	var loginId = "${sessionScope.loginId}";
-	
-	/*알람창*/
-	var msg = "${msg}";
-	if(msg != ""){
-		alert(msg);
-	}
+
 	
 	/*전화번호 - 를 기준으로 자르기*/
 	var phone = "${userUpdate.u_phone}";
 	var arr = phone.split("-");
-	
 	console.log(arr);
 	$('#phone1').attr('value',arr[0]);
 	$('#phone2').attr('value',arr[1]);
@@ -135,8 +153,9 @@ td {
 	var arr2 = email.split("@");
 	console.log(arr2);
 	$('input[name=email]').attr('value',arr2[0]);
-
-	var overChk = true;
+	
+	var overChk = false;
+	
 	$("input[name='id']").keyup(function(e) {
 		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
 			var inputVal = $(this).val();
@@ -150,8 +169,8 @@ td {
 		}
 	});
 
-	function join() {
-		console.log("join");
+	function update() {
+		console.log("update");
 		var $id = $("input[name='id']");//아이디 ==> 객체가 들어간다는건 $표시로 구분함.
 		var $pw = $("input[name='pw']");//비번
 		var $re_pw = $("input[name='re_pw']"); //비밀번호 확인칸
@@ -169,10 +188,7 @@ td {
 		//중복 체크
 		if (overChk) {
 			console.log("회원가입 체크");
-			if ($id.val() == "") {
-				alert("아이디를 입력해 주세요!");
-				$id.focus();
-			} else if ($pw.val() == "") {
+			if ($pw.val() == "") {
 				alert("비밀번호를 입력해 주세요!!");
 				$pw.focus();
 			} else if ($re_pw.val() == "") {
@@ -205,7 +221,7 @@ td {
 			} else if ($detailAddr.val() == "") {
 				alert("상세 주소를 입력해 주세요!!");
 				$detailAddr.focus();
-			} else {
+			} else { //모든 정보가 입력되었을 때
 				console.log("save");
 				var param = {};
 				param.id = $id.val();
@@ -219,19 +235,21 @@ td {
 				param.mail = $mail.val();
 				param.addr = $addr.val();
 				param.detailAddr = $detailAddr.val();
+				
 				//저장 가능
 				$.ajax({
 					type : "POST",
-					url : 'join',
+					url : 'userUpdate',
 					data : param,
 					dataType : 'JSON',
 					success : function(data) {
 						console.log(data);
-						if (data.success) {
-							alert("회원가입에 성공 했습니다!");
-							location.href = 'index.jsp';
+						if (data.success>0) {
+							alert("회원정보 수정에 성공 했습니다.");
+							location.href = 'myPage?id="+id';
 						} else {
-							alert('회원가입에 실패 했습니다! 다시 시도해 주세요!');
+							alert('회원정보 수정에 실패 했습니다. 다시 시도해 주세요!');
+							location.href = 'userUpdateForm?id="+id';
 						}
 					},
 					error : function(e) {
@@ -245,51 +263,16 @@ td {
 		}
 	}
 
-	$("#id_overlay").click(function() {
-		var id = $("input[name='id']").val();
-		if (id != "") {
-			console.log(id);
-			$.ajax({
-				type : 'get',
-				url : 'id_overlay',
-				data : {
-					'id' : id
-				},
-				dataType : 'JSON',
-				success : function(data) {
-					console.log(data);
-					if (!data.success) {
-						alert("처리 중 문제가 발생했습니다. 다시 시도해 주세요.");
-					} else {
-						if (data.overlay) {
-							$("#id_check").html("아이디가 중복됩니다!");
-							$("input[name='id']").val("");
-						} else {
-							$("#id_check").empty();
-							$("#id_check").html("사용가능한 아이디입니다!");
-							overChk = true;
-						}
-					}
-				},
-				error : function(e) {
-					console.log(e);
-				}
-			});
-		} else {
-			alert("중복 체크할 아이디를 입력하세요!");
-			$("input[name='id']").focus();
-		}
-	});
-
 	$("#nname_overlay").click(function() {
 		var nname = $("input[name='nname']").val();
+		var overChk = false;
 		console.log(nname);
 		if (nname != "") {
 			$.ajax({
 				type : 'get',
 				url : 'nname_overlay',
 				data : {
-					'nname' : nname
+					'nname' : nname,
 				},
 				dataType : 'JSON',
 				success : function(data) {
@@ -315,7 +298,6 @@ td {
 			alert("중복 체크할 닉네임을 입력하세요!");
 			$("input[name='nname']").focus();
 		}
-
 	});
 </script>
 </html>

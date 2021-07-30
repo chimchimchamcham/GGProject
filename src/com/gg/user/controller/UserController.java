@@ -13,8 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gg.user.service.UserService;
 import com.google.gson.Gson;
+import sun.misc.Contended;
 
-@WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage","/userUpdate","/userUpdateForm","/chkpw","/changePw"})
+@WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage","/userUpdate","/userUpdateForm","/chkpw","/changePw","/chkinfo"})
 public class UserController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -114,31 +115,40 @@ public class UserController extends HttpServlet {
 			resp.setContentType("text/html; charset=UTF-8");
 			req.setCharacterEncoding("UTF-8"); 
 			String id = (String)req.getSession().getAttribute("loginId");
-			msg = "회원정보 수정에 실패 했습니다.";
-			page = "userUpdateForm?id="+id;
-			if(service.userUpdate(id) >0) {
+			int result = service.userUpdate(id);
+			System.out.println("수정 성공 여부 : "+result);
+			
+			msg="회원정보 수정에 실패 했습니다. 다시 시도해 주세요";
+			page= "userUpdateForm?id=" + id; //실패하면 수정폼 그대로
+			if (result >0) {
 				msg="회원정보 수정에 성공 했습니다.";
-				page = "myPage?id="+id;
-			} 
-
+				page= "myPage?id=" + id; //성공하면 마이페이지로
+			}
+	
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);
-			
+
 			break;		
 
-		
-		case "/chkPw":
+		case "/chkpw":
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("success", service.chkpw());
+			map.put("pw", service.chkpw());
 			String obj = new Gson().toJson(map);
 			resp.getWriter().println(obj);
+			System.out.println(map.get("pw"));
 			break;
 		
 		case "/changePw":
-			success = service.changePw();
+			System.out.println("비밀번호 변경요청");
+			if(service.changePw()>0) {
+				System.out.println("비밀번호 성공");
+				resp.sendRedirect("login.jsp");
+			}else {
+				resp.sendRedirect("insearch.jsp");
+			}
 			break;
-
+			
 		}
 		
 	
