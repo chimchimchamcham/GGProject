@@ -47,7 +47,7 @@ public class UploadService {
 			if(oriFileName != null) {
 				String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
 				String i_newName = System.currentTimeMillis() + ext;
-				
+				System.out.println("i_newName:"+i_newName);
 				File oldName = new File(savePath + oriFileName);
 				File newName = new File(savePath + i_newName);
 				oldName.renameTo(newName);

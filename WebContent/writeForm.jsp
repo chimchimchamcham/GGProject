@@ -51,7 +51,7 @@ textarea {
 				<input type="text" name="title" value="" placeholder="제목을 입력해주세요"
 					style='width: "1000px"' />
 			</p>
-		<form enctype="multipart/form-data" id="uploadForm">
+		<form method="post" enctype="multipart/form-data" id="uploadForm">
 				<label for='test'><img src="img/plus.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" /></label>
 				 <input type="file" name="imgFile" style="display: none" id="test" />
 		</form>
@@ -261,12 +261,12 @@ textarea {
 	//사진 담을 객체
 	var form = $('#uploadForm')[0];
 	
-   var data = new FormData(form);
-
+   var form_data = new FormData(form);
+	console.log(form_data);
 	//data.append($('#test').prop('files')[0]);
 	
 	//등록버튼 클릭시 
-	$("#submit").click(function(){
+	$("#submit2").click(function(){
 		console.log(form);
 		console.log(data);
 		//console.log($("form input"));
@@ -279,7 +279,7 @@ textarea {
 		console.log(param); */ 
 	});
 	
-	$("#submit2").click(function() {
+	$("#submit").click(function() {
 
 		if (param.select == "P004") { //커뮤니티글 선택시
 			/* $("form input").each(function(idx,item){
@@ -368,18 +368,18 @@ textarea {
 					dataType : 'JSON',
 					success : function(data) {
 						console.log(data.p_no);
-						data.append("p_no",data.p_no);
-						console.log(data);
+						form_data.append("p_no",data.p_no);
+						console.log("data : ",data);
 						$.ajax({
 							 type: "POST",
 							 enctype: 'multipart/form-data',
-						     url: "/upload",
-						     data: data,
+						     url: "upload",
+						     data: form_data,
 						     processData: false,
 						     contentType: false,
 						     cache: false,
 						     success : function(data) {
-								console.log(data);
+								console.log(data.success);
 						},error : function(e) {
 							console.log(e);
 						}

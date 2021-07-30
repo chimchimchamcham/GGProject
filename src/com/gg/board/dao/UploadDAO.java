@@ -48,18 +48,22 @@ public class UploadDAO {
 		}
 	}
 
-	public void PhotoUpload(GGDto dto) {
+	public int PhotoUpload(GGDto dto) {
 		String sql = "INSERT INTO Img VALUES(?,?)";
+		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, dto.getP_no());
 			ps.setString(2, dto.getI_newName());
-			ps.executeUpdate();
+			success = ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		if(success>0) {
+			System.out.println("글 쓰기 사진 업로드 성공");
+		}
+		return success;
 		
 	}
 
