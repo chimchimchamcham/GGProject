@@ -211,7 +211,7 @@ public class UserService {
 	}
 	
 
-	public boolean chkpw() {
+	public String chkpw() {
 		UserDAO dao = new UserDAO();
 		GGDto dto = new GGDto();
 		dto.setU_id(req.getParameter("id"));
@@ -220,12 +220,6 @@ public class UserService {
 		return dao.chkpw(dto);
 	}
 
-	public boolean changePw() {
-		UserDAO dao = new UserDAO();
-		req.getParameter("");
-		return false;
-	}
-	
 public int userUpdate(String id) {
 		
 		int success = 0;
@@ -236,6 +230,41 @@ public int userUpdate(String id) {
 		GGDto dto = upload.PhotoUpload(); //새로운 사진 이름만 바꿔서 dto에 저장한거임
 		success = dao.userUpdate(dto); //회원정보 수정(사진제외)
 		System.out.println("회원정보수정 요청 확인");
+		String u_id = (String)req.getSession().getAttribute("loginId"); //세션아이디
+
+		String u_pw = req.getParameter("pw"); // 비밀번호
+		String u_name = req.getParameter("name"); //이름 
+		String u_nname = req.getParameter("nname"); // 닉네임
+		String u_phone = req.getParameter("phone1"); // 핸드폰 앞번호
+		String u_phone2 = req.getParameter("phone2"); // 핸드폰 중간번호
+		String u_phone3 = req.getParameter("phone3"); // 핸드폰 끝번호
+		String u_email = req.getParameter("email"); //메일 앞부분
+		String u_mail = req.getParameter("mail"); // 메일 뒷부분(ex]naver.com)
+		String u_addr = req.getParameter("addr"); // 대략적 주소
+		String u_detailAddr = req.getParameter("detailAddr"); // 상세 주소
+		
+		System.out.println("회원정보 수정값 확인");
+		System.out.println(u_id+"/"+u_pw+"/"+u_name+"/"+u_nname+"/"+u_phone+"/"+u_phone2+"/"+u_phone3+"/"+u_email+"/"+u_mail+"/"+u_addr+"/"+u_detailAddr);
+		
+		// 메일 합치기
+		u_email += "@" + u_mail;
+		System.out.println("이메일 확인 : " + u_email);
+		// 핸드폰 번호 합치기
+		u_phone += "-"+u_phone2 +"-"+ u_phone3;
+		System.out.println("핸드폰 번호 확인 : " + u_phone);
+		
+		//DTO에 값을 넣어주기.
+		dto.setU_id(u_id);
+		dto.setU_pw(u_pw);
+		dto.setU_name(u_name);
+		dto.setU_nname(u_nname);
+		dto.setU_phone(u_phone);
+		dto.setU_email(u_email);
+		dto.setU_addr(u_addr);
+		dto.setU_detailAddr(u_detailAddr);
+		
+		dao = new UserDAO();
+		Gson gson = null;
 
 			//기존사진 이름 가져와서 delFileName에 넣음
 			String delFileName = dao.getFileName(id).getU_newName();
@@ -249,10 +278,19 @@ public int userUpdate(String id) {
 				upload.del(delFileName);
 			}
 
+
 			
 			dao.resClose();
 
 		
 		return success;
 	}
+
+public int changePw() {
+	String id = req.getParameter("id");
+	String pw = req.getParameter("newPw");
+	System.out.println("id : "+id+"newPw : "+pw);
+	UserDAO dao = new UserDAO();
+	return dao.changePw(id,pw);
+}
 }

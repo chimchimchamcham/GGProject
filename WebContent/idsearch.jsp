@@ -117,29 +117,36 @@
 			</table>
 			<div id="resetpw">
 				<span style="font-weight:bold">비밀번호 재설정</span>
-				<table>
-					<tr>
-						<td>새 비밀번호</td>
-					</tr>
-					<tr>
-						<td><input type="text" id="pwchk1"/></td>
-					</tr>
-					<tr>
-						<td>새 비밀번호 확인</td>
-					</tr>
-					<tr>
-						<td><input type="text" id="pwchk2"/>&nbsp<span id ="alert" style="color:red">* 비밀번호가 일치하지 않습니다.</span></td>
-					</tr>
-					<tr>
-						<td align="right"><input type="button" value="비밀번호 확인" id="chkpw"/><input type="button" value="비밀번호 변경하기"/></td>
-					</tr>
-				</table>
+				<form id="change" action="changePw" method="post">
+					<table>
+						<tr>
+							<td>새 비밀번호</td>
+						</tr>
+						<tr>
+							<td><input type="text" id="pwchk1" name="newPw"/></td>
+						</tr>
+						<tr>
+							<td>새 비밀번호 확인</td>
+						</tr>
+						<tr>
+							<td><input type="text" id="pwchk2"/>&nbsp<span id ="alert" style="color:red">*공란이거나, 비밀번호가 일치하지 않습니다.</span></td>
+						</tr>
+						<tr style="display:none">
+							<td><input type="text" name="id" value=""/></td>
+						</tr>
+						<tr>
+							<td align="right"><input type="button" value="비밀번호 확인" id="chkpw"/><button type="button" id ="changePw">비밀번호 변경하기</button></td>
+						</tr>
+					</table>
+				</form>
 			</div>
 		</div>
 	</div>
 </body>
 <script>
 	var chkpw = false;
+	var id = "";
+	var pw = "";
 	$("#pwarea").hide();
 	$("#resetpw").hide();
 	$("#alert").hide();
@@ -165,7 +172,6 @@
 		},
 		dataType:"JSON",
 		success:function(data){
-			console.log(data.id);
 			if(data.id == null){
 				$("#resultprint").html("일치하는 아이디가 없습니다.");
 			}else{
@@ -191,8 +197,14 @@
 			},
 			dataType:"JSON",
 			success:function(data){
-				if(data.success){
+				if(data.pw != ""){
 					$("#resetpw").show();
+					pw = data.pw;
+					$("input[name='id']").attr('value',$("#chkid").val());
+					$("#chkid").prop('readonly', true);
+				}else{
+					alert("입력하신 데이터에 일치하는 ID를 찾지 못하였습니다.");
+					$("#resetpw").hide();
 				}
 			},
 			error:function(e){
@@ -203,16 +215,23 @@
 	
 	$("#chkpw").click(function(){
 		if($("#pwchk1").val() != "" && $("#pwchk1").val() == $("#pwchk2").val()){	
-			chkpw=true;
-			$("#alert").hide();
+			if($("#pwchk1").val() == pw){
+				alert("기존의 비밀번호와 일치합니다. 다시 확인해주세요");
+			}else{
+				chkpw=true;
+				$("#alert").hide();
+				alert("비밀번호가 일치합니다. - 비밀번호 변경을 눌러주세요");
+			}
 		}else{
 			$("#alert").show();
 		}
 	})
 	
-	$("#chkpw").click(function(){
-		if(chkpw=true){
-			location.href("/changePw");
+	$("#changePw").click(function(){
+		if(chkpw!=true){
+			alert("비밀번호 확인을 먼저 진행해주세요.");
+		}else{
+			$("#change").submit();
 		}
 	});
 </script>

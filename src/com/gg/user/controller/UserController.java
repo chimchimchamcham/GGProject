@@ -13,10 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gg.user.service.UserService;
 import com.google.gson.Gson;
-
 import sun.misc.Contended;
 
-@WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage","/userUpdate","/userUpdateForm","/chkpw","/changePw"})
+@WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage","/userUpdate","/userUpdateForm","/chkpw","/changePw","/chkinfo"})
 public class UserController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -132,18 +131,24 @@ public class UserController extends HttpServlet {
 
 			break;		
 
-		
-		case "/chkPw":
+		case "/chkpw":
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("success", service.chkpw());
+			map.put("pw", service.chkpw());
 			String obj = new Gson().toJson(map);
 			resp.getWriter().println(obj);
+			System.out.println(map.get("pw"));
 			break;
 		
 		case "/changePw":
-			success = service.changePw();
+			System.out.println("비밀번호 변경요청");
+			if(service.changePw()>0) {
+				System.out.println("비밀번호 성공");
+				resp.sendRedirect("login.jsp");
+			}else {
+				resp.sendRedirect("insearch.jsp");
+			}
 			break;
-
+			
 		}
 		
 	
