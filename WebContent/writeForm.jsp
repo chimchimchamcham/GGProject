@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -8,479 +8,351 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!--예약하기 달력 관련 링크-->
 <!-- jquery UI 링크 -->
 <link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- jquery UI CDN -->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <!-- 언어 별 CDN -->
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/i18n/jquery.ui.datepicker-ko.min.js"></script>
+   src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/i18n/jquery.ui.datepicker-ko.min.js"></script>
 <!-- Date 라이브러리 -->
 <script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+   src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <!--------------//////////////////////////////------------->
 
 <style>
 #wrap {
-	width: 1200px;
-	margin: 0 auto;
-	text-align: left;
+   width: 1200px;
+   margin: 0 auto;
+   text-align: left;
 }
 
 textarea {
-	resize: none;
+   resize: none;
 }
 </style>
 
 </head>
 <body>
-	<div id="wrap">
-		<h2>글쓰기</h2>
-		<!--글쓰기 폼 선택 버튼-->
-		<div id="selectForm">
-			<button id="sale">판매</button>
-			<button id="trade">경매</button>
-			<button id="community">커뮤니티</button>
-		</div>
+   <div id="wrap">
+      <h2>글쓰기</h2>
+      <!--글쓰기 폼 선택 버튼-->
+      <div id="selectForm">
+         <button id="sale">판매</button>
+         <button id="trade">경매</button>
+         <button id="community">커뮤니티</button>
+      </div>
 
-		<div id="communityForm">
-			<p>
-				<input type="text" name="title" value="" placeholder="제목을 입력해주세요"
-					style='width: "1000px"' />
-			</p>
-			<p class="imgFileUpload">
-				<label for='test'><img src="img/plus.png" class="imgFileBtn"
-					alt="plus" width="100px" /></label> <input type="file" name="imgFile"
-					style="display: none" id="test" />
-			</p>
-			<p>
-				<textarea name="content" rows="30" cols="100" placeholder="내용입력"
-					style="overflow-y: scroll"></textarea>
-			</p>
-			<p id="commuCategory">
-				카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="commuCat">
-					<c:forEach items="${commuCat }" var="CommuCategory">
-						<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
-					</c:forEach>
-				</select>
-			</p>
-		</div>
+      <div id="communityForm">
+         <p>
+            <input type="text" name="title" value="" placeholder="제목을 입력해주세요"
+               style='width: "1000px"' />
+         </p>
+         <p class="imgFileUpload">
+            <label for='test'><img src="img/plus.png" class="imgFileBtn"
+               alt="plus" width="100px" /></label> <input type="file" name="imgFile"
+               style="display: none" id="test" />
+         </p>
+         <p>
+            <textarea name="content" rows="30" cols="100" placeholder="내용입력"
+               style="overflow-y: scroll"></textarea>
+         </p>
+         <p id="commuCategory">
+            카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="commuCat">
+               <c:forEach items="${commuCat }" var="CommuCategory">
+                  <option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
+               </c:forEach>
+            </select>
+         </p>
+      </div>
 
-		<div id="saleForm">
-			<p id="salePr">
-<<<<<<< HEAD
-				<input type="text" name="price" value=""  placeholder="가격 입력(숫자입력)" />&nbsp;Point
-=======
-				<input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point
->>>>>>> f8269185af4c7f41fac9f21d933d9b60b8495422
-			</p>
-			<p>
-				거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
-					value="Y">택배<input type="radio" name="deliveryYN" value="N">직거래
-			</p>
-			<p id="category">
-				카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
-					<c:forEach items="${saleCat }" var="SaleCategory">
-						<option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
-					</c:forEach>
-				</select>
-			</p>
-			<p>
-				공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
-					value="N">전체공개 <input type="radio" name="disclosure"
-					value="Y">팔로우한정
-			</p>
-		</div>
-		<!--경매선택시 하단부분-->
-		<div id="tradeForm">
-			<p>경매시간 설정</p>
-			<p id="endDate">
-				현재시간 ~ 종료시간<input type="text" name="endDate" value=""
-					id="datepicker" readonly>
-			</p>
+      <div id="saleForm">
+         <p id="salePr">
+            <input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point
+         </p>
+         <p>
+            거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
+               value="Y">택배<input type="radio" name="deliveryYN" value="N">직거래
+         </p>
+         <p id="category">
+            카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
+               <c:forEach items="${saleCat }" var="SaleCategory">
+                  <option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
+               </c:forEach>
+            </select>
+         </p>
+         <p>
+            공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
+               value="N">전체공개 <input type="radio" name="disclosure"
+               value="Y">팔로우한정
+         </p>
+      </div>
+      <!--경매선택시 하단부분-->
+      <div id="tradeForm">
+         <p>경매시간 설정</p>
+         <p id="endDate">
+            현재시간 ~ 종료시간<input type="text" name="endDate" value=""
+               id="datepicker" readonly>
+         </p>
 
 
-			<!--예약 경매 버튼 클릭시-->
-			<button id="reservBtn">예약경매하기</button>
-			<div id="reservForm">
-				<p>
-					<input type="text" id="from" placeholder="시작시간"
-						style="width: 80px;" readonly> ~ <input type="text"
-						id="to" placeholder="종료시간" style="width: 80px;" readonly>
-				</p>
-				<!--아래에 선택 일자 표시-->
-				<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
-			</div>
-			<p>
-				시작가격&nbsp;<input type="text" name="startPrice" value=""
-					placeholder="시작가격 입력(숫자입력)" />&nbsp;Point
-			</p>
-			<p>
-				즉결가격&nbsp;<input type="text" name="promptPrice" value=""
-					placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
-			</p>
-		</div>
+         <!--예약 경매 버튼 클릭시-->
+         <button id="reservBtn">예약경매하기</button>
+         <div id="reservForm">
+            <p>
+               <input type="text" id="from" placeholder="시작시간"
+                  style="width: 80px;" readonly> ~ <input type="text"
+                  id="to" placeholder="종료시간" style="width: 80px;" readonly>
+            </p>
+            <!--아래에 선택 일자 표시-->
+            <!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
+         </div>
+         <p>
+            시작가격&nbsp;<input type="text" name="startPrice" value=""
+               placeholder="시작가격 입력(숫자입력)" />&nbsp;Point
+         </p>
+         <p>
+            즉결가격&nbsp;<input type="text" name="promptPrice" value=""
+               placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
+         </p>
+      </div>
 
-		<div id="twoButton">
-			<button id="submit">등록</button>
-			<button onclick="location.href='./index.jsp'">취소</button>
-		</div>
-	</div>
+      <div id="twoButton">
+         <button id="submit">등록</button>
+         <button onclick="location.href='./index.jsp'">취소</button>
+      </div>
+   </div>
 </body>
 <script>
-	//종료 날짜 설정 달력/////////////////////////////////////////////////////////////////
+   //종료 날짜 설정 달력/////////////////////////////////////////////////////////////////
 $(function(){
 var option = {
-			// datepicker 애니메이션 타입
-			// option 종류 : "show" , "slideDown", "fadeIn", "blind", "bounce", "clip", "drop", "fold", "slide"
-			showAnim : "slideDown",
-			// 해당 월의 다른 월의 날짜가 보이는 여부, 예를 들면 10월이면 전후에 9월 마지막과 11월의 시작 일이 보이는 여부입니다. 즉, 달력이 꽉 차 보이게 하는 것
-			showOtherMonths : true,
-			// 선택 여부 (showOtherMonths 옵션과 같이 일치시키지 않으면 에러가 발생합니다.)
-			selectOtherMonths : true,
-			// 달력 밑에 오늘과 닫기 버튼이 보인다.
-			showButtonPanel : true,
-			// 년 월이 셀렉트 박스로 표현 되어서 선택할 수 있다.
-			changeMonth : true,
-			changeYear : true,
-			// 한번에 보이는 개월 수
-			numberOfMonths : 3,
-			// 데이터 포멧
-			dateFormat : "yy-mm-dd",
-			// 텍스트 박스 옆의 달력 포시
-			showOn : "button",
-			//이미지 타입인지 버튼 타입인지 설정
-			buttonImageOnly : true,
-			// 이미지 경로
-			buttonImage : "https://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
-			// 버튼 타입이면 버튼 값
-			buttonText : "Select date",
-			// alt 데이터 포멧
-			altFormat : "DD, d MM, yy",
-			// 선택 가능한 날짜(수 형식) - 현재 기준 -20일
-			minDate : 0,
-			// 선택 가능한 최대 날짜(문자 형식) - 현재 기준 +1월 +20일
-			maxDate : "+1M",
-			// 주 표시
-			showWeek : true
-		};
+         // datepicker 애니메이션 타입
+         // option 종류 : "show" , "slideDown", "fadeIn", "blind", "bounce", "clip", "drop", "fold", "slide"
+         showAnim : "slideDown",
+         // 해당 월의 다른 월의 날짜가 보이는 여부, 예를 들면 10월이면 전후에 9월 마지막과 11월의 시작 일이 보이는 여부입니다. 즉, 달력이 꽉 차 보이게 하는 것
+         showOtherMonths : true,
+         // 선택 여부 (showOtherMonths 옵션과 같이 일치시키지 않으면 에러가 발생합니다.)
+         selectOtherMonths : true,
+         // 달력 밑에 오늘과 닫기 버튼이 보인다.
+         showButtonPanel : true,
+         // 년 월이 셀렉트 박스로 표현 되어서 선택할 수 있다.
+         changeMonth : true,
+         changeYear : true,
+         // 한번에 보이는 개월 수
+         numberOfMonths : 3,
+         // 데이터 포멧
+         dateFormat : "yy-mm-dd",
+         // 텍스트 박스 옆의 달력 포시
+         showOn : "button",
+         //이미지 타입인지 버튼 타입인지 설정
+         buttonImageOnly : true,
+         // 이미지 경로
+         buttonImage : "https://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+         // 버튼 타입이면 버튼 값
+         buttonText : "Select date",
+         // alt 데이터 포멧
+         altFormat : "DD, d MM, yy",
+         // 선택 가능한 날짜(수 형식) - 현재 기준 -20일
+         minDate : 0,
+         // 선택 가능한 최대 날짜(문자 형식) - 현재 기준 +1월 +20일
+         maxDate : "+1M",
+         // 주 표시
+         showWeek : true
+      };
 var option1 = {
-		// datepicker 애니메이션 타입
-		// option 종류 : "show" , "slideDown", "fadeIn", "blind", "bounce", "clip", "drop", "fold", "slide"
-		showAnim : "slideDown",
-		// 해당 월의 다른 월의 날짜가 보이는 여부, 예를 들면 10월이면 전후에 9월 마지막과 11월의 시작 일이 보이는 여부입니다. 즉, 달력이 꽉 차 보이게 하는 것
-		showOtherMonths : true,
-		// 선택 여부 (showOtherMonths 옵션과 같이 일치시키지 않으면 에러가 발생합니다.)
-		selectOtherMonths : true,
-		// 달력 밑에 오늘과 닫기 버튼이 보인다.
-		showButtonPanel : true,
-		// 년 월이 셀렉트 박스로 표현 되어서 선택할 수 있다.
-		changeMonth : true,
-		changeYear : true,
-		// 한번에 보이는 개월 수
-		numberOfMonths : 3,
-		// 데이터 포멧
-		dateFormat : "yy-mm-dd",
-		// 텍스트 박스 옆의 달력 포시
-		showOn : "button",
-		//이미지 타입인지 버튼 타입인지 설정
-		buttonImageOnly : true,
-		// 이미지 경로
-		buttonImage : "https://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
-		// 버튼 타입이면 버튼 값
-		buttonText : "Select date",
-		// alt 데이터 포멧
-		altFormat : "DD, d MM, yy",
-		// 선택 가능한 날짜(수 형식) - 현재 기준 -20일
-		minDate : 0,
-		// 선택 가능한 최대 날짜(문자 형식) - 현재 기준 +1월 +20일
-		maxDate : "+2M",
-		// 주 표시
-		showWeek : true
-	};
-		var optionFrom = option;
-		optionFrom.altField = "#alternateFrom";
-		var dateFormat = "mm/dd/yy";
-		// 시작일이 선택이 되면 종료일은 시작일 보다 앞을 선택할 수 없다.
-		var from = $("#from").datepicker(optionFrom).on("change", function() {
-			to.datepicker("option", "minDate", getDate(this));
-		});
-		var optionTo = option1;
-		optionTo.altField = "#alternateTo";
-		// 종료일이 선택이 되면 시작일은 시작일 보다 앞을 선택할 수 없다.
-		var to = $("#to").datepicker(optionTo).on("change", function() {
-			from.datepicker("option1", "maxDate", getDate(this));
-		});
-		function getDate(element) {
-			return moment(element.value).toDate();
-		}
-	});
+      // datepicker 애니메이션 타입
+      // option 종류 : "show" , "slideDown", "fadeIn", "blind", "bounce", "clip", "drop", "fold", "slide"
+      showAnim : "slideDown",
+      // 해당 월의 다른 월의 날짜가 보이는 여부, 예를 들면 10월이면 전후에 9월 마지막과 11월의 시작 일이 보이는 여부입니다. 즉, 달력이 꽉 차 보이게 하는 것
+      showOtherMonths : true,
+      // 선택 여부 (showOtherMonths 옵션과 같이 일치시키지 않으면 에러가 발생합니다.)
+      selectOtherMonths : true,
+      // 달력 밑에 오늘과 닫기 버튼이 보인다.
+      showButtonPanel : true,
+      // 년 월이 셀렉트 박스로 표현 되어서 선택할 수 있다.
+      changeMonth : true,
+      changeYear : true,
+      // 한번에 보이는 개월 수
+      numberOfMonths : 3,
+      // 데이터 포멧
+      dateFormat : "yy-mm-dd",
+      // 텍스트 박스 옆의 달력 포시
+      showOn : "button",
+      //이미지 타입인지 버튼 타입인지 설정
+      buttonImageOnly : true,
+      // 이미지 경로
+      buttonImage : "https://jqueryui.com/resources/demos/datepicker/images/calendar.gif",
+      // 버튼 타입이면 버튼 값
+      buttonText : "Select date",
+      // alt 데이터 포멧
+      altFormat : "DD, d MM, yy",
+      // 선택 가능한 날짜(수 형식) - 현재 기준 -20일
+      minDate : 0,
+      // 선택 가능한 최대 날짜(문자 형식) - 현재 기준 +1월 +20일
+      maxDate : "+2M",
+      // 주 표시
+      showWeek : true
+   };
+      var optionFrom = option;
+      optionFrom.altField = "#alternateFrom";
+      var dateFormat = "mm/dd/yy";
+      // 시작일이 선택이 되면 종료일은 시작일 보다 앞을 선택할 수 없다.
+      var from = $("#from").datepicker(optionFrom).on("change", function() {
+         to.datepicker("option", "minDate", getDate(this));
+      });
+      var optionTo = option1;
+      optionTo.altField = "#alternateTo";
+      // 종료일이 선택이 되면 시작일은 시작일 보다 앞을 선택할 수 없다.
+      var to = $("#to").datepicker(optionTo).on("change", function() {
+         from.datepicker("option1", "maxDate", getDate(this));
+      });
+      function getDate(element) {
+         return moment(element.value).toDate();
+      }
+   });
 
-	/////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////
 
-	//초기상태 - 판매폼만 보이는 상태
-	//폼 선택 버튼  클릭시 해당 값이 달라짐
-	var param = {};
-	param.userId = "${sessionScope.loginId}";
+   //초기상태 - 판매폼만 보이는 상태
+   //폼 선택 버튼  클릭시 해당 값이 달라짐
+   var param = {};
+   param.userId = "${sessionScope.loginId}";
 
-	//경매하단부분 숨겨져있음
-	$("#saleForm").show();
-	$("#communityForm").show();
-	$("#tradeForm").hide();
-	$("#reservForm").hide();
-	$("#commuCategory").hide();
+   //경매하단부분 숨겨져있음
+   $("#saleForm").show();
+   $("#communityForm").show();
+   $("#tradeForm").hide();
+   $("#reservForm").hide();
+   $("#commuCategory").hide();
 
-	//경매버튼클릭시
-	$("#trade").click(function() {
-		param.select = "P001";
+   //경매버튼클릭시
+   $("#trade").click(function() {
+      param.select = "P001";
 
-		console.log(param.select);
-		$("#tradeForm").show();
-		$("#reservForm,#commuCategory,#salePr").hide();
+      console.log(param.select);
+      $("#tradeForm").show();
+      $("#reservForm,#commuCategory,#salePr").hide();
 
-	});
+   });
 
-	//커뮤니티버튼 클릭시
-	$("#community").click(function() {
-		param.select = "P004";
-		console.log(param.select);
-		$("#tradeForm,#saleForm,#reservForm").hide();
-		$("#commuCategory").show();
-	});
+   //커뮤니티버튼 클릭시
+   $("#community").click(function() {
+      param.select = "P004";
+      console.log(param.select);
+      $("#tradeForm,#saleForm,#reservForm").hide();
+      $("#commuCategory").show();
+   });
 
-	//판매버튼 클릭시
-	$("#sale").click(function() {
-		param.select = "P002";
-		console.log(param.select);
-		$("#tradeForm,#reservForm,#commuCategory").hide();
-		$("#saleForm,#salePr").show();
-	});
+   //판매버튼 클릭시
+   $("#sale").click(function() {
+      param.select = "P002";
+      console.log(param.select);
+      $("#tradeForm,#reservForm,#commuCategory").hide();
+      $("#saleForm,#salePr").show();
+   });
 
-	//경매폼에서 예약경매하기 버튼 클릭시
-	$("#reservBtn").click(function() {
-		$("#endDate").toggle();
-		$("#reservForm").toggle();
+   //경매폼에서 예약경매하기 버튼 클릭시
+   $("#reservBtn").click(function() {
+      $("#endDate").toggle();
+      $("#reservForm").toggle();
 
-	})
+   })
 
-	//등록버튼 클릭시 
-	$("#submit").click(function() {
+   //등록버튼 클릭시 
+   $("#submit").click(function() {
 
-		if (param.select == "P004") { //커뮤니티글 선택시
-			param.title = $("input[name='title']").val();
-			param.content = $("textarea[name='content']").val();
-			param.category = $("select[name='commuCat']").val();//select name으로 값 받기			
-			console.log(param);
-			//ajax url="community"
-			$.ajax({
-				type : 'POST',
-				url : 'writeCommunity',
-				data : param,
-				dataType : 'JSON',
-				success : function(data) {
-					if (data.success) {
-						alert("글 작성 성공했습니다.");
-						location.href = 'index.jsp';
+      if (param.select == "P004") { //커뮤니티글 선택시
+         param.title = $("input[name='title']").val();
+         param.content = $("textarea[name='content']").val();
+         param.category = $("select[name='commuCat']").val();//select name으로 값 받기         
+         console.log(param);
+         //ajax url="community"
+         $.ajax({
+            type : 'POST',
+            url : 'writeCommunity',
+            data : param,
+            dataType : 'JSON',
+            success : function(data) {
+               if (data.success) {
+                  alert("글 작성 성공했습니다.");
+                  location.href = 'index.jsp';
 
-					} else {
-						alert("커뮤니티 글 작성을 실패하였습니다! ");
-					}
-				},
-				error : function(e) {
-					console.log(e);
-				}
+               } else {
+                  alert("커뮤니티 글 작성을 실패하였습니다! ");
+               }
+            },
+            error : function(e) {
+               console.log(e);
+            }
 
-			})
+         })
 
-		} else if (param.select == "P002") { //판매글 선택시
-			param.title = $("input[name='title']").val();
-			param.content = $("textarea[name='content']").val();
-			param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
-			param.deliveryYN = $("input[name='deliveryYN']:checked").val();
-			param.price = $("input[name='price']").val();
-			param.disclosure = $("input[name='disclosure']:checked").val();
-			//ajax url="sale"
-			console.log(param);
-			$.ajax({
-				type : 'POST',
-				url : 'writeSale',
-				data : param,
-				dataType : 'JSON',
-				success : function(data) {
-					if (data.success) {
-						alert("판매글 작성 성공했습니다.");
-						location.href = 'index.jsp';
+      } else if (param.select == "P002") { //판매글 선택시
+         param.title = $("input[name='title']").val();
+         param.content = $("textarea[name='content']").val();
+         param.category = $("select[name='saleCat']").val();//select name으로 값 받기   
+         param.deliveryYN = $("input[name='deliveryYN']:checked").val();
+         param.price = $("input[name='price']").val();
+         param.disclosure = $("input[name='disclosure']:checked").val();
+         //ajax url="sale"
+         console.log(param);
+         $.ajax({
+            type : 'POST',
+            url : 'writeSale',
+            data : param,
+            dataType : 'JSON',
+            success : function(data) {
+               if (data.success) {
+                  alert("판매글 작성 성공했습니다.");
+                  location.href = 'index.jsp';
 
-					} else {
-						alert("판매 글 작성을 실패하였습니다! ");
-					}
-				},
-				error : function(e) {
-					console.log(e);
-				}
+               } else {
+                  alert("판매 글 작성을 실패하였습니다! ");
+               }
+            },
+            error : function(e) {
+               console.log(e);
+            }
 
-			})
-		} else if (param.select == "P001") {//경매글 선택시
-			param.title = $("input[name='title']").val();// 제목
-			param.content = $("textarea[name='content']").val(); //내용
-			param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
-			param.startPr = $("input[name='startPrice']").val(); //시작가
-			param.instantPr = $("input[name='promptPrice']").val(); // 즉결가
-			param.deliveryYN = $("input[name='deliveryYN']:checked").val(); //택배여부
-			param.disclosure = $("input[name='disclosure']:checked").val(); // 팔로워 한정 여부
-			param.s_date = $("input[name='endDate']").val(); // 시작 날짜?
-			console.log(param);
+         })
+      } else if (param.select == "P001") {//경매글 선택시
+         param.title = $("input[name='title']").val();// 제목
+         param.content = $("textarea[name='content']").val(); //내용
+         param.category = $("select[name='saleCat']").val();//select name으로 값 받기   
+         param.startPr = $("input[name='startPrice']").val(); //시작가
+         param.instantPr = $("input[name='promptPrice']").val(); // 즉결가
+         param.deliveryYN = $("input[name='deliveryYN']:checked").val(); //택배여부
+         param.disclosure = $("input[name='disclosure']:checked").val(); // 팔로워 한정 여부
+         param.s_date = $("input[name='endDate']").val(); // 시작 날짜?
+         console.log(param);
 
-			//ajax url="trade"
-			/*
-			$.ajax({
-				type:'POST',
-				url:'writeTrade',
-				data:param,
-				dataType:'JSON',
-				success:function(data){
-					console.log(data);
-				},
-				error:function(e){
-					console.log(e);
-				}
-<<<<<<< HEAD
+         //ajax url="trade"
+         
+         $.ajax({
+            type:'POST',
+            url:'writeTrade',
+            data:param,
+            dataType:'JSON',
+            success:function(data){
+               console.log(data);
+            },
+            error:function(e){
+               console.log(e);
+            }
+            
+         
+         })
+      } else {
+         alert("폼을 선택해주세요!");
+      }
+   });
+   $("#test123123").click(function() {
 
-				sDate.datepicker({
-					language : 'ko',
-					autoClose : true
-				});
-			}
-
-			function isValidStr(str) {
-				if (str == null || str == undefined || str == "")
-					return true;
-				else
-					return false;
-			}
-		}
-	/////////////////////////////////////////////////////////////////////////////////////
-	
-	
-	
-		//초기상태 - 판매폼만 보이는 상태
-		//폼 선택 버튼  클릭시 해당 값이 달라짐
-		var param={};
-		param.userId ="${sessionScope.loginId}";
-		
-		//경매하단부분 숨겨져있음
-		$("#saleForm").show();
-		$("#communityForm").show();
-		$("#tradeForm").hide();
-		$("#reservForm").hide();
-		$("#commuCategory").hide();
-
-		//경매버튼클릭시
-		$("#trade").click(function() {
-			param.select ="P001";
-			
-			console.log(param.select);
-			$("#tradeForm").show();
-			$("#reservForm,#commuCategory,#salePr").hide();
-			
-		});
-
-		//커뮤니티버튼 클릭시
-		$("#community").click(function() {
-			param.select = "P004";
-			console.log(param.select);
-			$("#tradeForm,#saleForm,#reservForm").hide();
-			$("#commuCategory").show();
-		});
-
-		//판매버튼 클릭시
-		$("#sale").click(function() {
-			param.select = "P002";
-			console.log(param.select);
-			$("#tradeForm,#reservForm,#commuCategory").hide();
-			$("#saleForm,#salePr").show();
-		});
-
-		//경매폼에서 예약경매하기 버튼 클릭시
-		$("#reservBtn").click(function() {
-			$("#reservForm").toggle();
-		})
-		
-		
-		
-		//등록버튼 클릭시 
-		$("#submit").click(function(){
-			
-			if(param.select == "P004"){ //커뮤니티글 선택시
-				param.title = $("input[name='title']").val();
-				param.content = $("textarea[name='content']").val();
-				param.category = $("select[name='commuCat']").val();//select name으로 값 받기			
-				console.log(param);
-				//ajax url="community"
-				$.ajax({
-					type:'POST',
-					url:'writeCommunity',
-					data:param,
-					dataType:'JSON',
-					success:function(data){
-						if(data.success){
-							alert("글 작성 성공했습니다.");
-							location.href='index.jsp';
-							
-						}else {
-							alert("커뮤니티 글 작성을 실패하였습니다! ");
-						}
-					},
-					error:function(e){
-						console.log(e);
-					}
-					
-				
-				})
-				
-				
-			}else if(param.select == "P002"){ //판매글 선택시
-				param.title = $("input[name='title']").val();
-				param.content = $("textarea[name='content']").val();
-				param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
-				param.deliveryYN = $("input[name='deliveryYN']:checked").val();
-				param.price = $("input[name='price']").val();
-				param.disclosure = $("input[name='disclosure']:checked").val();
-				//ajax url="sale"
-				console.log(param);
-				$.ajax({
-					type:'POST',
-					url:'writeSale',
-					data:param,
-					dataType:'JSON',
-					success:function(data){
-						if(data.success){
-							alert("판매글 작성 성공했습니다.");
-							location.href='index.jsp';
-							
-						}else {
-							alert("판매 글 작성을 실패하였습니다! ");
-						}
-					},
-					error:function(e){
-						console.log(e);
-					}
-					
-=======
->>>>>>> f8269185af4c7f41fac9f21d933d9b60b8495422
-				
-			
-			})*/
-		} else {
-			alert("폼을 선택해주세요!");
-		}
-	});
-	$("#test123123").click(function() {
-
-	});
+   });
 </script>
 </html>
