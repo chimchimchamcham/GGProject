@@ -229,28 +229,30 @@ public class UserService {
 public int userUpdate(String id) {
 		
 		int success = 0;
+		UserDAO dao = new UserDAO();
 		
 		UserUploadService upload = new UserUploadService(req);
 		//회원정보 받아옴 파라미터
 		GGDto dto = upload.PhotoUpload(); //새로운 사진 이름만 바꿔서 dto에 저장한거임
-		
-		System.out.println("회원정보수정 요청 확인");
-		
-		UserDAO dao = new UserDAO();
 		success = dao.userUpdate(dto); //회원정보 수정(사진제외)
-		
-		//기존사진 이름 가져와서 delFileName에 넣음
-		String delFileName = dao.getFileName(id).getU_newName();
-		System.out.println("삭제할 사진 파일 : "+ delFileName);
-		
-		//새로 업로드한 파일을 photo에 업데이트
-		if(dto.getU_newName() !=null) {
-			dao.updateFileName(delFileName, dto);
+		System.out.println("회원정보수정 요청 확인");
+
+			//기존사진 이름 가져와서 delFileName에 넣음
+			String delFileName = dao.getFileName(id).getU_newName();
+			System.out.println("삭제할 사진 파일 : "+ delFileName);
 			
-			//기존 파일을 지우고
-			upload.del(delFileName);
-		}
-		dao.resClose();
+			//새로 업로드한 파일을 photo에 업데이트
+			if(dto.getU_newName() !=null) {
+				dao.updateFileName(delFileName, dto);
+				
+				//기존 파일을 지우고
+				upload.del(delFileName);
+			}
+
+			
+			dao.resClose();
+
+		
 		return success;
 	}
 }

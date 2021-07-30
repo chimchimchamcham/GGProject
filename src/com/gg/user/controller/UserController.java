@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.gg.user.service.UserService;
 import com.google.gson.Gson;
 
+import sun.misc.Contended;
+
 @WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage","/userUpdate","/userUpdateForm","/chkpw","/changePw"})
 public class UserController extends HttpServlet {
 
@@ -116,6 +118,17 @@ public class UserController extends HttpServlet {
 			String id = (String)req.getSession().getAttribute("loginId");
 			int result = service.userUpdate(id);
 			System.out.println("수정 성공 여부 : "+result);
+			
+			msg="회원정보 수정에 실패 했습니다. 다시 시도해 주세요";
+			page= "userUpdateForm?id=" + id; //실패하면 수정폼 그대로
+			if (result >0) {
+				msg="회원정보 수정에 성공 했습니다.";
+				page= "myPage?id=" + id; //성공하면 마이페이지로
+			}
+	
+			req.setAttribute("msg", msg);
+			dis = req.getRequestDispatcher(page);
+			dis.forward(req, resp);
 
 			break;		
 
