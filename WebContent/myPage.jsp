@@ -78,15 +78,20 @@ td {
 </style>
 <script>
 var loginId = "${sessionScope.loginId}";
-var $button;
-var $index;
-var $index_button;
+
+
 /*충전 팝업*/
 function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
 
 	$(document).ready(function() {
 
 		/*알림*/
+		firstcall();//처음에만 뿌려주는 거
+		var	$what_index = 0;
+		var $how_index = 0;
+		var $how_aline_list	= 0;
+		
+		
 		var msg = "${msg}";
 		if(msg != ""){
 			alert(msg);
@@ -126,7 +131,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
-		    call();
+		    WhatListcall();
 		    
 		    
 		});
@@ -148,7 +153,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
-		    call();
+		    WhatListcall();
 		    
 		});
 		$("#twoButton>button:nth-of-type(3)").click(function(){
@@ -168,7 +173,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
-		    call();
+		    WhatListcall();
 		});
 		$("#twoButton>button:nth-of-type(4)").click(function(){
 		    $("#twoButton>button:nth-of-type(4)").css({"background-color":"gray","color":"white"});
@@ -187,7 +192,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
-		    call();
+		    WhatListcall();
 		});
 		$("#twoButton>button:nth-of-type(5)").click(function(){
 		    $("#twoButton>button:nth-of-type(5)").css({"background-color":"gray","color":"white"});
@@ -206,7 +211,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
-		    call();
+		    WhatListcall();
 		});
 		$("#twoButton>button:nth-of-type(6)").click(function(){
 		    $("#twoButton>button:nth-of-type(6)").css({"background-color":"gray","color":"white"});
@@ -225,7 +230,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").show();
 		    $("#like").hide();
 		    $("#alarm").hide();
-		    call();
+		    WhatListcall();
 		});
 		$("#twoButton>button:nth-of-type(7)").click(function(){
 		    $("#twoButton>button:nth-of-type(7)").css({"background-color":"gray","color":"white"});
@@ -244,7 +249,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").show();
 		    $("#alarm").hide();
-		    call();
+		    WhatListcall();
 		});
 		$("#twoButton>button:nth-of-type(8)").click(function(){
 		    $("#twoButton>button:nth-of-type(8)").css({"background-color":"gray","color":"white"});
@@ -263,43 +268,113 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").show();
-		    call();
+		    WhatListcall();
 		});
 		
 	});
 	
-	
-	function call(){
-		console.log('call');
-		$("#twoButton>button").click(function(){
-		    $button = $("#twoButton>button");
-		    $index = $button.index(this);
-		    $index_button = $("#twoButton>button:eq(" + $index + ")");
-			console.log("$index:"+$index);
-			listCall();
-		})
+	function firstcall(){//처음에 보여주는거  목록 종류 0 = 판매 목록
+		console.log('call 처음 목록');
+		$.ajax({
+			type:'post',
+			url:'./list',
+			data:{},
+			dataType:'JSON',
+			success:function(data){
+				console.log("data",data);
+				if(data.list != null){
+					soled_list(data.list);
+				}
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
 	}
 	
-	function listCall(){
+	
+	
+	
+	
+	function ListWhatHowAline(){
+		$what_index = WhatListcall();
+		$how_index = howListcall();
+		$how_aline_list	= howAlineListcall();
+		
+		//listCall($what_index,$how_index);
+	}
+	
+	
+	
+	
+	
+	
+	/*_______________________________	 WhatListcall	목록의 종류는? 	______________________________*/	
+	function WhatListcall(){//top == 목록 종류 :		0 = 판매 목록
+	
+		var $button_what;
+		var $index_what;
+		var index_button_what;
+		
+		
+		console.log('WhatListcall 판매 목록');
+		$("#twoButton>button").click(function(){
+			
+			$button_what = $("#twoButton>button");
+			//console.log("$button_what:",$button_what);
+			
+		    $index_what = $button_what.index(this);
+		    //console.log("$index_what:",$index_what);
+		    
+		    $index_button_what = $("#twoButton>button:eq(" +  $index_what + ")");
+		    //console.log("$index_button_what:",$index_button_what);
+		    
+			console.log("$index:"+$index_what);
+			
+			
+			return $index_what;
+		})
+	}
+
+	
+	
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+	function listCall($index_top){
+		if ($index_top==0) {//전체
 		$.ajax({
-			type:'get',
-			url:'/sold',
+			type:'post',
+			url:'./list',
 			data:{},
 			dataType:'JSON',
 			success:function(data){
 				console.log("data:"+data);
 				if(data.list != null){
-					soled(data.list);
+					soled_list(data.list);
 				}
 			},
 			error:function(e){
-				console.log("e:"+e);
+				console.log(e);
 			}
-		});
+		});			
 		}
-			function soled(list){	
+		
+		
+		}
+			//데이터 가져와서 뿌려주는 함수 판매 리스트
+			function soled_list(list){	
 			
-			console.log("list:"+list);
+			console.log("list:", list);
 			var content="";
 			
 			list.forEach(function(item,idx){
@@ -316,10 +391,13 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 				content += "</div>";	
 				content += "</div>";
 			});	
-			$("#sale").empty();
-			$("#sale").append(content);
+			$("#sale .item-box").empty();
+			$("#sale .item-box").append(content);
 			
-		}
+		}//판매 리스트 end
+			
+			
+			
 </script>
 <body>
 	<h2>마이페이지</h2>
