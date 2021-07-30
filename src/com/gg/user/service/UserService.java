@@ -225,66 +225,31 @@ public class UserService {
 		req.getParameter("");
 		return false;
 	}
+	
 public int userUpdate(String id) {
 		
 		int success = 0;
 		
-		com.gg.board.service.UploadService upload = new com.gg.board.service.UploadService(req);
-		GGDto dto = upload.PhotoUpload();//새로운 파일 저장(변경한 사진)
+		UserUploadService upload = new UserUploadService(req);
+		GGDto dto = upload.PhotoUpload(); //새로운 사진 이름만 바꿔서 dto에 저장한거임
 		
 		System.out.println("회원정보수정 요청 확인");
-
-		String u_id = (String)req.getSession().getAttribute("loginId"); //세션아이디
-		
-		String u_pw = req.getParameter("pw"); // 비밀번호
-		String u_name = req.getParameter("name"); //이름 
-		String u_nname = req.getParameter("nname"); // 닉네임
-		String u_phone = req.getParameter("phone1"); // 핸드폰 앞번호
-		String u_phone2 = req.getParameter("phone2"); // 핸드폰 중간번호
-		String u_phone3 = req.getParameter("phone3"); // 핸드폰 끝번호
-		String u_email = req.getParameter("email"); //메일 앞부분
-		String u_mail = req.getParameter("mail"); // 메일 뒷부분(ex]naver.com)
-		String u_addr = req.getParameter("addr"); // 대략적 주소
-		String u_detailAddr = req.getParameter("detailAddr"); // 상세 주소
-		
-		System.out.println("회원정보 수정값 확인");
-		System.out.println(u_id+"/"+u_pw+"/"+u_name+"/"+u_nname+"/"+u_phone+"/"+u_phone2+"/"+u_phone3+"/"+u_email+"/"+u_mail+"/"+u_addr+"/"+u_detailAddr);
-		
-		// 메일 합치기
-		u_email += "@" + u_mail;
-		System.out.println("이메일 확인 : " + u_email);
-		// 핸드폰 번호 합치기
-		u_phone += "-"+u_phone2 +"-"+ u_phone3;
-		System.out.println("핸드폰 번호 확인 : " + u_phone);
-		
-		//DTO에 값을 넣어주기.
-		dto.setU_id(u_id);
-		dto.setU_pw(u_pw);
-		dto.setU_name(u_name);
-		dto.setU_nname(u_nname);
-		dto.setU_phone(u_phone);
-		dto.setU_email(u_email);
-		dto.setU_addr(u_addr);
-		dto.setU_detailAddr(u_detailAddr);
 		
 		UserDAO dao = new UserDAO();
-		Gson gson = null;
-
-		try {
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			success = dao.userUpdate(dto);
-			System.out.println("회원정보 수정 :"+success);
-			map.put("success", success);
-			gson = new Gson();
-			String obj = gson.toJson(map);
-			
-			resp.getWriter().println(obj);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			dao.resClose();
-		}
+		success = dao.userUpdate(dto); //회원정보 수정(사진제외)
 		
+		//기존사진 이름 가져오기
+		GGDto photoInfo = dao.getFileName(String.valueOf(id));
+		String delFileName = null;
+		delFileName = photoInfo.getU_newName(); //삭제할 사진에 기존사진 넣어주기
+		System.out.println("삭제할 사진 파일 : "+ delFileName);
+		
+		//새로 업로드한 파일을 photo에 업데이트
+		dao.updateFileName(delFileName, dto);
+		
+		//기존 파일을 지우고
+		upload.del(delFileName);
+
 		return success;
 	}
 }

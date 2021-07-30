@@ -46,7 +46,7 @@ td {
 </style>
 <body>
 <h2>${userUpdate.u_nname}님의 회원정보 수정</h2>
-<form action="userUpdate" method="POST" >
+<form action="userUpdate" method="POST" enctype="multipart/form-data">
 	<table>
 		<tr>
 				<th>닉네임</th>
@@ -71,8 +71,14 @@ td {
 		<tr>
 			<th>프로필 사진</th>
 			<td>
-			<p><input type="file" name="photo"/></p>
-			<img src="${userUpdate.u_newName }" width="100px"/>
+			<p><input type="file" name="photo" accept=".gif, .jpg, .png, .jpeg"/></p>
+			
+			<c:if test="${userUpdate.u_newName  eq 'default-profile.png'}">
+				<img src="./img/default-profile.png" width="100px"/>
+			</c:if>
+			<c:if test="${userUpdate.u_newName  ne 'default-profile.png'}">
+				<img src="/ProfilePhoto/${userUpdate.u_newName }" width="100px"/>
+			</c:if>
 			</td>
 		</tr>
 		<tr>
@@ -114,12 +120,7 @@ td {
 
 	/*세션아이디 가져오기*/
 	var loginId = "${sessionScope.loginId}";
-	
-	/*알람창*/
-	var msg = "${msg}";
-	if(msg != ""){
-		alert(msg);
-	}
+
 	
 	/*전화번호 - 를 기준으로 자르기*/
 	var phone = "${userUpdate.u_phone}";
@@ -209,7 +210,7 @@ td {
 				console.log("save");
 				var param = {};
 				param.id = $id.val();
-				param.pw = $pw.val();
+				//param.pw = $pw.val();
 				param.name = $name.val();
 				param.nname = $nname.val();
 				param.phone1 = $phone1.val();
@@ -219,19 +220,22 @@ td {
 				param.mail = $mail.val();
 				param.addr = $addr.val();
 				param.detailAddr = $detailAddr.val();
+				
 				//저장 가능
 				$.ajax({
 					type : "POST",
-					url : 'join',
+					url : 'userUpdate',
 					data : param,
 					dataType : 'JSON',
 					success : function(data) {
 						console.log(data);
+
 						if (data.success) {
-							alert("회원가입에 성공 했습니다!");
-							location.href = 'index.jsp';
+							alert("회원정보 수정에 성공 했습니다.");
+							location.href = 'myPage?id="+id';
 						} else {
-							alert('회원가입에 실패 했습니다! 다시 시도해 주세요!');
+							alert('회원정보 수정에 실패 했습니다. 다시 시도해 주세요!');
+							location.href = 'userUpdateForm?id="+id';
 						}
 					},
 					error : function(e) {

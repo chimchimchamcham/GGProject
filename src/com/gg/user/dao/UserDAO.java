@@ -194,7 +194,6 @@ public GGDto myPage(String id) {
 		System.out.println("전화번호 : " + dto.getU_phone());
 		System.out.println("이메일 : " + dto.getU_email());
 		
-		
 		sql = "SELECT pnt_point FROM point WHERE pnt_id =?";
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, id);
@@ -230,10 +229,11 @@ public GGDto myPage(String id) {
 	return success;
 	}
 
+	/*회원정보 수정 (사진제외)*/
 public int userUpdate(GGDto dto) {
 	
 	int success = 0;
-	String sql = "UPDATE userinfo SET u_id=?, u_name=?, u_nname=?, u_phone=?,u_email=?,u_addr=? WHERE u_id=?";
+	String sql = "UPDATE userinfo SET u_id=?, u_name=?, u_nname=?, u_phone=?,u_email=?,u_addr=?WHERE u_id=?";
 	try {
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, dto.getU_id());
@@ -249,6 +249,48 @@ public int userUpdate(GGDto dto) {
 		e.printStackTrace();
 	}
 	return success;
+}
+
+/*기존 프로필 사진 가져오기*/
+public GGDto getFileName(String id) {
+	
+	GGDto dto = null;
+	String sql = "SELECT u_newName FROM userinfo WHERE id=?";
+	
+	try {
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, id);
+		rs = ps.executeQuery();
+		
+		if (rs.next()) {
+			dto = new GGDto();
+			dto.setU_newName(rs.getString("u_newName"));
+		}
+		System.out.println("변경된 사진 dto : "+dto);
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	
+	return dto;
+}
+
+/*프로필 사진 수정*/
+public void updateFileName(String delFileName, GGDto dto) {
+	String sql = "UPDATE userinfo SET u_newName=? WHERE id=?";
+	
+	try {
+		//dto에는 변경할 사진의 파일명, db에는 기존 사진의 파일명이 있다.
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, dto.getU_newName());
+		ps.setString(2, dto.getU_id());
+		
+		int success = ps.executeUpdate();
+		System.out.println("사진 변경 성공 : "+success);
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
 }
 
 }

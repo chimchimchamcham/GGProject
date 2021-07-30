@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -325,10 +326,16 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 	<div id="div1">
 		<table style="text-align: center; width: 40%;">
 			<tr>
-				<td><img src="${myPageInfo.u_newName }" width="150"></td>
+				<td>
+			<c:if test="${myPageInfo.u_newName  eq 'default-profile.png'}">
+				<img src="./img/default-profile.png" width="150px"/>
+			</c:if>
+			<c:if test="${myPageInfo.u_newName  ne 'default-profile.png'}">
+				<img src="/ProfilePhoto/${userUpdate.u_newName }" width="150px"/>
+			</c:if>
 			</tr>
 			<tr>
-				<td>${myPageInfo.u_nname} </td>
+				<td>${myPageInfo.u_nname}</td>
 			</tr>
 			<tr>
 				<td>${myPageInfo.u_addr }</td>

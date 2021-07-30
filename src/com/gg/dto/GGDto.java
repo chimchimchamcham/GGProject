@@ -124,7 +124,6 @@ public class GGDto {
 	private String p_name; //!! 추가 필요
 
 	// 사진
-	private String i_oldName;
 	private String i_newName;
 	
 	//게시글 카테고리
