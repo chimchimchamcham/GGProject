@@ -43,21 +43,34 @@ public class BoardController extends HttpServlet {
 		int p_no;
 		
 		switch(addr) {
-		case "/salesDetail" :
+		case "/salesDetail" : 
 			System.out.println("판매글 상세보기");
 			GGDto dto = service.salesDetail();
 			System.out.println("Controller salesDetail dto : "+dto);
 			String u_id = (String) req.getSession().getAttribute("loginId");
-			System.out.println("loginId : "+u_id);
-			//String u_id = "user1"; //임시로 저장
+			
+			//String u_id = "user2"; //임시로 저장
 			p_no = Integer.parseInt(req.getParameter("p_no"));
+			
+			//좋아요를 눌렀는지 확인
 			boolean isLiked = false;
 			isLiked = service.isLiked(u_id, p_no);
+			
+			//구매요청을 눌렀는지 확인
 			boolean isBuyRequested = false;
 			isBuyRequested = service.isBuyRequested();
+			
+			//판매자의 판매목록 3개를 가져오기
+			String p_id = dto.getP_id();
+			System.out.println("p_id : "+p_id);
+			ArrayList<GGDto> sale3List = service.sale3List(p_id);
+			System.out.println("sale3List size"+sale3List.size());
+			
 			req.setAttribute("dto", dto);
 			req.setAttribute("isLiked", isLiked);
 			req.setAttribute("isBuyRequested", isBuyRequested);
+			req.setAttribute("sale3List", sale3List);
+			
 			dis = req.getRequestDispatcher("salesDetail.jsp");
 			dis.forward(req, resp);
 			break;
@@ -108,7 +121,8 @@ public class BoardController extends HttpServlet {
 			p_no = Integer.parseInt(req.getParameter("p_no"));
 			dis = req.getRequestDispatcher("/salesDetail?p_no="+p_no);
 			dis.forward(req, resp);
-			break;		
+			break;	
+			
 		/* ===========================================================================*/	
 		case "/list":
 			System.out.println("리스트 요청");	
@@ -150,14 +164,20 @@ public class BoardController extends HttpServlet {
 			
 		case "/writeTrade":
 			System.out.println("경매글 쓰기 요청");
-			success = service.writeTrade();
+			p_no = service.writeTrade();
 			
+			HashMap<String, Object> jo_map = new HashMap<String, Object>();
+			jo_map.put("p_no", p_no);
+			resp.getWriter().println(new Gson().toJson(jo_map));
+			
+			
+		
 			break;
 			
 		case "/writeCommunity":
 			System.out.println("커뮤니티글 쓰기 요청");
 			success = service.writeCommu();
-			HashMap<String, Object> jo_map = new  HashMap<String, Object>();
+			jo_map = new  HashMap<String, Object>();
 			
 			jo_map.put("success",success);
 			resp.getWriter().println(new Gson().toJson(jo_map));

@@ -2,6 +2,7 @@ package com.gg.board.service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -215,6 +216,15 @@ public class BoardService {
 		dao.resClose();
 		return isBuyRequested;
 	}
+	
+	public ArrayList<GGDto> sale3List(String p_id) {
+		System.out.println("service sale3List");
+		BoardDAO dao = new BoardDAO();
+		ArrayList<GGDto> sale3List = dao.sale3List(p_id);
+		System.out.println("dao sale3List");
+		dao.resClose();
+		return sale3List;
+	}
 	/* ====================================================== */
 public void list(String userid, int listwhatadd, int listhowaline)	throws IOException {
 		
@@ -278,9 +288,54 @@ public void list(String userid, int listwhatadd, int listhowaline)	throws IOExce
 		return success;
 	}
 
-	public boolean writeTrade() {
+	public int writeTrade() {
 
-		return false;
+		int success = -123; 
+		
+		GGDto dto = new GGDto();
+		String p_id = req.getParameter("userId");
+		String p_title = req.getParameter("title");
+		String p_content = req.getParameter("content");
+		String p_code = req.getParameter("select");
+		String s_deliveryYN = req.getParameter("deliveryYN");
+		String s_followLimYN = req.getParameter("followYN");
+		String s_code = req.getParameter("category");
+		String au_startPr = req.getParameter("startPr");//
+		String au_instantPr = req.getParameter("instantPr");
+		Date au_startTm = Date.valueOf(req.getParameter("startTm"));
+		Date au_endTm = Date.valueOf(req.getParameter("endTm"));
+		System.out.println("Service 경매 데이터 확인");
+		System.out.println(p_id+"\n"+p_title+"\n"+p_content+"\n"+p_code);
+		System.out.println(s_deliveryYN+"\n"+s_followLimYN+"\n"+s_code+"\n"+au_startPr);
+		System.out.println(au_startTm+"\n"+au_instantPr+"\n"+au_endTm);
+		
+		dto.setP_id(p_id);
+		dto.setP_title(p_title);
+		dto.setP_content(p_content);
+		dto.setP_title(p_title);
+		dto.setP_code(p_code);
+		dto.setS_DeliveryYN(s_deliveryYN);
+		dto.setS_followLimYN(s_followLimYN);
+		dto.setS_code(s_code);
+		dto.setAu_startPr(Integer.parseInt(au_startPr));
+		dto.setAu_instantPr(Integer.parseInt(au_instantPr));
+		dto.setAu_startTm(au_startTm);
+		dto.setAu_endTm(au_endTm);
+		
+		BoardDAO dao = new BoardDAO();
+		try {
+			success = dao.writeTrade(dto);
+			if(success > 0) {System.out.println("경매 글쓰기 완료");}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		// 사실 success 는 글번호이다.
+		
+		
+		return success;
 	}
 
 	public int writeSale() {
