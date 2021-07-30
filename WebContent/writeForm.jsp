@@ -94,11 +94,8 @@ textarea {
       <!--경매선택시 하단부분-->
       <div id="tradeForm">
          <p>경매시간 설정</p>
-       
-
 
          <!--예약 경매 버튼 클릭시-->
-       
          <div id="reservForm">
             <p>
                <input type="text" id="from" placeholder="시작시간"
@@ -132,7 +129,7 @@ var option = {
          // option 종류 : "show" , "slideDown", "fadeIn", "blind", "bounce", "clip", "drop", "fold", "slide"
          showAnim : "slideDown",
          // 해당 월의 다른 월의 날짜가 보이는 여부, 예를 들면 10월이면 전후에 9월 마지막과 11월의 시작 일이 보이는 여부입니다. 즉, 달력이 꽉 차 보이게 하는 것
-         showOtherMonths : true,
+         showOtherMonths : false,
          // 선택 여부 (showOtherMonths 옵션과 같이 일치시키지 않으면 에러가 발생합니다.)
          selectOtherMonths : true,
          // 달력 밑에 오늘과 닫기 버튼이 보인다.
@@ -233,7 +230,8 @@ var option1 = {
 
       console.log(param.select);
       $("#tradeForm,#reservForm").show();
-      $("#commuCategory,#salePr").hide();
+      
+      $("commuCategory,#salePr").hide();
 
    });
 
@@ -253,7 +251,12 @@ var option1 = {
       $("#saleForm,#salePr").show();
    });
 
-  
+   //경매폼에서 예약경매하기 버튼 클릭시
+   $("#reservBtn").click(function() {
+      $("#endDate").toggle();
+      $("#reservForm").toggle();
+
+   })
 
    //등록버튼 클릭시 
    $("#submit").click(function() {
@@ -321,9 +324,9 @@ var option1 = {
          param.deliveryYN = $("input[name='deliveryYN']:checked").val(); //택배여부
          param.followYN = $("input[name='disclosure']:checked").val(); // 팔로워 한정 여부
          param.startTm = $("#from").val(); // 시작 날짜
-         param.endTm = $("#to").val(); // 종료날짜
+         param.endTm = $("#to").val();
+         
          console.log(param);
-
          //ajax url="trade"
          
          $.ajax({
@@ -348,4 +351,3 @@ var option1 = {
 
    });
 </script>
-</html>
