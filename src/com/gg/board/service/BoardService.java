@@ -231,21 +231,43 @@ public void list(String userid, int listwhatadd, int listhowaline)	throws IOExce
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		BoardDAO dao = new BoardDAO();
-		ArrayList<GGDto> list = null;
+		ArrayList<GGDto> soldlist = null;
 		
 		try {
-			list = dao.list(userid,listwhatadd,listhowaline);
+			soldlist = dao.list(userid,listwhatadd,listhowaline);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			dao.resClose();
-			map.put("list", list);
+			map.put("soldlist", soldlist);
 		}
 		System.out.println(map);
 	resp.setContentType("text/html; charset=UTF-8");		
 	resp.getWriter().println(new Gson().toJson(map));
 }
 	
+public void list(String userid, int listwhatadd) throws IOException {
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	
+	BoardDAO dao = new BoardDAO();
+	ArrayList<GGDto> actionlist = null;
+	
+	try {
+		actionlist = dao.list(userid,listwhatadd);
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		dao.resClose();
+		map.put("actionlist", actionlist);
+	}
+	System.out.println(map);
+	
+	resp.setContentType("text/html; charset=UTF-8");		
+	resp.getWriter().println(new Gson().toJson(map));
+	
+}
+
+
 	public HashMap<String, ArrayList<GGDto>> category() {
 		BoardDAO dao = new BoardDAO();
 		HashMap<String, ArrayList<GGDto>> map = dao.category();
@@ -366,6 +388,8 @@ public void list(String userid, int listwhatadd, int listhowaline)	throws IOExce
 		 
 		return success;
 	}
+
+
 
 	
 	

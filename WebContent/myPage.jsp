@@ -288,14 +288,14 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		console.log('call 처음 목록');
 		$.ajax({
 			type:'post',
-			url:'./list',
+			url:'./soldlist',
 			data:{  index1 : 0,
 					index2 : 0 },
 			dataType:'JSON',
 			success:function(data){
 				console.log("data",data);
-				if(data.list != null){
-					soled_list(data.list);
+				if(data.soldlist != null){
+					soled_list(data.soldlist);
 				}
 			},
 			error:function(e){
@@ -307,33 +307,33 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 			
 			
 	function listCall($index_top){
-		if ($index_top==0) {//전체
+		
 		$.ajax({
 			type:'post',
-			url:'./list',
+			url:'./soldlist',
 			data:{},
 			dataType:'JSON',
 			success:function(data){
 				console.log("data:"+data);
-				if(data.list != null){
-					soled_list(data.list);
+				if(data.soldlist != null){
+					soled_list(data.soldlist);
 				}
 			},
 			error:function(e){
 				console.log(e);
 			}
 		});			
-		}
+		
 		
 		
 		}
 			//데이터 가져와서 뿌려주는 함수 판매 리스트
-			function soled_list(list){	
+			function soled_list(soldlist){	
 			
-			console.log("list:", list);
+			console.log("soldlist:", soldlist);
 			var content="";
 			
-			list.forEach(function(item,idx){
+			soldlist.forEach(function(item,idx){
 				console.log(idx,item);
 				content += "<div class='item-one'>";
 				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg'></div>";
@@ -422,7 +422,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
    </div>
    
    <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
-   <div id="trade" style="background-color:orange; padding:20px;">경매목록입니다.</div>
+   <div id="trade" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
    <div id="sell" style="background-color:yellow; padding:20px;">구매목록입니다.</div>
    <div id="commu" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
    <div id="follow" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
@@ -441,6 +441,9 @@ $index_button = $("#twoButton>button:eq(" + $index + ")");
 console.log("#twoButton>button:"+$index);
 
 })
+
+
+
 
 </script>
 </html>
