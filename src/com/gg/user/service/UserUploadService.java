@@ -71,24 +71,28 @@ public class UserUploadService {
 			dto.setU_addr(u_addr);
 			dto.setU_detailAddr(u_detailAddr);
 			dto.setU_intro(u_intro);
+			
 
 			// 4.이름 변경
-			// 원래 파일명 가져오기
+			//새로운 사진 원래 파일명
 			String oriFileName = multi.getFilesystemName("photo");
 			System.out.println("기존 파일명 : " + oriFileName);
+			if(oriFileName !=null) {
+				// 확장자 잘라내기
+				String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
+				// 새로운 파일명 지정하기
+				String newFileName = System.currentTimeMillis() + ext;
+				System.out.println("변경된 파일 명 : " + newFileName);
+				
+				//u_newname이랑 orifilename이랑 같으면 삭제x / 다르면 삭제되도록
+				File oldName = new File(savePath + oriFileName);
+				File newName = new File(savePath + newFileName);
+				
+				oldName.renameTo(newName);
+				
+				dto.setU_newName(newFileName);
+			}
 
-			// 확장자 잘라내기
-			String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
-			// 새로운 파일명 지정하기
-			String newFileName = System.currentTimeMillis() + ext;
-			System.out.println("변경된 파일 명 : " + newFileName);
-
-			File oldName = new File(savePath + oriFileName);
-			File newName = new File(savePath + newFileName);
-
-			oldName.renameTo(newName);
-
-			dto.setU_newName(newFileName);
 
 		} catch (IOException e) {
 
