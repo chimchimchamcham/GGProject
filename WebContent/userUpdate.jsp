@@ -60,6 +60,18 @@ td {
 			<tr>
 				<td id='nname_check'></td>
 			</tr>
+			<tr>
+				<th>비밀 번호</th>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="password" name="pw" value="${userUpdate.u_pw}"></td>
+			</tr>
+			<tr>
+				<th>비밀 번호 확인</th>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="password" name="re_pw" value="${userUpdate.u_pw}"></td>
+			</tr>
 		<tr>
 			<th>이름</th>
 			<td><input type="text" name="name" value="${userUpdate.u_name}"></td>
@@ -77,8 +89,9 @@ td {
 				<img src="./img/default-profile.png" width="100px"/>
 			</c:if>
 			<c:if test="${userUpdate.u_newName  ne 'default-profile.png'}">
-				<img src="/ProfilePhoto/${userUpdate.u_newName }" width="100px"/>
+				<img src="/ProfilePhoto/${userUpdate.u_newName}" width="100px"/>
 			</c:if>
+			
 			</td>
 		</tr>
 		<tr>
@@ -125,7 +138,6 @@ td {
 	/*전화번호 - 를 기준으로 자르기*/
 	var phone = "${userUpdate.u_phone}";
 	var arr = phone.split("-");
-	
 	console.log(arr);
 	$('#phone1').attr('value',arr[0]);
 	$('#phone2').attr('value',arr[1]);
@@ -136,7 +148,15 @@ td {
 	var arr2 = email.split("@");
 	console.log(arr2);
 	$('input[name=email]').attr('value',arr2[0]);
-
+	
+	/*사진 value값 넣기*/
+/* 	var newName="${userUpdate.u_newName}";
+	if(newName == 'default-profile.png'){
+		$("input[name='photo']").attr('value','default-profile.png');
+	}else{
+		$("input[name='photo']").attr('value','newName');
+	}
+ */
 	var overChk = true;
 	$("input[name='id']").keyup(function(e) {
 		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {

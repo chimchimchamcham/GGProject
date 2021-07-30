@@ -48,10 +48,11 @@ public class UserUploadService {
 			String u_mail = multi.getParameter("mail"); // 메일 뒷부분(ex]naver.com)
 			String u_addr = multi.getParameter("addr"); // 대략적 주소
 			String u_detailAddr = multi.getParameter("detailAddr"); // 상세 주소
+			String u_intro = multi.getParameter("intro"); //자기소개
 
 			System.out.println("회원정보 수정값 확인");
 			System.out.println(u_id + "/" + u_pw + "/" + u_name + "/" + u_nname + "/" + u_phone + "/" + u_phone2 + "/"
-					+ u_phone3 + "/" + u_email + "/" + u_mail + "/" + u_addr + "/" + u_detailAddr);
+					+ u_phone3 + "/" + u_email + "/" + u_mail + "/" + u_addr + "/" + u_detailAddr+"/"+u_intro);
 
 			// 메일 합치기
 			u_email += "@" + u_mail;
@@ -69,6 +70,7 @@ public class UserUploadService {
 			dto.setU_email(u_email);
 			dto.setU_addr(u_addr);
 			dto.setU_detailAddr(u_detailAddr);
+			dto.setU_intro(u_intro);
 
 			// 4.이름 변경
 			// 원래 파일명 가져오기
@@ -81,8 +83,8 @@ public class UserUploadService {
 			String newFileName = System.currentTimeMillis() + ext;
 			System.out.println("변경된 파일 명 : " + newFileName);
 
-			File oldName = new File(savePath + oriFileName); // C:/img/apple.jpg
-			File newName = new File(savePath + newFileName); // C:/img/14651321385.jpg
+			File oldName = new File(savePath + oriFileName);
+			File newName = new File(savePath + newFileName);
 
 			oldName.renameTo(newName);
 

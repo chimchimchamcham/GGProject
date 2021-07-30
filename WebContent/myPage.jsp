@@ -409,14 +409,23 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 				<img src="./img/default-profile.png" width="150px"/>
 			</c:if>
 			<c:if test="${myPageInfo.u_newName  ne 'default-profile.png'}">
-				<img src="/ProfilePhoto/${userUpdate.u_newName }" width="150px"/>
+				<img src="/ProfilePhoto/${myPageInfo.u_newName }" width="150px"/>
 			</c:if>
 			</tr>
 			<tr>
 				<td>${myPageInfo.u_nname}</td>
 			</tr>
 			<tr>
-				<td>${myPageInfo.u_addr }</td>
+				<td>${myPageInfo.u_addr }&nbsp;${myPageInfo.u_detailAddr }</td>
+			</tr>
+			<tr>
+				<td>이름 : ${myPageInfo.u_name }</td>
+			</tr>
+			<tr>
+				<td>이메일 : ${myPageInfo.u_email }</td>
+			</tr>
+			<tr>
+				<td>전화번호 : ${myPageInfo.u_phone }</td>
 			</tr>
 			<tr>
 				<td><button onclick="location.href='./userUpdateForm?id=${loginId}'">회원정보 수정</button></td>
@@ -438,7 +447,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 			</tr>
 			<tr>
 				<td colspan="3">
-					<p>${myPageInfo.u_intro }</p>
+					<p>${myPageInfo.u_intro}</p>
 				</td>
 			</tr>
 		</table>
