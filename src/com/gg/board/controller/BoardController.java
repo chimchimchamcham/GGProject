@@ -142,14 +142,20 @@ public class BoardController extends HttpServlet {
 			
 		case "/writeTrade":
 			System.out.println("경매글 쓰기 요청");
-			success = service.writeTrade();
+			p_no = service.writeTrade();
 			
+			HashMap<String, Object> jo_map = new HashMap<String, Object>();
+			jo_map.put("p_no", p_no);
+			resp.getWriter().println(new Gson().toJson(jo_map));
+			
+			
+		
 			break;
 			
 		case "/writeCommunity":
 			System.out.println("커뮤니티글 쓰기 요청");
 			success = service.writeCommu();
-			HashMap<String, Object> jo_map = new  HashMap<String, Object>();
+			jo_map = new  HashMap<String, Object>();
 			
 			jo_map.put("success",success);
 			resp.getWriter().println(new Gson().toJson(jo_map));
