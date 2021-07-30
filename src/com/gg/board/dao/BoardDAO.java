@@ -323,10 +323,18 @@ public class BoardDAO {
 	public ArrayList<GGDto> list(String userid, int listwhatadd) throws SQLException {
 		String sql = "";
 		if (listwhatadd == 0) {//전체 NS_001 NS_003
-			sql = "";
-		}else if (listwhatadd == 1) {//경매중 NS_001 NS_003
+			sql="SELECT p.P_title,i.i_newname,h.ha_bidpr,a.au_instantpr,a.au_endtm,p.p_tm,c.c_name "+
+				"from Post p, img i,sale s,auction a, his_auction h, codes" + 
+				"where p.p_no = s.p_no and s.p_no = a.p_no and a.p_no = h.p_no and h.ha_bidpr = (SELECT max(ha_bidpr) FROM his_auction) and (a.Au_code = 'Au001' or a.Au_code = 'Au003') and a.Au_code = c.c_code";
+		}else if (listwhatadd == 1) {//경매중  NS_001
+			sql="SELECT p.P_title,i.i_newname,h.ha_bidpr,a.au_instantpr,a.au_endtm,p.p_tm,c.c_name "+
+					"from Post p, img i,sale s,auction a, his_auction h, codes" + 
+					"where p.p_no = s.p_no and s.p_no = a.p_no and a.p_no = h.p_no and h.ha_bidpr = (SELECT max(ha_bidpr) FROM his_auction) and a.Au_code = 'Au001' and a.Au_code = c.c_code";
 			
 		}else if (listwhatadd == 2) {//경매완료 NS_003
+			sql="SELECT p.P_title,i.i_newname,h.ha_bidpr,a.au_instantpr,a.au_endtm,p.p_tm,c.c_name "+
+					"from Post p, img i,sale s,auction a, his_auction h, codes" + 
+					"where p.p_no = s.p_no and s.p_no = a.p_no and a.p_no = h.p_no and h.ha_bidpr = (SELECT max(ha_bidpr) FROM his_auction) and a.Au_code = 'Au003' and a.Au_code = c.c_code";
 			
 		}
 
