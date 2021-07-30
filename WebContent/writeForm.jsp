@@ -53,8 +53,8 @@ textarea {
 					style='width: "1000px"' />
 			</p>
 			<p class="imgFileUpload">
-				<label for='test'><img src="img/plus.png" class="imgFileBtn"
-					alt="plus" width="100px" /></label> <input type="file" name="imgFile"
+				<label for='test'><img src="img/plus.png" id="preview-image"
+					width="100px" height="100px" style="border:solid 1px gray"/></label> <input type="file" name="imgFile" style="display: none"
 					id="test" />
 			</p>
 			<p>
@@ -216,7 +216,7 @@ textarea {
 	//폼 선택 버튼  클릭시 해당 값이 달라짐
 	var param = {};
 	param.userId = "${sessionScope.loginId}";
-
+ 	
 	//경매하단부분 숨겨져있음
 	$("#saleForm").show();
 	$("#communityForm").show();
@@ -372,7 +372,7 @@ textarea {
 	    }
 	}
 	// input file에 change 이벤트 부여
-	const inputImage = document.getElementById("input-image")
+	const inputImage = document.getElementById("test")
 	inputImage.addEventListener("change", e => {
 	    readImage(e.target)
 	})
