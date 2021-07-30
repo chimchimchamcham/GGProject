@@ -30,18 +30,18 @@
     }
     
     	/*기본*/
-        .button-layout_sold button{
+        .button-layout_auction button{
             margin: 1vh;
             padding: 1vh;
         }
         /*버튼위에 마우스포인터 있을때*/
-        .button-layout_sold button:hover{
+        .button-layout_auction button:hover{
             margin: 1vh;
             padding: 1vh;
             background-color: gray;
         }
         /*버튼을 클릭해서 jq로 버튼애 .clicked 클라스 추가될때*/
-        .button-layout_sold button.clicked{
+        .button-layout_auction button.clicked{
             margin: 1vh;
             padding: 1vh;
             background-color: gray;
@@ -53,26 +53,26 @@
         
    /*	최신,인기,저가,고가 버튼	*/
    /* 전체 버튼들 레이아웃,정렬 설정 */
-        .alien_list_sold{
+        .alien_list_auction{
             display: block;
             align-self: flex-end;
             margin-right: 50vh;
             margin-bottom: 5vh;
         }
         /*기본*/
-        .alien_list_sold button{
+        .alien_list_auction button{
             border: none;
             font-size: 15px;
             background-color:transparent;
             color: black;
         }
         /*버튼위에 마우스포인터 있을때*/
-        .alien_list_sold button:hover{
+        .alien_list_auction button:hover{
             color:	gray;
             cursor: pointer;
         }
         /*버튼을 클릭해서 jq로 버튼애 .clicked 클라스 추가될때*/
-        .alien_list_sold button.clicked{
+        .alien_list_auction button.clicked{
             color: gray;
             cursor: pointer;
         }
@@ -133,18 +133,14 @@
   
 <body>
     <div class="contents">
-        <div class="button-layout_sold">
+        <div class="button-layout_auction">
             <button class="clicked">전체</button>
-            <button>판매중</button>
-            <button>판매완료</button>
+            <button>경매중</button>
+            <button>경매완료</button>
+        </div>
         </div>
         
-        <div class="alien_list_sold">
-                <button class="clicked" >최신</button>/
-                <button>인기</button>
-        </div>
-        
-        <div class="content-zoon">
+        <div class="content-zoon_auction">
             <div class="item-box">
                 
             </div>
@@ -161,56 +157,35 @@
 	let $index_how = 0;
 	let $index_aline_how = 0; */
 	
-	let $index1 = 0;
-	let $index2 = 0;
 	
-    $(".button-layout_sold button").click(function(){
-	    $button1 = $(".button-layout_sold button");
+    $(".button-layout_auction button").click(function(){
+	    $button1 = $(".button-layout_auction button");
 	    $index1 = $button1.index(this);
 	    
-	    $index_button_sold = $(".button-layout_sold button:eq(" + $index1 + ")");
-	    
-		console.log("$sold_index:"+$index1);
-		console.log("$alien_list:"+$index2);
-		
-		listCall($index1,$index2);
-		
-		$button1.removeClass('clicked');
-		$index_button_sold.addClass('clicked');
-		
-		
-    })
-    
-    $(".alien_list_sold button").click(function(){
-	    
-	    $button2 = $(".alien_list_sold button");
-	    $index2 = $button2.index(this);
-	    
-	    $index_button = $(".alien_list_sold button:eq(" + $index2 + ")");
+	    $index_button = $(".button-layout_auction button:eq(" + $index1 + ")");
 	    
 		console.log("$center_index:"+$index1);
-		console.log("$alien_list_sold:"+$index2);
 		
-		listCall($index1,$index2);
 		
-		$button2.removeClass('clicked');
+		auctionlistCall($index1);
+		$button1.removeClass('clicked');
 		$index_button.addClass('clicked');
+		
 		
     })
     
-    function listCall($index1,index2){
+    function auctionlistCall($index1){
 		
 		
 		$.ajax({
 			type:'post',
-			url:'./soldlist',
-			data:{	index1 : $index1,
-					index2 : $index2},
+			url:'./auction_list',
+			data:{	index1 : $index1 },
 			dataType:'JSON',
 			success:function(data){
 				console.log("data:"+data);
-				if(data.soldlist != null){
-					soled_list(data.soldlist);
+				if(data.list != null){
+					action_list(data.list);
 				}
 			},
 			error:function(e){

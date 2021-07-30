@@ -271,7 +271,9 @@ public class BoardDAO {
 		String sql = "";
 		if (listwhatadd == 0) {//전체 NS_001 NS_003
 			if (listhowaline == 0) {//시간최신 -desc
-				sql = "select * FROM  post p,N_Sale n where (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.p_tm DESC";				
+			sql = "select * FROM  post p,N_Sale n where (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.p_tm DESC";				
+			//sql = "SELECT p.p_id,p.p_no,p.p_title,p.p_likecount,p.p_tm,n.ns_pr,n.ns_code,p.p_code,i.i_newname FROM  post p,N_Sale n,img i,SALE S WHERE p.p_code = 'P002' and P.P_NO=S.P_NO AND s.P_NO = N.P_NO AND N.P_NO = P.P_NO and N.P_NO = i.p_no and (n.ns_code = 'NS_001' or n.ns_code = 'NS_003')";
+			
 			}else if(listhowaline == 1) {//좋아요많은쪽 -desc
 				sql= "select * FROM  post p,N_Sale n where (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.P_likeCount DESC";
 			}
@@ -289,9 +291,9 @@ public class BoardDAO {
 			}
 		}
 
-		ArrayList<GGDto> list = new ArrayList<GGDto>();
+		ArrayList<GGDto> soldlist = new ArrayList<GGDto>();
 		
-		System.out.println("list:"+list);
+		System.out.println("soldlist:"+soldlist);
 		
 		ps = conn.prepareStatement(sql);
 		
@@ -311,13 +313,55 @@ public class BoardDAO {
 			dto.setI_newName("i_newName");
 			dto.setNs_code("ns_code");
 			
-			list.add(dto);
+			soldlist.add(dto);
 		}
 		
-		System.out.println("list:"+list);
-		return list;
+		System.out.println("list:"+soldlist);
+		return soldlist;
 	}
 
+	public ArrayList<GGDto> list(String userid, int listwhatadd) throws SQLException {
+		String sql = "";
+		if (listwhatadd == 0) {//전체 NS_001 NS_003
+			sql = "";
+		}else if (listwhatadd == 1) {//경매중 NS_001 NS_003
+			
+		}else if (listwhatadd == 2) {//경매완료 NS_003
+			
+		}
+
+		ArrayList<GGDto> actionlist = new ArrayList<GGDto>();
+		
+		System.out.println("actionlist:"+actionlist);
+		
+		ps = conn.prepareStatement(sql);
+		
+		System.out.println("daouserID:"+userid);
+		ps.setString(1, userid);
+		//System.out.println("ps:"+ps);
+		rs = ps.executeQuery();
+		//System.out.println("rs:"+rs);
+		
+		while (rs.next()) {
+			GGDto dto = new GGDto();
+			dto.setP_no(rs.getInt("P_no"));
+			dto.setP_title(rs.getString("P_title"));
+			dto.setP_tm(rs.getDate("p_tm"));
+			dto.setP_likeCount(rs.getInt("p_likecount"));
+			dto.setNs_pr(rs.getInt("NS_pr"));
+			dto.setI_newName("i_newName");
+			dto.setNs_code("ns_code");
+			
+			actionlist.add(dto);
+		}
+		
+		System.out.println("list:"+actionlist);
+		return actionlist;
+	}
+	
+	
+	
+	
 	public HashMap<String, ArrayList<GGDto>> category() {
 		String sql = "select * from codes where c_code like 'S%'";
 		HashMap<String, ArrayList<GGDto>> map = new HashMap<String, ArrayList<GGDto>>();
@@ -494,4 +538,6 @@ public class BoardDAO {
 		
 		return p_no;
 	}
+
+
 }
