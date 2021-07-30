@@ -257,28 +257,26 @@ public int userUpdate(GGDto dto) {
 }
 
 /*기존 프로필 사진 가져오기*/
-public GGDto getFileName(String id, GGDto dto) {
+public String getFileName(String id) {
+	//GGDto dto = null;
 	
+	String oriPhoto = null;
 	String sql = "SELECT u_newName FROM userinfo WHERE u_id=?";
-	
 	try {
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, id);
 		rs = ps.executeQuery();
-		
-		if (rs.next()) {
-			dto.setU_newName(rs.getString("u_newName"));
-		}
-		System.out.println("변경된 사진 dto : "+dto.getU_newName());
+ 
+		oriPhoto = rs.getString(1);
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
 	
-	return dto;
+	return oriPhoto;
 }
 
 /*프로필 사진 수정*/
-public void updateFileName(String delFileName, GGDto dto) {
+public void updateFileName(String oriPhoto, GGDto dto) {
 	String sql = "UPDATE userinfo SET u_newName=? WHERE u_id=?";
 	
 	try {
