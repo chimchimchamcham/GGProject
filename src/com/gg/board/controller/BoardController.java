@@ -113,7 +113,15 @@ public class BoardController extends HttpServlet {
 		case "/list":
 			System.out.println("리스트 요청");	
 			String userid = (String) req.getSession().getAttribute("loginId");
-			service.list(userid);
+			int listwhatadd = Integer.parseInt(req.getParameter("index1"));
+			int listhowaline = Integer.parseInt(req.getParameter("index2"));
+			
+			
+			System.out.println("listwhatadd:"+listwhatadd);
+			System.out.println("listhowaline:"+listhowaline);
+
+			service.list(userid,listwhatadd,listhowaline);
+			
 			break;
 			
 		case "/writeForm":

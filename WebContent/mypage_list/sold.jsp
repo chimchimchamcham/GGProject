@@ -130,7 +130,7 @@
                     justify-content: space-between;
                 }
 </style>
-
+  
 <body>
     <div class="contents">
         <div class="button-layout">
@@ -141,9 +141,7 @@
         
         <div class="alien_list">
                 <button class="clicked" >최신</button>/
-                <button>인기</button>/
-                <button>저가</button>/
-                <button>고가</button>
+                <button>인기</button>
         </div>
         
         <div class="content-zoon">
@@ -153,48 +151,81 @@
         </div>
     </div>
 </body>
-    <script>
-
+  <script>
+	//목록들 정보 변수
+	/* var $how_index = 0;
+	var $how_aline_list	= 0;
+	
+	
+	// index들 변수
+	let $index_how = 0;
+	let $index_aline_how = 0; */
+	
+	let $index1 = 0;
+	let $index2 = 0
+	
     $(".button-layout button").click(function(){
-	    $button = $(".button-layout button");
-	    $index = $button.index(this);
-	    $index_button = $(".button-layout button:eq(" + $index + ")");
-		console.log("$center_index:"+$index);
-		$button.removeClass('clicked');
+	    $button1 = $(".button-layout button");
+	    $index1 = $button1.index(this);
+	    
+	    $index_button = $(".button-layout button:eq(" + $index1 + ")");
+	    
+		console.log("$center_index:"+$index1);
+		console.log("$alien_list:"+$index2);
+		
+		listCall($index1,$index2);
+		
+		$button1.removeClass('clicked');
 		$index_button.addClass('clicked');
-
-		var dd=howListcall($index);
-		console.log("howListcall:",dd);
+		
 		
     })
     
     $(".alien_list button").click(function(){
-	    $button = $(".alien_list button");
-	    $index = $button.index(this);
-	    $index_button = $(".alien_list button:eq(" + $index + ")");
-		console.log("$alien_list:"+$index);
-		$button.removeClass('clicked');
-		$index_button.addClass('clicked');
+	    
+	    $button2 = $(".alien_list button");
+	    $index2 = $button2.index(this);
+	    
+	    $index_button = $(".alien_list button:eq(" + $index2 + ")");
+	    
+		console.log("$center_index:"+$index1);
+		console.log("$alien_list:"+$index2);
 		
-		var dd=howAlineListcall($index);
-		console.log("howAlineListcall:",dd);
+		listCall($index1,$index2);
+		
+		$button2.removeClass('clicked');
+		$index_button.addClass('clicked');
 		
     })
     
-    
- 		/*_______________________________	목록을 어떻게 보여줄까? 	______________________________*/	   
-    function howListcall($index){// 0 =='전체' , 1 =='판매중' , 2=='판매완료' 
-    	console.log('howListcall 목록의 범위');
-    	let $index_how = $index;
-		return $index_how;
-				
+    function listCall($index1,index2){
+		
+		
+		$.ajax({
+			type:'post',
+			url:'./list',
+			data:{	index1 : $index1,
+					index2 : $index2},
+			dataType:'JSON',
+			success:function(data){
+				console.log("data:"+data);
+				if(data.list != null){
+					soled_list(data.list);
+				}
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});	
+		
 		}
-    /*_______________________________	목록을 어떻게 정렬할까? 	______________________________*/
-    function howAlineListcall($index){
-    	console.log('howAlineListcall 판매 목록 정렬');
-    	let $index_aline_how = $index;
-		return $index_aline_how;
-    }
+		
+		
+		
+    
+   
+    
+
     
 </script>
 </html>

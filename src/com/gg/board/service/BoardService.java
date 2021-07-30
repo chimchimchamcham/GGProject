@@ -216,7 +216,7 @@ public class BoardService {
 		return isBuyRequested;
 	}
 	/* ====================================================== */
-public void list(String userid)	throws IOException {
+public void list(String userid, int listwhatadd, int listhowaline)	throws IOException {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
@@ -224,7 +224,7 @@ public void list(String userid)	throws IOException {
 		ArrayList<GGDto> list = null;
 		
 		try {
-			list = dao.list(userid);
+			list = dao.list(userid,listwhatadd,listhowaline);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
