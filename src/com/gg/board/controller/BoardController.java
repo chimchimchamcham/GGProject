@@ -9,11 +9,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.gg.board.dao.UploadDAO;
 import com.gg.board.service.BoardService;
+import com.gg.board.service.UploadService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
-@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/list","/writeForm","/writeSale","/writeTrade","/writeCommunity"})
+@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/list","/writeForm","/writeSale","/writeTrade","/writeCommunity","/upload"})
 public class BoardController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -183,6 +186,14 @@ public class BoardController extends HttpServlet {
 			resp.getWriter().println(new Gson().toJson(jo_map));
 			
 			break;
+			
+		case "/upload":
+			System.out.println("글 쓰기 파일 업로드 요청");
+			UploadService uploadSer = new UploadService(req);
+			dto = uploadSer.PhotoUpload();
+			
+			UploadDAO uploadDAO = new UploadDAO();
+			uploadDAO.PhotoUpload(dto);
 			
 		}
 		

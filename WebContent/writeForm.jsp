@@ -46,6 +46,7 @@ textarea {
 			<button id="trade">경매</button>
 			<button id="community">커뮤니티</button>
 		</div>
+<<<<<<< HEAD
 		<form>
 			<div id="communityForm">
 				<p>
@@ -91,8 +92,65 @@ textarea {
 					공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
 						value="N">전체공개 <input type="radio" name="disclosure"
 						value="Y">팔로우한정
+=======
+		<div id="communityForm">
+			<p>
+				<input type="text" name="title" value="" placeholder="제목을 입력해주세요"
+					style='width: "1000px"' />
+			</p>
+		<form enctype="multipart/form-data" id="uploadForm">
+				<label for='test'><img src="img/plus.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" /></label>
+				 <input type="file" name="imgFile" style="display: none" id="test" />
+		</form>
+
+			<p>
+				<textarea name="content" rows="30" cols="100" placeholder="내용입력"
+					style="overflow-y: scroll"></textarea>
+			</p>
+			<p id="commuCategory">
+				카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="commuCat">
+					<c:forEach items="${commuCat }" var="CommuCategory">
+						<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
+					</c:forEach>
+				</select>
+			</p>
+		</div>
+
+		<div id="saleForm">
+			<p id="salePr">
+				<input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point
+			</p>
+			<p>
+				거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
+					value="Y">택배<input type="radio" name="deliveryYN" value="N">직거래
+			</p>
+			<p id="category">
+				카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
+					<c:forEach items="${saleCat }" var="SaleCategory">
+						<option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
+					</c:forEach>
+				</select>
+			</p>
+			<p>
+				공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
+					value="N">전체공개 <input type="radio" name="disclosure"
+					value="Y">팔로우한정
+			</p>
+		</div>
+		<!--경매선택시 하단부분-->
+		<div id="tradeForm">
+			<p>경매시간 설정</p>
+
+			<!--예약 경매 버튼 클릭시-->
+			<div id="reservForm">
+				<p>
+					<input type="text" id="from" placeholder="시작시간" name="from"
+						style="width: 80px;" readonly> ~ <input type="text"
+						name="to" id="to" placeholder="종료시간" style="width: 80px;" readonly>
+>>>>>>> eea36aa1359eb3306bc38849787340d1cf5e3630
 				</p>
 			</div>
+<<<<<<< HEAD
 			<!--경매선택시 하단부분-->
 			<div id="tradeForm">
 				<p>경매시간 설정</p>
@@ -117,12 +175,24 @@ textarea {
 				</p>
 			</div>
 		</form>
+=======
+			<p>
+				시작가격&nbsp;<input type="text" name="startPrice" value=""
+					placeholder="시작가격 입력(숫자입력)" />&nbsp;Point
+			</p>
+			<p>
+				즉결가격&nbsp;<input type="text" name="promptPrice" value=""
+					placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
+			</p>
+		</div>
+>>>>>>> eea36aa1359eb3306bc38849787340d1cf5e3630
 		<div id="twoButton">
-			<button id="submit">등록</button>
-			<button onclick="location.href='./index.jsp'">취소</button>
+			<input type="button" id="submit" value="등록" /> <input type="button"
+				onclick="location.href='./index.jsp'" value="취소" />
 		</div>
 
 	</div>
+
 </body>
 <script>
 	//종료 날짜 설정 달력/////////////////////////////////////////////////////////////////
@@ -259,15 +329,51 @@ textarea {
 		$("#endDate").toggle();
 		$("#reservForm").toggle();
 
-	})
+	});
+	
+	//사진 담을 객체
+	var form = $('#uploadForm')[0];
+	
+   var data = new FormData(form);
 
+	//data.append($('#test').prop('files')[0]);
+	
 	//등록버튼 클릭시 
+<<<<<<< HEAD
 	$("#submit").click(function() {
+=======
+	$("#submit").click(function(){
+		console.log(form);
+		console.log(data);
+		//console.log($("form input"));
+	 /* var param = {};
+		$("form input").each(function(idx,item){
+			//console.log(item)
+			param[$(item).attr("name")]=$(item).val();
+		});
+		param.content = $("textarea").val();
+		console.log(param); */ 
+	});
+	
+	$("#submit2").click(function() {
+
+>>>>>>> eea36aa1359eb3306bc38849787340d1cf5e3630
 		if (param.select == "P004") { //커뮤니티글 선택시
+			/* $("form input").each(function(idx,item){
+				//console.log(item)
+				param[$(item).attr("name")]=$(item).val();
+			}); */
 			param.title = $("input[name='title']").val();
 			param.content = $("textarea[name='content']").val();
+<<<<<<< HEAD
 			param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
 			//ajax url="community"
+=======
+			param.category = $("select[name='commuCat']").val();//select name으로 값 받기	
+			console.log(param);
+			
+			//ajax url="writeCommunity"
+>>>>>>> eea36aa1359eb3306bc38849787340d1cf5e3630
 			$.ajax({
 				type : 'POST',
 				url : 'writeCommunity',
@@ -286,9 +392,13 @@ textarea {
 					console.log(e);
 				}
 
+<<<<<<< HEAD
 			});
 			
 			
+=======
+			})
+>>>>>>> eea36aa1359eb3306bc38849787340d1cf5e3630
 			
 
 		} else if (param.select == "P002") { //판매글 선택시
@@ -346,6 +456,24 @@ textarea {
 					dataType : 'JSON',
 					success : function(data) {
 						console.log(data.p_no);
+						data.append("p_no",data.p_no);
+						console.log(data);
+						$.ajax({
+							 type: "POST",
+							 enctype: 'multipart/form-data',
+						     url: "/upload",
+						     data: data,
+						     processData: false,
+						     contentType: false,
+						     cache: false,
+						     success : function(data) {
+								console.log(data);
+						},error : function(e) {
+							console.log(e);
+						}
+
+					})
+						
 					},
 					error : function(e) {
 						console.log(e);
