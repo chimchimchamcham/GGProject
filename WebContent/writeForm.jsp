@@ -46,17 +46,16 @@ textarea {
 			<button id="trade">경매</button>
 			<button id="community">커뮤니티</button>
 		</div>
-
 		<div id="communityForm">
 			<p>
 				<input type="text" name="title" value="" placeholder="제목을 입력해주세요"
 					style='width: "1000px"' />
 			</p>
-			<p class="imgFileUpload">
-				<label for='test'><img src="img/plus.png" id="preview-image"
-					width="100px" height="100px" style="border:solid 1px gray"/></label> <input type="file" name="imgFile" style="display: none"
-					id="test" />
-			</p>
+		<form enctype="multipart/form-data" id="uploadForm">
+				<label for='test'><img src="img/plus.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" /></label>
+				 <input type="file" name="imgFile" style="display: none" id="test" />
+		</form>
+
 			<p>
 				<textarea name="content" rows="30" cols="100" placeholder="내용입력"
 					style="overflow-y: scroll"></textarea>
@@ -98,9 +97,9 @@ textarea {
 			<!--예약 경매 버튼 클릭시-->
 			<div id="reservForm">
 				<p>
-					<input type="text" id="from" placeholder="시작시간"
+					<input type="text" id="from" placeholder="시작시간" name="from"
 						style="width: 80px;" readonly> ~ <input type="text"
-						id="to" placeholder="종료시간" style="width: 80px;" readonly>
+						name="to" id="to" placeholder="종료시간" style="width: 80px;" readonly>
 				</p>
 				<!--아래에 선택 일자 표시-->
 				<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
@@ -114,12 +113,13 @@ textarea {
 					placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
 			</p>
 		</div>
-
 		<div id="twoButton">
-			<button id="submit">등록</button>
-			<button onclick="location.href='./index.jsp'">취소</button>
+			<input type="button" id="submit" value="등록" /> <input type="button"
+				onclick="location.href='./index.jsp'" value="취소" />
 		</div>
+
 	</div>
+
 </body>
 <script>
 	//종료 날짜 설정 달력/////////////////////////////////////////////////////////////////
@@ -256,17 +256,42 @@ textarea {
 		$("#endDate").toggle();
 		$("#reservForm").toggle();
 
-	})
+	});
+	
+	//사진 담을 객체
+	var form = $('#uploadForm')[0];
+	
+   var data = new FormData(form);
 
+	//data.append($('#test').prop('files')[0]);
+	
 	//등록버튼 클릭시 
-	$("#submit").click(function() {
+	$("#submit").click(function(){
+		console.log(form);
+		console.log(data);
+		//console.log($("form input"));
+	 /* var param = {};
+		$("form input").each(function(idx,item){
+			//console.log(item)
+			param[$(item).attr("name")]=$(item).val();
+		});
+		param.content = $("textarea").val();
+		console.log(param); */ 
+	});
+	
+	$("#submit2").click(function() {
 
 		if (param.select == "P004") { //커뮤니티글 선택시
+			/* $("form input").each(function(idx,item){
+				//console.log(item)
+				param[$(item).attr("name")]=$(item).val();
+			}); */
 			param.title = $("input[name='title']").val();
 			param.content = $("textarea[name='content']").val();
-			param.category = $("select[name='commuCat']").val();//select name으로 값 받기			
+			param.category = $("select[name='commuCat']").val();//select name으로 값 받기	
 			console.log(param);
-			//ajax url="community"
+			
+			//ajax url="writeCommunity"
 			$.ajax({
 				type : 'POST',
 				url : 'writeCommunity',
@@ -286,6 +311,7 @@ textarea {
 				}
 
 			})
+			
 
 		} else if (param.select == "P002") { //판매글 선택시
 			param.title = $("input[name='title']").val();
@@ -342,6 +368,24 @@ textarea {
 					dataType : 'JSON',
 					success : function(data) {
 						console.log(data.p_no);
+						data.append("p_no",data.p_no);
+						console.log(data);
+						$.ajax({
+							 type: "POST",
+							 enctype: 'multipart/form-data',
+						     url: "/upload",
+						     data: data,
+						     processData: false,
+						     contentType: false,
+						     cache: false,
+						     success : function(data) {
+								console.log(data);
+						},error : function(e) {
+							console.log(e);
+						}
+
+					})
+						
 					},
 					error : function(e) {
 						console.log(e);
@@ -364,8 +408,8 @@ textarea {
 	        const reader = new FileReader()
 	        // 이미지가 로드가 된 경우
 	        reader.onload = e => {
-	            const previewImage = document.getElementById("preview-image")
-	            previewImage.src = e.target.result
+	            const previewImage = document.getElementById("preview-image");
+	            previewImage.src = e.target.result;
 	        }
 	        // reader가 이미지 읽도록 하기
 	        reader.readAsDataURL(input.files[0])
