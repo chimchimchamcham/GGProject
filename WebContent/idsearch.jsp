@@ -129,7 +129,7 @@
 							<td>새 비밀번호 확인</td>
 						</tr>
 						<tr>
-							<td><input type="text" id="pwchk2"/>&nbsp<span id ="alert" style="color:red">*공란이거나, 비밀번호가 일치하지 않습니다.</span></td>
+							<td><input type="text" id="pwchk2"/>&nbsp;<span id ="alert" style="color:red">*공란이거나, 비밀번호가 일치하지 않습니다.</span></td>
 						</tr>
 						<tr style="display:none">
 							<td><input type="text" name="id" value=""/></td>
