@@ -91,7 +91,7 @@
             display: flex;
             flex-wrap: wrap;
             margin: 0 auto;
-
+			
             
         }
             /*물건 정보 크기 200*300*/
@@ -101,6 +101,7 @@
                 margin: 1%;
                 padding: 2vh;
                 border: 1px solid black;
+              	background-color: aqua;
             }
             	/* 물건 이미지 틀,만약 이미지가 틀을 넘으면  넘은부분은 보이지않음 그리고 이미지를 가운데를 기준으로 보여짐*/
                 .img-zoon{
@@ -115,6 +116,8 @@
                 img{
                     max-width: 175px;
                     max-height: 150px;
+                    min-width:170px;
+                    min-height:120px;
                 }
                 .dretion-zoon{
                     margin-top: 2vh;
@@ -159,7 +162,9 @@
 		console.log("$center_index:"+$index);
 		$button.removeClass('clicked');
 		$index_button.addClass('clicked');
-		
+
+		var dd=howListcall($index);
+		console.log("howListcall:",dd);
 		
     })
     
@@ -170,6 +175,26 @@
 		console.log("$alien_list:"+$index);
 		$button.removeClass('clicked');
 		$index_button.addClass('clicked');
+		
+		var dd=howAlineListcall($index);
+		console.log("howAlineListcall:",dd);
+		
     })
+    
+    
+ 		/*_______________________________	목록을 어떻게 보여줄까? 	______________________________*/	   
+    function howListcall($index){// 0 =='전체' , 1 =='판매중' , 2=='판매완료' 
+    	console.log('howListcall 목록의 범위');
+    	let $index_how = $index;
+		return $index_how;
+				
+		}
+    /*_______________________________	목록을 어떻게 정렬할까? 	______________________________*/
+    function howAlineListcall($index){
+    	console.log('howAlineListcall 판매 목록 정렬');
+    	let $index_aline_how = $index;
+		return $index_aline_how;
+    }
+    
 </script>
 </html>
