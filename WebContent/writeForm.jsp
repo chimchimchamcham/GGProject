@@ -94,14 +94,11 @@ textarea {
       <!--경매선택시 하단부분-->
       <div id="tradeForm">
          <p>경매시간 설정</p>
-         <p id="endDate">
-            현재시간 ~ 종료시간<input type="text" name="endDate" value=""
-               id="datepicker" readonly>
-         </p>
+       
 
 
          <!--예약 경매 버튼 클릭시-->
-         <button id="reservBtn">예약경매하기</button>
+       
          <div id="reservForm">
             <p>
                <input type="text" id="from" placeholder="시작시간"
@@ -235,8 +232,8 @@ var option1 = {
       param.select = "P001";
 
       console.log(param.select);
-      $("#tradeForm").show();
-      $("#reservForm,#commuCategory,#salePr").hide();
+      $("#tradeForm,#reservForm").show();
+      $("#commuCategory,#salePr").hide();
 
    });
 
@@ -256,12 +253,7 @@ var option1 = {
       $("#saleForm,#salePr").show();
    });
 
-   //경매폼에서 예약경매하기 버튼 클릭시
-   $("#reservBtn").click(function() {
-      $("#endDate").toggle();
-      $("#reservForm").toggle();
-
-   })
+  
 
    //등록버튼 클릭시 
    $("#submit").click(function() {
@@ -327,8 +319,9 @@ var option1 = {
          param.startPr = $("input[name='startPrice']").val(); //시작가
          param.instantPr = $("input[name='promptPrice']").val(); // 즉결가
          param.deliveryYN = $("input[name='deliveryYN']:checked").val(); //택배여부
-         param.disclosure = $("input[name='disclosure']:checked").val(); // 팔로워 한정 여부
-         param.s_date = $("input[name='endDate']").val(); // 시작 날짜?
+         param.followYN = $("input[name='disclosure']:checked").val(); // 팔로워 한정 여부
+         param.startTm = $("#from").val(); // 시작 날짜
+         param.endTm = $("#to").val(); // 종료날짜
          console.log(param);
 
          //ajax url="trade"
