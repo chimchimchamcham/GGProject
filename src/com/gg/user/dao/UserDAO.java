@@ -225,7 +225,6 @@ public GGDto myPage(String id) {
 			success = true;
 		}
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 	return success;
@@ -257,26 +256,27 @@ public int userUpdate(GGDto dto) {
 }
 
 /*기존 프로필 사진 가져오기*/
-public String getFileName(String id) {
-	//GGDto dto = null;
-	
-	String oriPhoto = null;
+public GGDto getFileName(String id) {
+	GGDto dto = null;
 	String sql = "SELECT u_newName FROM userinfo WHERE u_id=?";
 	try {
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, id);
 		rs = ps.executeQuery();
  
-		oriPhoto = rs.getString(1);
+		if(rs.next()) {
+			dto = new GGDto();
+			dto.setU_newName(rs.getString(1));
+		}
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}
 	
-	return oriPhoto;
+	return dto;
 }
 
 /*프로필 사진 수정*/
-public void updateFileName(String oriPhoto, GGDto dto) {
+public void updateFileName(String delFileName, GGDto dto) {
 	String sql = "UPDATE userinfo SET u_newName=? WHERE u_id=?";
 	
 	try {
@@ -288,10 +288,8 @@ public void updateFileName(String oriPhoto, GGDto dto) {
 		int success = ps.executeUpdate();
 		System.out.println("사진 변경 성공 : "+success);
 	} catch (SQLException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-
 }
 
 }

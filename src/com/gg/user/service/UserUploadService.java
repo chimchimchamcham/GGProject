@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 
 import com.gg.dto.GGDto;
+import com.gg.user.dao.UserDAO;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -73,14 +74,13 @@ public class UserUploadService {
 			dto.setU_intro(u_intro);
 			
 			// 4.이름 변경
+			UserDAO dao = new UserDAO();
 			//새로운 사진 원래 파일명
-			String oriFileName = multi.getFilesystemName("photo");
-			System.out.println("기존 파일명 : " + oriFileName);
-			/*
-			 * if (oriFileName != null) {
-			 * 
-			 * }
-			 */
+			String oriFileName = multi.getFilesystemName("photo"); //새로운 사진 파일명 변경 전
+			System.out.println("기존파일 : " + oriFileName);
+			
+			/*새로들어온 사진이 있을 때만*/
+			if (oriFileName != null) {
 				// 확장자 잘라내기
 				String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
 				// 새로운 파일명 지정하기
@@ -90,11 +90,10 @@ public class UserUploadService {
 				//u_newname이랑 orifilename이랑 같으면 삭제x / 다르면 삭제되도록
 				File oldName = new File(savePath + oriFileName);
 				File newName = new File(savePath + newFileName);
-				
 				oldName.renameTo(newName);
 				
 				dto.setU_newName(newFileName);
-
+			}
 
 		} catch (IOException e) {
 
@@ -110,13 +109,16 @@ public class UserUploadService {
 		boolean success = false;
 		
 		// 기존파일이름
-		File file = new File("C:/img/" + delFileName);
+		File file = new File("C:/photo/" + delFileName);
 		
 		// 파일이 존재한다면 삭제해라
-		if (file.exists() && !delFileName.equals("default-profile.png")) {
-			success = file.delete();
-			System.out.println("기존 파일 삭제 성공 여부 : " + success);
+		if (file.exists()) {
+			if(!delFileName.equals("default-profile.png")) {
+				success = file.delete();
+				System.out.println("기존 파일 삭제 성공 여부 : " + success);
+			}
 		}
+
 		return success;
 
 	}

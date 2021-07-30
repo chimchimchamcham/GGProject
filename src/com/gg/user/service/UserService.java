@@ -239,21 +239,18 @@ public int userUpdate(String id) {
 		UserDAO dao = new UserDAO();
 		success = dao.userUpdate(dto); //회원정보 수정(사진제외)
 		
-		//기존사진 이름 가져오기
-		String oriPhoto = dao.getFileName(id);
-		/*
-		 * String delFileName = null; delFileName = photoInfo.getU_newName(); //삭제할 사진에
-		 * 기존사진 넣어주기
-		 * 
-		 */
-		System.out.println("삭제할 사진 파일 : "+ oriPhoto);
+		//기존사진 이름 가져와서 delFileName에 넣음
+		String delFileName = dao.getFileName(id).getU_newName();
+		System.out.println("삭제할 사진 파일 : "+ delFileName);
 		
 		//새로 업로드한 파일을 photo에 업데이트
-		dao.updateFileName(oriPhoto, dto);
-		
-		//기존 파일을 지우고
-		upload.del(oriPhoto);
-
+		if(dto.getU_newName() !=null) {
+			dao.updateFileName(delFileName, dto);
+			
+			//기존 파일을 지우고
+			upload.del(delFileName);
+		}
+		dao.resClose();
 		return success;
 	}
 }
