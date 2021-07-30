@@ -53,9 +53,9 @@ textarea {
 					style='width: "1000px"' />
 			</p>
 			<p class="imgFileUpload">
-				<label for='test'><img src="img/plus.png" class="imgFileBtn"
-					alt="plus" width="100px" /></label> <input type="file" name="imgFile"
-					style="display: none" id="test" />
+				<label for='test'><img src="img/plus.png" id="preview-image"
+					width="100px" height="100px" style="border:solid 1px gray"/></label> <input type="file" name="imgFile" style="display: none"
+					id="test" />
 			</p>
 			<p>
 				<textarea name="content" rows="30" cols="100" placeholder="내용입력"
@@ -216,7 +216,7 @@ textarea {
 	//폼 선택 버튼  클릭시 해당 값이 달라짐
 	var param = {};
 	param.userId = "${sessionScope.loginId}";
-
+ 	
 	//경매하단부분 숨겨져있음
 	$("#saleForm").show();
 	$("#communityForm").show();
@@ -354,5 +354,28 @@ textarea {
 			alert("폼을 선택해주세요!");
 		}
 	});
+	
+	///////사진 선택시 미리보기 변경/////////
+	function readImage(input) {
+	    // 인풋 태그에 파일이 있는 경우
+	    if(input.files && input.files[0]) {
+	        // 이미지 파일인지 검사 (생략)
+	        // FileReader 인스턴스 생성
+	        const reader = new FileReader()
+	        // 이미지가 로드가 된 경우
+	        reader.onload = e => {
+	            const previewImage = document.getElementById("preview-image")
+	            previewImage.src = e.target.result
+	        }
+	        // reader가 이미지 읽도록 하기
+	        reader.readAsDataURL(input.files[0])
+	    }
+	}
+	// input file에 change 이벤트 부여
+	const inputImage = document.getElementById("test")
+	inputImage.addEventListener("change", e => {
+	    readImage(e.target)
+	})
+	
 </script>
 </html>

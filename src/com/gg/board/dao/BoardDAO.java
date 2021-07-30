@@ -266,11 +266,34 @@ public class BoardDAO {
 		return sale3List;
 	}
 	/* ================================================ */
-	public ArrayList<GGDto> list(String userid) throws SQLException {
-		String sql = "select * FROM  post p,N_Sale n where (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_code = 'P002' and p.p_id = ? and p.p_no = n.p_no";
+	public ArrayList<GGDto> list(String userid, int listwhatadd, int listhowaline) throws SQLException {
+		String sql = "";
+		if (listwhatadd == 0) {//전체 NS_001 NS_003
+			if (listhowaline == 0) {//시간최신 -desc
+				sql = "select * FROM  post p,N_Sale n where (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.p_tm DESC";				
+			}else if(listhowaline == 1) {//좋아요많은쪽 -desc
+				sql= "select * FROM  post p,N_Sale n where (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.P_likeCount DESC";
+			}
+		}else if (listwhatadd == 1) {//판매중 NS_001 NS_003
+			if (listhowaline == 0) {//시간최신 -desc
+				sql = "select * FROM  post p,N_Sale n where n.ns_code = 'NS_001' and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.p_tm DESC";				
+			}else if(listhowaline == 1) {//좋아요많은쪽 -desc
+				sql= "select * FROM  post p,N_Sale n where n.ns_code = 'NS_001' and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.P_likeCount DESC";
+			}
+		}else if (listwhatadd == 2) {//판매완료 NS_003
+			if (listhowaline == 0) {//시간최신 -desc
+				sql = "select * FROM  post p,N_Sale n where n.ns_code = 'NS_003' and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.p_tm DESC";				
+			}else if(listhowaline == 1) {//좋아요많은쪽 -desc
+				sql= "select * FROM  post p,N_Sale n where n.ns_code = 'NS_003' and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.P_likeCount DESC";
+			}
+		}
+
 		ArrayList<GGDto> list = new ArrayList<GGDto>();
+		
 		System.out.println("list:"+list);
+		
 		ps = conn.prepareStatement(sql);
+		
 		System.out.println("daouserID:"+userid);
 		ps.setString(1, userid);
 		//System.out.println("ps:"+ps);
@@ -289,6 +312,7 @@ public class BoardDAO {
 			
 			list.add(dto);
 		}
+		
 		System.out.println("list:"+list);
 		return list;
 	}
