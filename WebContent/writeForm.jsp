@@ -46,79 +46,82 @@ textarea {
 			<button id="trade">경매</button>
 			<button id="community">커뮤니티</button>
 		</div>
-
-		<div id="communityForm">
-			<p>
-				<input type="text" name="title" value="" placeholder="제목을 입력해주세요"
-					style='width: "1000px"' />
-			</p>
-			<p class="imgFileUpload">
-				<label for='test'><img src="img/plus.png" id="preview-image"
-					width="100px" height="100px" style="border:solid 1px gray"/></label> <input type="file" name="imgFile" style="display: none"
-					id="test" />
-			</p>
-			<p>
-				<textarea name="content" rows="30" cols="100" placeholder="내용입력"
-					style="overflow-y: scroll"></textarea>
-			</p>
-			<p id="commuCategory">
-				카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="commuCat">
-					<c:forEach items="${commuCat }" var="CommuCategory">
-						<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
-					</c:forEach>
-				</select>
-			</p>
-		</div>
-
-		<div id="saleForm">
-			<p id="salePr">
-				<input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point
-			</p>
-			<p>
-				거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
-					value="Y">택배<input type="radio" name="deliveryYN" value="N">직거래
-			</p>
-			<p id="category">
-				카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
-					<c:forEach items="${saleCat }" var="SaleCategory">
-						<option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
-					</c:forEach>
-				</select>
-			</p>
-			<p>
-				공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
-					value="N">전체공개 <input type="radio" name="disclosure"
-					value="Y">팔로우한정
-			</p>
-		</div>
-		<!--경매선택시 하단부분-->
-		<div id="tradeForm">
-			<p>경매시간 설정</p>
-
-			<!--예약 경매 버튼 클릭시-->
-			<div id="reservForm">
+		<form>
+			<div id="communityForm">
 				<p>
-					<input type="text" id="from" placeholder="시작시간"
-						style="width: 80px;" readonly> ~ <input type="text"
-						id="to" placeholder="종료시간" style="width: 80px;" readonly>
+					<input type="text" name="title" value="" placeholder="제목을 입력해주세요"
+						style='width: "1000px"' />
 				</p>
-				<!--아래에 선택 일자 표시-->
-				<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
+				<p class="imgFileUpload">
+					<label for='test'><img src="img/plus.png"
+						id="preview-image" width="100px" height="100px"
+						style="border: solid 1px gray" /></label> <input type="file"
+						name="imgFile" style="display: none" id="test" />
+				</p>
+				<p>
+					<textarea name="content" rows="30" cols="100" placeholder="내용입력"
+						style="overflow-y: scroll"></textarea>
+				</p>
+				<p id="commuCategory">
+					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="commuCat">
+						<c:forEach items="${commuCat }" var="CommuCategory">
+							<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
+						</c:forEach>
+					</select>
+				</p>
 			</div>
-			<p>
-				시작가격&nbsp;<input type="text" name="startPrice" value=""
-					placeholder="시작가격 입력(숫자입력)" />&nbsp;Point
-			</p>
-			<p>
-				즉결가격&nbsp;<input type="text" name="promptPrice" value=""
-					placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
-			</p>
-		</div>
 
+			<div id="saleForm">
+				<p id="salePr">
+					<input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point
+				</p>
+				<p>
+					거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
+						value="Y">택배<input type="radio" name="deliveryYN"
+						value="N">직거래
+				</p>
+				<p id="category">
+					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
+						<c:forEach items="${saleCat }" var="SaleCategory">
+							<option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
+						</c:forEach>
+					</select>
+				</p>
+				<p>
+					공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
+						value="N">전체공개 <input type="radio" name="disclosure"
+						value="Y">팔로우한정
+				</p>
+			</div>
+			<!--경매선택시 하단부분-->
+			<div id="tradeForm">
+				<p>경매시간 설정</p>
+
+				<!--예약 경매 버튼 클릭시-->
+				<div id="reservForm">
+					<p>
+						<input type="text" id="from" placeholder="시작시간"
+							style="width: 80px;" readonly> ~ <input type="text"
+							id="to" placeholder="종료시간" style="width: 80px;" readonly>
+					</p>
+					<!--아래에 선택 일자 표시-->
+					<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
+				</div>
+				<p>
+					시작가격&nbsp;<input type="text" name="startPrice" value=""
+						placeholder="시작가격 입력(숫자입력)" />&nbsp;Point
+				</p>
+				<p>
+					즉결가격&nbsp;<input type="text" name="promptPrice" value=""
+						placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
+				</p>
+			</div>
+		</form>
 		<div id="twoButton">
 			<button id="submit">등록</button>
 			<button onclick="location.href='./index.jsp'">취소</button>
 		</div>
+
 	</div>
 </body>
 <script>
@@ -215,7 +218,7 @@ textarea {
 	//초기상태 - 판매폼만 보이는 상태
 	//폼 선택 버튼  클릭시 해당 값이 달라짐
 	var param = {};
-	param.userId = "${sessionScope.loginId}";
+	var file = new FormData();
  	
 	//경매하단부분 숨겨져있음
 	$("#saleForm").show();
@@ -260,12 +263,10 @@ textarea {
 
 	//등록버튼 클릭시 
 	$("#submit").click(function() {
-
 		if (param.select == "P004") { //커뮤니티글 선택시
 			param.title = $("input[name='title']").val();
 			param.content = $("textarea[name='content']").val();
-			param.category = $("select[name='commuCat']").val();//select name으로 값 받기			
-			console.log(param);
+			param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
 			//ajax url="community"
 			$.ajax({
 				type : 'POST',
@@ -285,7 +286,10 @@ textarea {
 					console.log(e);
 				}
 
-			})
+			});
+			
+			
+			
 
 		} else if (param.select == "P002") { //판매글 선택시
 			param.title = $("input[name='title']").val();
@@ -364,18 +368,18 @@ textarea {
 	        const reader = new FileReader()
 	        // 이미지가 로드가 된 경우
 	        reader.onload = e => {
-	            const previewImage = document.getElementById("preview-image")
-	            previewImage.src = e.target.result
+	            const previewImage = document.getElementById("preview-image");
+	            previewImage.src = e.target.result;
 	        }
 	        // reader가 이미지 읽도록 하기
-	        reader.readAsDataURL(input.files[0])
+	        reader.readAsDataURL(input.files[0]);
 	    }
-	}
+	};
 	// input file에 change 이벤트 부여
 	const inputImage = document.getElementById("test")
 	inputImage.addEventListener("change", e => {
-	    readImage(e.target)
-	})
+	    readImage(e.target);
+	});
 	
 </script>
 </html>
