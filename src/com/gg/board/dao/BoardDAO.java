@@ -68,6 +68,7 @@ public class BoardDAO {
 				dto = new GGDto();
 				dto.setP_no(rs.getInt("P_no"));
 				dto.setP_id(rs.getString("P_id"));
+				//System.out.println("dto.getP_id:"+dto.getP_id());
 				dto.setP_title(rs.getString("P_title"));
 				dto.setP_content(rs.getString("P_content"));
 				dto.setP_tm(rs.getDate("P_tm"));
