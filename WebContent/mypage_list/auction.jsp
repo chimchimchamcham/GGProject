@@ -113,7 +113,7 @@
                     justify-content: center;
                 }
                 /*이미지크기==175*150을 넘지 않음*/
-                img{
+                .img-zoon img{
                     max-width: 175px;
                     max-height: 150px;
                     min-width:170px;
