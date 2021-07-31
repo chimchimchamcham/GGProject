@@ -13,7 +13,7 @@
 #main {
 	background-color: gray;
 	width:1200px;
-	height:2000px;
+	height:auto;
 	position: absolute;
 	top:150px;
 	z-index: -1;
