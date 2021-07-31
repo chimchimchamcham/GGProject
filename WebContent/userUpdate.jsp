@@ -46,7 +46,7 @@ td {
 </style>
 <body>
 <h2>${userUpdate.u_nname}님의 회원정보 수정</h2>
-<form action="userUpdate" method="POST" enctype="multipart/form-data">
+<form action="userUpdate" method="POST" enctype="multipart/form-data" id="userUpdate">
 	<table>
 		<tr>
 				<th>닉네임</th>
@@ -78,7 +78,8 @@ td {
 		</tr>
 		<tr>
 			<th>자기소개 수정</th>
-			<td><textarea name="intro">${userUpdate.u_intro}</textarea></td>
+			<td><textarea name="intro"  id="intro" >${userUpdate.u_intro}</textarea></td>
+			<td><div id="intro_cnt">(0 / 1000)</div></td>
 		</tr>
 		<tr>
 			<th>프로필 사진</th>
@@ -123,7 +124,7 @@ td {
 		<tr>
 			<td colspan="2">
 				<input type="button" onclick="location.href='myPage.jsp'" value="취소"/>
-				<button>저장</button>
+				<button type="button" id="updateBtn" >저장</button>
 			</td>
 		</tr>
 	</table>
@@ -153,15 +154,9 @@ if(msg != ""){
 	var arr2 = email.split("@");
 	console.log(arr2);
 	$('input[name=email]').attr('value',arr2[0]);
-	
+
 	var overChk = false;
 	
-	$("input[name='id']").keyup(function(e) {
-		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
-			var inputVal = $(this).val();
-			$(this).val(inputVal.replace(/[^a-zA-Z0-9]/gi, ''));
-		}
-	});
 	$("#phone").keyup(function(e){
 		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
 			var inputVal = $(this).val();
@@ -169,103 +164,9 @@ if(msg != ""){
 		}
 	});
 
-	function update() {
-		console.log("update");
-		var $id = $("input[name='id']");//아이디 ==> 객체가 들어간다는건 $표시로 구분함.
-		var $pw = $("input[name='pw']");//비번
-		var $re_pw = $("input[name='re_pw']"); //비밀번호 확인칸
-		var $nname = $("input[name = 'nname']");
-		var $name = $("input[name='name']");//이름
-		var $phone1 = $("input[name='phone1']");// 전화번호1
-		var $phone2 = $("input[name='phone2']");// 전화번호2
-		var $phone3 = $("input[name='phone3']");// 전화번호3
-		var $gender = $("input[name='gender']:checked");//성별
-		var $email = $("input[name='email']");//이메일아이디
-		var $mail = $('select'); // 이메일주소
-		var $addr = $("input[name='addr']"); //주소
-		var $detailAddr = $("input[name='detailAddr']"); // 상세주소
-		
-		//중복 체크
-		if (overChk) {
-			console.log("회원가입 체크");
-			if ($pw.val() == "") {
-				alert("비밀번호를 입력해 주세요!!");
-				$pw.focus();
-			} else if ($re_pw.val() == "") {
-				alert("비밀번호 확인칸을 입력해 주세요!");
-				$re_pw.focus();
-			} else if ($pw.val() != $re_pw.val()) {
-				alert("비밀번호가 일치하지 않습니다!")
-				$re_pw.focus();
-			} else if ($nname.val() == "") {
-				alert("닉네임을 입력해 주세요!");
-				$nname.focus();
-			} else if ($name.val() == "") {
-				alert("이름 입력해 주세요!!");
-				$name.focus();
-			}else if($phone1.val() =="") {
-				alert("핸드폰 번호를 입력해 주세요!!");
-				$phone1.focus();
-			}else if($phone2.val() =="") {
-				alert("핸드폰 번호를 입력해 주세요!!");
-				$phone2.focus();
-			}else if($phone3.val() =="") {
-				alert("핸드폰 번호를 입력해 주세요!!");
-				$phone3.focus();
-			}else if ($email.val() == "") {
-				alert("이메일을 입력해 주세요!!");
-				$email.focus();
-			} else if ($addr.val() == "") {
-				alert("주소를 입력해 주세요!!");
-				$addr.focus();
-			} else if ($detailAddr.val() == "") {
-				alert("상세 주소를 입력해 주세요!!");
-				$detailAddr.focus();
-			} else { //모든 정보가 입력되었을 때
-				console.log("save");
-				var param = {};
-				param.id = $id.val();
-				param.pw = $pw.val();
-				param.name = $name.val();
-				param.nname = $nname.val();
-				param.phone1 = $phone1.val();
-				param.phone2 = $phone2.val();
-				param.phone3 = $phone3.val();
-				param.email = $email.val();
-				param.mail = $mail.val();
-				param.addr = $addr.val();
-				param.detailAddr = $detailAddr.val();
-				
-				//저장 가능
-				$.ajax({
-					type : "POST",
-					url : 'userUpdate',
-					data : param,
-					dataType : 'JSON',
-					success : function(data) {
-						console.log(data);
-						if (data.success>0) {
-							alert("회원정보 수정에 성공 했습니다.");
-							location.href = 'myPage?id="+id';
-						} else {
-							alert('회원정보 수정에 실패 했습니다. 다시 시도해 주세요!');
-							location.href = 'userUpdateForm?id="+id';
-						}
-					},
-					error : function(e) {
-						console.log(e);
-					}
-				});
-			}
-
-		} else {
-			alert("아이디 중복 체크를 해 주세요!");
-		}
-	}
-
 	$("#nname_overlay").click(function() {
 		var nname = $("input[name='nname']").val();
-		var overChk = false;
+		//overChk = false;
 		console.log(nname);
 		if (nname != "") {
 			$.ajax({
@@ -299,5 +200,31 @@ if(msg != ""){
 			$("input[name='nname']").focus();
 		}
 	});
+	
+	/*글자수 제한*/
+	 $('#intro').on('keyup', function() {
+	        $('#intro_cnt').html("("+$(this).val().length+" / 1000)");
+	 
+	        if($(this).val().length > 1000) {
+	            $(this).val($(this).val().substring(0, 1000));
+	            $('#intro_cnt').html("(1000 / 1000)");
+	        }
+	    });
+	
+	/*버튼 submit 제한*/
+	var nname = "${userUpdate.u_nname}";
+	
+	 $("#updateBtn").click(function(){
+		 if(nname == $("input[name='nname']").val()){
+			 overChk=true;
+		 }
+		 
+		 if(overChk==false){
+	         alert("닉네임 중복체크를 해주세요");
+	      }else{
+	         $("#userUpdate").submit();
+	      }
+		
+	   });
 </script>
 </html>

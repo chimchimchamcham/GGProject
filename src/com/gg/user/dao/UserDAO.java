@@ -70,24 +70,24 @@ public class UserDAO {
 	}
 
 	public boolean nNameOverlay(String nname) {
-		boolean success = false;
+	      boolean success = false;
 
-		sql = "SELECT u_nname FROM userInfo WHERE u_nname = ?";
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, nname);
-			rs = ps.executeQuery();
+	      sql = "SELECT u_nname FROM userInfo WHERE u_nname = ?";
+	      try {
+	         ps = conn.prepareStatement(sql);
+	         ps.setString(1, nname);
+	         rs = ps.executeQuery();
 
-			success = rs.next();
-		} catch (SQLException e) {
+	         success = rs.next();
+	      } catch (SQLException e) {
 
-			e.printStackTrace();
-		} finally {
-			System.out.println("중복 여부 : " + success);
-			// resClose()는 service에서 실행한다.
-		}
-		return success;
-	}
+	         e.printStackTrace();
+	      } finally {
+	         System.out.println("중복 여부 : " + success);
+	         // resClose()는 service에서 실행한다.
+	      }
+	      return success;
+	   }
 
 	public boolean join(GGDto dto) throws Exception {
 
@@ -309,5 +309,6 @@ public void updateFileName(String delFileName, GGDto dto) {
 		System.out.println("success : " + success);
 		return success;
 	}
+
 
 }
