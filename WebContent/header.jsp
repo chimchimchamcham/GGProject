@@ -131,6 +131,7 @@ header {
 	top: 10px;
 	cursor: pointer;
 	transition: 0.5s;
+	
 }
 
 #search input {

@@ -325,13 +325,8 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 			error:function(e){
 				console.log(e);
 			}
-<<<<<<< HEAD
 		});			
-		
-		
-=======
-		});	
->>>>>>> c92e623938a1b5555da5bb899b88988a6830c6fb
+
 		}
 			//데이터 가져와서 뿌려주는 함수 판매 리스트
 			function soled_list(soldlist){	
