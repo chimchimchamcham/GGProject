@@ -52,7 +52,6 @@ public class UploadService {
 				File newName = new File(savePath + i_newName);
 				oldName.renameTo(newName);
 				dto.setI_newName(i_newName);
-				
 			}
 			
 		} catch (IOException e) {

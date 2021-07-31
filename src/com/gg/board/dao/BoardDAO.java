@@ -414,8 +414,9 @@ public class BoardDAO {
 	public int writeSale(GGDto dto) {
 
 		String sql = "INSERT INTO post(p_no,p_id,p_title,p_content,p_tm,p_view,p_likeCount,p_blindYN,p_code) VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
-		int success = 0;
+		int checker = 0;
 		int p_no = 0;
+		boolean success = false;
 		try {
 			ps = conn.prepareStatement(sql, new String[] { "p_no" });
 			ps.setString(1, dto.getP_id());
@@ -424,9 +425,12 @@ public class BoardDAO {
 			ps.setString(4, "N");
 			ps.setString(5, dto.getP_code());
 
-			success += ps.executeUpdate();
-			System.out.println("게시판 테이블 작성 성공: " + success);
-
+			checker += ps.executeUpdate();
+			if(checker == 1) {
+				success = true;
+				System.out.println("게시판 테이블 작성 성공: " + success);
+				success = false;
+			}
 			rs = ps.getGeneratedKeys();
 
 			if (rs.next()) {
@@ -439,21 +443,27 @@ public class BoardDAO {
 				ps.setString(4, dto.getP_id());
 				ps.setString(5, dto.getS_code());
 
-				success += ps.executeUpdate();
-				System.out.println("판매 테이블 작성 성공: " + success);
-				if (success==2) {
+				checker += ps.executeUpdate();
+
+				if (checker ==2) {
+					success = true;
+					System.out.println("판매 테이블 작성 성공: " + success);
+					success = false;
+					
 					sql = "INSERT INTO n_sale VALUES(?,?,?)";
 					ps = conn.prepareStatement(sql);
 					ps.setInt(1, p_no);
 					ps.setInt(2, dto.getNs_pr());
 					ps.setString(3, "NS_001");
 
-					success += ps.executeUpdate();
-					System.out.println("일반 판매 테이블 작성 성공: " + success);
+					checker += ps.executeUpdate();
+					
 				}
-				if (success ==3) {
+				if (checker ==3) {
+					success = true;
+					System.out.println("일반 판매 테이블 작성 성공: " + success);
 					System.out.println("판매글 작성 번호 : " + p_no);
-					System.out.println("판매글 작성 성공");
+					System.out.println("판매글 작성 성공 ");
 				}
 			}
 
@@ -461,13 +471,14 @@ public class BoardDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return success;
+		return p_no;
 	}
 
-	public boolean writeCommu(GGDto dto) throws SQLException {
-
+	public int writeCommu(GGDto dto) throws SQLException {
+		
 		boolean success = false;
 		int checker = 0;
+		int p_no = 0;
 
 		String sql = "INSERT INTO post VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?,?)";
 
@@ -482,13 +493,13 @@ public class BoardDAO {
 		rs = ps.getGeneratedKeys();
 		if (checker > 0) {
 			rs.next();
-			int pk = rs.getInt(1);
 			success = true;
-			System.out.println("글 작성 번호 : " + pk);
-			System.out.println("글 작성 성공");
+			p_no = rs.getInt(1);
+			System.out.println("글 작성 번호 : " + p_no);
+			System.out.println("글 작성 성공 여부 :"+ success);
 		}
 
-		return success;
+		return p_no;
 	}
 
 	public int writeTrade(GGDto dto) throws SQLException {

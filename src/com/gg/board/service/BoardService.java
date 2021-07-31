@@ -278,8 +278,8 @@ public void list(String userid, int listwhatadd) throws IOException {
 		
 	}
 
-	public boolean writeCommu() {
-		boolean success= false;
+	public int writeCommu() {
+		int p_no= -123;
 		
 		String p_id = (String)req.getSession().getAttribute("loginId");
 		String p_title = req.getParameter("title");
@@ -298,7 +298,7 @@ public void list(String userid, int listwhatadd) throws IOException {
 		dto.setP_code(p_code);
 		
 		try {
-			 success =  dao.writeCommu(dto);
+			 p_no =  dao.writeCommu(dto);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -307,7 +307,7 @@ public void list(String userid, int listwhatadd) throws IOException {
 		}
 		
 		
-		return success;
+		return p_no;
 	}
 
 	public int writeTrade() {
@@ -384,9 +384,9 @@ public void list(String userid, int listwhatadd) throws IOException {
 		dto.setNs_pr(Integer.parseInt(ns_pr));
 		dto.setP_code(p_code);
 
-		int success = dao.writeSale(dto);
+		int p_no = dao.writeSale(dto);
 		 
-		return success;
+		return p_no;
 	}
 
 

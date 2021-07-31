@@ -25,6 +25,19 @@
 <!--------------//////////////////////////////------------->
 
 <style>
+#mainHeader {
+	z-index: 1000;
+}
+
+#main {
+	background-color: gray;
+	width: 1200px;
+	height: 2000px;
+	position: absolute;
+	top: 150px;
+	z-index: -1;
+}
+
 #wrap {
 	width: 1200px;
 	margin: 0 auto;
@@ -42,23 +55,28 @@ console.log("오늘 날짜 : ",currDate);
 </script>
 </head>
 <body>
-	<div id="wrap">
-		<h2>글쓰기</h2>
-		<!--글쓰기 폼 선택 버튼-->
-		<div id="selectForm">
-			<button id="sale">판매</button>
-			<button id="trade">경매</button>
-			<button id="community">커뮤니티</button>
-		</div>
+	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
+	<div id="main">
+
+		<div id="wrap">
+			<h2>글쓰기</h2>
+			<!--글쓰기 폼 선택 버튼-->
+			<div id="selectForm">
+				<button id="sale">판매</button>
+				<button id="trade">경매</button>
+				<button id="community">커뮤니티</button>
+			</div>
 			<div id="communityForm">
 				<p>
 					<input type="text" name="title" value="" placeholder="제목을 입력해주세요"
 						style='width: "1000px"' />
 				</p>
-					<form method='POST' enctype="multipart/form-date" id='uploadForm'>
-					<label for='test'><img src="img/plus.png" id="preview-image" width="100px" height="100px"style="border: solid 1px gray" /></label> 
-					<input type="file" name="imgFile" style="display: none" id="test" />
-					</form>
+				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
+					<label for='test'><img src="img/plus.png"
+						id="preview-image" width="100px" height="100px"
+						style="border: solid 1px gray" /></label> <input type="file"
+						name="imgFile" style="display: none" id="test" />
+				</form>
 				<p>
 					<textarea name="content" rows="30" cols="100" placeholder="내용입력"
 						style="overflow-y: scroll"></textarea>
@@ -119,8 +137,8 @@ console.log("오늘 날짜 : ",currDate);
 				<input type="button" id="submit" value="등록" /> <input type="button"
 					onclick="location.href='./index.jsp'" value="취소" />
 			</div>
+		</div>
 	</div>
-
 </body>
 <script>
 	// 예약
@@ -144,9 +162,8 @@ console.log("오늘 날짜 : ",currDate);
     	maxDate.setDate(maxDate.getDate()+7);
     	document.getElementById('to').max = maxDate.toISOString().substring(0,10);
     });
-	////////////////////////////////////////////////////////////
-	
-	
+	/////////////////////////////////////
+	var success = false;
   	//초기상태 - 판매폼만 보이는 상태
 	//폼 선택 버튼  클릭시 해당 값이 달라짐
 	var param = {};
@@ -199,13 +216,11 @@ console.log("오늘 날짜 : ",currDate);
 	//등록버튼 클릭시 
 	$("#submit").click(function() {
 		
-		// 클릭 시 폼 데이터를 가져와야 한다.
-		
+		// 클릭 시 폼 데이터를 가져와야 한다.		
 		var data = $("#test")[0].files[0]; // input type='file'의 id 인 test 에서 첫 번째 파일데이터를 가져온다.
 		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
 		console.log(data);
-		
-		
+
 		
 		if (param.select == "P004") { //커뮤니티글 선택시
 			/* $("form input").each(function(idx,item){
@@ -224,9 +239,12 @@ console.log("오늘 날짜 : ",currDate);
 				data : param,
 				dataType : 'JSON',
 				success : function(data) {
-					if (data.success) {
+					if (data.p_no > 0) {
 						FileUpload();
 						alert("글 작성 성공했습니다.");
+						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
+						location.href = "./salesDetail?p_no="+data.p_no;
+						
 					} else {
 						alert("커뮤니티 글 작성을 실패하였습니다! ");
 					}
@@ -235,7 +253,7 @@ console.log("오늘 날짜 : ",currDate);
 					console.log(e);
 				}
 
-			})
+			});
 			
 
 		} else if (param.select == "P002") { //판매글 선택시
@@ -253,10 +271,10 @@ console.log("오늘 날짜 : ",currDate);
 				data : param,
 				dataType : 'JSON',
 				success : function(data) {
-					if (data.success) {
+					if (data.p_no>0) {
+						FileUpload();
 						alert("판매글 작성 성공했습니다.");
-						location.href = 'index.jsp';
-
+						location.href="./salesDetail?p_no="+data.p_no;
 					} else {
 						alert("판매 글 작성을 실패하였습니다! ");
 					}
@@ -292,14 +310,15 @@ console.log("오늘 날짜 : ",currDate);
 					data : param,
 					dataType : 'JSON',
 					success : function(data) {
-						console.log(data.p_no);
-						form_data.append("p_no",data.p_no);
-						console.log("data : ",data);
+						console.log("글 작성 번호 :",data.p_no);
+						form.append("p_no",data.p_no);
+						FileUpload();
+						//향후 변경사항 경매상세보기 만들고 보내주는 페이지 편집
+						location.href='./salesDetail?p_no='+data.p_no;
 					},
 					error : function(e) {
 						console.log(e);
 					}
-
 				})
 			}
 
@@ -329,9 +348,9 @@ console.log("오늘 날짜 : ",currDate);
 	inputImage.addEventListener("change", e => {
 	    readImage(e.target);
 	});
+	
 	// ajax로 파일 보내기 formdata()
 	function FileUpload(){
-		
 		$.ajax({
 			type : 'POST',
 			url : 'upload',
@@ -341,20 +360,16 @@ console.log("오늘 날짜 : ",currDate);
 			cache:false,
 			processData:false,
 			success : function(data) {
-				if (data.success) {
-					console.log("사진 업로드 완료.");
-					
-
-				} else {
-					console.log("사진 업로드 실패.");
+				if(data!=null){ // 들어오는게 String[] 이라 null인지만 판단.
+					alert("사진 등록 성공");
+				}else{
+					alsert("사진 등록 실패");
 				}
 			},
 			error : function(e) {
 				console.log(e);
 			}
-
 		});
-		
 	};
 	
 </script>
