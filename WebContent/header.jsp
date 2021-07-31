@@ -102,7 +102,7 @@ body {
 	background-color: #fff;
 }
 
-header {
+.Hheader {
 	width: 1200px;
 	height: 90px;
 	position: fixed;
@@ -178,7 +178,7 @@ margin-left:7px;
 
 
 /*메인메뉴*/
-nav {
+.header_nav {
 	width: 1200px;
 	position: fixed;
 	height: 40px;
@@ -189,28 +189,28 @@ nav {
 	background-color: #fff;
 }
 
-nav ul#dropdown {
+.header_nav ul#dropdown {
 	box-sizing: border-box;
 	margin: 0px auto;
 	width: 1000px;
 	background-color: #fff;
 }
 
-nav ul#dropdown li {
+.header_nav ul#dropdown li {
 	float: left;
 	list-style: none;
 	margin: 0px auto;
 	background-color: #fff;
 }
 
-nav ul#dropdown li a {
+.header_nav ul#dropdown li a {
 	color: #000;
 	padding: 0 82px;
 	text-decoration: none;
 	display: block;
 }
 
-nav ul#dropdown li a:hover {
+.header_nav ul#dropdown li a:hover {
 	color: gray;
 }
 
@@ -224,12 +224,12 @@ nav ul#dropdown li a:hover {
 	z-index: 100;
 }
 
-nav ul#dropdown li ul li {
+.header_nav ul#dropdown li ul li {
 	float: none;
 	display: inline;
 }
 
-nav ul#dropdown li ul li a {
+.header_nav ul#dropdown li ul li a {
 	width: 120px;
 	height: 30px;
 	padding: 10px 20px 0px 10px;
@@ -239,12 +239,12 @@ nav ul#dropdown li ul li a {
 	text-align: center;
 }
 
-nav ul#dropdown li ul li a:hover {
+.header_nav ul#dropdown li ul li a:hover {
 	background-color: #ffffff;
 	background-color: rgba(255, 255, 255, 0.9);
 }
 
-nav ul#dropdown:after {
+.header_nav ul#dropdown:after {
 	content: "";
 	display: block;
 	clear: both;
@@ -277,7 +277,7 @@ nav ul#dropdown:after {
 </style>
 <body>
 	<div id="hWrap">
-		<header>
+		<header class="Hheader">
 			<div>
 				<div id="logo"><a href="index.jsp"><img src="img/logo2.png" width="80"></a></div>
 				<div id="search">
@@ -306,7 +306,7 @@ nav ul#dropdown:after {
 				</div>
 			</div>
 		</header>
-		<nav>
+		<nav class="header_nav">
 			<div id="navWrap">
 				<ul id="dropdown">
 					<li><a href="#">판매</a>

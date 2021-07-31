@@ -9,6 +9,18 @@
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
+#mainHeader{
+	z-index: 1000;
+}
+#main {
+	background-color: gray;
+	width:1200px;
+	height:auto;
+	position: absolute;
+	top:150px;
+	z-index: -1;
+}
+
 #navWrap2 {
    width: 1000px;
    height: 60px;
@@ -380,6 +392,8 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 			
 </script>
 <body>
+<div id="mainHeader"><jsp:include page="header.jsp" /></div>
+	<div id="main">
 	<h2>마이페이지</h2>
 	<div id="div1">
 		<table style="text-align: center; width: 40%;">
@@ -452,7 +466,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
    <div id="want" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
    <div id="like" style="background-color:purple; padding:20px;">좋아요목록입니다.</div>
    <div id="alarm" style="background-color:lime; padding:20px;">신고목록입니다.</div>
-	
+	</div>
 </body>
 <script type="text/javascript">
 
