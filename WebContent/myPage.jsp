@@ -394,10 +394,8 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 <body>
 <div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
-<c:choose>
-	
 <!-- true일때 실행되는 마이페이지 -->
-	<c:when test="${myPageInfo.myYN}">
+	<c:if test ="${myPageInfo.myYN eq 'true'}">
 	<h2>마이페이지</h2>
 	<div id="div1">
 		<table style="text-align: center; width: 40%;">
@@ -470,10 +468,10 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
    <div id="want" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
    <div id="like" style="background-color:purple; padding:20px;">좋아요목록입니다.</div>
    <div id="alarm" style="background-color:lime; padding:20px;">신고목록입니다.</div>
-</c:when> --%>
+</c:if>
 
 <!-- false일때 실행되는 타인 프로필 -->
-<c:otherwise>
+	<c:if test ="${myPageInfo.myYN eq 'false'}">
 	<h2>${myPageInfo.u_nname}님의 프로필</h2>
 	<div id="div1">
 		<table style="text-align: center; width: 40%;">
@@ -546,9 +544,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
    <div id="want" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
    <div id="like" style="background-color:purple; padding:20px;">좋아요목록입니다.</div>
    <div id="alarm" style="background-color:lime; padding:20px;">신고목록입니다.</div>
-</c:otherwise>
-   
-   </c:choose>
+</c:if>
    
 	</div> <!-- div main end -->
 </body>
