@@ -325,13 +325,9 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 			error:function(e){
 				console.log(e);
 			}
-<<<<<<< HEAD
+
 		});			
 		
-		
-=======
-		});	
->>>>>>> c92e623938a1b5555da5bb899b88988a6830c6fb
 		}
 			//데이터 가져와서 뿌려주는 함수 판매 리스트
 			function soled_list(soldlist){	
@@ -339,12 +335,12 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 			var content="";
 			
 			soldlist.forEach(function(item,idx){
-				console.log(idx,item);
+				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
-				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg'></div>";
+				content += "<div class='img-zoon'><img src="+item.i_newName+"></div>";
 				content += "<div class='dretion-zoon'>";
-				//content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no="+item.p_no+">"+item.p_title+"</a>"+"</div>";
-				content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no=11>"+item.p_title+"</a>"+"</div>";
+				content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no="+item.p_no+">"+item.p_title+"</a>"+"</div>";
+				//content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no=11>"+item.p_title+"</a>"+"</div>";
 				content += "	<div class='itempoint'>"+item.ns_pr+"p"+"</div>";
 				content += "</div>";
 				content += "<div class='love-time'>";
