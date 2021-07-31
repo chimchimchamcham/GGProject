@@ -38,7 +38,7 @@ public class UploadService {
 			
 			String p_no = multi.getParameter("p_no");
 			if (p_no != null) {
-				System.out.println("p_no : " + p_no);
+				System.out.println("사진 p_no : " + p_no);
 				dto.setP_no(Integer.parseInt(p_no));
 			}
 			
