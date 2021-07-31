@@ -168,6 +168,7 @@
 		
 		
 		auctionlistCall($index1);
+		
 		$button1.removeClass('clicked');
 		$index_button.addClass('clicked');
 		
@@ -176,7 +177,7 @@
     
     function auctionlistCall($index1){
 		
-		
+		console.log("$index1:"+$index1);
 		$.ajax({
 			type:'post',
 			url:'./auction_list',
@@ -185,7 +186,7 @@
 			success:function(data){
 				console.log("data:"+data);
 				if(data.list != null){
-					action_list(data.list);
+					action_list(data.auction_list);
 				}
 			},
 			error:function(e){
