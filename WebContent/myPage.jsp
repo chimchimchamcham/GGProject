@@ -396,6 +396,10 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 <body>
 <div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
+<c:choose>
+	
+<!-- true일때 실행되는 마이페이지 -->
+	<c:when test="${myPageInfo.myYN}">
 	<h2>마이페이지</h2>
 	<div id="div1">
 		<table style="text-align: center; width: 40%;">
@@ -468,7 +472,87 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
    <div id="want" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
    <div id="like" style="background-color:purple; padding:20px;">좋아요목록입니다.</div>
    <div id="alarm" style="background-color:lime; padding:20px;">신고목록입니다.</div>
+</c:when> --%>
+
+<!-- false일때 실행되는 타인 프로필 -->
+<c:otherwise>
+	<h2>${myPageInfo.u_nname}님의 프로필</h2>
+	<div id="div1">
+		<table style="text-align: center; width: 40%;">
+			<tr>
+				<td>
+			<c:if test="${myPageInfo.u_newName  eq 'default-profile.png'}">
+				<img src="./img/default-profile.png" width="150px"/>
+			</c:if>
+			<c:if test="${myPageInfo.u_newName  ne 'default-profile.png'}">
+				<img src="/ProfilePhoto/${myPageInfo.u_newName }" width="150px"/>
+			</c:if>
+			</tr>
+			<tr>
+				<td>${myPageInfo.u_nname}</td>
+			</tr>
+			<tr>
+				<td>${myPageInfo.u_addr }&nbsp;${myPageInfo.u_detailAddr }</td>
+			</tr>
+			<tr>
+				<td>이름 : ${myPageInfo.u_name }</td>
+			</tr>
+			<tr>
+				<td>이메일 : ${myPageInfo.u_email }</td>
+			</tr>
+			<tr>
+				<td>전화번호 : ${myPageInfo.u_phone }</td>
+			</tr>
+			<tr>
+				<td><button onclick="location.href='./userUpdateForm?id=${loginId}'">회원정보 수정</button></td>
+			</tr>
+		</table>
+
+		<table style="width: 60%;">
+			<tr>
+				<td>현재 포인트</td>
+				<td>${myPageInfo.pnt_point }P</td>	
+				<td><input type="button" value="충전" onclick="showPopup();" /></td>
+			</tr>
+			<tr>
+				<td>평점</td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<td colspan="3">자기소개</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+					<p>${myPageInfo.u_intro}</p>
+				</td>
+			</tr>
+		</table>
 	</div>
+	
+	   <div id="twoButton">
+      <button>판매목록	</button>
+      <button>경매목록</button> 
+      <button>구매목록</button>
+      <button>커뮤니티</button> 
+      <button>팔로우</button>
+      <button>구매요청</button> 
+      <button>좋아요</button> 
+      <button>신고목록</button>
+   </div>
+   
+   <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
+   <div id="trade" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
+   <div id="sell" style="background-color:yellow; padding:20px;">구매목록입니다.</div>
+   <div id="commu" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
+   <div id="follow" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
+   <div id="want" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
+   <div id="like" style="background-color:purple; padding:20px;">좋아요목록입니다.</div>
+   <div id="alarm" style="background-color:lime; padding:20px;">신고목록입니다.</div>
+</c:otherwise>
+   
+   </c:choose>
+   
+	</div> <!-- div main end -->
 </body>
 <script type="text/javascript">
 
