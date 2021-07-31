@@ -184,7 +184,7 @@ console.log("오늘 날짜 : ",currDate);
 		console.log(param.select);
 		$("#tradeForm,#reservForm").show();
 
-		$("commuCategory,#salePr").hide();
+		$("#commuCategory,#salePr").hide();
 
 	});
 
@@ -200,7 +200,7 @@ console.log("오늘 날짜 : ",currDate);
 	$("#sale").click(function() {
 		param.select = "P002";
 		console.log(param.select);
-		 
+		$("#commuCategory").hide();
 		$("#saleForm,#salePr").show();
 	});
 
@@ -241,6 +241,7 @@ console.log("오늘 날짜 : ",currDate);
 				dataType : 'JSON',
 				success : function(data) {
 					if (data.p_no > 0) {
+						form.append("p_no",data.p_no);
 						FileUpload();
 						alert("글 작성 성공했습니다.");
 						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
@@ -253,10 +254,9 @@ console.log("오늘 날짜 : ",currDate);
 				error : function(e) {
 					console.log(e);
 				}
-
+				
 			});
 			
-
 		} else if (param.select == "P002") { //판매글 선택시
 			param.title = $("input[name='title']").val();
 			param.content = $("textarea[name='content']").val();
@@ -273,6 +273,7 @@ console.log("오늘 날짜 : ",currDate);
 				dataType : 'JSON',
 				success : function(data) {
 					if (data.p_no>0) {
+						form.append("p_no",data.p_no);
 						FileUpload();
 						alert("판매글 작성 성공했습니다.");
 						location.href="./salesDetail?p_no="+data.p_no;
