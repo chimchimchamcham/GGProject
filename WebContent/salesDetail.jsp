@@ -7,17 +7,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-    #mainHeader{
-	z-index: 1000;
-	}
-	#main {
-		background-color: gray;
-		width:1200px;
-		height:auto;
-		position: absolute;
-		top:150px;
-		z-index: -1;
-	}
     
     /* *{margin:0;padding:0;border-width:0;list-style-type:none;}
     body{width:100%;background-color:white;}
@@ -159,8 +148,6 @@
 </script>
 </head>
 <body>
-	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
-	<div id="main">
     <div id="wrap">
         <section>
             <div id="sectionWrap">
@@ -236,7 +223,6 @@
                 </article>
             </div>
         </section>
-    </div>
     </div>
 </body>
 <script>
