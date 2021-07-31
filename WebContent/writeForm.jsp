@@ -328,6 +328,11 @@ console.log("오늘 날짜 : ",currDate);
 	const inputImage = document.getElementById("test");
 	inputImage.addEventListener("change", e => {
 	    readImage(e.target);
+<<<<<<< HEAD
+	})
+	
+	////
+=======
 	});
 	// ajax로 파일 보내기 formdata()
 	function FileUpload(){
@@ -358,6 +363,7 @@ console.log("오늘 날짜 : ",currDate);
 		});
 		
 	};
+>>>>>>> 7ea3692e0081cfec86ec87fb4f2194b93b207f09
 	
 </script>
 </html>
