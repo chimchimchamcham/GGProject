@@ -277,12 +277,7 @@ public int userUpdate(String id) {
 				//기존 파일을 지우고
 				upload.del(delFileName);
 			}
-
-
-			
 			dao.resClose();
-
-		
 		return success;
 	}
 
