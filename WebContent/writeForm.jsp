@@ -183,7 +183,7 @@ console.log("오늘 날짜 : ",currDate);
 	$("#sale").click(function() {
 		param.select = "P002";
 		console.log(param.select);
-		$("#tradeForm,#reservForm,#commuCategory").hide();
+		 
 		$("#saleForm,#salePr").show();
 	});
 
@@ -306,22 +306,6 @@ console.log("오늘 날짜 : ",currDate);
 						console.log(data.p_no);
 						form_data.append("p_no",data.p_no);
 						console.log("data : ",data);
-						$.ajax({
-							 type: "POST",
-							 enctype: 'multipart/form-data',
-						     url: "upload",
-						     data: form_data,
-						     processData: false,
-						     contentType: false,
-						     cache: false,
-						     success : function(data) {
-								console.log(data.success);
-						},error : function(e) {
-							console.log(e);
-						}
-
-					})
-						
 					},
 					error : function(e) {
 						console.log(e);
@@ -350,12 +334,14 @@ console.log("오늘 날짜 : ",currDate);
 	        // reader가 이미지 읽도록 하기
 	        reader.readAsDataURL(input.files[0])
 	    }
-	}
+	};
 	// input file에 change 이벤트 부여
 	const inputImage = document.getElementById("test")
 	inputImage.addEventListener("change", e => {
 	    readImage(e.target)
 	})
+	
+	////
 	
 </script>
 </html>
