@@ -292,9 +292,9 @@ console.log("오늘 날짜 : ",currDate);
 					data : param,
 					dataType : 'JSON',
 					success : function(data) {
-						console.log("글 작성 번호 :",data.p_no);
-						form.append("p_no",data.p_no);
-						FileUpload();
+						console.log(data.p_no);
+						form_data.append("p_no",data.p_no);
+						console.log("data : ",data);
 					},
 					error : function(e) {
 						console.log(e);
@@ -319,7 +319,7 @@ console.log("오늘 날짜 : ",currDate);
 	        reader.onload = e => {
 	            const previewImage = document.getElementById("preview-image");
 	            previewImage.src = e.target.result;
-	        }
+	        };
 	        // reader가 이미지 읽도록 하기
 	        reader.readAsDataURL(input.files[0]);
 	    }
@@ -328,11 +328,6 @@ console.log("오늘 날짜 : ",currDate);
 	const inputImage = document.getElementById("test");
 	inputImage.addEventListener("change", e => {
 	    readImage(e.target);
-<<<<<<< HEAD
-	})
-	
-	////
-=======
 	});
 	// ajax로 파일 보내기 formdata()
 	function FileUpload(){
@@ -346,13 +341,11 @@ console.log("오늘 날짜 : ",currDate);
 			cache:false,
 			processData:false,
 			success : function(data) {
-				if(data.success == "true") {
-					console.log("data : ", data[0]);
-					console.log("data.success :",data.success);
+				if (data.success) {
 					console.log("사진 업로드 완료.");
+					
+
 				} else {
-					console.log("data : ", data);
-					console.log("data.success :",data.success);
 					console.log("사진 업로드 실패.");
 				}
 			},
@@ -363,7 +356,6 @@ console.log("오늘 날짜 : ",currDate);
 		});
 		
 	};
->>>>>>> 7ea3692e0081cfec86ec87fb4f2194b93b207f09
 	
 </script>
 </html>
