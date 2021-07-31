@@ -200,7 +200,7 @@ console.log("오늘 날짜 : ",currDate);
 	$("#sale").click(function() {
 		param.select = "P002";
 		console.log(param.select);
-		 
+		$("#commuCategory").hide();
 		$("#saleForm,#salePr").show();
 	});
 
