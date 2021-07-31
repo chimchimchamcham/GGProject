@@ -476,7 +476,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 	<div id="div1">
 		<table style="text-align: center; width: 40%;">
 			<tr>
-				<td>
+				<td colspan="2">
 			<c:if test="${myPageInfo.u_newName  eq 'default-profile.png'}">
 				<img src="./img/default-profile.png" width="150px"/>
 			</c:if>
@@ -485,37 +485,21 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 			</c:if>
 			</tr>
 			<tr>
-				<td>${myPageInfo.u_nname}</td>
+				<td colspan="2">${myPageInfo.u_nname}</td>
 			</tr>
 			<tr>
-				<td>${myPageInfo.u_addr }&nbsp;${myPageInfo.u_detailAddr }</td>
+				<td colspan="2">${myPageInfo.u_addr }</td>
 			</tr>
 			<tr>
-				<td>이름 : ${myPageInfo.u_name }</td>
-			</tr>
-			<tr>
-				<td>이메일 : ${myPageInfo.u_email }</td>
-			</tr>
-			<tr>
-				<td>전화번호 : ${myPageInfo.u_phone }</td>
-			</tr>
-			<tr>
-				<td><button onclick="location.href='./userUpdateForm?id=${loginId}'">회원정보 수정</button></td>
+			<td><button>+팔로우</button></td>
+			<td><button>쪽지</button></td>
 			</tr>
 		</table>
 
 		<table style="width: 60%;">
 			<tr>
-				<td>현재 포인트</td>
-				<td>${myPageInfo.pnt_point }P</td>	
-				<td><input type="button" value="충전" onclick="showPopup();" /></td>
-			</tr>
-			<tr>
-				<td>평점</td>
-				<td colspan="2"></td>
-			</tr>
-			<tr>
-				<td colspan="3">자기소개</td>
+				<td>${myPageInfo.u_nname}님의 자기소개</td>
+				<td><button>신고하기</button></td>
 			</tr>
 			<tr>
 				<td colspan="3">
