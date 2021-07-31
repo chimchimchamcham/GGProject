@@ -50,82 +50,80 @@ console.log("오늘 날짜 : ",currDate);
 			<button id="trade">경매</button>
 			<button id="community">커뮤니티</button>
 		</div>
-		<div id="communityForm">
-			<p>
-				<input type="text" name="title" value="" placeholder="제목을 입력해주세요"
-					style='width: "1000px"' />
-			</p>
-		<form method="post" enctype="multipart/form-data" id="uploadForm">
-				<label for='test'><img src="img/plus.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" /></label>
-				 <input type="file" name="imgFile" style="display: none" id="test" />
-		</form>
-
-			<p>
-				<textarea name="content" rows="30" cols="100" placeholder="내용입력"
-					style="overflow-y: scroll"></textarea>
-			</p>
-			<p id="commuCategory">
-				카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="commuCat">
-					<c:forEach items="${commuCat }" var="CommuCategory">
-						<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
-					</c:forEach>
-				</select>
-			</p>
-		</div>
-
-		<div id="saleForm">
-			<p id="salePr">
-				<input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point
-			</p>
-			<p>
-				거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
-					value="Y">택배<input type="radio" name="deliveryYN" value="N">직거래
-			</p>
-			<p id="category">
-				카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
-					<c:forEach items="${saleCat }" var="SaleCategory">
-						<option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
-					</c:forEach>
-				</select>
-			</p>
-			<p>
-				공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
-					value="N">전체공개 <input type="radio" name="disclosure"
-					value="Y">팔로우한정
-			</p>
-		</div>
-		<!--경매선택시 하단부분-->
-		<div id="tradeForm">
-			<p>경매시간 설정</p>
-
-			<!--예약 경매 버튼 클릭시-->
-			<div id="reservForm">
+			<div id="communityForm">
 				<p>
-					<input type="date" id="from" name="from" style="width: 120px;" > ~ 
-					<input type="date" id="to" name="to" style="width: 120px;" >
+					<input type="text" name="title" value="" placeholder="제목을 입력해주세요"
+						style='width: "1000px"' />
 				</p>
-				<!--아래에 선택 일자 표시-->
-				<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
+					<form method='POST' enctype="multipart/form-date" id='uploadForm'>
+					<label for='test'><img src="img/plus.png" id="preview-image" width="100px" height="100px"style="border: solid 1px gray" /></label> 
+					<input type="file" name="imgFile" style="display: none" id="test" />
+					</form>
+				<p>
+					<textarea name="content" rows="30" cols="100" placeholder="내용입력"
+						style="overflow-y: scroll"></textarea>
+				</p>
+				<p id="commuCategory">
+					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="commuCat">
+						<c:forEach items="${commuCat }" var="CommuCategory">
+							<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
+						</c:forEach>
+					</select>
+				</p>
 			</div>
-			<p>
-				시작가격&nbsp;<input type="text" name="startPrice" value=""
-					placeholder="시작가격 입력(숫자입력)" />&nbsp;Point
-			</p>
-			<p>
-				즉결가격&nbsp;<input type="text" name="promptPrice" value=""
-					placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
-			</p>
-		</div>
-		<div id="twoButton">
-			<input type="button" id="submit" value="등록" /> <input type="button"
-				onclick="location.href='./index.jsp'" value="취소" />
-		</div>
+			<div id="saleForm">
+				<p id="salePr">
+					<input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point
+				</p>
+				<p>
+					거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
+						value="Y">택배<input type="radio" name="deliveryYN"
+						value="N">직거래
+				</p>
+				<p id="category">
+					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
+						<c:forEach items="${saleCat }" var="SaleCategory">
+							<option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
+						</c:forEach>
+					</select>
+				</p>
+				<p>
+					공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
+						value="N">전체공개 <input type="radio" name="disclosure"
+						value="Y">팔로우한정
+				</p>
+			</div>
+			<!--경매선택시 하단부분-->
+			<div id="tradeForm">
+				<p>경매시간 설정</p>
 
+				<!--예약 경매 버튼 클릭시-->
+				<div id="reservForm">
+					<p>
+						<input type="date" id="from" name="from" style="width: 120px;">
+						~ <input type="date" id="to" name="to" style="width: 120px;">
+					</p>
+					<!--아래에 선택 일자 표시-->
+					<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
+				</div>
+				<p>
+					시작가격&nbsp;<input type="text" name="startPrice" value=""
+						placeholder="시작가격 입력(숫자입력)" />&nbsp;Point
+				</p>
+				<p>
+					즉결가격&nbsp;<input type="text" name="promptPrice" value=""
+						placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
+				</p>
+			</div>
+			<div id="twoButton">
+				<input type="button" id="submit" value="등록" /> <input type="button"
+					onclick="location.href='./index.jsp'" value="취소" />
+			</div>
 	</div>
 
 </body>
 <script>
-	
+	// 예약
 	// 경매 예약 시작 시간 초기 설정 (오늘)
 	document.getElementById('from').value = currDate;
 	// 경매 예약 시작 최소 시간 설정 (오늘)
@@ -146,10 +144,11 @@ console.log("오늘 날짜 : ",currDate);
     	maxDate.setDate(maxDate.getDate()+7);
     	document.getElementById('to').max = maxDate.toISOString().substring(0,10);
     });
+	////////////////////////////////////////////////////////////
 	
-  //초기상태 - 판매폼만 보이는 상태
+	
+  	//초기상태 - 판매폼만 보이는 상태
 	//폼 선택 버튼  클릭시 해당 값이 달라짐
-    
 	var param = {};
 	param.userId = "${sessionScope.loginId}";
  	
@@ -194,29 +193,20 @@ console.log("오늘 날짜 : ",currDate);
 
 	});
 	
-	//사진 담을 객체
-	var form = $('#uploadForm')[0];
-	
-   var form_data = new FormData(form);
-	console.log(form_data);
-	//data.append($('#test').prop('files')[0]);
+	// 전역변수로 설정해주어야 한다.
+	var form = new FormData();
 	
 	//등록버튼 클릭시 
-	$("#submit2").click(function(){
-		console.log(form);
-		console.log(data);
-		//console.log($("form input"));
-	 /* var param = {};
-		$("form input").each(function(idx,item){
-			//console.log(item)
-			param[$(item).attr("name")]=$(item).val();
-		});
-		param.content = $("textarea").val();
-		console.log(param); */ 
-	});
-	
 	$("#submit").click(function() {
-
+		
+		// 클릭 시 폼 데이터를 가져와야 한다.
+		
+		var data = $("#test")[0].files[0]; // input type='file'의 id 인 test 에서 첫 번째 파일데이터를 가져온다.
+		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
+		console.log(data);
+		
+		
+		
 		if (param.select == "P004") { //커뮤니티글 선택시
 			/* $("form input").each(function(idx,item){
 				//console.log(item)
@@ -235,9 +225,8 @@ console.log("오늘 날짜 : ",currDate);
 				dataType : 'JSON',
 				success : function(data) {
 					if (data.success) {
+						FileUpload();
 						alert("글 작성 성공했습니다.");
-						location.href = 'index.jsp';
-
 					} else {
 						alert("커뮤니티 글 작성을 실패하였습니다! ");
 					}
@@ -276,7 +265,7 @@ console.log("오늘 날짜 : ",currDate);
 					console.log(e);
 				}
 
-			})
+			});
 		} else if (param.select == "P001") {//경매글 선택시
 			param.title = $("input[name='title']").val();// 제목
 			param.content = $("textarea[name='content']").val(); //내용
@@ -332,16 +321,47 @@ console.log("오늘 날짜 : ",currDate);
 	            previewImage.src = e.target.result;
 	        }
 	        // reader가 이미지 읽도록 하기
-	        reader.readAsDataURL(input.files[0])
+	        reader.readAsDataURL(input.files[0]);
 	    }
 	};
 	// input file에 change 이벤트 부여
-	const inputImage = document.getElementById("test")
+	const inputImage = document.getElementById("test");
 	inputImage.addEventListener("change", e => {
 	    readImage(e.target);
+<<<<<<< HEAD
 	})
 	
 	////
+=======
+	});
+	// ajax로 파일 보내기 formdata()
+	function FileUpload(){
+		
+		$.ajax({
+			type : 'POST',
+			url : 'upload',
+			data : form,
+			asynsc:true,
+			contentType:false,
+			cache:false,
+			processData:false,
+			success : function(data) {
+				if (data.success) {
+					console.log("사진 업로드 완료.");
+					
+
+				} else {
+					console.log("사진 업로드 실패.");
+				}
+			},
+			error : function(e) {
+				console.log(e);
+			}
+
+		});
+		
+	};
+>>>>>>> 7ea3692e0081cfec86ec87fb4f2194b93b207f09
 	
 </script>
 </html>
