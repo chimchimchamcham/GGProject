@@ -7,9 +7,22 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-    *{margin:0;padding:0;border-width:0;list-style-type:none;}
+    #mainHeader{
+	z-index: 1000;
+	}
+	#main {
+		background-color: gray;
+		width:1200px;
+		height:auto;
+		position: absolute;
+		top:150px;
+		z-index: -1;
+	}
+    
+    /* *{margin:0;padding:0;border-width:0;list-style-type:none;}
     body{width:100%;background-color:white;}
-	#wrap{margin-top:120px;}
+	#wrap{margin-top:120px;} */
+	
 	
     section{width:100%;}
     #sectionWrap{width:1200px;margin:0 auto;border-top:1px solid gray;padding:30px;}
@@ -135,7 +148,8 @@
     	$("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
     }
     //판매자가 자신의 글을 본다면 수정 삭제 표시, 팔로우 숨기기, 버튼 색상변경과 비활성화 시키기
-    if("user2" == "${dto.p_id}"){
+    if("${sessionScppe.loginId} == "${dto.p_id}"){
+    /* if("user2" == "${dto.p_id}"){ */
     	$("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
     	$("#follow").css({"background-color":"gray"}).attr("disabled", true);
     	$("#description>div:nth-of-type(1)").hide();
@@ -145,12 +159,14 @@
 </script>
 </head>
 <body>
+	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
+	<div id="main">
     <div id="wrap">
         <section>
             <div id="sectionWrap">
                 <article>
                     <div id="imgWrap">
-                        <img src="img/notebook.PNG" width="400px" height="400px">
+                        <img src="/photo/${dto.i_newName }" width="400px" height="400px">
                     	<p>i_newName ${dto.i_newName }</p>
                     </div>
                     <div id="description">
@@ -220,6 +236,7 @@
                 </article>
             </div>
         </section>
+    </div>
     </div>
 </body>
 <script>
