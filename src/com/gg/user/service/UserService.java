@@ -186,14 +186,21 @@ public class UserService {
 	}
 
 	public GGDto myPage() {
-		
 		String id = (String)req.getSession().getAttribute("loginId");
+		String oppId = req.getParameter("id");
 		System.out.println("서비스 진입 : " + id);
 		UserDAO dao = new UserDAO();
 		GGDto dto = new GGDto();
-		dto = dao.myPage(id);
-		dao.resClose();
-		
+		if(id.equals(oppId) || oppId == null){
+			dto = dao.myPage(id);
+			dao.resClose();
+			dto.myYN = true;
+		}
+		else {
+			dto = dao.myPage(oppId);
+			dao.resClose();
+			dto.myYN = false;
+		}
 		return dto;
 
 	}

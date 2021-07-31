@@ -4,8 +4,6 @@
 <!DOCTYPE html>
 <html>
 <style>
-/* 초기화 */
-
 /* 화면 전체 레이아웃  설정 */
 .contents{
     display: flex;

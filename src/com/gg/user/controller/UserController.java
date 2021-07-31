@@ -97,7 +97,7 @@ public class UserController extends HttpServlet {
 		case "/myPage":
 			System.out.println("마이페이지 요청");
 
-			req.getSession().setAttribute("myPageInfo", service.myPage());
+			req.setAttribute("myPageInfo", service.myPage());
 			dis = req.getRequestDispatcher("myPage.jsp");
 			dis.forward(req, resp);
 			break;

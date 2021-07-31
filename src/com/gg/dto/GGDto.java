@@ -135,6 +135,7 @@ public class GGDto {
 	//코드분류
 	private String c_code;
 	private String c_name;
+	public boolean myYN;
 	
 	public String getU_id() {
 		return u_id;
