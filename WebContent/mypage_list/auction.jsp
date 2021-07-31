@@ -4,12 +4,6 @@
 <!DOCTYPE html>
 <html>
 <style>
-/* 초기화 */
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 /* 화면 전체 레이아웃  설정 */
 .contents{
     display: flex;
