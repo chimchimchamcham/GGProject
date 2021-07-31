@@ -56,8 +56,8 @@ td {
 			</tr>
 			<tr>
 				<td colspan="2"><input type="text" name="nname"
-					value="${userUpdate.u_nname}" id="nname" /> <input type='button'
-					id="nname_overlay" value='중복확인' /></td>
+					value="${userUpdate.u_nname}" id="nname" />
+					<input type='button' id="nname_overlay" value='중복확인' /></td>
 			</tr>
 			<tr>
 				<td id='nname_check'></td>
