@@ -19,20 +19,32 @@
     #description{width:740px;height:400px;float:left;margin-left:50px;position:relative;/* background-color:white; */}
     #description>h1{margin-left:10px;margin-top:10px;font-size:2rem;}
     #description>h1>sup{border-radius:5px;margin-left:10px;background-color:blue;font-size:1rem;color:white;}
-    #salePrice{margin-left:10px;margin-top:10px;margin-bottom:50px;font-weight:700;font-size:3rem;}
-    #description>p:not(:nth-of-type(1)){color:gray;margin:20px;font-size:1.2rem;}
-    #description>div{position:absolute;top:30px;left:600px;width:100px;height:40px;}
-    #description>div>a{text-decoration:none;color:gray;}
-    
+    #description>a:nth-of-type(1){position:absolute;top:10px;left:650px;text-decoration:none;color:gray;}
+    #description>div:nth-of-type(1){position:absolute;top:10px;left:650px;color:gray;}
+    #description>div:nth-of-type(1)>a{text-decoration:none;color:gray;}
+    #description>span:nth-of-type(1){position:absolute;top:80px;left:60px;font-size:1.5rem;}
+    #description>div:nth-of-type(2){position:absolute;top:60px;right:30px;}
+    #description>div:nth-of-type(2)>sup{font-size:1.1rem;background-color:yellow;border-radius:3px/3px;}
+    #description>div:nth-of-type(2)>span{font-size:3rem;color:red;font-weight:700;margin-left:10px;}
+    #description>span:nth-of-type(2){position:absolute;top:140px;left:60px;font-size:1.5rem;}
+    #description>span:nth-of-type(3){position:absolute;top:140px;right:30px;font-size:1.5rem;font-weight:600}
+    #description>span:nth-of-type(4){position:absolute;top:200px;left:60px;font-size:1.5rem;}
+    #description>span:nth-of-type(5){position:absolute;top:200px;right:30px;font-size:1.5rem;font-weight:600}
+    #description>span:nth-of-type(6){position:absolute;top:260px;left:60px;font-size:1.5rem;color:red;font-weight:700}
+    #description>span:nth-of-type(7){position:absolute;top:260px;right:30px;font-size:1.5rem;color:red;font-weight:700}
+    #description>span:nth-of-type(8){position:absolute;top:320px;left:60px;font-size:1.1rem;color:gray;}
+    #description>span:nth-of-type(9){position:absolute;top:350px;left:60px;font-size:1.1rem;color:gray;}
+    #description>span:nth-of-type(10){position:absolute;top:320px;right:30px;font-size:1.1rem;color:gray;}
+    #description>span:nth-of-type(11){position:absolute;top:350px;right:30px;font-size:1.1rem;color:gray;}
+     
     #threeButton{line-height:100px;margin-left:400px;width:600px;height:100px;/* background-color:rosybrown; */float:right;}
     button{margin:3px;width:190px;height:80px;}
     
     #threeButton>button{color:white;font-size:1.5rem;font-weight:700}
-    #threeButton>button:nth-last-of-type(5){background-color: red;}
-    #threeButton>button:nth-last-of-type(4){background-color: gray;}
-    #threeButton>button:nth-last-of-type(3){background-color: green;}
-    #threeButton>button:nth-last-of-type(2){background-color: orange;}
-    #threeButton>button:nth-last-of-type(1){background-color: gray;}
+    #threeButton>button:nth-last-of-type(4){background-color: red;}
+    #threeButton>button:nth-last-of-type(3){background-color: gray;}
+    #threeButton>button:nth-last-of-type(2){background-color: green;}
+    #threeButton>button:nth-last-of-type(1){background-color: orange;}
     
     #twoButton>button{height:50px;font-size:1.2rem;}
     #twoButton{overflow:hidden;clear:both;}
@@ -65,18 +77,15 @@
  
  $(document).ready(function(){
 	//수정 삭제버튼 숨기기
-	$("#description>div:nth-of-type(2)").hide();
-    //이전에 해당 판매글에 대해 구매요청을 누른적이 있는지 확인
-    <c:if test="${isBuyRequested eq true}">$("#threeButton>button:nth-last-of-type(2)").hide();</c:if>
-    <c:if test="${isBuyRequested eq false}">$("#threeButton>button:nth-last-of-type(1)").hide();</c:if>
-    
+	$("#description>div:nth-of-type(1)").hide();
     //댓글 창을 숨김
     $("#second").hide();
     //상세정보 버튼 초기설정
     $("#twoButton>button:nth-of-type(1)").css({"background-color":"gray","color":"white"});
     //이전에 해당 판매글에 대해 좋아요를 누른적이 있는지 확인
-    <c:if test="${isLiked eq true}">$("#threeButton>button:nth-last-of-type(5)").hide();</c:if>
-    <c:if test="${isLiked eq false}">$("#threeButton>button:nth-last-of-type(4)").hide();</c:if>
+    $("#threeButton>button:nth-last-of-type(3)").hide();
+    /* <c:if test="${isLiked eq true}">$("#threeButton>button:nth-last-of-type(5)").hide();</c:if>
+    <c:if test="${isLiked eq false}">$("#threeButton>button:nth-last-of-type(4)").hide();</c:if> */
 
     //상세정보 버튼 클릭시 창이 표시
     $("#twoButton>button:nth-of-type(2)").click(function(){
@@ -93,30 +102,24 @@
         $("#first").show();
         $("#second").hide();
     });
-
-    ////구매요청 버튼 클릭시 숨겨짐
-    $("#threeButton>button:nth-last-of-type(2)").click(function(){
-        $("#threeButton>button:nth-last-of-type(2)").hide();
-        $("#threeButton>button:nth-last-of-type(1)").show();
-    });
-    //구매요청취소 버튼 클릭시 숨겨짐
-    $("#threeButton>button:nth-last-of-type(1)").click(function(){
-        $("#threeButton>button:nth-last-of-type(1)").hide();
-        $("#threeButton>button:nth-last-of-type(2)").show();
+    
+    //찜+버튼 클릭시 숨겨짐
+    $("#threeButton>button:nth-last-of-type(4)").click(function(){
+    	$("#threeButton>button:nth-last-of-type(4)").hide();
+    	$("#threeButton>button:nth-last-of-type(3)").show();
     });
     
-    //찜1버튼 클릭시 숨겨짐
-    $("#threeButton>button:nth-last-of-type(5)").click(function(){
-    	$("#threeButton>button:nth-last-of-type(5)").hide();
+  	//찜-버튼 클릭시 숨겨짐
+    $("#threeButton>button:nth-last-of-type(3)").click(function(){
+    	$("#threeButton>button:nth-last-of-type(3)").hide();
     	$("#threeButton>button:nth-last-of-type(4)").show();
     });
     
-    //찜2버튼 클릭시 숨겨짐
-    $("#threeButton>button:nth-last-of-type(4)").click(function(){
-    	$("#threeButton>button:nth-last-of-type(4)").hide();
-    	$("#threeButton>button:nth-last-of-type(5)").show();
+  	//입찰하기 버튼을 누르면 팝업창 띄우기
+  	$("#threeButton>button:nth-last-of-type(1)").click(function(){
+  		window.open("./auctionBidPopup.jsp", "auctionBidPopup", "width=390, height=175, left=700, top=400");
     });
-    
+  	
     //팔로우 클릭시 버튼 변경
     var isFollow = false;
     $("#follow").click(function(){
@@ -130,11 +133,12 @@
     });
     
     //dto.ns_name 가 거래중 또는 판매완료일 경우 버튼 색상변경과 비활성화 시키기
-    if($("#description>h1>sup").text()=="거래중" || $("#description>h1>sup").text()=="판매완료"){
+    if($("#description>h1>sup").text()=="거래중" || $("#description>h1>sup").text()=="경매종료"){
     	$("#description>h1>sup").css({"background-color":"gray"});
     	$("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
     }
     //판매자가 자신의 글을 본다면 수정 삭제 표시, 팔로우 숨기기, 버튼 색상변경과 비활성화 시키기
+    /*if("${sessionScppe.loginId} == "${dto.p_id}")  */
     if("user2" == "${dto.p_id}"){
     	$("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
     	$("#follow").css({"background-color":"gray"}).attr("disabled", true);
@@ -151,72 +155,63 @@
                 <article>
                     <div id="imgWrap">
                         <img src="img/notebook.PNG" width="400px" height="400px">
-                    	<p>i_newName ${dto.i_newName }</p>
+                    	<p>사진이름</p>
                     </div>
                     <div id="description">
-                        <h1>${dto.p_title }<sup>${dto.ns_name }</sup></h1>
-                        <p id="salePrice">${dto.ns_pr } P</p>
-                        <p>${dto.p_tm }<p>
-                        <p>거래방식 :              
-                       		<c:if test="${dto.s_DeliveryYN eq 'Y' }">택배</c:if>
-                       		<c:if test="${dto.s_DeliveryYN eq 'N' }">직거래</c:if>                       		
-                       	</p>
-                       	<% GGDto dto = (GGDto) request.getAttribute("dto"); %>
-                        <%-- <p>거래주소 : ${dto.u_addr }</p> --%>
-                        <p>거래주소 : <%=dto.getU_addr() %></p><!-- 주소가 넘어오지를 않음 dao에서는 정상적으로 받아옴 -->
-                        <p>하트<span>${dto.p_likeCount }</span>&nbsp;&nbsp;&nbsp;&nbsp;조회수<span>${dto.p_view }</span></p>
-                        <div><a href="#">신고하기</a></div>
+                        <h1>아이패드파우치<sup>경매중</sup></h1>
+                        <a href="#">신고하기</a>
                         <div><a href="#">수정 /</a>&nbsp;<a href="#">삭제</a></div>
+                        <span>현재최고 입찰가</span>
+                        <div><sup>애플</sup><span>7000P</span></div>
+                        <span>즉시구매가</span>
+                        <span>15000P/시작가 1000P</span>
+                        <span>입찰 수</span>
+                        <span>25회</span>
+                        <span>남은 시간</span>
+                        <span>07:17:56</span>
+                        <span>거래방식 : 택배</span>
+                        <span>거래지역 : 광명동</span>
+                        <span>좋아요 21</span>
+                        <span>조회수 42</span>
+                         
                     </div>
-                    <div id="threeButton">
-                    	<!-- 새로고침 방법 -->
-                        <%--<button onclick="location.href='lovePlus2?p_no=${dto.p_no }'">찜</button>--%><!-- +1 -->
-                        <%--<button onclick="location.href='loveMinus2?p_no=${dto.p_no }'">찜</button>--%><!-- -1 -->
-                        <!-- ajax 방법 -->
+                    <div id="threeButton">                    
                         <button>찜+</button><!-- +1 -->
                         <button>찜-</button><!-- -1 -->
-                        <button>쪽지보내기</button>
-                        <button onclick="location.href='buyRequest?p_no=${dto.p_no }'">구매요청</button>
-                        <button onclick="location.href='buyRequestCancel?p_no=${dto.p_no }'">구매요청취소</button>
+                        <button>즉시구매</button>
+                        <button onclick="showPopup();">입찰하기</button>
                     </div>
                     <div id="twoButton">
                         <button>상세정보</button>
                         <button>댓글</button>
                     </div>
-                    <!-- #first>div:nth-of-type(1) -->
                     <div id="first">
                     	<div>
-                    		${dto.p_content }                   		
+                    		내용                   		
                     	</div>
                     	<div>
                     		<p>상점정보</p>
                     		<div>
 	                    		<div><a href="#"><img src="./img/profile.PNG" width="100" height="100"></a></div>
 	                    		<div>
-	                    			<p id="u_nname">${dto.u_nname }</p>
+	                    			<p id="u_nname">판매자 닉네임</p>
 	                    			<p id="reviewAvg">별점 4.5</p>
 	                    		</div>
                     		</div>
                     		<button id="follow">팔로우</button>
                     		<div>
-                    			
-                    				<c:forEach items="${sale3List }" var="dto">
+                    				<%-- <c:forEach items="${sale3List }" var="dto">
                     					<div>
                     						<a href="salesDetail?p_no=${dto.p_no}"><img src="#" alt="${dto.i_newName }"></a>
                     						<p>${dto.ns_pr } P</p>                    					
                     					</div>
-                    				</c:forEach>
-                    		
+                    				</c:forEach> --%>
                     		</div>
-                    		<p><a href="#">판매자의 다른 상품 더보기 > </a></p>
-                    		
-                    	</div>
-             
-                    	
+                    		<p><a href="#">판매자의 다른 상품 더보기 > </a></p>                    	
+                    	</div>          
                     </div>
                     <div id="second">
                     </div>
-                    
                 </article>
             </div>
         </section>
