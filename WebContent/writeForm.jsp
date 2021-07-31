@@ -292,9 +292,9 @@ console.log("오늘 날짜 : ",currDate);
 					data : param,
 					dataType : 'JSON',
 					success : function(data) {
-						console.log(data.p_no);
-						form_data.append("p_no",data.p_no);
-						console.log("data : ",data);
+						console.log("글 작성 번호 :",data.p_no);
+						form.append("p_no",data.p_no);
+						FileUpload();
 					},
 					error : function(e) {
 						console.log(e);
@@ -341,11 +341,13 @@ console.log("오늘 날짜 : ",currDate);
 			cache:false,
 			processData:false,
 			success : function(data) {
-				if (data.success) {
+				if(data.success == "true") {
+					console.log("data : ", data[0]);
+					console.log("data.success :",data.success);
 					console.log("사진 업로드 완료.");
-					
-
 				} else {
+					console.log("data : ", data);
+					console.log("data.success :",data.success);
 					console.log("사진 업로드 실패.");
 				}
 			},

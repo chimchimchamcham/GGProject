@@ -1,12 +1,17 @@
 package com.gg.board.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.gg.board.dao.UploadDAO;
+import com.gg.board.service.UploadService;
+import com.google.gson.Gson;
 
 @WebServlet({"/upload"})
 public class UploadController extends HttpServlet {
@@ -33,7 +38,19 @@ public class UploadController extends HttpServlet {
 		switch(addr) {
 		
 		case "/upload":
+			boolean success = false;
 			System.out.println("파일 업로드 요청");
+			UploadService service = new UploadService(req);
+			UploadDAO dao = new UploadDAO();
+			int cheker = 0;
+			cheker = dao.PhotoUpload(service.PhotoUpload());
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			if(cheker>0) {
+				success = true;
+				map.put("success", success);
+				resp.getWriter().println(new Gson().toJson(map));
+				
+			}else 
 			
 			
 			break;
