@@ -271,23 +271,32 @@ public class BoardDAO {
 		String sql = "";
 		if (listwhatadd == 0) {//전체 NS_001 NS_003
 			if (listhowaline == 0) {//시간최신 -desc
-			sql = "select * FROM  post p,N_Sale n where (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.p_tm DESC";				
+			//sql = "select * FROM  post p,N_Sale n,img i where (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.p_tm DESC";				
 			//sql = "SELECT p.p_id,p.p_no,p.p_title,p.p_likecount,p.p_tm,n.ns_pr,n.ns_code,p.p_code,i.i_newname FROM  post p,N_Sale n,img i,SALE S WHERE p.p_code = 'P002' and P.P_NO=S.P_NO AND s.P_NO = N.P_NO AND N.P_NO = P.P_NO and N.P_NO = i.p_no and (n.ns_code = 'NS_001' or n.ns_code = 'NS_003')";
+			sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME, S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME, N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME, I.I_NEWNAME, LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR FROM POST P, SALE S, N_SALE N, IMG I WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = ? and (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_code = 'P002' order BY p.p_tm DESC";
 			
 			}else if(listhowaline == 1) {//좋아요많은쪽 -desc
-				sql= "select * FROM  post p,N_Sale n where (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.P_likeCount DESC";
+				//sql= "select * FROM  post p,N_Sale n where (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.P_likeCount DESC";
+				sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME, S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME, N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME, I.I_NEWNAME, LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR FROM POST P, SALE S, N_SALE N, IMG I WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = ? and (n.ns_code = 'NS_001' or n.ns_code = 'NS_003') and p.p_code = 'P002' order BY p.P_likeCount DESC";
+				
 			}
 		}else if (listwhatadd == 1) {//판매중 NS_001 NS_003
 			if (listhowaline == 0) {//시간최신 -desc
-				sql = "select * FROM  post p,N_Sale n where n.ns_code = 'NS_001' and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.p_tm DESC";				
+				//sql = "select * FROM  post p,N_Sale n where n.ns_code = 'NS_001' and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.p_tm DESC";				
+				sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME, S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME, N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME, I.I_NEWNAME, LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR FROM POST P, SALE S, N_SALE N, IMG I WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = ? and n.ns_code = 'NS_001' and p.p_code = 'P002' order BY p.p_tm DESC";
 			}else if(listhowaline == 1) {//좋아요많은쪽 -desc
-				sql= "select * FROM  post p,N_Sale n where n.ns_code = 'NS_001' and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.P_likeCount DESC";
+				//sql= "select * FROM  post p,N_Sale n where n.ns_code = 'NS_001' and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.P_likeCount DESC";
+				sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME, S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME, N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME, I.I_NEWNAME, LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR FROM POST P, SALE S, N_SALE N, IMG I WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = ? and n.ns_code = 'NS_001' and p.p_code = 'P002' order BY p.P_likeCount DESC";
 			}
 		}else if (listwhatadd == 2) {//판매완료 NS_003
 			if (listhowaline == 0) {//시간최신 -desc
-				sql = "select * FROM  post p,N_Sale n where n.ns_code = 'NS_003' and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.p_tm DESC";				
+				//sql = "select * FROM  post p,N_Sale n where n.ns_code = 'NS_003' and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.p_tm DESC";				
+				sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME, S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME, N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME, I.I_NEWNAME, LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR FROM POST P, SALE S, N_SALE N, IMG I WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = ? and n.ns_code = 'NS_003' and p.p_code = 'P002' order BY p.p_tm DESC";
+
 			}else if(listhowaline == 1) {//좋아요많은쪽 -desc
-				sql= "select * FROM  post p,N_Sale n where n.ns_code = 'NS_003' and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.P_likeCount DESC";
+				//sql= "select * FROM  post p,N_Sale n where n.ns_code = 'NS_003' and p.p_code = 'P002' and p.p_no = n.p_no and p.p_id = ? order BY p.P_likeCount DESC";
+				sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME, S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME, N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME, I.I_NEWNAME, LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR FROM POST P, SALE S, N_SALE N, IMG I WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = ? and n.ns_code = 'NS_003' and p.p_code = 'P002' order BY p.P_likeCount DESC";
+
 			}
 		}
 
@@ -310,8 +319,7 @@ public class BoardDAO {
 			dto.setP_tm(rs.getDate("p_tm"));
 			dto.setP_likeCount(rs.getInt("p_likecount"));
 			dto.setNs_pr(rs.getInt("NS_pr"));
-			dto.setI_newName("i_newName");
-			dto.setNs_code("ns_code");
+			dto.setI_newName(rs.getString("I_newName"));
 			
 			soldlist.add(dto);
 		}
@@ -322,12 +330,15 @@ public class BoardDAO {
 
 	public ArrayList<GGDto> list(String userid, int listwhatadd) throws SQLException {
 		String sql = "";
-		if (listwhatadd == 0) {//전체 NS_001 NS_003
-			sql="SELECT p.P_title,i.i_newname,h.ha_bidpr,a.au_instantpr,a.au_endtm,p.p_tm,c.c_name from Post p, img i,sale s,auction a, his_auction h, codes c where p.p_no = s.p_no and s.p_no = a.p_no and a.p_no = h.p_no and h.ha_bidpr = (SELECT max(ha_bidpr) FROM his_auction) and (a.Au_code = 'Au001' or a.Au_code = 'Au003') and a.Au_code = c.c_code and p.p_id = ?";
-		}else if (listwhatadd == 1) {//경매중  NS_001
-			sql="SELECT p.P_title,i.i_newname,h.ha_bidpr,a.au_instantpr,a.au_endtm,p.p_tm,c.c_name from Post p, img i,sale s,auction a, his_auction h, codes c where p.p_no = s.p_no and s.p_no = a.p_no and a.p_no = h.p_no and h.ha_bidpr = (SELECT max(ha_bidpr) FROM his_auction) and a.Au_code = 'Au001' and a.Au_code = c.c_code and p.p_id = ?";
-		}else if (listwhatadd == 2) {//경매완료 NS_003
-			sql="SELECT p.P_title,i.i_newname,h.ha_bidpr,a.au_instantpr,a.au_endtm,p.p_tm,c.c_name from Post p, img i,sale s,auction a, his_auction h, codes c where p.p_no = s.p_no and s.p_no = a.p_no and a.p_no = h.p_no and h.ha_bidpr = (SELECT max(ha_bidpr) FROM his_auction) and a.Au_code = 'Au003' and a.Au_code = c.c_code and p.p_id = ?";
+		if (listwhatadd == 0) {//전체 Au001 Au003
+			//sql="SELECT p.P_title,i.i_newname,h.ha_bidpr,a.au_instantpr,a.au_endtm,p.p_tm,c.c_name from Post p, img i,sale s,auction a, his_auction h, codes c where p.p_no = s.p_no and s.p_no = a.p_no and a.p_no = h.p_no and h.ha_bidpr = (SELECT max(ha_bidpr) FROM his_auction) and (a.Au_code = 'Au001' or a.Au_code = 'Au003') and a.Au_code = c.c_code and p.p_id = ?";
+			sql = "";
+		}else if (listwhatadd == 1) {//경매중   Au001
+			//sql="SELECT p.P_title,i.i_newname,h.ha_bidpr,a.au_instantpr,a.au_endtm,p.p_tm,c.c_name from Post p, img i,sale s,auction a, his_auction h, codes c where p.p_no = s.p_no and s.p_no = a.p_no and a.p_no = h.p_no and h.ha_bidpr = (SELECT max(ha_bidpr) FROM his_auction) and a.Au_code = 'Au001' and a.Au_code = c.c_code and p.p_id = ?";
+			sql = "";
+		}else if (listwhatadd == 2) {//경매완료  Au003
+			//sql="SELECT p.P_title,i.i_newname,h.ha_bidpr,a.au_instantpr,a.au_endtm,p.p_tm,c.c_name from Post p, img i,sale s,auction a, his_auction h, codes c where p.p_no = s.p_no and s.p_no = a.p_no and a.p_no = h.p_no and h.ha_bidpr = (SELECT max(ha_bidpr) FROM his_auction) and a.Au_code = 'Au003' and a.Au_code = c.c_code and p.p_id = ?";
+			sql = "";
 		}
 
 		ArrayList<GGDto> actionlist = new ArrayList<GGDto>();
@@ -348,7 +359,7 @@ public class BoardDAO {
 			GGDto dto = new GGDto();
 			dto.setP_no(rs.getInt("P_no"));
 			dto.setP_title(rs.getString("P_title"));
-			dto.setI_newName(rs.getString("i_newName"));
+			dto.setI_newName(rs.getString("I_newName"));
 			dto.setHa_bidPr(rs.getInt("ha_bidPr"));
 			dto.setAu_instantPr(rs.getInt("au_instantPr"));
 			dto.setAu_endTm(rs.getDate("au_endtm"));
@@ -406,8 +417,9 @@ public class BoardDAO {
 	public int writeSale(GGDto dto) {
 
 		String sql = "INSERT INTO post(p_no,p_id,p_title,p_content,p_tm,p_view,p_likeCount,p_blindYN,p_code) VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
-		int success = 0;
+		int checker = 0;
 		int p_no = 0;
+		boolean success = false;
 		try {
 			ps = conn.prepareStatement(sql, new String[] { "p_no" });
 			ps.setString(1, dto.getP_id());
@@ -416,9 +428,12 @@ public class BoardDAO {
 			ps.setString(4, "N");
 			ps.setString(5, dto.getP_code());
 
-			success += ps.executeUpdate();
-			System.out.println("게시판 테이블 작성 성공: " + success);
-
+			checker += ps.executeUpdate();
+			if(checker == 1) {
+				success = true;
+				System.out.println("게시판 테이블 작성 성공: " + success);
+				success = false;
+			}
 			rs = ps.getGeneratedKeys();
 
 			if (rs.next()) {
@@ -431,21 +446,27 @@ public class BoardDAO {
 				ps.setString(4, dto.getP_id());
 				ps.setString(5, dto.getS_code());
 
-				success += ps.executeUpdate();
-				System.out.println("판매 테이블 작성 성공: " + success);
-				if (success==2) {
+				checker += ps.executeUpdate();
+
+				if (checker ==2) {
+					success = true;
+					System.out.println("판매 테이블 작성 성공: " + success);
+					success = false;
+					
 					sql = "INSERT INTO n_sale VALUES(?,?,?)";
 					ps = conn.prepareStatement(sql);
 					ps.setInt(1, p_no);
 					ps.setInt(2, dto.getNs_pr());
 					ps.setString(3, "NS_001");
 
-					success += ps.executeUpdate();
-					System.out.println("일반 판매 테이블 작성 성공: " + success);
+					checker += ps.executeUpdate();
+					
 				}
-				if (success ==3) {
+				if (checker ==3) {
+					success = true;
+					System.out.println("일반 판매 테이블 작성 성공: " + success);
 					System.out.println("판매글 작성 번호 : " + p_no);
-					System.out.println("판매글 작성 성공");
+					System.out.println("판매글 작성 성공 ");
 				}
 			}
 
@@ -453,13 +474,14 @@ public class BoardDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return success;
+		return p_no;
 	}
 
-	public boolean writeCommu(GGDto dto) throws SQLException {
-
+	public int writeCommu(GGDto dto) throws SQLException {
+		
 		boolean success = false;
 		int checker = 0;
+		int p_no = 0;
 
 		String sql = "INSERT INTO post VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?,?)";
 
@@ -474,13 +496,13 @@ public class BoardDAO {
 		rs = ps.getGeneratedKeys();
 		if (checker > 0) {
 			rs.next();
-			int pk = rs.getInt(1);
 			success = true;
-			System.out.println("글 작성 번호 : " + pk);
-			System.out.println("글 작성 성공");
+			p_no = rs.getInt(1);
+			System.out.println("글 작성 번호 : " + p_no);
+			System.out.println("글 작성 성공 여부 :"+ success);
 		}
 
-		return success;
+		return p_no;
 	}
 
 	public int writeTrade(GGDto dto) throws SQLException {
