@@ -135,7 +135,7 @@ public class GGDto {
 	//코드분류
 	private String c_code;
 	private String c_name;
-	public boolean myYN;
+	private boolean myYN;
 	
 	public String getU_id() {
 		return u_id;
@@ -792,5 +792,14 @@ public class GGDto {
 	public void setP_cateName(String p_cateName) {
 		this.p_cateName = p_cateName;
 	}
+
+	public boolean isMyYN() {
+		return myYN;
+	}
+
+	public void setMyYN(boolean myYN) {
+		this.myYN = myYN;
+	}
+	
 
 }
