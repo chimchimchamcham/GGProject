@@ -5,11 +5,15 @@
 <html>
 <style>
 /* 초기화 */
+<<<<<<< HEAD
 /* *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 } */
+=======
+
+>>>>>>> f91d6cffb63e355646cafddcecd9fcdcac75d9e0
 /* 화면 전체 레이아웃  설정 */
 .contents{
     display: flex;
