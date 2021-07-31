@@ -325,7 +325,7 @@ console.log("오늘 날짜 : ",currDate);
 	    if(input.files && input.files[0]) {
 	        // 이미지 파일인지 검사 (생략)
 	        // FileReader 인스턴스 생성
-	        const reader = new FileReader()
+	        const reader = new FileReader();
 	        // 이미지가 로드가 된 경우
 	        reader.onload = e => {
 	            const previewImage = document.getElementById("preview-image");
@@ -338,7 +338,7 @@ console.log("오늘 날짜 : ",currDate);
 	// input file에 change 이벤트 부여
 	const inputImage = document.getElementById("test")
 	inputImage.addEventListener("change", e => {
-	    readImage(e.target)
+	    readImage(e.target);
 	})
 	
 	////
