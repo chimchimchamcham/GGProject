@@ -363,7 +363,7 @@ console.log("오늘 날짜 : ",currDate);
 				if(data!=null){ // 들어오는게 String[] 이라 null인지만 판단.
 					alert("사진 등록 성공");
 				}else{
-					alsert("사진 등록 실패");
+					alert("사진 등록 실패");
 				}
 			},
 			error : function(e) {
