@@ -101,9 +101,8 @@ console.log("오늘 날짜 : ",currDate);
 			<!--예약 경매 버튼 클릭시-->
 			<div id="reservForm">
 				<p>
-					<input type="date" id="from" placeholder="시작시간" name="from"
-						style="width: 80px;" min="" readonly> ~ <input type="date"
-						name="to" id="to" min="from" placeholder="종료시간" style="width: 80px;" readonly>
+					<input type="date" id="from" name="from" style="width: 120px;" > ~ 
+					<input type="date" id="to" name="to" style="width: 120px;" >
 				</p>
 				<!--아래에 선택 일자 표시-->
 				<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
@@ -126,8 +125,31 @@ console.log("오늘 날짜 : ",currDate);
 
 </body>
 <script>
-	//초기상태 - 판매폼만 보이는 상태
+	
+	// 경매 예약 시작 시간 초기 설정 (오늘)
+	document.getElementById('from').value = currDate;
+	// 경매 예약 시작 최소 시간 설정 (오늘)
+    document.getElementById('from').min = currDate;
+    var setting = new Date(); // 최대 날짜를 설정하기 위함.
+   	console.log("setting",setting);
+   	setting.setDate(setting.getDate()+30); // 오늘 기준 30일 제한 설정
+   	console.log("재 세팅" ,setting);
+   	// 맥스 날짜 제한 적용
+    document.getElementById('from').max = setting.toISOString().substring(0,10);
+	
+    $("#to").click(function(){
+    	//경매 종료 날 설정 (최소 시작 시간.);
+    	document.getElementById('to').min= document.getElementById('from').value;
+    	var maxDate = new Date(document.getElementById('from').value);
+    	console.log("maxDate", maxDate);
+    	// 최대 경매 기간은 7일 이내이다.
+    	maxDate.setDate(maxDate.getDate()+7);
+    	document.getElementById('to').max = maxDate.toISOString().substring(0,10);
+    });
+	
+  //초기상태 - 판매폼만 보이는 상태
 	//폼 선택 버튼  클릭시 해당 값이 달라짐
+    
 	var param = {};
 	param.userId = "${sessionScope.loginId}";
  	
