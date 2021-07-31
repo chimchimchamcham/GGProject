@@ -5,19 +5,17 @@
 <html>
 <style>
 /* 초기화 */
-*{
+/* *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+} */
 /* 화면 전체 레이아웃  설정 */
 .contents{
     display: flex;
     justify-items: center;
     align-items: center;
     flex-direction: column;
-
-    
 }
 
 /*	전체,판매중,판매완료 버튼	*/
@@ -113,7 +111,7 @@
                     justify-content: center;
                 }
                 /*이미지크기==175*150을 넘지 않음*/
-                img{
+               .img-zoon img{
                     max-width: 175px;
                     max-height: 150px;
                     min-width:170px;
