@@ -10,9 +10,10 @@
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
-h2{
-	text-align:center;
+h2 {
+	text-align: center;
 }
+
 table {
 	margin: auto;
 }
@@ -28,6 +29,7 @@ button {
 td {
 	padding: 5px;
 }
+
 #phone {
 	width: 50px;
 	text-align: center;
@@ -45,17 +47,17 @@ td {
 }
 </style>
 <body>
-<h2>${userUpdate.u_nname}님의 회원정보 수정</h2>
-<form action="userUpdate" method="POST" enctype="multipart/form-data" id="userUpdate">
-	<table>
-		<tr>
+	<h2>${userUpdate.u_nname}님의회원정보 수정</h2>
+	<form action="userUpdate" method="POST" enctype="multipart/form-data"
+		id="userUpdate">
+		<table>
+			<tr>
 				<th>닉네임</th>
 			</tr>
 			<tr>
-				<td colspan="2">
-					<input type="text" name="nname" value="${userUpdate.u_nname}" required/>
-					<input type='button' id="nname_overlay" value='중복확인' />
-				</td>
+				<td colspan="2"><input type="text" name="nname"
+					value="${userUpdate.u_nname}" id="nname" /> <input type='button'
+					id="nname_overlay" value='중복확인' /></td>
 			</tr>
 			<tr>
 				<td id='nname_check'></td>
@@ -64,51 +66,54 @@ td {
 				<th>비밀 번호</th>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="password" name="pw" value="${userUpdate.u_pw}" required></td>
+				<td colspan="2"><input type="password" name="pw"
+					value="${userUpdate.u_pw}" /></td>
 			</tr>
 			<tr>
 				<th>비밀 번호 확인</th>
 			</tr>
 			<tr>
-				<td colspan="2"><input type="password" name="re_pw" value="${userUpdate.u_pw}" required></td>
+				<td colspan="2"><input type="password" name="re_pw"
+					value="${userUpdate.u_pw}" /></td>
 			</tr>
-		<tr>
-			<th>이름</th>
-			<td><input type="text" name="name" value="${userUpdate.u_name}" required></td>
-		</tr>
-		<tr>
-			<th>자기소개 수정</th>
-			<td><textarea name="intro"  id="intro" >${userUpdate.u_intro}</textarea></td>
-			<td><div id="intro_cnt">(0 / 1000)</div></td>
-		</tr>
-		<tr>
-			<th>프로필 사진</th>
-			<td>
-			<p><input type="file" name="photo" accept=".gif, .jpg, .png, .jpeg"/></p>
-			
-			<c:if test="${userUpdate.u_newName  eq 'default-profile.png'}">
-				<img src="./img/default-profile.png" width="100px"/>
-			</c:if>
-			<c:if test="${userUpdate.u_newName  ne 'default-profile.png'}">
-				<img src="/ProfilePhoto/${userUpdate.u_newName}" width="100px"/>
-			</c:if>
-			
-			</td>
-		</tr>
-		<tr>
+			<tr>
+				<th>이름</th>
+				<td><input type="text" name="name" value="${userUpdate.u_name}" /></td>
+			</tr>
+			<tr>
+				<th>자기소개 수정</th>
+				<td><textarea name="intro" id="intro">${userUpdate.u_intro}</textarea></td>
+				<td><div id="intro_cnt">(0 / 1000)</div></td>
+			</tr>
+			<tr>
+				<th>프로필 사진</th>
+				<td>
+					<p>
+						<input type="file" name="photo" accept=".gif, .jpg, .png, .jpeg" id="test"/>
+					</p> <c:if test="${userUpdate.u_newName  eq 'default-profile.png'}">
+						<img src="./img/default-profile.png" width="100px" id="preview-image"/>
+					</c:if> <c:if test="${userUpdate.u_newName  ne 'default-profile.png'}">
+						<img src="/ProfilePhoto/${userUpdate.u_newName}" width="100px" id="preview-image"/>
+					</c:if>
+
+				</td>
+			</tr>
+			<tr>
 				<th>핸드폰 번호</th>
 			</tr>
 			<tr>
-				<td colspan="2"><input type='text' name='phone1' maxlength='3' id='phone1' value="" required/>&nbsp;-
-				<input type='text' name='phone2'id='phone2' maxlength='4' value="" required/>&nbsp;-
-				<input type='text' name='phone3'id='phone3' maxlength='4' value="" required/>
-				</td>
+			<td colspan="2">
+				<input type='text' name='phone1' maxlength='3' id='phone1' value="" />&nbsp;-
+				<input type='text' name='phone2' id='phone2' maxlength='4' value="" />&nbsp;-
+				<input type='text' name='phone3' id='phone3' maxlength='4' value="" />
+			</td>
 			</tr>
 			<tr>
 				<th>이메일</th>
 			</tr>
 			<tr>
-				<td><input type="text" name="email" value="" required>&nbsp;@ <select name="mail">
+				<td><input type="text" name="email" value="">&nbsp;@ <select
+					name="mail">
 						<option value='naver.com'>naver.com</option>
 						<option value='daum.net'>daum.net</option>
 						<option value='google.com'>google.com</option>
@@ -118,17 +123,17 @@ td {
 				<th>주소</th>
 			</tr>
 			<tr>
-				<td><input type='text' name='addr' value="${userUpdate.u_addr}" required/>
-				<input type='text' name='detailAddr' value="${userUpdate.u_detailAddr}" required/></td>
+				<td><input type='text' name='addr' value="${userUpdate.u_addr}"
+					required /> <input type='text' name='detailAddr'
+					value="${userUpdate.u_detailAddr}" required /></td>
 			</tr>
-		<tr>
-			<td colspan="2">
-				<input type="button" onclick="location.href='myPage.jsp'" value="취소"/>
-				<button type="button" id="updateBtn" >저장</button>
-			</td>
-		</tr>
-	</table>
-</form>
+			<tr>
+				<td colspan="2"><input type="button"
+					onclick="location.href='myPage.jsp'" value="취소" />
+					<button type="button" id="updateBtn">저장</button></td>
+			</tr>
+		</table>
+	</form>
 </body>
 <script>
 
@@ -187,6 +192,7 @@ if(msg != ""){
 						} else {
 							$("#nname_check").html("사용가능한 닉네임입니다!");
 							overChk = true;
+							document.getElementById('nname').readOnly = true;
 						}
 					}
 				},
@@ -211,20 +217,90 @@ if(msg != ""){
 	        }
 	    });
 	
-	/*버튼 submit 제한*/
-	var nname = "${userUpdate.u_nname}";
-	
-	 $("#updateBtn").click(function(){
-		 if(nname == $("input[name='nname']").val()){
-			 overChk=true;
-		 }
-		 
-		 if(overChk==false){
-	         alert("닉네임 중복체크를 해주세요");
-	      }else{
-	         $("#userUpdate").submit();
-	      }
+	/*빈칸 확인, 닉네임 중복체크 확인 여부*/
+		var chk_pw = $("input[name='pw']");//비번
+		var chk_re_pw = $("input[name='re_pw']");//비밀번호 확인칸
+		var chk_nname = $("input[name = 'nname']");
+		var chk_name = $("input[name='name']");//이름
+		var chk_phone1 = $("input[name='phone1']");// 전화번호1
+		var chk_phone2 = $("input[name='phone2']");// 전화번호2
+		var chk_phone3 = $("input[name='phone3']");// 전화번호3
+		var chk_email = $("input[name='email']");//이메일아이디
+		var chk_mail = $('select'); // 이메일주소
+		var chk_addr = $("input[name='addr']"); //주소
+		var chk_detailAddr = $("input[name='detailAddr']"); // 상세주소
 		
+		var user_nname = "${userUpdate.u_nname}";
+		
+		/*저장 버튼 클릭 시 확인*/
+	 $("#updateBtn").click(function(){
+				console.log("수정사항 체크");
+				
+				/*닉네임 중복체크 확인*/
+				 if(user_nname == chk_nname.val()){
+					 overChk=true;
+				 }
+				 
+				 if (chk_pw.val() == "") {
+					alert("비밀번호를 입력해 주세요!!");
+					chk_pw.focus();
+				} else if (chk_re_pw.val() == "") {
+					alert("비밀번호 확인칸을 입력해 주세요!");
+					chk_re_pw.focus();
+				} else if (chk_pw.val() != chk_re_pw.val()) {
+					alert("비밀번호가 일치하지 않습니다!")
+					chk_re_pw.focus();
+				} else if (chk_nname.val() == "") {
+					alert("닉네임을 입력해 주세요!");
+					chk_nname.focus();
+				} else if (chk_name.val() == "") {
+					alert("이름 입력해 주세요!!");
+					chk_name.focus();
+				}else if(chk_phone1.val() =="") {
+					alert("핸드폰 번호를 입력해 주세요!!");
+					chk_phone1.focus();
+				}else if(chk_phone2.val() =="") {
+					alert("핸드폰 번호를 입력해 주세요!!");
+					chk_phone2.focus();
+				}else if(chk_phone3.val() =="") {
+					alert("핸드폰 번호를 입력해 주세요!!");
+					chk_phone3.focus();
+				}else if (chk_email.val() == "") {
+					alert("이메일을 입력해 주세요!!");
+					chk_email.focus();
+				} else if (chk_addr.val() == "") {
+					alert("주소를 입력해 주세요!!");
+					chk_addr.focus();
+				} else if (chk_detailAddr.val() == "") {
+					alert("상세 주소를 입력해 주세요!!");
+					chk_detailAddr.focus();
+				}else if(overChk==false){
+				         alert("닉네임 중복체크를 해주세요!!!");
+				}else{ //모든 조건이 맞을 경우
+					$("#userUpdate").submit();
+				}
 	   });
+		
+		/*사진 미리보기*/
+		function readImage(input) {
+		    // 인풋 태그에 파일이 있는 경우
+		    if(input.files && input.files[0]) {
+		        // 이미지 파일인지 검사 (생략)
+		        // FileReader 인스턴스 생성
+		        const reader = new FileReader()
+		        // 이미지가 로드가 된 경우
+		        reader.onload = e => {
+		            const previewImage = document.getElementById("preview-image");
+		            previewImage.src = e.target.result;
+		        }
+		        // reader가 이미지 읽도록 하기
+		        reader.readAsDataURL(input.files[0])
+		    }
+		};
+		// input file에 change 이벤트 부여
+		const inputImage = document.getElementById("test")
+		inputImage.addEventListener("change", e => {
+		    readImage(e.target)
+		});
 </script>
 </html>
