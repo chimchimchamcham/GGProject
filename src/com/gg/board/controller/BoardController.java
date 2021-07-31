@@ -17,7 +17,7 @@ import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
 
-@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auction_list","/writeForm","/writeSale","/writeTrade","/writeCommunity"})
+@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auction_list","/writeForm","/writeSale","/writeTrade","/writeCommunity","/auctionDetail"})
 
 public class BoardController extends HttpServlet {
 
