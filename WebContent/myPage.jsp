@@ -139,7 +139,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		    $("#want").hide();
 		    $("#like").hide();
 		    $("#alarm").hide();
-
+			
 
 		    
 		    
@@ -285,7 +285,6 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 	});
 	
 	function firstcall(){//처음에 보여주는거  목록 종류 0 = 판매 목록
-		console.log('call 처음 목록');
 		$.ajax({
 			type:'post',
 			url:'./soldlist',
@@ -304,31 +303,38 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		});
 	}
 
-			
-			
-	function listCall($index_top){
-		
-		$.ajax({
+	function listCall($index,url){
+		$.ajax({			
 			type:'post',
-			url:'./soldlist',
+			url:url,
 			data:{},
 			dataType:'JSON',
 			success:function(data){
 				console.log("data:"+data);
 				if(data.soldlist != null){
-					soled_list(data.soldlist);
+					if ($index==0) {
+						
+						console.log("soled_list:");
+						soled_list(data.soldlist);
+					}else if ($index==1) {
+						console.log("auction_list:");
+						auction_list(data.auction_list);
+					}
 				}
 			},
 			error:function(e){
 				console.log(e);
 			}
+<<<<<<< HEAD
 		});			
 		
 		
+=======
+		});	
+>>>>>>> c92e623938a1b5555da5bb899b88988a6830c6fb
 		}
 			//데이터 가져와서 뿌려주는 함수 판매 리스트
 			function soled_list(soldlist){	
-			
 			console.log("soldlist:", soldlist);
 			var content="";
 			
@@ -352,6 +358,30 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 			
 		}//판매 리스트 end
 			
+		//데이터 가져와서 뿌려주는 경매 리스트
+		function auction_list(auction_list){	
+			console.log("auction_list:", auction_list);
+			var content="";
+			
+			soldlist.forEach(function(item,idx){
+				console.log(idx,item);
+				content += "<div class='item-one'>";
+				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg'></div>";
+				content += "<div class='dretion-zoon'>";
+				//content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no="+item.p_no+">"+item.p_title+"</a>"+"</div>";
+				content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no=11>"+item.p_title+"</a>"+"</div>";
+				content += "	<div class='itempoint'>"+""+"p"+"</div>";
+				content += "</div>";
+				content += "<div class='love-time'>";
+				content += "	<div class='love'>"+""+"</div>";
+				content += "	<div class='time'>"+item.p_tm+"</div>";	
+				content += "</div>";	
+				content += "</div>";
+			});	
+			$("#sale .item-box").empty();
+			$("#sale .item-box").append(content);
+			
+		}// 경매 리스트 end
 			
 			
 </script>
@@ -439,6 +469,15 @@ $index = $button.index(this);
 $index_button = $("#twoButton>button:eq(" + $index + ")");
 console.log("#twoButton>button:"+$index);
 
+let url ='';
+if ($index==0) {
+	url ='./soldlist';
+}else if($index==1) {
+	url ='./auction_list';
+}
+console.log("url:"+url);
+
+listCall($index,url);
 })
 
 
