@@ -82,7 +82,7 @@ td {
 			</tr>
 			<tr>
 				<th>자기소개 수정</th>
-				<td><textarea name="intro" id="intro">${userUpdate.u_intro}</textarea></td>
+				<td><textarea name="intro" id="intro" style="resize: none; width:550px; height:250px;">${userUpdate.u_intro}</textarea></td>
 				<td><div id="intro_cnt">(0 / 1000)</div></td>
 			</tr>
 			<tr>
@@ -95,7 +95,7 @@ td {
 					</c:if> <c:if test="${userUpdate.u_newName  ne 'default-profile.png'}">
 						<img src="/ProfilePhoto/${userUpdate.u_newName}" width="100px" id="preview-image"/>
 					</c:if>
-
+					<!-- <button type="button" id="default-image">기본 이미지</button> -->
 				</td>
 			</tr>
 			<tr>
@@ -302,5 +302,11 @@ if(msg != ""){
 		inputImage.addEventListener("change", e => {
 		    readImage(e.target)
 		});
+		
+		/*기본이미지로 변경*/
+		/* $("#default-image").click(function(){
+			document.getElementById("preview-image").src = "./img/default-profile.png";
+		}); */
+		
 </script>
 </html>
