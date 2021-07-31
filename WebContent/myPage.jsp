@@ -50,7 +50,7 @@ body {
 
 
 #div1 {
-	width: 1200px;
+	width: 100%;
 	display: block;
 	height: 500px;
 	background-color: gray;
@@ -89,7 +89,7 @@ var loginId = "${sessionScope.loginId}";
 
 /*충전 팝업*/
 function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
-
+	
 	$(document).ready(function() {
 
 		let $index1 = 0;
@@ -325,7 +325,13 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 			error:function(e){
 				console.log(e);
 			}
+<<<<<<< HEAD
+		});			
+		
+		
+=======
 		});	
+>>>>>>> c92e623938a1b5555da5bb899b88988a6830c6fb
 		}
 			//데이터 가져와서 뿌려주는 함수 판매 리스트
 			function soled_list(soldlist){	

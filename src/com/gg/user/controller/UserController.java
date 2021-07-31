@@ -64,7 +64,7 @@ public class UserController extends HttpServlet {
 			ArrayList<String> idYN = service.login();
 			String msg = "아이디 또는 비밀번호를 확인 하세요";
 			String page = "login.jsp";
-			if (idYN.get(1) != null) {
+			if (!idYN.isEmpty()) {
 				req.getSession().setAttribute("loginId", idYN.get(0));
 				req.getSession().setAttribute("adminYN", idYN.get(1));
 				msg = null;
