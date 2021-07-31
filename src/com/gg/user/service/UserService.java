@@ -191,18 +191,23 @@ public class UserService {
 		System.out.println("서비스 진입 : " + id);
 		UserDAO dao = new UserDAO();
 		GGDto dto = new GGDto();
-		if(id.equals(oppId) || oppId == null){
-			dto = dao.myPage(id);
-			dao.resClose();
-			dto.myYN = true;
-		}
-		else {
-			dto = dao.myPage(oppId);
-			dao.resClose();
-			dto.myYN = false;
-		}
+		if(id != null){ //로그인 했을 때 
+            if (id.equals(oppId) || oppId == null ){ //내글에서 내프로필 갈때 / 마이페이지
+               dto = dao.myPage(id);
+               dto.setMyYN(true);
+               System.out.println(dto.isMyYN());
+            }else if(!id.equals(oppId)){
+               dto = dao.myPage(oppId);
+               dto.setMyYN(false);
+               System.out.println(dto.isMyYN());
+            }
+         }else { //로그인 안됐을 때 타인프로필
+            dto = dao.myPage(oppId);
+               dto.setMyYN(false);
+               System.out.println(dto.isMyYN());
+         }
+		dao.resClose();
 		return dto;
-
 	}
 
 	public Object userUpdateForm() {
