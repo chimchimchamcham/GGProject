@@ -114,6 +114,7 @@ header {
 
 #logo {
 	float: left;
+	width:80px;
 }
 
 /*검색창*/
@@ -278,7 +279,7 @@ nav ul#dropdown:after {
 	<div id="hWrap">
 		<header>
 			<div>
-				<div id="logo"><a href="index.jsp"><img src="img/logo2.png" width="80"></a></div>
+				<div id="logo"><a href="index.jsp"><img src="img/logo2.png"></a></div>
 				<div id="search">
 					<input type="text" name="search" placeholder="찾고 싶은 상품을 검색해보세요!">
 					<img src="img/search-icon.png" alt="search-icon">
