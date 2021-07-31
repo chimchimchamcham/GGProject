@@ -184,7 +184,7 @@ console.log("오늘 날짜 : ",currDate);
 		console.log(param.select);
 		$("#tradeForm,#reservForm").show();
 
-		$("commuCategory,#salePr").hide();
+		$("#commuCategory,#salePr").hide();
 
 	});
 
