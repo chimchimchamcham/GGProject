@@ -59,6 +59,8 @@ public class UploadDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			resClose();
 		}
 		if(success>0) {
 			System.out.println("글 쓰기 사진 업로드 성공");
