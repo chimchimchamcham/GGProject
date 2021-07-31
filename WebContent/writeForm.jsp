@@ -78,9 +78,10 @@ console.log("오늘 날짜 : ",currDate);
 						name="imgFile" style="display: none" id="test" />
 				</form>
 				<p>
-					<textarea name="content" rows="30" cols="100" placeholder="내용입력"
+					<textarea name="content" rows="30" cols="100" placeholder="내용입력" id ="input"
 						style="overflow-y: scroll"></textarea>
 				</p>
+				<div id="intro_cnt">(0 / 1000)</div>
 				<p id="commuCategory">
 					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="commuCat">
 						<c:forEach items="${commuCat }" var="CommuCategory">
@@ -363,7 +364,7 @@ console.log("오늘 날짜 : ",currDate);
 				if(data!=null){ // 들어오는게 String[] 이라 null인지만 판단.
 					alert("사진 등록 성공");
 				}else{
-					alsert("사진 등록 실패");
+					alert("사진 등록 실패");
 				}
 			},
 			error : function(e) {
@@ -371,6 +372,16 @@ console.log("오늘 날짜 : ",currDate);
 			}
 		});
 	};
+	
+	/*글자수 제한*/
+    $('#input').on('keyup', function() {
+           $('#intro_cnt').html("("+$(this).val().length+" / 1000)");
+    
+           if($(this).val().length > 1000) {
+               $(this).val($(this).val().substring(0, 1000));
+               $('#intro_cnt').html("(1000 / 1000)");
+           }
+       });
 	
 </script>
 </html>
