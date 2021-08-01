@@ -35,6 +35,7 @@ public class PointController extends HttpServlet {
 		String addr = uri.substring(ctx.length());
 		System.out.println("addr : " + addr);
 
+		PointService service = null;
 		RequestDispatcher dis = null;
 		String page = "";
 		String msg = "";
@@ -44,10 +45,10 @@ public class PointController extends HttpServlet {
 		case "/pointPop":
 			System.out.println("포인트 충전 팝업 진입 완료");
 			boolean success = false;
-			PointService service = new PointService(req);
+			service = new PointService(req);
 			int myPoint = service.pointPop();
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			if(myPoint > - 1000000) { // 포인트가 음수가 될 순 없다.
+			if (myPoint > -1000000) { // 포인트가 음수가 될 순 없다.
 				success = true;
 			}
 			map.put("success", success);
@@ -55,12 +56,21 @@ public class PointController extends HttpServlet {
 
 			resp.getWriter().println(new Gson().toJson(map));
 			break;
-			
-			
+
 		case "/charge":
 			System.out.println("포인트 충전 요청");
+			String id = req.getParameter("id");
 			int chargePoint = Integer.parseInt(req.getParameter("chargePoint"));
+			System.out.println("충전 아이디  : " + req.getParameter("id"));
 			System.out.println("충전 요청 금액 : " + chargePoint);
+			success = false;
+			service = new PointService(req);
+			success = service.charge(chargePoint, id);
+			System.out.println("충전 성공 여부 : " + success);
+
+			req.getSession().setAttribute("chargeSuccess", success);
+			dis = req.getRequestDispatcher("./popup/chargePopup.jsp");
+			dis.forward(req, resp);
 
 			break;
 
