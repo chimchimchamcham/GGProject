@@ -22,10 +22,15 @@ table,tr,td{
 #postTable textarea,#commentTable textarea,#userTable textarea{
 	width:370px;
 }
+#mainheader{
+	magin:0px;
+	padding:0px;
+	background-color:gray;
+}
 </style>
 </head>
+<div id="mainheader">신고하기</div>
 <body>
-	<div id="mainheader">신고하기</div>
 	<select name="drop" onchange="drop()">
 	    <option value = "postCate">게시글 신고</option>
 	    <option value = "commentCate">댓글 신고</option>
