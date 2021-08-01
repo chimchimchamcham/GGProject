@@ -51,15 +51,10 @@ public class BoardController extends HttpServlet {
 		case "/salesDetail" : 
 			System.out.println("판매글 상세보기");
 			GGDto dto = service.salesDetail();
-			System.out.println("Controller salesDetail dto : "+dto);
-			String u_id = (String) req.getSession().getAttribute("loginId");
-			
-			//String u_id = "user2"; //임시로 저장
-			p_no = Integer.parseInt(req.getParameter("p_no"));
-			
+
 			//좋아요를 눌렀는지 확인
 			boolean isLiked = false;
-			isLiked = service.isLiked(u_id, p_no);
+			isLiked = service.isLiked();
 			
 			//구매요청을 눌렀는지 확인
 			boolean isBuyRequested = false;

@@ -10,9 +10,12 @@
     
     /* *{margin:0;padding:0;border-width:0;list-style-type:none;}
     body{width:100%;background-color:white;}
-	#wrap{margin-top:120px;} */
+	*/
+	#mainHeader{
+	z-index: 1000;
+	}
 	
-	
+	#wrap{margin-top:120px;} 
     section{width:100%;}
     #sectionWrap{width:1200px;margin:0 auto;border-top:1px solid gray;padding:30px;}
     #sectionWrap>article{width:1200px;height:1000px;/* border:1px solid black; */clear: both;}
@@ -137,7 +140,7 @@
     	$("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
     }
     //판매자가 자신의 글을 본다면 수정 삭제 표시, 팔로우 숨기기, 버튼 색상변경과 비활성화 시키기
-    if("${sessionScppe.loginId} == "${dto.p_id}"){
+    if("${sessionScppe.loginId}" == "${dto.p_id}"){
     /* if("user2" == "${dto.p_id}"){ */
     	$("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
     	$("#follow").css({"background-color":"gray"}).attr("disabled", true);
@@ -148,6 +151,7 @@
 </script>
 </head>
 <body>
+	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
     <div id="wrap">
         <section>
             <div id="sectionWrap">

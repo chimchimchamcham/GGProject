@@ -51,7 +51,10 @@ public class BoardService {
 	}
 
 	//찜을 눌렀는지 확인
-	public boolean isLiked(String u_id, int p_no) {
+	public boolean isLiked() {
+		int p_no = Integer.parseInt(req.getParameter("p_no"));
+		String u_id = (String) req.getSession().getAttribute("loginId");
+		//String u_id = "user1"; //임시로 저장
 		System.out.println("service isLiked");
 		boolean isLiked = false;
 		BoardDAO dao = new BoardDAO();

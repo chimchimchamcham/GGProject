@@ -117,7 +117,7 @@
     
   	//입찰하기 버튼을 누르면 팝업창 띄우기
   	$("#threeButton>button:nth-last-of-type(1)").click(function(){
-  		window.open("./auctionBidPopup.jsp", "auctionBidPopup", "width=390, height=175, left=700, top=400");
+  		window.open("./popup/auctionBidPopup.jsp", "auctionBidPopup", "width=390, height=175, left=700, top=400");
     });
   	
     //팔로우 클릭시 버튼 변경
