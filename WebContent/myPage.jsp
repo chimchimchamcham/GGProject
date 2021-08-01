@@ -13,7 +13,6 @@
 	z-index: 1000;
 }
 #main {
-	background-color: gray;
 	width:1200px;
 	height:auto;
 	position: absolute;
@@ -65,7 +64,6 @@ body {
 	width: 100%;
 	display: block;
 	height: 500px;
-	background-color: gray;
 	margin: 0px auto;
 	clear: both;
 }
@@ -76,6 +74,17 @@ table {
 
 td {
 	border: 1px solid black;
+}
+
+.addrBg{
+}
+
+.addrBg p{
+	background-color: #D8D8D8;
+	display: inline;
+	padding : 5px 15px;
+	border: 0px;
+	border-radius: 10px;
 }
 
 #soge {
@@ -402,7 +411,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 	<c:if test ="${myPageInfo.myYN eq 'true'}">
 	<h2>마이페이지</h2>
 	<div id="div1">
-		<table style="text-align: center; width: 40%;">
+		<table style="text-align: center; width: 30%;">
 			<tr>
 				<td>
 			<c:if test="${myPageInfo.u_newName  eq 'default-profile.png'}">
@@ -416,7 +425,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				<td>${myPageInfo.u_nname}</td>
 			</tr>
 			<tr>
-				<td>${myPageInfo.u_addr }&nbsp;${myPageInfo.u_detailAddr }</td>
+				<td class="addrBg"><p>${myPageInfo.u_addr }&nbsp;${myPageInfo.u_detailAddr }</p></td>
 			</tr>
 			<tr>
 				<td>이름 : ${myPageInfo.u_name }</td>
@@ -432,7 +441,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			</tr>
 		</table>
 
-		<table style="width: 60%;">
+		<table style="width: 55%;">
 			<tr>
 				<td>현재 포인트</td>
 				<td><a href="#" onclick="pointListPop();">${myPageInfo.pnt_point }P</a></td>	
@@ -451,6 +460,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				</td>
 			</tr>
 		</table>
+		
 	</div>
 	
 	   <div id="twoButton">
@@ -504,11 +514,6 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			<tr>
 				<td>${myPageInfo.u_nname}님의 자기소개</td>
 				<td><button>신고하기</button></td>
-			</tr>
-			<tr>
-				<td colspan="3">
-					<p>${myPageInfo.u_intro}</p>
-				</td>
 			</tr>
 		</table>
 	</div>
