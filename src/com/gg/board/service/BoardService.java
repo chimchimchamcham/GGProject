@@ -419,6 +419,31 @@ public void list(String userid, int listwhatadd) throws IOException {
 		return dto;
 	}
 
+	public HashMap<String,Object> auctionBid() {
+		
+		boolean success = false;
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		int p_no = Integer.parseInt(req.getParameter("p_no"));
+		int ha_bidPr = Integer.parseInt(req.getParameter("ha_bidPr"));
+		String ha_bidUsr =(String) req.getSession().getAttribute("loginId");
+		System.out.println("경매글 입찰 글번호 : "+p_no);
+		System.out.println("경매글 입찰 가격 : "+ ha_bidPr);
+		System.out.println("경매 입찰자 : "+ ha_bidUsr);
+		
+		BoardDAO dao = new BoardDAO();
+		try {
+			map = dao.auctionBid(p_no,ha_bidPr,ha_bidUsr);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		return map;
+		
+	}
+
 
 
 	
