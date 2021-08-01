@@ -99,8 +99,12 @@ var loginId = "${sessionScope.loginId}";
 
 
 
-/*충전 팝업*/
-function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
+/*팝업창*/
+ //충전팝업
+function chargePopup() { window.open("./popup/chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
+//포인트내역 팝업
+function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "width=600, height=500, left=600, top=200"); }
+
 	
 	$(document).ready(function() {
 
@@ -431,8 +435,8 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		<table style="width: 60%;">
 			<tr>
 				<td>현재 포인트</td>
-				<td><a href="#">${myPageInfo.pnt_point }P</a></td>	
-				<td><input type="button" value="충전" onclick="showPopup();" /></td>
+				<td><a href="#" onclick="pointListPop();">${myPageInfo.pnt_point }P</a></td>	
+				<td><input type="button" value="충전" onclick="chargePopup();" /></td>
 			</tr>
 			<tr>
 				<td>평점</td>
