@@ -14,8 +14,15 @@
 	#mainHeader{
 	z-index: 1000;
 	}
-	
-	#wrap{margin-top:120px;} 
+	#main {
+	/* background-color: gray; */
+	width:1200px;
+	height:auto;
+	position: absolute;
+	top:150px;
+	z-index: -1;
+	}
+	/* #wrap{margin-top:150px;}  */
     section{width:100%;}
     #sectionWrap{width:1200px;margin:0 auto;border-top:1px solid gray;padding:30px;}
     #sectionWrap>article{width:1200px;height:1000px;/* border:1px solid black; */clear: both;}
@@ -30,7 +37,7 @@
     #description>div>a{text-decoration:none;color:gray;}
     
     #threeButton{line-height:100px;margin-left:400px;width:600px;height:100px;/* background-color:rosybrown; */float:right;}
-    button{margin:3px;width:190px;height:80px;}
+    #threeButton>button{margin:3px;width:190px;height:80px;}
     
     #threeButton>button{color:white;font-size:1.5rem;font-weight:700}
     #threeButton>button:nth-last-of-type(5){background-color: red;}
@@ -152,7 +159,9 @@
 </head>
 <body>
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
+	<div id="main">
     <div id="wrap">
+    
         <section>
             <div id="sectionWrap">
                 <article>
@@ -227,6 +236,7 @@
                 </article>
             </div>
         </section>
+    </div>
     </div>
 </body>
 <script>
