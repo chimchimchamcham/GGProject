@@ -175,7 +175,7 @@
                        	</span>
                       <% GGDto dto = (GGDto) request.getAttribute("dto"); %>
                         <span>거래지역 : ${dto.u_addr }</span> 
-                        <span>좋아요 ${dto.p_likeCount }</span>
+                        <span>좋아요 <span>${dto.p_likeCount }</span></span>
                         <span>조회수 ${dto.p_view }</span>
                          
                     </div>
@@ -232,8 +232,8 @@
 			success : function(data){
 				console.log(data);
 				if(data.success){
-					var love = $("#description>p:nth-of-type(6)>span:nth-of-type(1)").text();
-					$("#description>p:nth-of-type(6)>span:nth-of-type(1)").text(++love);
+					var love = $("#description>span:nth-of-type(10)>span:nth-of-type(1)").text();
+					$("#description>span:nth-of-type(10)>span:nth-of-type(1)").text(++love);
 					alert('좋아요 등록 성공.');
 				}else{
 					alert('좋아요 등록 실패.');
@@ -255,8 +255,8 @@
 			success : function(data){
 				console.log(data);
 				if(data.success){
-					var love = $("#description>p:nth-of-type(6)>span:nth-of-type(1)").text();
-					$("#description>p:nth-of-type(6)>span:nth-of-type(1)").text(--love);
+					var love = $("#description>span:nth-of-type(10)>span:nth-of-type(1)").text();
+					$("#description>span:nth-of-type(10)>span:nth-of-type(1)").text(--love);
 					alert('좋아요 해제 성공');
 				}else{
 					alert('좋아요 해제 실패');
