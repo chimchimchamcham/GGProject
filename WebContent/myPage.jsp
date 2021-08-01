@@ -549,15 +549,11 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
       <button>좋아요</button> 
       <button>신고목록</button>
    </div>
-<<<<<<< HEAD
+
    
-   <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp" ></jsp:include></div>
-   <div id="trade" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp" ></jsp:include></div>
-=======
 
    <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
    <div id="trade" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
->>>>>>> e5e93eea1813ef1863f5ab27126ba53b4094a7f3
    <div id="sell" style="background-color:yellow; padding:20px;">구매목록입니다.</div>
    <div id="commu" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
    <div id="follow" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
