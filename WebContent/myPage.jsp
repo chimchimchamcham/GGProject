@@ -178,15 +178,46 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 
 	
 	$(document).ready(function() {
+		$.ajax({
+			type:'post',
+			url:'./soldlist',
+			data:{  index1 : 0,
+					index2 : 0 },
+			dataType:'JSON',
+			success:function(data){
+				console.log("data",data);
+				if(data.soldlist != null){
+					soled_list(data.soldlist);
+				}
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+		
+		
+		$("#twoButton>button").click(function(){
+			
+			$button = $("#twoButton>button");
+			$index = $button.index(this);
+			$index_button = $("#twoButton>button:eq(" + $index + ")");
+			console.log("#twoButton>button:"+$index);
 
-		let $index1 = 0;
-		let $index2 = 0;
+			let url ='';
+			
+			if ($index == 0) {
+				url ='./soldlist';
+			}else if($index == 1) {
+				url ='./auction_list';
+			}
+			console.log("url:"+url);
+
+			listCall($index,url);
+
+			})
+		
 		
 		/*알림*/
-		firstcall();//처음에만 뿌려주는 거
-		
-		
-		
 		var msg = "${msg}";
 		if(msg != ""){
 			alert(msg);
@@ -371,44 +402,31 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 		
 	});
 	
-	function firstcall(){//처음에 보여주는거  목록 종류 0 = 판매 목록
-		$.ajax({
-			type:'post',
-			url:'./soldlist',
-			data:{  index1 : 0,
-					index2 : 0 },
-			dataType:'JSON',
-			success:function(data){
-				console.log("data",data);
-				if(data.soldlist != null){
-					soled_list(data.soldlist);
-				}
-			},
-			error:function(e){
-				console.log(e);
-			}
-		});
-	}
+
 
 	function listCall($index,url){
 		$.ajax({			
 			type:'post',
 			url:url,
-			data:{},
+			data:{
+				index1:0,
+				index2:0
+			},
 			dataType:'JSON',
 			success:function(data){
-				console.log("data:"+data);
-				if(data.soldlist != null){
+				console.log("soldlist:",data.soldlist);
+				console.log("auctionlist:",data.auctionlist);
+				if(data != null){
+					console.log("data:"+data);
 					console.log($index);
-					if (url == './soldlist') {
-						console.log("soled_list:",data.data.soldlist);
+					console.log(url);
+					if($index == 0){
+						console.log("soled_list:",data.soldlist);
 						soled_list(data.soldlist);
-					}else if (url == './auction_list') {
-						console.log("auction_list:",data.auction_list);
-						auction_list(data.auction_list);
+					}else if ($index == 1) {
+						console.log("auction_list:",data.auctionlist);
+						auction_list(data.auctionlist);
 					}
-				}else{
-					console.log("data 가  null")
 				}
 			},
 			error:function(e){
@@ -417,7 +435,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 		});			
 		}
 			//데이터 가져와서 뿌려주는 함수 판매 리스트
-			function soled_list(soldlist){	
+		function soled_list(soldlist){	
 			console.log("soldlist:", soldlist);
 			var content="";
 			
@@ -441,13 +459,14 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 		}//판매 리스트 end
 			
 		//데이터 가져와서 뿌려주는 경매 리스트
-			function auction_list(auction_list){	
-			console.log("auction_list:", auction_list);
+		function auction_list(auctionlist){	
+			console.log("auction_list:", auctionlist);
 			var content="";
 			
-			soldlist.forEach(function(item,idx){
-				console.log(idx,item);
+			auctionlist.forEach(function(item,idx){
+				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
+				content += "<h2>경매</h2>";
 				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg'></div>";
 				content += "<div class='dretion-zoon'>";
 				content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no=11>"+item.p_title+"</a>"+"</div>";
@@ -531,6 +550,8 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
       <button>신고목록</button>
    </div>
 
+   
+
    <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
    <div id="trade" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
    <div id="sell" style="background-color:yellow; padding:20px;">구매목록입니다.</div>
@@ -610,28 +631,4 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
    
 	</div> <!-- div main end -->
 </body>
-<script type="text/javascript">
-
-$("#twoButton>button").click(function(){
-	
-$button = $("#twoButton>button");
-$index = $button.index(this);
-$index_button = $("#twoButton>button:eq(" + $index + ")");
-console.log("#twoButton>button:"+$index);
-
-let url ='';
-if ($index == 0) {
-	url ='./soldlist';
-}else if($index == 1) {
-	url ='./auction_list';
-}
-console.log("url:"+url);
-
-listCall($index,url);
-})
-
-
-
-
-</script>
 </html>

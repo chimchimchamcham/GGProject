@@ -132,7 +132,6 @@
             <button>경매중</button>
             <button>경매완료</button>
         </div>
-        </div>
         
         <div class="content-zoon_auction">
             <div class="item-box">
@@ -172,15 +171,16 @@
     function auctionlistCall($index1){
 		
 		console.log("$index1:"+$index1);
+		
 		$.ajax({
 			type:'post',
 			url:'./auction_list',
-			data:{	index1 : $index1 },
+			data:{	index1 : $index1},
 			dataType:'JSON',
 			success:function(data){
 				console.log("data:"+data);
-				if(data.list != null){
-					auction_list(data.auction_list);
+				if(data.auctionlist != null){
+					auction_list(data.auctionlist);
 				}
 			},
 			error:function(e){

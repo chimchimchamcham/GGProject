@@ -167,7 +167,7 @@
 		console.log("$sold_index:"+$index1);
 		console.log("$alien_list:"+$index2);
 		
-		listCall($index1,$index2);
+		sold_listCall($index1,$index2);
 		
 		$button1.removeClass('clicked');
 		$index_button_sold.addClass('clicked');
@@ -185,14 +185,14 @@
 		console.log("$center_index:"+$index1);
 		console.log("$alien_list_sold:"+$index2);
 		
-		listCall($index1,$index2);
+		sold_listCall($index1,$index2);
 		
 		$button2.removeClass('clicked');
 		$index_button.addClass('clicked');
 		
     })
     
-    function listCall($index1,index2){
+    function sold_listCall($index1,index2){
 		
 		
 		$.ajax({
