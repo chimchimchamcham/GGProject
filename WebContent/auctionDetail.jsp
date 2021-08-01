@@ -154,25 +154,29 @@
             <div id="sectionWrap">
                 <article>
                     <div id="imgWrap">
-                        <img src="img/notebook.PNG" width="400px" height="400px">
-                    	<p>사진이름</p>
+                        <img src="/photo/${dto.i_newName}" width="400px" height="400px">
+                    	<p>i_newName ${dto.i_newName}</p>
                     </div>
                     <div id="description">
-                        <h1>아이패드파우치<sup>경매중</sup></h1>
+                        <h1>${dto.p_title}<sup>${dto.c_name }</sup></h1>
                         <a href="#">신고하기</a>
                         <div><a href="#">수정 /</a>&nbsp;<a href="#">삭제</a></div>
                         <span>현재최고 입찰가</span>
-                        <div><sup>애플</sup><span>7000P</span></div>
+                        <div><sup>${dto.ha_bidUsr }</sup><span>${dto.ha_bidPr }P</span></div>
                         <span>즉시구매가</span>
-                        <span>15000P/시작가 1000P</span>
+                        <span>${dto.au_instantPr }P/시작가 ${dto.au_startPr }P</span>
                         <span>입찰 수</span>
-                        <span>25회</span>
-                        <span>남은 시간</span>
-                        <span>07:17:56</span>
-                        <span>거래방식 : 택배</span>
-                        <span>거래지역 : 광명동</span>
-                        <span>좋아요 21</span>
-                        <span>조회수 42</span>
+                        <span>${dto.au_count }회</span>
+                        <span>종료 시간</span>
+                        <span>${dto.au_endTm}</span>
+                        <span>거래방식 :
+                        	<c:if test="${dto.s_DeliveryYN eq 'Y' }">택배</c:if>
+                       		<c:if test="${dto.s_DeliveryYN eq 'N' }">직거래</c:if>  
+                       	</span>
+                      <% GGDto dto = (GGDto) request.getAttribute("dto"); %>
+                        <span>거래지역 : ${dto.u_addr }</span> 
+                        <span>좋아요 ${dto.p_likeCount }</span>
+                        <span>조회수 ${dto.p_view }</span>
                          
                     </div>
                     <div id="threeButton">                    

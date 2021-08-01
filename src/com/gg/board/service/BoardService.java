@@ -392,6 +392,33 @@ public void list(String userid, int listwhatadd) throws IOException {
 		return p_no;
 	}
 
+	//경매 상세보기
+	public GGDto auctionDetail() {
+		int p_no = Integer.parseInt(req.getParameter("p_no"));
+		System.out.println("경매글 상세보기 글번호 : "+p_no);
+		BoardDAO dao = new BoardDAO();
+		GGDto dto = new GGDto();
+		try {
+			dao.conn.setAutoCommit(false);
+			int up = dao.upP_view(p_no);
+			System.out.println("조회수 올리기 :"+up);
+			if(up>0) {
+				dto = dao.auctionDetail(p_no);
+				System.out.println("상세보기 dto : "+dto);
+			}
+			if(dto == null) {
+				dao.conn.rollback();
+			}else {
+				dao.conn.commit();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		return dto;
+	}
+
 
 
 	

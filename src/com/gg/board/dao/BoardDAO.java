@@ -565,5 +565,51 @@ public class BoardDAO {
 		return p_no;
 	}
 
+	public GGDto auctionDetail(int p_no) throws SQLException {
+		String sql = "select p.p_no, p.p_id, p.p_title, p.p_content, p.p_view, p.p_likeCount, p.p_blindYN, p.p_code, (select u.u_addr from userinfo u where u.u_id= p_id) as u_addr, s.s_deliveryyn, s.s_followlimyn, s.s_code,au.au_code ,(select c.c_name from codes c where c.c_code = au.au_code) as au_c_name,au.au_startpr,au.au_instantpr,au.au_endtm ,au.au_count, hau.ha_bidpr,hau.ha_bidusr,i.i_newname from post p, sale s, auction au, his_auction hau, img i where p.p_no=s.p_no and p.p_no= i.p_no and s.p_no = au.p_no and au.p_no=hau.p_no and hau.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and  p.p_no=?";
+		GGDto dto = null;
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, p_no);
+		ps.setInt(2, p_no);
+		rs = ps.executeQuery();
+		if(rs.next()) {
+			dto = new GGDto();
+			dto.setP_no(rs.getInt("p_no"));
+			dto.setP_id(rs.getString("p_id"));
+			dto.setP_title(rs.getString("p_title"));
+			dto.setP_content(rs.getString("p_content"));
+			dto.setP_view(rs.getInt("p_view"));
+			dto.setP_likeCount(rs.getInt("p_likeCount"));
+			dto.setP_blindYN(rs.getString("p_blindYN"));
+			dto.setP_code(rs.getString("p_code"));
+			dto.setU_addr(rs.getString(("u_addr")));
+			dto.setS_DeliveryYN(rs.getString("s_deliveryyn"));
+			dto.setS_followLimYN(rs.getString("s_followlimyn"));
+			dto.setS_code(rs.getString("s_code"));
+			dto.setAu_code(rs.getString("au_code"));
+			dto.setC_name(rs.getString("au_c_name"));
+			dto.setAu_startPr(rs.getInt("au_startpr"));
+			dto.setAu_instantPr(rs.getInt("au_instantpr"));
+			dto.setAu_endTm(rs.getDate("au_endtm"));
+			dto.setAu_count(rs.getInt("au_count"));
+			dto.setHa_bidPr(rs.getInt("ha_bidpr"));
+			dto.setHa_bidUsr(rs.getString("ha_bidusr"));
+			dto.setI_newName(rs.getString("i_newname"));
+			
+			System.out.println(dto.getAu_count());
+			System.out.println(rs.getString("i_newname"));
+			System.out.println(dto.getP_title());
+			System.out.println(dto.getU_addr());
+			System.out.println(dto.getP_code());
+			
+			
+		}
+		
+		
+		return dto;
+		
+		
+	}
+
 
 }
