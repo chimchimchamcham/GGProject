@@ -268,7 +268,7 @@ public class BoardDAO {
 		return sale3List;
 	}
 	/* ================================================ */
-	public ArrayList<GGDto> list(String userid, int listwhatadd, int listhowaline) throws SQLException {
+	public ArrayList<GGDto> sold_list(String userid, int listwhatadd, int listhowaline) throws SQLException {
 		String sql = "";
 		if (listwhatadd == 0) {//전체 NS_001 NS_003
 			if (listhowaline == 0) {//시간최신 -desc
@@ -324,12 +324,11 @@ public class BoardDAO {
 			
 			soldlist.add(dto);
 		}
-		resClose();
 		System.out.println("list:"+soldlist);
 		return soldlist;
 	}
 
-	public ArrayList<GGDto> list(String userid, int listwhatadd) throws SQLException {
+	public ArrayList<GGDto> auction_list(String userid, int listwhatadd) throws SQLException {
 		String sql = "";
 		if (listwhatadd == 0) {//전체 Au001 Au003
 			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND P_ID = 'admin1' and  p.p_code ='P001' and (a.Au_code = 'Au001' or a.Au_code = 'Au003') and P.P_ID = ? ";
@@ -339,9 +338,9 @@ public class BoardDAO {
 			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND P_ID = 'admin1' and  p.p_code ='P001' and a.Au_code = 'Au003' and P.P_ID = ? ";
 		}
 
-		ArrayList<GGDto> actionlist = new ArrayList<GGDto>();
+		ArrayList<GGDto> auctionlist = new ArrayList<GGDto>();
 		
-		System.out.println("actionlist:"+actionlist);
+		System.out.println("auctionlist:"+auctionlist);
 		
 		ps = conn.prepareStatement(sql);
 		
@@ -363,12 +362,10 @@ public class BoardDAO {
 			dto.setAu_startPr(rs.getInt("Au_startPr"));
 			dto.setAu_instantPr(rs.getInt("Au_instantPr"));
 			dto.setP_tm(rs.getDate("P_TM"));
-			actionlist.add(dto);
+			auctionlist.add(dto);
 		}
-		
-		System.out.println("actionlist:"+actionlist);
-		resClose();
-		return actionlist;
+		System.out.println("actionlist:"+auctionlist);
+		return auctionlist;
 	}
 	
 	
@@ -560,52 +557,6 @@ public class BoardDAO {
 		}
 		
 		return p_no;
-	}
-
-	public GGDto auctionDetail(int p_no) throws SQLException {
-		String sql = "select p.p_no, p.p_id, p.p_title, p.p_content, p.p_view, p.p_likeCount, p.p_blindYN, p.p_code, (select u.u_addr from userinfo u where u.u_id= p_id) as u_addr, s.s_deliveryyn, s.s_followlimyn, s.s_code,au.au_code ,(select c.c_name from codes c where c.c_code = au.au_code) as au_c_name,au.au_startpr,au.au_instantpr,au.au_endtm ,au.au_count, hau.ha_bidpr,hau.ha_bidusr,i.i_newname from post p, sale s, auction au, his_auction hau, img i where p.p_no=s.p_no and p.p_no= i.p_no and s.p_no = au.p_no and au.p_no=hau.p_no and hau.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and  p.p_no=?";
-		GGDto dto = null;
-		ps = conn.prepareStatement(sql);
-		ps.setInt(1, p_no);
-		ps.setInt(2, p_no);
-		rs = ps.executeQuery();
-		if(rs.next()) {
-			dto = new GGDto();
-			dto.setP_no(rs.getInt("p_no"));
-			dto.setP_id(rs.getString("p_id"));
-			dto.setP_title(rs.getString("p_title"));
-			dto.setP_content(rs.getString("p_content"));
-			dto.setP_view(rs.getInt("p_view"));
-			dto.setP_likeCount(rs.getInt("p_likeCount"));
-			dto.setP_blindYN(rs.getString("p_blindYN"));
-			dto.setP_code(rs.getString("p_code"));
-			dto.setU_addr(rs.getString(("u_addr")));
-			dto.setS_DeliveryYN(rs.getString("s_deliveryyn"));
-			dto.setS_followLimYN(rs.getString("s_followlimyn"));
-			dto.setS_code(rs.getString("s_code"));
-			dto.setAu_code(rs.getString("au_code"));
-			dto.setC_name(rs.getString("au_c_name"));
-			dto.setAu_startPr(rs.getInt("au_startpr"));
-			dto.setAu_instantPr(rs.getInt("au_instantpr"));
-			dto.setAu_endTm(rs.getDate("au_endtm"));
-			dto.setAu_count(rs.getInt("au_count"));
-			dto.setHa_bidPr(rs.getInt("ha_bidpr"));
-			dto.setHa_bidUsr(rs.getString("ha_bidusr"));
-			dto.setI_newName(rs.getString("i_newname"));
-			
-			System.out.println(dto.getAu_count());
-			System.out.println(rs.getString("i_newname"));
-			System.out.println(dto.getP_title());
-			System.out.println(dto.getU_addr());
-			System.out.println(dto.getP_code());
-			
-			
-		}
-		
-		
-		return dto;
-		
-		
 	}
 
 

@@ -229,7 +229,7 @@ public class BoardService {
 		return sale3List;
 	}
 	/* ====================================================== */
-public void list(String userid, int listwhatadd, int listhowaline)	throws IOException {
+public void sold_list(String userid, int listwhatadd, int listhowaline)	throws IOException {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
@@ -237,7 +237,7 @@ public void list(String userid, int listwhatadd, int listhowaline)	throws IOExce
 		ArrayList<GGDto> soldlist = null;
 		
 		try {
-			soldlist = dao.list(userid,listwhatadd,listhowaline);
+			soldlist = dao.sold_list(userid,listwhatadd,listhowaline);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -247,27 +247,31 @@ public void list(String userid, int listwhatadd, int listhowaline)	throws IOExce
 		System.out.println(map);
 	resp.setContentType("text/html; charset=UTF-8");		
 	resp.getWriter().println(new Gson().toJson(map));
+	map.clear();
+	dao.resClose();
 }
 	
-public void list(String userid, int listwhatadd) throws IOException {
-	HashMap<String, Object> map = new HashMap<String, Object>();
+public void auc_list(String userid, int listwhatadd) throws IOException {
+	HashMap<String, Object> map2 = new HashMap<String, Object>();
 	
 	BoardDAO dao = new BoardDAO();
-	ArrayList<GGDto> actionlist = null;
+	ArrayList<GGDto> auctionlist = null;
 	
 	try {
-		actionlist = dao.list(userid,listwhatadd);
+		auctionlist = dao.auction_list(userid,listwhatadd);
+		System.out.println("auction==="+auctionlist);
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}finally {
 		dao.resClose();
-		map.put("actionlist", actionlist);
+		map2.put("auctionlist:", auctionlist);
 	}
-	System.out.println(map);
+	System.out.println("auc_map:"+map2);
 	
 	resp.setContentType("text/html; charset=UTF-8");		
-	resp.getWriter().println(new Gson().toJson(map));
-	
+	resp.getWriter().println(new Gson().toJson(map2));
+	map2.clear();
+	dao.resClose();
 }
 
 
