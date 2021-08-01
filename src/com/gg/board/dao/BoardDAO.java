@@ -624,6 +624,7 @@ public class BoardDAO {
 			String bidUsr = rs.getString("ha_bidusr");
 			int bidPr =rs.getInt("ha_bidpr");
 			System.out.println("최고 입찰자 : "+ bidUsr+" / 최고입찰가 : "+bidPr );
+			
 			if(bidUsr.equals(ha_bidUsr)) { //내가 이미 최고입찰자인 경우
 				msg = "이미 최고입찰자 입니다.";
 			}else if( bidPr >= ha_bidPr){ //내가 입력한 입찰금이 최고 입찰금보다 적을 때
@@ -653,7 +654,6 @@ public class BoardDAO {
 		map.put("msg", msg);
 		return map;
 	}
-	
 
 
 }
