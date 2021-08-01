@@ -51,7 +51,6 @@ button {
 		console.log("로그인 아이디 확인 ", loginId);
 		var param = {};
 		param.id = loginId;
-		var myPoint = 110;
 		
 		$.ajax({
 			type : "POST",
@@ -59,9 +58,10 @@ button {
 			data : param,
 			dataType : "JSON",
 			success : function(data) {
-
+				console.log("야호");
 			},
 			error : function(e) {
+				console.log("에러");
 				console.log(e);
 			}
 
