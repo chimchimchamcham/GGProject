@@ -17,7 +17,7 @@ import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
 
-@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auction_list","/writeForm","/writeSale","/writeTrade","/writeCommunity","/auctionDetail","/bid"})
+@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auctionlist","/maidelist","/writeForm","/writeSale","/writeTrade","/writeCommunity","/auctionDetail","/bid"})
 
 public class BoardController extends HttpServlet {
 
@@ -46,7 +46,7 @@ public class BoardController extends HttpServlet {
 		GGDto bdto = null;
 		boolean success = false;
 		int p_no;
-		
+		String userid;
 		switch(addr) {
 		case "/salesDetail" : 
 			System.out.println("판매글 상세보기");
@@ -126,7 +126,7 @@ public class BoardController extends HttpServlet {
 		/* ===========================================================================*/	
 		case "/soldlist":
 			System.out.println("판매 리스트 요청");	
-			String userid = (String) req.getSession().getAttribute("loginId");
+			userid = (String) req.getSession().getAttribute("loginId");
 			
 			int listwhatadd = Integer.parseInt(req.getParameter("index1"));
 			int listhowaline = Integer.parseInt(req.getParameter("index2"));
@@ -139,7 +139,7 @@ public class BoardController extends HttpServlet {
 			
 			break;
 			
-		case "/auction_list":
+		case "/auctionlist":
 			System.out.println("경매 리스트 요청");
 			
 			String userid1 = (String) req.getSession().getAttribute("loginId");
@@ -149,6 +149,14 @@ public class BoardController extends HttpServlet {
 			System.out.println("listwhatadd:"+auctionlistwhatadd);
 			
 			service.auc_list(userid1,auctionlistwhatadd);
+			
+			break;
+			
+		case "/maidelist":
+			System.out.println("판매 리스트 요청");	
+			userid = (String) req.getSession().getAttribute("loginId");
+
+			service.maide_list(userid);
 			
 			break;
 			

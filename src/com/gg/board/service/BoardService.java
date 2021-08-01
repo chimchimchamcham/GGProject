@@ -273,7 +273,27 @@ public void auc_list(String userid, int listwhatadd) throws IOException {
 	map.clear();
 	dao.resClose();
 }
-
+public void maide_list(String userid) {
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	
+	BoardDAO dao = new BoardDAO();
+	ArrayList<GGDto> maidelist = null;
+	
+	try {
+		maidelist = dao.maide_list(userid);
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		dao.resClose();
+		map.put("maidelist", maidelist);
+	}
+	System.out.println(map);
+resp.setContentType("text/html; charset=UTF-8");		
+resp.getWriter().println(new Gson().toJson(map));
+map.clear();
+dao.resClose();
+	
+}
 
 	public HashMap<String, ArrayList<GGDto>> category() {
 		BoardDAO dao = new BoardDAO();
@@ -447,6 +467,8 @@ public void auc_list(String userid, int listwhatadd) throws IOException {
 		return map;
 		
 	}
+
+	
 
 
 

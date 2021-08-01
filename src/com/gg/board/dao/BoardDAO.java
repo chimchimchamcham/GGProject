@@ -368,6 +368,34 @@ public class BoardDAO {
 		return auctionlist;
 	}
 	
+	public ArrayList<GGDto> maide_list(String userid) throws SQLException {
+		String sql = "";
+
+		ArrayList<GGDto> soldlist = new ArrayList<GGDto>();
+		
+		System.out.println("soldlist:"+soldlist);
+		
+		ps = conn.prepareStatement(sql);
+		
+		System.out.println("daouserID:"+userid);
+		ps.setString(1, userid);
+		rs = ps.executeQuery();
+
+		
+		while (rs.next()) {
+			GGDto dto = new GGDto();
+			dto.setP_no(rs.getInt("P_no"));
+			dto.setP_title(rs.getString("P_title"));
+			dto.setP_tm(rs.getDate("p_tm"));
+			dto.setP_likeCount(rs.getInt("p_likecount"));
+			dto.setNs_pr(rs.getInt("NS_pr"));
+			dto.setI_newName(rs.getString("I_newName"));
+			
+			soldlist.add(dto);
+		}
+		System.out.println("soldlist:"+soldlist);
+		return soldlist;
+	}
 	
 	
 	
@@ -653,6 +681,8 @@ public class BoardDAO {
 		map.put("msg", msg);
 		return map;
 	}
+
+
 
 
 }

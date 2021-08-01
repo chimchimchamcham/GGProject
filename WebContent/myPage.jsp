@@ -166,6 +166,43 @@ margin-top:50px;
 	padding : 5 10px;
 	margin : 10px;
 }
+                .auction{
+                    display: flex;
+                    flex-direction: row;
+                    font-size: 12px;
+                    opacity: 0.5;
+                }
+                .xianzai{
+                    font-size: 20px;
+                }
+                .endtime-zoon{
+                    display: flex;
+                    flex-direction: row;
+                    color: red;
+                    font-size: 15px;
+                }
+                .nick{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 30px;
+                }
+                .c_code{
+                    border: 1px solid black;
+                    justify-self: center;
+                }
+                .c_zoon{
+                    margin: 3%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .mai-time{
+                    margin-left: 6%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
 </style>
 <script>
 var loginId = "${sessionScope.loginId}";
@@ -208,7 +245,9 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			if ($index == 0) {
 				url ='./soldlist';
 			}else if($index == 1) {
-				url ='./auction_list';
+				url ='./auctionlist';
+			}else if($index == 2){
+				url ='./maidelist';
 			}
 			console.log("url:"+url);
 
@@ -420,12 +459,15 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 					console.log("data:",data);
 					console.log($index);
 					console.log(url);
-					if($index == 0){
+					if($index == 0){//판매
 						console.log("soled_list:",data.soldlist);
 						soled_list(data.soldlist);
-					}else if ($index == 1) {
+					}else if ($index == 1) {//경매
 						console.log("auction_list:",data.auctionlist);
 						auction_list(data.auctionlist);
+					}else if ($index == 2) {//구매
+						console.log("maide_list:",data.maidelist);
+						auction_list(data.maidelist);
 					}
 				}
 			},
@@ -465,22 +507,47 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			
 			auctionlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
-				content += "<div class='item-one'>";
-				content += "<h2>경매</h2>";
-				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg'></div>";
-				content += "<div class='dretion-zoon'>";
-				content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no=11>"+item.p_title+"</a>"+"</div>";
-				content += "	<div class='itempoint'>"+""+"p"+"</div>";
-				content += "</div>";
-				content += "<div class='love-time'>";
-				content += "	<div class='time'>"+item.p_tm+"</div>";	
-				content += "</div>";	
-				content += "</div>";
-			});	
-			$("#sale .item-box").empty();
-			$("#sale .item-box").append(content);
-			
+				content +="<div class='item-one'>";
+				content +="<div class='img-zoon'><img src='test.jpg' alt=''#'></div>";
+				content +="<div class='dretion-zoon'>";
+				content +="<h2>제목.....</h2>";
+				content +="<div class='xianzai'>현제 입찰가</div><div style='font-size: 25px;'>5000p</div><div class='auction'>";
+				content +="<div>시작:5000p</div>/<div>즉결:5000p</div></div>";
+				content +="</div><div class='endtime-zoon'>종료시간:<div>2021/07/03</div></div>";
+				content +="<div class='love-time'><div>입찰수:2</div><div>2시간 전</div></div>";
+				content +="</div>";
+				});	
+				$('#trade .item-box').empty();
+				$('#trade .item-box').append(content);
 		}// 경매 리스트 end
+		
+		//데이터 가져와서 뿌려주는 구매 리스트
+		function maide_list(maidelist){	
+			console.log("maidelist:", maidelist);
+			var content="";
+			
+			auctionlist.forEach(function(item,idx){
+				console.log("idx:",idx,item);
+				content += "<div class='item-one'>";
+				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg' style='margin:3%'></div>";
+				content += "<div class='dretion-zoon style='margin: 3%'>";
+				content +="		<h2>제목.....</h2>";
+				content += "	<div style='font-size: 25px; justify-self: center;'>5000p</div>";
+				content += "</div>";
+				content += "<div class='c_zoon'>";
+				content += "	<div class='c_code'>판매</div>";	
+				content += "</div>";	
+				content += "<div class='nick' style='margin: 3%;'>";
+				content += "	<div>닉네임</div>";
+				content += "</div>";
+				content += "<div class='mai-time'>";
+				content += "	<div> 구매날짜:2시간 전</div>";
+				content += "</div></div>";
+			});	
+			$("#sell .item-box").empty();
+			$("#sell .item-box").append(content);
+			
+		}// 구매 리스트 end
 			
 			
 </script>
@@ -621,7 +688,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 
    <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
    <div id="trade" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
-   <div id="sell" style="background-color:yellow; padding:20px;">구매목록입니다.</div>
+   <div id="sell" style="background-color:yellow; padding:20px;"><jsp:include page="./mypage_list/maide.jsp"></div>
    <div id="commu" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
    <div id="follow" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
    <div id="want" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
