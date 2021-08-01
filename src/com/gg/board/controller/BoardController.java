@@ -235,7 +235,9 @@ public class BoardController extends HttpServlet {
 		case "/bid":
 			System.out.println("입찰 요청");
 			sue_map = service.auctionBid();
-			
+			resp.setCharacterEncoding("UTF-8");
+			resp.setContentType("text/html charset=UTF-8");
+			resp.setHeader("Access-Control-Allow-origin", "*"); //view가 같은 서버에 있으면 생략 가능
 			resp.getWriter().println(new Gson().toJson(sue_map));
 		}
 		

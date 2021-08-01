@@ -559,8 +559,6 @@ public class BoardDAO {
 		return p_no;
 	}
 
-<<<<<<< HEAD
-=======
 	public GGDto auctionDetail(int p_no) throws SQLException {
 		String sql = "select p.p_no, p.p_id, p.p_title, p.p_content, p.p_view, p.p_likeCount, p.p_blindYN, p.p_code, (select u.u_addr from userinfo u where u.u_id= p_id) as u_addr, s.s_deliveryyn, s.s_followlimyn, s.s_code,au.au_code ,(select c.c_name from codes c where c.c_code = au.au_code) as au_c_name,au.au_startpr,au.au_instantpr,au.au_endtm ,au.au_count, hau.ha_bidpr,hau.ha_bidusr,i.i_newname from post p, sale s, auction au, his_auction hau, img i where p.p_no=s.p_no and p.p_no= i.p_no and s.p_no = au.p_no and au.p_no=hau.p_no and hau.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and  p.p_no=?";
 		GGDto dto = null;
@@ -617,9 +615,10 @@ public class BoardDAO {
 		String msg = "";
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		//최고입찰자와 최고입찰금액 가져오는 쿼리
-		sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?);";
+		sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and p_no = ?";
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, p_no);
+		ps.setInt(2, p_no);
 		rs = ps.executeQuery();
 		if(rs.next()) {
 			String bidUsr = rs.getString("ha_bidusr");
@@ -650,10 +649,10 @@ public class BoardDAO {
 		//입찰금액 입력 쿼리
 		System.out.println("경매 히스토리 입력여부 : "+success);
 		map.put("success", success);
+		System.out.println("메세지 확인 : "+msg);
 		map.put("msg", msg);
 		return map;
 	}
 
->>>>>>> b8a0485ad1293102ca0f3654a4d7b4ea593bfc3f
 
 }
