@@ -45,10 +45,11 @@
 		if(bidpr==0){
 			alert("입찰가격을 입력하세요");
 			$("#ha_bidPr").focus();
-		}else if(bidpr<$("#toppr").val()){
+			
+		}/* else if(bidpr<$("#toppr").val()){
 			alert("현재 입찰 가격보다 큰 값을 입력하세요.");
 			$("#ha_bidPr").focus();
-		}else{
+		} */else{
 			var param = {};
 			param.p_no = $("#p_no").val();
 			param.ha_bidPr = $("#ha_bidPr").val();
