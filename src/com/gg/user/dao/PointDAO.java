@@ -70,7 +70,19 @@ public class PointDAO {
 		
 		return myPoint;
 	}
-	
+	public boolean chargePoint(int chargePoint, String id) throws SQLException {
+		sql = "INSERT INTO point(pnt_id,pnt_point,pnt_tm,pnt_otherid,pnt_code) VALUES(?,?,SYSDATE,'SYSTEM','PNT001')";
+		boolean success = false;
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, id);
+		ps.setInt(2, chargePoint);
+		int checker = ps.executeUpdate();
+		if(checker >0) {
+			success = true;
+		}
+		
+		return success;
+	}
 	
 	public void resClose() {
 		try {
@@ -82,6 +94,7 @@ public class PointDAO {
 			e.printStackTrace();
 		}
 	}
+	
 
 	
 	
