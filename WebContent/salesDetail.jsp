@@ -172,7 +172,7 @@
                     <div id="description">
                         <h1>${dto.p_title }<sup>${dto.ns_name }</sup></h1>
                         <p id="salePrice">${dto.ns_pr } P</p>
-                        <p>${dto.p_tm }<p>
+                        <p>${dto.p_tm }</p>
                         <p>거래방식 :              
                        		<c:if test="${dto.s_DeliveryYN eq 'Y' }">택배</c:if>
                        		<c:if test="${dto.s_DeliveryYN eq 'N' }">직거래</c:if>                       		
