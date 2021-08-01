@@ -10,10 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gg.dto.GGDto;
 import com.gg.user.service.PointService;
 import com.google.gson.Gson;
 
-@WebServlet({ "/charge", "/test", "/pointPop" })
+@WebServlet({ "/charge", "/test", "/pointPop", "/pointList" })
 public class PointController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -68,11 +69,18 @@ public class PointController extends HttpServlet {
 			success = service.charge(chargePoint, id);
 			System.out.println("충전 성공 여부 : " + success);
 			map = new HashMap<String, Object>();
-			map.put("success",success);
-			
+			map.put("success", success);
+
 			resp.getWriter().println(new Gson().toJson(map));
-			
-			
+			break;
+
+		case "/pointList":
+			System.out.println("포인트 리스트 진입.");
+
+			service = new PointService(req);
+			map = new HashMap<String, Object>();
+			map.put("list", service.pointList());
+			resp.getWriter().println(new Gson().toJson(map));
 
 			break;
 

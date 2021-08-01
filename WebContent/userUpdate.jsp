@@ -45,6 +45,21 @@ td {
 	width: 500px;
 	text-align: center;
 }
+
+/*프로필 사진*/
+.box {
+    width: 130px;
+    height: 130px; 
+    border-radius: 50%;
+    overflow: hidden;
+    margin:0px auto;
+}
+
+.profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 </style>
 <body>
 	<h2>${userUpdate.u_nname}님의회원정보 수정</h2>
@@ -91,9 +106,13 @@ td {
 					<p>
 						<input type="file" name="photo" accept=".gif, .jpg, .png, .jpeg" id="test"/>
 					</p> <c:if test="${userUpdate.u_newName  eq 'default-profile.png'}">
-						<img src="./img/default-profile.png" width="100px" id="preview-image" style="border-radius:50%;"/>
+					<div class="box" >
+    					<img class="profile" src="./img/default-profile.png" id="preview-image" >
+					</div>
 					</c:if> <c:if test="${userUpdate.u_newName  ne 'default-profile.png'}">
-						<img src="/ProfilePhoto/${userUpdate.u_newName}" width="100px" id="preview-image" style="border-radius:50%;"/>
+					<div class="box" >
+    					<img class="profile" src="/ProfilePhoto/${userUpdate.u_newName}" id="preview-image" >
+					</div>
 					</c:if>
 					<!-- <button type="button" id="default-image">기본 이미지</button> -->
 				</td>
