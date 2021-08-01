@@ -12,18 +12,15 @@
 	
 	#wrap>div:nth-of-type(2){position:absolute;top:60px;left:20px;line-height:50px;}
 	#wrap>div:nth-of-type(2)>input{width:240px;height:50px;text-align:center;padding-right:30px;font-weight:700;font-size:2.5rem;border:1px solid gray;border-radius:5px/5px;}
-	#wrap>div:nth-of-type(2)>span{font-weight:700;font-size:2.5rem;}
-	#wrap>div:nth-of-type(2)>button{display:inline-block;margin-left:10px;width:90px;height:40px;color:white;background-color:#6E6E6E;font-size:1.1rem;border-radius:5px/5px;}
+	
+	#bid{display:inline-block;margin-left:10px;width:90px;height:40px;color:white;background-color:#6E6E6E;font-size:1.1rem;border-radius:5px/5px;}
 	
 	#wrap>div:nth-of-type(3){position:absolute;top:140px;left:20px;}
 	#wrap>div:nth-of-type(3)>div{display:inline-block;width:270px;height:40px;background-color:#BDBDBD;border-radius:5px/5px;text-align:center;font-weight:500;font-size:1.1em;line-height:40px;}
-	#wrap>div:nth-of-type(3)>button{display:inline-block;margin-left:10px;width:90px;height:40px;color:white;background-color:#6E6E6E;border-radius:5px/5px;font-size:1.1rem;}
+	#charge{display:inline-block;margin-left:10px;width:90px;height:40px;color:white;background-color:#6E6E6E;border-radius:5px/5px;font-size:1.1rem;}
 	
 	#wrap>span{top:60px;left:260px;font-weight:700;font-size:2.5rem;position:absolute;}
-	
-	
-	
-	
+		
 </style>
 <head>
 <meta charset="UTF-8">
@@ -31,11 +28,70 @@
 </head>
 <body>
 	<div id="wrap">
+		<input type="hidden" id="p_no" value="${param.p_no }">
+		<input type="hidden" id="toppr" value="${param.toppr }">
+		<input type="hidden" id="endpr" value="${param.endpr }">
 		<div><p>아이패드 파우치에 <b>입찰하기</b></p></div>
-		<div><input type="text" name="point"><button>입찰</button></div>
-		<div><div>둘리님의 잔여 포인트 5000P</div><button>포인트충전</button></div>
+		<div><input type="text" name="ha_bidPr" id="ha_bidPr" value="0"><button id="bid">입찰</button></div>
+		<div><div>둘리님의 잔여 포인트 <span id="wallet">5000</span>P</div><input type="button" id="charge" value="포인트충전"></div>
 		<span>P</span>
+		<p>${param.endpr }</p>
 	</div>
 </body>
-<script></script>
+<script>
+	//입찰버튼 클릭시 알람 뜸
+	$("#bid").click(function(){
+		var bidpr = $("#ha_bidPr").val()>$("#endpr").val()?$("#endpr").val():$("#ha_bidPr").val();
+		if(bidpr==0){
+			alert("입찰가격을 입력하세요");
+			$("#ha_bidPr").focus();
+		}else if(bidpr<$("#toppr").val()){
+			alert("현재 입찰 가격보다 큰 값을 입력하세요.");
+			$("#ha_bidPr").focus();
+		}else{
+		 	/* $.ajax({
+				type : 'post',
+				url : 'bid',
+				data : {
+					'p_no' : $("#p_no").val(),
+					'ha_bidPr' : $("#ha_bidPr").val()	
+				},
+				dataType : 'JSON',
+				success : function(data){
+					console.log(data);
+					if(data.success){
+						alert('입찰 완료');
+						opener.parent.location.reload();
+						window.close();
+					}else if{
+						alert(data.msg);
+					}
+				},
+				error : function(e){
+					console.log("접속 실패");
+					console.log(e);
+				}
+			}); */
+			alert("입찰 완료 bidpr : "+bidpr);
+			opener.parent.location.reload();
+			window.close();
+		}
+	});
+	
+	//포인트버튼 클릭시 알람 뜸
+	$("#charge").click(function(){
+		alert("포인트 충전 팝업 이동");
+	});
+	
+	//입력한 값이 잔여 포인트보다 클 경우 입찰 버튼 비활성화, 검정색으로 바뀜
+	$("#ha_bidPr").change(function(){
+		if($("#ha_bidPr").val()>$("#wallet").text()){
+			$("#bid").attr("disabled", true).css({"background-color":"black"});
+		}else{
+			$("#bid").attr("disabled", false).css({"background-color":"#6E6E6E"});
+		}
+	});
+	
+	//
+</script>
 </html>
