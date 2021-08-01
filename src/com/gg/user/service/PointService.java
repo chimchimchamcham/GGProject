@@ -1,6 +1,5 @@
 package com.gg.user.service;
 
-import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 

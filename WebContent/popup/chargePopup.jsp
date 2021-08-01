@@ -60,7 +60,7 @@ h2 {
 	<form action="../charge" method="POST">
 		<table>
 			<tr>
-				<td>충전금액 : <input type="number" name="chargePoint" />P
+				<td>충전금액 : <input type="number" name="chargePoint" value=0 />P
 				</td>
 			</tr>
 			<tr>
@@ -75,29 +75,15 @@ h2 {
 	</form>
 </body>
 <script>
-	function pageLoding(){
+	$("button").click(function(){
 		
-		$.ajax({
-			type : 'POST',
-			url : 'writeSale',
-			data : param,
-			dataType : 'JSON',
-			success : function(data) {
-				if (data.p_no>0) {
-					form.append("p_no",data.p_no);
-					FileUpload();
-					alert("판매글 작성 성공했습니다.");
-					location.href="./salesDetail?p_no="+data.p_no;
-				} else {
-					alert("판매 글 작성을 실패하였습니다! ");
-				}
-			},
-			error : function(e) {
-				console.log(e);
-			}
+		if($("input[name='chargePoint']").val() == ""){
+			alert("금액을 입력해 주세요!");
+			location.href='chargePopup.jsp';
+		}
+		
+		
+	});
 
-		});
-		
-	}
 </script>
 </html>

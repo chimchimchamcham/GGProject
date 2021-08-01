@@ -59,6 +59,9 @@ public class PointController extends HttpServlet {
 			
 		case "/charge":
 			System.out.println("포인트 충전 요청");
+			if(req.getParameter("chargePoint") == null){
+				resp.sendRedirect("./popup/chargePopup");
+			}
 			int chargePoint = Integer.parseInt(req.getParameter("chargePoint"));
 			System.out.println("충전 요청 금액 : " + chargePoint);
 
