@@ -653,6 +653,7 @@ public class BoardDAO {
 		map.put("msg", msg);
 		return map;
 	}
+	
 
 
 }
