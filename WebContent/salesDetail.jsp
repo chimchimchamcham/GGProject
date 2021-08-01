@@ -24,7 +24,7 @@
 	}
 	/* #wrap{margin-top:150px;}  */
     section{width:100%;}
-    #sectionWrap{width:1200px;margin:0 auto;border-top:1px solid gray;padding:30px;}
+    #sectionWrap{width:1200px;margin:0 auto;}
     #sectionWrap>article{width:1200px;height:1000px;/* border:1px solid black; */clear: both;}
     #imgWrap{width:400px;height:400px;/* background-color:green; */float:left;}
     
