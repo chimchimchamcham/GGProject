@@ -195,11 +195,11 @@ public class UserService {
             if (id.equals(oppId) || oppId == null ){ //내글에서 내프로필 갈때 / 마이페이지
                dto = dao.myPage(id);
                dto.setMyYN(true);
-               System.out.println(dto.isMyYN());
-            }else if(!id.equals(oppId)){
+               System.out.println("마이 프로필 여부 : "+dto.isMyYN());
+            }else if(!id.equals(oppId)){ //로그인했는데 타인프로필
                dto = dao.myPage(oppId);
                dto.setMyYN(false);
-               System.out.println(dto.isMyYN());
+               System.out.println("마이 프로필 여부 : "+dto.isMyYN());
             }
          }else { //로그인 안됐을 때 타인프로필
             dto = dao.myPage(oppId);

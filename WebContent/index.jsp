@@ -28,7 +28,7 @@
 		<a href="salesDetail.jsp?P_no=10">타인 판매 상세보기</a>
 		<a href="salesDetailSalerPosition.jsp">내 판매글 상세보기</a>
 		<a href = "myPage?id=123">123프로필로 연결</a>
-	</div>
+	</div><!-- div main end -->
 </body>
 <script>
 	var msg = "${msg}";
