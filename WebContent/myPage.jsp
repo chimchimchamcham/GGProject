@@ -61,36 +61,27 @@ body {
 
 
 #div1 {
-	width: 100%;
+	width: 1020px;
 	display: block;
-	height: 500px;
+	height: 450px;
 	margin: 0px auto;
 	clear: both;
+	padding-top: 20px;
 }
 
 table {
 	float: left;
 }
 
-td {
+ td,th {
 	border: 1px solid black;
 }
 
 .addrBg{
-}
-
-.addrBg p{
 	background-color: #D8D8D8;
-	display: inline;
-	padding : 5px 15px;
+	padding :5px 9px;
 	border: 0px;
 	border-radius: 10px;
-}
-
-#soge {
-	heigth: 100px;
-	background-color: yellow;
-	display: block;
 }
 
 #td1 {
@@ -102,6 +93,41 @@ a{
 	color: balck;
 }
 
+#userInfoBox{
+	width : 300px;
+}
+
+#intro{
+	width:700px;
+	float: left;
+	margin-left: 20px;
+	margin-top: 20px;
+	text-align: left;
+}
+
+#intro p:nth-of-type(2){
+width:700px;
+	height:200px;
+	overflow: scroll;
+	background-color: #F2F2F2;
+}
+
+#pointBox{
+	margin-left: 20px;
+	text-align:left;
+}
+
+#pointBox td:nth-of-type(1){
+	width:150px;
+}
+
+#pointBox td:nth-of-type(2){
+	display: inline;
+}
+
+#pointBox th{
+	width:130px;
+}
 </style>
 <script>
 var loginId = "${sessionScope.loginId}";
@@ -409,11 +435,13 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 	<div id="main">
 <!-- true일때 실행되는 마이페이지 -->
 	<c:if test ="${myPageInfo.myYN eq 'true'}">
-	<h2>마이페이지</h2>
+	
+	<!-- 마이페이지 상단 -->
 	<div id="div1">
-		<table style="text-align: center; width: 30%;">
+	<h2>마이페이지</h2>
+		<table id="userInfoBox">
 			<tr>
-				<td>
+				<td colspan="2">
 			<c:if test="${myPageInfo.u_newName  eq 'default-profile.png'}">
 				<img src="./img/default-profile.png" width="150px"/>
 			</c:if>
@@ -422,48 +450,42 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			</c:if>
 			</tr>
 			<tr>
-				<td>${myPageInfo.u_nname}</td>
+				<th colspan="2">${myPageInfo.u_nname}</th>
 			</tr>
 			<tr>
-				<td class="addrBg"><p>${myPageInfo.u_addr }&nbsp;${myPageInfo.u_detailAddr }</p></td>
+				<td colspan="2" class="addrBg">${myPageInfo.u_addr }&nbsp;${myPageInfo.u_detailAddr }</td>
 			</tr>
 			<tr>
-				<td>이름 : ${myPageInfo.u_name }</td>
+				<th>이름</th>
+				<td>${myPageInfo.u_name }</td>
 			</tr>
 			<tr>
-				<td>이메일 : ${myPageInfo.u_email }</td>
+				<th>이메일</th>
+				<td>${myPageInfo.u_email }</td>
 			</tr>
 			<tr>
-				<td>전화번호 : ${myPageInfo.u_phone }</td>
+				<th>전화번호</th>
+				<td>${myPageInfo.u_phone }</td>
 			</tr>
 			<tr>
-				<td><button onclick="location.href='./userUpdateForm?id=${loginId}'">회원정보 수정</button></td>
+				<td colspan="2"><button onclick="location.href='./userUpdateForm?id=${loginId}'">회원정보 수정</button></td>
 			</tr>
 		</table>
 
-		<table style="width: 55%;">
+		<table id="pointBox">
 			<tr>
-				<td>현재 포인트</td>
+				<th>현재 포인트</th>
 				<td><a href="#" onclick="pointListPop();">${myPageInfo.pnt_point }P</a></td>	
 				<td><input type="button" value="충전" onclick="chargePopup();" /></td>
 			</tr>
-			<tr>
-				<td>평점</td>
-				<td colspan="2"></td>
-			</tr>
-			<tr>
-				<td colspan="3">자기소개</td>
-			</tr>
-			<tr>
-				<td colspan="3">
-					<p>${myPageInfo.u_intro}</p>
-				</td>
-			</tr>
 		</table>
-		
+		<div id="intro">
+			<p>자기소개 글</p>
+			<p>${myPageInfo.u_intro}</p>
+		</div>
 	</div>
-	
-	   <div id="twoButton">
+			
+	 <div id="twoButton">
       <button>판매목록	</button>
       <button>경매목록</button> 
       <button>구매목록</button>
@@ -473,7 +495,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
       <button>좋아요</button> 
       <button>신고목록</button>
    </div>
-   
+
    <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
    <div id="trade" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
    <div id="sell" style="background-color:yellow; padding:20px;">구매목록입니다.</div>
