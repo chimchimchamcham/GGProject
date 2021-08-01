@@ -28,9 +28,11 @@
 		<a href="salesDetail.jsp?P_no=10">타인 판매 상세보기</a>
 		<a href="salesDetailSalerPosition.jsp">내 판매글 상세보기</a>
 		<a href = "myPage?id=123">123프로필로 연결</a>
+		<a href = "#" onclick= notifyPop()>신고하기</a>
 	</div><!-- div main end -->
 </body>
 <script>
+	function notifyPop() { window.open("./popup/notifyPopup.jsp", "notify", "width=500, height=700, left=600, top=200"); }
 	var msg = "${msg}";
 	if(msg != ""){
 		alert(msg);
