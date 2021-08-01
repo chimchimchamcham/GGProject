@@ -1,5 +1,6 @@
 package com.gg.user.service;
 
+
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,24 @@ public class PointService {
 		
 		
 		return myPoint;
+	}
+
+	public boolean charge(int chargePoint, String id) {
+		System.out.println("포인트 충전 서비스 진입 : " + chargePoint);
+		System.out.println("포인트 충전 서비스 진입 : " + id);
+		PointDAO dao = new PointDAO();
+		boolean success = false;
+		try {
+			success = dao.chargePoint(chargePoint,id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		
+		return success;
 	}
 	
 	

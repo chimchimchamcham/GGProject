@@ -7,47 +7,47 @@
 <title>충전 팝업</title>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-#myPoint{
+#myPoint {
 	display: inline;
 }
 </style>
 </head>
 <script type="text/javascript">
 	$(document).ready(function() {
-
+		
 		$("#cancelBtn").click(function() {
 			alert("포인트 충전이 취소되었습니다.");
 			window.close();
 		});
+
+		console.log("야호");
 		var loginId = "${sessionScope.loginId}";
-		console.log("로그인 아이디 확인 " , loginId);
-		var param= {};
+		console.log("로그인 아이디 확인 ", loginId);
+		var param = {};
 		param.id = loginId;
 		var myPoint = 110;
 		$.ajax({
 			type : "POST",
 			url : "../pointPop",
-			data: param,
+			data : param,
 			dataType : "JSON",
-			success :function(data){
-				console.log("잘 놀다갑니다.");
+			success : function(data) {
 				console.log(data.success);
 				console.log(data.myPoint);
-				if(data.success){
+				if (data.success) {
 					myPoint = data.myPoint;
-					console.log("내포인트 : " ,myPoint);
+					console.log("내포인트 : ", myPoint);
 					$("#myPoint").text(myPoint);
-				}else{
+				} else {
 					alert("페이지 로딩 중 오류가 발생하였습니다.");
 				}
-				
 			},
-			error : function(e){
+			error : function(e) {
 				console.log(e);
 			}
-			
+
 		});
-		
+
 	});
 </script>
 <style>
@@ -57,47 +57,66 @@ h2 {
 </style>
 <body>
 	<h2>포인트 충전</h2>
-	<form action="../charge" method="POST">
 		<table>
 			<tr>
-				<td>충전금액 : <input type="number" name="chargePoint" />P
+				<td>충전금액 : <input type="text" name="chargePoint" value=0 />P <input
+					type='text' name='id' value=${loginId } hidden='hidden' />
 				</td>
 			</tr>
 			<tr>
-				<td>${loginId }님 의 현재 포인트 : <p id="myPoint"></p>P</td>
+				<td>${loginId }님의 현재 포인트 :
+					<p id="myPoint"></p>P
+				</td>
 			</tr>
 			<tr>
 				<td>
-					<button>충전</button> <input type="button" id="cancelBtn" value="취소" />
+					<button type='button'>충전</button> <input type="button"
+					id="cancelBtn" value="취소" />
 				</td>
 			</tr>
 		</table>
-	</form>
 </body>
 <script>
-	function pageLoding(){
-		
-		$.ajax({
-			type : 'POST',
-			url : 'writeSale',
-			data : param,
-			dataType : 'JSON',
-			success : function(data) {
-				if (data.p_no>0) {
-					form.append("p_no",data.p_no);
-					FileUpload();
-					alert("판매글 작성 성공했습니다.");
-					location.href="./salesDetail?p_no="+data.p_no;
-				} else {
-					alert("판매 글 작성을 실패하였습니다! ");
-				}
-			},
-			error : function(e) {
-				console.log(e);
-			}
+var param = {};
+param.id = "${sessionScope.loginId}";
 
-		});
-		
-	}
+	$("input[name='chargePoint']").keyup(function(e) {
+		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
+			var inputVal = $(this).val();
+			$(this).val(inputVal.replace(/[^0-9]/gi, ''));
+		}
+	});
+	$("button[type='button']").click(
+			function() {
+
+				if ($("input[name='chargePoint']").val() == ""
+						|| $("input[name='chargePoint']").val() == 0) {
+					alert("금액을 입력해 주세요!");
+					$("input[name='chargePoint']").focus();
+				} else {
+					param.chargePoint = $("input[name='chargePoint']").val();
+					console.log("미친 시발 :" , param.chargePoint);
+					$.ajax({
+						type : "POST",
+						url : "../charge",
+						data : param,
+						dataType : "JSON",
+						success : function(data) {
+							console.log(data.success);
+							if (data.success) {
+								alert("포인트 충전 여부 "+data.success);
+								window.close();
+							} else {
+								alert("충전에 실패하였습니다.");
+							}
+						},
+						error : function(e) {
+							console.log(e);
+						}
+
+					});
+				}
+
+			});
 </script>
 </html>

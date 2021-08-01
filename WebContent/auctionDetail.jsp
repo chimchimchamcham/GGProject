@@ -117,7 +117,10 @@
     
   	//입찰하기 버튼을 누르면 팝업창 띄우기
   	$("#threeButton>button:nth-last-of-type(1)").click(function(){
-  		window.open("./popup/auctionBidPopup.jsp", "auctionBidPopup", "width=390, height=175, left=700, top=400");
+  		var p_no = ${dto.p_no};
+  		var toppr = ${dto.ha_bidPr};
+  		var endpr = ${dto.ha_bidPr};
+  		window.open("./popup/auctionBidPopup.jsp?p_no="+p_no+"&toppr="+toppr+"&endpr="+endpr, "auctionBidPopup", "width=400, height=200, left=700, top=400");
     });
   	
     //팔로우 클릭시 버튼 변경
@@ -138,8 +141,8 @@
     	$("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
     }
     //판매자가 자신의 글을 본다면 수정 삭제 표시, 팔로우 숨기기, 버튼 색상변경과 비활성화 시키기
-    /*if("${sessionScppe.loginId} == "${dto.p_id}")  */
-    if("user2" == "${dto.p_id}"){
+    if("${sessionScppe.loginId} == "${dto.p_id}"){
+    //if("user2" == "${dto.p_id}"){
     	$("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
     	$("#follow").css({"background-color":"gray"}).attr("disabled", true);
     	$("#description>div:nth-of-type(1)").hide();
@@ -183,7 +186,7 @@
                         <button>찜+</button><!-- +1 -->
                         <button>찜-</button><!-- -1 -->
                         <button>즉시구매</button>
-                        <button onclick="showPopup();">입찰하기</button>
+                        <button>입찰하기</button>
                     </div>
                     <div id="twoButton">
                         <button>상세정보</button>
