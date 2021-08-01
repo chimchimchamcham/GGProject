@@ -56,10 +56,11 @@ public class PointService {
 
 	public ArrayList<GGDto> pointList() {
 		System.out.println("리스트 소환");
+		PointDAO dao = new PointDAO();
 		String id = req.getParameter("id");
 		System.out.println("포인트리스트 아이디 :" + id);
 		GGDto dto = null;
-		//dto = dto.pointList();
+		dto = dao.pointList(id);
 		
 		
 		return null;

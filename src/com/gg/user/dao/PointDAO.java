@@ -9,6 +9,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.gg.dto.GGDto;
+
 
 public class PointDAO {
 
@@ -83,6 +85,18 @@ public class PointDAO {
 		
 		return success;
 	}
+	public GGDto pointList(String id) {
+		sql
+		
+		
+		
+		return null;
+	}
+	
+	
+	
+	
+	
 	
 	public void resClose() {
 		try {
@@ -94,6 +108,7 @@ public class PointDAO {
 			e.printStackTrace();
 		}
 	}
+	
 	
 
 	
