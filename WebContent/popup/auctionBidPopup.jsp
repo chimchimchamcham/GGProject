@@ -49,13 +49,14 @@
 			alert("현재 입찰 가격보다 큰 값을 입력하세요.");
 			$("#ha_bidPr").focus();
 		}else{
+			var param = {};
+			param.p_no = $("#p_no").val();
+			param.ha_bidPr = $("#ha_bidPr").val();
+			
 		 	 $.ajax({
 				type : 'post',
 				url : '../bid',
-				data : {
-					'p_no' : $("#p_no").val(),
-					'ha_bidPr' : $("#ha_bidPr").val()	
-				},
+				data : param,
 				dataType : 'JSON',
 				success : function(data){
 					console.log(data);
