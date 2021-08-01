@@ -68,18 +68,18 @@ h2 {
 			</tr>
 			<tr>
 				<td>
-					<button>충전</button> <input type="button" id="cancelBtn" value="취소" />
+					<button type='button'>충전</button> <input type="button" id="cancelBtn" value="취소" />
 				</td>
 			</tr>
 		</table>
 	</form>
 </body>
 <script>
-	$("button").click(function(){
+	$("button[type='button']").click(function(){
 		
 		if($("input[name='chargePoint']").val() == ""){
 			alert("금액을 입력해 주세요!");
-			location.href='chargePopup.jsp';
+			location.href='./chargePopup.jsp';
 		}
 		
 		
