@@ -14,8 +14,7 @@
 </head>
 <script type="text/javascript">
 	$(document).ready(function() {
-		console.log(msg);
-		msg="";
+		
 		$("#cancelBtn").click(function() {
 			alert("포인트 충전이 취소되었습니다.");
 			window.close();
@@ -42,7 +41,6 @@
 				} else {
 					alert("페이지 로딩 중 오류가 발생하였습니다.");
 				}
-
 			},
 			error : function(e) {
 				console.log(e);
@@ -59,9 +57,7 @@ h2 {
 </style>
 <body>
 	<h2>포인트 충전</h2>
-	<form action="../charge" method="POST" id="charge">
 		<table>
-
 			<tr>
 				<td>충전금액 : <input type="text" name="chargePoint" value=0 />P <input
 					type='text' name='id' value=${loginId } hidden='hidden' />
@@ -79,9 +75,11 @@ h2 {
 				</td>
 			</tr>
 		</table>
-	</form>
 </body>
 <script>
+var param = {};
+param.id = "${sessionScope.loginId}";
+
 	$("input[name='chargePoint']").keyup(function(e) {
 		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
 			var inputVal = $(this).val();
@@ -96,16 +94,29 @@ h2 {
 					alert("금액을 입력해 주세요!");
 					$("input[name='chargePoint']").focus();
 				} else {
-					$("#charge").submit();
+					param.chargePoint = $("input[name='chargePoint']").val();
+					console.log("미친 시발 :" , param.chargePoint);
+					$.ajax({
+						type : "POST",
+						url : "../charge",
+						data : param,
+						dataType : "JSON",
+						success : function(data) {
+							console.log(data.success);
+							if (data.success) {
+								alert("포인트 충전 여부 "+data.success);
+								window.close();
+							} else {
+								alert("충전에 실패하였습니다.");
+							}
+						},
+						error : function(e) {
+							console.log(e);
+						}
+
+					});
 				}
 
 			});
-	var msg = "${sessionScope.chargeSuccess}";
-	if(msg != ""){
-		console.log("으아아 :" ,msg);
-		msg ="";
-		console.log("으아아 이후 : " ,msg);
-		
-	}
 </script>
 </html>

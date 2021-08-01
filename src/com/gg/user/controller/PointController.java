@@ -67,10 +67,12 @@ public class PointController extends HttpServlet {
 			service = new PointService(req);
 			success = service.charge(chargePoint, id);
 			System.out.println("충전 성공 여부 : " + success);
-
-			req.getSession().setAttribute("chargeSuccess", success);
-			dis = req.getRequestDispatcher("pointPop");
-			dis.forward(req, resp);
+			map = new HashMap<String, Object>();
+			map.put("success",success);
+			
+			resp.getWriter().println(new Gson().toJson(map));
+			
+			
 
 			break;
 
