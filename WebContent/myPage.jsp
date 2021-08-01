@@ -166,6 +166,21 @@ margin-top:50px;
 	padding : 5 10px;
 	margin : 10px;
 }
+
+/*프로필 사진*/
+.box {
+    width: 130px;
+    height: 130px; 
+    border-radius: 50%;
+    overflow: hidden;
+    margin:0px auto;
+}
+
+.profile {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 </style>
 <script>
 var loginId = "${sessionScope.loginId}";
@@ -497,10 +512,14 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			<tr>
 				<td colspan="2">
 			<c:if test="${myPageInfo.u_newName  eq 'default-profile.png'}">
-				<img src="./img/default-profile.png" width="130px" style="border-radius:50%;"/>
+			<div class="box" >
+    			<img class="profile" src="./img/default-profile.png">
+			</div>
 			</c:if>
 			<c:if test="${myPageInfo.u_newName  ne 'default-profile.png'}">
-				<img src="/ProfilePhoto/${myPageInfo.u_newName }" width="130px" style="border-radius:50%;"/>
+			<div class="box" >
+    			<img class="profile" src="/ProfilePhoto/${myPageInfo.u_newName }">
+			</div>
 			</c:if>
 			</tr>
 			<tr>
