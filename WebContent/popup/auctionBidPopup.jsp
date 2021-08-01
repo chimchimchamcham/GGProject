@@ -33,7 +33,7 @@
 		<input type="hidden" id="endpr" value="${param.endpr }">
 		<div><p>아이패드 파우치에 <b>입찰하기</b></p></div>
 		<div><input type="text" name="ha_bidPr" id="ha_bidPr" value="0"><button id="bid">입찰</button></div>
-		<div><div>둘리님의 잔여 포인트 <span id="wallet">5000</span>P</div><input type="button" id="charge" value="포인트충전"></div>
+		<div><div>둘리님의 잔여 포인트 <span id="wallet">500000</span>P</div><input type="button" id="charge" value="포인트충전"></div>
 		<span>P</span>
 		<p>${param.endpr }</p>
 	</div>
@@ -49,9 +49,9 @@
 			alert("현재 입찰 가격보다 큰 값을 입력하세요.");
 			$("#ha_bidPr").focus();
 		}else{
-		 	/* $.ajax({
+		 	 $.ajax({
 				type : 'post',
-				url : 'bid',
+				url : '../bid',
 				data : {
 					'p_no' : $("#p_no").val(),
 					'ha_bidPr' : $("#ha_bidPr").val()	
@@ -60,10 +60,10 @@
 				success : function(data){
 					console.log(data);
 					if(data.success){
-						alert('입찰 완료');
+						alert(data.msg);
 						opener.parent.location.reload();
 						window.close();
-					}else if{
+					}else{
 						alert(data.msg);
 					}
 				},
@@ -71,10 +71,10 @@
 					console.log("접속 실패");
 					console.log(e);
 				}
-			}); */
-			alert("입찰 완료 bidpr : "+bidpr);
+			}); 
+			/* alert("입찰 완료 bidpr : "+bidpr);
 			opener.parent.location.reload();
-			window.close();
+			window.close(); */
 		}
 	});
 	
