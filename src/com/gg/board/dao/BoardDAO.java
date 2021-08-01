@@ -324,7 +324,7 @@ public class BoardDAO {
 			
 			soldlist.add(dto);
 		}
-		System.out.println("list:"+soldlist);
+		System.out.println("soldlist:"+soldlist);
 		return soldlist;
 	}
 
@@ -559,8 +559,6 @@ public class BoardDAO {
 		return p_no;
 	}
 
-<<<<<<< HEAD
-=======
 	public GGDto auctionDetail(int p_no) throws SQLException {
 		String sql = "select p.p_no, p.p_id, p.p_title, p.p_content, p.p_view, p.p_likeCount, p.p_blindYN, p.p_code, (select u.u_addr from userinfo u where u.u_id= p_id) as u_addr, s.s_deliveryyn, s.s_followlimyn, s.s_code,au.au_code ,(select c.c_name from codes c where c.c_code = au.au_code) as au_c_name,au.au_startpr,au.au_instantpr,au.au_endtm ,au.au_count, hau.ha_bidpr,hau.ha_bidusr,i.i_newname from post p, sale s, auction au, his_auction hau, img i where p.p_no=s.p_no and p.p_no= i.p_no and s.p_no = au.p_no and au.p_no=hau.p_no and hau.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and  p.p_no=?";
 		GGDto dto = null;
@@ -654,6 +652,5 @@ public class BoardDAO {
 		return map;
 	}
 
->>>>>>> b8a0485ad1293102ca0f3654a4d7b4ea593bfc3f
 
 }

@@ -415,9 +415,9 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			dataType:'JSON',
 			success:function(data){
 				console.log("soldlist:",data.soldlist);
-				console.log("auctionlist:",data.auctionlist);
+				console.log("auctionlist:",data);
 				if(data != null){
-					console.log("data:"+data);
+					console.log("data:",data);
 					console.log($index);
 					console.log(url);
 					if($index == 0){

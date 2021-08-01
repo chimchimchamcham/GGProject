@@ -252,25 +252,25 @@ public void sold_list(String userid, int listwhatadd, int listhowaline)	throws I
 }
 	
 public void auc_list(String userid, int listwhatadd) throws IOException {
-	HashMap<String, Object> map2 = new HashMap<String, Object>();
+	
+	HashMap<String, Object> map = new HashMap<String, Object>();
 	
 	BoardDAO dao = new BoardDAO();
 	ArrayList<GGDto> auctionlist = null;
 	
 	try {
 		auctionlist = dao.auction_list(userid,listwhatadd);
-		System.out.println("auction==="+auctionlist);
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}finally {
 		dao.resClose();
-		map2.put("auctionlist:", auctionlist);
+		map.put("auctionlist:", auctionlist);
 	}
-	System.out.println("auc_map:"+map2);
+	System.out.println("auc_map:"+(String)map.get("auctionlist"));
 	
 	resp.setContentType("text/html; charset=UTF-8");		
-	resp.getWriter().println(new Gson().toJson(map2));
-	map2.clear();
+	resp.getWriter().println(new Gson().toJson(map));
+	map.clear();
 	dao.resClose();
 }
 
