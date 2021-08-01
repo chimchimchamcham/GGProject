@@ -180,7 +180,7 @@
 			success:function(data){
 				console.log("data:"+data);
 				if(data.list != null){
-					action_list(data.auction_list);
+					auction_list(data.auction_list);
 				}
 			},
 			error:function(e){

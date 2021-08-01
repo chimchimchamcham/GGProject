@@ -146,7 +146,6 @@ public class BoardController extends HttpServlet {
 			
 			
 			System.out.println("listwhatadd:"+auctionlistwhatadd);
-
 			service.list(userid,auctionlistwhatadd);
 			
 			break;
