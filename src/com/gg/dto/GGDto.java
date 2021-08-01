@@ -85,9 +85,15 @@ public class GGDto {
 	private Date au_sucTm; // 경매 낙찰시간
 	private int au_count; // 입찰횟수
 	private String au_successer; // 낙찰자
-
+	
+	
+	
 	// 경매히스토리관련
 	private int ha_bidPr; // 입찰가격
+
+	private long hm;
+	
+
 
 	private String ha_bidUsr; // 입찰자
 
@@ -799,6 +805,14 @@ public class GGDto {
 
 	public void setMyYN(boolean myYN) {
 		this.myYN = myYN;
+	}
+	
+	public long getHm() {
+		return hm;
+	}
+
+	public void setHm(long l) {
+		this.hm = l;
 	}
 	
 
