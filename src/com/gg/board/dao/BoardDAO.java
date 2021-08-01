@@ -371,9 +371,9 @@ public class BoardDAO {
 	public ArrayList<GGDto> maide_list(String userid) throws SQLException {
 		String sql = "";
 
-		ArrayList<GGDto> soldlist = new ArrayList<GGDto>();
+		ArrayList<GGDto> maidelist = new ArrayList<GGDto>();
 		
-		System.out.println("soldlist:"+soldlist);
+		System.out.println("maidelist:"+maidelist);
 		
 		ps = conn.prepareStatement(sql);
 		
@@ -391,10 +391,10 @@ public class BoardDAO {
 			dto.setNs_pr(rs.getInt("NS_pr"));
 			dto.setI_newName(rs.getString("I_newName"));
 			
-			soldlist.add(dto);
+			maidelist.add(dto);
 		}
-		System.out.println("soldlist:"+soldlist);
-		return soldlist;
+		System.out.println("maidelist:"+maidelist);
+		return maidelist;
 	}
 	
 	

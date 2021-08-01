@@ -266,14 +266,14 @@ public void auc_list(String userid, int listwhatadd) throws IOException {
 		dao.resClose();
 		map.put("auctionlist:", auctionlist);
 	}
-	System.out.println("auc_map:"+(String)map.get("auctionlist"));
+	System.out.println("auc_map:"+map);
 	
 	resp.setContentType("text/html; charset=UTF-8");		
 	resp.getWriter().println(new Gson().toJson(map));
 	map.clear();
 	dao.resClose();
 }
-public void maide_list(String userid) {
+public void maide_list(String userid) throws IOException {
 	HashMap<String, Object> map = new HashMap<String, Object>();
 	
 	BoardDAO dao = new BoardDAO();
