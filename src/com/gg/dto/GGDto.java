@@ -78,6 +78,7 @@ public class GGDto {
 
 	// 경매글
 	// 분류코드(경매중, 거래중, 거래완료)
+	private String au_code;//경매상태코드
 	private int au_startPr; // 시작가격
 	private int au_instantPr; // 즉결가격
 	private Date au_startTm;// 경매시작시간
@@ -799,6 +800,14 @@ public class GGDto {
 
 	public void setMyYN(boolean myYN) {
 		this.myYN = myYN;
+	}
+
+	public String getAu_code() {
+		return au_code;
+	}
+
+	public void setAu_code(String au_code) {
+		this.au_code = au_code;
 	}
 	
 

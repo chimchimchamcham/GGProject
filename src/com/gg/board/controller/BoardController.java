@@ -209,6 +209,24 @@ public class BoardController extends HttpServlet {
 			uploadSuccess = uploadDAO.PhotoUpload(dto);
 			sue_map.put("success", uploadSuccess);
 			resp.getWriter().println(new Gson().toJson(sue_map));
+			break;
+			
+		case "/auctionDetail":
+			System.out.println("경매글 상세보기 요청");
+			dto = service.auctionDetail(); //경매글 해당 글번호 내용 dto로 반환
+			//System.out.println("Controller 경매 상세 사진명 : "+dto.getI_newName());
+
+			//좋아요를 눌렀는지 확인
+			isLiked = false;
+			isLiked = service.isLiked();
+			
+			//구매요청을 눌렀는지 확인
+			isBuyRequested = false;
+			isBuyRequested = service.isBuyRequested();
+			
+			req.setAttribute("dto", dto);
+			dis = req.getRequestDispatcher("auctionDetail.jsp");
+			dis.forward(req, resp);
 		}
 		
 		
