@@ -328,14 +328,16 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			success:function(data){
 				console.log("data:"+data);
 				if(data.soldlist != null){
-					if ($index==0) {
-						
-						console.log("soled_list:");
+					console.log($index);
+					if (url == './soldlist') {
+						console.log("soled_list:",data.data.soldlist);
 						soled_list(data.soldlist);
-					}else if ($index==1) {
-						console.log("auction_list:");
+					}else if (url == './auction_list') {
+						console.log("auction_list:",data.auction_list);
 						auction_list(data.auction_list);
 					}
+				}else{
+					console.log("data 가  null")
 				}
 			},
 			error:function(e){
@@ -354,7 +356,6 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content += "<div class='img-zoon'><img src="+item.i_newName+"></div>";
 				content += "<div class='dretion-zoon'>";
 				content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no="+item.p_no+">"+item.p_title+"</a>"+"</div>";
-				//content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no=11>"+item.p_title+"</a>"+"</div>";
 				content += "	<div class='itempoint'>"+item.ns_pr+"p"+"</div>";
 				content += "</div>";
 				content += "<div class='love-time'>";
@@ -369,7 +370,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 		}//판매 리스트 end
 			
 		//데이터 가져와서 뿌려주는 경매 리스트
-		function auction_list(auction_list){	
+			function auction_list(auction_list){	
 			console.log("auction_list:", auction_list);
 			var content="";
 			
@@ -378,12 +379,10 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content += "<div class='item-one'>";
 				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg'></div>";
 				content += "<div class='dretion-zoon'>";
-				//content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no="+item.p_no+">"+item.p_title+"</a>"+"</div>";
 				content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no=11>"+item.p_title+"</a>"+"</div>";
 				content += "	<div class='itempoint'>"+""+"p"+"</div>";
 				content += "</div>";
 				content += "<div class='love-time'>";
-				content += "	<div class='love'>"+""+"</div>";
 				content += "	<div class='time'>"+item.p_tm+"</div>";	
 				content += "</div>";	
 				content += "</div>";
@@ -546,9 +545,9 @@ $index_button = $("#twoButton>button:eq(" + $index + ")");
 console.log("#twoButton>button:"+$index);
 
 let url ='';
-if ($index==0) {
+if ($index == 0) {
 	url ='./soldlist';
-}else if($index==1) {
+}else if($index == 1) {
 	url ='./auction_list';
 }
 console.log("url:"+url);
