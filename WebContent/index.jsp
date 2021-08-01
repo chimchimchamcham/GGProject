@@ -37,6 +37,6 @@
 	if(msg != ""){
 		alert(msg);
 		msg = "";
-	}
+	};
 </script>
 </html>
