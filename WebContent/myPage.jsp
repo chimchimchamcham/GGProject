@@ -61,12 +61,13 @@ body {
 
 
 #div1 {
-	width: 1020px;
+	width: 940px;
 	display: block;
-	height: 450px;
+	height: 550px;
 	margin: 0px auto;
 	clear: both;
 	padding-top: 20px;
+	/* border:1px solid black; */
 }
 
 table {
@@ -74,7 +75,8 @@ table {
 }
 
  td,th {
-	border: 1px solid black;
+	padding : 5px;
+	/* border: 1px solid black; */
 }
 
 .addrBg{
@@ -98,27 +100,29 @@ a{
 }
 
 #intro{
-	width:700px;
+	width:600px;
 	float: left;
-	margin-left: 20px;
+	margin-left: 40px;
 	margin-top: 20px;
 	text-align: left;
 }
 
 #intro p:nth-of-type(2){
-width:700px;
+width:600px;
 	height:200px;
 	overflow: scroll;
 	background-color: #F2F2F2;
 }
 
 #pointBox{
-	margin-left: 20px;
+margin-top:50px;
+	margin-left: 40px;
 	text-align:left;
 }
 
 #pointBox td:nth-of-type(1){
-	width:150px;
+margin-top:20px;
+	width:120px;
 }
 
 #pointBox td:nth-of-type(2){
@@ -434,18 +438,17 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 	<div id="main">
 <!-- true일때 실행되는 마이페이지 -->
 	<c:if test ="${myPageInfo.myYN eq 'true'}">
-	
+	<h2>마이페이지</h2>
 	<!-- 마이페이지 상단 -->
 	<div id="div1">
-	<h2>마이페이지</h2>
 		<table id="userInfoBox">
 			<tr>
 				<td colspan="2">
 			<c:if test="${myPageInfo.u_newName  eq 'default-profile.png'}">
-				<img src="./img/default-profile.png" width="150px"/>
+				<img src="./img/default-profile.png" width="130px"/>
 			</c:if>
 			<c:if test="${myPageInfo.u_newName  ne 'default-profile.png'}">
-				<img src="/ProfilePhoto/${myPageInfo.u_newName }" width="150px"/>
+				<img src="/ProfilePhoto/${myPageInfo.u_newName }" width="130px"/>
 			</c:if>
 			</tr>
 			<tr>
@@ -454,15 +457,15 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			<tr>
 				<td colspan="2" class="addrBg">${myPageInfo.u_addr }&nbsp;${myPageInfo.u_detailAddr }</td>
 			</tr>
-			<tr>
-				<th>이름</th>
-				<td>${myPageInfo.u_name }</td>
+			<tr style="text-align:left;">
+				<th  style="padding-top:30px;">이름</th>
+				<td style="padding-top:30px;">${myPageInfo.u_name }</td>
 			</tr>
-			<tr>
-				<th>이메일</th>
+			<tr style="text-align:left;">
+				<th >이메일</th>
 				<td>${myPageInfo.u_email }</td>
 			</tr>
-			<tr>
+			<tr style="text-align:left;">
 				<th>전화번호</th>
 				<td>${myPageInfo.u_phone }</td>
 			</tr>
@@ -479,7 +482,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			</tr>
 		</table>
 		<div id="intro">
-			<p>자기소개 글</p>
+			<p><b>자기소개 글</b></p>
 			<p>${myPageInfo.u_intro}</p>
 		</div>
 	</div>
