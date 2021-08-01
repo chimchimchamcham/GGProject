@@ -13,7 +13,6 @@
 	z-index: 1000;
 }
 #main {
-	background-color: gray;
 	width:1200px;
 	height:auto;
 	position: absolute;
@@ -62,26 +61,39 @@ body {
 
 
 #div1 {
-	width: 100%;
+	width: 840px;
 	display: block;
-	height: 500px;
-	background-color: gray;
+	height: 520px;
 	margin: 0px auto;
 	clear: both;
+	padding-top: 20px;
+	/* border:1px solid black; */
+}
+
+#div2 {
+	width: 840px;
+	display: block;
+	height: 400px;
+	margin: 0px auto;
+	clear: both;
+	padding-top: 20px;
+	/* border:1px solid black; */
 }
 
 table {
 	float: left;
 }
 
-td {
-	border: 1px solid black;
+ td,th {
+	padding : 5px;
+	/* border: 1px solid black; */
 }
 
-#soge {
-	heigth: 100px;
-	background-color: yellow;
-	display: block;
+.addrBg{
+	background-color: #D8D8D8;
+	padding :5px 9px;
+	border: 0px;
+	border-radius: 10px;
 }
 
 #td1 {
@@ -93,11 +105,70 @@ a{
 	color: balck;
 }
 
+#userInfoBox{
+	width : 300px;
+}
+
+#intro{
+	width:500px;
+	float: left;
+	margin-left: 40px;
+	text-align: left;
+}
+
+.introBox{
+width:500px;
+	height:150px;
+	overflow: scroll;
+	background-color: #F2F2F2;
+	padding : 15px;
+}
+
+#pointBox{
+margin-top:50px;
+	margin-left: 40px;
+	text-align:left;
+}
+
+#pointBox td:nth-of-type(1){
+	margin-top:10px;
+	width:120px;
+}
+
+#pointBox td:nth-of-type(2){
+	display: inline;
+}
+
+#pointBox th{
+	width:130px;
+}
+
+#chargeBtn{
+	border: 0px;
+	padding:5px 13px;
+	border-radius: 10px;
+	color: black;
+	background-color: #D8D8D8;
+}
+
+#chargeBtn:hover{
+		background-color: #A4A4A4;
+	color: white;
+	cursor: pointer;
+	
+}
+
+#f_mBtn{
+	text-align:center;
+}
+
+#f_mBtn button{
+	padding : 5 10px;
+	margin : 10px;
+}
 </style>
 <script>
 var loginId = "${sessionScope.loginId}";
-
-
 
 /*팝업창*/
  //충전팝업
@@ -416,62 +487,59 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 <body>
 <div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
+	
 <!-- true일때 실행되는 마이페이지 -->
 	<c:if test ="${myPageInfo.myYN eq 'true'}">
-	<h2>마이페이지</h2>
+	<h2 style="margin-top:30px;">마이페이지</h2>
+	<!-- 마이페이지 상단 -->
 	<div id="div1">
-		<table style="text-align: center; width: 40%;">
+		<table id="userInfoBox">
 			<tr>
-				<td>
+				<td colspan="2">
 			<c:if test="${myPageInfo.u_newName  eq 'default-profile.png'}">
-				<img src="./img/default-profile.png" width="150px"/>
+				<img src="./img/default-profile.png" width="130px" style="border-radius:50%;"/>
 			</c:if>
 			<c:if test="${myPageInfo.u_newName  ne 'default-profile.png'}">
-				<img src="/ProfilePhoto/${myPageInfo.u_newName }" width="150px"/>
+				<img src="/ProfilePhoto/${myPageInfo.u_newName }" width="130px" style="border-radius:50%;"/>
 			</c:if>
 			</tr>
 			<tr>
-				<td>${myPageInfo.u_nname}</td>
+				<th colspan="2">${myPageInfo.u_nname}</th>
 			</tr>
 			<tr>
-				<td>${myPageInfo.u_addr }&nbsp;${myPageInfo.u_detailAddr }</td>
+				<td colspan="2" class="addrBg">${myPageInfo.u_addr }&nbsp;${myPageInfo.u_detailAddr }</td>
 			</tr>
-			<tr>
-				<td>이름 : ${myPageInfo.u_name }</td>
+			<tr style="text-align:left;">
+				<th  style="padding-top:30px;">이름</th>
+				<td style="padding-top:30px;">${myPageInfo.u_name }</td>
 			</tr>
-			<tr>
-				<td>이메일 : ${myPageInfo.u_email }</td>
+			<tr style="text-align:left;">
+				<th >이메일</th>
+				<td>${myPageInfo.u_email }</td>
 			</tr>
-			<tr>
-				<td>전화번호 : ${myPageInfo.u_phone }</td>
+			<tr style="text-align:left;">
+				<th>전화번호</th>
+				<td>${myPageInfo.u_phone }</td>
 			</tr>
-			<tr>
-				<td><button onclick="location.href='./userUpdateForm?id=${loginId}'">회원정보 수정</button></td>
+			<tr >
+				<td colspan="2" style="padding-top:20px;"><button onclick="location.href='./userUpdateForm?id=${loginId}'">회원정보 수정</button></td>
 			</tr>
 		</table>
 
-		<table style="width: 60%;">
+		<table id="pointBox">
 			<tr>
-				<td>현재 포인트</td>
+				<th>현재 포인트</th>
 				<td><a href="#" onclick="pointListPop();">${myPageInfo.pnt_point }P</a></td>	
-				<td><input type="button" value="충전" onclick="chargePopup();" /></td>
-			</tr>
-			<tr>
-				<td>평점</td>
-				<td colspan="2"></td>
-			</tr>
-			<tr>
-				<td colspan="3">자기소개</td>
-			</tr>
-			<tr>
-				<td colspan="3">
-					<p>${myPageInfo.u_intro}</p>
-				</td>
+				<td><input type="button" value="충전" onclick="chargePopup();" id="chargeBtn"/></td>
 			</tr>
 		</table>
+		<div id="intro" style="margin-top: 20px;">
+			<p><b>자기소개 글</b></p>
+			<p class="introBox">${myPageInfo.u_intro}</p>
+		</div>
 	</div>
-	
-	   <div id="twoButton">
+			
+	 <div id="twoButton">
       <button>판매목록	</button>
       <button>경매목록</button> 
       <button>구매목록</button>
@@ -481,9 +549,15 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
       <button>좋아요</button> 
       <button>신고목록</button>
    </div>
+<<<<<<< HEAD
    
    <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp" ></jsp:include></div>
    <div id="trade" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp" ></jsp:include></div>
+=======
+
+   <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
+   <div id="trade" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
+>>>>>>> e5e93eea1813ef1863f5ab27126ba53b4094a7f3
    <div id="sell" style="background-color:yellow; padding:20px;">구매목록입니다.</div>
    <div id="commu" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
    <div id="follow" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
@@ -492,46 +566,53 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
    <div id="alarm" style="background-color:lime; padding:20px;">신고목록입니다.</div>
 </c:if>
 
-<!-- false일때 실행되는 타인 프로필 -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- fals일때 실행되는 타인프로필 -->
 	<c:if test ="${myPageInfo.myYN eq 'false'}">
-	<h2>${myPageInfo.u_nname}님의 프로필</h2>
-	<div id="div1">
-		<table style="text-align: center; width: 40%;">
+	<h2 style="margin-top:30px;">${myPageInfo.u_nname}님의 프로필</h2>
+	<!-- 마이페이지 상단 -->
+	<div id="div2">
+		<table id="userInfoBox">
 			<tr>
 				<td colspan="2">
 			<c:if test="${myPageInfo.u_newName  eq 'default-profile.png'}">
-				<img src="./img/default-profile.png" width="150px"/>
+				<img src="./img/default-profile.png" width="130px"/>
 			</c:if>
 			<c:if test="${myPageInfo.u_newName  ne 'default-profile.png'}">
-				<img src="/ProfilePhoto/${myPageInfo.u_newName }" width="150px"/>
+				<img src="/ProfilePhoto/${myPageInfo.u_newName }" width="130px"/>
 			</c:if>
 			</tr>
 			<tr>
-				<td colspan="2">${myPageInfo.u_nname}</td>
+				<th colspan="2">${myPageInfo.u_nname}</th>
 			</tr>
 			<tr>
-				<td colspan="2">${myPageInfo.u_addr }</td>
+				<td colspan="2" class="addrBg">${myPageInfo.u_addr }&nbsp;${myPageInfo.u_detailAddr }</td>
 			</tr>
-			<tr>
-			<td><button>+팔로우</button></td>
-			<td><button>쪽지</button></td>
+			<tr id="f_mBtn">
+				 <td><button>+팔로우</button><button>쪽지</button></td>
+			</tr>
+			<tr >
+				<td colspan="2"><a href = "#">신고하기</a></td>
 			</tr>
 		</table>
-
-		<table style="width: 60%;">
-			<tr>
-				<td>${myPageInfo.u_nname}님의 자기소개</td>
-				<td><button>신고하기</button></td>
-			</tr>
-			<tr>
-				<td colspan="3">
-					<p>${myPageInfo.u_intro}</p>
-				</td>
-			</tr>
-		</table>
+		<div id="intro">
+			<p><b>${myPageInfo.u_nname}님의 자기소개</b></p>
+			<p class="introBox">${myPageInfo.u_intro}</p>
+		</div>
 	</div>
-	
-	   <div id="twoButton">
+			
+	 <div id="twoButton">
       <button>판매목록	</button>
       <button>경매목록</button> 
       <button>구매목록</button>
@@ -541,7 +622,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
       <button>좋아요</button> 
       <button>신고목록</button>
    </div>
-   
+
    <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
    <div id="trade" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
    <div id="sell" style="background-color:yellow; padding:20px;">구매목록입니다.</div>

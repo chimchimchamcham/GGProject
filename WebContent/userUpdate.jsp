@@ -91,9 +91,9 @@ td {
 					<p>
 						<input type="file" name="photo" accept=".gif, .jpg, .png, .jpeg" id="test"/>
 					</p> <c:if test="${userUpdate.u_newName  eq 'default-profile.png'}">
-						<img src="./img/default-profile.png" width="100px" id="preview-image"/>
+						<img src="./img/default-profile.png" width="100px" id="preview-image" style="border-radius:50%;"/>
 					</c:if> <c:if test="${userUpdate.u_newName  ne 'default-profile.png'}">
-						<img src="/ProfilePhoto/${userUpdate.u_newName}" width="100px" id="preview-image"/>
+						<img src="/ProfilePhoto/${userUpdate.u_newName}" width="100px" id="preview-image" style="border-radius:50%;"/>
 					</c:if>
 					<!-- <button type="button" id="default-image">기본 이미지</button> -->
 				</td>
