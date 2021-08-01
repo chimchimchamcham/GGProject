@@ -69,7 +69,7 @@ public class PointController extends HttpServlet {
 			System.out.println("충전 성공 여부 : " + success);
 
 			req.getSession().setAttribute("chargeSuccess", success);
-			dis = req.getRequestDispatcher("./popup/chargePopup.jsp");
+			dis = req.getRequestDispatcher("pointPop");
 			dis.forward(req, resp);
 
 			break;

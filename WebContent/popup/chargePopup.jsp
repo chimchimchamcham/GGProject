@@ -14,7 +14,8 @@
 </head>
 <script type="text/javascript">
 	$(document).ready(function() {
-
+		console.log(msg);
+		msg="";
 		$("#cancelBtn").click(function() {
 			alert("포인트 충전이 취소되었습니다.");
 			window.close();
@@ -99,9 +100,12 @@ h2 {
 				}
 
 			});
-	var msg = "${sesssionScope.chargeSuccess}";
+	var msg = "${sessionScope.chargeSuccess}";
 	if(msg != ""){
-		alert(msg);
+		console.log("으아아 :" ,msg);
+		msg ="";
+		console.log("으아아 이후 : " ,msg);
+		
 	}
 </script>
 </html>
