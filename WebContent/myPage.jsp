@@ -166,6 +166,43 @@ margin-top:50px;
 	padding : 5 10px;
 	margin : 10px;
 }
+.auction{
+                    display: flex;
+                    flex-direction: row;
+                    font-size: 12px;
+                    opacity: 0.5;
+                }
+                .xianzai{
+                    font-size: 20px;
+                }
+                .endtime-zoon{
+                    display: flex;
+                    flex-direction: row;
+                    color: red;
+                    font-size: 15px;
+                }
+                .nick{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 30px;
+                }
+                .c_code{
+                    border: 1px solid black;
+                    justify-self: center;
+                }
+                .c_zoon{
+                    margin: 3%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .mai-time{
+                    margin-left: 6%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+}
 
 /*프로필 사진*/
 .box {
@@ -181,6 +218,7 @@ margin-top:50px;
     height: 100%;
     object-fit: cover;
 }
+
 </style>
 <script>
 var loginId = "${sessionScope.loginId}";
@@ -210,9 +248,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			}
 		});
 		
-		
 		$("#twoButton>button").click(function(){
-			
 			$button = $("#twoButton>button");
 			$index = $button.index(this);
 			$index_button = $("#twoButton>button:eq(" + $index + ")");
@@ -223,7 +259,9 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			if ($index == 0) {
 				url ='./soldlist';
 			}else if($index == 1) {
-				url ='./auction_list';
+				url ='./auctionlist';
+			}else if($index == 2){
+				url ='./maidelist';
 			}
 			console.log("url:"+url);
 
@@ -431,16 +469,22 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			success:function(data){
 				console.log("soldlist:",data.soldlist);
 				console.log("auctionlist:",data.auctionlist);
+				console.log("maidelist:",data.maidelist);
 				if(data != null){
-					console.log("data:"+data);
+					console.log("data:",data.soldlist);
+					console.log("data:",data.auctionlist);
+					console.log("data:",data.maidelist);
 					console.log($index);
 					console.log(url);
-					if($index == 0){
-						console.log("soled_list:",data.soldlist);
+					if($index == 0){//판매
+						console.log("soled_list3:",data.soldlist);
 						soled_list(data.soldlist);
-					}else if ($index == 1) {
-						console.log("auction_list:",data.auctionlist);
+					}else if ($index == 1) {//경매
+						console.log("auction_list3:",data.auctionlist);
 						auction_list(data.auctionlist);
+					}else if ($index == 2) {//구매
+						console.log("maide_list3:",data.maidelist);
+						auction_list(data.maidelist);
 					}
 				}
 			},
@@ -453,7 +497,9 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 		function soled_list(soldlist){	
 			console.log("soldlist:", soldlist);
 			var content="";
-			
+			$('#trade .item-box').empty();
+			$("#sale .item-box").empty();
+			$("#sell .item-box").empty();
 			soldlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
@@ -468,7 +514,9 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content += "</div>";	
 				content += "</div>";
 			});	
+			$('#trade .item-box').empty();
 			$("#sale .item-box").empty();
+			$("#sell .item-box").empty();
 			$("#sale .item-box").append(content);
 			
 		}//판매 리스트 end
@@ -477,27 +525,55 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 		function auction_list(auctionlist){	
 			console.log("auction_list:", auctionlist);
 			var content="";
-			
+			$("#sale .item-box").empty();
+			$("#sell .item-box").empty();
 			auctionlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
-				content += "<div class='item-one'>";
-				content += "<h2>경매</h2>";
-				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg'></div>";
-				content += "<div class='dretion-zoon'>";
-				content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no=11>"+item.p_title+"</a>"+"</div>";
-				content += "	<div class='itempoint'>"+""+"p"+"</div>";
-				content += "</div>";
-				content += "<div class='love-time'>";
-				content += "	<div class='time'>"+item.p_tm+"</div>";	
-				content += "</div>";	
-				content += "</div>";
-			});	
+				content +="<div class='item-one'>";
+				content +="<div class='img-zoon'><img src='test.jpg' alt=''#'></div>";
+				content +="<div class='dretion-zoon'>";
+				content +="<h2>제목.....</h2>";
+				content +="<div class='xianzai'>현제 입찰가</div><div style='font-size: 25px;'>5000p</div><div class='auction'>";
+				content +="<div>시작:5000p</div>/<div>즉결:5000p</div></div>";
+				content +="</div><div class='endtime-zoon'>종료시간:<div>2021/07/03</div></div>";
+				content +="<div class='love-time'><div>입찰수:2</div><div>2시간 전</div></div>";
+				content +="</div>";
+				});	
+			$('#trade .item-box').empty();
 			$("#sale .item-box").empty();
-			$("#sale .item-box").append(content);
-			
+			$("#sell .item-box").empty();
+				$('#trade .item-box').append(content);
 		}// 경매 리스트 end
+		
+		//데이터 가져와서 뿌려주는 구매 리스트
+		function maide_list(maidelist){	
+			console.log("maidelist:", maidelist);
+			var content="";
 			
+			maide_list.forEach(function(item,idx){
+				console.log("idx:",idx,item);
+				content += "<div class='item-one'>";
+				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg' style='margin:3%'></div>";
+				content += "<div class='dretion-zoon style='margin: 3%'>";
+				content +="		<h2>제목.....</h2>";
+				content += "	<div style='font-size: 25px; justify-self: center;'>5000p</div>";
+				content += "</div>";
+				content += "<div class='c_zoon'>";
+				content += "	<div class='c_code'>판매</div>";	
+				content += "</div>";	
+				content += "<div class='nick' style='margin: 3%;'>";
+				content += "	<div>닉네임</div>";
+				content += "</div>";
+				content += "<div class='mai-time'>";
+				content += "	<div> 구매날짜:2시간 전</div>";
+				content += "</div></div>";
+			});	
+			$('#trade .item-box').empty();
+			$("#sale .item-box").empty();
+			$("#sell .item-box").empty();
+			$("#sell .item-box").append(content);
 			
+		}// 구매 리스트 end
 </script>
 <body>
 <div id="mainHeader"><jsp:include page="header.jsp" /></div>
@@ -571,14 +647,14 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 
    
 
-   <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
-   <div id="trade" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
-   <div id="sell" style="background-color:yellow; padding:20px;">구매목록입니다.</div>
-   <div id="commu" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
-   <div id="follow" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
-   <div id="want" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
-   <div id="like" style="background-color:purple; padding:20px;">좋아요목록입니다.</div>
-   <div id="alarm" style="background-color:lime; padding:20px;">신고목록입니다.</div>
+   <div id="sale"  class="categori" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
+   <div id="trade"  class="categori" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
+   <div id="sell"  class="categori" style="background-color:yellow; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
+   <div id="commu"  class="categori" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
+   <div id="follow"  class="categori" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
+   <div id="want"  class="categori" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
+   <div id="like"  class="categori" style="background-color:purple; padding:20px;">좋아요목록입니다.</div>
+   <div id="alarm"  class="categori" style="background-color:lime; padding:20px;">신고목록입니다.</div>
 </c:if>
 
 
@@ -638,14 +714,14 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
       <button>신고목록</button>
    </div>
 
-   <div id="sale" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
-   <div id="trade" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
-   <div id="sell" style="background-color:yellow; padding:20px;">구매목록입니다.</div>
-   <div id="commu" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
-   <div id="follow" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
-   <div id="want" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
-   <div id="like" style="background-color:purple; padding:20px;">좋아요목록입니다.</div>
-   <div id="alarm" style="background-color:lime; padding:20px;">신고목록입니다.</div>
+   <div id="sale" class="categori" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
+   <div id="trade" class="categori" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
+   <div id="sell" class="categori" style="background-color:yellow; padding:20px;"><jsp:include page="./mypage_list/maide.jsp"></jsp:include></div>
+   <div id="commu" class="categori" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
+   <div id="follow" class="categori" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
+   <div id="want" class="categori" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
+   <div id="like" class="categori" style="background-color:purple; padding:20px;">좋아요목록입니다.</div>
+   <div id="alarm" class="categori" style="background-color:lime; padding:20px;">신고목록입니다.</div>
 </c:if>
    
 	</div> <!-- div main end -->
