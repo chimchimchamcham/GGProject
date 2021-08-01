@@ -183,7 +183,7 @@
                         <button>찜+</button><!-- +1 -->
                         <button>찜-</button><!-- -1 -->
                         <button>즉시구매</button>
-                        <button onclick="showPopup();">입찰하기</button>
+                        <button>입찰하기</button>
                     </div>
                     <div id="twoButton">
                         <button>상세정보</button>

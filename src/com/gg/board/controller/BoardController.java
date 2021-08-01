@@ -17,7 +17,7 @@ import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
 
-@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auction_list","/writeForm","/writeSale","/writeTrade","/writeCommunity","/auctionDetail"})
+@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auction_list","/writeForm","/writeSale","/writeTrade","/writeCommunity","/auctionDetail","/bid"})
 
 public class BoardController extends HttpServlet {
 
@@ -146,11 +146,11 @@ public class BoardController extends HttpServlet {
 			
 			
 			System.out.println("listwhatadd:"+auctionlistwhatadd);
-
 			service.list(userid,auctionlistwhatadd);
 			
 			break;
 			
+		/* ====== 글쓰기 ====== */	
 		case "/writeForm":
 			System.out.println("글쓰기 폼 요청");
 			HashMap<String,ArrayList<GGDto>>map = service.category();
@@ -182,9 +182,6 @@ public class BoardController extends HttpServlet {
 			HashMap<String, Object> jo_map = new HashMap<String, Object>();
 			jo_map.put("p_no", p_no);
 			resp.getWriter().println(new Gson().toJson(jo_map));
-			
-			
-		
 			break;
 			
 		case "/writeCommunity":
@@ -194,7 +191,6 @@ public class BoardController extends HttpServlet {
 			
 			jo_map.put("p_no",p_no);
 			resp.getWriter().println(new Gson().toJson(jo_map));
-			
 			break;
 			
 		case "/upload":
@@ -210,11 +206,14 @@ public class BoardController extends HttpServlet {
 			sue_map.put("success", uploadSuccess);
 			resp.getWriter().println(new Gson().toJson(sue_map));
 			break;
+
 			
+			
+		/*========================*/	
 		case "/auctionDetail":
 			System.out.println("경매글 상세보기 요청");
+			
 			dto = service.auctionDetail(); //경매글 해당 글번호 내용 dto로 반환
-			//System.out.println("Controller 경매 상세 사진명 : "+dto.getI_newName());
 
 			//좋아요를 눌렀는지 확인
 			isLiked = false;
@@ -228,6 +227,14 @@ public class BoardController extends HttpServlet {
 			req.setAttribute("isLiked", isLiked);
 			dis = req.getRequestDispatcher("auctionDetail.jsp");
 			dis.forward(req, resp);
+			
+			break;
+			
+		case "/bid":
+			System.out.println("입찰 요청");
+			sue_map = service.auctionBid();
+			
+			resp.getWriter().println(new Gson().toJson(sue_map));
 		}
 		
 		
