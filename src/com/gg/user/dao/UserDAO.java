@@ -196,13 +196,44 @@ public class UserDAO {
 			System.out.println("전화번호 : " + dto.getU_phone());
 			System.out.println("이메일 : " + dto.getU_email());
 
-			sql = "SELECT pnt_point FROM point WHERE pnt_id =?";
+			int myPoint =0;
+			int plusPoint = 0; // 수입
+			int minusPoint = 0; // 지출
+			// 지출 코드
+			sql = "SELECT SUM(pnt_point) FROM point WHERE pnt_id= ?" + 
+					"    AND ( pnt_code != 'PNT001'" + 
+					"    AND pnt_code != 'PNT004'" + 
+					"    AND pnt_code !='PNT005'" + 
+					"    AND pnt_code != 'PNT007'" + 
+					"    AND pnt_code != 'PNT008'" + 
+					"    AND pnt_code != 'PNT010')";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, id);
 			rs = ps.executeQuery();
-			if (rs.next()) {
-				dto.setPnt_point(rs.getInt("pnt_point"));
+			if(rs.next()) {
+				minusPoint = rs.getInt(1);
+			}else {
+				minusPoint =0;
 			}
+			// 수입 코드
+			sql = "SELECT SUM(pnt_point) FROM point" + 
+					"    WHERE pnt_id=?" + 
+					"    AND ( pnt_code = 'PNT001'" + 
+					"    OR pnt_code = 'PNT004'" + 
+					"    OR pnt_code = 'PNT005'" + 
+					"    OR pnt_code = 'PNT007'" + 
+					"    OR pnt_code = 'PNT008'" + 
+					"    OR pnt_code = 'PNT010')";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				plusPoint = rs.getInt(1);
+			}else {
+				plusPoint = 0;
+			}
+			myPoint = plusPoint - minusPoint;
+			dto.setPnt_point(myPoint);
 			System.out.println("포인트 : " + dto.getPnt_point());
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -431,7 +431,7 @@ function showPopup() { window.open("./popup/chargePopup.jsp", "charge", "width=6
 		<table style="width: 60%;">
 			<tr>
 				<td>현재 포인트</td>
-				<td>${myPageInfo.pnt_point }P</td>	
+				<td><a href="#">${myPageInfo.pnt_point }P</a></td>	
 				<td><input type="button" value="충전" onclick="showPopup();" /></td>
 			</tr>
 			<tr>
