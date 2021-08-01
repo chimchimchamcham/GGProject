@@ -10,27 +10,32 @@
 #drop *{
 	list-style: none;
 }
-table,tr,td{
+/* table,tr,td{
 	border:1px solid black;
-}
+} */
 #postTable *,#commentTable *,#userTable *{
 	font-size : 10px;	
 }
 #postTable,#commentTable,#userTable{
-	width:380px;
+	width:100%;
 }
 #postTable textarea,#commentTable textarea,#userTable textarea{
-	width:370px;
+	width:98%;
+	height:200px;
+	resize:none;
+}
+#notifyBody{
+	margin:0;
+	padding:0;
+	width:100%;
 }
 #mainheader{
-	magin:0px;
-	padding:0px;
 	background-color:gray;
 }
 </style>
 </head>
-<div id="mainheader">신고하기</div>
-<body>
+<body id="notifyBody">
+	<div id="mainheader">신고하기</div>
 	<select name="drop" onchange="drop()">
 	    <option value = "postCate">게시글 신고</option>
 	    <option value = "commentCate">댓글 신고</option>
@@ -66,11 +71,12 @@ table,tr,td{
 				<td><input type="radio" name="N2_code" value="" style="visibility:hidden"/></td>
 			</tr>
 			<tr>
-				<td colspan = "2"><textarea></textarea></td>
+				<td colspan = "2"><textarea class ="charNum" maxlength="1000"></textarea></td>
 			</tr>
 			<tr style="text-align:right">
 				<td colspan ="2"><button>신고하기</button></td>
 			</tr>
+			
 		</table>
 	</form>
 	<form  action = "#" method = "get" name = "commentNoti">
@@ -102,8 +108,8 @@ table,tr,td{
 				<td><input type="radio" name="N2_code" value="" style="visibility:hidden"/></td>
 				<td><input type="radio" name="N2_code" value="" style="visibility:hidden"/></td>
 			</tr>
-				<tr>
-				<td colspan = "2"><textarea></textarea></td>
+			<tr>
+				<td colspan = "2"><textarea class ="charNum" maxlength="1000"></textarea></td>
 			</tr>
 			<tr style="text-align:right">
 				<td colspan ="2"><button>신고하기</button></td>
@@ -140,7 +146,7 @@ table,tr,td{
 				<td><input type="radio" name="N2_code" value="" style="visibility:hidden"/></td>
 			</tr>
 			<tr>
-				<td colspan = "2"><textarea></textarea></td>
+				<td colspan = "2"><textarea class ="charNum" maxlength="1000"></textarea></td>
 			</tr>
 			<tr style="text-align:right">
 				<td colspan ="2"><button>신고하기</button></td>
@@ -173,7 +179,7 @@ function drop(){
 		break;
 	}
 }
-	$("select[name=drop]").onchange(drop($("select[name=drop]").val()));
 
+$("select[name=drop]").onchange(drop($("select[name=drop]").val()));
 </script>
 </html>
