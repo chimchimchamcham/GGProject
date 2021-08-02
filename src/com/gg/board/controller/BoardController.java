@@ -291,6 +291,8 @@ public class BoardController extends HttpServlet {
 			dis.forward(req, resp);
 
 			break;
+			
+		
 		}
 
 	}
