@@ -463,7 +463,7 @@ dao.resClose();
 		
 		BoardDAO dao = new BoardDAO();
 		int sucP_no = dao.commUpdate(p_no, title,content,category);
-		
+		dao.resClose();
 		return sucP_no;
 	}
 	

@@ -93,7 +93,7 @@ $('#update').on('keyup', function() {
 					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
 					<select name="commuCat">
 						<c:forEach items="${commuCat }" var="CommuCategory">
-							<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
+							<option value="${CommuCategory.p_cate}" <c:if test="${CommuCategory.p_cate eq '${commUpdate.p_cate}'}">selected</c:if>>${CommuCategory.p_cateName}</option>
 						</c:forEach>
 					</select>
 				</p>
@@ -106,6 +106,8 @@ $('#update').on('keyup', function() {
 	</div>
 </body>
 <script>
+console.log("${commUpdate.p_cate}");
+console.log("${CommuCategory.p_cate}");
 	var success = false;
   	//초기상태 - 판매폼만 보이는 상태
 	//폼 선택 버튼  클릭시 해당 값이 달라짐
