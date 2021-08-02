@@ -17,7 +17,7 @@ import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
 
-@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auctionlist","/maidelist","/writeForm","/writeSale","/writeTrade","/writeCommunity","/auctionDetail","/bid","/commDetail"})
+@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auctionlist","/maidelist","/communitylist","/writeForm","/writeSale","/writeTrade","/writeCommunity","/auctionDetail","/bid","/commDetail"})
 
 public class BoardController extends HttpServlet {
 
@@ -159,7 +159,13 @@ public class BoardController extends HttpServlet {
 			service.maide_list(userid);
 			
 			break;
+		case "/communitylist":
+			System.out.println("커뮤니티 리스트 요청");	
+			userid = (String) req.getSession().getAttribute("loginId");
+
+			service.community_list(userid);
 			
+			break;
 		/* ====== 글쓰기 ====== */	
 		case "/writeForm":
 			System.out.println("글쓰기 폼 요청");
