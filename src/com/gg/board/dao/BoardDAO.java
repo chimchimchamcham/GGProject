@@ -626,6 +626,8 @@ public class BoardDAO {
 			System.out.println(dto.getP_code());
 			
 			
+		}else {
+			
 		}
 		
 		
