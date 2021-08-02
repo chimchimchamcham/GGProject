@@ -694,21 +694,25 @@ public class BoardDAO {
 		ps.setInt(1, p_no);
 		rs = ps.executeQuery();
 		
-		String bidUsr = rs.getString("ha_bidusr");
-		int bidPr =rs.getInt("ha_bidpr");
-		System.out.println("최고 입찰자 : "+ bidUsr+" / 최고입찰가 : "+bidPr );
+		
 		
 		if(rs.next()) {//무조건 즉결가는 존재(이미 보유포인트에서 거를 예정이기에)
 			instantPr = rs.getInt("au_instantpr");
 			System.out.println("경매글 최고 입찰가 : "+instantPr);
 			
-			bidPr = (bidPr >=instantPr) ? instantPr : bidPr;
-			System.out.println("변경된 입찰가 : "+bidPr);
+			ha_bidPr = (ha_bidPr >=instantPr) ? instantPr : ha_bidPr;
+			System.out.println("변경된 입찰가 : "+ha_bidPr);
 		}
 		
 		//변경된 입찰금액과 즉결가를 비교해서 동일한 경우 즉결구매로 넘김
-		if(bidPr == instantPr) {
-				buyNow(p_no, bidUsr, bidPr);
+		if(ha_bidPr == instantPr) {
+				
+			success = buyNow(p_no, ha_bidUsr, ha_bidPr);
+			System.out.println("즉결구매 성공 여부 : "+success);
+			if(success) {
+					msg = "즉결구매에 성공하였습니다.";
+				}	
+				
 		}else {
 			//최고입찰자와 최고입찰금액 가져오는 쿼리
 			sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and p_no = ?";
@@ -717,6 +721,10 @@ public class BoardDAO {
 			ps.setInt(2, p_no);
 			rs = ps.executeQuery();
 			if(rs.next()) {
+				String bidUsr = rs.getString("ha_bidusr");
+				int bidPr =rs.getInt("ha_bidpr");
+				System.out.println("최고 입찰자 : "+ bidUsr+" / 최고입찰가 : "+bidPr );
+				
 				if(bidUsr.equals(ha_bidUsr)) { //내가 이미 최고입찰자인 경우
 					msg = "이미 최고입찰자 입니다.";
 				}else if( bidPr >= ha_bidPr){ //내가 입력한 입찰금이 최고 입찰금보다 적을 때
