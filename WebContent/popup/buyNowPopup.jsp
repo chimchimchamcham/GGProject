@@ -31,8 +31,8 @@
 		<input type="hidden" id="p_no" value="${param.p_no }">
 		<input type="hidden" id="toppr" value="${param.toppr }">
 		<input type="hidden" id="endpr" value="${param.endpr }">
-		<div><p>아이패드 파우치에 <b>즉결구매하기</b></p></div>
-		<div><input type="text" name="ha_bidPr" id="ha_bidPr" value="0"><button id="bid">즉결구매하기</button></div>
+		<div><p>아이패드 파우치에 <b>즉시구매하기</b></p></div>
+		<div><input type="text" name="au_instantpr" id="au_instantpr" value="0"><button id="bid">즉시구매</button></div>
 		<div><div>둘리님의 잔여 포인트 <span id="wallet">500000</span>P</div><input type="button" id="charge" value="포인트충전"></div>
 		<span>P</span>
 		<p>${param.endpr }</p>
@@ -41,26 +41,26 @@
 <script>
 	//입찰버튼 클릭시 알람 뜸
 	$("#bid").click(function(){
-		if($("#ha_bidPr").val()==0){
-			alert("입찰가격을 입력하세요");
-			$("#ha_bidPr").focus();
-		}/* else if($("#ha_bidPr").val()<$("#toppr").val()){
+		if($("#au_instantpr").val()==0){
+			alert("즉결구매가를 입력하세요");
+			$("#au_instantpr").focus();
+		}/* else if($("#au_instantpr").val()<$("#toppr").val()){
 			alert("현재 입찰 가격보다 큰 값을 입력하세요.");
-			$("#ha_bidPr").focus();
+			$("#au_instantpr").focus();
 		} */else{
 			//즉결가 보다 큰 값을 입력한 경우, 즉결가 가격으로 변경
 			/* var $bidpr = 0;
-			if($("#ha_bidPr").val()>$("#endpr").val()){
+			if($("#au_instantpr").val()>$("#endpr").val()){
 				$bidpr = $("#endpr").val();
 			}else{
-				$bidpr = $("#ha_bidPr").val();
+				$bidpr = $("#au_instantpr").val();
 			}
 			console.log($bidpr); */
 			
 			//ajax로 보낼 파라미터 값
 			var param = {};
 			param.p_no = $("#p_no").val();
-			param.ha_bidPr = $("#ha_bidPr").val();
+			param.au_instantpr = $("#au_instantpr").val();
 			console.log(param);
 			
 		 	 $.ajax({
@@ -95,8 +95,8 @@
 	});
 	
 	//입력한 값이 잔여 포인트보다 클 경우 입찰 버튼 비활성화, 검정색으로 바뀜
-	/* $("#ha_bidPr").on("propertychange change keyup paste input",function(){
-		var $bidpr = $("#ha_bidPr").val();
+	/* $("#au_instantpr").on("propertychange change keyup paste input",function(){
+		var $bidpr = $("#au_instantpr").val();
 		var $wallet = $("#wallet").text();
 		if($bidpr>$wallet){
 			$("#bid").attr("disabled", true).css({"background-color":"black"});
