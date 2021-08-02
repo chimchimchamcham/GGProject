@@ -79,10 +79,13 @@ button {
 	console.log("로그인 아이디 확인 ", loginId);
 	var param = {};
 	param.id = loginId;
-	
+	function chargePopup() { window.open("./chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
 	listCall();
-	
-	
+	$("button").click(function(){
+		console.log("충전 버튼 클릭");
+		chargePopup();
+	});
+
 	function listCall() {
 	
 		$.ajax({
@@ -147,7 +150,7 @@ button {
 			
 			content += "<tr><td>"+pnt_code+"</td>";
 			content += "<td>" + item.pnt_point + "</td>";
-			content += "<td id=''><img src='C:/photo/"+item.i_newName +"'/></td>";
+			content += "<td id=''><a href='details?p_no="+item.p_no+ "'><img src='C:/photo/"+item.i_newName +"'/></td>";
 			content += "<td><a href='details?p_no="+item.p_no+ "'>" + item.p_title + "</a></td>";
 			content += "<td>" + item.pnt_tm + "</td></tr>";
 		});
