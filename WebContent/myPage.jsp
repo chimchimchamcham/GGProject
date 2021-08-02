@@ -105,7 +105,7 @@ a{
 	color: balck;
 }
 
-#userInfoBox{
+#userInfo{
 	width : 300px;
 }
 
