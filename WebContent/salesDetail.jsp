@@ -147,7 +147,7 @@
     	$("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
     }
     //판매자가 자신의 글을 본다면 수정 삭제 표시, 팔로우 숨기기, 버튼 색상변경과 비활성화 시키기
-    if("${sessionScppe.loginId}" == "${dto.p_id}"){
+    if("${sessionScope.loginId}" == "${dto.p_id}"){
     /* if("user2" == "${dto.p_id}"){ */
     	$("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
     	$("#follow").css({"background-color":"gray"}).attr("disabled", true);
