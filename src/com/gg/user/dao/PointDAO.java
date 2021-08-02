@@ -83,11 +83,12 @@ public class PointDAO {
 	}
 	public ArrayList<GGDto> pointList(String id) throws SQLException {
 		System.out.println("포인트 리스트 보여주기.");
-		sql = "SELECT pnt.pnt_code, pnt.pnt_point,i.i_newname, p.p_title, pnt.pnt_tm, p.p_no FROM point pnt " + 
-				"LEFT OUTER JOIN post " + 
-				"ON (p.p_no = pnt.p_no AND pnt.pnt_id = ?) " + 
-				"LEFT OUTER JOIN img i" + 
+		sql = "SELECT pnt.pnt_code, pnt.pnt_point,i.i_newname, p.p_title, pnt.pnt_tm, p.p_no,pnt.pnt_id FROM point pnt " + 
+				"LEFT OUTER JOIN post p " + 
+				"ON (p.p_no = pnt.p_no) " + 
+				"LEFT OUTER JOIN img i " + 
 				"ON (p.p_no = i.p_no) " + 
+				"WHERE pnt.pnt_id = ? " + 
 				"ORDER BY pnt.pnt_tm DESC;";
 		
 		ps = conn.prepareStatement(sql);
