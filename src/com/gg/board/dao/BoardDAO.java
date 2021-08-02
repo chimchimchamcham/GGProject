@@ -656,6 +656,9 @@ public class BoardDAO {
 		String sql = "";
 		String msg = "";
 		HashMap<String,Object> map = new HashMap<String,Object>();
+		//즉결구매가 이상을 입력한 경우
+		
+		
 		//최고입찰자와 최고입찰금액 가져오는 쿼리
 		sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and p_no = ?";
 		ps = conn.prepareStatement(sql);
@@ -666,6 +669,8 @@ public class BoardDAO {
 			String bidUsr = rs.getString("ha_bidusr");
 			int bidPr =rs.getInt("ha_bidpr");
 			System.out.println("최고 입찰자 : "+ bidUsr+" / 최고입찰가 : "+bidPr );
+			
+			
 			
 			if(bidUsr.equals(ha_bidUsr)) { //내가 이미 최고입찰자인 경우
 				msg = "이미 최고입찰자 입니다.";
@@ -724,7 +729,7 @@ public class BoardDAO {
 	
 
 	public GGDto commDetail(String p_no) {
-		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname,c_name FROM "+ 
+		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname,c_name,u_id FROM "+ 
 				"    UserInfo u INNER JOIN Post p ON u.u_id = p.p_id" + 
 				"    INNER JOIN codes c ON p.p_cate = c.c_code" + 
 				"    LEFT OUTER JOIN Img i ON p.p_no = i.p_no" + 
@@ -745,6 +750,7 @@ public class BoardDAO {
 				dto.setP_view(rs.getInt("p_view"));
 				dto.setI_newName(rs.getString("i_newName"));
 				dto.setC_name(rs.getString("c_name"));
+				dto.setU_id(rs.getString("u_id"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
