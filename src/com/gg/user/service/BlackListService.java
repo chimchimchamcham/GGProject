@@ -19,7 +19,7 @@ public class BlackListService {
 		String N2_code = req.getParameter("N2_code");
 		String N_content = req.getParameter("N_content");
 		boolean success = dao.notifyUser();
-		
+		return success;
 	}
 	
 	
