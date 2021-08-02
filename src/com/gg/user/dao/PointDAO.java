@@ -85,13 +85,13 @@ public class PointDAO {
 		System.out.println("포인트 리스트 보여주기.");
 		GGDto dto = null;
 		ArrayList<GGDto> list = new ArrayList<GGDto>();
-		sql = "SELECT pnt.pnt_code, pnt.pnt_point,i.i_newname, p.p_title, pnt.pnt_tm, p.p_no,pnt.pnt_id FROM point pnt " + 
+		sql = "SELECT pnt.pnt_code, pnt.pnt_point,i.i_newname, p.p_title, pnt.pnt_tm, p.p_no, pnt.pnt_id FROM point pnt " + 
 				"LEFT OUTER JOIN post p " + 
 				"ON (p.p_no = pnt.p_no) " + 
 				"LEFT OUTER JOIN img i " + 
 				"ON (p.p_no = i.p_no) " + 
 				"WHERE pnt.pnt_id = ? " + 
-				"ORDER BY pnt.pnt_tm DESC;";
+				"ORDER BY pnt.pnt_tm DESC";
 		
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, id);

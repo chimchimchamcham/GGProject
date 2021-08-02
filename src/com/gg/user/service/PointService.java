@@ -59,7 +59,6 @@ public class PointService {
 		PointDAO dao = new PointDAO();
 		String id = req.getParameter("id");
 		System.out.println("포인트리스트 아이디 :" + id);
-		GGDto dto = null;
 		ArrayList<GGDto> list= null;
 		try {
 			list = dao.pointList(id);

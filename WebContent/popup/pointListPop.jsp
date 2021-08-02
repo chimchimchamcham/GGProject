@@ -73,12 +73,14 @@ button {
 	</table>
 </body>
 <script>
-	listCall();
 	var loginId = "${sessionScope.loginId}";
 	console.log("로그인 아이디 확인 ", loginId);
 	var param = {};
 	param.id = loginId;
-
+	
+	listCall();
+	
+	
 	function listCall() {
 	
 		$.ajax({
@@ -96,7 +98,7 @@ button {
 
 		});
 
-	}
+	};
 	function drawList(list) {
 		console.log("드로우 리스트");
 		console.log(list);
