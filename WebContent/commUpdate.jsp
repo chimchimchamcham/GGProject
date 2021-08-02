@@ -83,7 +83,7 @@ console.log("오늘 날짜 : ",currDate);
 					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
 					<select name="commuCat">
 						<c:forEach items="${commuCat }" var="CommuCategory">
-							<option value="${CommuCategory.p_cate}" <c:if test="${CommuCategory.p_cate eq '${commUpdate.p_cate}'}">selected = "selected"</c:if> >${CommuCategory.p_cateName}</option>
+							<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
 						</c:forEach>
 					</select>
 				</p>
@@ -99,6 +99,8 @@ console.log("오늘 날짜 : ",currDate);
 console.log("카테고리 테스트 1 : ","${commUpdate.p_cate}");
 /* console.log("${commUpdate.c_name}"); */
 console.log("카테고리 테스트 2 : ","${CommuCategory.p_cate}");
+
+$("select[name=commuCat]").val("${commUpdate.p_cate}").prop("selected", true);
 
 	var success = false;
   	//초기상태 - 판매폼만 보이는 상태
