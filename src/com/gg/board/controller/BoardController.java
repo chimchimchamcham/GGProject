@@ -224,7 +224,7 @@ public class BoardController extends HttpServlet {
 			System.out.println("경매글 상세보기 요청");
 			
 			dto = service.auctionDetail(); //경매글 해당 글번호 내용 dto로 반환
-
+			System.out.println("Controller 경매글 상세보기 반환:"+dto);
 			//좋아요를 눌렀는지 확인
 			isLiked = false;
 			isLiked = service.isLiked();
