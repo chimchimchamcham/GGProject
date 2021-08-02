@@ -44,7 +44,7 @@
 	<form  action = "../notify" method = "get" name = "postNoti">
 		<table id = "postTable">
 			<tr style="display:none">
-				<td><input type="text" name="N_receiveId" value=${param.N_receiveId }/></td>
+				<td><input type="text" name="N_receiveId" value=${param.N_receiveId }></td>
 			</tr>
 			<tr>
 				<td><input type="hidden" name="N1_code" value="comment" checked></td>
@@ -84,7 +84,7 @@
 	<form  action = "../notify" method = "get" name = "commentNoti">
 		<table id = "commentTable" style="display:none">
 			<tr style="display:none">
-				<td><input type="text" name="N_receiveId" value=${param.N_receiveId }/></td>
+				<td><input type="text" name="N_receiveId" value=${param.N_receiveId }></td>
 			</tr>
 			<tr>
 				<td><input type="hidden" name="N1_code" value="user" checked></td>
@@ -124,7 +124,7 @@
 	<form  action = "../notify" method = "get" name = "userNoti">
 		<table id = "userTable" style="display:none">
 			<tr style="display:none">
-				<td><input type="text" name="N_receiveId" value=${param.N_receiveId }/></td>
+				<td><input type="text" name="N_receiveId" value=${param.N_receiveId }></td>
 			</tr>
 			<tr>
 				<td><input type="hidden" name="N1_code" value="post" checked></td>
@@ -163,7 +163,6 @@
 	</form>
 </body>
 <script type="text/javascript">
-console.log(${param.N_receiveId});
 function drop(){
 	var drop = $("select[name=drop]").val();
 	console.log(drop);

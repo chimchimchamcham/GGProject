@@ -3,31 +3,56 @@ package com.gg.user.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.gg.dto.GGDto;
+
 public class BlackListDAO {
-	Connection conn;
-	PreparedStatement ps;
-	ResultSet rs;
+	Connection conn = null;
+	PreparedStatement ps = null;
+	ResultSet rs = null;
 	public BlackListDAO() {
 		try {
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource)ctx.lookup("java:/comp/env/jdbc/Oracle");
-			
-		} catch (NamingException e) {
-			// TODO Auto-generated catch block
+			Connection conn = ds.getConnection();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public boolean notifyUser() {
-		String sql = "INSERT INTO notify VALUES(n_no_seq.NEXTVAL(),?,?,?,?,?)";
-		
-		return false;
+	public boolean notifyUser(String loginId, GGDto dto) {
+		String sql = "INSERT INTO notify VALUES(n_no_seq.NEXTVAL,?,?,?,?,?)";
+		boolean success = false;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, dto.getN_receivedId());
+			ps.setString(2, dto.getN_sendId());
+			ps.setString(3, dto.getN_content());
+			ps.setString(4, dto.getN1_code());
+			ps.setString(5, dto.getN2_code());
+			if(ps.executeUpdate()>0) {
+				success = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return success;
 	}
-
+	public void resClose() {
+		try {
+			if(conn != null && !conn.isClosed()) {conn.close();}
+			if(ps != null && !ps.isClosed()) {ps.close();}
+			if(rs != null && !rs.isClosed()) {rs.close();}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
