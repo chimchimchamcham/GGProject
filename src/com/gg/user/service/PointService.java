@@ -60,10 +60,17 @@ public class PointService {
 		String id = req.getParameter("id");
 		System.out.println("포인트리스트 아이디 :" + id);
 		GGDto dto = null;
-		dto = dao.pointList(id);
+		ArrayList<GGDto> list= null;
+		try {
+			list = dao.pointList(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
 		
-		
-		return null;
+		return list;
 	}
 
 	public String getNname(String id) {

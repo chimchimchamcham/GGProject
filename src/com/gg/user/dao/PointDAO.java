@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -81,9 +82,13 @@ public class PointDAO {
 		return success;
 	}
 
-	public GGDto pointList(String id) {
+	public ArrayList<GGDto> pointList(String id) throws SQLException {
+		System.out.println("DAO 진입");
 		sql = "";
-
+		
+		ps = conn.prepareStatement(sql);
+		
+		
 		return null;
 	}
 
