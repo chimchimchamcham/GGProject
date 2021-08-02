@@ -692,8 +692,6 @@ public class BoardDAO {
 		ps.setInt(1, p_no);
 		rs = ps.executeQuery();
 		
-		
-		
 		if(rs.next()) {//무조건 즉결가는 존재(이미 보유포인트에서 거를 예정이기에)
 			instantPr = rs.getInt("au_instantpr");
 			System.out.println("경매글 최고 입찰가 : "+instantPr);

@@ -486,7 +486,9 @@ dao.resClose();
 		BoardDAO dao = new BoardDAO();
 		try {
 			dao.conn.setAutoCommit(false);
-			if(dao.upAucCnt(p_no)>0) {//조회수 올리기 성공시 
+			int upAucCnt = dao.upAucCnt(p_no);
+			System.out.println("입찰횟수 올리기 : "+upAucCnt);
+			if(upAucCnt >0) {//입찰수 올리기 성공시 
 				map = dao.auctionBid(p_no,ha_bidPr,ha_bidUsr); //경매입찰시
 			}
 			//((Boolean) yourObject).booleanValue();
