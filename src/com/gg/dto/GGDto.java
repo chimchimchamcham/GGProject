@@ -48,6 +48,16 @@ public class GGDto {
 	private String n_content; // 신고내용
 	private String n1_code; // 대분류코드
 	private String n2_code; // 중분류코드
+	private String Pntcode;// 분류코드
+	
+	
+	public String getPntcode() {
+		return Pntcode;
+	}
+
+	public void setPntcode(String pntcode) {
+		Pntcode = pntcode;
+	}
 
 	// 블랙리스트
 	private Date b_startTm; // 블랙리스트 등록날짜

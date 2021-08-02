@@ -471,31 +471,15 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				console.log("auctionlist:",data.auctionlist);
 				console.log("maidelist:",data.maidelist);
 				if(data != null){
-					console.log("data0:",data.soldlist);
-					console.log("data1:",data.auctionlist);
-					console.log("data2:",data.maidelist);
-					console.log("array*:",typeof data);
-					console.log("Array_data:"+Array.isArray(data));
-					console.log("Array_data0:"+Array.isArray(data.soldlist));
-					console.log("Array_data1:"+Array.isArray(data.auctionlist));
-					console.log("Array_data2:"+Array.isArray(data.maidelist));
 					console.log("index",$index);
 					console.log(url);
 					if($index == 0){//판매
-						console.log("soled_list3:",data.soldlist);
-						console.log("타입:"+typeof data.soldlist);
-						
 						soled_list(data.soldlist);
 					}else if ($index == 1) {//경매
-
-						
 						auction_list(data.auctionlist);
-					
 					}else if ($index == 2) {//구매
-						console.log("maide_list3:",data.maidelist);
-						auction_list(data.maidelist);
-						
-						console.log(typeof data.maidelist);
+						maide_list(data.maidelist);
+
 					}
 				}
 			},
@@ -538,7 +522,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content +="<div class='item-one'>";
 				content +="<div class='img-zoon'><img src="+item.i_newName+"></div>";
 				content +="<div class='dretion-zoon'>";
-				content +="<a href="+"salesDetail?p_no="+item.p_no+">"+item.p_title+"</a>";
+				content +="<a href="+"auctionDetail?p_no="+item.p_no+">"+item.p_title+"</a>";
 				content +="<div class='xianzai'>현제 입찰가</div><div style='font-size: 25px;'>"+item.hm+"p</div><div class='auction'>";
 				content +="<div>시작:"+item.au_startPr+"</div>/<div>즉결:"+item.au_instantPr+"</div></div>";
 				content +="</div><div class='endtime-zoon'>종료시간:<div>"+item.au_endTm+"</div></div>";
@@ -554,7 +538,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			console.log("maidelist:", maidelist);
 			var content="";
 
-			maide_list.forEach(function(item,idx){
+			maidelist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
 				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg' style='margin:3%'></div>";
