@@ -686,6 +686,23 @@ public class BoardDAO {
 		return map;
 	}
 
+	public GGDto commDetail(String p_no) {
+		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname FROM" + 
+				"UserInfo u INNER JOIN Post p ON u.u_id = p.p_id" + 
+				"LEFT OUTER JOIN Img i ON p.p_no = i.p_no" + 
+				"LEFT OUTER JOIN Post_Comment pc ON p.p_no = pc.p_no" + 
+				"WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_no=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, p_no);
+			rs = ps.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 
 
 
