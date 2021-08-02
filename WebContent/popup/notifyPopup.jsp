@@ -41,13 +41,16 @@
 	    <option value = "commentCate">댓글 신고</option>
 	    <option value = "userCate">사용자 신고</option>
 	</select>
-	<form  action = "notify" method = "get" name = "postNoti">
+	<form  action = "../notify" method = "get" name = "postNoti">
 		<table id = "postTable">
+			<tr style="display:none">
+				<td><input type="text" name="N_receiveId" value=${param.N_receiveId }/></td>
+			</tr>
 			<tr>
 				<td><input type="hidden" name="N1_code" value="comment" checked></td>
 			</tr>
 			<tr>
-				<td><input type="radio" name="N2_code" value="post_01"/>허위상품,과대상품거래</td>
+				<td><input type="radio" name="N2_code" value="post_01" checked/>허위상품,과대상품거래</td>
 				<td><input type="radio" name="N2_code" value="post_02"/>물건에 무관한 게시글</td>
 			</tr>
 			<tr>
@@ -71,21 +74,23 @@
 				<td><input type="radio" name="N2_code" value="" style="visibility:hidden"/></td>
 			</tr>
 			<tr>
-				<td colspan = "2"><textarea class ="N_content" maxlength="1000"></textarea></td>
+				<td colspan = "2"><textarea name ="N_content" maxlength="1000"></textarea></td>
 			</tr>
 			<tr style="text-align:right">
 				<td colspan ="2"><button>신고하기</button></td>
 			</tr>
-			
 		</table>
 	</form>
-	<form  action = "notify" method = "get" name = "commentNoti">
+	<form  action = "../notify" method = "get" name = "commentNoti">
 		<table id = "commentTable" style="display:none">
+			<tr style="display:none">
+				<td><input type="text" name="N_receiveId" value=${param.N_receiveId }/></td>
+			</tr>
 			<tr>
 				<td><input type="hidden" name="N1_code" value="user" checked></td>
 			</tr>
 			<tr>
-				<td><input type="radio" name="N2_code" value="comment_01"/>욕설,비방성 댓글</td>
+				<td><input type="radio" name="N2_code" value="comment_01" checked/>욕설,비방성 댓글</td>
 				<td><input type="radio" name="N2_code" value="comment_02"/>광고/홍보성댓글</td>
 			</tr>
 			<tr>
@@ -109,20 +114,23 @@
 				<td><input type="radio" name="N2_code" value="" style="visibility:hidden"/></td>
 			</tr>
 			<tr>
-				<td colspan = "2"><textarea class ="N_content" maxlength="1000"></textarea></td>
+				<td colspan = "2"><textarea name ="N_content" maxlength="1000"></textarea></td>
 			</tr>
 			<tr style="text-align:right">
 				<td colspan ="2"><button>신고하기</button></td>
 			</tr>
 		</table>
 	</form>
-	<form  action = "notify" method = "get" name = "userNoti">
+	<form  action = "../notify" method = "get" name = "userNoti">
 		<table id = "userTable" style="display:none">
+			<tr style="display:none">
+				<td><input type="text" name="N_receiveId" value=${param.N_receiveId }/></td>
+			</tr>
 			<tr>
 				<td><input type="hidden" name="N1_code" value="post" checked></td>
 			</tr>
 			<tr>
-				<td><input type="radio" name="N2_code" value="user_01"/>거래와 상관 없는 쪽지와 댓글을 보내는 경우</td>
+				<td><input type="radio" name="N2_code" value="user_01" checked/>거래와 상관 없는 쪽지와 댓글을 보내는 경우</td>
 				<td><input type="radio" name="N2_code" value="user_02"/>불법상품 거래</td>
 			</tr>
 			<tr>
@@ -146,7 +154,7 @@
 				<td><input type="radio" name="N2_code" value="" style="visibility:hidden"/></td>
 			</tr>
 			<tr>
-				<td colspan = "2"><textarea class ="N_content" maxlength="1000"></textarea></td>
+				<td colspan = "2"><textarea name ="N_content" maxlength="1000"></textarea></td>
 			</tr>
 			<tr style="text-align:right">
 				<td colspan ="2"><button>신고하기</button></td>
@@ -155,6 +163,7 @@
 	</form>
 </body>
 <script type="text/javascript">
+console.log(${param.N_receiveId});
 function drop(){
 	var drop = $("select[name=drop]").val();
 	console.log(drop);
