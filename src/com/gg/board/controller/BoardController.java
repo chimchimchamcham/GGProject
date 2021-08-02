@@ -236,6 +236,7 @@ public class BoardController extends HttpServlet {
 			System.out.println("[Controller ] category success : " + map);
 			commuCat = map.get("commuCat");
 			req.setAttribute("commuCat", commuCat);
+			
 			// 글 내용
 			req.setAttribute("commUpdate", service.commUpdateForm());
 			dis = req.getRequestDispatcher("commUpdate.jsp");

@@ -76,7 +76,12 @@ $('#update').on('keyup', function() {
 				</p>
 				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
 					<label for='test'>
-						<img src="img/plus.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+					<c:if test="${commUpdate.i_newName  eq 'plus-icon.png'}">
+						<img src="img/plus-icon.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+					</c:if>
+					<c:if test="${commUpdate.i_newName  ne 'plus-icon.png'}">
+						<img src="/photo/${commUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+					</c:if>
 					</label>
 					<input type="file" name="imgFile" style="display: none" id="test" />
 				</form>
@@ -88,7 +93,7 @@ $('#update').on('keyup', function() {
 					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
 					<select name="commuCat">
 						<c:forEach items="${commuCat }" var="CommuCategory">
-							<option value="${commUpdate.p_cate}">${CommuCategory.p_cateName}</option>
+							<option value="${commUpdate.p_cate}">${commUpdate.c_name}</option>
 						</c:forEach>
 					</select>
 				</p>
@@ -168,6 +173,7 @@ $('#update').on('keyup', function() {
 	        reader.readAsDataURL(input.files[0]);
 	    }
 	};
+	
 	// input file에 change 이벤트 부여
 	const inputImage = document.getElementById("test");
 	inputImage.addEventListener("change", e => {
