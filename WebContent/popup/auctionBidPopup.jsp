@@ -61,6 +61,7 @@
 			var param = {};
 			param.p_no = $("#p_no").val();
 			param.ha_bidPr = $("#ha_bidPr").val();
+			console.log(param);
 			
 		 	 $.ajax({
 				type : 'post',
