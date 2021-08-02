@@ -680,6 +680,7 @@ public class BoardDAO {
 		//msg를 뿌려줄 예정 (성공/ 현재입찰자 = 최고입찰자 / 입찰금액 <최고입찰긍)
 		int checker = 0;
 		boolean success = false;
+		int instantPr =0;
 		String sql = "";
 		String msg = "";
 		HashMap<String,Object> map = new HashMap<String,Object>();
@@ -696,8 +697,16 @@ public class BoardDAO {
 		System.out.println("최고 입찰자 : "+ bidUsr+" / 최고입찰가 : "+bidPr );
 		
 		if(rs.next()) {//무조건 즉결가는 존재(이미 보유포인트에서 거를 예정이기에)
-			int instantPr = rs.getInt("au_instantpr");
-			System.out.println("경매글 최고 입찰가 : "+instanPr);
+			instantPr = rs.getInt("au_instantpr");
+			System.out.println("경매글 최고 입찰가 : "+instantPr);
+			
+			bidPr = (bidPr >=instantPr) ? instantPr : bidPr;
+			System.out.println("변경된 입찰가 : "+bidPr);
+		}
+		
+		//변경된 입찰금액과 즉결가를 비교해서 동일한 경우 즉결구매로 넘김
+		if(bidPr == instantPr) {
+				buyNow(p_no, bidUsr, bidPr);
 		}else {
 			//최고입찰자와 최고입찰금액 가져오는 쿼리
 			sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and p_no = ?";
