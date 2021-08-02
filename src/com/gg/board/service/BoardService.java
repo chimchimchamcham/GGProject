@@ -372,14 +372,20 @@ dao.resClose();
 		String s_deliveryYN = req.getParameter("deliveryYN");
 		String s_followLimYN = req.getParameter("followYN");
 		String s_code = req.getParameter("category");
-		String au_startPr = req.getParameter("startPr");//
+		String au_startPr = req.getParameter("startPr");
 		String au_instantPr = req.getParameter("instantPr");
 		Date au_startTm = Date.valueOf(req.getParameter("startTm"));
 		Date au_endTm = Date.valueOf(req.getParameter("endTm"));
+		
 		System.out.println("Service 경매 데이터 확인");
 		System.out.println(p_id+"\n"+p_title+"\n"+p_content+"\n"+p_code);
 		System.out.println(s_deliveryYN+"\n"+s_followLimYN+"\n"+s_code+"\n"+au_startPr);
 		System.out.println(au_startTm+"\n"+au_instantPr+"\n"+au_endTm);
+		
+		if(au_instantPr ==null) {
+			au_instantPr = "999999999999";
+			System.out.println("변경된 즉결 구매가 : "+au_startPr);
+		}
 		
 		dto.setP_id(p_id);
 		dto.setP_title(p_title);
@@ -468,7 +474,7 @@ dao.resClose();
 
 	public HashMap<String,Object> auctionBid() {
 		
-		boolean success = false;
+		//boolean success = false;
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		int p_no = Integer.parseInt(req.getParameter("p_no"));
 		int ha_bidPr = Integer.parseInt(req.getParameter("ha_bidPr"));
