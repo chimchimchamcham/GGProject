@@ -105,7 +105,7 @@ a{
 	color: balck;
 }
 
-#userInfoBox{
+#userInfo{
 	width : 300px;
 }
 
@@ -262,6 +262,8 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				url ='./auctionlist';
 			}else if($index == 2){
 				url ='./maidelist';
+			}else if($index == 3){
+				url ='./communitylist';
 			}
 			console.log("url:"+url);
 
@@ -470,6 +472,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				console.log("soldlist:",data.soldlist);
 				console.log("auctionlist:",data.auctionlist);
 				console.log("maidelist:",data.maidelist);
+				console.log("communitylist:",data.communitylist);
 				if(data != null){
 					console.log("index",$index);
 					console.log(url);
@@ -479,7 +482,8 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 						auction_list(data.auctionlist);
 					}else if ($index == 2) {//구매
 						maide_list(data.maidelist);
-
+					}else if ($index == 3) {//커뮤니티
+						community_list(data.communitylist);
 					}
 				}
 			},
@@ -507,7 +511,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content += "</div>";	
 				content += "</div>";
 			});	
-			$('categori').empty();
+			$("#sale .item-box").empty();
 			$("#sale .item-box").append(content);
 			
 		}//판매 리스트 end
@@ -522,14 +526,14 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content +="<div class='item-one'>";
 				content +="<div class='img-zoon'><img src="+item.i_newName+"></div>";
 				content +="<div class='dretion-zoon'>";
-				content +="<a href="+"auctionDetail?p_no="+item.p_no+">"+item.p_title+"</a>";
+				content +="<a href= auctionDetail?p_no="+item.p_no+">"+item.p_title+"</a>";
 				content +="<div class='xianzai'>현제 입찰가</div><div style='font-size: 25px;'>"+item.hm+"p</div><div class='auction'>";
 				content +="<div>시작:"+item.au_startPr+"</div>/<div>즉결:"+item.au_instantPr+"</div></div>";
 				content +="</div><div class='endtime-zoon'>종료시간:<div>"+item.au_endTm+"</div></div>";
 				content +="<div class='love-time'><div>입찰수:"+item.au_count+"</div><div>"+item.p_tm+"</div></div>";
 				content +="</div>";
 				});	
-			$('categori').empty();
+			$('#trade .item-box').empty();
 			$('#trade .item-box').append(content);
 		}// 경매 리스트 end
 		
@@ -556,10 +560,34 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content += "	<div> 구매날짜:2시간 전</div>";
 				content += "</div></div>";
 			});	
-			$('categori').empty();
+			$("#sell .item-box").empty();
 			$("#sell .item-box").append(content);
 			
 		}// 구매 리스트 end
+		
+		//데이터 가져와서 뿌려주는 커뮤니티 리스트
+		function community_list(communitylist){	
+			console.log("communitylist:", communitylist);
+			var content="";
+
+			communitylist.forEach(function(item,idx){
+				console.log("idx:",idx,item);
+				content += "<div class='item-one'>";
+				content += "<div class='dretion-zoon style='margin: 3%'>";
+				content += "	<div>"+item.p_cateName+"</div>";
+				content += "	<div><a href = auctionDetail?p_no="+item.p_no+">"+item.p_title+"</a></div>";///경로 고쳐야함
+				content += "</div>";
+				content += "<div class='c_zoon'>";
+				content += "	<div>"+item.p_tm+"</div>";	
+				content += "</div>";
+				content += "<div class='mai-time'>";
+				content += "	<div>"+item.p_view+"</div>";
+				content += "</div></div>";
+			});	
+			$("#commu .item-box").empty();
+			$("#commu .item-box").append(content);
+			
+		}//판매 리스트 end
 </script>
 <body>
 <div id="mainHeader"><jsp:include page="header.jsp" /></div>
@@ -636,7 +664,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
    <div id="sale"  class="categori" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
    <div id="trade"  class="categori" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
    <div id="sell"  class="categori" style="background-color:yellow; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
-   <div id="commu"  class="categori" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
+   <div id="commu"  class="categori" style="background-color:green; padding:20px;"><jsp:include page="./mypage_list/community.jsp"></jsp:include></div>
    <div id="follow"  class="categori" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
    <div id="want"  class="categori" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
    <div id="like"  class="categori" style="background-color:purple; padding:20px;">좋아요목록입니다.</div>
