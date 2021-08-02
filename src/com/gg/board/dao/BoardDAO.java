@@ -694,8 +694,6 @@ public class BoardDAO {
 		ps.setInt(1, p_no);
 		rs = ps.executeQuery();
 		
-		
-		
 		if(rs.next()) {//무조건 즉결가는 존재(이미 보유포인트에서 거를 예정이기에)
 			instantPr = rs.getInt("au_instantpr");
 			System.out.println("경매글 최고 입찰가 : "+instantPr);
@@ -711,7 +709,9 @@ public class BoardDAO {
 			System.out.println("즉결구매 성공 여부 : "+success);
 			if(success) {
 					msg = "즉결구매에 성공하였습니다.";
-				}	
+				}else {
+					msg="즉결구매에 실패하였습니다.";
+				}
 				
 		}else {
 			//최고입찰자와 최고입찰금액 가져오는 쿼리
