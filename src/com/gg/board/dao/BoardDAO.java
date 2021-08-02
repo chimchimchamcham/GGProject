@@ -370,7 +370,7 @@ public class BoardDAO {
 	}
 	
 	public ArrayList<GGDto> maide_list(String userid) throws SQLException {
-		String sql = "select p.p_title,pi.pnt_point,pi.pnt_tm,i.i_newname,pi.pnt_otherid,pi.pnt_code from post p,point pi,img i where (p.p_code='P002' or p.p_code='P001') and pi.pnt_code='PNT003' and p.p_no = pi.p_no and p.p_no = i.p_no and p.p_id = pi.PNT_id and pi.PNT_id = ?";
+		String sql = "select p.p_title,pi.pnt_point,pi.pnt_tm,i.i_newname,pi.pnt_otherid,pi.pnt_code from post p,point pi,img i,Codes c where (p.p_code='P002' or p.p_code='P001') and pi.pnt_code='PNT003' and p.p_no = pi.p_no and p.p_no = i.p_no and p.p_id = pi.PNT_id and pi.pnt_code=c.c_code and pi.PNT_id = ?";
 
 		ArrayList<GGDto> maidelist = new ArrayList<GGDto>();
 		
@@ -399,7 +399,7 @@ public class BoardDAO {
 	
 	public ArrayList<GGDto> community_list(String userid) throws SQLException {
 		
-		String sql = "SELECT DISTINCT pc.p_catename,p.p_title,p.p_tm,p.P_view FROM post p,Post_codes pc,Codes c where pc.p_cate = p.p_cate and p.p_code = c.c_code and p.p_id = ?";
+		String sql = "SELECT DISTINCT p.p_no,pc.p_catename,p.p_title,p.p_tm,p.P_view FROM post p,Post_codes pc,Codes c where pc.p_cate = p.p_cate and p.p_code = c.c_code and p.p_id = ?";
 
 		ArrayList<GGDto> communitylist = new ArrayList<GGDto>();
 		
@@ -414,6 +414,7 @@ public class BoardDAO {
 		
 		while (rs.next()) {
 			GGDto dto = new GGDto();
+			dto.setP_no(rs.getInt("P_NO"));
 			dto.setP_cateName(rs.getString("p_catename"));
 			dto.setP_title(rs.getString("P_title"));
 			dto.setP_tm(rs.getDate("p_tm"));

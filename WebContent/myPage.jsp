@@ -547,8 +547,8 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content += "<div class='item-one'>";
 				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg' style='margin:3%'></div>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
-				content +="		<h2>제목.....</h2>";
-				content += "	<div style='font-size: 25px; justify-self: center;'>5000p</div>";
+				content +="		<h2>"+p_title+"</h2>";
+				content += "	<div style='font-size: 25px; justify-self: center;'>"+pnt_point+"p</div>";
 				content += "</div>";
 				content += "<div class='c_zoon'>";
 				content += "	<div class='c_code'>판매</div>";	
@@ -575,7 +575,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content += "<div class='item-one'>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
 				content += "	<div>"+item.p_cateName+"</div>";
-				content += "	<div><a href = auctionDetail?p_no="+item.p_no+">"+item.p_title+"</a></div>";///경로 고쳐야함
+				content += "	<div><a href = commDetail?P_no="+item.p_no+">"+item.p_title+"</a></div>";///경로 고쳐야함
 				content += "</div>";
 				content += "<div class='c_zoon'>";
 				content += "	<div>"+item.p_tm+"</div>";	
