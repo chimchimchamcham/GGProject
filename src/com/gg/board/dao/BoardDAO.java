@@ -681,38 +681,69 @@ public class BoardDAO {
 		//msg를 뿌려줄 예정 (성공/ 현재입찰자 = 최고입찰자 / 입찰금액 <최고입찰긍)
 		int checker = 0;
 		boolean success = false;
+		int instantPr =0;
 		String sql = "";
 		String msg = "";
 		HashMap<String,Object> map = new HashMap<String,Object>();
+		
+		
 		//즉결구매가 이상을 입력한 경우
-		
-		
-		//최고입찰자와 최고입찰금액 가져오는 쿼리
-		sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and p_no = ?";
+		sql = "select au_instantpr from auction where p_no=?";
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, p_no);
-		ps.setInt(2, p_no);
 		rs = ps.executeQuery();
-		if(rs.next()) {
-			String bidUsr = rs.getString("ha_bidusr");
-			int bidPr =rs.getInt("ha_bidpr");
-			System.out.println("최고 입찰자 : "+ bidUsr+" / 최고입찰가 : "+bidPr );
+		
+		String bidUsr = rs.getString("ha_bidusr");
+		int bidPr =rs.getInt("ha_bidpr");
+		System.out.println("최고 입찰자 : "+ bidUsr+" / 최고입찰가 : "+bidPr );
+		
+		if(rs.next()) {//무조건 즉결가는 존재(이미 보유포인트에서 거를 예정이기에)
+			instantPr = rs.getInt("au_instantpr");
+			System.out.println("경매글 최고 입찰가 : "+instantPr);
 			
-			
-			
-			if(bidUsr.equals(ha_bidUsr)) { //내가 이미 최고입찰자인 경우
-				msg = "이미 최고입찰자 입니다.";
-			}else if( bidPr >= ha_bidPr){ //내가 입력한 입찰금이 최고 입찰금보다 적을 때
-				msg="입찰금액이 최고입찰가보다 적습니다. 다시 입찰해주세요.";
-				map.put("bidPr", bidPr);
-			}else { //내가 입력한 금액이 최고 입찰금액보다 큰 경우
+			bidPr = (bidPr >=instantPr) ? instantPr : bidPr;
+			System.out.println("변경된 입찰가 : "+bidPr);
+		}
+		
+		//변경된 입찰금액과 즉결가를 비교해서 동일한 경우 즉결구매로 넘김
+		if(bidPr == instantPr) {
+				buyNow(p_no, bidUsr, bidPr);
+		}else {
+			//최고입찰자와 최고입찰금액 가져오는 쿼리
+			sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and p_no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, p_no);
+			ps.setInt(2, p_no);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				if(bidUsr.equals(ha_bidUsr)) { //내가 이미 최고입찰자인 경우
+					msg = "이미 최고입찰자 입니다.";
+				}else if( bidPr >= ha_bidPr){ //내가 입력한 입찰금이 최고 입찰금보다 적을 때
+					msg="입찰금액이 최고입찰가보다 적습니다. 다시 입찰해주세요.";
+					map.put("bidPr", bidPr);
+				}else { //내가 입력한 금액이 최고 입찰금액보다 큰 경우
+					sql = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE) ";
+					ps = conn.prepareStatement(sql);
+					ps.setInt(1,p_no);
+					ps.setInt(2, ha_bidPr);
+					ps.setString(3, ha_bidUsr);
+					checker = ps.executeUpdate();
+	
+					//insert 성공시
+					if(checker>0) {
+						success = true;
+						msg = "입찰에 성공하였습니다.";
+						
+					}
+				}
+			}else {//이전 입찰자가 없었을 때
 				sql = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE) ";
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1,p_no);
 				ps.setInt(2, ha_bidPr);
 				ps.setString(3, ha_bidUsr);
 				checker = ps.executeUpdate();
-
+	
 				//insert 성공시
 				if(checker>0) {
 					success = true;
@@ -720,22 +751,7 @@ public class BoardDAO {
 					
 				}
 			}
-		}else {//이전 입찰자가 없었을 때
-			sql = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE) ";
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1,p_no);
-			ps.setInt(2, ha_bidPr);
-			ps.setString(3, ha_bidUsr);
-			checker = ps.executeUpdate();
-
-			//insert 성공시
-			if(checker>0) {
-				success = true;
-				msg = "입찰에 성공하였습니다.";
-				
-			}
 		}
-		
 		//입찰금액 입력 쿼리
 		System.out.println("경매 히스토리 입력여부 : "+success);
 		map.put("success", success);
@@ -789,19 +805,34 @@ public class BoardDAO {
 	}
 	
 	public boolean buyNow(int p_no, String u_id, int ha_bidPr) {
+		//즉결가 조회
 		String sql = "SELECT AU_INSTANTPR FROM AUCTION WHERE P_NO = ?";
+		//낙찰자를 등록
+		String sql2 = "INSERT INTO AUCTION (AU_SUCCESSER) VALUES(?)";
+		//경매상태를 거래중으로 변경
+		String sql3 = "UPDATE FROM AUCTION SET AU_CODE = 'Au002' WHERE P_NO = ?";
+		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
 			rs = ps.executeQuery();
+			int au_instantpr = 0;
 			if(rs.next()) {
-				
-				
+				au_instantpr = rs.getInt("au_instantpr");
+			}
+			if(au_instantpr == ha_bidPr) {
+				ps = conn.prepareStatement(sql2);
+				ps.setString(1, u_id);
+				if(ps.executeUpdate()>0) {
+					ps = conn.prepareStatement(sql3);
+					ps.setInt(1, p_no);
+					success = ps.executeUpdate();
+				}
 			}
 		}catch(Exception e) {
 			
 		}
-		return false;
+		return success>0?true:false;
 	}
 	
 }
