@@ -30,7 +30,7 @@
 		<a href = "myPage?id=123">123프로필로 연결</a>
 		<a href = "#" onclick= notifyPop()>신고하기</a>
 		<a href = "commUpdateForm?P_no=65">커뮤니티 글 수정</a>
-		<a href = "commDetail?P_no=6">커뮤니티 글 상세보기</a>
+		<a href = "commDetail?P_no=64">커뮤니티 글 상세보기</a>
 	</div><!-- div main end -->
 </body>
 <script>
