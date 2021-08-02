@@ -14,7 +14,7 @@ import com.gg.dto.GGDto;
 import com.gg.trade.service.TradeService;
 import com.google.gson.Gson;
 
-@WebServlet({"/buyRequest","/buyRequestCancel","/bid"})
+@WebServlet({"/buyRequest","/buyRequestCancel","/bid","/buyNow"})
 public class TradeController extends HttpServlet {
 	
 	
@@ -74,6 +74,10 @@ public class TradeController extends HttpServlet {
 			resp.getWriter().println(new Gson().toJson(sue_map));
 
 			break;	
+			
+		case "/buyNow":
+			System.out.println("즉결 구매 요청");
+			
 		}
 		
 	}
