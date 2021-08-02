@@ -248,6 +248,7 @@ public class BoardController extends HttpServlet {
 			resp.setContentType("text/html charset=UTF-8");
 			resp.setHeader("Access-Control-Allow-origin", "*"); //view가 같은 서버에 있으면 생략 가능
 			resp.getWriter().println(new Gson().toJson(sue_map));
+			break;
 		
 		case "/commDetail":
 			System.out.println("커뮤니티 상세보기 요청");	
