@@ -162,7 +162,7 @@ public class BoardController extends HttpServlet {
 			service.maide_list(userid);
 
 			break;
-<<<<<<< HEAD
+
 		case "/communitylist":
 			System.out.println("커뮤니티 리스트 요청");	
 			userid = (String) req.getSession().getAttribute("loginId");
@@ -170,11 +170,8 @@ public class BoardController extends HttpServlet {
 			service.community_list(userid);
 			
 			break;
-		/* ====== 글쓰기 ====== */	
-=======
 
-		/* ====== 글쓰기 ====== */
->>>>>>> 1ca54974cc5255b1768af2fff2dae53b6a16766b
+
 		case "/writeForm":
 			System.out.println("글쓰기 폼 요청");
 			HashMap<String, ArrayList<GGDto>> map = service.category();
