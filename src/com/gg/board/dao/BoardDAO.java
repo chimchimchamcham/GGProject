@@ -709,7 +709,9 @@ public class BoardDAO {
 			System.out.println("즉결구매 성공 여부 : "+success);
 			if(success) {
 					msg = "즉결구매에 성공하였습니다.";
-				}	
+				}else {
+					msg="즉결구매에 실패하였습니다.";
+				}
 				
 		}else {
 			//최고입찰자와 최고입찰금액 가져오는 쿼리
