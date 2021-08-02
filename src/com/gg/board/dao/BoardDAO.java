@@ -724,11 +724,12 @@ public class BoardDAO {
 	
 
 	public GGDto commDetail(String p_no) {
-		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname,p.p_code FROM " + 
-				"UserInfo u INNER JOIN Post p ON u.u_id = p.p_id " + 
-				"LEFT OUTER JOIN Img i ON p.p_no = i.p_no " + 
-				"LEFT OUTER JOIN Post_Comment pc ON p.p_no = pc.p_no " + 
-				"WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_no=?";
+		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname,c_name FROM "+ 
+				"    UserInfo u INNER JOIN Post p ON u.u_id = p.p_id" + 
+				"    INNER JOIN codes c ON p.p_cate = c.c_code" + 
+				"    LEFT OUTER JOIN Img i ON p.p_no = i.p_no" + 
+				"    LEFT OUTER JOIN Post_Comment pc ON p.p_no = pc.p_no" + 
+				"    WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_no=?";
 		GGDto dto = new GGDto();
 		try {
 			ps = conn.prepareStatement(sql);
@@ -743,7 +744,7 @@ public class BoardDAO {
 				dto.setP_tm(rs.getDate("p_tm"));
 				dto.setP_view(rs.getInt("p_view"));
 				dto.setI_newName(rs.getString("i_newName"));
-				dto.setP_code(rs.getString("p_code"));
+				dto.setC_name(rs.getString("c_name"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
