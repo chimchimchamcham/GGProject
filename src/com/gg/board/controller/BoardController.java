@@ -218,6 +218,20 @@ public class BoardController extends HttpServlet {
 			break;
 
 			
+			/* ====== 글수정 ====== */	
+		case "/commUpdateForm":
+			System.out.println("글쓰기 폼 요청");
+			HashMap<String,ArrayList<GGDto>>map = service.category();
+			System.out.println("[Controller ] category success : "+map);
+			ArrayList<GGDto> commuCat =map.get("commuCat");
+			ArrayList<GGDto> saleCat =map.get("saleCat");
+			System.out.println("saleCat list size : "+saleCat.size());
+			System.out.println("commuCat list size : "+commuCat.size());
+			req.setAttribute("saleCat", saleCat);
+			req.setAttribute("commuCat", commuCat);
+			dis = req.getRequestDispatcher("writeForm.jsp");
+			dis.forward(req, resp);
+			 break;
 			
 		/*========================*/	
 		case "/auctionDetail":
@@ -247,6 +261,7 @@ public class BoardController extends HttpServlet {
 			resp.setContentType("text/html charset=UTF-8");
 			resp.setHeader("Access-Control-Allow-origin", "*"); //view가 같은 서버에 있으면 생략 가능
 			resp.getWriter().println(new Gson().toJson(sue_map));
+			break;
 		}
 		
 		
