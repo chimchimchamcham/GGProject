@@ -2,6 +2,7 @@ package com.gg.user.service;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.gg.dto.GGDto;
 import com.gg.user.dao.BlackListDAO;
 
 public class BlackListService {
@@ -13,12 +14,14 @@ public class BlackListService {
 	}
 
 	public boolean notifyUser() {
-		String N_sendId = (String)req.getSession().getAttribute("loginId");
-		String N_receiveId = req.getParameter("N_receiveId");
-		String N1_code = req.getParameter("N1_code");
-		String N2_code = req.getParameter("N2_code");
-		String N_content = req.getParameter("N_content");
-		boolean success = dao.notifyUser();
+		GGDto dto = new GGDto();
+		String loginId = (String)req.getSession().getAttribute("loginId");
+		dto.setN_receivedId(req.getParameter("N_receiveId"));
+		dto.setN1_code(req.getParameter("N1_code"));
+		dto.setN2_code(req.getParameter("N2_code"));
+		dto.setN_content(req.getParameter("N_content"));
+		System.out.println(loginId+req.getParameter("N_receiveId"));
+		boolean success = dao.notifyUser(loginId,dto);
 		return success;
 	}
 	

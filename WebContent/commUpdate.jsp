@@ -52,6 +52,16 @@ textarea {
 // 오늘 날짜 설정
 var currDate = new Date().toISOString().substring(0,10);
 console.log("오늘 날짜 : ",currDate);
+
+/*글자수 제한*/
+$('#update').on('keyup', function() {
+       $('#update_cnt').html("("+$(this).val().length+" / 1000)");
+
+       if($(this).val().length > 1000) {
+           $(this).val($(this).val().substring(0, 1000));
+           $('#update_cnt').html("(1000 / 1000)");
+       }
+   });
 </script>
 
 </head>
@@ -62,22 +72,28 @@ console.log("오늘 날짜 : ",currDate);
 			<h2>커뮤니티 수정</h2>
 			<div id="communityForm">
 				<p>
-					<input type="text" name="title" value="${commUpdate.p_title }" placeholder="제목을 입력해주세요" style='width: "1000px"' />
+					<input type="text" name="title" value="${commUpdate.p_title }" style='width: "1000px"' />
 				</p>
 				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
 					<label for='test'>
-						<img src="img/plus.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+					<c:if test="${commUpdate.i_newName  eq null}">
+						<img src="img/plus-icon.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+					</c:if>
+					<c:if test="${commUpdate.i_newName  ne null}">
+						<img src="/photo/${commUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+					</c:if>
 					</label>
 					<input type="file" name="imgFile" style="display: none" id="test" />
 				</form>
 				<p>
-					<textarea name="content" rows="30" cols="100" id ="input" style="overflow-y: scroll">${commUpdate.p_content}</textarea>
+					<textarea name="content" rows="30" cols="100" id ="update" style="overflow-y: scroll" >${commUpdate.p_content}</textarea>
 				</p>
-				<div id="intro_cnt">(0 / 1000)</div>
+				<div id="update_cnt">(0 / 1000)</div>
 				<p id="commuCategory">
-					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="commuCat">
+					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
+					<select name="commuCat">
 						<c:forEach items="${commuCat }" var="CommuCategory">
-							<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
+							<option value="${CommuCategory.p_cate}" <c:if test="${CommuCategory.p_cate eq '${commUpdate.p_cate}'}">selected</c:if>>${CommuCategory.p_cateName}</option>
 						</c:forEach>
 					</select>
 				</p>
@@ -90,6 +106,8 @@ console.log("오늘 날짜 : ",currDate);
 	</div>
 </body>
 <script>
+console.log("${commUpdate.p_cate}");
+console.log("${CommuCategory.p_cate}");
 	var success = false;
   	//초기상태 - 판매폼만 보이는 상태
 	//폼 선택 버튼  클릭시 해당 값이 달라짐
@@ -107,31 +125,32 @@ console.log("오늘 날짜 : ",currDate);
 	$("#submit").click(function() {
 		
 		// 클릭 시 폼 데이터를 가져와야 한다.		
-		var data = $("#test")[0].files[0]; // input type='file'의 id 인 test 에서 첫 번째 파일데이터를 가져온다.
-		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
-		console.log(data);
+		//var data = $("#test")[0].files[0]; // input type='file'의 id 인 test 에서 첫 번째 파일데이터를 가져온다.
+		//form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
+		//console.log(data);
 
+			param.p_no = ${commUpdate.p_no};
 			param.title = $("input[name='title']").val();
 			param.content = $("textarea[name='content']").val();
-			param.category = $("select[name='commuCat']").val();//select name으로 값 받기	
+			param.category = $("select[name='commuCat']").val();
 			console.log(param);
-			
-			//ajax url="writeCommunity"
+
 			$.ajax({
 				type : 'POST',
-				url : 'updateCommunity',
+				url : 'commUpdate',
 				data : param,
 				dataType : 'JSON',
 				success : function(data) {
-					if (data.p_no > 0) {
+					if (data.sucP_no == '${commUpdate.p_no}') {
 						form.append("p_no",data.p_no);
-						FileUpload();
-						alert("글 작성 성공했습니다.");
+						FileUpload(); //사진 업로드
+						alert("글 수정에 성공했습니다.");
 						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
-						location.href = "./salesDetail?p_no="+data.p_no;
+						location.href = "./commDetail?P_no="+data.sucP_no;
 						
 					} else {
-						alert("커뮤니티 글 작성을 실패하였습니다! ");
+						alert("글 수정을 실패하였습니다. 다시 시도해 주세요.");
+						location.href = "./commUpdateForm?P_no="+${commUpdate.p_no};
 					}
 				},
 				error : function(e) {
@@ -139,7 +158,7 @@ console.log("오늘 날짜 : ",currDate);
 				}
 				
 			});
-	
+	});
 	///////사진 선택시 미리보기 변경/////////
 	function readImage(input) {
 	    // 인풋 태그에 파일이 있는 경우
@@ -156,6 +175,7 @@ console.log("오늘 날짜 : ",currDate);
 	        reader.readAsDataURL(input.files[0]);
 	    }
 	};
+	
 	// input file에 change 이벤트 부여
 	const inputImage = document.getElementById("test");
 	inputImage.addEventListener("change", e => {
@@ -183,17 +203,8 @@ console.log("오늘 날짜 : ",currDate);
 				console.log(e);
 			}
 		});
-	};
-	
-	/*글자수 제한*/
-    $('#input').on('keyup', function() {
-           $('#intro_cnt').html("("+$(this).val().length+" / 1000)");
-    
-           if($(this).val().length > 1000) {
-               $(this).val($(this).val().substring(0, 1000));
-               $('#intro_cnt').html("(1000 / 1000)");
-           }
-       });
-	
+	}
+
+
 </script>
 </html>

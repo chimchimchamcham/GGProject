@@ -17,9 +17,10 @@ import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
 
-@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2","/soldlist", "/auctionlist",
+
+@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
 	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
-		"/writeCommunity", "/auctionDetail","/commDetail", "/commUpdateForm","/communitylist" })
+		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist" })
 
 public class BoardController extends HttpServlet {
 
@@ -50,6 +51,7 @@ public class BoardController extends HttpServlet {
 		int p_no;
 		String userid;
 		switch (addr) {
+		
 		case "/salesDetail":
 			System.out.println("판매글 상세보기");
 			GGDto dto = service.salesDetail();
@@ -154,7 +156,7 @@ public class BoardController extends HttpServlet {
 			service.community_list(userid);
 			
 			break;
-
+		/* ====== 글쓰기 ====== */	
 
 		case "/writeForm":
 			System.out.println("글쓰기 폼 요청");
@@ -210,24 +212,38 @@ public class BoardController extends HttpServlet {
 			resp.getWriter().println(new Gson().toJson(sue_map));
 			break;
 
-		/* ====== 글수정 ====== */
-
+			
+		/* ====== 커뮤니티 글수정 ====== */
 		case "/commUpdateForm":
-			System.out.println("커뮤니티 수정 요청");
-
+			System.out.println("커뮤니티 수정 폼 요청");
 			// 카테고리
 			map = service.category();
 			System.out.println("[Controller ] category success : " + map);
 			commuCat = map.get("commuCat");
 			req.setAttribute("commuCat", commuCat);
-
+			
 			// 글 내용
 			req.setAttribute("commUpdate", service.commUpdateForm());
 			dis = req.getRequestDispatcher("commUpdate.jsp");
 			dis.forward(req, resp);
 			break;
+			
+		case "/commUpdate":
+			System.out.println("커뮤니티 수정 요청");
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			System.out.println("수정요청 글 번호 : "+p_no);
+			int sucP_no = service.commUpdate(p_no);
+			System.out.println("수정 성공 글 번호 : "+sucP_no);
+			
+			HashMap<String, Object> commUpdateMap = new HashMap<String, Object>();
+			commUpdateMap.put("sucP_no", sucP_no);
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().println(new Gson().toJson(commUpdateMap));
+			
+			break;
 
-		case "/salesUpdateForm":
+			
+		/*case "/salesUpdateForm":
 			System.out.println("판매글 수정 요청");
 
 			// 카테고리
@@ -241,7 +257,7 @@ public class BoardController extends HttpServlet {
 			req.setAttribute("salesUpdate", service.salesUpdateForm());
 			dis = req.getRequestDispatcher("salesUpdate.jsp");
 			dis.forward(req, resp);
-			break;
+			break;*/
 
 		/* ======================== */
 		case "/auctionDetail":

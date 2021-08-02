@@ -686,6 +686,29 @@ public class BoardDAO {
 		return dto;
 	}
 	
-	
+
+
+	public int commUpdate(int p_no, String title, String content, String category) {
+		
+		int sucP_no = 0;
+		String sql = "UPDATE post SET p_title=?, p_content=?, p_cate=? WHERE p_no=?";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, title);
+			ps.setString(2, content);
+			ps.setString(3, category);
+			ps.setInt(4, p_no);
+			int success = ps.executeUpdate();
+			if(success > 0) {
+				sucP_no = p_no;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return sucP_no;
+	}
+
 	
 }
