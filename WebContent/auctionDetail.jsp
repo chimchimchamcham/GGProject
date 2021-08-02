@@ -148,6 +148,12 @@
     	$("#description>div:nth-of-type(1)").hide();
     	$("#description>div:nth-of-type(2)").show();
     }
+    
+    //즉결 가격이 999999999999 일 경우, 즉결 버튼이 비활성화 된다.
+    if("${dto.au_instantPr }" == 999999999999){
+    	$("#threeButton>button:nth-of-type(2)").css({"background-color":"gray"}).attr("disabled", true);
+    }
+    
  });
 </script>
 </head>
@@ -167,7 +173,7 @@
                         <span>현재최고 입찰가</span>
                         <div><sup>${dto.ha_bidUsr }</sup><span>${dto.ha_bidPr }P</span></div>
                         <span>즉시구매가</span>
-                        <span>${dto.au_instantPr }P/시작가 ${dto.au_startPr }P</span>
+                        <span><c:if test="${dto.au_instantPr ne 999999999999 }">${dto.au_instantPr}P</c:if>/시작가 ${dto.au_startPr }P</span>
                         <span>입찰 수</span>
                         <span>${dto.au_count }회</span>
                         <span>종료 시간</span>
