@@ -236,13 +236,7 @@ public class BoardController extends HttpServlet {
 			System.out.println("수정 요청");
 			p_no = Integer.parseInt(req.getParameter("P_no"));
 			System.out.println("수정요청 글 번호 : "+p_no);
-			
-			msg = "수정에 실패 했습니다.";
-			page = "commUpdateForm?p_no="+p_no;
-			if(service.commUpdate(p_no)>0) {
-				msg="수정에 성공 했습니다.";
-				page = "commDetail?p_no="+p_no;
-			} 
+
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);

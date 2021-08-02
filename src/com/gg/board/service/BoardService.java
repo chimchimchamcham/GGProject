@@ -479,6 +479,10 @@ dao.resClose();
 
 	/*커뮤니티 수정*/
 	public int commUpdate(int p_no) {
+		String subject=req.getParameter("subject");
+		String content=req.getParameter("content");
+		String category=req.getParameter("category");
+		System.out.println("카테고리 수정 : "+subject+"/"+content+"/"+category);
 		
 		return 0;
 	}
