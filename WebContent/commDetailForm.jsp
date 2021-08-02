@@ -31,7 +31,14 @@
 	<div id="main">
     <div id="wrap">
     	<h3>커뮤니티</h3>
-    	<
+    	<input type = text value = ${dto.u_nname }>
+    	<input type = text value = ${dto.u_newName }>
+    	<input type = text value = ${dto.p_no }>
+    	<input type = text value = ${dto.p_title }>
+    	<input type = text value = ${dto.p_content }>
+    	<input type = text value = ${dto.p_tm }>
+    	<input type = text value = ${dto.p_view }>
+    	<input type = text value = ${dto.i_newName }>
     </div>
     </div>
 </body>

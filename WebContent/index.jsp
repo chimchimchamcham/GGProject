@@ -29,7 +29,7 @@
 		<a href="salesDetailSalerPosition.jsp">내 판매글 상세보기</a>
 		<a href = "myPage?id=123">123프로필로 연결</a>
 		<a href = "#" onclick= notifyPop()>신고하기</a>
-		<a href = "commDetail?P_no=6";></a>
+		<a href = "commDetail?P_no=6";>커뮤니티 글 상세보기</a>
 	</div><!-- div main end -->
 </body>
 <script>

@@ -17,7 +17,7 @@ import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
 
-@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auctionlist","/maidelist","/writeForm","/writeSale","/writeTrade","/writeCommunity","/auctionDetail","/bid","commDetail"})
+@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auctionlist","/maidelist","/writeForm","/writeSale","/writeTrade","/writeCommunity","/auctionDetail","/bid","/commDetail"})
 
 public class BoardController extends HttpServlet {
 
@@ -250,7 +250,10 @@ public class BoardController extends HttpServlet {
 		
 		case "/commDetail":
 			System.out.println("커뮤니티 상세보기 요청");	
-			String P_no = req.getParameter("P_no");
+			dto = service.commDetail();
+			req.setAttribute("dto", dto);
+			dis = req.getRequestDispatcher("commDetailForm.jsp");
+			dis.forward(req, resp);
 			
 			break;
 		}
