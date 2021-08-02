@@ -182,7 +182,7 @@
                         <p>거래주소 : <%=dto.getU_addr() %></p><!-- 주소가 넘어오지를 않음 dao에서는 정상적으로 받아옴 -->
                         <p>하트<span>${dto.p_likeCount }</span>&nbsp;&nbsp;&nbsp;&nbsp;조회수<span>${dto.p_view }</span></p>
                         <div><a href="#">신고하기</a></div>
-                        <div><a href="#">수정 /</a>&nbsp;<a href="#">삭제</a></div>
+                        <div><a href="./salesUpdateForm?p_no=${dto.p_no}">수정 /</a>&nbsp;<a href="#">삭제</a></div>
                     </div>
                     <div id="threeButton">
                     	<!-- 새로고침 방법 -->
