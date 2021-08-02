@@ -243,11 +243,12 @@ public class BoardController extends HttpServlet {
 			break;
 			
 		case "/commUpdate":
-			System.out.println("수정 요청");
-			p_no = Integer.parseInt(req.getParameter("P_no"));
+			System.out.println("커뮤니티 수정 요청");
+			p_no = Integer.parseInt(req.getParameter("p_no"));
 			System.out.println("수정요청 글 번호 : "+p_no);
-
 			int sucP_no = service.commUpdate(p_no);
+			System.out.println("수정 성공 글 번호 : "+sucP_no);
+			
 			HashMap<String, Object> commUpdateMap = new HashMap<String, Object>();
 			commUpdateMap.put("sucP_no", sucP_no);
 			resp.setContentType("text/html; charset=UTF-8");

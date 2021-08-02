@@ -508,13 +508,13 @@ dao.resClose();
 
 	/*커뮤니티 수정*/
 	public int commUpdate(int p_no) {
-		String subject=req.getParameter("subject");
+		String title=req.getParameter("title");
 		String content=req.getParameter("content");
 		String category=req.getParameter("category");
-		System.out.println("카테고리 수정 : "+subject+"/"+content+"/"+category);
+		System.out.println("카테고리 수정 : "+title+"/"+content+"/"+category);
 		
 		BoardDAO dao = new BoardDAO();
-		int sucP_no = dao.commUpdate(p_no, subject,content,category);
+		int sucP_no = dao.commUpdate(p_no, title,content,category);
 		
 		return sucP_no;
 	}

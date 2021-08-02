@@ -72,7 +72,7 @@ $('#update').on('keyup', function() {
 			<h2>커뮤니티 수정</h2>
 			<div id="communityForm">
 				<p>
-					<input type="text" name="title" value="${commUpdate.p_title }" placeholder="제목을 입력해주세요" style='width: "1000px"' />
+					<input type="text" name="title" value="${commUpdate.p_title }" style='width: "1000px"' />
 				</p>
 				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
 					<label for='test'>
@@ -88,7 +88,7 @@ $('#update').on('keyup', function() {
 					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
 					<select name="commuCat">
 						<c:forEach items="${commuCat }" var="CommuCategory">
-							<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
+							<option value="${commUpdate.p_cate}">${CommuCategory.p_cateName}</option>
 						</c:forEach>
 					</select>
 				</p>
@@ -120,29 +120,52 @@ $('#update').on('keyup', function() {
 		// 클릭 시 폼 데이터를 가져와야 한다.		
 		//var data = $("#test")[0].files[0]; // input type='file'의 id 인 test 에서 첫 번째 파일데이터를 가져온다.
 		//form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
-		console.log(data);
+		//console.log(data);
 
+			param.p_no = ${commUpdate.p_no};
 			param.title = $("input[name='title']").val();
 			param.content = $("textarea[name='content']").val();
-			param.category = $("select[name='commuCat']").val();//select name으로 값 받기	
+			param.category = $("select[name='commuCat']").val();
 			console.log(param);
-			
-			//ajax url="writeCommunity"
+
 			$.ajax({
 				type : 'POST',
 				url : 'commUpdate',
 				data : param,
 				dataType : 'JSON',
 				success : function(data) {
-					if (sucP_no == '${commUpdate.p_no}') {
+					if (data.sucP_no == '${commUpdate.p_no}') {
 						form.append("p_no",data.p_no);
 						FileUpload();
 						alert("글 수정에 성공했습니다.");
+				
+						// ajax로 파일 보내기 formdata()
+						function FileUpload(){
+							$.ajax({
+								type : 'POST',
+								url : 'upload',
+								data : form,
+								asynsc:true,
+								contentType:false,
+								cache:false,
+								processData:false,
+								success : function(data) {
+									if(data!=null){ // 들어오는게 String[] 이라 null인지만 판단.
+										alert("사진 등록 성공");
+									}else{
+										alert("사진 등록 실패");
+									}
+								},
+								error : function(e) {
+									console.log(e);
+								}
+							});
+						}
 						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
-						location.href = "./commDetail?p_no="+sucP_no;
+						location.href = "./commDetail?p_no="+data.sucP_no;
 						
 					} else {
-						alert("커뮤니티 글 작성을 실패하였습니다! ");
+						alert("글 수정을 실패하였습니다. 다시 시도해 주세요.");
 						location.href = "./commUpdateForm?p_no="+${commUpdate.p_no};
 					}
 				},
@@ -151,7 +174,7 @@ $('#update').on('keyup', function() {
 				}
 				
 			});
-	
+	});
 	///////사진 선택시 미리보기 변경/////////
 	function readImage(input) {
 	    // 인풋 태그에 파일이 있는 경우
@@ -174,28 +197,7 @@ $('#update').on('keyup', function() {
 	    readImage(e.target);
 	});
 	
-	// ajax로 파일 보내기 formdata()
-	function FileUpload(){
-		$.ajax({
-			type : 'POST',
-			url : 'upload',
-			data : form,
-			asynsc:true,
-			contentType:false,
-			cache:false,
-			processData:false,
-			success : function(data) {
-				if(data!=null){ // 들어오는게 String[] 이라 null인지만 판단.
-					alert("사진 등록 성공");
-				}else{
-					alert("사진 등록 실패");
-				}
-			},
-			error : function(e) {
-				console.log(e);
-			}
-		});
-	}
+	
 
 
 </script>

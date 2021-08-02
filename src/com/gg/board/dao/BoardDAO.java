@@ -836,14 +836,14 @@ public class BoardDAO {
 		return success>0?true:false;
 	}
 
-	public int commUpdate(int p_no, String subject, String content, String category) {
+	public int commUpdate(int p_no, String title, String content, String category) {
 		
 		int sucP_no = 0;
-		String sql = "UPDATE post SET subject=?, content=?, category=? WHERE p_no=?";
+		String sql = "UPDATE post SET p_title=?, p_content=?, p_cate=? WHERE p_no=?";
 		
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, subject);
+			ps.setString(1, title);
 			ps.setString(2, content);
 			ps.setString(3, category);
 			ps.setInt(4, p_no);
