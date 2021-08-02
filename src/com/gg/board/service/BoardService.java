@@ -468,6 +468,7 @@ dao.resClose();
 		
 	}
 
+<<<<<<< HEAD
 	/*판매글 수정*/
 	public Object salesUpdateForm() {
 		String P_no = req.getParameter("P_no");
@@ -489,7 +490,13 @@ dao.resClose();
 	
 
 
+=======
+	public GGDto commDetail() {
+		String P_no = req.getParameter("P_no");
+		BoardDAO dao = new BoardDAO();
+		return dao.commDetail(P_no);
+	}
+>>>>>>> 06463c6c58249df91eb31947ce1a14f3b74f7625
 
-	
 	
 }

@@ -685,6 +685,35 @@ public class BoardDAO {
 	//입찰횟수 늘리기
 	
 
+	public GGDto commDetail(String p_no) {
+		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname FROM " + 
+				"UserInfo u INNER JOIN Post p ON u.u_id = p.p_id " + 
+				"LEFT OUTER JOIN Img i ON p.p_no = i.p_no " + 
+				"LEFT OUTER JOIN Post_Comment pc ON p.p_no = pc.p_no " + 
+				"WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_no=?";
+		GGDto dto = new GGDto();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,p_no);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				dto.setU_nname(rs.getString("u_nname"));
+				dto.setU_newName(rs.getString("u_newName"));
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setP_title(rs.getString("p_title"));
+				dto.setP_content(rs.getString("p_content"));
+				dto.setP_tm(rs.getDate("p_tm"));
+				dto.setP_view(rs.getInt("p_view"));
+				dto.setI_newName(rs.getString("i_newName"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return dto;
+	}
+
 
 
 

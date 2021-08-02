@@ -82,7 +82,12 @@ public class PointDAO {
 	}
 
 	public GGDto pointList(String id) {
+<<<<<<< HEAD
 		sql="";
+=======
+
+		sql = "";
+>>>>>>> 06463c6c58249df91eb31947ce1a14f3b74f7625
 
 		return null;
 	}
