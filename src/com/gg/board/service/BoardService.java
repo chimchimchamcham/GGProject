@@ -264,7 +264,7 @@ public void auc_list(String userid, int listwhatadd) throws IOException {
 		e.printStackTrace();
 	}finally {
 		dao.resClose();
-		map.put("auctionlist:", auctionlist);
+		map.put("auctionlist", auctionlist);
 	}
 	System.out.println("auc_map:"+map);
 	
