@@ -103,6 +103,7 @@ public class PointDAO {
 			dto.setI_newName(rs.getString("i_newname"));
 			dto.setP_title(rs.getString("p_title"));
 			dto.setPnt_tm(rs.getDate("pnt_tm"));
+			dto.setP_no(rs.getInt("p_no"));
 			list.add(dto);
 		}
 	

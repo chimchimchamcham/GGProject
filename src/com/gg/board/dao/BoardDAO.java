@@ -616,7 +616,7 @@ public class BoardDAO {
 			dto.setC_name(rs.getString("au_c_name")); //경매상태(한글)
 			dto.setAu_startPr(rs.getInt("au_startpr")); //경매 시작 가격
 			dto.setAu_instantPr(rs.getInt("au_instantpr")); //경매 즉결 가격
-			dto.setAu_endTm(rs.getDate("au_starttm")); //경매 종료 시간
+			dto.setAu_startTm(rs.getDate("au_starttm")); //경매 종료 시간
 			dto.setAu_endTm(rs.getDate("au_endtm")); //경매 종료 시간
 			dto.setAu_count(rs.getInt("au_count")); //입찰횟수
 			//dto.setHa_bidPr(rs.getInt("ha_bidpr"));
