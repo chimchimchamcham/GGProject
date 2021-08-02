@@ -390,7 +390,7 @@ public class BoardDAO {
 			dto.setPnt_tm(rs.getDate("pnt_tm"));
 			dto.setI_newName(rs.getString("I_newName"));
 			dto.setPnt_otherId(rs.getString("pnt_otherid"));
-			dto.setPntcode(rs.getString("pnt_code"));
+			dto.setPnt_code(rs.getString("pnt_code"));
 			maidelist.add(dto);
 		}
 		System.out.println("maidelist:"+maidelist);
@@ -712,7 +712,7 @@ public class BoardDAO {
 	
 
 	public GGDto commDetail(String p_no) {
-		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname FROM " + 
+		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname,p.p_code FROM " + 
 				"UserInfo u INNER JOIN Post p ON u.u_id = p.p_id " + 
 				"LEFT OUTER JOIN Img i ON p.p_no = i.p_no " + 
 				"LEFT OUTER JOIN Post_Comment pc ON p.p_no = pc.p_no " + 
@@ -731,6 +731,7 @@ public class BoardDAO {
 				dto.setP_tm(rs.getDate("p_tm"));
 				dto.setP_view(rs.getInt("p_view"));
 				dto.setI_newName(rs.getString("i_newName"));
+				dto.setP_code(rs.getString("p_code"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
