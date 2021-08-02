@@ -18,9 +18,9 @@ import com.google.gson.Gson;
 
 
 
-@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/buyRequest",
-		"/buyRequestCancel", "/soldlist", "/auctionlist", "/maidelist", "/writeForm", "/writeSale", "/writeTrade",
-		"/writeCommunity", "/auctionDetail", "/bid", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist" })
+@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
+	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
+		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist" })
 
 public class BoardController extends HttpServlet {
 

@@ -76,10 +76,10 @@ $('#update').on('keyup', function() {
 				</p>
 				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
 					<label for='test'>
-					<c:if test="${commUpdate.i_newName  eq 'plus-icon.png'}">
+					<c:if test="${commUpdate.i_newName  eq null}">
 						<img src="img/plus-icon.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
 					</c:if>
-					<c:if test="${commUpdate.i_newName  ne 'plus-icon.png'}">
+					<c:if test="${commUpdate.i_newName  ne null}">
 						<img src="/photo/${commUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
 					</c:if>
 					</label>
@@ -93,7 +93,7 @@ $('#update').on('keyup', function() {
 					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
 					<select name="commuCat">
 						<c:forEach items="${commuCat }" var="CommuCategory">
-							<option value="${commUpdate.p_cate}">${commUpdate.c_name}</option>
+							<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
 						</c:forEach>
 					</select>
 				</p>
@@ -144,11 +144,11 @@ $('#update').on('keyup', function() {
 						FileUpload(); //사진 업로드
 						alert("글 수정에 성공했습니다.");
 						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
-						location.href = "./commDetail?p_no="+data.sucP_no;
+						location.href = "./commDetail?P_no="+data.sucP_no;
 						
 					} else {
 						alert("글 수정을 실패하였습니다. 다시 시도해 주세요.");
-						location.href = "./commUpdateForm?p_no="+${commUpdate.p_no};
+						location.href = "./commUpdateForm?P_no="+${commUpdate.p_no};
 					}
 				},
 				error : function(e) {

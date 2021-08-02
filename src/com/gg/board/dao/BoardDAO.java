@@ -687,53 +687,6 @@ public class BoardDAO {
 	}
 	
 
-	public boolean buyNow(int p_no, String u_id, int ha_bidPr) {
-		//즉결가 조회
-		String sql = "SELECT AU_INSTANTPR FROM AUCTION WHERE P_NO = ?";
-		//낙찰자를 등록
-		String sql2 = "UPDATE AUCTION SET AU_SUCCESSER = ? WHERE P_NO = ?";
-		//경매상태를 거래중으로 변경
-		String sql3 = "UPDATE AUCTION SET AU_CODE = 'Au002' WHERE P_NO = ?";
-		//경매히스토리에 이력을 저장
-		String sql4 = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE)";
-		int success = 0;
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, p_no);
-			rs = ps.executeQuery();
-			System.out.println("DAO buyNow 즉결가 조회");
-			int au_instantpr = 0;
-			if(rs.next()) {
-				au_instantpr = rs.getInt("au_instantpr");
-				System.out.println("DAO buyNow au_instantpr : "+au_instantpr);
-			}
-			System.out.println("DAO buyNow au_instantpr == ha_bidPr : "+(au_instantpr == ha_bidPr));
-			if(au_instantpr == ha_bidPr) {
-				System.out.println("테스트");
-				ps = conn.prepareStatement(sql2);
-				ps.setString(1, u_id);
-				ps.setInt(2, p_no);
-				
-				if(ps.executeUpdate()>0) {
-					System.out.println("DAO buyNow 낙찰자 등록");
-					ps = conn.prepareStatement(sql3);
-					ps.setInt(1, p_no);
-					if(ps.executeUpdate()>0) {
-						System.out.println("DAO buyNow 경매상태 거래중으로 변경 성공");
-						ps = conn.prepareStatement(sql4);
-						ps.setInt(1, p_no);
-						ps.setInt(2, ha_bidPr);
-						ps.setString(3, u_id);
-						success = ps.executeUpdate();
-						System.out.println("DAO buyNow 경매히스토리 이력 저장 완료");
-					}
-				}
-			}
-		}catch(Exception e) {
-			
-		}
-		return success>0?true:false;
-	}
 
 	public int commUpdate(int p_no, String title, String content, String category) {
 		
