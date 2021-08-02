@@ -19,7 +19,7 @@ import com.google.gson.Gson;
 
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/buyRequest",
 		"/buyRequestCancel", "/soldlist", "/auctionlist", "/maidelist", "/writeForm", "/writeSale", "/writeTrade",
-		"/writeCommunity", "/auctionDetail", "/bid", "/commDetail", "/commUpdateForm","/communitylist" })
+		"/writeCommunity", "/auctionDetail", "/bid", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist" })
 
 public class BoardController extends HttpServlet {
 
@@ -248,9 +248,10 @@ public class BoardController extends HttpServlet {
 			System.out.println("수정요청 글 번호 : "+p_no);
 
 			int sucP_no = service.commUpdate(p_no);
-			req.setAttribute("sucP_no", sucP_no);
-			dis = req.getRequestDispatcher("");
-			dis.forward(req, resp);
+			HashMap<String, Object> commUpdateMap = new HashMap<String, Object>();
+			commUpdateMap.put("sucP_no", sucP_no);
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().println(new Gson().toJson(commUpdateMap));
 			
 			break;
 

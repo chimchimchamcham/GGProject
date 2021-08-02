@@ -118,8 +118,8 @@ $('#update').on('keyup', function() {
 	$("#submit").click(function() {
 		
 		// 클릭 시 폼 데이터를 가져와야 한다.		
-		var data = $("#test")[0].files[0]; // input type='file'의 id 인 test 에서 첫 번째 파일데이터를 가져온다.
-		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
+		//var data = $("#test")[0].files[0]; // input type='file'의 id 인 test 에서 첫 번째 파일데이터를 가져온다.
+		//form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
 		console.log(data);
 
 			param.title = $("input[name='title']").val();
@@ -134,15 +134,16 @@ $('#update').on('keyup', function() {
 				data : param,
 				dataType : 'JSON',
 				success : function(data) {
-					if (sucP_no == ${commUpdate.p_no}) {
+					if (sucP_no == '${commUpdate.p_no}') {
 						form.append("p_no",data.p_no);
 						FileUpload();
-						alert("글 작성 성공했습니다.");
+						alert("글 수정에 성공했습니다.");
 						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
-						location.href = "./commDetail?p_no="+data.p_no;
+						location.href = "./commDetail?p_no="+sucP_no;
 						
 					} else {
 						alert("커뮤니티 글 작성을 실패하였습니다! ");
+						location.href = "./commUpdateForm?p_no="+${commUpdate.p_no};
 					}
 				},
 				error : function(e) {
@@ -195,7 +196,7 @@ $('#update').on('keyup', function() {
 			}
 		});
 	}
-&("select[name=commuCat]").onchange()
+
 
 </script>
 </html>
