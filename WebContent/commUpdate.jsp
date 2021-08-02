@@ -80,7 +80,7 @@ $('#update').on('keyup', function() {
 						<img src="img/plus-icon.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
 					</c:if>
 					<c:if test="${commUpdate.i_newName  ne null}">
-						<img src="/photo/${commUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+						<img src="C:photo/${commUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
 					</c:if>
 					</label>
 					<input type="file" name="imgFile" style="display: none" id="test" />
@@ -107,7 +107,9 @@ $('#update').on('keyup', function() {
 </body>
 <script>
 console.log("${commUpdate.p_cate}");
+console.log("${commUpdate.c_name}");
 console.log("${CommuCategory.p_cate}");
+
 	var success = false;
   	//초기상태 - 판매폼만 보이는 상태
 	//폼 선택 버튼  클릭시 해당 값이 달라짐
