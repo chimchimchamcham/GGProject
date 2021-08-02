@@ -88,6 +88,12 @@ public class PointDAO {
 		
 		ps = conn.prepareStatement(sql);
 		
+		rs = ps.executeQuery();
+		while(rs.next()) {
+			GGDto dto = new GGDto();
+			
+		}
+		
 		
 		return null;
 	}

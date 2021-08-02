@@ -468,10 +468,11 @@ dao.resClose();
 		
 	}
 
-	
+	public GGDto commDetail() {
+		String P_no = req.getParameter("P_no");
+		BoardDAO dao = new BoardDAO();
+		return dao.commDetail(P_no);
+	}
 
-
-
-	
 	
 }

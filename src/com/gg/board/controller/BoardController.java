@@ -17,7 +17,7 @@ import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
 
-@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auctionlist","/maidelist","/writeForm","/writeSale","/writeTrade","/writeCommunity","/auctionDetail","/bid"})
+@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auctionlist","/maidelist","/writeForm","/writeSale","/writeTrade","/writeCommunity","/auctionDetail","/bid","/commDetail"})
 
 public class BoardController extends HttpServlet {
 
@@ -247,6 +247,15 @@ public class BoardController extends HttpServlet {
 			resp.setContentType("text/html charset=UTF-8");
 			resp.setHeader("Access-Control-Allow-origin", "*"); //view가 같은 서버에 있으면 생략 가능
 			resp.getWriter().println(new Gson().toJson(sue_map));
+		
+		case "/commDetail":
+			System.out.println("커뮤니티 상세보기 요청");	
+			dto = service.commDetail();
+			req.setAttribute("dto", dto);
+			dis = req.getRequestDispatcher("commDetailForm.jsp");
+			dis.forward(req, resp);
+			
+			break;
 		}
 		
 		
