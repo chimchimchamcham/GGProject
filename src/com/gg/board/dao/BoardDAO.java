@@ -370,7 +370,8 @@ public class BoardDAO {
 	}
 	
 	public ArrayList<GGDto> maide_list(String userid) throws SQLException {
-		String sql = "select p.p_title,pi.pnt_point,pi.pnt_tm,i.i_newname,pi.pnt_otherid,pi.pnt_code from post p,point pi,img i,Codes c where (p.p_code='P002' or p.p_code='P001') and pi.pnt_code='PNT003' and p.p_no = pi.p_no and p.p_no = i.p_no and p.p_id = pi.PNT_id and pi.pnt_code=c.c_code and pi.PNT_id = ?";
+
+		String sql = "select p.p_title,pi.pnt_point,pi.pnt_tm,i.i_newname,pi.pnt_otherid,c.c_name,pi.PNT_otherId from post p,point pi,img i,codes c where (p.p_code='P002' or p.p_code='P001') and p.p_code = c.c_code and pi.pnt_code='PNT003' and p.p_no = pi.p_no and p.p_no = i.p_no and p.p_id = pi.PNT_id and pi.PNT_id = ?";
 
 		ArrayList<GGDto> maidelist = new ArrayList<GGDto>();
 		
@@ -389,8 +390,8 @@ public class BoardDAO {
 			dto.setPnt_point(rs.getInt("pnt_point"));
 			dto.setPnt_tm(rs.getDate("pnt_tm"));
 			dto.setI_newName(rs.getString("I_newName"));
+			dto.setC_name(rs.getString("c_name"));;
 			dto.setPnt_otherId(rs.getString("pnt_otherid"));
-			dto.setPntcode(rs.getString("pnt_code"));
 			maidelist.add(dto);
 		}
 		System.out.println("maidelist:"+maidelist);
