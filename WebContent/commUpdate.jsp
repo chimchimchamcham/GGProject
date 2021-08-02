@@ -136,31 +136,8 @@ $('#update').on('keyup', function() {
 				success : function(data) {
 					if (data.sucP_no == '${commUpdate.p_no}') {
 						form.append("p_no",data.p_no);
-						FileUpload();
+						FileUpload(); //사진 업로드
 						alert("글 수정에 성공했습니다.");
-				
-						// ajax로 파일 보내기 formdata()
-						function FileUpload(){
-							$.ajax({
-								type : 'POST',
-								url : 'upload',
-								data : form,
-								asynsc:true,
-								contentType:false,
-								cache:false,
-								processData:false,
-								success : function(data) {
-									if(data!=null){ // 들어오는게 String[] 이라 null인지만 판단.
-										alert("사진 등록 성공");
-									}else{
-										alert("사진 등록 실패");
-									}
-								},
-								error : function(e) {
-									console.log(e);
-								}
-							});
-						}
 						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
 						location.href = "./commDetail?p_no="+data.sucP_no;
 						
@@ -197,7 +174,28 @@ $('#update').on('keyup', function() {
 	    readImage(e.target);
 	});
 	
-	
+	// ajax로 파일 보내기 formdata()
+	function FileUpload(){
+		$.ajax({
+			type : 'POST',
+			url : 'upload',
+			data : form,
+			asynsc:true,
+			contentType:false,
+			cache:false,
+			processData:false,
+			success : function(data) {
+				if(data!=null){ // 들어오는게 String[] 이라 null인지만 판단.
+					alert("사진 등록 성공");
+				}else{
+					alert("사진 등록 실패");
+				}
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
+	}
 
 
 </script>
