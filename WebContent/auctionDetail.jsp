@@ -203,19 +203,19 @@
                         <button>입찰하기</button>
                     </div>
                     <div id="twoButton">
-                        <button>상세정보</button>
+                        <button>내용</button>
                         <button>댓글</button>
                     </div>
                     <div id="first">
                     	<div>
-                    		내용                   		
+                    		${dto.p_content }                   		
                     	</div>
                     	<div>
                     		<p>상점정보</p>
                     		<div>
 	                    		<div><a href="#"><img src="./img/profile.PNG" width="100" height="100"></a></div>
 	                    		<div>
-	                    			<p id="u_nname">판매자 닉네임</p>
+	                    			<p id="u_nname">${dto.u_nname }</p>
 	                    			<p id="reviewAvg">별점 4.5</p>
 	                    		</div>
                     		</div>
