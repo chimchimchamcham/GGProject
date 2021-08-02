@@ -106,9 +106,9 @@ button {
 		console.log("forEach문")
 		list.forEach(function(item, idx) {
 			console.log(idx, item);
-			content += "<tr><td>"+item.idx+"'/></td>";
-			content += "<td>" + item.idx + "</td>";
-			content += "<td><a href='details?p_no=" + item.p_no + "'>"
+			content += "<tr><td>"+item.pnt_code+"'/></td>";
+			content += "<td>" + item.pnt_point + "</td>";
+			content += "<td id=''><a href='details?p_no=" + item.p_no + "'>"
 							+ item.p_title + "</a></td>";
 			content += "<td><a href='#'>" + item.user_name + "</a></td>";
 			content += "<td>" + item.reg_date + "</td></tr>";
