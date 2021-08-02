@@ -61,12 +61,9 @@ public class PointDAO {
 			plusPoint = 0;
 		}
 		myPoint = plusPoint - minusPoint;
-		// 닉네임 가져오기
-		sql = "SELECT * FROM userInfo WHERE u_id=?";
-		ps = conn.prepareStatement(sql);
-		ps.setString(1, id);
-		rs = ps.executeQuery();
-
+		
+		
+		
 		return myPoint;
 	}
 
@@ -90,6 +87,21 @@ public class PointDAO {
 		return null;
 	}
 
+	public String getNname(String id) throws SQLException {
+		String nname ="";
+		// 닉네임 가져오기
+		sql = "SELECT u_nname FROM userInfo WHERE u_id=?";
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, id);
+		rs = ps.executeQuery();
+		
+		if(rs.next()) {
+			nname = rs.getString(1);
+			System.out.println("nname : " + nname);
+		}
+		return nname;
+	}
+	
 	public void resClose() {
 		try {
 			if (rs != null && !rs.isClosed()) {
@@ -106,5 +118,7 @@ public class PointDAO {
 			e.printStackTrace();
 		}
 	}
+
+	
 
 }

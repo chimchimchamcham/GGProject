@@ -69,7 +69,15 @@ public class PointService {
 	public String getNname(String id) {
 		System.out.println("닉네임을 가져와야 한다니~");
 		PointDAO dao = new PointDAO();
-		String nname = dao.getNname(id); 
+		String nname = "";
+		try {
+			nname = dao.getNname(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
 		
 		return nname;
 	}

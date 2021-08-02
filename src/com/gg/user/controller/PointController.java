@@ -35,7 +35,7 @@ public class PointController extends HttpServlet {
 		String ctx = req.getContextPath();
 		String addr = uri.substring(ctx.length());
 		System.out.println("addr : " + addr);
-
+		resp.setContentType("text/html; charset=UTF-8");
 		PointService service = null;
 		RequestDispatcher dis = null;
 		String page = "";
@@ -52,15 +52,18 @@ public class PointController extends HttpServlet {
 			if (myPoint > -1000000) { // 포인트가 음수가 될 순 없다.
 				success = true;
 			}
+			String id = req.getParameter("id");
+			String nname = service.getNname(id);
+			System.out.println("nname : " + nname);
+			map.put("nickname", nname);
 			map.put("success", success);
 			map.put("myPoint", myPoint);
-
 			resp.getWriter().println(new Gson().toJson(map));
 			break;
 
 		case "/charge":
 			System.out.println("포인트 충전 요청");
-			String id = req.getParameter("id");
+			id = req.getParameter("id");
 			int chargePoint = Integer.parseInt(req.getParameter("chargePoint"));
 			System.out.println("충전 아이디  : " + req.getParameter("id"));
 			System.out.println("충전 요청 금액 : " + chargePoint);
@@ -70,9 +73,9 @@ public class PointController extends HttpServlet {
 			System.out.println("충전 성공 여부 : " + success);
 			map = new HashMap<String, Object>();
 			map.put("success", success);
-			String nname = service.getNname(id);
-			map.put("nickname", nname);
+			
 			resp.getWriter().println(new Gson().toJson(map));
+			
 			break;
 
 		case "/pointList":
