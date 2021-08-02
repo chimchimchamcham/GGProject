@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
+<head>
 <style>
-
 .contents{
     display: flex;
     justify-items: center;
@@ -85,7 +85,7 @@
                     overflow: hidden;
                     display: flex;
                 }
-                img{
+                .img-zoon img{
                     max-width: 174px;
                     max-height: 175px;
                     min-width: 175px;
@@ -139,7 +139,7 @@
                     align-items: center;
                 }
 </style>
-  
+</head>
 <body>
     <div class="contents">
         <div class="content-zoon_auction">
@@ -149,3 +149,4 @@
         </div>
     </div>
 </body>
+</html>
