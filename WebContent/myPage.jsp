@@ -471,20 +471,31 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				console.log("auctionlist:",data.auctionlist);
 				console.log("maidelist:",data.maidelist);
 				if(data != null){
-					console.log("data:",data.soldlist);
-					console.log("data:",data.auctionlist);
-					console.log("data:",data.maidelist);
-					console.log($index);
+					console.log("data0:",data.soldlist);
+					console.log("data1:",data.auctionlist);
+					console.log("data2:",data.maidelist);
+					console.log("array*:",typeof data);
+					console.log("Array_data:"+Array.isArray(data));
+					console.log("Array_data0:"+Array.isArray(data.soldlist));
+					console.log("Array_data1:"+Array.isArray(data.auctionlist));
+					console.log("Array_data2:"+Array.isArray(data.maidelist));
+					console.log("index",$index);
 					console.log(url);
 					if($index == 0){//판매
 						console.log("soled_list3:",data.soldlist);
+						console.log("타입:"+typeof data.soldlist);
+						
 						soled_list(data.soldlist);
 					}else if ($index == 1) {//경매
-						console.log("auction_list3:",data.auctionlist);
+
+						
 						auction_list(data.auctionlist);
+					
 					}else if ($index == 2) {//구매
 						console.log("maide_list3:",data.maidelist);
 						auction_list(data.maidelist);
+						
+						console.log(typeof data.maidelist);
 					}
 				}
 			},
@@ -497,9 +508,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 		function soled_list(soldlist){	
 			console.log("soldlist:", soldlist);
 			var content="";
-			$('#trade .item-box').empty();
-			$("#sale .item-box").empty();
-			$("#sell .item-box").empty();
+
 			soldlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
@@ -514,9 +523,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content += "</div>";	
 				content += "</div>";
 			});	
-			$('#trade .item-box').empty();
-			$("#sale .item-box").empty();
-			$("#sell .item-box").empty();
+			$('categori').empty();
 			$("#sale .item-box").append(content);
 			
 		}//판매 리스트 end
@@ -525,31 +532,28 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 		function auction_list(auctionlist){	
 			console.log("auction_list:", auctionlist);
 			var content="";
-			$("#sale .item-box").empty();
-			$("#sell .item-box").empty();
+
 			auctionlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content +="<div class='item-one'>";
-				content +="<div class='img-zoon'><img src='test.jpg' alt=''#'></div>";
+				content +="<div class='img-zoon'><img src="+item.i_newName+"></div>";
 				content +="<div class='dretion-zoon'>";
-				content +="<h2>제목.....</h2>";
-				content +="<div class='xianzai'>현제 입찰가</div><div style='font-size: 25px;'>5000p</div><div class='auction'>";
-				content +="<div>시작:5000p</div>/<div>즉결:5000p</div></div>";
-				content +="</div><div class='endtime-zoon'>종료시간:<div>2021/07/03</div></div>";
-				content +="<div class='love-time'><div>입찰수:2</div><div>2시간 전</div></div>";
+				content +="<a href="+"salesDetail?p_no="+item.p_no+">"+item.p_title+"</a>";
+				content +="<div class='xianzai'>현제 입찰가</div><div style='font-size: 25px;'>"+item.hm+"p</div><div class='auction'>";
+				content +="<div>시작:"+item.au_startPr+"</div>/<div>즉결:"+item.au_instantPr+"</div></div>";
+				content +="</div><div class='endtime-zoon'>종료시간:<div>"+item.au_endTm+"</div></div>";
+				content +="<div class='love-time'><div>입찰수:"+item.au_count+"</div><div>"+item.p_tm+"</div></div>";
 				content +="</div>";
 				});	
-			$('#trade .item-box').empty();
-			$("#sale .item-box").empty();
-			$("#sell .item-box").empty();
-				$('#trade .item-box').append(content);
+			$('categori').empty();
+			$('#trade .item-box').append(content);
 		}// 경매 리스트 end
 		
 		//데이터 가져와서 뿌려주는 구매 리스트
 		function maide_list(maidelist){	
 			console.log("maidelist:", maidelist);
 			var content="";
-			
+
 			maide_list.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
@@ -568,9 +572,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content += "	<div> 구매날짜:2시간 전</div>";
 				content += "</div></div>";
 			});	
-			$('#trade .item-box').empty();
-			$("#sale .item-box").empty();
-			$("#sell .item-box").empty();
+			$('categori').empty();
 			$("#sell .item-box").append(content);
 			
 		}// 구매 리스트 end
