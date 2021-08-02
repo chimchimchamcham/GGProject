@@ -31,23 +31,21 @@
 		<input type="hidden" id="p_no" value="${param.p_no }">
 		<input type="hidden" id="toppr" value="${param.toppr }">
 		<input type="hidden" id="endpr" value="${param.endpr }">
-		<div><p>아이패드 파우치에 <b>즉시구매하기</b></p></div>
-		<div><input type="text" name="au_instantpr" id="au_instantpr" value="0"><button id="bid">즉시구매</button></div>
-		<div><div>둘리님의 잔여 포인트 <span id="wallet">500000</span>P</div><input type="button" id="charge" value="포인트충전"></div>
+		<div><p>${param.title } 에 <b>즉시구매하기</b></p></div>
+		<div><input type="text" name="au_instantpr" id="au_instantpr" value="${param.endpr }" readonly><button id="bid">즉시구매</button></div>
+		<div><div>잔여 포인트 <span id="wallet">500000</span>P</div><input type="button" id="charge" value="포인트충전"></div>
 		<span>P</span>
-		<p>${param.endpr }</p>
 	</div>
 </body>
 <script>
-	//입찰버튼 클릭시 알람 뜸
 	$("#bid").click(function(){
-		if($("#au_instantpr").val()==0){
+		/* if($("#au_instantpr").val()==0){
 			alert("즉결구매가를 입력하세요");
 			$("#au_instantpr").focus();
-		}/* else if($("#au_instantpr").val()<$("#toppr").val()){
+		} else if($("#au_instantpr").val()<$("#toppr").val()){
 			alert("현재 입찰 가격보다 큰 값을 입력하세요.");
 			$("#au_instantpr").focus();
-		} */else{
+		} else{ */
 			//즉결가 보다 큰 값을 입력한 경우, 즉결가 가격으로 변경
 			/* var $bidpr = 0;
 			if($("#au_instantpr").val()>$("#endpr").val()){
@@ -57,6 +55,7 @@
 			}
 			console.log($bidpr); */
 			
+			alert("즉결 구매하시겠습니까?");
 			//ajax로 보낼 파라미터 값
 			var param = {};
 			param.p_no = $("#p_no").val();
@@ -86,7 +85,7 @@
 			/* alert("입찰 완료 bidpr : "+bidpr);
 			opener.parent.location.reload();
 			window.close(); */
-		}
+		/* } */
 	});
 	
 	//포인트버튼 클릭시 알람 뜸

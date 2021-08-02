@@ -599,7 +599,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content += "<div class='item-one'>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
 				content += "	<div>"+item.p_cateName+"</div>";
-				content += "	<div><a href = commDetail?P_no="+item.p_no+">"+item.p_title+"</a></div>";///경로 고쳐야함
+				content += "	<div><a href = commDetail?p_no="+item.p_no+">"+item.p_title+"</a></div>";///경로 고쳐야함
 				content += "</div>";
 				content += "<div class='c_zoon'>";
 				content += "	<div>"+item.p_tm+"</div>";	
@@ -689,7 +689,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
    <div id="sale"  class="categori" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
    <div id="trade"  class="categori" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
    <div id="sell"  class="categori" style="background-color:yellow; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
-   <div id="commu"  class="categori" style="background-color:green; padding:20px;"></div>
+   <div id="commu"  class="categori" style="background-color:green; padding:20px;"><jsp:include page="./mypage_list/community.jsp"></jsp:include></div>
    <div id="follow"  class="categori" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
    <div id="want"  class="categori" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
    <div id="like"  class="categori" style="background-color:purple; padding:20px;">좋아요목록입니다.</div>
