@@ -26,6 +26,10 @@
             padding: 15px;
             padding-right: 200px;
         }
+        .categor td:hover{
+            text-decoration:underline black;
+            cursor: pointer;
+        }
         .main_auc{
             width: 900px;
             height: 700px;
@@ -47,6 +51,18 @@
         .alinebutton button{
             border-color: gray;
             background-color: transparent;
+        }
+        .alinebutton button:hover{
+            border-color: gray;
+            background-color: gray;
+            color: white;
+            cursor: pointer;
+        }
+        .alinebutton button.checked{
+            border-color: gray;
+            background-color: gray;
+            color: white;
+            cursor: pointer;
         }
 
         .items{
@@ -94,7 +110,7 @@
         <h2>경매</h2>
         <div class="itembox">
             <div class="alinebutton">
-                <button>신규등록순</button><button>마감임박순</button>
+                <button class="checked" style="margin-right: 1px;">신규등록순</button><button>마감임박순</button>
             </div>
             <div class="items">
                 <div class="item-one">
@@ -129,4 +145,10 @@
 
 
 </body>
+<script>
+$(".alinebutton button").click(function(){
+    $(".alinebutton button").toggleClass("checked");
+});
+
+</script>
 </html>
