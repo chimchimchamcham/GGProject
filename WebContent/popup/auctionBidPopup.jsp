@@ -41,18 +41,27 @@
 <script>
 	//입찰버튼 클릭시 알람 뜸
 	$("#bid").click(function(){
-		var bidpr = $("#ha_bidPr").val()>$("#endpr").val()?$("#endpr").val():$("#ha_bidPr").val();
-		if(bidpr==0){
+		
+		if($("#ha_bidPr").val()==0){
 			alert("입찰가격을 입력하세요");
 			$("#ha_bidPr").focus();
-			
-		}/* else if(bidpr<$("#toppr").val()){
+		}else if($("#ha_bidPr").val()<$("#toppr").val()){
 			alert("현재 입찰 가격보다 큰 값을 입력하세요.");
 			$("#ha_bidPr").focus();
-		} */else{
+		}else{
+			var $bidpr = 0;
+			//즉결가 보다 큰 값을 입력한 경우, 즉결가 가격으로 변경
+			if($("#ha_bidPr").val()>$("#endpr").val()){
+				$bidpr = $("#endpr").val();
+			}else{
+				$bidpr = $("#ha_bidPr").val();
+			}
+			console.log($bidpr);
+			
+			//ajax로 보낼 파라미터 값
 			var param = {};
 			param.p_no = $("#p_no").val();
-			param.ha_bidPr = $("#ha_bidPr").val();
+			param.ha_bidPr = $bidpr;
 			
 		 	 $.ajax({
 				type : 'post',
@@ -86,14 +95,14 @@
 	});
 	
 	//입력한 값이 잔여 포인트보다 클 경우 입찰 버튼 비활성화, 검정색으로 바뀜
-	$("#ha_bidPr").change(function(){
-		if($("#ha_bidPr").val()>$("#wallet").text()){
+	$("#ha_bidPr").on("propertychange change keyup paste input",function(){
+		var $bidpr = $("#ha_bidPr").val();
+		var $wallet = $("#wallet").text();
+		if($bidpr>$wallet){
 			$("#bid").attr("disabled", true).css({"background-color":"black"});
 		}else{
 			$("#bid").attr("disabled", false).css({"background-color":"#6E6E6E"});
 		}
 	});
-	
-	//
 </script>
 </html>
