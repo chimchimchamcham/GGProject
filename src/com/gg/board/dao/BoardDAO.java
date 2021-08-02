@@ -755,6 +755,4 @@ public class BoardDAO {
 	}
 
 
-
-
 }
