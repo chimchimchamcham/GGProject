@@ -106,13 +106,12 @@ button {
 		console.log("forEach문")
 		list.forEach(function(item, idx) {
 			console.log(idx, item);
-			content += "<tr><td><input type='checkbox' value='"+item.idx+"'/></td>";
+			content += "<tr><td>"+item.idx+"'/></td>";
 			content += "<td>" + item.idx + "</td>";
-			content += "<td><a href='detail?idx=" + item.idx + "'>"
-							+ item.subject + "</a></td>";
-			content += "<td>" + item.user_name + "</td>";
-			content += "<td>" + item.reg_date + "</td>";
-			content += "<td>" + item.bHit + "</td></tr>";
+			content += "<td><a href='details?p_no=" + item.p_no + "'>"
+							+ item.p_title + "</a></td>";
+			content += "<td><a href='#'>" + item.user_name + "</a></td>";
+			content += "<td>" + item.reg_date + "</td></tr>";
 		});
 		$("tbody").empty();
 		$("tbody").append(content);
