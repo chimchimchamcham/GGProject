@@ -62,7 +62,7 @@ console.log("오늘 날짜 : ",currDate);
 			<h2>커뮤니티 수정</h2>
 			<div id="communityForm">
 				<p>
-					<input type="text" name="title" value="" placeholder="제목을 입력해주세요" style='width: "1000px"' />
+					<input type="text" name="title" value="${commUpdate.p_title }" placeholder="제목을 입력해주세요" style='width: "1000px"' />
 				</p>
 				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
 					<label for='test'>
@@ -71,7 +71,7 @@ console.log("오늘 날짜 : ",currDate);
 					<input type="file" name="imgFile" style="display: none" id="test" />
 				</form>
 				<p>
-					<textarea name="content" rows="30" cols="100" placeholder="내용입력" id ="input" style="overflow-y: scroll"></textarea>
+					<textarea name="content" rows="30" cols="100" id ="input" style="overflow-y: scroll">${commUpdate.p_content}</textarea>
 				</p>
 				<div id="intro_cnt">(0 / 1000)</div>
 				<p id="commuCategory">
