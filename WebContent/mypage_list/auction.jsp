@@ -123,6 +123,21 @@
                     flex-direction: row;
                     justify-content: space-between;
                 }
+                                .auction{
+                    display: flex;
+                    flex-direction: row;
+                    font-size: 12px;
+                    opacity: 0.5;
+                }
+                .xianzai{
+                    font-size: 20px;
+                }
+                .endtime-zoon{
+                    display: flex;
+                    flex-direction: row;
+                    color: red;
+                    font-size: 15px;
+                }
 </style>
   
 <body>
