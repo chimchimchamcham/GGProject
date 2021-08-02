@@ -589,35 +589,37 @@ public class BoardDAO {
 	}
 
 	public GGDto auctionDetail(int p_no) throws SQLException {
-		String sql = "select p.p_no, p.p_id, p.p_title, p.p_content, p.p_view, p.p_likeCount, p.p_blindYN, p.p_code, (select u.u_addr from userinfo u where u.u_id= p_id) as u_addr, s.s_deliveryyn, s.s_followlimyn, s.s_code,au.au_code ,(select c.c_name from codes c where c.c_code = au.au_code) as au_c_name,au.au_startpr,au.au_instantpr,au.au_endtm ,au.au_count, hau.ha_bidpr,hau.ha_bidusr,i.i_newname from post p, sale s, auction au, his_auction hau, img i where p.p_no=s.p_no and p.p_no= i.p_no and s.p_no = au.p_no and au.p_no=hau.p_no and hau.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and  p.p_no=?";
+		
+		//경매 상세보기(경매 히스토리 테이블 제외)
+		String sql = "select p.p_no, p.p_id, p.p_title, p.p_content, p.p_view, p.p_likeCount, p.p_blindYN, p.p_code, (select u.u_nname from userinfo u where u.u_id = p_id) as u_nname,(select u.u_addr from userinfo u where u.u_id= p_id) as u_addr, s.s_deliveryyn, s.s_followlimyn, s.s_code, a.au_code ,(select c.c_name from codes c where c.c_code = a.au_code) as au_c_name, a.au_startpr,a.au_instantpr,a.au_starttm,a.au_endtm ,a.au_count, i.i_newname from post p, sale s, auction a, img i where p.p_no=s.p_no and p.p_no= i.p_no and s.p_no = a.p_no and p.p_no=?";
 		GGDto dto = null;
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, p_no);
-		ps.setInt(2, p_no);
 		rs = ps.executeQuery();
 		if(rs.next()) {
 			dto = new GGDto();
-			dto.setP_no(rs.getInt("p_no"));
-			dto.setP_id(rs.getString("p_id"));
-			dto.setP_title(rs.getString("p_title"));
-			dto.setP_content(rs.getString("p_content"));
-			dto.setP_view(rs.getInt("p_view"));
-			dto.setP_likeCount(rs.getInt("p_likeCount"));
-			dto.setP_blindYN(rs.getString("p_blindYN"));
-			dto.setP_code(rs.getString("p_code"));
-			dto.setU_addr(rs.getString(("u_addr")));
-			dto.setS_DeliveryYN(rs.getString("s_deliveryyn"));
-			dto.setS_followLimYN(rs.getString("s_followlimyn"));
-			dto.setS_code(rs.getString("s_code"));
-			dto.setAu_code(rs.getString("au_code"));
-			dto.setC_name(rs.getString("au_c_name"));
-			dto.setAu_startPr(rs.getInt("au_startpr"));
-			dto.setAu_instantPr(rs.getInt("au_instantpr"));
-			dto.setAu_endTm(rs.getDate("au_endtm"));
-			dto.setAu_count(rs.getInt("au_count"));
+			dto.setP_no(rs.getInt("p_no")); //글번호
+			dto.setP_id(rs.getString("p_id")); //글작성자
+			dto.setP_title(rs.getString("p_title")); //글제목
+			dto.setP_content(rs.getString("p_content")); //글내용
+			dto.setP_view(rs.getInt("p_view")); //조회수
+			dto.setP_likeCount(rs.getInt("p_likeCount")); //좋아요수
+			dto.setP_blindYN(rs.getString("p_blindYN")); //블라인드 여부
+			dto.setP_code(rs.getString("p_code")); //게시글 카테고리
+			dto.setU_addr(rs.getString(("u_addr"))); //간편주소
+			dto.setS_DeliveryYN(rs.getString("s_deliveryyn")); //택배여부
+			dto.setS_followLimYN(rs.getString("s_followlimyn")); //팔로워한정판매여부
+			dto.setS_code(rs.getString("s_code")); //판매, 경매 카테고리
+			dto.setAu_code(rs.getString("au_code")); //경매상태(코드)
+			dto.setC_name(rs.getString("au_c_name")); //경매상태(한글)
+			dto.setAu_startPr(rs.getInt("au_startpr")); //경매 시작 가격
+			dto.setAu_instantPr(rs.getInt("au_instantpr")); //경매 즉결 가격
+			dto.setAu_endTm(rs.getDate("au_starttm")); //경매 종료 시간
+			dto.setAu_endTm(rs.getDate("au_endtm")); //경매 종료 시간
+			dto.setAu_count(rs.getInt("au_count")); //입찰횟수
 			//dto.setHa_bidPr(rs.getInt("ha_bidpr"));
 			//dto.setHa_bidUsr(rs.getString("ha_bidusr"));
-			dto.setI_newName(rs.getString("i_newname"));
+			dto.setI_newName(rs.getString("i_newname")); //사진명 
 			
 			System.out.println(dto.getAu_count());
 			System.out.println(rs.getString("i_newname"));
@@ -626,6 +628,20 @@ public class BoardDAO {
 			System.out.println(dto.getP_code());
 		}
 		
+		//경매 상세보기 (히스토리 테이블)
+		sql = "select p.p_no, (select max(h.ha_bidpr) from auction a left outer join his_auction h on a.p_no = h.p_no group by a.p_no having a.p_no=?) as ha_bidpr from post p, his_auction h where p.p_no = h.p_no and p.p_no=?";
+		
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, p_no);
+		rs = ps.executeQuery();
+		if(rs.next()) {//입찰기록이 있을 경우
+			dto = new GGDto();
+			dto.setHa_bidPr(rs.getInt("ha_bidpr"));
+			dto.setHa_bidUsr(rs.getString("ha_bidusr"));
+		}else {//입찰기록이 없을 경우
+			dto.setHa_bidPr(0);
+			dto.setHa_bidUsr("-");
+		}
 		
 		return dto;
 		
