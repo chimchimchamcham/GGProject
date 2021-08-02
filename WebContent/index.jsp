@@ -34,7 +34,7 @@
 	</div><!-- div main end -->
 </body>
 <script>
-	function notifyPop() { window.open("./popup/notifyPopup.jsp?id=123", "notify", "width=500, height=700, left=600, top=200"); }
+	function notifyPop() { window.open("popup/notifyPopup.jsp?N_receiveId=123", "notify", "width=500, height=700, left=600, top=200"); }
 	var msg = "${msg}";
 	if(msg != ""){
 		alert(msg);
