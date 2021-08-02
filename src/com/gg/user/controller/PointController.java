@@ -82,9 +82,11 @@ public class PointController extends HttpServlet {
 			System.out.println("포인트 리스트 진입.");
 
 			service = new PointService(req);
+			myPoint = service.pointPop();
 			map = new HashMap<String, Object>();
 			
 			map.put("list", service.pointList());
+			map.put("myPoint", myPoint);
 			resp.getWriter().println(new Gson().toJson(map));
 
 			break;
