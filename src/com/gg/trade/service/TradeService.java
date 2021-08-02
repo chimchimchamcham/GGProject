@@ -1,5 +1,6 @@
 package com.gg.trade.service;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gg.trade.dao.TradeDAO;
+import com.google.gson.Gson;
 
 
 
@@ -84,6 +86,43 @@ public HashMap<String,Object> auctionBid() {
 		return map;
 		
 	}
+public void buyNow(){
+	
+	boolean success = false;
+	String msg = null;
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	
+	int p_no = Integer.parseInt(req.getParameter("p_no"));
+	String u_id = (String) req.getSession().getAttribute("loginId");
+	int ha_bidPr = Integer.parseInt(req.getParameter("au_instantpr"));
+	
+	System.out.println("p_no: "+p_no+" / u_id:"+u_id+" / bidPr: "+ha_bidPr);
+	
+	TradeDAO dao = new TradeDAO();
+	success = dao.buyNow(p_no, u_id, ha_bidPr);
+	System.out.println("즉결구매 성공 여부 :"+success);
+	if(success) {
+		msg = "즉결구매에 성공하였습니다.";
+	}else {
+		msg = "즉결구매에 실패하였습니다.";
+	}
+	
+	map.put("success", success);
+	map.put("msg", msg);
+	
+	
+	try {
+		resp.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html charset= UTF-8");
+		resp.setHeader("Access-Control-Allow-origin", "*"); // view가 같은 서버에 있으면 생략 가능
+		resp.getWriter().println(new Gson().toJson(map));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
 
+	
+}
 
 }

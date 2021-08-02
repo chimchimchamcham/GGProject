@@ -77,8 +77,7 @@ public class TradeController extends HttpServlet {
 			
 		case "/buyNow":
 			System.out.println("즉결 구매 요청");
-			
-			
+			service.buyNow();
 		}
 		
 	}
