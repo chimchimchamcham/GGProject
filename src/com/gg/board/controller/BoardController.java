@@ -17,7 +17,7 @@ import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
 
-@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auctionlist","/maidelist","/writeForm","/writeSale","/writeTrade","/writeCommunity","/auctionDetail","/bid","/commDetail"})
+@WebServlet({"/salesDetail","/loveMinus","/lovePlus","/loveMinus2","/lovePlus2","/buyRequest","/buyRequestCancel","/soldlist","/auctionlist","/maidelist","/writeForm","/writeSale","/writeTrade","/writeCommunity","/auctionDetail","/bid","/commDetail", "/commUpdateForm"})
 
 public class BoardController extends HttpServlet {
 
@@ -219,7 +219,7 @@ public class BoardController extends HttpServlet {
 
 			
 			/* ====== 글수정 ====== */	
-			/*
+			
 		case "/commUpdateForm":
 			System.out.println("커뮤니티 수정 요청");
 			
@@ -236,7 +236,7 @@ public class BoardController extends HttpServlet {
 			dis = req.getRequestDispatcher("commUpdate.jsp");
 			dis.forward(req, resp);
 			 break;
-			 */
+			 
 			 
 		case "/salesUpdateForm":
 			System.out.println("판매글 수정 요청");
@@ -285,7 +285,7 @@ public class BoardController extends HttpServlet {
 		break;
 		
 		case "/commDetail":
-			System.out.println("커뮤니티 상세보기 요청");	
+			System.out.println("커뮤니티 상세보기 요청");
 			dto = service.commDetail();
 			req.setAttribute("dto", dto);
 			dis = req.getRequestDispatcher("commDetailForm.jsp");

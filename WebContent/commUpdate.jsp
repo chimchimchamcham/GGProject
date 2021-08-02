@@ -111,11 +111,6 @@ console.log("오늘 날짜 : ",currDate);
 		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
 		console.log(data);
 
-
-			/* $("form input").each(function(idx,item){
-				//console.log(item)
-				param[$(item).attr("name")]=$(item).val();
-			}); */
 			param.title = $("input[name='title']").val();
 			param.content = $("textarea[name='content']").val();
 			param.category = $("select[name='commuCat']").val();//select name으로 값 받기	

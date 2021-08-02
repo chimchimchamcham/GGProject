@@ -9,21 +9,6 @@
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<!--예약하기 달력 관련 링크-->
-<!-- jquery UI 링크 -->
-<link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!-- jquery UI CDN -->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<!-- 언어 별 CDN -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/i18n/jquery.ui.datepicker-ko.min.js"></script>
-<!-- Date 라이브러리 -->
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<!--------------//////////////////////////////------------->
-
 <style>
 #mainHeader {
 	z-index: 1000;
@@ -49,9 +34,6 @@ textarea {
 }
 </style>
 <script>
-// 오늘 날짜 설정
-var currDate = new Date().toISOString().substring(0,10);
-console.log("오늘 날짜 : ",currDate);
 </script>
 </head>
 <body>
@@ -59,14 +41,8 @@ console.log("오늘 날짜 : ",currDate);
 	<div id="main">
 
 		<div id="wrap">
-			<h2>글쓰기</h2>
-			<!--글쓰기 폼 선택 버튼-->
-			<div id="selectForm">
-				<button id="sale">판매</button>
-				<button id="trade">경매</button>
-				<button id="community">커뮤니티</button>
-			</div>
-			<div id="communityForm">
+			<h2>판매 글 수정</h2>	
+			<div id="saleForm">
 				<p>
 					<input type="text" name="title" value="" placeholder="제목을 입력해주세요"
 						style='width: "1000px"' />
@@ -81,16 +57,6 @@ console.log("오늘 날짜 : ",currDate);
 					<textarea name="content" rows="30" cols="100" placeholder="내용입력" id ="input"
 						style="overflow-y: scroll"></textarea>
 				</p>
-				<div id="intro_cnt">(0 / 1000)</div>
-				<p id="commuCategory">
-					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="commuCat">
-						<c:forEach items="${commuCat }" var="CommuCategory">
-							<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
-						</c:forEach>
-					</select>
-				</p>
-			</div>
-			<div id="saleForm">
 				<p id="salePr">
 					<input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point
 				</p>
@@ -110,28 +76,6 @@ console.log("오늘 날짜 : ",currDate);
 					공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
 						value="N">전체공개 <input type="radio" name="disclosure"
 						value="Y">팔로우한정
-				</p>
-			</div>
-			<!--경매선택시 하단부분-->
-			<div id="tradeForm">
-				<p>경매시간 설정</p>
-
-				<!--예약 경매 버튼 클릭시-->
-				<div id="reservForm">
-					<p>
-						<input type="date" id="from" name="from" style="width: 120px;">
-						~ <input type="date" id="to" name="to" style="width: 120px;">
-					</p>
-					<!--아래에 선택 일자 표시-->
-					<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
-				</div>
-				<p>
-					시작가격&nbsp;<input type="text" name="startPrice" value=""
-						placeholder="시작가격 입력(숫자입력)" />&nbsp;Point
-				</p>
-				<p>
-					즉결가격&nbsp;<input type="text" name="promptPrice" value=""
-						placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
 				</p>
 			</div>
 			<div id="twoButton">
