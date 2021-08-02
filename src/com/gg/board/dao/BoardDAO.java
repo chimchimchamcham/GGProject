@@ -591,12 +591,11 @@ public class BoardDAO {
 		
 		//경매 상세보기(경매 히스토리 테이블 제외)
 		String sql = "select p.p_no, p.p_id, p.p_title, p.p_content, p.p_view, p.p_likeCount, p.p_blindYN, p.p_code, (select u.u_nname from userinfo u where u.u_id = p_id) as u_nname,(select u.u_addr from userinfo u where u.u_id= p_id) as u_addr, s.s_deliveryyn, s.s_followlimyn, s.s_code, a.au_code ,(select c.c_name from codes c where c.c_code = a.au_code) as au_c_name, a.au_startpr,a.au_instantpr,a.au_starttm,a.au_endtm ,a.au_count, i.i_newname from post p, sale s, auction a, img i where p.p_no=s.p_no and p.p_no= i.p_no and s.p_no = a.p_no and p.p_no=?";
-		GGDto dto = null;
+		GGDto dto = new GGDto();
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, p_no);
 		rs = ps.executeQuery();
 		if(rs.next()) {
-			dto = new GGDto();
 			dto.setP_no(rs.getInt("p_no")); //글번호
 			dto.setP_id(rs.getString("p_id")); //글작성자
 			dto.setP_title(rs.getString("p_title")); //글제목
@@ -636,7 +635,6 @@ public class BoardDAO {
 		ps.setInt(1, p_no);
 		rs = ps.executeQuery();
 		if(rs.next()) {//입찰기록이 있을 경우
-			dto = new GGDto();
 			dto.setHa_bidPr(rs.getInt("toppr")); //최고 입찰가
 			dto.setHa_bidUsr(rs.getString("u_nname"));//최고 입찰자
 		}else {//입찰기록이 없을 경우
@@ -726,11 +724,12 @@ public class BoardDAO {
 	
 
 	public GGDto commDetail(String p_no) {
-		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname FROM " + 
-				"UserInfo u INNER JOIN Post p ON u.u_id = p.p_id " + 
-				"LEFT OUTER JOIN Img i ON p.p_no = i.p_no " + 
-				"LEFT OUTER JOIN Post_Comment pc ON p.p_no = pc.p_no " + 
-				"WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_no=?";
+		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname,c_name,u_id FROM "+ 
+				"    UserInfo u INNER JOIN Post p ON u.u_id = p.p_id" + 
+				"    INNER JOIN codes c ON p.p_cate = c.c_code" + 
+				"    LEFT OUTER JOIN Img i ON p.p_no = i.p_no" + 
+				"    LEFT OUTER JOIN Post_Comment pc ON p.p_no = pc.p_no" + 
+				"    WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_no=?";
 		GGDto dto = new GGDto();
 		try {
 			ps = conn.prepareStatement(sql);
@@ -745,6 +744,8 @@ public class BoardDAO {
 				dto.setP_tm(rs.getDate("p_tm"));
 				dto.setP_view(rs.getInt("p_view"));
 				dto.setI_newName(rs.getString("i_newName"));
+				dto.setC_name(rs.getString("c_name"));
+				dto.setU_id(rs.getString("u_id"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
