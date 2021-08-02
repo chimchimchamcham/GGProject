@@ -170,8 +170,13 @@ public class BoardController extends HttpServlet {
 			service.community_list(userid);
 			
 			break;
+<<<<<<< HEAD
 		/* ====== 글쓰기 ====== */	
 
+=======
+
+
+>>>>>>> 34672fb6281439c70664aee34c80f8eb05baee14
 		case "/writeForm":
 			System.out.println("글쓰기 폼 요청");
 			HashMap<String, ArrayList<GGDto>> map = service.category();
