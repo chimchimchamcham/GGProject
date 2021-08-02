@@ -827,22 +827,28 @@ public class BoardDAO {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
 			rs = ps.executeQuery();
+			System.out.println("DAO buyNow 즉결가 조회");
 			int au_instantpr = 0;
 			if(rs.next()) {
 				au_instantpr = rs.getInt("au_instantpr");
+				System.out.println("DAO buyNow au_instantpr : "+au_instantpr);
 			}
+			System.out.println("DAO buyNow au_instantpr == ha_bidPr : "+(au_instantpr == ha_bidPr));
 			if(au_instantpr == ha_bidPr) {
 				ps = conn.prepareStatement(sql2);
 				ps.setString(1, u_id);
 				if(ps.executeUpdate()>0) {
+					System.out.println("DAO buyNow 낙찰자 등록");
 					ps = conn.prepareStatement(sql3);
 					ps.setInt(1, p_no);
 					if(ps.executeUpdate()>0) {
+						System.out.println("DAO buyNow 경매상태 거래중으로 변경 성공");
 						ps = conn.prepareStatement(sql4);
 						ps.setInt(1, p_no);
 						ps.setInt(2, ha_bidPr);
 						ps.setString(3, u_id);
 						success = ps.executeUpdate();
+						System.out.println("DAO buyNow 경매히스토리 이력 저장 완료");
 					}
 				}
 			}
