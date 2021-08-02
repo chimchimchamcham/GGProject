@@ -654,7 +654,7 @@ public class BoardDAO {
 	
 
 	public GGDto commDetail(String p_no) {
-		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname,c_name,u_id FROM "+ 
+		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname,c_name,u_id,p_cate FROM "+ 
 				"    UserInfo u INNER JOIN Post p ON u.u_id = p.p_id" + 
 				"    INNER JOIN codes c ON p.p_cate = c.c_code" + 
 				"    LEFT OUTER JOIN Img i ON p.p_no = i.p_no" + 
@@ -676,6 +676,7 @@ public class BoardDAO {
 				dto.setI_newName(rs.getString("i_newName"));
 				dto.setC_name(rs.getString("c_name"));
 				dto.setU_id(rs.getString("u_id"));
+				dto.setP_cate(rs.getString("p_cate"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
