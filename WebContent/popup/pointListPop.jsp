@@ -80,16 +80,14 @@ button {
 	param.id = loginId;
 
 	function listCall() {
-
+	
 		$.ajax({
 			type : "POST",
 			url : "../pointList",
 			data : param,
 			dataType : "JSON",
 			success : function(data) {
-				if (data.list != null) {
-					drawList(data.list);
-				}
+				console.log(data.list);
 			},
 			error : function(e) {
 				console.log("에러");
