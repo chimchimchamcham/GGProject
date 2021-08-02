@@ -219,8 +219,9 @@ public class BoardController extends HttpServlet {
 
 			
 			/* ====== 글수정 ====== */	
+			/*
 		case "/commUpdateForm":
-			System.out.println("글쓰기 폼 요청");
+			System.out.println("커뮤니티 수정 요청");
 			
 			//카테고리
 			map = service.category();
@@ -234,7 +235,23 @@ public class BoardController extends HttpServlet {
 			req.setAttribute("commUpdate", service.commUpdateForm());
 			dis = req.getRequestDispatcher("commUpdate.jsp");
 			dis.forward(req, resp);
+			 break;
+			 */
+			 
+		case "/salesUpdateForm":
+			System.out.println("판매글 수정 요청");
 			
+			//카테고리
+			map = service.category();
+			System.out.println("[Controller ] category success : "+map);
+			saleCat =map.get("saleCat");
+			System.out.println("saleCat list size : "+saleCat.size());
+			req.setAttribute("saleCat", saleCat);
+			
+			//글 내용
+			req.setAttribute("salesUpdate", service.salesUpdateForm());
+			dis = req.getRequestDispatcher("salesUpdate.jsp");
+			dis.forward(req, resp);
 			 break;
 			
 		/*========================*/	

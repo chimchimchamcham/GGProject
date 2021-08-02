@@ -468,6 +468,16 @@ dao.resClose();
 		
 	}
 
+	/*판매글 수정*/
+	public Object salesUpdateForm() {
+		String P_no = req.getParameter("P_no");
+		System.out.println("수정 요청 글 번호 : "+P_no);
+		BoardDAO dao = new BoardDAO();
+		
+		return null;
+	}
+
+	/*커뮤니티 글 수정*/
 	public Object commUpdateForm() {
 		String P_no = req.getParameter("P_no");
 		System.out.println("수정 요청 글 번호 : "+P_no);
