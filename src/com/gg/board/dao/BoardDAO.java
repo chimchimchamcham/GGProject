@@ -689,6 +689,20 @@ public class BoardDAO {
 					
 				}
 			}
+		}else {//이전 입찰자가 없었을 때
+			sql = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE) ";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1,p_no);
+			ps.setInt(2, ha_bidPr);
+			ps.setString(3, ha_bidUsr);
+			checker = ps.executeUpdate();
+
+			//insert 성공시
+			if(checker>0) {
+				success = true;
+				msg = "입찰에 성공하였습니다.";
+				
+			}
 		}
 		
 		//입찰금액 입력 쿼리
