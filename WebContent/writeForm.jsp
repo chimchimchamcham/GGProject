@@ -72,7 +72,7 @@ console.log("오늘 날짜 : ",currDate);
 						style='width: "1000px"' />
 				</p>
 				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
-					<label for='test'><img src="img/plus.png"
+					<label for='test'><img src="img/plus-icon.png"
 						id="preview-image" width="100px" height="100px"
 						style="border: solid 1px gray" /></label> <input type="file"
 						name="imgFile" style="display: none" id="test" />
