@@ -753,6 +753,21 @@ public class BoardDAO {
 		}
 		return dto;
 	}
-
-
+	
+	public boolean buyNow(int p_no, String u_id, int ha_bidPr) {
+		String sql = "SELECT AU_INSTANTPR FROM AUCTION WHERE P_NO = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, p_no);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				
+				
+			}
+		}catch(Exception e) {
+			
+		}
+		return false;
+	}
+	
 }
