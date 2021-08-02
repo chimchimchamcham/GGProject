@@ -83,6 +83,7 @@ public class PointController extends HttpServlet {
 
 			service = new PointService(req);
 			map = new HashMap<String, Object>();
+			
 			map.put("list", service.pointList());
 			resp.getWriter().println(new Gson().toJson(map));
 
