@@ -702,7 +702,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 
    <div id="sale" class="categori" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
    <div id="trade" class="categori" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
-   <div id="sell" class="categori" style="background-color:yellow; padding:20px;"></jsp:include></div>
+   <div id="sell" class="categori" style="background-color:yellow; padding:20px;"><jsp:include page="./mypage_list/maide.jsp"></jsp:include></div>
    <div id="commu" class="categori" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
    <div id="follow" class="categori" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
    <div id="want" class="categori" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
