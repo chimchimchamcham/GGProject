@@ -17,9 +17,15 @@ import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
 
+<<<<<<< HEAD
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/buyRequest",
 		"/buyRequestCancel", "/soldlist", "/auctionlist", "/maidelist", "/writeForm", "/writeSale", "/writeTrade",
 		"/writeCommunity", "/auctionDetail", "/bid", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist" })
+=======
+@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2","/soldlist", "/auctionlist",
+	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
+		"/writeCommunity", "/auctionDetail","/commDetail", "/commUpdateForm","/communitylist" })
+>>>>>>> 7dd3fad38ddd60a0da92cb036abcf13678c5b056
 
 public class BoardController extends HttpServlet {
 
@@ -108,23 +114,7 @@ public class BoardController extends HttpServlet {
 			service.loveMinus2();
 			break;
 
-		case "/buyRequest":
-			System.out.println("구매요청");
-			success = service.buyRequest();
-			System.out.println("Controller buyRequest success : " + success);
-			p_no = Integer.parseInt(req.getParameter("p_no"));
-			dis = req.getRequestDispatcher("/salesDetail?p_no=" + p_no);
-			dis.forward(req, resp);
-			break;
-
-		case "/buyRequestCancel":
-			System.out.println("구매요청 취소");
-			success = service.buyRequestCancel();
-			System.out.println("Controller buyRequest success : " + success);
-			p_no = Integer.parseInt(req.getParameter("p_no"));
-			dis = req.getRequestDispatcher("/salesDetail?p_no=" + p_no);
-			dis.forward(req, resp);
-			break;
+		
 
 		/*
 		 * ===========================================================================
@@ -294,16 +284,6 @@ public class BoardController extends HttpServlet {
 
 			dis = req.getRequestDispatcher("auctionDetail.jsp");
 			dis.forward(req, resp);
-
-			break;
-
-		case "/bid":
-			System.out.println("입찰 요청");
-			sue_map = service.auctionBid();
-			resp.setCharacterEncoding("UTF-8");
-			resp.setContentType("text/html charset=UTF-8");
-			resp.setHeader("Access-Control-Allow-origin", "*"); // view가 같은 서버에 있으면 생략 가능
-			resp.getWriter().println(new Gson().toJson(sue_map));
 
 			break;
 

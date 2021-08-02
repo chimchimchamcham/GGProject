@@ -194,33 +194,7 @@ public class BoardDAO {
 		return success;
 	}
 
-	public boolean buyRequest(int p_no, String u_id) {
-		String sql = "INSERT INTO REQUEST VALUES(RQ_no_seq.NEXTVAL,?,?,NULL,SYSDATE)";
-		int success = 0;
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, p_no);
-			ps.setString(2, u_id);
-			success = ps.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return success > 0 ? true : false;
-	}
-
-	public boolean buyRequestCancel(int p_no, String u_id) {
-		String sql = "DELETE FROM REQUEST WHERE P_NO = ? AND RQ_ID = ?";
-		int success = 0;
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, p_no);
-			ps.setString(2, u_id);
-			success = ps.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return success > 0 ? true : false;
-	}
+	
 
 	public boolean isBuyRequested(int p_no, String u_id) {
 		String sql = "SELECT * FROM REQUEST WHERE P_NO = ? AND RQ_ID = ?";
@@ -676,109 +650,7 @@ public class BoardDAO {
 		
 	}
 
-	public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUsr) throws SQLException {
-		
-		//반환값(성공여부, 실패시 ->현재 최고 입찰가, 성공여부 초기상태
-		//msg를 뿌려줄 예정 (성공/ 현재입찰자 = 최고입찰자 / 입찰금액 <최고입찰긍)
-		int checker = 0;
-		boolean success = false;
-		int instantPr =0;
-		String sql = "";
-		String msg = "";
-		HashMap<String,Object> map = new HashMap<String,Object>();
-		
-		
-		//즉결구매가 이상을 입력한 경우
-		sql = "select au_instantpr from auction where p_no=?";
-		ps = conn.prepareStatement(sql);
-		ps.setInt(1, p_no);
-		rs = ps.executeQuery();
-		
-		if(rs.next()) {//무조건 즉결가는 존재(이미 보유포인트에서 거를 예정이기에)
-			instantPr = rs.getInt("au_instantpr");
-			System.out.println("경매글 최고 입찰가 : "+instantPr);
-			
-			ha_bidPr = (ha_bidPr >=instantPr) ? instantPr : ha_bidPr;
-			System.out.println("변경된 입찰가 : "+ha_bidPr);
-		}
-		
-		//변경된 입찰금액과 즉결가를 비교해서 동일한 경우 즉결구매로 넘김
-		if(ha_bidPr == instantPr) {
-				
-			success = buyNow(p_no, ha_bidUsr, ha_bidPr);
-			System.out.println("즉결구매 성공 여부 : "+success);
-			if(success) {
-					msg = "즉결구매에 성공하였습니다.";
-				}else {
-					msg="즉결구매에 실패하였습니다.";
-				}
-				
-		}else {
-			//최고입찰자와 최고입찰금액 가져오는 쿼리
-			sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and p_no = ?";
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, p_no);
-			ps.setInt(2, p_no);
-			rs = ps.executeQuery();
-			if(rs.next()) {
-				String bidUsr = rs.getString("ha_bidusr");
-				int bidPr =rs.getInt("ha_bidpr");
-				System.out.println("최고 입찰자 : "+ bidUsr+" / 최고입찰가 : "+bidPr );
-				
-				if(bidUsr.equals(ha_bidUsr)) { //내가 이미 최고입찰자인 경우
-					msg = "이미 최고입찰자 입니다.";
-				}else if( bidPr >= ha_bidPr){ //내가 입력한 입찰금이 최고 입찰금보다 적을 때
-					msg="입찰금액이 최고입찰가보다 적습니다. 다시 입찰해주세요.";
-					map.put("bidPr", bidPr);
-				}else { //내가 입력한 금액이 최고 입찰금액보다 큰 경우
-					sql = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE) ";
-					ps = conn.prepareStatement(sql);
-					ps.setInt(1,p_no);
-					ps.setInt(2, ha_bidPr);
-					ps.setString(3, ha_bidUsr);
-					checker = ps.executeUpdate();
 	
-					//insert 성공시
-					if(checker>0) {
-						success = true;
-						msg = "입찰에 성공하였습니다.";
-						
-					}
-				}
-			}else {//이전 입찰자가 없었을 때
-				sql = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE) ";
-				ps = conn.prepareStatement(sql);
-				ps.setInt(1,p_no);
-				ps.setInt(2, ha_bidPr);
-				ps.setString(3, ha_bidUsr);
-				checker = ps.executeUpdate();
-	
-				//insert 성공시
-				if(checker>0) {
-					success = true;
-					msg = "입찰에 성공하였습니다.";
-					
-				}
-			}
-		}
-		//입찰금액 입력 쿼리
-		System.out.println("경매 히스토리 입력여부 : "+success);
-		map.put("success", success);
-		System.out.println("메세지 확인 : "+msg);
-		map.put("msg", msg);
-		return map;
-	}
-	
-	//입찰횟수 늘리기
-	public int upAucCnt(int p_no) throws SQLException {
-		String sql = "update auction set au_count = au_count+1 where p_no=?";
-		ps = conn.prepareStatement(sql);
-		ps.setInt(1,p_no);
-		int success = ps.executeUpdate();
-		System.out.println("올라간 입찰 수 : "+success);
-		
-		return success;
-	}
 	
 
 	public GGDto commDetail(String p_no) {
@@ -814,6 +686,7 @@ public class BoardDAO {
 		return dto;
 	}
 	
+<<<<<<< HEAD
 	public boolean buyNow(int p_no, String u_id, int ha_bidPr) {
 		//즉결가 조회
 		String sql = "SELECT AU_INSTANTPR FROM AUCTION WHERE P_NO = ?";
@@ -883,5 +756,8 @@ public class BoardDAO {
 
 		return sucP_no;
 	}
+=======
+	
+>>>>>>> 7dd3fad38ddd60a0da92cb036abcf13678c5b056
 	
 }
