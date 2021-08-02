@@ -390,7 +390,7 @@ public class BoardDAO {
 			dto.setPnt_tm(rs.getDate("pnt_tm"));
 			dto.setI_newName(rs.getString("I_newName"));
 			dto.setPnt_otherId(rs.getString("pnt_otherid"));
-			dto.setPnt_code(rs.getString("pnt_code"));
+			dto.setPntcode(rs.getString("pnt_code"));
 			maidelist.add(dto);
 		}
 		System.out.println("maidelist:"+maidelist);

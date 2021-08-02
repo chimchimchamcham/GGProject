@@ -53,6 +53,9 @@
     			<td colspan ="6" id = "p_title"><h2>${dto.p_title }</h2></td>
     		</tr>
     		<tr>
+    			<td colspan ="6" id = "p_code" style="text-aling:left"><h5> ${dto.p_code }</h5></td>
+    		</tr>
+    		<tr>
     			<td colspan = "6"><hr></hr></td>
     		</tr>
     		<tr>
@@ -74,6 +77,7 @@
 	    <input type = text value = ${dto.u_newName }>유저 사진 이름
 	    <input type = text value = ${dto.p_no }>글 번호
 	    <input type = text value = >글 제목${dto.u_nname }
+	   
 	    <input type = text value = ${dto.p_content }>글 내용
 	    <input type = text value = ${dto.p_tm }>작성 시간
 	    <input type = text value = ${dto.p_view }>조회수
