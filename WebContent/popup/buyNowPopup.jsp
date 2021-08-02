@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>    
 <!DOCTYPE html>
 <html>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -31,6 +32,8 @@
 		<input type="hidden" id="p_no" value="${param.p_no }">
 		<input type="hidden" id="toppr" value="${param.toppr }">
 		<input type="hidden" id="endpr" value="${param.endpr }">
+		 <%-- <c:set var = "length" value = "${fn:length(param.title)}"/> --%>
+		 
 		<div><p>${param.title } 에 <b>즉시구매하기</b></p></div>
 		<div><input type="text" name="au_instantpr" id="au_instantpr" value="${param.endpr }" readonly><button id="bid">즉시구매</button></div>
 		<div><div>잔여 포인트 <span id="wallet">500000</span>P</div><input type="button" id="charge" value="포인트충전"></div>

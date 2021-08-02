@@ -120,7 +120,7 @@
   		var p_no = ${dto.p_no};
   		var toppr = ${dto.ha_bidPr};
   		var endpr = ${dto.au_instantPr};
-  		var title = ${dto.p_title};
+  		var title = "${dto.p_title}";
   		window.open("./popup/auctionBidPopup.jsp?p_no="+p_no+"&toppr="+toppr+"&endpr="+endpr+"&title="+title, "auctionBidPopup", "width=400, height=200, left=700, top=400");
     });
   	
@@ -129,6 +129,7 @@
   		var p_no = ${dto.p_no};
   		var toppr = ${dto.ha_bidPr};
   		var endpr = ${dto.au_instantPr};
+  		var title = "${dto.p_title}";
   		window.open("./popup/buyNowPopup.jsp?p_no="+p_no+"&toppr="+toppr+"&endpr="+endpr+"&title="+title, "buyNowPopup", "width=400, height=200, left=700, top=400");
     });
   	
