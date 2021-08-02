@@ -683,6 +683,8 @@ public class BoardDAO {
 		String sql = "";
 		String msg = "";
 		HashMap<String,Object> map = new HashMap<String,Object>();
+		
+		
 		//즉결구매가 이상을 입력한 경우
 		sql = "select au_instantpr from auction where p_no=?";
 		ps = conn.prepareStatement(sql);
@@ -693,10 +695,10 @@ public class BoardDAO {
 		int bidPr =rs.getInt("ha_bidpr");
 		System.out.println("최고 입찰자 : "+ bidUsr+" / 최고입찰가 : "+bidPr );
 		
-		if(rs.next()) {//무조건 즉결가는 존재
-			
+		if(rs.next()) {//무조건 즉결가는 존재(이미 보유포인트에서 거를 예정이기에)
+			int instantPr = rs.getInt("au_instantpr");
+			System.out.println("경매글 최고 입찰가 : "+instanPr);
 		}else {
-		
 			//최고입찰자와 최고입찰금액 가져오는 쿼리
 			sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and p_no = ?";
 			ps = conn.prepareStatement(sql);
