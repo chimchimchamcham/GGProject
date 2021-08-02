@@ -221,16 +221,20 @@ public class BoardController extends HttpServlet {
 			/* ====== 글수정 ====== */	
 		case "/commUpdateForm":
 			System.out.println("글쓰기 폼 요청");
-			HashMap<String,ArrayList<GGDto>>map = service.category();
+			
+			//카테고리
+			map = service.category();
 			System.out.println("[Controller ] category success : "+map);
-			ArrayList<GGDto> commuCat =map.get("commuCat");
-			ArrayList<GGDto> saleCat =map.get("saleCat");
-			System.out.println("saleCat list size : "+saleCat.size());
-			System.out.println("commuCat list size : "+commuCat.size());
-			req.setAttribute("saleCat", saleCat);
+			commuCat =map.get("commuCat");
 			req.setAttribute("commuCat", commuCat);
-			dis = req.getRequestDispatcher("writeForm.jsp");
+			dis = req.getRequestDispatcher("commUpdate.jsp");
 			dis.forward(req, resp);
+			
+			//글 내용
+			req.setAttribute("commUpdate", service.commUpdateForm());
+			dis = req.getRequestDispatcher("commUpdate.jsp");
+			dis.forward(req, resp);
+			
 			 break;
 			
 		/*========================*/	
