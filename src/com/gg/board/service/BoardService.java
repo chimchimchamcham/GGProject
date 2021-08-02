@@ -273,6 +273,7 @@ public void auc_list(String userid, int listwhatadd) throws IOException {
 	map.clear();
 	dao.resClose();
 }
+
 public void maide_list(String userid) throws IOException {
 	HashMap<String, Object> map = new HashMap<String, Object>();
 	
@@ -295,6 +296,28 @@ dao.resClose();
 	
 }
 
+public void community_list(String userid) throws IOException {
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	
+	BoardDAO dao = new BoardDAO();
+	ArrayList<GGDto> communitylist = null;
+	
+	try {
+		communitylist = dao.community_list(userid);
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		dao.resClose();
+		map.put("communitylist", communitylist);
+	}
+	System.out.println(map);
+resp.setContentType("text/html; charset=UTF-8");		
+resp.getWriter().println(new Gson().toJson(map));
+map.clear();
+dao.resClose();
+	
+}
+///////////////////////////////////////////////////////////////////////////////
 	public HashMap<String, ArrayList<GGDto>> category() {
 		BoardDAO dao = new BoardDAO();
 		HashMap<String, ArrayList<GGDto>> map = dao.category();
@@ -517,5 +540,9 @@ dao.resClose();
 	}
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 46d3ebb7567f008da051db50dc61b1069a2a76bb
 	
 }

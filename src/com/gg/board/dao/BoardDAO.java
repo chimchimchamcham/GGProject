@@ -397,8 +397,35 @@ public class BoardDAO {
 		return maidelist;
 	}
 	
+	public ArrayList<GGDto> community_list(String userid) throws SQLException {
+		
+		String sql = "SELECT DISTINCT pc.p_catename,p.p_title,p.p_tm,p.P_view FROM post p,Post_codes pc,Codes c where pc.p_cate = p.p_cate and p.p_code = c.c_code and p.p_id = ?";
+
+		ArrayList<GGDto> communitylist = new ArrayList<GGDto>();
+		
+		System.out.println("communitylist:"+communitylist);
+		
+		ps = conn.prepareStatement(sql);
+		
+		System.out.println("daouserID:"+userid);
+		ps.setString(1, userid);
+		rs = ps.executeQuery();
+
+		
+		while (rs.next()) {
+			GGDto dto = new GGDto();
+			dto.setP_cateName(rs.getString("p_catename"));
+			dto.setP_title(rs.getString("P_title"));
+			dto.setP_tm(rs.getDate("p_tm"));
+			dto.setP_view(rs.getInt("p_view"));
+			communitylist.add(dto);
+		}
+		System.out.println("communitylist:"+communitylist);
+		return communitylist;
+	}
 	
 	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public HashMap<String, ArrayList<GGDto>> category() {
 		String sql = "select * from codes where c_code like 'S%'";
 		HashMap<String, ArrayList<GGDto>> map = new HashMap<String, ArrayList<GGDto>>();
@@ -656,6 +683,9 @@ public class BoardDAO {
 		String sql = "";
 		String msg = "";
 		HashMap<String,Object> map = new HashMap<String,Object>();
+		//즉결구매가 이상을 입력한 경우
+		
+		
 		//최고입찰자와 최고입찰금액 가져오는 쿼리
 		sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and p_no = ?";
 		ps = conn.prepareStatement(sql);
@@ -666,6 +696,8 @@ public class BoardDAO {
 			String bidUsr = rs.getString("ha_bidusr");
 			int bidPr =rs.getInt("ha_bidpr");
 			System.out.println("최고 입찰자 : "+ bidUsr+" / 최고입찰가 : "+bidPr );
+			
+			
 			
 			if(bidUsr.equals(ha_bidUsr)) { //내가 이미 최고입찰자인 경우
 				msg = "이미 최고입찰자 입니다.";
