@@ -477,14 +477,21 @@ dao.resClose();
 		
 	}
 
+	/*커뮤니티 수정*/
+	public int commUpdate(int p_no) {
+		
+		return 0;
+	}
+	
+	
 	/*판매글 수정*/
-	public Object salesUpdateForm() {
-		String P_no = req.getParameter("P_no");
-		System.out.println("수정 요청 글 번호 : "+P_no);
+	/*public Object salesUpdateForm() {
+		int p_no = Integer.parseInt(req.getParameter("P_no"));
+		System.out.println("수정 요청 글 번호 : "+p_no);
 		BoardDAO dao = new BoardDAO();
 		
 		return null;
-	}
+	}*/
 
 	/*커뮤니티 글 수정*/
 	public Object commUpdateForm() {
@@ -504,6 +511,7 @@ dao.resClose();
 		BoardDAO dao = new BoardDAO();
 		return dao.commDetail(P_no);
 	}
+
 
 	
 }

@@ -52,6 +52,16 @@ textarea {
 // 오늘 날짜 설정
 var currDate = new Date().toISOString().substring(0,10);
 console.log("오늘 날짜 : ",currDate);
+
+/*글자수 제한*/
+$('#update').on('keyup', function() {
+       $('#update_cnt').html("("+$(this).val().length+" / 1000)");
+
+       if($(this).val().length > 1000) {
+           $(this).val($(this).val().substring(0, 1000));
+           $('#update_cnt').html("(1000 / 1000)");
+       }
+   });
 </script>
 
 </head>
@@ -71,11 +81,12 @@ console.log("오늘 날짜 : ",currDate);
 					<input type="file" name="imgFile" style="display: none" id="test" />
 				</form>
 				<p>
-					<textarea name="content" rows="30" cols="100" id ="input" style="overflow-y: scroll">${commUpdate.p_content}</textarea>
+					<textarea name="content" rows="30" cols="100" id ="update" style="overflow-y: scroll" >${commUpdate.p_content}</textarea>
 				</p>
-				<div id="intro_cnt">(0 / 1000)</div>
+				<div id="update_cnt">(0 / 1000)</div>
 				<p id="commuCategory">
-					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="commuCat">
+					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
+					<select name="commuCat">
 						<c:forEach items="${commuCat }" var="CommuCategory">
 							<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
 						</c:forEach>
@@ -119,7 +130,7 @@ console.log("오늘 날짜 : ",currDate);
 			//ajax url="writeCommunity"
 			$.ajax({
 				type : 'POST',
-				url : 'updateCommunity',
+				url : 'commUpdate',
 				data : param,
 				dataType : 'JSON',
 				success : function(data) {
@@ -128,7 +139,7 @@ console.log("오늘 날짜 : ",currDate);
 						FileUpload();
 						alert("글 작성 성공했습니다.");
 						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
-						location.href = "./salesDetail?p_no="+data.p_no;
+						location.href = "./commDetail?p_no="+data.p_no;
 						
 					} else {
 						alert("커뮤니티 글 작성을 실패하였습니다! ");
@@ -183,17 +194,8 @@ console.log("오늘 날짜 : ",currDate);
 				console.log(e);
 			}
 		});
-	};
-	
-	/*글자수 제한*/
-    $('#input').on('keyup', function() {
-           $('#intro_cnt').html("("+$(this).val().length+" / 1000)");
-    
-           if($(this).val().length > 1000) {
-               $(this).val($(this).val().substring(0, 1000));
-               $('#intro_cnt').html("(1000 / 1000)");
-           }
-       });
-	
+	}
+&("select[name=commuCat]").onchange()
+
 </script>
 </html>

@@ -217,24 +217,40 @@ public class BoardController extends HttpServlet {
 			resp.getWriter().println(new Gson().toJson(sue_map));
 			break;
 
-		/* ====== 글수정 ====== */
-
+			
+		/* ====== 커뮤니티 글수정 ====== */
 		case "/commUpdateForm":
-			System.out.println("커뮤니티 수정 요청");
-
+			System.out.println("커뮤니티 수정 폼 요청");
 			// 카테고리
 			map = service.category();
 			System.out.println("[Controller ] category success : " + map);
 			commuCat = map.get("commuCat");
 			req.setAttribute("commuCat", commuCat);
-
 			// 글 내용
 			req.setAttribute("commUpdate", service.commUpdateForm());
 			dis = req.getRequestDispatcher("commUpdate.jsp");
 			dis.forward(req, resp);
 			break;
+			
+		case "/commUpdate":
+			System.out.println("수정 요청");
+			p_no = Integer.parseInt(req.getParameter("P_no"));
+			System.out.println("수정요청 글 번호 : "+p_no);
+			
+			msg = "수정에 실패 했습니다.";
+			page = "commUpdateForm?p_no="+p_no;
+			if(service.commUpdate(p_no)>0) {
+				msg="수정에 성공 했습니다.";
+				page = "commDetail?p_no="+p_no;
+			} 
+			req.setAttribute("msg", msg);
+			dis = req.getRequestDispatcher(page);
+			dis.forward(req, resp);
+			
+			break;
 
-		case "/salesUpdateForm":
+			
+		/*case "/salesUpdateForm":
 			System.out.println("판매글 수정 요청");
 
 			// 카테고리
@@ -248,7 +264,7 @@ public class BoardController extends HttpServlet {
 			req.setAttribute("salesUpdate", service.salesUpdateForm());
 			dis = req.getRequestDispatcher("salesUpdate.jsp");
 			dis.forward(req, resp);
-			break;
+			break;*/
 
 		/* ======================== */
 		case "/auctionDetail":
