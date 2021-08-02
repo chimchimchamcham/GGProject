@@ -657,34 +657,54 @@ public class BoardDAO {
 		String msg = "";
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		//즉결구매가 이상을 입력한 경우
-		
-		
-		//최고입찰자와 최고입찰금액 가져오는 쿼리
-		sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and p_no = ?";
+		sql = "select au_instantpr from auction where p_no=?";
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, p_no);
-		ps.setInt(2, p_no);
 		rs = ps.executeQuery();
-		if(rs.next()) {
-			String bidUsr = rs.getString("ha_bidusr");
-			int bidPr =rs.getInt("ha_bidpr");
-			System.out.println("최고 입찰자 : "+ bidUsr+" / 최고입찰가 : "+bidPr );
+		
+		String bidUsr = rs.getString("ha_bidusr");
+		int bidPr =rs.getInt("ha_bidpr");
+		System.out.println("최고 입찰자 : "+ bidUsr+" / 최고입찰가 : "+bidPr );
+		
+		if(rs.next()) {//무조건 즉결가는 존재
 			
-			
-			
-			if(bidUsr.equals(ha_bidUsr)) { //내가 이미 최고입찰자인 경우
-				msg = "이미 최고입찰자 입니다.";
-			}else if( bidPr >= ha_bidPr){ //내가 입력한 입찰금이 최고 입찰금보다 적을 때
-				msg="입찰금액이 최고입찰가보다 적습니다. 다시 입찰해주세요.";
-				map.put("bidPr", bidPr);
-			}else { //내가 입력한 금액이 최고 입찰금액보다 큰 경우
+		}else {
+		
+			//최고입찰자와 최고입찰금액 가져오는 쿼리
+			sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and p_no = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, p_no);
+			ps.setInt(2, p_no);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				if(bidUsr.equals(ha_bidUsr)) { //내가 이미 최고입찰자인 경우
+					msg = "이미 최고입찰자 입니다.";
+				}else if( bidPr >= ha_bidPr){ //내가 입력한 입찰금이 최고 입찰금보다 적을 때
+					msg="입찰금액이 최고입찰가보다 적습니다. 다시 입찰해주세요.";
+					map.put("bidPr", bidPr);
+				}else { //내가 입력한 금액이 최고 입찰금액보다 큰 경우
+					sql = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE) ";
+					ps = conn.prepareStatement(sql);
+					ps.setInt(1,p_no);
+					ps.setInt(2, ha_bidPr);
+					ps.setString(3, ha_bidUsr);
+					checker = ps.executeUpdate();
+	
+					//insert 성공시
+					if(checker>0) {
+						success = true;
+						msg = "입찰에 성공하였습니다.";
+						
+					}
+				}
+			}else {//이전 입찰자가 없었을 때
 				sql = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE) ";
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1,p_no);
 				ps.setInt(2, ha_bidPr);
 				ps.setString(3, ha_bidUsr);
 				checker = ps.executeUpdate();
-
+	
 				//insert 성공시
 				if(checker>0) {
 					success = true;
@@ -692,22 +712,7 @@ public class BoardDAO {
 					
 				}
 			}
-		}else {//이전 입찰자가 없었을 때
-			sql = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE) ";
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1,p_no);
-			ps.setInt(2, ha_bidPr);
-			ps.setString(3, ha_bidUsr);
-			checker = ps.executeUpdate();
-
-			//insert 성공시
-			if(checker>0) {
-				success = true;
-				msg = "입찰에 성공하였습니다.";
-				
-			}
 		}
-		
 		//입찰금액 입력 쿼리
 		System.out.println("경매 히스토리 입력여부 : "+success);
 		map.put("success", success);
