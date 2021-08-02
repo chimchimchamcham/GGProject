@@ -633,7 +633,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			</c:if>
 			<c:if test="${myPageInfo.u_newName  ne 'default-profile.png'}">
 			<div class="box" >
-    			<img class="profile" src="/ProfilePhoto/${myPageInfo.u_newName }">
+    			<img class="profile" src="C:/photo/${myPageInfo.u_newName }">
 			</div>
 			</c:if>
 			</tr>
@@ -720,7 +720,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				<img src="./img/default-profile.png" width="130px"/>
 			</c:if>
 			<c:if test="${myPageInfo.u_newName  ne 'default-profile.png'}">
-				<img src="/ProfilePhoto/${myPageInfo.u_newName }" width="130px"/>
+				<img src="C:/photo/${myPageInfo.u_newName }" width="130px"/>
 			</c:if>
 			</tr>
 			<tr>

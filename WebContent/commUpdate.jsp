@@ -52,16 +52,6 @@ textarea {
 // 오늘 날짜 설정
 var currDate = new Date().toISOString().substring(0,10);
 console.log("오늘 날짜 : ",currDate);
-
-/*글자수 제한*/
-$('#update').on('keyup', function() {
-       $('#update_cnt').html("("+$(this).val().length+" / 1000)");
-
-       if($(this).val().length > 1000) {
-           $(this).val($(this).val().substring(0, 1000));
-           $('#update_cnt').html("(1000 / 1000)");
-       }
-   });
 </script>
 
 </head>
@@ -80,7 +70,7 @@ $('#update').on('keyup', function() {
 						<img src="img/plus-icon.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
 					</c:if>
 					<c:if test="${commUpdate.i_newName  ne null}">
-						<img src="/photo/${commUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+						<img src="C:/photo/${commUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
 					</c:if>
 					</label>
 					<input type="file" name="imgFile" style="display: none" id="test" />
@@ -93,7 +83,7 @@ $('#update').on('keyup', function() {
 					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
 					<select name="commuCat">
 						<c:forEach items="${commuCat }" var="CommuCategory">
-							<option value="${CommuCategory.p_cate}" <c:if test="${CommuCategory.p_cate eq '${commUpdate.p_cate}'}">selected</c:if>>${CommuCategory.p_cateName}</option>
+							<option value="${CommuCategory.p_cate}">${CommuCategory.p_cateName}</option>
 						</c:forEach>
 					</select>
 				</p>
@@ -106,8 +96,12 @@ $('#update').on('keyup', function() {
 	</div>
 </body>
 <script>
-console.log("${commUpdate.p_cate}");
-console.log("${CommuCategory.p_cate}");
+console.log("카테고리 테스트 1 : ","${commUpdate.p_cate}");
+/* console.log("${commUpdate.c_name}"); */
+console.log("카테고리 테스트 2 : ","${CommuCategory.p_cate}");
+
+$("select[name=commuCat]").val("${commUpdate.p_cate}").prop("selected", true);
+
 	var success = false;
   	//초기상태 - 판매폼만 보이는 상태
 	//폼 선택 버튼  클릭시 해당 값이 달라짐
@@ -125,9 +119,9 @@ console.log("${CommuCategory.p_cate}");
 	$("#submit").click(function() {
 		
 		// 클릭 시 폼 데이터를 가져와야 한다.		
-		//var data = $("#test")[0].files[0]; // input type='file'의 id 인 test 에서 첫 번째 파일데이터를 가져온다.
-		//form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
-		//console.log(data);
+		var data = $("#test")[0].files[0]; // input type='file'의 id 인 test 에서 첫 번째 파일데이터를 가져온다.
+		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
+		console.log(data);
 
 			param.p_no = ${commUpdate.p_no};
 			param.title = $("input[name='title']").val();
@@ -142,7 +136,8 @@ console.log("${CommuCategory.p_cate}");
 				dataType : 'JSON',
 				success : function(data) {
 					if (data.sucP_no == '${commUpdate.p_no}') {
-						form.append("p_no",data.p_no);
+						
+						form.append("p_no",data.sucP_no);
 						FileUpload(); //사진 업로드
 						alert("글 수정에 성공했습니다.");
 						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
@@ -186,17 +181,17 @@ console.log("${CommuCategory.p_cate}");
 	function FileUpload(){
 		$.ajax({
 			type : 'POST',
-			url : 'upload',
+			url : 'update',
 			data : form,
 			asynsc:true,
 			contentType:false,
 			cache:false,
 			processData:false,
 			success : function(data) {
-				if(data!=null){ // 들어오는게 String[] 이라 null인지만 판단.
-					alert("사진 등록 성공");
+				if(data != null){
+					alert("사진 수정 성공");
 				}else{
-					alert("사진 등록 실패");
+					alert("사진 수정 실패");
 				}
 			},
 			error : function(e) {
@@ -204,7 +199,16 @@ console.log("${CommuCategory.p_cate}");
 			}
 		});
 	}
+	
+	/*글자수 제한*/
+	$('#update').on('keyup', function() {
+	       $('#update_cnt').html("("+$(this).val().length+" / 1000)");
 
+	       if($(this).val().length > 1000) {
+	           $(this).val($(this).val().substring(0, 1000));
+	           $('#update_cnt').html("(1000 / 1000)");
+	       }
+	   });
 
 </script>
 </html>

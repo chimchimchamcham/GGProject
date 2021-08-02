@@ -202,18 +202,15 @@ public class BoardController extends HttpServlet {
 			resp.getWriter().println(new Gson().toJson(jo_map));
 			break;
 
-		case "/upload":
-			System.out.println("글 쓰기 파일 업로드 요청");
-			UploadService uploadSer = new UploadService(req);
-			dto = uploadSer.PhotoUpload();
-			int uploadSuccess = 0;
-			sue_map = new HashMap<String, Object>();
-
-			UploadDAO uploadDAO = new UploadDAO();
-			uploadSuccess = uploadDAO.PhotoUpload(dto);
-			sue_map.put("success", uploadSuccess);
-			resp.getWriter().println(new Gson().toJson(sue_map));
-			break;
+		/*
+		 * case "/upload": System.out.println("글 쓰기 파일 업로드 요청"); UploadService uploadSer
+		 * = new UploadService(req); dto = uploadSer.PhotoUpload(); int uploadSuccess =
+		 * 0; sue_map = new HashMap<String, Object>();
+		 * 
+		 * UploadDAO uploadDAO = new UploadDAO(); uploadSuccess =
+		 * uploadDAO.PhotoUpload(dto); sue_map.put("success", uploadSuccess);
+		 * resp.getWriter().println(new Gson().toJson(sue_map)); break;
+		 */
 
 			
 		/* ====== 커뮤니티 글수정 ====== */
