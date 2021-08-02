@@ -31,11 +31,10 @@
 		<input type="hidden" id="p_no" value="${param.p_no }">
 		<input type="hidden" id="toppr" value="${param.toppr }">
 		<input type="hidden" id="endpr" value="${param.endpr }">
-		<div><p>아이패드 파우치에 <b>입찰하기</b></p></div>
+		<div><p>${param.title } 에 <b>입찰하기</b></p></div>
 		<div><input type="text" name="ha_bidPr" id="ha_bidPr" value="0"><button id="bid">입찰</button></div>
-		<div><div>둘리님의 잔여 포인트 <span id="wallet">500000</span>P</div><input type="button" id="charge" value="포인트충전"></div>
+		<div><div>잔여 포인트 <span id="wallet">500000</span>P</div><input type="button" id="charge" value="포인트충전"></div>
 		<span>P</span>
-		<p>${param.endpr }</p>
 	</div>
 </body>
 <script>
@@ -56,6 +55,8 @@
 				$bidpr = $("#ha_bidPr").val();
 			}
 			console.log($bidpr); */
+			
+			alert("입찰 하시겠습니까?");
 			
 			//ajax로 보낼 파라미터 값
 			var param = {};
