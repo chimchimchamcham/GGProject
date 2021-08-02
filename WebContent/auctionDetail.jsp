@@ -155,14 +155,18 @@
     //if("user2" == "${dto.p_id}"){
     	$("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
     	$("#follow").css({"background-color":"gray"}).attr("disabled", true);
-    	$("#description>div:nth-of-type(1)").hide();
-    	$("#description>div:nth-of-type(2)").show();
+    	$("#description>a:nth-of-type(1)").hide();
+    	$("#description>div:nth-of-type(1)").show();
     }
     
     //즉결 가격이 999999999999 일 경우, 즉결 버튼이 비활성화 된다.
     if("${dto.au_instantPr }" == 999999999999){
     	$("#threeButton>button:nth-of-type(2)").css({"background-color":"gray"}).attr("disabled", true);
     }
+    
+    //현재날짜를 가져와서 경매시작 날짜를 비교한다. 현재날짜가 더 빠를 경우, 경매상태를 경매시작전상태로 바꾸고, 좋아요, 즉시구매, 입찰하기 버튼을 비활성화 시킨다.
+    var now = new Date();
+    var auctionStart = 
     
  });
 </script>
