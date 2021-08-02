@@ -686,7 +686,7 @@ public class BoardDAO {
 		return dto;
 	}
 	
-<<<<<<< HEAD
+
 	public boolean buyNow(int p_no, String u_id, int ha_bidPr) {
 		//즉결가 조회
 		String sql = "SELECT AU_INSTANTPR FROM AUCTION WHERE P_NO = ?";
@@ -756,8 +756,6 @@ public class BoardDAO {
 
 		return sucP_no;
 	}
-=======
-	
->>>>>>> 7dd3fad38ddd60a0da92cb036abcf13678c5b056
+
 	
 }

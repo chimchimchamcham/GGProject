@@ -17,15 +17,10 @@ import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
 
-<<<<<<< HEAD
+
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/buyRequest",
 		"/buyRequestCancel", "/soldlist", "/auctionlist", "/maidelist", "/writeForm", "/writeSale", "/writeTrade",
 		"/writeCommunity", "/auctionDetail", "/bid", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist" })
-=======
-@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2","/soldlist", "/auctionlist",
-	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
-		"/writeCommunity", "/auctionDetail","/commDetail", "/commUpdateForm","/communitylist" })
->>>>>>> 7dd3fad38ddd60a0da92cb036abcf13678c5b056
 
 public class BoardController extends HttpServlet {
 

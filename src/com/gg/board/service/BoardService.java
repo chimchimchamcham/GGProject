@@ -452,7 +452,7 @@ dao.resClose();
 		return dto;
 	}
 
-<<<<<<< HEAD
+
 	public HashMap<String,Object> auctionBid() {
 		
 		//boolean success = false;
@@ -502,8 +502,6 @@ dao.resClose();
 		return sucP_no;
 	}
 	
-=======
->>>>>>> 7dd3fad38ddd60a0da92cb036abcf13678c5b056
 	
 	/*판매글 수정*/
 	/*public Object salesUpdateForm() {
