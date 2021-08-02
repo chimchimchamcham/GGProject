@@ -82,6 +82,7 @@ public class PointDAO {
 		return success;
 	}
 
+<<<<<<< HEAD
 	public ArrayList<GGDto> pointList(String id) throws SQLException {
 		System.out.println("DAO 진입");
 		sql = "";
@@ -94,6 +95,10 @@ public class PointDAO {
 			//dto.set
 		}
 		
+=======
+	public GGDto pointList(String id) {
+		sql="";
+>>>>>>> 86a307f30940c84a8de5a4bef57e3a09263a2d7d
 		
 		return null;
 	}
