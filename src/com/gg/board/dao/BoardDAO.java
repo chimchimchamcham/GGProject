@@ -637,8 +637,8 @@ public class BoardDAO {
 		rs = ps.executeQuery();
 		if(rs.next()) {//입찰기록이 있을 경우
 			dto = new GGDto();
-			dto.setHa_bidPr(rs.getInt("ha_bidpr")); //최고 입찰가
-			dto.setHa_bidUsr(rs.getString("ha_bidusr"));//최고 입찰자
+			dto.setHa_bidPr(rs.getInt("toppr")); //최고 입찰가
+			dto.setHa_bidUsr(rs.getString("u_nname"));//최고 입찰자
 		}else {//입찰기록이 없을 경우
 			dto.setHa_bidPr(0); 
 			dto.setHa_bidUsr("-");
