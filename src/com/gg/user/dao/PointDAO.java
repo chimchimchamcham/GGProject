@@ -91,7 +91,7 @@ public class PointDAO {
 		rs = ps.executeQuery();
 		while(rs.next()) {
 			GGDto dto = new GGDto();
-			
+			//dto.set
 		}
 		
 		
