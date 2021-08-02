@@ -606,6 +606,7 @@ public class BoardDAO {
 			dto.setP_likeCount(rs.getInt("p_likeCount")); //좋아요수
 			dto.setP_blindYN(rs.getString("p_blindYN")); //블라인드 여부
 			dto.setP_code(rs.getString("p_code")); //게시글 카테고리
+			dto.setU_nname(rs.getString("u_nname"));//판매자 닉네임
 			dto.setU_addr(rs.getString(("u_addr"))); //간편주소
 			dto.setS_DeliveryYN(rs.getString("s_deliveryyn")); //택배여부
 			dto.setS_followLimYN(rs.getString("s_followlimyn")); //팔로워한정판매여부
@@ -625,11 +626,12 @@ public class BoardDAO {
 			System.out.println(rs.getString("i_newname"));
 			System.out.println(dto.getP_title());
 			System.out.println(dto.getU_addr());
+			System.out.println("경매 상태: "+dto.getAu_code());
 			System.out.println(dto.getP_code());
 		}
 		
 		//경매 상세보기 (히스토리 테이블)
-		sql = "select p.p_no, (select max(h.ha_bidpr) from auction a left outer join his_auction h on a.p_no = h.p_no group by a.p_no having a.p_no=?) as ha_bidpr from post p, his_auction h where p.p_no = h.p_no and p.p_no=?";
+		sql = "SELECT (select u_nname from userinfo where u_id = ha_bidusr) u_nname, haum.toppr toppr FROM his_auction hau, (SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) haum WHERE hau.p_no = haum.p_no and hau.ha_bidpr = haum.toppr and hau.p_no=?";
 		
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, p_no);
@@ -697,7 +699,8 @@ public class BoardDAO {
 		map.put("msg", msg);
 		return map;
 	}
-
+	
+	//입찰횟수 늘리기
 	public int upAucCnt(int p_no) throws SQLException {
 		String sql = "update auction set au_count = au_count+1 where p_no=?";
 		ps = conn.prepareStatement(sql);
@@ -707,8 +710,6 @@ public class BoardDAO {
 		
 		return success;
 	}
-	
-	//입찰횟수 늘리기
 	
 
 	public GGDto commDetail(String p_no) {

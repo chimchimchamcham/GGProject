@@ -458,10 +458,10 @@ dao.resClose();
 		try {
 			dao.conn.setAutoCommit(false);
 			if(dao.upAucCnt(p_no)>0) {//조회수 올리기 성공시 
-				map = dao.auctionBid(p_no,ha_bidPr,ha_bidUsr); //경매글 상세보기 불러오기
+				map = dao.auctionBid(p_no,ha_bidPr,ha_bidUsr); //경매입찰시
 			}
-			
-			if(map == null) {
+			//((Boolean) yourObject).booleanValue();
+			if(!((Boolean) map.get("success")).booleanValue()) {
 				dao.conn.rollback();
 			}else {
 				dao.conn.commit();
