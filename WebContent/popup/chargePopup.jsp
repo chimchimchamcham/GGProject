@@ -7,7 +7,7 @@
 <title>충전 팝업</title>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-#myPoint {
+#myPoint, #myNname {
 	display: inline;
 }
 </style>
@@ -36,8 +36,10 @@
 				console.log(data.myPoint);
 				if (data.success) {
 					myPoint = data.myPoint;
+					nickname = data.nickname;
 					console.log("내포인트 : ", myPoint);
 					$("#myPoint").text(myPoint);
+					$("#myNname").text(nickname);
 				} else {
 					alert("페이지 로딩 중 오류가 발생하였습니다.");
 				}
@@ -64,7 +66,7 @@ h2 {
 				</td>
 			</tr>
 			<tr>
-				<td>${loginId }님의 현재 포인트 :
+				<td><p id="myNname"></p>님의 현재 포인트 :
 					<p id="myPoint"></p>P
 				</td>
 			</tr>
