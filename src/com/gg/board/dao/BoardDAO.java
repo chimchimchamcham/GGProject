@@ -704,7 +704,13 @@ public class BoardDAO {
 		
 		//변경된 입찰금액과 즉결가를 비교해서 동일한 경우 즉결구매로 넘김
 		if(ha_bidPr == instantPr) {
-				buyNow(p_no, ha_bidUsr, ha_bidPr);
+				
+			success = buyNow(p_no, ha_bidUsr, ha_bidPr);
+			System.out.println("즉결구매 성공 여부 : "+success);
+			if(success) {
+					msg = "즉결구매에 성공하였습니다.";
+				}	
+				
 		}else {
 			//최고입찰자와 최고입찰금액 가져오는 쿼리
 			sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and p_no = ?";
