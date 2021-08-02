@@ -161,7 +161,7 @@
                     	<p>i_newName ${dto.i_newName}</p>
                     </div>
                     <div id="description">
-                        <h1>${dto.p_title}<sup>${dto.c_name }</sup></h1>
+                        <h1>${dto.p_title}<sup>${dto.u_nname }</sup></h1>
                         <a href="#">신고하기</a>
                         <div><a href="#">수정 /</a>&nbsp;<a href="#">삭제</a></div>
                         <span>현재최고 입찰가</span>

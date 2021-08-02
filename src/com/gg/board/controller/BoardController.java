@@ -235,6 +235,7 @@ public class BoardController extends HttpServlet {
 			
 			req.setAttribute("dto", dto);
 			req.setAttribute("isLiked", isLiked);
+			
 			dis = req.getRequestDispatcher("auctionDetail.jsp");
 			dis.forward(req, resp);
 			

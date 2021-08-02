@@ -456,7 +456,16 @@ dao.resClose();
 		
 		BoardDAO dao = new BoardDAO();
 		try {
-			map = dao.auctionBid(p_no,ha_bidPr,ha_bidUsr);
+			dao.conn.setAutoCommit(false);
+			if(dao.upAucCnt(p_no)>0) {//조회수 올리기 성공시 
+				map = dao.auctionBid(p_no,ha_bidPr,ha_bidUsr); //경매글 상세보기 불러오기
+			}
+			
+			if(map == null) {
+				dao.conn.rollback();
+			}else {
+				dao.conn.commit();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

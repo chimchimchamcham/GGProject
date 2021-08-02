@@ -636,10 +636,10 @@ public class BoardDAO {
 		rs = ps.executeQuery();
 		if(rs.next()) {//입찰기록이 있을 경우
 			dto = new GGDto();
-			dto.setHa_bidPr(rs.getInt("ha_bidpr"));
-			dto.setHa_bidUsr(rs.getString("ha_bidusr"));
+			dto.setHa_bidPr(rs.getInt("ha_bidpr")); //최고 입찰가
+			dto.setHa_bidUsr(rs.getString("ha_bidusr"));//최고 입찰자
 		}else {//입찰기록이 없을 경우
-			dto.setHa_bidPr(0);
+			dto.setHa_bidPr(0); 
 			dto.setHa_bidUsr("-");
 		}
 		
@@ -696,6 +696,16 @@ public class BoardDAO {
 		System.out.println("메세지 확인 : "+msg);
 		map.put("msg", msg);
 		return map;
+	}
+
+	public int upAucCnt(int p_no) throws SQLException {
+		String sql = "update auction set au_count = au_count+1 where p_no=?";
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1,p_no);
+		int success = ps.executeUpdate();
+		System.out.println("올라간 입찰 수 : "+success);
+		
+		return success;
 	}
 	
 	//입찰횟수 늘리기
