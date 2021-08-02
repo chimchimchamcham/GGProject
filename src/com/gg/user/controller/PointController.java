@@ -70,7 +70,8 @@ public class PointController extends HttpServlet {
 			System.out.println("충전 성공 여부 : " + success);
 			map = new HashMap<String, Object>();
 			map.put("success", success);
-
+			String nname = service.getNname(id);
+			map.put("nickname", nname);
 			resp.getWriter().println(new Gson().toJson(map));
 			break;
 

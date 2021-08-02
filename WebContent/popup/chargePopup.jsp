@@ -38,6 +38,7 @@
 					myPoint = data.myPoint;
 					console.log("내포인트 : ", myPoint);
 					$("#myPoint").text(myPoint);
+					$("#myNname").text(data.nname);
 				} else {
 					alert("페이지 로딩 중 오류가 발생하였습니다.");
 				}
@@ -64,7 +65,7 @@ h2 {
 				</td>
 			</tr>
 			<tr>
-				<td>${loginId }님의 현재 포인트 :
+				<td><p id="myNname"></p>님의 현재 포인트 :
 					<p id="myPoint"></p>P
 				</td>
 			</tr>
