@@ -508,9 +508,9 @@ dao.resClose();
 		System.out.println("카테고리 수정 : "+subject+"/"+content+"/"+category);
 		
 		BoardDAO dao = new BoardDAO();
-		int result = dao.commUpdate(p_no, subject,content,category);
+		int sucP_no = dao.commUpdate(p_no, subject,content,category);
 		
-		return result;
+		return sucP_no;
 	}
 	
 	

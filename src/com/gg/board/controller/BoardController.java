@@ -50,6 +50,7 @@ public class BoardController extends HttpServlet {
 		int p_no;
 		String userid;
 		switch (addr) {
+		
 		case "/salesDetail":
 			System.out.println("판매글 상세보기");
 			GGDto dto = service.salesDetail();
@@ -170,13 +171,8 @@ public class BoardController extends HttpServlet {
 			service.community_list(userid);
 			
 			break;
-<<<<<<< HEAD
 		/* ====== 글쓰기 ====== */	
 
-=======
-
-
->>>>>>> 34672fb6281439c70664aee34c80f8eb05baee14
 		case "/writeForm":
 			System.out.println("글쓰기 폼 요청");
 			HashMap<String, ArrayList<GGDto>> map = service.category();
@@ -251,9 +247,9 @@ public class BoardController extends HttpServlet {
 			p_no = Integer.parseInt(req.getParameter("P_no"));
 			System.out.println("수정요청 글 번호 : "+p_no);
 
-			int result = service.commUpdate(p_no);
-			req.setAttribute("msg", msg);
-			dis = req.getRequestDispatcher(page);
+			int sucP_no = service.commUpdate(p_no);
+			req.setAttribute("sucP_no", sucP_no);
+			dis = req.getRequestDispatcher("");
 			dis.forward(req, resp);
 			
 			break;

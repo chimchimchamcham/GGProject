@@ -134,7 +134,7 @@ $('#update').on('keyup', function() {
 				data : param,
 				dataType : 'JSON',
 				success : function(data) {
-					if (success > 0) {
+					if (sucP_no == ${commUpdate.p_no}) {
 						form.append("p_no",data.p_no);
 						FileUpload();
 						alert("글 작성 성공했습니다.");
