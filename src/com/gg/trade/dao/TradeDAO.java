@@ -82,6 +82,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		
 		
+		
 		//즉결구매가 이상을 입력한 경우
 		sql = "select au_instantpr from auction where p_no=?";
 		ps = conn.prepareStatement(sql);

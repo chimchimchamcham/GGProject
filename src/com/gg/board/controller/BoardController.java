@@ -1,7 +1,10 @@
 package com.gg.board.controller;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -263,9 +266,23 @@ public class BoardController extends HttpServlet {
 		case "/auctionDetail":
 			System.out.println("경매글 상세보기 요청");
 			dto = service.auctionDetail(); //경매글 해당 글번호 내용 dto로 반환
-			System.out.println("[Controller] 경매글 상세보기 반환:"+dto);
-			System.out.println("[Controller] 경매 내용 : "+dto.getP_content());
-			System.out.println("[Controller] 경매 제목 : "+dto.getP_title());
+			//System.out.println("[Controller] 경매글 상세보기 반환:"+dto);
+			//System.out.println("[Controller] 경매 내용 : "+dto.getP_content());
+			//System.out.println("[Controller] 경매 제목 : "+dto.getP_title());
+			
+			////시작 시간, 종료시간 형식 변환/////
+			DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+			Date au_endTm = dto.getAu_endTm();
+			Date au_startTm = dto.getAu_startTm();
+			
+			System.out.println("au_endTm : " + au_endTm);
+			System.out.println("au_startTm : "+au_startTm);
+			
+			String endTm = dateFormat.format(au_endTm);
+			String startTm = dateFormat.format(au_startTm);
+
+			///////////////
+			
 			//좋아요를 눌렀는지 확인
 			isLiked = false;
 			isLiked = service.isLiked();
@@ -275,7 +292,10 @@ public class BoardController extends HttpServlet {
 			isBuyRequested = service.isBuyRequested();
 
 			req.setAttribute("dto", dto);
-			req.setAttribute("isLiked", isLiked);
+			req.setAttribute("isLiked", isLiked); //좋아요여부
+			
+			req.setAttribute("endTm", endTm);
+			req.setAttribute("startTm", startTm);
 
 			dis = req.getRequestDispatcher("auctionDetail.jsp");
 			dis.forward(req, resp);
