@@ -788,19 +788,34 @@ public class BoardDAO {
 	}
 	
 	public boolean buyNow(int p_no, String u_id, int ha_bidPr) {
+		//즉결가 조회
 		String sql = "SELECT AU_INSTANTPR FROM AUCTION WHERE P_NO = ?";
+		//낙찰자를 등록
+		String sql2 = "INSERT INTO AUCTION (AU_SUCCESSER) VALUES(?)";
+		//경매상태를 거래중으로 변경
+		String sql3 = "UPDATE FROM AUCTION SET AU_CODE = 'Au002' WHERE P_NO = ?";
+		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
 			rs = ps.executeQuery();
+			int au_instantpr = 0;
 			if(rs.next()) {
-				
-				
+				au_instantpr = rs.getInt("au_instantpr");
+			}
+			if(au_instantpr == ha_bidPr) {
+				ps = conn.prepareStatement(sql2);
+				ps.setString(1, u_id);
+				if(ps.executeUpdate()>0) {
+					ps = conn.prepareStatement(sql3);
+					ps.setInt(1, p_no);
+					success = ps.executeUpdate();
+				}
 			}
 		}catch(Exception e) {
 			
 		}
-		return false;
+		return success>0?true:false;
 	}
 	
 }
