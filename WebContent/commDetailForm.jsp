@@ -69,9 +69,9 @@
     		<tr>
     			<td>
     				<c:if test="${dto.u_newName  eq 'default-profile.png'}">
-						<div class="box" >
+						<div class="box" ><a href="myPage?id=${dto.u_id}">
 	    				<img class="profile" src="./img/default-profile.png">
-						</div>
+						</a></div>
 					</c:if>
 				</td>
     			<td>글 번호 : ${dto.p_no }</td>
