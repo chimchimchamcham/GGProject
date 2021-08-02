@@ -181,5 +181,6 @@ function drop(){
 }
 
 $("select[name=drop]").onchange(drop($("select[name=drop]").val()));
+console.log(id);
 </script>
 </html>
