@@ -16,9 +16,10 @@ import com.gg.board.service.UploadService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
+
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/buyRequest",
 		"/buyRequestCancel", "/soldlist", "/auctionlist", "/maidelist", "/writeForm", "/writeSale", "/writeTrade",
-		"/writeCommunity", "/auctionDetail", "/bid", "/commDetail", "/commUpdateForm" })
+		"/writeCommunity", "/auctionDetail", "/bid", "/commDetail", "/commUpdateForm","/communitylist" })
 
 public class BoardController extends HttpServlet {
 
@@ -162,7 +163,15 @@ public class BoardController extends HttpServlet {
 
 			break;
 
-		/* ====== 글쓰기 ====== */
+		case "/communitylist":
+			System.out.println("커뮤니티 리스트 요청");	
+			userid = (String) req.getSession().getAttribute("loginId");
+
+			service.community_list(userid);
+			
+			break;
+
+
 		case "/writeForm":
 			System.out.println("글쓰기 폼 요청");
 			HashMap<String, ArrayList<GGDto>> map = service.category();
