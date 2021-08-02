@@ -48,25 +48,68 @@ public class UploadDAO {
 		}
 	}
 
-	public int PhotoUpload(GGDto dto) {
-		String sql = "INSERT INTO Img VALUES(?,?)";
-		int success = 0;
+	/* 기존 사진 가져오기 */
+	public GGDto getFileName(int p_no) {
+		GGDto dto = null;
+		String sql = "SELECT i_newName FROM img WHERE p_no=?";
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, dto.getP_no());
-			ps.setString(2, dto.getI_newName());
-			success = ps.executeUpdate();
+			ps.setInt(1, p_no);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				dto = new GGDto();
+				dto.setI_newName(rs.getString(1));
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			resClose();
 		}
-		if(success>0) {
-			System.out.println("글 쓰기 사진 업로드 성공");
-		}
-		return success;
+
+		return dto;
+	}
+
+	 public int PhotoUpload(GGDto dto) {
+	      String sql = "INSERT INTO Img VALUES(?,?)";
+	      int success = 0;
+	      try {
+	         ps = conn.prepareStatement(sql);
+	         ps.setInt(1, dto.getP_no());
+	         ps.setString(2, dto.getI_newName());
+	         success = ps.executeUpdate();
+	      } catch (SQLException e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      }finally {
+	         resClose();
+	      }
+	      if(success>0) {
+	         System.out.println("글 쓰기 사진 업로드 성공");
+	      }
+	      
+	      return success;
+	      
+	   }
+
+	public int PhotoUpdate(GGDto dto) {
+		String sql = "UPDATE img SET i_newName=? WHERE p_no=?";
+	      int success = 0;
+	      try {
+	         ps = conn.prepareStatement(sql);
+	         ps.setString(1, dto.getI_newName());
+	         ps.setInt(2, dto.getP_no());
+	         success = ps.executeUpdate();
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }finally {
+	         resClose();
+	      }
+	      if(success>0) {
+	         System.out.println("글 사진 수정 성공");
+	      }
+	      
+	      return success;
 		
 	}
 
+	
 }

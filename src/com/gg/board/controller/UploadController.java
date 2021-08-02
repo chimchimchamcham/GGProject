@@ -11,9 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gg.board.dao.UploadDAO;
 import com.gg.board.service.UploadService;
+import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
-@WebServlet({"/upload"})
+@WebServlet({"/upload","/update"})
 public class UploadController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -50,11 +51,40 @@ public class UploadController extends HttpServlet {
 				map.put("success", success);
 				resp.getWriter().println(new Gson().toJson(map));
 				
-			}else 
-			
+			}
 			
 			break;
+			
+		case "/update":
+			success = false;
+			System.out.println("사진 수정 요청");
+			service = new UploadService(req);
+			dao = new UploadDAO();
+			cheker = 0;
+			GGDto dto = service.PhotoUpload();
+			
+			//기존사진 이름 가져와서 delFileName에 넣음
+			String delFileName = dao.getFileName(dto.getP_no()).getI_newName();
+			System.out.println("삭제할 사진 파일 : "+ delFileName);
+			
+			if(delFileName != null) {
+				cheker = dao.PhotoUpdate(dto);
+				//기존 파일을 지우고
+				service.del(delFileName);
+			}
+			
+			map = new HashMap<String, Object>();
+			if(cheker>0) {
+				success = true;
+				map.put("success", success);
+				resp.getWriter().println(new Gson().toJson(map));
+			}
+			
+			break;
+			
 		}
+		
+		
 		
 	}
 }
