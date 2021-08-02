@@ -615,8 +615,8 @@ public class BoardDAO {
 			dto.setAu_instantPr(rs.getInt("au_instantpr"));
 			dto.setAu_endTm(rs.getDate("au_endtm"));
 			dto.setAu_count(rs.getInt("au_count"));
-			dto.setHa_bidPr(rs.getInt("ha_bidpr"));
-			dto.setHa_bidUsr(rs.getString("ha_bidusr"));
+			//dto.setHa_bidPr(rs.getInt("ha_bidpr"));
+			//dto.setHa_bidUsr(rs.getString("ha_bidusr"));
 			dto.setI_newName(rs.getString("i_newname"));
 			
 			System.out.println(dto.getAu_count());
@@ -624,10 +624,6 @@ public class BoardDAO {
 			System.out.println(dto.getP_title());
 			System.out.println(dto.getU_addr());
 			System.out.println(dto.getP_code());
-			
-			
-		}else {
-			
 		}
 		
 		
@@ -685,6 +681,9 @@ public class BoardDAO {
 		map.put("msg", msg);
 		return map;
 	}
+	
+	//입찰횟수 늘리기
+	
 
 	public GGDto commDetail(String p_no) {
 		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname FROM" + 
