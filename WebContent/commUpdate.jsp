@@ -134,7 +134,7 @@ $('#update').on('keyup', function() {
 				data : param,
 				dataType : 'JSON',
 				success : function(data) {
-					if (data.p_no > 0) {
+					if (success > 0) {
 						form.append("p_no",data.p_no);
 						FileUpload();
 						alert("글 작성 성공했습니다.");

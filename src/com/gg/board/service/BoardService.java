@@ -507,7 +507,10 @@ dao.resClose();
 		String category=req.getParameter("category");
 		System.out.println("카테고리 수정 : "+subject+"/"+content+"/"+category);
 		
-		return 0;
+		BoardDAO dao = new BoardDAO();
+		int result = dao.commUpdate(p_no, subject,content,category);
+		
+		return result;
 	}
 	
 	
@@ -539,10 +542,5 @@ dao.resClose();
 		return dao.commDetail(P_no);
 	}
 
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 46d3ebb7567f008da051db50dc61b1069a2a76bb
 	
 }
