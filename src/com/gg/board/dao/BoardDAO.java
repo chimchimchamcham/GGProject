@@ -820,6 +820,8 @@ public class BoardDAO {
 		String sql2 = "INSERT INTO AUCTION (AU_SUCCESSER) VALUES(?)";
 		//경매상태를 거래중으로 변경
 		String sql3 = "UPDATE FROM AUCTION SET AU_CODE = 'Au002' WHERE P_NO = ?";
+		//경매히스토리에 이력을 저장
+		String sql4 = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE)";
 		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
@@ -835,7 +837,13 @@ public class BoardDAO {
 				if(ps.executeUpdate()>0) {
 					ps = conn.prepareStatement(sql3);
 					ps.setInt(1, p_no);
-					success = ps.executeUpdate();
+					if(ps.executeUpdate()>0) {
+						ps = conn.prepareStatement(sql4);
+						ps.setInt(1, p_no);
+						ps.setInt(2, ha_bidPr);
+						ps.setString(3, u_id);
+						success = ps.executeUpdate();
+					}
 				}
 			}
 		}catch(Exception e) {
