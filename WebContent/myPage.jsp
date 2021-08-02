@@ -496,7 +496,11 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 		function soled_list(soldlist){	
 			console.log("soldlist:", soldlist);
 			var content="";
-
+			
+			$(".button-layout_sold").hide();
+			$(".alien_list_sold").hide();
+			$(".button-layout_auction").hide();
+			
 			soldlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
@@ -511,6 +515,9 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content += "</div>";	
 				content += "</div>";
 			});	
+			$(".button-layout_sold").show();
+			$(".alien_list_sold").show();
+			
 			$("#sale .item-box").empty();
 			$("#sale .item-box").append(content);
 			
@@ -521,6 +528,10 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 			console.log("auction_list:", auctionlist);
 			var content="";
 
+			$(".button-layout_sold").hide();
+			$(".alien_list_sold").hide();
+			$(".button-layout_auction").hide();
+			
 			auctionlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content +="<div class='item-one'>";
@@ -533,6 +544,9 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content +="<div class='love-time'><div>입찰수:"+item.au_count+"</div><div>"+item.p_tm+"</div></div>";
 				content +="</div>";
 				});	
+			
+			$(".button-layout_auction").show();
+			
 			$('#trade .item-box').empty();
 			$('#trade .item-box').append(content);
 		}// 경매 리스트 end
@@ -541,25 +555,31 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 		function maide_list(maidelist){	
 			console.log("maidelist:", maidelist);
 			var content="";
-
+			
+			$(".button-layout_sold").hide();
+			$(".alien_list_sold").hide();
+			$(".button-layout_auction").hide();
+			
 			maidelist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
 				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg' style='margin:3%'></div>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
-				content +="		<h2>제목.....</h2>";
-				content += "	<div style='font-size: 25px; justify-self: center;'>5000p</div>";
+				content +="		<h2>"+item.p_title+"</h2>";
+				content += "	<div style='font-size: 25px; justify-self: center;'>"+item.pnt_point+"p</div>";
 				content += "</div>";
 				content += "<div class='c_zoon'>";
-				content += "	<div class='c_code'>판매</div>";	
+				content += "	<div class='c_code'>"+item.c_name+"</div>";	
 				content += "</div>";	
 				content += "<div class='nick' style='margin: 3%;'>";
-				content += "	<div>닉네임</div>";
+				content += "	<div>"+item.pnt_otherId+"</div>";
 				content += "</div>";
 				content += "<div class='mai-time'>";
-				content += "	<div> 구매날짜:2시간 전</div>";
+				content += "	<div>"+item.pnt_tm+"</div>";
 				content += "</div></div>";
 			});	
+
+			
 			$("#sell .item-box").empty();
 			$("#sell .item-box").append(content);
 			
@@ -569,13 +589,17 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 		function community_list(communitylist){	
 			console.log("communitylist:", communitylist);
 			var content="";
-
+			
+			$(".button-layout_sold").hide();
+			$(".alien_list_sold").hide();
+			$(".button-layout_auction").hide();
+			
 			communitylist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
 				content += "	<div>"+item.p_cateName+"</div>";
-				content += "	<div><a href = auctionDetail?p_no="+item.p_no+">"+item.p_title+"</a></div>";///경로 고쳐야함
+				content += "	<div><a href = commDetail?P_no="+item.p_no+">"+item.p_title+"</a></div>";///경로 고쳐야함
 				content += "</div>";
 				content += "<div class='c_zoon'>";
 				content += "	<div>"+item.p_tm+"</div>";	
@@ -584,6 +608,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "charge", "wid
 				content += "	<div>"+item.p_view+"</div>";
 				content += "</div></div>";
 			});	
+
 			$("#commu .item-box").empty();
 			$("#commu .item-box").append(content);
 			

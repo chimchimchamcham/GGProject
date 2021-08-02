@@ -370,7 +370,8 @@ public class BoardDAO {
 	}
 	
 	public ArrayList<GGDto> maide_list(String userid) throws SQLException {
-		String sql = "select p.p_title,pi.pnt_point,pi.pnt_tm,i.i_newname,pi.pnt_otherid,pi.pnt_code from post p,point pi,img i where (p.p_code='P002' or p.p_code='P001') and pi.pnt_code='PNT003' and p.p_no = pi.p_no and p.p_no = i.p_no and p.p_id = pi.PNT_id and pi.PNT_id = ?";
+
+		String sql = "select p.p_title,pi.pnt_point,pi.pnt_tm,i.i_newname,pi.pnt_otherid,c.c_name,pi.PNT_otherId from post p,point pi,img i,codes c where (p.p_code='P002' or p.p_code='P001') and p.p_code = c.c_code and pi.pnt_code='PNT003' and p.p_no = pi.p_no and p.p_no = i.p_no and p.p_id = pi.PNT_id and pi.PNT_id = ?";
 
 		ArrayList<GGDto> maidelist = new ArrayList<GGDto>();
 		
@@ -389,8 +390,8 @@ public class BoardDAO {
 			dto.setPnt_point(rs.getInt("pnt_point"));
 			dto.setPnt_tm(rs.getDate("pnt_tm"));
 			dto.setI_newName(rs.getString("I_newName"));
+			dto.setC_name(rs.getString("c_name"));;
 			dto.setPnt_otherId(rs.getString("pnt_otherid"));
-			dto.setPntcode(rs.getString("pnt_code"));
 			maidelist.add(dto);
 		}
 		System.out.println("maidelist:"+maidelist);
@@ -399,7 +400,7 @@ public class BoardDAO {
 	
 	public ArrayList<GGDto> community_list(String userid) throws SQLException {
 		
-		String sql = "SELECT DISTINCT pc.p_catename,p.p_title,p.p_tm,p.P_view FROM post p,Post_codes pc,Codes c where pc.p_cate = p.p_cate and p.p_code = c.c_code and p.p_id = ?";
+		String sql = "SELECT DISTINCT p.p_no,pc.p_catename,p.p_title,p.p_tm,p.P_view FROM post p,Post_codes pc,Codes c where pc.p_cate = p.p_cate and p.p_code = c.c_code and p.p_id = ?";
 
 		ArrayList<GGDto> communitylist = new ArrayList<GGDto>();
 		
@@ -414,6 +415,7 @@ public class BoardDAO {
 		
 		while (rs.next()) {
 			GGDto dto = new GGDto();
+			dto.setP_no(rs.getInt("P_NO"));
 			dto.setP_cateName(rs.getString("p_catename"));
 			dto.setP_title(rs.getString("P_title"));
 			dto.setP_tm(rs.getDate("p_tm"));
@@ -692,8 +694,6 @@ public class BoardDAO {
 		ps.setInt(1, p_no);
 		rs = ps.executeQuery();
 		
-		
-		
 		if(rs.next()) {//무조건 즉결가는 존재(이미 보유포인트에서 거를 예정이기에)
 			instantPr = rs.getInt("au_instantpr");
 			System.out.println("경매글 최고 입찰가 : "+instantPr);
@@ -704,7 +704,15 @@ public class BoardDAO {
 		
 		//변경된 입찰금액과 즉결가를 비교해서 동일한 경우 즉결구매로 넘김
 		if(ha_bidPr == instantPr) {
-				buyNow(p_no, ha_bidUsr, ha_bidPr);
+				
+			success = buyNow(p_no, ha_bidUsr, ha_bidPr);
+			System.out.println("즉결구매 성공 여부 : "+success);
+			if(success) {
+					msg = "즉결구매에 성공하였습니다.";
+				}else {
+					msg="즉결구매에 실패하였습니다.";
+				}
+				
 		}else {
 			//최고입찰자와 최고입찰금액 가져오는 쿼리
 			sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and p_no = ?";
@@ -809,25 +817,42 @@ public class BoardDAO {
 		//즉결가 조회
 		String sql = "SELECT AU_INSTANTPR FROM AUCTION WHERE P_NO = ?";
 		//낙찰자를 등록
-		String sql2 = "INSERT INTO AUCTION (AU_SUCCESSER) VALUES(?)";
+		String sql2 = "UPDATE AUCTION SET AU_SUCCESSER = ? WHERE P_NO = ?";
 		//경매상태를 거래중으로 변경
-		String sql3 = "UPDATE FROM AUCTION SET AU_CODE = 'Au002' WHERE P_NO = ?";
+		String sql3 = "UPDATE AUCTION SET AU_CODE = 'Au002' WHERE P_NO = ?";
+		//경매히스토리에 이력을 저장
+		String sql4 = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE)";
 		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
 			rs = ps.executeQuery();
+			System.out.println("DAO buyNow 즉결가 조회");
 			int au_instantpr = 0;
 			if(rs.next()) {
 				au_instantpr = rs.getInt("au_instantpr");
+				System.out.println("DAO buyNow au_instantpr : "+au_instantpr);
 			}
+			System.out.println("DAO buyNow au_instantpr == ha_bidPr : "+(au_instantpr == ha_bidPr));
 			if(au_instantpr == ha_bidPr) {
+				System.out.println("테스트");
 				ps = conn.prepareStatement(sql2);
 				ps.setString(1, u_id);
+				ps.setInt(2, p_no);
+				
 				if(ps.executeUpdate()>0) {
+					System.out.println("DAO buyNow 낙찰자 등록");
 					ps = conn.prepareStatement(sql3);
 					ps.setInt(1, p_no);
-					success = ps.executeUpdate();
+					if(ps.executeUpdate()>0) {
+						System.out.println("DAO buyNow 경매상태 거래중으로 변경 성공");
+						ps = conn.prepareStatement(sql4);
+						ps.setInt(1, p_no);
+						ps.setInt(2, ha_bidPr);
+						ps.setString(3, u_id);
+						success = ps.executeUpdate();
+						System.out.println("DAO buyNow 경매히스토리 이력 저장 완료");
+					}
 				}
 			}
 		}catch(Exception e) {

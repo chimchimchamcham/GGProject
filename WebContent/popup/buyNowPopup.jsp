@@ -31,8 +31,8 @@
 		<input type="hidden" id="p_no" value="${param.p_no }">
 		<input type="hidden" id="toppr" value="${param.toppr }">
 		<input type="hidden" id="endpr" value="${param.endpr }">
-		<div><p>아이패드 파우치에 <b>입찰하기</b></p></div>
-		<div><input type="text" name="ha_bidPr" id="ha_bidPr" value="0"><button id="bid">입찰</button></div>
+		<div><p>아이패드 파우치에 <b>즉결구매하기</b></p></div>
+		<div><input type="text" name="ha_bidPr" id="ha_bidPr" value="0"><button id="bid">즉결구매하기</button></div>
 		<div><div>둘리님의 잔여 포인트 <span id="wallet">500000</span>P</div><input type="button" id="charge" value="포인트충전"></div>
 		<span>P</span>
 		<p>${param.endpr }</p>
@@ -65,7 +65,7 @@
 			
 		 	 $.ajax({
 				type : 'post',
-				url : '../bid',
+				url : '../buyNow',
 				data : param,
 				dataType : 'JSON',
 				success : function(data){
