@@ -14,7 +14,7 @@ import com.gg.dto.GGDto;
 import com.gg.user.service.PointService;
 import com.google.gson.Gson;
 
-@WebServlet({ "/charge", "/test", "/pointPop", "/pointList" })
+@WebServlet({ "/charge", "/test", "/pointPop", "/pointList","/outPoint" })
 public class PointController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -90,7 +90,22 @@ public class PointController extends HttpServlet {
 			resp.getWriter().println(new Gson().toJson(map));
 
 			break;
-
+			
+		case "/outPoint":
+			System.out.println("인출 컨트롤 진입.");
+			id = req.getParameter("id");
+			int outPoint = Integer.parseInt(req.getParameter("outPoint"));
+			System.out.println("인출 하는 아이디 : " + id);
+			System.out.println("인출 요청 금액 : " + outPoint);
+			success = false; 
+			service = new PointService(req);
+			success = service.outPoint(outPoint,id);
+			System.out.println("인출 성공 여부 : " + success);
+			map = new HashMap<String, Object>();
+			map.put("success", success);
+			
+			resp.getWriter().println(new Gson().toJson(map));
+			break;
 		}
 
 	}
