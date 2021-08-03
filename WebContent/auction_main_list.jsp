@@ -67,6 +67,7 @@
 
         .items{
             display: flex;
+            flex-wrap: wrap;
             flex-direction: row;
             margin-top: 20%;
         }
