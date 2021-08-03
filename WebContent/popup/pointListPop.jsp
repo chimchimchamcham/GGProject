@@ -79,7 +79,7 @@ button {
 	console.log("로그인 아이디 확인 ", loginId);
 	var param = {};
 	param.id = loginId;
-	function chargePopup() { window.open("./chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
+	function chargePopup() { window.open("./chargePopup.jsp", "chargePop", "width=600, height=500, left=600, top=200"); }
 	listCall();
 	
 	$("button").click(function(){
@@ -99,7 +99,7 @@ button {
 				console.log("마이 포인트 : " ,data.myPoint);
 				drawList(data.list);
 				myPoint(data.myPoint);
-				//opener.parent.parent.location.reload();
+				opener.parent.location.reload();
 			},
 			error : function(e) {
 				console.log("에러");
