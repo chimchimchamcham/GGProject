@@ -752,4 +752,6 @@ public class BoardDAO {
 		return auctionmainlist;
 
 		}
+	
+	public GGDto 
 }
