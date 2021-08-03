@@ -23,6 +23,7 @@
 	z-index: -1;
 	}
 	/* #wrap{margin-top:150px;}  */
+	#category{font-weight:600;font-color:#848484;font-size:1.2rem;}
     section{width:100%;}
     #sectionWrap{width:1200px;margin:0 auto;}
     #sectionWrap>article{width:1200px;height:1000px;/* border:1px solid black; */clear: both;}
@@ -166,7 +167,7 @@
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
     <div id="wrap">
-    	<p>카테고리</p>
+    	<p id="category">${dto.p_name } > ${dto.s_name }</p>
         <section>
             <div id="sectionWrap">
                 <article>

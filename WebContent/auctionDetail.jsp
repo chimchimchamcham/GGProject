@@ -11,6 +11,7 @@
     body{width:100%;background-color:white;}
 	#wrap{margin-top:120px;}
 	
+	#category{font-weight:600;font-color:#848484;font-size:1.2rem;}
     section{width:100%;}
     #sectionWrap{width:1200px;margin:0 auto;border-top:1px solid gray;padding:30px;}
     #sectionWrap>article{width:1200px;height:1000px;/* border:1px solid black; */clear: both;}
@@ -220,6 +221,7 @@
 </head>
 <body>
     <div id="wrap">
+    	<p id="category">${dto.p_name } > ${dto.s_name }</p>
         <section>
             <div id="sectionWrap">
                 <article>
