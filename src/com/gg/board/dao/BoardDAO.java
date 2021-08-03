@@ -649,8 +649,6 @@ public class BoardDAO {
 		
 		
 	}
-
-	
 	
 
 	public GGDto commDetail(String p_no) {
@@ -750,6 +748,7 @@ public class BoardDAO {
 		return auctionmainlist;
 
 		}
+
 
 	public ArrayList<GGDto> commList() {
 

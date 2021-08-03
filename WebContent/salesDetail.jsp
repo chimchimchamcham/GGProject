@@ -159,6 +159,13 @@
     	$("#description>div:nth-of-type(1)").hide();
     	$("#description>div:nth-of-type(2)").show();
     }
+    
+  	//신고하기 버튼을 누르면 팝업창 띄우기
+	$("#description>div:nth-of-type(1)>a").click(function(){
+	    	var N_receiveId = "${dto.p_id}";
+	  		window.open("./popup/notifyPopup.jsp?N_receiveId="+N_receiveId, "notifyPopup", "width=400, height=400, left=700, top=400");	
+	    
+    });
  });
 </script>
 </head>
