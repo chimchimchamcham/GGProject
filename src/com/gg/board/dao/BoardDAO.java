@@ -680,8 +680,6 @@ public class BoardDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			resClose();
 		}
 		return dto;
 	}
@@ -752,4 +750,11 @@ public class BoardDAO {
 		return auctionmainlist;
 
 		}
+
+	public ArrayList<GGDto> commList() {
+
+		String sql ="";
+		return null;
+	}
+
 }

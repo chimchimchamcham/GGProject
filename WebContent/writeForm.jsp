@@ -94,7 +94,7 @@ console.log("오늘 날짜 : ",currDate);
 				<p id="salePr">
 					<input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point
 				</p>
-				<p>
+				<p id='delivery'>
 					거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
 						value="Y">택배<input type="radio" name="deliveryYN"
 						value="N">직거래
@@ -182,7 +182,7 @@ console.log("오늘 날짜 : ",currDate);
 		param.select = "P001";
 
 		console.log(param.select);
-		$("#tradeForm,#reservForm").show();
+		$("#tradeForm,#reservForm,#saleForm").show();
 
 		$("#commuCategory,#salePr").hide();
 
@@ -221,9 +221,20 @@ console.log("오늘 날짜 : ",currDate);
 		var data = $("#test")[0].files[0]; // input type='file'의 id 인 test 에서 첫 번째 파일데이터를 가져온다.
 		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
 		console.log(data);
-
-		
-		if (param.select == "P004") { //커뮤니티글 선택시
+		if(data==null){
+			alert("사진을 등록하셔야만 합니다!");
+			
+		}else {
+		//글을 작성하지 않았을 경우.
+		if($("input[name='title']").val() == ""){
+			alert("제목을 입력하셔야 합니다.");
+			$("input[name='title']").focus();
+			return false;
+		}else if($("textarea[name='content']").val()==""){
+			alert("내용을 입력하셔야 합니다!");
+			$("textarea[name='content']").focus();
+			return false;
+		}else if (param.select == "P004") { //커뮤니티글 선택시
 			/* $("form input").each(function(idx,item){
 				//console.log(item)
 				param[$(item).attr("name")]=$(item).val();
@@ -258,8 +269,21 @@ console.log("오늘 날짜 : ",currDate);
 			});
 			
 		} else if (param.select == "P002") { //판매글 선택시
+
 			param.title = $("input[name='title']").val();
 			param.content = $("textarea[name='content']").val();
+			if($("input[name='price']").val() == ""){
+				alert("가격을 선택하셔야 합니다!");
+				$("input[name='price']").focus();
+				return false;
+			}else if(!$("input[name='deliveryYN']").is(":checked") ){
+				alert("택배/ 직거래 선택을 하셔야 합니다!");
+				$("input[name='deliveryYN']").focus();
+				return false;
+			}else if(!$("input[name='disclosure']").is(":checked")){
+				alert("팔로우 공개 여부를 선택해주세요!");
+				return false;
+			}
 			param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
 			param.deliveryYN = $("input[name='deliveryYN']:checked").val();
 			param.price = $("input[name='price']").val();
@@ -289,7 +313,27 @@ console.log("오늘 날짜 : ",currDate);
 		} else if (param.select == "P001") {//경매글 선택시
 			param.title = $("input[name='title']").val();// 제목
 			param.content = $("textarea[name='content']").val(); //내용
-			param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
+			param.category = $("select[name='saleCat']").val();//select name으로 값 받기
+			if($("input[name='startPrice']").val() ==""){
+				alert("시작 가격을 설정해주세요!");
+				$("input[name='startPrice']").focus();
+				return false;
+			}else if($("input[name='promptPrice']").val() ==""){
+				alert("즉결 가격을 설정해 주세요!");
+				$("input[name='promptPrice']").focus();
+				return false;
+			}else if(!$("input[name='deliveryYN']").is(":checked") ){
+				alert("택배/ 직거래 선택을 하셔야 합니다!");
+				$("input[name='deliveryYN']").focus();
+				return false;
+			}else if(!$("input[name='disclosure']").is(":checked")){
+				alert("팔로우 공개 여부를 선택해주세요!");
+				return false;
+			}else if($("#to").val()==""){
+				alert("경매 종료 날짜를 선택해 주세요!");
+				return false;
+			}
+			
 			param.startPr = $("input[name='startPrice']").val(); //시작가
 			param.instantPr = $("input[name='promptPrice']").val(); // 즉결가
 			param.deliveryYN = $("input[name='deliveryYN']:checked").val(); //택배여부
@@ -327,6 +371,10 @@ console.log("오늘 날짜 : ",currDate);
 		} else {
 			alert("폼을 선택해주세요!");
 		}
+			
+		}
+		
+		
 	});
 	
 	///////사진 선택시 미리보기 변경/////////
