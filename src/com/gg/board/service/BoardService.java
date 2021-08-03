@@ -441,30 +441,45 @@ dao.resClose();
 			System.out.println("조회수 올리기 :"+up);
 			if(up>0) { //조회수 올리기 먼저
 				dto = dao.auctionDetail(p_no);
-				System.out.println("상세보기 dto : "+dto);
-				
-				Date endTm = dto.getAu_endTm();//경매종료시간
-				String au_code = dto.getAu_code();//경매상태
-				System.out.println("경매종료시간 : "+endTm);
-				System.out.println("경매상태 : "+au_code);
-				
-				java.util.Date nowDate = new java.util.Date();
-				System.out.println("현재 시간 : "+ nowDate);
-				
-				
-				//현재시간 > 경매 종료시간 and 경매상태 = '경매중' 
-				if(nowDate.before(endTm)&&au_code.equals("Au001")) {
-					
-					//경매종료상태 메서드 실행
-					dto2 = t_dao.endAuction(endTm,au_code); 
+				System.out.println("상세보기 dto : " + dto);
 
-					//dto 내용 변경
-					dto.setAu_code(dto2.getAu_code());
-					dto.setAu_endTm(dto2.getAu_endTm());
+				Date endTm = dto.getAu_endTm();// 경매종료시간
+				String au_code = dto.getAu_code();// 경매상태
+				String ha_bidusr = dto.getHa_bidUsr();// 최고입찰자
+
+				System.out.println("경매종료시간 : " + endTm);
+				System.out.println("경매상태 : " + au_code);
+				System.out.println("경매최고입찰자 : " + ha_bidusr);
+
+				java.util.Date nowDate = new java.util.Date();
+				System.out.println("현재 시간 : " + nowDate);
+				
+				java.util.Date u_endTm = Date.parse(endTm);
+
+				if(nowDate.before(endTm)) {
+					System.out.println("true");
+				}else {
+					System.out.println("false");
 				}
-				////////////////////////////////////////////////
+				
+				if (ha_bidusr.equals("-")) {
+					System.out.println("입찰자 존재x");
+				} else {
+
+					// 현재시간 > 경매 종료시간 and 경매상태 = '경매중'
+					if (nowDate.before(endTm) && au_code.equals("Au001")) {
+						
+						System.out.println("입찰자 존재o / 경매종료 메서드 실행 ");
+						/*
+						 * //경매종료상태 메서드 실행 dto2 = t_dao.endAuction(p_no,au_endTm,ha_bidusr);
+						 * 
+						 * //dto 내용 변경 dto.setAu_code(dto2.getAu_code());
+						 * dto.setAu_endTm(dto2.getAu_endTm());
+						 */
+					}
+					////////////////////////////////////////////////
+				}
 			}
-			
 			if(dto == null) {
 				dao.conn.rollback();
 			}else {
