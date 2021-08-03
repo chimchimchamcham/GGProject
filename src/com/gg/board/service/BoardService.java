@@ -495,6 +495,8 @@ dao.resClose();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			dao.resClose();
 		}
 		return dto;
 	}
