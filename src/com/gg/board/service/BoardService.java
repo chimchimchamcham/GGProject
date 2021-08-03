@@ -494,7 +494,24 @@ dao.resClose();
 	public GGDto commDetail() {
 		String P_no = req.getParameter("P_no");
 		BoardDAO dao = new BoardDAO();
-		return dao.commDetail(P_no);
+		GGDto dto = null;
+		try {
+			dao.conn.setAutoCommit(false);
+			if(0<dao.upP_view(Integer.parseInt(P_no))) {
+				dto = dao.commDetail(P_no);
+			}
+			if(dto == null) {
+				dao.conn.rollback();
+			}else {
+				dao.conn.commit();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		return dto;
 	}
 
 	public void mainauc_list(String auctionmainlistwhatadd, int auctionmainlisthowaline) throws IOException {//경매 목록
@@ -518,6 +535,12 @@ dao.resClose();
 		map.clear();
 		dao.resClose();
 		
+	}
+
+	public ArrayList<GGDto> commList() {
+		
+		BoardDAO dao = new BoardDAO();
+		return dao.commList();
 	}
 
 	
