@@ -166,8 +166,44 @@
     
     //현재날짜를 가져와서 경매시작 날짜를 비교한다. 현재날짜가 더 빠를 경우, 경매상태를 경매시작전상태로 바꾸고, 좋아요, 즉시구매, 입찰하기 버튼을 비활성화 시킨다.
     var now = new Date();
-    var auctionStart = 
+    console.log(now);
+    console.log(now.getTime());
+     
+    //양수 = 경매전
+    var startTm = "${startTm}";
+    var startTime = strToDate(startTm);
+    console.log(startTm);
+    console.log(startTime);
+    console.log(startTime.getTime()-now.getTime());
+    if(startTime.getTime()-now.getTime()>0){
+        console.log("경매전");
+        $("#description>h1>sup").text("경매전");
+        $("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
+    }
     
+    //양수 = 경매완료
+    var endTm = "${endTm}";
+    var endTime = strToDate(endTm);
+    console.log(endTm);
+    console.log(endTime);
+    console.log(now.getTime()-endTime.getTime());
+    if(now.getTime()-endTime.getTime()>0){
+        console.log("경매완료");
+        $("#description>h1>sup").text("경매완료");
+        $("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
+    }
+    
+    //문자열을 날짜로 변경해주는 메서드
+    function strToDate(str){
+        var yyyy = str.substring(0,4);
+        var MM = str.substring(4,6)-1;
+        var dd = str.substring(6,8);
+        var HH = str.substring(8,10);
+        var mm = str.substring(10,12);
+        var ss = str.substring(12,14);
+        var time = new Date(yyyy,MM,dd,HH,mm,ss);
+        return time;
+    }
  });
 </script>
 </head>
