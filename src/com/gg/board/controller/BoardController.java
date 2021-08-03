@@ -24,7 +24,11 @@ import com.google.gson.Gson;
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
 	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
 		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" 
+<<<<<<< HEAD
 		,"/commList","/salesUpdateForm","/salesUpdate"})
+=======
+		,"/commList","/salesUpdateForm","/details" })
+>>>>>>> 05530766fcb8bf8218877b7552b1d75733e18cde
 
 public class BoardController extends HttpServlet {
 
@@ -274,6 +278,7 @@ public class BoardController extends HttpServlet {
 
 			break;
 			
+<<<<<<< HEAD
 		case "/salesUpdate":
 			System.out.println("판매 글 수정 요청");
 			p_no = Integer.parseInt(req.getParameter("p_no"));
@@ -288,6 +293,17 @@ public class BoardController extends HttpServlet {
 
 			break;
 
+=======
+		/* ========================= */
+		case "/details":
+			System.out.println("걸러주는 디테일즈");
+			
+			
+			
+			
+			break;
+			
+>>>>>>> 05530766fcb8bf8218877b7552b1d75733e18cde
 		/* ======================== */
 		case "/auctionDetail":
 			System.out.println("경매글 상세보기 요청");
