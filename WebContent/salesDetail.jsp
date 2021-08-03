@@ -166,7 +166,7 @@
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
     <div id="wrap">
-    
+    	<p>카테고리</p>
         <section>
             <div id="sectionWrap">
                 <article>
