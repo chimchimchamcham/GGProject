@@ -227,12 +227,12 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 	}
 	
 	///경매 종료 메서드///
-		public GGDto endAuction(int p_no,Date au_endTm,String au_code,String ha_bidusr) throws SQLException {
+		public GGDto endAuction(int p_no,String au_code,String ha_bidusr) throws SQLException {
 			
 			GGDto dto = new GGDto();
 			
 			//낙찰시간,경매상태,낙찰자 변경
-			String sql = "update auction set au_suctm = SYSDATE, au_code= 'Au002' ,au_successer = ? where p_no=? ";
+			String sql = "update auction set au_suctm = SYSDATE, au_code= 'Au002' ,au_successer = (select u_id from userinfo where u_nname= ?) where p_no=? ";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1,ha_bidusr);
 			ps.setInt(2, p_no);

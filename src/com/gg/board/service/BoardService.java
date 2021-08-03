@@ -454,29 +454,39 @@ dao.resClose();
 				java.util.Date nowDate = new java.util.Date();
 				System.out.println("현재 시간 : " + nowDate);
 				
-				SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-				Date f_endTm = date
-
-				if(nowDate.before(endTm)) {
-					System.out.println("true");
-				}else {
-					System.out.println("false");
-				}
+				SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyyMMddHHmmss");
+				String endDateToStr = dateFormat.format(endTm);
+				String nowDateToStr = dateFormat.format(nowDate);
+				
+				System.out.println("형변환된 경매종료시간: "+endDateToStr);
+				System.out.println("형변환된 현재시간: "+nowDateToStr);
+				
+				
+				//>0 : 경매종료 전 
+				
+				Double result = Double.parseDouble(endDateToStr)-Double.parseDouble(nowDateToStr);
+				System.out.println("경매종료 - 현재시간 = "+result);
 				
 				if (ha_bidusr.equals("-")) {
 					System.out.println("입찰자 존재x");
 				} else {
 
 					// 현재시간 > 경매 종료시간 and 경매상태 = '경매중'
-					if (nowDate.before(endTm) && au_code.equals("Au001")) {
+					if (result<0 && au_code.equals("Au001")) {
 						
 						System.out.println("입찰자 존재o / 경매종료 메서드 실행 ");
-						/*
-						 * //경매종료상태 메서드 실행 dto2 = t_dao.endAuction(p_no,au_endTm,ha_bidusr);
-						 * 
-						 * //dto 내용 변경 dto.setAu_code(dto2.getAu_code());
-						 * dto.setAu_endTm(dto2.getAu_endTm());
-						 */
+	
+						  //경매종료상태 메서드 실행 
+						dto2 = t_dao.endAuction(p_no,au_code,ha_bidusr);
+						  
+						  //dto 내용 변경 dto.setAu_code(dto2.getAu_code());
+						  dto.setAu_sucTm(dto2.getAu_sucTm());
+						  dto.setAu_code(dto2.getAu_code());
+						  dto.setAu_successer(dto2.getAu_successer());
+						  
+						 
+					}else {
+						System.out.println("경매 종료 전 상태");
 					}
 					////////////////////////////////////////////////
 				}
