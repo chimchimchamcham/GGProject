@@ -98,7 +98,7 @@ param.id = "${sessionScope.loginId}";
 					$("input[name='chargePoint']").focus();
 				} else {
 					param.chargePoint = $("input[name='chargePoint']").val();
-					console.log("미친 시발 :" , param.chargePoint);
+					console.log("충전할 포인트  :" , param.chargePoint);
 					$.ajax({
 						type : "POST",
 						url : "../charge",

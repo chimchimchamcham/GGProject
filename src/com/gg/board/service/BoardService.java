@@ -484,14 +484,14 @@ dao.resClose();
 		return dao.commDetail(P_no);
 	}
 
-	public void mainauc_list(int auctionlistwhatadd, int auctionmainlisthowaline) throws IOException {//경매 목록
+	public void mainauc_list(String auctionmainlistwhatadd, int auctionmainlisthowaline) throws IOException {//경매 목록
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		BoardDAO dao = new BoardDAO();
 		ArrayList<GGDto> auctionmainlist = null;
 		
 		try {
-			auctionmainlist = dao.auction_main_list(auctionlistwhatadd,auctionmainlisthowaline);
+			auctionmainlist = dao.auction_main_list(auctionmainlistwhatadd,auctionmainlisthowaline);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {

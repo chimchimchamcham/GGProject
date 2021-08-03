@@ -146,7 +146,7 @@ public class BoardController extends HttpServlet {
 
 			//String userid1 = (String) req.getSession().getAttribute("loginId");
 
-			int auctionmainlistwhatadd = Integer.parseInt(req.getParameter("index1"));
+			String auctionmainlistwhatadd = req.getParameter("index_button_auction");
 			int auctionmainlisthowaline = Integer.parseInt(req.getParameter("index2"));
 			
 			System.out.println("auctionmainlisthowaline:" + auctionmainlistwhatadd);

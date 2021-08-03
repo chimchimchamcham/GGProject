@@ -2,6 +2,7 @@ package com.gg.user.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,13 +33,19 @@ public class BlackListController extends HttpServlet {
 		String addr = uri.substring(ctx.length());
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html charset=UTF-8"); // 한글 설정
+		RequestDispatcher dis;
 		BlackListService service = new BlackListService(req);
 		switch (addr) {
 		
 		case "/notify":
-			boolean success = service.notifyUser();
+			String msg =null;
+			if(service.notifyUser()) {
+				msg = "신고가 접수되었습니다.";
+				req.setAttribute("msg", msg);
+				dis = req.getRequestDispatcher("popup/notifyPopup.jsp");
+				dis.forward(req, resp);
+			}
 			break;
-			
 		}
 	}
 }
