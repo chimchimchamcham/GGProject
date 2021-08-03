@@ -271,6 +271,20 @@ public class BoardController extends HttpServlet {
 			dis.forward(req, resp);
 
 			break;
+			
+		case "/salesUpdate":
+			System.out.println("판매 글 수정 요청");
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			System.out.println("수정요청 글 번호 : " + p_no);
+			sucP_no = service.commUpdate(p_no);
+			System.out.println("수정 성공 글 번호 : " + sucP_no);
+
+			HashMap<String, Object> salesUpdateMap = new HashMap<String, Object>();
+			salesUpdateMap.put("sucP_no", sucP_no);
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().println(new Gson().toJson(salesUpdateMap));
+
+			break;
 
 		/* ======================== */
 		case "/auctionDetail":

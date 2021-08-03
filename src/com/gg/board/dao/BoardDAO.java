@@ -687,10 +687,17 @@ public class BoardDAO {
 	}
 	
 
-
-	public int commUpdate(int p_no, String title, String content, String category) {
+/*글 수정*/
+	public int commUpdate(int p_no, String title, String content, String category, String deliveryYN, String price, String disclosure) {
 		
 		int sucP_no = 0;
+		
+		//판매
+		if(price != null || price != "") {
+			String sql = "UPDATE ";
+		}
+		
+		//커뮤니티
 		String sql = "UPDATE post SET p_title=?, p_content=?, p_cate=? WHERE p_no=?";
 		
 		try {
@@ -709,6 +716,7 @@ public class BoardDAO {
 
 		return sucP_no;
 	}
+
 ///////////////////////////////////////////////////////
 	
 	public ArrayList<GGDto> auction_main_list(String auctionmainlistwhatadd, int auctionmainlisthowaline) throws SQLException  {//경매목록
@@ -752,4 +760,6 @@ public class BoardDAO {
 		return auctionmainlist;
 
 		}
+
+
 }

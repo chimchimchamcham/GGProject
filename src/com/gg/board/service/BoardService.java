@@ -454,15 +454,28 @@ dao.resClose();
 
 
 
-	/*커뮤니티 수정*/
+	/*글 수정*/
 	public int commUpdate(int p_no) {
+		int sucP_no = 0;
+		
 		String title=req.getParameter("title");
 		String content=req.getParameter("content");
 		String category=req.getParameter("category");
-		System.out.println("카테고리 수정 : "+title+"/"+content+"/"+category);
+		//판매글 수정
+		String deliveryYN = req.getParameter("deliveryYN");
+		String price = req.getParameter("price");
+		String disclosure = req.getParameter("disclosure");
 		
 		BoardDAO dao = new BoardDAO();
-		int sucP_no = dao.commUpdate(p_no, title,content,category);
+		
+		if(price != null) { //판매글 수정
+			System.out.println("판매글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+disclosure);
+		} else {//커뮤니티 수정
+			System.out.println("커뮤니티 수정 값 : "+title+"/"+content+"/"+category);
+		}
+		
+		sucP_no = dao.commUpdate(p_no, title,content,category,deliveryYN,price,disclosure);
+		
 		dao.resClose();
 		return sucP_no;
 	}
