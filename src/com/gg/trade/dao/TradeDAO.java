@@ -73,6 +73,7 @@ public class TradeDAO {
 		return success > 0 ? true : false;
 	}
 	
+//입찰하기
 public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUsr) throws SQLException {
 		
 		//반환값(성공여부, 실패시 ->현재 최고 입찰가, 성공여부 초기상태
@@ -83,8 +84,6 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		String sql = "";
 		String msg = "";
 		HashMap<String,Object> map = new HashMap<String,Object>();
-		
-		
 		
 		//즉결구매가 이상을 입력한 경우
 		sql = "select au_instantpr from auction where p_no=?";
@@ -259,7 +258,31 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		}
 
 		
-		
+		public boolean bidRecordYN(int p_no,String user_id) throws SQLException {
+
+			boolean success = false;
+			PointDAO dao = null;
+			
+			//입찰내역이 있는지 확인 
+			String sql="select count(h.p_no),(select au_instantpr from auction where p_no=?) as pnt_point, (select p_id from post where p_no=?) as from his_auction h where h.p_no=? group by h.p_no";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, p_no);
+			ps.setInt(2, p_no);
+			ps.setInt(3, p_no);
+			rs = ps.executeQuery();
+			if(!rs.next()) {
+				//입찰한 내역이 없는 경우
+				sql = "select au_instantpr from auction where p_no=?";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, p_no);
+				rs = ps.executeQuery();
+				rs.next();
+				int pnt_point =  rs.getInt("au_instantpr");
+				success = insertPoint(user_id, pnt_point, "SYSTEM", "PNT006", p_no);
+			}
+			return false;
+			
+		}
 		
 		
 }
