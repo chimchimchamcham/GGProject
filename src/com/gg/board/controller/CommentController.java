@@ -42,18 +42,16 @@ public class CommentController extends HttpServlet {
 		GGDto bdto = null;
 		boolean success = false;
 		int p_no;
-		String userid;
+		String p_id;
 		switch (addr) {
 		
 		case "/saleboardlist":
 			System.out.println("댓글 리스트 요청");
-			GGDto dto = boardservice.salesDetail();
 			
+			p_id = req.getParameter("p_id");
+			p_no = Integer.parseInt(req.getParameter("p_no"));
 			
-			userid = (String) req.getSession().getAttribute("p_id");
-			p_no = (int) req.getSession().getAttribute("p_no");
-			
-			commentservice.sold_board_list(userid,p_no);
+			commentservice.sold_board_list(p_id,p_no);
 
 			break;
 		
