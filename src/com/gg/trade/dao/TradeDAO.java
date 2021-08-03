@@ -1,6 +1,7 @@
 package com.gg.trade.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -226,7 +227,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 	}
 	
 	///경매 종료 메서드///
-		public GGDto endAuction() {
+		public GGDto endAuction(Date au_endTm,String au_code) {
 			GGDto dto = new GGDto();
 			//String sql = "SELECT ";
 			

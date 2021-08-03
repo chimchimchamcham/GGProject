@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.gg.board.dao.BoardDAO;
 import com.gg.dto.GGDto;
+import com.gg.trade.dao.TradeDAO;
 import com.google.gson.Gson;
 
 public class BoardService {
@@ -430,14 +431,31 @@ dao.resClose();
 		int p_no = Integer.parseInt(req.getParameter("p_no"));
 		System.out.println("경매글 상세보기 글번호 : "+p_no);
 		BoardDAO dao = new BoardDAO();
-		GGDto dto = new GGDto();
+		TradeDAO t_dao = new TradeDAO();
+		GGDto dto = null;
+		GGDto dto2 = null;
 		try {
 			dao.conn.setAutoCommit(false);
 			int up = dao.upP_view(p_no);
 			System.out.println("조회수 올리기 :"+up);
-			if(up>0) {
+			if(up>0) { //조회수 올리기 먼저
 				dto = dao.auctionDetail(p_no);
 				System.out.println("상세보기 dto : "+dto);
+				
+				Date endTm = dto.getAu_endTm();//경매종료시간
+				String au_code = dto.getAu_code();//경매상태
+				
+				java.util.Date nowDate = new java.util.Date();
+				System.out.println("현재 시간 : "+ nowDate);
+				if()
+
+				dto2 = t_dao.endAuction(endTm,au_code); 
+
+				dto.setAu_code(dto2.getAu_code());
+				dto.setAu_endTm(dto2.getAu_endTm());
+				
+				
+				//경매종료 
 			}
 			if(dto == null) {
 				dao.conn.rollback();
