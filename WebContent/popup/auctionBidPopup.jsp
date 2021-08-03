@@ -33,11 +33,37 @@
 		<input type="hidden" id="endpr" value="${param.endpr }">
 		<div><p>${param.title } 에 <b>입찰하기</b></p></div>
 		<div><input type="text" name="ha_bidPr" id="ha_bidPr" value="0"><button id="bid">입찰</button></div>
-		<div><div>잔여 포인트 <span id="wallet">500000</span>P</div><input type="button" id="charge" value="포인트충전"></div>
+		<div><div>잔여 포인트 <span id="wallet">0</span>P</div><input type="button" id="charge" value="포인트충전"></div>
 		<span>P</span>
 	</div>
 </body>
 <script>
+	var loginId = "${sessionScope.loginId}";
+	var param = {};
+	param.id = loginId;
+	$.ajax({
+		type : "POST",
+		url : "../pointPop",
+		data : param,
+		dataType : "JSON",
+		success : function(data) {
+			console.log(data.success);
+			console.log(data.myPoint);
+			if (data.success) {
+				myPoint = data.myPoint;
+				nickname = data.nickname;
+				console.log("내포인트 : ", myPoint);
+				$("#wallet").text(myPoint);
+			} else {
+				alert("페이지 로딩 중 오류가 발생하였습니다.");
+			}
+		},
+		error : function(e) {
+			console.log(e);
+		}
+	
+	});
+
 	//입찰버튼 클릭시 알람 뜸
 	$("#bid").click(function(){
 		if($("#ha_bidPr").val()==0){
