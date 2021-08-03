@@ -9,6 +9,7 @@
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <style>
 #mainHeader {
 	z-index: 1000;
@@ -17,75 +18,88 @@
 #main {
 	background-color: gray;
 	width: 1200px;
-	height: 2000px;
+	height: auto;
 	position: absolute;
 	top: 150px;
 	z-index: -1;
 }
 
 #wrap {
-	width: 1200px;
 	margin: 0 auto;
 	text-align: left;
 }
 
 textarea {
 	resize: none;
-}
+} 
 </style>
 <script>
+// 오늘 날짜 설정
+var currDate = new Date().toISOString().substring(0,10);
+console.log("오늘 날짜 : ",currDate);
 </script>
+
 </head>
 <body>
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
-
 		<div id="wrap">
-			<h2>판매 글 수정</h2>	
+			<h2>판매글 수정</h2>
 			<div id="saleForm">
 				<p>
-					<input type="text" name="title" value="" placeholder="제목을 입력해주세요"
-						style='width: "1000px"' />
+					<input type="text" name="title" value="${salesUpdate.p_title }" style='width: "1000px"' placeholder="제목을 입력해주세요"/>
 				</p>
 				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
-					<label for='test'><img src="img/plus.png"
-						id="preview-image" width="100px" height="100px"
-						style="border: solid 1px gray" /></label> <input type="file"
-						name="imgFile" style="display: none" id="test" />
+					<label for='test'>
+					<c:if test="${salesUpdate.i_newName  eq null}">
+						<img src="img/plus-icon.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+					</c:if>
+					<c:if test="${salesUpdate.i_newName  ne null}">
+						<img src="/photo/${salesUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+					</c:if>
+					</label>
+					<input type="file" name="imgFile" style="display: none" id="test" />
 				</form>
 				<p>
-					<textarea name="content" rows="30" cols="100" placeholder="내용입력" id ="input"
-						style="overflow-y: scroll"></textarea>
+					<textarea name="content" rows="30" cols="100" id ="update" style="overflow-y: scroll" placeholder="내용입력" >${salesUpdate.p_content}</textarea>
 				</p>
-				<p id="salePr">
-					<input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point
+				<div id="update_cnt">(0 / 1000)</div>
+				<p>
+					<input type="text" name="price" value="${salesUpdate.ns_pr}" placeholder="가격 입력(숫자입력)"/> P
 				</p>
 				<p>
-					거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
-						value="Y">택배<input type="radio" name="deliveryYN"
-						value="N">직거래
+					거래방식(필수선택) &nbsp;&nbsp;&nbsp;
+					<input type="radio" name="deliveryYN" value="Y">택배
+					<input type="radio" name="deliveryYN" value="N">직거래
 				</p>
-				<p id="category">
-					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
+				<p>
+					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
+					<select name="saleCat">
 						<c:forEach items="${saleCat }" var="SaleCategory">
-							<option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
+							<option value="${salesUpdate.s_name}">${SaleCategory.c_name}</option>
 						</c:forEach>
 					</select>
 				</p>
 				<p>
-					공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
-						value="N">전체공개 <input type="radio" name="disclosure"
-						value="Y">팔로우한정
+					공개범위&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="disclosure" value="N">전체공개
+					<input type="radio" name="disclosure" value="Y">팔로우한정
 				</p>
 			</div>
 			<div id="twoButton">
-				<input type="button" id="submit" value="등록" /> <input type="button"
-					onclick="location.href='./index.jsp'" value="취소" />
+				<input type="button" id="submit" value="등록" /> 
+				<input type="button" onclick="location.href='./index.jsp'" value="취소" />
 			</div>
 		</div>
-	</div>
+	</div><!-- main div end -->
 </body>
+
 <script>
+console.log("${salesUpdate.ns_code}");
+
+$("select[name=saleCat]").val("${salesUpdate.s_name}").prop("selected", true);
+$("input[name=deliveryYN]").val("${salesUpdate.s_DeliveryYN}").prop("checked", true);
+$("input[name=disclosure]").val("${salesUpdate.s_followLimYN}").prop("checked", true);
 
 	var success = false;
 	var param = {};
@@ -102,55 +116,35 @@ textarea {
 		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
 		console.log(data);
 
-			param.title = $("input[name='title']").val();
-			param.content = $("textarea[name='content']").val();
-			param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
-			param.deliveryYN = $("input[name='deliveryYN']:checked").val();
-			param.price = $("input[name='price']").val();
-			param.disclosure = $("input[name='disclosure']:checked").val();
-			//ajax url="sale"
-			console.log(param);
-			$.ajax({
-				type : 'POST',
-				url : 'writeSale',
-				data : param,
-				dataType : 'JSON',
-				success : function(data) {
-					if (data.p_no>0) {
-						form.append("p_no",data.p_no);
-						FileUpload();
-						alert("판매글 작성 성공했습니다.");
-						location.href="./salesDetail?p_no="+data.p_no;
-					} else {
-						alert("판매 글 작성을 실패하였습니다! ");
-					}
-				},
-				error : function(e) {
-					console.log(e);
-				}
-
-			});
+		param.title = $("input[name='title']").val();
+		param.content = $("textarea[name='content']").val();
+		param.category = $("select[name='saleCat']").val();
+		param.deliveryYN = $("input[name='deliveryYN']:checked").val();
+		param.price = $("input[name='price']").val();
+		param.disclosure = $("input[name='disclosure']:checked").val();
 		
-			if (checker == true) {
-				$.ajax({
-					type : 'POST',
-					url : 'writeTrade',
-					data : param,
-					dataType : 'JSON',
-					success : function(data) {
-						console.log("글 작성 번호 :",data.p_no);
-						form.append("p_no",data.p_no);
-						FileUpload();
-						//향후 변경사항 경매상세보기 만들고 보내주는 페이지 편집
-						location.href='./salesDetail?p_no='+data.p_no;
-					},
-					error : function(e) {
-						console.log(e);
-					}
-				})
+		//ajax url="sale"
+		console.log(param);
+		$.ajax({
+			type : 'POST',
+			url : 'salesUpdate',
+			data : param,
+			dataType : 'JSON',
+			success : function(data) {
+				if (data.p_no>0) {
+					form.append("p_no",data.p_no);
+					FileUpload();
+					alert("판매글 수정을 성공했습니다.");
+					location.href="./salesDetail?p_no="+data.p_no;
+				} else {
+					alert("판매글 수정을 실패하였습니다! ");
+				}
+			},
+			error : function(e) {
+				console.log(e);
 			}
 
-		}
+		});
 	});
 	
 	///////사진 선택시 미리보기 변경/////////
@@ -169,6 +163,7 @@ textarea {
 	        reader.readAsDataURL(input.files[0]);
 	    }
 	};
+	
 	// input file에 change 이벤트 부여
 	const inputImage = document.getElementById("test");
 	inputImage.addEventListener("change", e => {
@@ -179,34 +174,34 @@ textarea {
 	function FileUpload(){
 		$.ajax({
 			type : 'POST',
-			url : 'upload',
+			url : 'update',
 			data : form,
 			asynsc:true,
 			contentType:false,
 			cache:false,
 			processData:false,
 			success : function(data) {
-				if(data!=null){ // 들어오는게 String[] 이라 null인지만 판단.
-					alert("사진 등록 성공");
+				if(data != null){
+					alert("사진 수정 성공");
 				}else{
-					alert("사진 등록 실패");
+					alert("사진 수정 실패");
 				}
 			},
 			error : function(e) {
 				console.log(e);
 			}
 		});
-	};
+	}
 	
 	/*글자수 제한*/
-    $('#input').on('keyup', function() {
-           $('#intro_cnt').html("("+$(this).val().length+" / 1000)");
-    
-           if($(this).val().length > 1000) {
-               $(this).val($(this).val().substring(0, 1000));
-               $('#intro_cnt').html("(1000 / 1000)");
-           }
-       });
-	
+	$('#update').on('keyup', function() {
+	       $('#update_cnt').html("("+$(this).val().length+" / 1000)");
+
+	       if($(this).val().length > 1000) {
+	           $(this).val($(this).val().substring(0, 1000));
+	           $('#update_cnt').html("(1000 / 1000)");
+	       }
+	   });
+
 </script>
 </html>

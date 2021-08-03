@@ -466,18 +466,7 @@ dao.resClose();
 		dao.resClose();
 		return sucP_no;
 	}
-	
-	
-	/*판매글 수정*/
-	/*public Object salesUpdateForm() {
-		int p_no = Integer.parseInt(req.getParameter("P_no"));
-		System.out.println("수정 요청 글 번호 : "+p_no);
-		BoardDAO dao = new BoardDAO();
-		
-		return null;
-	}*/
 
-	/*커뮤니티 글 수정*/
 	public GGDto commUpdateForm() {
 		String p_no = req.getParameter("P_no");
 		System.out.println("수정 요청 글 번호 : "+p_no);
@@ -489,14 +478,13 @@ dao.resClose();
 		return dto;
 	}
 
-
 	public GGDto commDetail() {
 		String P_no = req.getParameter("P_no");
 		BoardDAO dao = new BoardDAO();
-		GGDto dto;
+		GGDto dto = null;
 		try {
 			dao.conn.setAutoCommit(false);
-			if(0<dao.upHit(P_no)) {
+			if(0<dao.upP_view(Integer.parseInt(P_no))) {
 				dto = dao.commDetail(P_no);
 			}
 			if(dto == null) {
@@ -538,6 +526,18 @@ dao.resClose();
 		
 		BoardDAO dao = new BoardDAO();
 		return dao.commList();
+	}
+
+	
+	/*판매 글 수정*/
+	public GGDto salesUpdateForm() {
+		int SalesP_no = Integer.parseInt(req.getParameter("p_no"));
+		System.out.println("수정 요청 글 번호 : "+SalesP_no);
+		BoardDAO dao = new BoardDAO();
+		GGDto dto = dao.salesDetail(SalesP_no);
+		System.out.println("수정요청 dto : "+ dto);
+		dao.resClose();
+		return dto;
 	}
 
 	

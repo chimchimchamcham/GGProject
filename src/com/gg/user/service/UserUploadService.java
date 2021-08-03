@@ -19,7 +19,7 @@ public class UserUploadService {
 	}
 
 	public GGDto PhotoUpload() {
-		String savePath = "C:/photo/";// 1.저장경로 저장
+		String savePath = "/photo/";// 1.저장경로 저장
 		int maxSize = 10 * 1024 * 1024;// 2.용량제한(10MB)
 
 		GGDto dto = null;
@@ -109,7 +109,7 @@ public class UserUploadService {
 		boolean success = false;
 		
 		// 기존파일이름
-		File file = new File("C:/photo/" + delFileName);
+		File file = new File("/photo/" + delFileName);
 		
 		// 파일이 존재한다면 삭제해라
 		if (file.exists()) {
