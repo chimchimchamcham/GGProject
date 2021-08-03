@@ -752,9 +752,31 @@ public class BoardDAO {
 		}
 
 	public ArrayList<GGDto> commList() {
-
-		String sql ="";
-		return null;
+		GGDto dto = null;
+		ArrayList<GGDto> list = new ArrayList<GGDto>();
+		String sql ="SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code " + 
+				"LEFT OUTER JOIN love l ON p.p_no = l.p_no " + 
+				"LEFT OUTER JOIN img i ON p.p_no = i.p_no "+ 
+				"WHERE p.p_code = 'P004'AND p.p_blindyn = 'N'";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				dto.setC_name(rs.getString("c_name"));
+				dto.setP_title(rs.getString("p_title"));
+				dto.setU_id(rs.getString("U_id"));
+				dto.setU_nname(rs.getString("U_nname"));
+				dto.setP_tm(rs.getDate("p_tm"));
+				dto.setP_view(rs.getInt("p_view"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return list;
 	}
 
 }
