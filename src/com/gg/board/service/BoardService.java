@@ -454,7 +454,8 @@ dao.resClose();
 				java.util.Date nowDate = new java.util.Date();
 				System.out.println("현재 시간 : " + nowDate);
 				
-				java.util.Date u_endTm = Date.parse(endTm);
+				SimpleDateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
+				Date f_endTm = date
 
 				if(nowDate.before(endTm)) {
 					System.out.println("true");
