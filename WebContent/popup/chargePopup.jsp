@@ -17,6 +17,7 @@
 		
 		$("#cancelBtn").click(function() {
 			alert("포인트 충전이 취소되었습니다.");
+			
 			window.close();
 		});
 
@@ -107,6 +108,7 @@ param.id = "${sessionScope.loginId}";
 							console.log(data.success);
 							if (data.success) {
 								alert("포인트 충전 여부 "+data.success);
+								opener.parent.location.reload();
 								window.close();
 							} else {
 								alert("충전에 실패하였습니다.");
