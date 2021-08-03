@@ -40,8 +40,11 @@ a {
 	text-decoration: none;	
 	color : black;
 }
-a:hover {
+#parentChange:hover {
 	color : hotpink;
+}
+#parentChange{
+	cursor: pointer;
 }
 a:visited {
 	color : black;
@@ -107,6 +110,16 @@ a:visited {
 		console.log("인출 버튼 클릭");
 		outPointPopup();
 	});
+	var p_no;
+	$(document).on('click','#parentChange',function(){
+		console.log("해당 글로 이동하기.");
+		p_no = ($(this).children().val());
+		opener.parent.location.href = '../details?p_no='+p_no+'&id='+loginId;
+	});
+	
+	
+	
+	
 	
 	function listCall() {
 	
@@ -181,10 +194,10 @@ a:visited {
 			else{content += " id ='extract_point_color'";}
 			content += ">" + pnt_code+"</h3></td>";
 			content += "<td><h3>" + item.pnt_point + "</h3></td>";
-			content += "<td><h3><a href='details?p_no="+item.p_no+ "'>";
-			if(item.i_newName != null){content +="<img src='/photo/"+item.i_newName +"' style='width:100px; height:100px'/>";}
+			content += "<td><h3 id='parentChange'>";
+			if(item.i_newName != null){content +="<input type='text' hidden='hidden' value='"+item.p_no +"'><img src='/photo/"+item.i_newName +"' style='width:100px; height:100px'/>";}
 			content += "</h3></td>";
-			content += "<td><h3><a href='details?p_no="+item.p_no+ "'>" + item.p_title + "</a></h3></td>";
+			content += "<td><h3 id='parentChange'><input type='text' hidden='hidden' value='"+item.p_no +"'>" + item.p_title + "</h3></td>";
 			content += "<td><h3>" + item.pnt_tm + "</h3></td></tr>";
 		});
 		$("tbody").empty();
