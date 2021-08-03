@@ -594,7 +594,7 @@ public class BoardDAO {
 	public GGDto auctionDetail(int p_no) throws SQLException {
 		
 		//경매 상세보기(경매 히스토리 테이블 제외)
-		String sql = "select p.p_no, p.p_id, p.p_title, p.p_content, p.p_view, p.p_likeCount, p.p_blindYN, p.p_code, (select u.u_nname from userinfo u where u.u_id = p_id) as u_nname,(select u.u_addr from userinfo u where u.u_id= p_id) as u_addr, s.s_deliveryyn, s.s_followlimyn, s.s_code, a.au_code ,(select c.c_name from codes c where c.c_code = a.au_code) as au_c_name, a.au_startpr,a.au_instantpr,a.au_starttm,a.au_endtm ,a.au_count, i.i_newname from post p, sale s, auction a, img i where p.p_no=s.p_no and p.p_no= i.p_no and s.p_no = a.p_no and p.p_no=?";
+		String sql = "select p.p_no, p.p_id, p.p_title, p.p_content, p.p_view, p.p_likeCount, p.p_blindYN, p.p_code,(select c_name from codes where c_code = p.p_code) as p_name, (select u.u_nname from userinfo u where u.u_id = p_id) as u_nname,(select u.u_addr from userinfo u where u.u_id= p_id) as u_addr, s.s_deliveryyn, s.s_followlimyn, s.s_code,(select c_name from codes where c_code=s.s_code) as s.s_code ,a.au_code ,(select c.c_name from codes c where c.c_code = a.au_code) as au_c_name, a.au_startpr,a.au_instantpr,a.au_starttm,a.au_endtm ,a.au_count, i.i_newname from post p, sale s, auction a, img i where p.p_no=s.p_no and p.p_no= i.p_no and s.p_no = a.p_no and p.p_no=?";
 		GGDto dto = new GGDto();
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, p_no);
@@ -608,11 +608,17 @@ public class BoardDAO {
 			dto.setP_likeCount(rs.getInt("p_likeCount")); //좋아요수
 			dto.setP_blindYN(rs.getString("p_blindYN")); //블라인드 여부
 			dto.setP_code(rs.getString("p_code")); //게시글 카테고리
+			
+			dto.setP_name(rs.getString("p_name"));
+			
 			dto.setU_nname(rs.getString("u_nname"));//판매자 닉네임
 			dto.setU_addr(rs.getString(("u_addr"))); //간편주소
 			dto.setS_DeliveryYN(rs.getString("s_deliveryyn")); //택배여부
 			dto.setS_followLimYN(rs.getString("s_followlimyn")); //팔로워한정판매여부
 			dto.setS_code(rs.getString("s_code")); //판매, 경매 카테고리
+			
+			dto.setS_name(rs.getString("s_name"));//판매,경매 카테고리(한글)
+			
 			dto.setAu_code(rs.getString("au_code")); //경매상태(코드)
 			dto.setC_name(rs.getString("au_c_name")); //경매상태(한글)
 			dto.setAu_startPr(rs.getInt("au_startpr")); //경매 시작 가격

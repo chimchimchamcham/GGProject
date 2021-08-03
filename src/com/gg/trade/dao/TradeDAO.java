@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.gg.dto.GGDto;
+import com.gg.user.dao.PointDAO;
 
 public class TradeDAO {
 
@@ -158,8 +159,17 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				}
 			}
 		}
+		
 		//입찰금액 입력 쿼리
 		System.out.println("경매 히스토리 입력여부 : "+success);
+		boolean instantYN = false;
+		
+		//시작금액 빼가는 쿼리
+		if(success) {
+			instantYN = bidRecordYN(p_no,ha_bidUsr);
+			System.out.println("시작금 인출 여부 : "+instantYN);
+		}
+		
 		map.put("success", success);
 		System.out.println("메세지 확인 : "+msg);
 		map.put("msg", msg);
@@ -270,17 +280,22 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			ps.setInt(2, p_no);
 			ps.setInt(3, p_no);
 			rs = ps.executeQuery();
+			
 			if(!rs.next()) {
 				//입찰한 내역이 없는 경우
 				sql = "select au_instantpr from auction where p_no=?";
+				
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1, p_no);
 				rs = ps.executeQuery();
 				rs.next();
-				int pnt_point =  rs.getInt("au_instantpr");
-				success = insertPoint(user_id, pnt_point, "SYSTEM", "PNT006", p_no);
+				
+				int pnt_point =  rs.getInt("au_instantpr"); //즉결가격 가져오기
+				success = dao.insertPoint(user_id, pnt_point, "SYSTEM", "PNT006", p_no);
+				
 			}
-			return false;
+			
+			return success;
 			
 		}
 		
