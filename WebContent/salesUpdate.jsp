@@ -58,12 +58,12 @@ console.log("오늘 날짜 : ",currDate);
 						<img src="/photo/${salesUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
 					</c:if>
 					</label>
-					<input type="file" name="imgFile" style="display: none" id="test" />
+					<input type="file" name="oriFileImg" style="display: none" id="test" />
 				</form>
 				<p>
 					<textarea name="content" rows="30" cols="100" id ="update" style="overflow-y: scroll" placeholder="내용입력" >${salesUpdate.p_content}</textarea>
 				</p>
-				<div id="update_cnt">(0 / 1000)</div>
+				<div id="update_cnt">( 0 / 1000)</div>
 				<p>
 					<input type="text" name="price" value="${salesUpdate.ns_pr}" placeholder="가격 입력(숫자입력)"/> P
 				</p>
@@ -76,7 +76,7 @@ console.log("오늘 날짜 : ",currDate);
 					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
 					<select name="saleCat">
 						<c:forEach items="${saleCat }" var="SaleCategory">
-							<option value="${salesUpdate.s_name}">${SaleCategory.c_name}</option>
+							<option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
 						</c:forEach>
 					</select>
 				</p>
@@ -97,7 +97,7 @@ console.log("오늘 날짜 : ",currDate);
 <script>
 console.log("${salesUpdate.ns_code}");
 
-$("select[name=saleCat]").val("${salesUpdate.s_name}").prop("selected", true);
+$("select[name=saleCat]").val("${salesUpdate.s_code}").prop("selected", true);
 $("input[name=deliveryYN]").val("${salesUpdate.s_DeliveryYN}").prop("checked", true);
 $("input[name=disclosure]").val("${salesUpdate.s_followLimYN}").prop("checked", true);
 
@@ -116,6 +116,7 @@ $("input[name=disclosure]").val("${salesUpdate.s_followLimYN}").prop("checked", 
 		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
 		console.log(data);
 
+		param.p_no = ${salesUpdate.p_no};
 		param.title = $("input[name='title']").val();
 		param.content = $("textarea[name='content']").val();
 		param.category = $("select[name='saleCat']").val();
@@ -131,13 +132,15 @@ $("input[name=disclosure]").val("${salesUpdate.s_followLimYN}").prop("checked", 
 			data : param,
 			dataType : 'JSON',
 			success : function(data) {
-				if (data.p_no>0) {
-					form.append("p_no",data.p_no);
+				if (data.sucP_no == '${salesUpdate.p_no}') {
+					form.append("p_no",data.sucP_no);
 					FileUpload();
 					alert("판매글 수정을 성공했습니다.");
-					location.href="./salesDetail?p_no="+data.p_no;
+					location.href="./salesDetail?p_no="+data.sucP_no;
+					
 				} else {
 					alert("판매글 수정을 실패하였습니다! ");
+					location.href = "./salesUpdateForm?P_no="+ ${salesUpdate.p_no};
 				}
 			},
 			error : function(e) {

@@ -24,7 +24,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
 	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
 		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" 
-		,"/commList","/salesUpdateForm","/details" })
+		,"/commList","/salesUpdateForm","/salesUpdate","/details"})
 
 public class BoardController extends HttpServlet {
 
@@ -274,6 +274,20 @@ public class BoardController extends HttpServlet {
 
 			break;
 			
+		case "/salesUpdate":
+			System.out.println("판매 글 수정 요청");
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			System.out.println("수정요청 글 번호 : " + p_no);
+			sucP_no = service.commUpdate(p_no);
+			System.out.println("수정 성공 글 번호 : " + sucP_no);
+
+			HashMap<String, Object> salesUpdateMap = new HashMap<String, Object>();
+			salesUpdateMap.put("sucP_no", sucP_no);
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().println(new Gson().toJson(salesUpdateMap));
+
+			break;
+
 		/* ========================= */
 		case "/details":
 			System.out.println("걸러주는 디테일즈");
