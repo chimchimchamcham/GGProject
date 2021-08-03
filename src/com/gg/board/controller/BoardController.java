@@ -277,7 +277,6 @@ public class BoardController extends HttpServlet {
 			
 			String endTm = dateFormat.format(au_endTm);
 			String startTm = dateFormat.format(au_startTm);
-
 			///////////////
 			
 			//좋아요를 눌렀는지 확인

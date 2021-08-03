@@ -165,6 +165,7 @@
     }
     
     //현재날짜를 가져와서 경매시작 날짜를 비교한다. 현재날짜가 더 빠를 경우, 경매상태를 경매시작전상태로 바꾸고, 좋아요, 즉시구매, 입찰하기 버튼을 비활성화 시킨다.
+
     var now = new Date();
     console.log(now);
     console.log(now.getTime());
@@ -180,7 +181,7 @@
         $("#description>h1>sup").text("경매전");
         $("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
     }
-    
+
     //양수 = 경매완료
     var endTm = "${endTm}";
     var endTime = strToDate(endTm);
