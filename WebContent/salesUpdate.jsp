@@ -58,12 +58,12 @@ console.log("오늘 날짜 : ",currDate);
 						<img src="/photo/${salesUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
 					</c:if>
 					</label>
-					<input type="file" name="imgFile" style="display: none" id="test" />
+					<input type="file" name="oriFileImg" style="display: none" id="test" />
 				</form>
 				<p>
 					<textarea name="content" rows="30" cols="100" id ="update" style="overflow-y: scroll" placeholder="내용입력" >${salesUpdate.p_content}</textarea>
 				</p>
-				<div id="update_cnt">(0 / 1000)</div>
+				<div id="update_cnt">( 0 / 1000)</div>
 				<p>
 					<input type="text" name="price" value="${salesUpdate.ns_pr}" placeholder="가격 입력(숫자입력)"/> P
 				</p>
@@ -112,9 +112,9 @@ $("input[name=disclosure]").val("${salesUpdate.s_followLimYN}").prop("checked", 
 	$("#submit").click(function() {
 		
 		// 클릭 시 폼 데이터를 가져와야 한다.		
-		/* var data = $("#test")[0].files[0]; // input type='file'의 id 인 test 에서 첫 번째 파일데이터를 가져온다.
+		var data = $("#test")[0].files[0]; // input type='file'의 id 인 test 에서 첫 번째 파일데이터를 가져온다.
 		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
-		console.log(data); */
+		console.log(data);
 
 		param.p_no = ${salesUpdate.p_no};
 		param.title = $("input[name='title']").val();
@@ -206,5 +206,9 @@ $("input[name=disclosure]").val("${salesUpdate.s_followLimYN}").prop("checked", 
 	       }
 	   });
 
+	   onload = function () {
+	        var contentLen = ${salesUpdate.p_content};
+	        document.getElementById('add_results_7').innerHTML=ball;
+	      };
 </script>
 </html>
