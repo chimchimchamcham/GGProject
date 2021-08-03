@@ -24,7 +24,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
 	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
 		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" 
-		,"/commList","/salesUpdateForm","/salesUpdate","/details"})
+		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate"})
 
 public class BoardController extends HttpServlet {
 
@@ -288,6 +288,28 @@ public class BoardController extends HttpServlet {
 
 			break;
 
+			
+			/* ====== 경매 글수정 ====== */
+		case "/auctionUpdateForm":
+			System.out.println("경매 글 수정 요청");
+			
+			// 카테고리
+			map = service.category();
+			System.out.println("[Controller ] category success : " + map);
+
+			saleCat = map.get("saleCat");
+			System.out.println("saleCat list size : " + saleCat.size());
+			req.setAttribute("saleCat", saleCat);
+
+			// 글 내용
+			req.setAttribute("auctionUpdate", service.auctionUpdateForm());
+			dis = req.getRequestDispatcher("auctionUpdate.jsp");
+			dis.forward(req, resp);
+
+			break;
+			
+			
+			
 		/* ========================= */
 		case "/details":
 			System.out.println("걸러주는 디테일즈");

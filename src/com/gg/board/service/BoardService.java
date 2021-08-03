@@ -614,5 +614,25 @@ dao.resClose();
 		return dto;
 	}
 
+	/*경매 글 수정*/
+	public GGDto auctionUpdateForm() {
+		int AuctionP_no = Integer.parseInt(req.getParameter("p_no"));
+		System.out.println("수정 요청 글 번호 : "+AuctionP_no);
+		BoardDAO dao = new BoardDAO();
+		GGDto dto = new GGDto();
+		
+		try {
+			dto = dao.auctionDetail(AuctionP_no);
+			System.out.println("수정요청 dto : "+ dto);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+
+		return dto;
+	}
+
 	
 }
