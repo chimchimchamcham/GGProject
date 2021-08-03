@@ -117,30 +117,24 @@
     
   	//입찰하기 버튼을 누르면 팝업창 띄우기
   	$("#threeButton>button:nth-last-of-type(1)").click(function(){
-  		if("${sessonScope.loginId}"==""){
-  	    	alert('로그인후 이용가능합니다');
-  	    	location.href = "login.jsp";
-  	    }else{
+  		
   	    	var p_no = ${dto.p_no};
   	  		var toppr = ${dto.ha_bidPr};
   	  		var endpr = ${dto.au_instantPr};
   	  		var title = "${dto.p_title}";
   	  		window.open("./popup/auctionBidPopup.jsp?p_no="+p_no+"&toppr="+toppr+"&endpr="+endpr+"&title="+title, "auctionBidPopup", "width=400, height=200, left=700, top=400"); 	
-  	    }
+  	    
   	});
   	
 	//즉시구매 버튼을 누르면 팝업창 띄우기
   	$("#threeButton>button:nth-last-of-type(2)").click(function(){
-  		if("${sessonScope.loginId}"==""){
-  	    	alert('로그인후 이용가능합니다');
-  	    	location.href = "login.jsp";
-  	    }else{
+  	
   	    	var p_no = ${dto.p_no};
   	  		var toppr = ${dto.ha_bidPr};
   	  		var endpr = ${dto.au_instantPr};
   	  		var title = "${dto.p_title}";
   	  		window.open("./popup/buyNowPopup.jsp?p_no="+p_no+"&toppr="+toppr+"&endpr="+endpr+"&title="+title, "buyNowPopup", "width=400, height=200, left=700, top=400");
-  	    }
+  	    
   	});
   	
 	//신고하기 버튼을 누르면 팝업창 띄우기

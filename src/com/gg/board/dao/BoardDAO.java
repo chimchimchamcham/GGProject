@@ -649,8 +649,6 @@ public class BoardDAO {
 		
 		
 	}
-
-	
 	
 
 	public GGDto commDetail(String p_no) {
