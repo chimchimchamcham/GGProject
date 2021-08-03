@@ -46,7 +46,7 @@ a:hover {
 a:visited {
 	color : black;
 }
-#pointPop {
+#out_point {
 	width: 120px;
 	height: 30px;
 	border-radius: 5px;
@@ -84,7 +84,7 @@ a:visited {
 					<!-- 충전 팝업 실행-->
 				</button></td>
 			<!-- 포인트 인출 팝업 -->
-			<td><input type='button' value='인출' id='pointPop' /></td>
+			<td><input type='button' value='인출' id='out_point' /></td>
 		</tr>
 		</tfoot>
 	</table>
@@ -94,14 +94,20 @@ a:visited {
 	console.log("로그인 아이디 확인 ", loginId);
 	var param = {};
 	param.id = loginId;
+	var allPoint =0;
 	function chargePopup() { window.open("./chargePopup.jsp", "chargePop", "width=600, height=500, left=1200, top=200"); }
+	function outPointPopup() { window.open("./outPointPopup.jsp?allPoint="+allPoint,"outPointPop","width=600, height=500, left=1200, top=200")}
 	listCall();
 	
 	$("button").click(function(){
 		console.log("충전 버튼 클릭");
 		chargePopup();
 	});
-
+	$("#out_point").click(function(){
+		console.log("인출 버튼 클릭");
+		outPointPopup();
+	});
+	
 	function listCall() {
 	
 		$.ajax({
@@ -114,6 +120,7 @@ a:visited {
 				console.log("마이 포인트 : " ,data.myPoint);
 				drawList(data.list);
 				myPoint(data.myPoint);
+				allPoint = data.myPoint;
 				opener.parent.location.reload();
 			},
 			error : function(e) {
@@ -163,6 +170,8 @@ a:visited {
 				pnt_code = "미입금패널티";
 			}else if(item.Pntcode =="PNT010"){
 				pnt_code = "경매위자료";
+			}else if(item.Pntcode ==null){
+				item.p_title ="";
 			}
 			console.log("글 번호 확인",item.p_no);
 			
