@@ -102,7 +102,7 @@ table {
 
 a{
 	text-decoration: none;
-	color: balck;
+	color: black;
 }
 
 #userInfoBox{
@@ -218,7 +218,12 @@ margin-top:50px;
     height: 100%;
     object-fit: cover;
 }
-
+a:hover {
+	color : hotpink;
+}
+a:visited {
+	color : black;
+}
 </style>
 <script>
 var loginId = "${sessionScope.loginId}";
@@ -227,7 +232,7 @@ var loginId = "${sessionScope.loginId}";
  //충전팝업
 function chargePopup() { window.open("./popup/chargePopup.jsp", "chargePop", "width=600, height=500, left=600, top=200"); }
 //포인트내역 팝업
-function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "width=600, height=500, left=600, top=200"); }
+function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "width=900, height=600, left=450, top=180"); }
 
 	
 	$(document).ready(function() {
