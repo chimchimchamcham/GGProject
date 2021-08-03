@@ -9,6 +9,7 @@
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <style>
 #mainHeader {
 	z-index: 1000;
@@ -31,32 +32,39 @@
 
 textarea {
 	resize: none;
-}
+} 
 </style>
 <script>
+// 오늘 날짜 설정
+var currDate = new Date().toISOString().substring(0,10);
+console.log("오늘 날짜 : ",currDate);
 </script>
+
 </head>
 <body>
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
-
 		<div id="wrap">
-			<h2>판매 글 수정</h2>	
+			<h2>판매글 수정</h2>
 			<div id="saleForm">
 				<p>
-					<input type="text" name="title" value="" placeholder="제목을 입력해주세요"
-						style='width: "1000px"' />
+					<input type="text" name="title" value="${commUpdate.p_title }" style='width: "1000px"' />
 				</p>
 				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
-					<label for='test'><img src="img/plus.png"
-						id="preview-image" width="100px" height="100px"
-						style="border: solid 1px gray" /></label> <input type="file"
-						name="imgFile" style="display: none" id="test" />
+					<label for='test'>
+					<c:if test="${commUpdate.i_newName  eq null}">
+						<img src="img/plus-icon.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+					</c:if>
+					<c:if test="${commUpdate.i_newName  ne null}">
+						<img src="/photo/${commUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+					</c:if>
+					</label>
+					<input type="file" name="imgFile" style="display: none" id="test" />
 				</form>
 				<p>
-					<textarea name="content" rows="30" cols="100" placeholder="내용입력" id ="input"
-						style="overflow-y: scroll"></textarea>
+					<textarea name="content" rows="30" cols="100" id ="update" style="overflow-y: scroll" >${commUpdate.p_content}</textarea>
 				</p>
+				<div id="update_cnt">(0 / 1000)</div>
 				<p id="salePr">
 					<input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point
 				</p>
@@ -79,17 +87,25 @@ textarea {
 				</p>
 			</div>
 			<div id="twoButton">
-				<input type="button" id="submit" value="등록" /> <input type="button"
-					onclick="location.href='./index.jsp'" value="취소" />
+				<input type="button" id="submit" value="등록" /> 
+				<input type="button" onclick="location.href='./index.jsp'" value="취소" />
 			</div>
 		</div>
 	</div>
 </body>
 <script>
 
+$("select[name=commuCat]").val("${commUpdate.p_cate}").prop("selected", true);
+
 	var success = false;
+  	//초기상태 - 판매폼만 보이는 상태
+	//폼 선택 버튼  클릭시 해당 값이 달라짐
 	var param = {};
 	param.userId = "${sessionScope.loginId}";
+ 	
+	//커뮤니티버튼 클릭시
+		param.select = "P004";
+		console.log(param.select);
 
 	// 전역변수로 설정해주어야 한다.
 	var form = new FormData();
@@ -102,57 +118,37 @@ textarea {
 		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
 		console.log(data);
 
+			param.p_no = ${commUpdate.p_no};
 			param.title = $("input[name='title']").val();
 			param.content = $("textarea[name='content']").val();
-			param.category = $("select[name='saleCat']").val();//select name으로 값 받기	
-			param.deliveryYN = $("input[name='deliveryYN']:checked").val();
-			param.price = $("input[name='price']").val();
-			param.disclosure = $("input[name='disclosure']:checked").val();
-			//ajax url="sale"
+			param.category = $("select[name='commuCat']").val();
 			console.log(param);
+
 			$.ajax({
 				type : 'POST',
-				url : 'writeSale',
+				url : 'commUpdate',
 				data : param,
 				dataType : 'JSON',
 				success : function(data) {
-					if (data.p_no>0) {
-						form.append("p_no",data.p_no);
-						FileUpload();
-						alert("판매글 작성 성공했습니다.");
-						location.href="./salesDetail?p_no="+data.p_no;
+					if (data.sucP_no == '${commUpdate.p_no}') {
+						
+						form.append("p_no",data.sucP_no);
+						FileUpload(); //사진 업로드
+						alert("글 수정에 성공했습니다.");
+						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
+						location.href = "./commDetail?P_no="+data.sucP_no;
+						
 					} else {
-						alert("판매 글 작성을 실패하였습니다! ");
+						alert("글 수정을 실패하였습니다. 다시 시도해 주세요.");
+						location.href = "./commUpdateForm?P_no="+${commUpdate.p_no};
 					}
 				},
 				error : function(e) {
 					console.log(e);
 				}
-
+				
 			});
-		
-			if (checker == true) {
-				$.ajax({
-					type : 'POST',
-					url : 'writeTrade',
-					data : param,
-					dataType : 'JSON',
-					success : function(data) {
-						console.log("글 작성 번호 :",data.p_no);
-						form.append("p_no",data.p_no);
-						FileUpload();
-						//향후 변경사항 경매상세보기 만들고 보내주는 페이지 편집
-						location.href='./salesDetail?p_no='+data.p_no;
-					},
-					error : function(e) {
-						console.log(e);
-					}
-				})
-			}
-
-		}
 	});
-	
 	///////사진 선택시 미리보기 변경/////////
 	function readImage(input) {
 	    // 인풋 태그에 파일이 있는 경우
@@ -169,6 +165,7 @@ textarea {
 	        reader.readAsDataURL(input.files[0]);
 	    }
 	};
+	
 	// input file에 change 이벤트 부여
 	const inputImage = document.getElementById("test");
 	inputImage.addEventListener("change", e => {
@@ -179,34 +176,34 @@ textarea {
 	function FileUpload(){
 		$.ajax({
 			type : 'POST',
-			url : 'upload',
+			url : 'update',
 			data : form,
 			asynsc:true,
 			contentType:false,
 			cache:false,
 			processData:false,
 			success : function(data) {
-				if(data!=null){ // 들어오는게 String[] 이라 null인지만 판단.
-					alert("사진 등록 성공");
+				if(data != null){
+					alert("사진 수정 성공");
 				}else{
-					alert("사진 등록 실패");
+					alert("사진 수정 실패");
 				}
 			},
 			error : function(e) {
 				console.log(e);
 			}
 		});
-	};
+	}
 	
 	/*글자수 제한*/
-    $('#input').on('keyup', function() {
-           $('#intro_cnt').html("("+$(this).val().length+" / 1000)");
-    
-           if($(this).val().length > 1000) {
-               $(this).val($(this).val().substring(0, 1000));
-               $('#intro_cnt').html("(1000 / 1000)");
-           }
-       });
-	
+	$('#update').on('keyup', function() {
+	       $('#update_cnt').html("("+$(this).val().length+" / 1000)");
+
+	       if($(this).val().length > 1000) {
+	           $(this).val($(this).val().substring(0, 1000));
+	           $('#update_cnt').html("(1000 / 1000)");
+	       }
+	   });
+
 </script>
 </html>

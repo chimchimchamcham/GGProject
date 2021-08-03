@@ -10,20 +10,6 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<!--예약하기 달력 관련 링크-->
-<!-- jquery UI 링크 -->
-<link rel="stylesheet"
-	href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!-- jquery UI CDN -->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<!-- 언어 별 CDN -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/i18n/jquery.ui.datepicker-ko.min.js"></script>
-<!-- Date 라이브러리 -->
-<script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-<!--------------//////////////////////////////------------->
-
 <style>
 #mainHeader {
 	z-index: 1000;
@@ -46,7 +32,7 @@
 
 textarea {
 	resize: none;
-}
+} 
 </style>
 <script>
 // 오늘 날짜 설정
@@ -100,6 +86,7 @@ console.log("카테고리 테스트 1 : ","${commUpdate.p_cate}");
 /* console.log("${commUpdate.c_name}"); */
 console.log("카테고리 테스트 2 : ","${CommuCategory.p_cate}");
 
+/*현재 글의 카테고리 초기에 뿌려주기*/
 $("select[name=commuCat]").val("${commUpdate.p_cate}").prop("selected", true);
 
 	var success = false;

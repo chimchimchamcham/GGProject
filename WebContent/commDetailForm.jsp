@@ -84,7 +84,7 @@
 	    		<td colspan = "6"><hr></hr></td>
 	    	</tr>
     		<tr>
-    			<td colspan ="6" id = "i_newName" style="text-align:left"><img src = "C:/photo/${dto.i_newName }" width=100px/></td>
+    			<td colspan ="6" id = "i_newName" style="text-align:left"><img src = "/photo/${dto.i_newName }" width=100px/></td>
     		</tr>
     		<tr>
     			<td colspan ="6" id = "p_content"><textarea style="width:100%" readonly>${dto.p_content }</textarea></td>
