@@ -87,6 +87,24 @@ public class PointService {
 		
 		return nname;
 	}
+
+	public boolean outPoint(int outPoint, String id) {
+		
+		System.out.println("포인트 인출 서비스 진입 : " + outPoint);
+		System.out.println("포인트 인출 서비스 진입 : " + id);
+		PointDAO dao = new PointDAO();
+		boolean success = false;
+		try {
+			success = dao.outPoint(outPoint,id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		return success;
+	}
 	
 	
 	

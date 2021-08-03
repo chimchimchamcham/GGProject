@@ -97,8 +97,14 @@ public class PointController extends HttpServlet {
 			int outPoint = Integer.parseInt(req.getParameter("outPoint"));
 			System.out.println("인출 하는 아이디 : " + id);
 			System.out.println("인출 요청 금액 : " + outPoint);
+			success = false; 
+			service = new PointService(req);
+			success = service.outPoint(outPoint,id);
+			System.out.println("인출 성공 여부 : " + success);
+			map = new HashMap<String, Object>();
+			map.put("success", success);
 			
-			
+			resp.getWriter().println(new Gson().toJson(map));
 			break;
 		}
 

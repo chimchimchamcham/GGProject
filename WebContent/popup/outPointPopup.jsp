@@ -72,7 +72,7 @@ h2 {
 			</tr>
 			<tr>
 				<td>
-					<button type='button'>충전</button> <input type="button"
+					<button type='button'>인출</button> <input type="button"
 					id="cancelBtn" value="취소" />
 				</td>
 			</tr>
@@ -97,7 +97,7 @@ param.id = "${sessionScope.loginId}";
 					$("input[name='outPoint']").focus();
 				} else {
 					param.outPoint = $("input[name='outPoint']").val();
-					console.log("충전할 포인트  :" , param.outPoint);
+					console.log("인출할 포인트  :" , param.outPoint);
 					$.ajax({
 						type : "POST",
 						url : "../outPoint",
@@ -106,7 +106,7 @@ param.id = "${sessionScope.loginId}";
 						success : function(data) {
 							console.log(data.success);
 							if (data.success) {
-								alert("포인트 인출 여부 "+data.success);
+								alert("포인트 인출 성공 ");
 								opener.parent.location.reload();
 								window.close();
 							} else {
