@@ -10,6 +10,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.gg.dto.GGDto;
+
 public class TradeDAO {
 
 	public Connection conn = null;
@@ -222,4 +224,15 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		}
 		return success>0?true:false;
 	}
+	
+	///경매 종료 메서드///
+		public GGDto endAuction() {
+			GGDto dto = new GGDto();
+			//String sql = "SELECT ";
+			
+			return dto;
+		}
+		
+		
+		
 }
