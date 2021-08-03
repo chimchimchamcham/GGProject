@@ -291,7 +291,12 @@ public class BoardController extends HttpServlet {
 		/* ========================= */
 		case "/details":
 			System.out.println("걸러주는 디테일즈");
-			
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			String id = req.getParameter("id");
+			System.out.println("이것이 번호다 : " + p_no);
+			System.out.println("이것이 아이디다 : " + id);
+			service = new BoardService(req, resp);
+			String code = service.details(p_no,id);
 			
 			
 			
