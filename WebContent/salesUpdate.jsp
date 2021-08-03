@@ -206,9 +206,5 @@ $("input[name=disclosure]").val("${salesUpdate.s_followLimYN}").prop("checked", 
 	       }
 	   });
 
-	   onload = function () {
-	        var contentLen = ${salesUpdate.p_content};
-	        document.getElementById('add_results_7').innerHTML=ball;
-	      };
 </script>
 </html>

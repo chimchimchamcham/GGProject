@@ -50,8 +50,6 @@ public class CommentController extends HttpServlet {
 			
 			p_id = req.getParameter("p_id");
 			p_no = Integer.parseInt(req.getParameter("p_no"));
-			
-			commentservice.sold_board_list(p_id,p_no);
 
 			break;
 		
