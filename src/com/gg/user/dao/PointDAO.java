@@ -157,7 +157,7 @@ public class PointDAO {
 
 	// 아이디, 포인트, 상대방아이디, 분류코드, 글번호를 받아서 포인트 테이블에 전송해주는 메서드
 	public boolean insertPoint(String pnt_id, int pnt_point, String pnt_otherId, String pnt_code, int p_no) throws SQLException {
-		sql = "INSERT INTO point(pnt_id,pnt_point,pnt_tm,pnt_otherid,pnt_code) VALUES(?,?,SYSDATE,?,?)";
+		sql = "INSERT INTO point(pnt_id,pnt_point,pnt_tm,pnt_otherid,pnt_code,p_no) VALUES(?,?,SYSDATE,?,?,?)";
 		boolean success = false;
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, pnt_id);
