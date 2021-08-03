@@ -44,7 +44,6 @@ public class CommentService {
 		resp.setContentType("text/html; charset=UTF-8");		
 		resp.getWriter().println(new Gson().toJson(map));
 		map.clear();
-		dao.resClose();
 	}
 
 }
