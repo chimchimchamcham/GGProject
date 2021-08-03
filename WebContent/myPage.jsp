@@ -509,7 +509,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			soldlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
-				content += "<div class='img-zoon'><img src="+item.i_newName+"></div>";
+				content += "<div class='img-zoon'><img src=/photo/"+item.i_newName+"></div>";
 				content += "<div class='dretion-zoon'>";
 				content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no="+item.p_no+">"+item.p_title+"</a>"+"</div>";
 				content += "	<div class='itempoint'>"+item.ns_pr+"p"+"</div>";
@@ -540,7 +540,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			auctionlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content +="<div class='item-one'>";
-				content +="<div class='img-zoon'><img src="+item.i_newName+"></div>";
+				content +="<div class='img-zoon'><img src=/photo"+item.i_newName+"></div>";
 				content +="<div class='dretion-zoon'>";
 				content +="<a href= auctionDetail?p_no="+item.p_no+">"+item.p_title+"</a>";
 				content +="<div class='xianzai'>현제 입찰가</div><div style='font-size: 25px;'>"+item.hm+"p</div><div class='auction'>";
@@ -568,7 +568,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			maidelist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
-				content += "<div class='img-zoon'><img src="+item.i_newName+" class='itemimg' style='margin:3%'></div>";
+				content += "<div class='img-zoon'><img src=/photo"+item.i_newName+" class='itemimg' style='margin:3%'></div>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
 				content +="		<h2>"+item.p_title+"</h2>";
 				content += "	<div style='font-size: 25px; justify-self: center;'>"+item.pnt_point+"p</div>";
