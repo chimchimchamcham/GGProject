@@ -8,30 +8,37 @@
 <title>메인페이지</title>
 <style type="text/css">
 #mainHeader{
-	z-index: 1000;
+	position: relative;
+	z-index: 1
 }
 #main {
 	background-color: gray;
 	width:1200px;
 	height:auto;
-	position: absolute;
+	position: relative;
 	top:150px;
-	z-index: -1;
+	z-index: 0;
 }
-
+#main a{
+z-index: 2;
+}
+.auc-con{
+	margin-top:30vh;
+}
 </style>
 </head>
 <body>
 <div id="mainHeader"><jsp:include page="header.jsp" /></div>
-	<div id="main">
-		<h2>메인페이지</h2>
-		<a href="salesDetail.jsp?P_no=10">타인 판매 상세보기</a>
-		<a href="salesDetailSalerPosition.jsp">내 판매글 상세보기</a>
-		<a href = "myPage?id=123">123프로필로 연결</a>
-		<a href = "#" onclick= notifyPop()>신고하기</a>
-		<a href = "commUpdateForm?P_no=65">커뮤니티 글 수정</a>
-		<a href = "commDetail?P_no=64">커뮤니티 글 상세보기</a>
-	</div><!-- div main end -->
+<div id="main">
+	<h2>메인페이지</h2>
+	<a href="salesDetail.jsp?P_no=10">타인 판매 상세보기</a>
+	<a href="salesDetailSalerPosition.jsp">내 판매글 상세보기</a>
+	<a href = "myPage?id=123">123프로필로 연결</a>
+	<a href = "#" onclick= notifyPop()>신고하기</a>
+	<a href = "commUpdateForm?P_no=65">커뮤니티 글 수정</a>
+	<a href = "commDetail?P_no=64">커뮤니티 글 상세보기</a>
+</div><!-- div main end -->
+	<jsp:include page="auction_main_list.jsp"></jsp:include>
 </body>
 <script>
 	function notifyPop() { window.open("popup/notifyPopup.jsp?N_receiveId=123", "notify", "width=500, height=700, left=600, top=200"); }
