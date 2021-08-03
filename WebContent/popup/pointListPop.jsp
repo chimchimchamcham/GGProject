@@ -81,6 +81,7 @@ button {
 	param.id = loginId;
 	function chargePopup() { window.open("./chargePopup.jsp", "charge", "width=600, height=500, left=600, top=200"); }
 	listCall();
+	
 	$("button").click(function(){
 		console.log("충전 버튼 클릭");
 		chargePopup();
@@ -98,6 +99,7 @@ button {
 				console.log("마이 포인트 : " ,data.myPoint);
 				drawList(data.list);
 				myPoint(data.myPoint);
+				//opener.parent.parent.location.reload();
 			},
 			error : function(e) {
 				console.log("에러");
@@ -112,7 +114,6 @@ button {
 		console.log(myPoint);
 		$("#myPoint").empty();
 		$("#myPoint").append("총 보유 포인트 : "+myPoint);
-		opener.parent.location.reload();
 		
 	};	
 	
@@ -127,8 +128,10 @@ button {
 			console.log(idx, item);
 			if(item.Pntcode =="PNT001"){
 				pnt_code = "충전";
+				item.p_title = "";
 			}else if(item.Pntcode =="PNT002"){
 				pnt_code = "인출";
+				item.p_title = "";
 			}else if(item.Pntcode =="PNT003"){
 				pnt_code = "구매";
 			}else if(item.Pntcode =="PNT004"){
@@ -150,7 +153,9 @@ button {
 			
 			content += "<tr><td>"+pnt_code+"</td>";
 			content += "<td>" + item.pnt_point + "</td>";
-			content += "<td id=''><a href='details?p_no="+item.p_no+ "'><img src='C:/photo/"+item.i_newName +"'/></td>";
+			content += "<td><a href='details?p_no="+item.p_no+ "'>";
+			if(item.i_newName != null){content +="<img src='C:/photo/"+item.i_newName +"'/>";}
+			content += "</td>";
 			content += "<td><a href='details?p_no="+item.p_no+ "'>" + item.p_title + "</a></td>";
 			content += "<td>" + item.pnt_tm + "</td></tr>";
 		});
