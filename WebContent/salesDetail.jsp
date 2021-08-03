@@ -61,6 +61,11 @@
     #u_nname{font-weight:700;font-size:1.5rem;margin:10px;}
     #reviewAvg{font-weight:500;font-size:1.3rem;margin:10px;}
     
+    
+    /*뎃글*/
+    #second	div.board{border: 1px solid #D8D8D8;width: 143vh;height: 50vh;float: left;margin: 10px;padding: 20px;}
+    
+    
     #follow{background-color:#E6E6E6;width:340px;height:60px;color:black;font-size:1.5rem;font-weight:700;margin:20px;border-radius:5px/5px;}
     
     #first>div:nth-of-type(2)>div:nth-of-type(2){width:340px;height:100px;margin:10px 20px;}
@@ -197,7 +202,7 @@
                     </div>
                     <div id="twoButton">
                         <button>상세정보</button>
-                        <button>댓글</button>
+                        <button class ='board'>댓글</button>
                     </div>
                     <!-- #first>div:nth-of-type(1) -->
                     <div id="first">
@@ -230,7 +235,10 @@
              
                     	
                     </div>
-                    <div id="second">
+                    <div id="second"><!-- 댓글처리 -->
+                    	<div class="board">
+                    		
+                    	</div>
                     </div>
                     
                 </article>
@@ -245,7 +253,7 @@
 		$.ajax({
 			type : 'get',
 			url : 'lovePlus2',
-			data : {'p_no' : ${dto.p_no}},
+			data : {'p_no' : ${dto.p_no},
 			dataType : 'JSON',
 			success : function(data){
 				console.log(data);
@@ -268,7 +276,7 @@
 		$.ajax({
 			type : 'get',
 			url : 'loveMinus2',
-			data : {'p_no' : ${dto.p_no}},
+			data : {'p_no' : ${dto.p_no},
 			dataType : 'JSON',
 			success : function(data){
 				console.log(data);
@@ -285,6 +293,27 @@
 			}
 		});
 	});
-
+	//뎃글
+	$("#twoButton>button:nth-of-type(2)").click(function(){
+		$.ajax({
+			type : 'post',
+			url : './soldboardlist',
+			data : {'p_no' : ${dto.p_no},
+			dataType : 'JSON',
+			success : function(data){
+				console.log(data);
+				if(data.success){
+					alert('sucess');
+				}else{
+					alert('뎃글 등록 실패.');
+				}
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
+	});
+	
+	
 </script>
 </html>
