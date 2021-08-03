@@ -752,4 +752,10 @@ public class BoardDAO {
 		return auctionmainlist;
 
 		}
+
+	public ArrayList<GGDto> commList() {
+
+		String sql ="";
+		return null;
+	}
 }

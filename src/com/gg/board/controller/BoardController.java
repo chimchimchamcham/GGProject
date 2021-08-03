@@ -325,6 +325,9 @@ public class BoardController extends HttpServlet {
 		
 		case "/commList":
 			ArrayList<GGDto> list = service.commList();
+			req.setAttribute("list", list);
+			req.getRequestDispatcher("commListForm.jsp");
+			dis.forward(req, resp);
 			break;
 		}
 
