@@ -73,7 +73,7 @@ h2 {
 			</tr>
 			<tr>
 				<td>
-					<button type='button'>인출</button> <input type="button"
+					<button type='button'>충전</button> <input type="button"
 					id="cancelBtn" value="취소" />
 				</td>
 			</tr>

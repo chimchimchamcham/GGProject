@@ -579,6 +579,13 @@ dao.resClose();
 	public ArrayList<GGDto> commList() {
 		
 		BoardDAO dao = new BoardDAO();
+		
+		String codes = null; ;
+		if((String) req.getAttribute("codes") == " like('%')") {
+			codes = " like('%')";
+		}else {
+			
+		}
 		return dao.commList();
 	}
 

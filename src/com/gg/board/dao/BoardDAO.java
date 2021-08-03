@@ -657,7 +657,7 @@ public class BoardDAO {
 				"    INNER JOIN codes c ON p.p_cate = c.c_code" + 
 				"    LEFT OUTER JOIN Img i ON p.p_no = i.p_no" + 
 				"    LEFT OUTER JOIN Post_Comment pc ON p.p_no = pc.p_no" + 
-				"    WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_no=?";
+				"    WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_no=? AND c.c_code";
 		GGDto dto = new GGDto();
 		try {
 			ps = conn.prepareStatement(sql);
@@ -749,11 +749,33 @@ public class BoardDAO {
 
 		}
 
-
-	public ArrayList<GGDto> commList() {
-
-		String sql ="";
-		return null;
+	public ArrayList<GGDto> commList() {		
+		ArrayList<GGDto> list = new ArrayList<GGDto>();
+		String sql ="SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code " + 
+						"INNER JOIN userinfo u on p.p_id = u.u_id " + 
+						"LEFT OUTER JOIN love l ON p.p_no = l.p_no " + 
+						"LEFT OUTER JOIN img i ON p.p_no = i.p_no " + 
+						"WHERE p.p_code = 'P004'AND p.p_blindyn = 'N'";
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				GGDto dto = new GGDto();
+				dto.setC_name(rs.getString("c_name"));
+				dto.setP_title(rs.getString("p_title"));
+				dto.setU_id(rs.getString("p_id"));
+				dto.setU_nname(rs.getString("u_nname"));
+				dto.setP_tm(rs.getDate("p_tm"));
+				dto.setP_view(rs.getInt("p_view"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return list;
 	}
 
 }

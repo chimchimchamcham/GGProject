@@ -338,7 +338,7 @@ margin-left:7px;
 							<li><a href="#">도서기타</a></li>
 							<li><a href="#">기타</a></li>
 						</ul></li>
-					<li><a href="#">커뮤니티</a></li>
+					<li><a href="commList">커뮤니티</a></li>
 					<li><a href="#">공지사항</a></li>
 				</ul>
 			</div>
