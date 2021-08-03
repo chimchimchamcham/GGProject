@@ -8,14 +8,14 @@
 <script src = "https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<c:forEach items="${list }" val="item">
+	<c:forEach items="${list }" var="item">
 	<div>
-	<span>${item.c_name}</span>
-	<span>${item.p_title}</span>
-	<span>${item.U_id}</span>
-	<span>${item.U_nname}</span>
-	<span>${item.p_tm}</span>
-	<span>${item.p_view}</span>
+	<span>${item.c_name}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+	<span>${item.u_id}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+	<span>${item.u_nname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+	<span>${item.p_title}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+	<span>${item.p_tm}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+	<span>${item.p_view}</span>&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>
 	</c:forEach>
 </body>
