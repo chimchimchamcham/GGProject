@@ -271,26 +271,27 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		public boolean bidRecordYN(int p_no,String user_id) throws SQLException {
 
 			boolean success = false;
-			PointDAO dao = null;
+			PointDAO dao = new PointDAO();
 			
 			//입찰내역이 있는지 확인 
-			String sql="select count(h.p_no),(select au_instantpr from auction where p_no=?) as pnt_point, (select p_id from post where p_no=?) as from his_auction h where h.p_no=? group by h.p_no";
+			String sql="select p_no from his_auction where ha_bidusr =? and p_no=?";
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, p_no);
+			ps.setString(1, user_id);
 			ps.setInt(2, p_no);
-			ps.setInt(3, p_no);
+			
 			rs = ps.executeQuery();
 			
 			if(!rs.next()) {
 				//입찰한 내역이 없는 경우
-				sql = "select au_instantpr from auction where p_no=?";
+				sql = "select au_startpr from auction where p_no=?";
 				
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1, p_no);
 				rs = ps.executeQuery();
 				rs.next();
 				
-				int pnt_point =  rs.getInt("au_instantpr"); //즉결가격 가져오기
+				int pnt_point =  rs.getInt("au_startpr"); //시작가격 가져오기
+				System.out.println("시작가격 pnt_point : "+pnt_point);
 				success = dao.insertPoint(user_id, pnt_point, "SYSTEM", "PNT006", p_no);
 				
 			}
