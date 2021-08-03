@@ -65,7 +65,7 @@ console.log("오늘 날짜 : ",currDate);
 				</p>
 				<div id="update_cnt">(0 / 1000)</div>
 				<p>
-					<input type="text" name="price" value="${salesUpdate.ns_pr}" /> P
+					<input type="text" name="price" value="${salesUpdate.ns_pr}" placeholder="가격 입력(숫자입력)"/> P
 				</p>
 				<p>
 					거래방식(필수선택) &nbsp;&nbsp;&nbsp;
@@ -76,7 +76,7 @@ console.log("오늘 날짜 : ",currDate);
 					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
 					<select name="saleCat">
 						<c:forEach items="${saleCat }" var="SaleCategory">
-							<option value="${SaleCategory.c_code}"></option>
+							<option value="${salesUpdate.s_name}">${SaleCategory.c_name}</option>
 						</c:forEach>
 					</select>
 				</p>
@@ -95,8 +95,11 @@ console.log("오늘 날짜 : ",currDate);
 </body>
 
 <script>
-console.log("${salesUpdate.NS_name}");
-//$("select[name=saleCat]").val("${salesUpdate.p_cate}").prop("selected", true);
+console.log("${salesUpdate.ns_code}");
+
+$("select[name=saleCat]").val("${salesUpdate.s_name}").prop("selected", true);
+$("input[name=deliveryYN]").val("${salesUpdate.s_DeliveryYN}").prop("checked", true);
+$("input[name=disclosure]").val("${salesUpdate.s_followLimYN}").prop("checked", true);
 
 	var success = false;
 	var param = {};
