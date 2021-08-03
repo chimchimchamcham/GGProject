@@ -70,7 +70,7 @@ console.log("오늘 날짜 : ",currDate);
 						<img src="img/plus-icon.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
 					</c:if>
 					<c:if test="${commUpdate.i_newName  ne null}">
-						<img src="C:/photo/${commUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+						<img src="/photo/${commUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
 					</c:if>
 					</label>
 					<input type="file" name="imgFile" style="display: none" id="test" />

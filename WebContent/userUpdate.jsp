@@ -111,7 +111,7 @@ td {
 					</div>
 					</c:if> <c:if test="${userUpdate.u_newName  ne 'default-profile.png'}">
 					<div class="box" >
-    					<img class="profile" src="C:/photo/${userUpdate.u_newName}" id="preview-image" >
+    					<img class="profile" src="/photo/${userUpdate.u_newName}" id="preview-image" >
 					</div>
 					</c:if>
 					<!-- <button type="button" id="default-image">기본 이미지</button> -->
