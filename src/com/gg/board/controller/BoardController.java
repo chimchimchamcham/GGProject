@@ -19,11 +19,9 @@ import com.gg.board.service.UploadService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
-
-
-@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
-	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
-		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist" })
+@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist",
+		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/writeCommunity", "/auctionDetail", "/commDetail",
+		"/commUpdateForm", "/commUpdate", "/communitylist","/salesUpdateForm" })
 
 public class BoardController extends HttpServlet {
 
@@ -54,7 +52,7 @@ public class BoardController extends HttpServlet {
 		int p_no;
 		String userid;
 		switch (addr) {
-		
+
 		case "/salesDetail":
 			System.out.println("판매글 상세보기");
 			GGDto dto = service.salesDetail();
@@ -112,8 +110,6 @@ public class BoardController extends HttpServlet {
 			service.loveMinus2();
 			break;
 
-		
-
 		/*
 		 * ===========================================================================
 		 */
@@ -153,13 +149,13 @@ public class BoardController extends HttpServlet {
 			break;
 
 		case "/communitylist":
-			System.out.println("커뮤니티 리스트 요청");	
+			System.out.println("커뮤니티 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
 
 			service.community_list(userid);
-			
+
 			break;
-		/* ====== 글쓰기 ====== */	
+		/* ====== 글쓰기 ====== */
 
 		case "/writeForm":
 			System.out.println("글쓰기 폼 요청");
@@ -212,7 +208,6 @@ public class BoardController extends HttpServlet {
 		 * resp.getWriter().println(new Gson().toJson(sue_map)); break;
 		 */
 
-			
 		/* ====== 커뮤니티 글수정 ====== */
 		case "/commUpdateForm":
 			System.out.println("커뮤니티 수정 폼 요청");
@@ -221,65 +216,67 @@ public class BoardController extends HttpServlet {
 			System.out.println("[Controller ] category success : " + map);
 			commuCat = map.get("commuCat");
 			req.setAttribute("commuCat", commuCat);
-			
+
 			// 글 내용
 			req.setAttribute("commUpdate", service.commUpdateForm());
 			dis = req.getRequestDispatcher("commUpdate.jsp");
 			dis.forward(req, resp);
 			break;
-			
+
 		case "/commUpdate":
 			System.out.println("커뮤니티 수정 요청");
 			p_no = Integer.parseInt(req.getParameter("p_no"));
-			System.out.println("수정요청 글 번호 : "+p_no);
+			System.out.println("수정요청 글 번호 : " + p_no);
 			int sucP_no = service.commUpdate(p_no);
-			System.out.println("수정 성공 글 번호 : "+sucP_no);
-			
+			System.out.println("수정 성공 글 번호 : " + sucP_no);
+
 			HashMap<String, Object> commUpdateMap = new HashMap<String, Object>();
 			commUpdateMap.put("sucP_no", sucP_no);
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().println(new Gson().toJson(commUpdateMap));
-			
+
 			break;
 
-			
-		/*case "/salesUpdateForm":
+		/* ====== 판매 글수정 ====== */
+		case "/salesUpdateForm":
 			System.out.println("판매글 수정 요청");
 
 			// 카테고리
 			map = service.category();
 			System.out.println("[Controller ] category success : " + map);
+
 			saleCat = map.get("saleCat");
 			System.out.println("saleCat list size : " + saleCat.size());
 			req.setAttribute("saleCat", saleCat);
-
+			
 			// 글 내용
 			req.setAttribute("salesUpdate", service.salesUpdateForm());
 			dis = req.getRequestDispatcher("salesUpdate.jsp");
 			dis.forward(req, resp);
-			break;*/
+
+			break;
 
 		/* ======================== */
 		case "/auctionDetail":
 			System.out.println("경매글 상세보기 요청");
-			dto = service.auctionDetail(); //경매글 해당 글번호 내용 dto로 반환
-			//System.out.println("[Controller] 경매글 상세보기 반환:"+dto);
-			//System.out.println("[Controller] 경매 내용 : "+dto.getP_content());
-			//System.out.println("[Controller] 경매 제목 : "+dto.getP_title());
-			
-			////시작 시간, 종료시간 형식 변환/////
+			dto = service.auctionDetail(); // 경매글 해당 글번호 내용 dto로 반환
+			// System.out.println("[Controller] 경매글 상세보기 반환:"+dto);
+			// System.out.println("[Controller] 경매 내용 : "+dto.getP_content());
+			// System.out.println("[Controller] 경매 제목 : "+dto.getP_title());
+
+			//// 시작 시간, 종료시간 형식 변환/////
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 			Date au_endTm = dto.getAu_endTm();
 			Date au_startTm = dto.getAu_startTm();
-			
+
 			System.out.println("au_endTm : " + au_endTm);
-			System.out.println("au_startTm : "+au_startTm);
-			
+			System.out.println("au_startTm : " + au_startTm);
+
 			String endTm = dateFormat.format(au_endTm);
 			String startTm = dateFormat.format(au_startTm);
 			///////////////
-			
-			//좋아요를 눌렀는지 확인
+
+			// 좋아요를 눌렀는지 확인
 			isLiked = false;
 			isLiked = service.isLiked();
 
@@ -288,8 +285,8 @@ public class BoardController extends HttpServlet {
 			isBuyRequested = service.isBuyRequested();
 
 			req.setAttribute("dto", dto);
-			req.setAttribute("isLiked", isLiked); //좋아요여부
-			
+			req.setAttribute("isLiked", isLiked); // 좋아요여부
+
 			req.setAttribute("endTm", endTm);
 			req.setAttribute("startTm", startTm);
 
@@ -306,8 +303,7 @@ public class BoardController extends HttpServlet {
 			dis.forward(req, resp);
 
 			break;
-			
-		
+
 		}
 
 	}

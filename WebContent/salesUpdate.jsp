@@ -48,21 +48,21 @@ console.log("오늘 날짜 : ",currDate);
 			<h2>판매글 수정</h2>
 			<div id="saleForm">
 				<p>
-					<input type="text" name="title" value="${commUpdate.p_title }" style='width: "1000px"' />
+					<input type="text" name="title" value="${salesUpdate.p_title }" style='width: "1000px"' />
 				</p>
 				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
 					<label for='test'>
-					<c:if test="${commUpdate.i_newName  eq null}">
+					<c:if test="${salesUpdate.i_newName  eq null}">
 						<img src="img/plus-icon.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
 					</c:if>
-					<c:if test="${commUpdate.i_newName  ne null}">
-						<img src="/photo/${commUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+					<c:if test="${salesUpdate.i_newName  ne null}">
+						<img src="/photo/${salesUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
 					</c:if>
 					</label>
 					<input type="file" name="imgFile" style="display: none" id="test" />
 				</form>
 				<p>
-					<textarea name="content" rows="30" cols="100" id ="update" style="overflow-y: scroll" >${commUpdate.p_content}</textarea>
+					<textarea name="content" rows="30" cols="100" id ="update" style="overflow-y: scroll" >${salesUpdate.p_content}</textarea>
 				</p>
 				<div id="update_cnt">(0 / 1000)</div>
 				<p id="salePr">
@@ -81,9 +81,9 @@ console.log("오늘 날짜 : ",currDate);
 					</select>
 				</p>
 				<p>
-					공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
-						value="N">전체공개 <input type="radio" name="disclosure"
-						value="Y">팔로우한정
+					공개범위&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="disclosure" value="N">전체공개
+					<input type="radio" name="disclosure" value="Y">팔로우한정
 				</p>
 			</div>
 			<div id="twoButton">
@@ -95,7 +95,8 @@ console.log("오늘 날짜 : ",currDate);
 </body>
 <script>
 
-$("select[name=commuCat]").val("${commUpdate.p_cate}").prop("selected", true);
+console.log("${salesUpdate.NS_name}");
+$("select[name=saleCat]").val("${salesUpdate.p_cate}").prop("selected", true);
 
 	var success = false;
   	//초기상태 - 판매폼만 보이는 상태
@@ -118,7 +119,7 @@ $("select[name=commuCat]").val("${commUpdate.p_cate}").prop("selected", true);
 		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
 		console.log(data);
 
-			param.p_no = ${commUpdate.p_no};
+			param.p_no = ${salesUpdate.p_no};
 			param.title = $("input[name='title']").val();
 			param.content = $("textarea[name='content']").val();
 			param.category = $("select[name='commuCat']").val();
@@ -126,11 +127,11 @@ $("select[name=commuCat]").val("${commUpdate.p_cate}").prop("selected", true);
 
 			$.ajax({
 				type : 'POST',
-				url : 'commUpdate',
+				url : 'salesUpdate',
 				data : param,
 				dataType : 'JSON',
 				success : function(data) {
-					if (data.sucP_no == '${commUpdate.p_no}') {
+					if (data.sucP_no == '${salesUpdate.p_no}') {
 						
 						form.append("p_no",data.sucP_no);
 						FileUpload(); //사진 업로드
@@ -140,7 +141,7 @@ $("select[name=commuCat]").val("${commUpdate.p_cate}").prop("selected", true);
 						
 					} else {
 						alert("글 수정을 실패하였습니다. 다시 시도해 주세요.");
-						location.href = "./commUpdateForm?P_no="+${commUpdate.p_no};
+						location.href = "./salesUpdateForm?P_no="+${salesUpdate.p_no};
 					}
 				},
 				error : function(e) {
