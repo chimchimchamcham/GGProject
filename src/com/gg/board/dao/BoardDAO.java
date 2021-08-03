@@ -709,6 +709,44 @@ public class BoardDAO {
 
 		return sucP_no;
 	}
+///////////////////////////////////////////////////////
+	public ArrayList<GGDto> auction_main_list(int auctionlistwhatadd, int auctionmainlisthowaline) throws SQLException  {//경매목록
+		String sql = "";
+		if (auctionlistwhatadd == 0) {//뷰티잡화
+			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND P_ID = 'admin1' and  p.p_code ='P001' and (a.Au_code = 'Au001' or a.Au_code = 'Au003')";
+		}else if (auctionlistwhatadd == 1) {//유아용품
+			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND P_ID = 'admin1' and  p.p_code ='P001' and a.Au_code = 'Au001'";
+		}else if (auctionlistwhatadd == 2) {//가구생활
+			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND P_ID = 'admin1' and  p.p_code ='P001' and a.Au_code = 'Au003'";
+		}else if (auctionlistwhatadd == 2) {//경매완료  Au003
+			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND P_ID = 'admin1' and  p.p_code ='P001' and a.Au_code = 'Au003'";
+		}
 
-	
+		ArrayList<GGDto> auctionlist = new ArrayList<GGDto>();
+		
+		System.out.println("auctionlist:"+auctionlist);
+		System.out.println("success");
+		ps = conn.prepareStatement(sql);
+		rs = ps.executeQuery();
+		System.out.println("rs:" + rs);
+		
+		while (rs.next()) {
+			GGDto dto = new GGDto();
+			dto.setP_no(rs.getInt("P_NO"));
+			dto.setP_id(rs.getString("P_ID"));
+			dto.setP_title(rs.getString("P_TITLE"));
+			dto.setHa_bidUsr(rs.getString("HA_BIDUSR"));
+			dto.setAu_count(rs.getInt("au_count"));
+			dto.setAu_endTm(rs.getDate("au_endTm"));
+			dto.setHm(rs.getLong("TOPPR"));
+			dto.setI_newName(rs.getString("I_NEWNAME"));
+			dto.setAu_startPr(rs.getInt("Au_startPr"));
+			dto.setAu_instantPr(rs.getInt("Au_instantPr"));
+			dto.setP_tm(rs.getDate("P_TM"));
+			auctionlist.add(dto);
+		}
+		System.out.println("actionlist:"+auctionlist);
+		return auctionlist;
+
+		}
 }
