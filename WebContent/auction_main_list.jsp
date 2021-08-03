@@ -78,6 +78,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            cursor: pointer;
         }
         .img-zoon,.index{
             margin: 5%;
@@ -126,6 +127,11 @@
 
 let $index_button_auction = '뷰티잡화';
 let $index2 = 0;
+
+
+
+
+
 
 $(document).ready(function() {
 	
@@ -189,7 +195,7 @@ $(".categor tr td").click(function(){//카테고리
 			success:function(data){
 				console.log("data:"+data);
 				if(data != null){
-					auction_list(data.auctionlist);
+					auction_list(data.auctionmainlist);
 				}
 			},
 			error:function(e){
@@ -202,25 +208,25 @@ $(".categor tr td").click(function(){//카테고리
 	
 		
 		//데이터 가져와서 뿌려주는 경매 리스트
-		function auction_list(auctionlist){	
-			console.log("auc=="+auctionlist)
+		function auction_list(auctionmainlist){	
+			console.log("auc=="+auctionmainlist)
 			var content="";
 			
-			auctionlist.forEach(function(item,idx){
+			auctionmainlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
-				content+= "<div class='item-one'>";
+				content+= "<div class='item-one' onclick="+"window.location.href='auctionDetail?p_no=" + item.p_no  +"\'" +">"
 				content+= 	"<div class='img-zoon'>";
-				content+=		"<img src="+item.i_newName+">";
+				content+=		"<img src="+item.i_newName+">";	
 				content+=	"</div>";
 				content+=	"<div class='index'>"+item.p_title+"</div>";
 				content+=	"<div class='bestcost'>현재 최고 입찰가:"+item.hm+"p</div>";
 				content+=	"<div class='nowbuycost'>즉시구매가:"+item.au_instantPr+"p</div>";
 				content+=	"<div class='endtime-count'>";
-				content+=		"<div class='endtime'>종료시간:"+item.p_tm+"</div>";
+				content+=		"<div class='endtime'>종료시간:"+item.au_endTm+"</div>";
 				content+=		"<div class='count'>입찰자:"+item.au_count+"명</div>";
 				content+=	"</div>";
 				content+= "</div>";
-				});	
+			    });	
 			
 			$('.main_auc div.items').empty();
 			$('.main_auc div.items').append(content);
@@ -232,7 +238,6 @@ $(".categor tr td").click(function(){//카테고리
 		$(".alinebutton button").click(function(){
 		    $(".alinebutton button").toggleClass("checked");
 		});
-
 
 </script>
 </html>
