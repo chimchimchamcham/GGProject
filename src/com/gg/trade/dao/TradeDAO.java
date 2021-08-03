@@ -184,7 +184,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		//낙찰자를 등록
 		String sql2 = "UPDATE AUCTION SET AU_SUCCESSER = ? WHERE P_NO = ?";
 		//경매상태를 거래중으로 변경
-		String sql3 = "UPDATE AUCTION SET AU_CODE = 'Au002' WHERE P_NO = ?";
+		String sql3 = "UPDATE AUCTION SET AU_CODE = 'Au002', AU_SUCTM = SYSDATE WHERE P_NO = ?";
 		//경매히스토리에 이력을 저장
 		String sql4 = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE)";
 		int success = 0;
