@@ -24,7 +24,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
 	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
 		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" 
-		,"/commList","/salesUpdateForm" })
+		,"/commList","/salesUpdateForm","/details" })
 
 public class BoardController extends HttpServlet {
 
@@ -273,7 +273,16 @@ public class BoardController extends HttpServlet {
 			dis.forward(req, resp);
 
 			break;
-
+			
+		/* ========================= */
+		case "/details":
+			System.out.println("걸러주는 디테일즈");
+			
+			
+			
+			
+			break;
+			
 		/* ======================== */
 		case "/auctionDetail":
 			System.out.println("경매글 상세보기 요청");
