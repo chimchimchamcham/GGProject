@@ -253,7 +253,7 @@
 		$.ajax({
 			type : 'get',
 			url : 'lovePlus2',
-			data : {'p_no' : ${dto.p_no},
+			data : {'p_no' : ${dto.p_no}},
 			dataType : 'JSON',
 			success : function(data){
 				console.log(data);
@@ -276,7 +276,7 @@
 		$.ajax({
 			type : 'get',
 			url : 'loveMinus2',
-			data : {'p_no' : ${dto.p_no},
+			data : {'p_no' : ${dto.p_no},${dto.}},
 			dataType : 'JSON',
 			success : function(data){
 				console.log(data);
@@ -294,11 +294,12 @@
 		});
 	});
 	//뎃글
-	$("#twoButton>button:nth-of-type(2)").click(function(){
+	$("div#twoButton>button.board").click(function(){
 		$.ajax({
 			type : 'post',
-			url : './soldboardlist',
-			data : {'p_no' : ${dto.p_no},
+			url : './saleboardlist',
+			data : {p_no:${dto.P_no},p_id:${dto.P_id}},
+			}
 			dataType : 'JSON',
 			success : function(data){
 				console.log(data);

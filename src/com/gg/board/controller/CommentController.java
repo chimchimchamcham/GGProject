@@ -14,7 +14,7 @@ import com.gg.board.service.BoardService;
 import com.gg.board.service.CommentService;
 import com.gg.dto.GGDto;
 
-@WebServlet({"/soldboardlist"})
+@WebServlet({"/saleboardlist"})
 public class CommentController extends HttpServlet {
 
 	
@@ -37,19 +37,23 @@ public class CommentController extends HttpServlet {
 		System.out.println("addr : " + addr);
 
 		RequestDispatcher dis = null;
-		CommentService service = new CommentService(req, resp);
+		BoardService boardservice = new BoardService(req, resp);
+		CommentService commentservice = new CommentService(req, resp);
 		GGDto bdto = null;
 		boolean success = false;
 		int p_no;
 		String userid;
 		switch (addr) {
 		
-		case "/soldboardlist":
-			System.out.println("뎃글 리스트 요청");
-			userid = (String) req.getSession().getAttribute("loginId");
+		case "/saleboardlist":
+			System.out.println("댓글 리스트 요청");
+			GGDto dto = boardservice.salesDetail();
+			
+			
+			userid = (String) req.getSession().getAttribute("p_id");
 			p_no = (int) req.getSession().getAttribute("p_no");
 			
-			service.sold_board_list(userid,p_no);
+			commentservice.sold_board_list(userid,p_no);
 
 			break;
 		
