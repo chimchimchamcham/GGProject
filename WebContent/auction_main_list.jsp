@@ -125,19 +125,6 @@
                     <div class="count">입찰자:5명</div>
                 </div>
                 </div>
-                
-                <div class="item-one">
-                    <div class="img-zoon">
-                        <img src="test.jpg">
-                    </div>
-                    <div class="index">아이페드 삽니다</div>
-                    <div class="bestcost">현재 최고 입찰가:7000p</div>
-                    <div class="nowbuycost">즉시구매가:15000p</div>
-                <div class="endtime-count">
-                    <div class="endtime">종료시간:07월 21일</div>
-                    <div class="count">입찰자:5명</div>
-                </div>
-                </div>
             </div>
         </div>
     </div>
@@ -146,9 +133,114 @@
 
 </body>
 <script>
-$(".alinebutton button").click(function(){
-    $(".alinebutton button").toggleClass("checked");
-});
+
+let $index1 = 0;
+let $index2 = 0;
+
+$(document).ready(function() {
+	
+	$.ajax({
+		type:'post',
+		url:'./auctionmainlist',
+		data:{  index1 : 0,
+				index2 : 0 },
+		dataType:'JSON',
+		success:function(data){
+			console.log("data",data);
+			if(data.soldlist != null){
+				auction_list(data.auctionlist);
+			}
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+	
+})
+
+$(".categor tr td").click(function(){//카테고리
+	    $button1 = $(".categor tr td");
+	    $index1 = $button1.index(this);
+	    
+	    $index_button_sold = $(".categor tr td:eq(" + $index1 + ")");
+	    
+		console.log("$auction_categor_index:"+$index1);
+		console.log("$alien_list:"+$index2);
+		
+		sold_listCall($index1,$index2);
+		//alert('hellow');
+		
+    })
+    
+    $(".alinebutton button").click(function(){//정렬
+	    
+	    $button2 = $(".alinebutton button");
+	    $index2 = $button2.index(this);
+	    
+	    $index_button = $(".alinebutton button:eq(" + $index2 + ")");
+	    
+		console.log("$center_index:"+$index1);
+		console.log("$alien_list_sold:"+$index2);
+		
+		sold_listCall($index1,$index2);
+		//alert('hellow');
+
+		
+    })
+    
+    function auction_listCall($index1,index2){
+		
+		
+		$.ajax({
+			type:'post',
+			url:'./auctionmainlist',
+			data:{	index1 : $index1,
+					index2 : $index2},
+			dataType:'JSON',
+			success:function(data){
+				console.log("data:"+data);
+				if(data.soldlist != null){
+					auction_list(data.auctionlist);
+				}
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});	
+		
+		}
+	
+	
+		
+		//데이터 가져와서 뿌려주는 경매 리스트
+		function auction_list(auctionlist){	
+			console.log("auctionlist:", auctionlist);
+			var content="";
+			
+			auctionlist.forEach(function(item,idx){
+				console.log("idx:",idx,item);
+				content +="<div class='item-one'>";
+				content +="<div class='img-zoon'><img src="+item.i_newName+"></div>";
+				content +="<div class='dretion-zoon'>";
+				content +="<a href= auctionDetail?p_no="+item.p_no+">"+item.p_title+"</a>";
+				content +="<div class='xianzai'>현제 입찰가</div><div style='font-size: 25px;'>"+item.hm+"p</div><div class='auction'>";
+				content +="<div>시작:"+item.au_startPr+"</div>/<div>즉결:"+item.au_instantPr+"</div></div>";
+				content +="</div><div class='endtime-zoon'>종료시간:<div>"+item.au_endTm+"</div></div>";
+				content +="<div class='love-time'><div>입찰수:"+item.au_count+"</div><div>"+item.p_tm+"</div></div>";
+				content +="</div>";
+				});	
+			
+			$('#trade .item-box').empty();
+			$('#trade .item-box').append(content);
+		}// 경매 리스트 end	
+	
+		 
+				
+		////////////////////////////////////////////////////////////
+		$(".alinebutton button").click(function(){
+		    $(".alinebutton button").toggleClass("checked");
+		});
+
 
 </script>
 </html>

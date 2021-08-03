@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
 	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
-		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist" })
+		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" })
 
 public class BoardController extends HttpServlet {
 
@@ -137,13 +137,28 @@ public class BoardController extends HttpServlet {
 			String userid1 = (String) req.getSession().getAttribute("loginId");
 
 			int auctionlistwhatadd = Integer.parseInt(req.getParameter("index1"));
-
+			int auctionlisthowaline = Integer.parseInt(req.getParameter("index2"));
+			
 			System.out.println("listwhatadd:" + auctionlistwhatadd);
-
 			service.auc_list(userid1, auctionlistwhatadd);
 
 			break;
+			
+		case "/auctionmainlist":
+			System.out.println("경매 매인 리스트 요청");
 
+			//String userid1 = (String) req.getSession().getAttribute("loginId");
+
+			int auctionmainlistwhatadd = Integer.parseInt(req.getParameter("index1"));
+			int auctionmainlisthowaline = Integer.parseInt(req.getParameter("index2"));
+			
+			System.out.println("auctionmainlisthowaline:" + auctionmainlistwhatadd);
+			System.out.println("auctionmainlisthowaline:" + auctionmainlisthowaline);
+			
+			service.mainauc_list(auctionmainlistwhatadd,auctionmainlisthowaline);
+
+			break;
+			
 		case "/maidelist":
 			System.out.println("판매 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
