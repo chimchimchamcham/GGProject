@@ -17,6 +17,7 @@ h2 {
 </head>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
+var myPoint =0;
 	$(document).ready(function() {
 		
 		$("#cancelBtn").click(function() {
@@ -30,7 +31,6 @@ h2 {
 		console.log("로그인 아이디 확인 ", loginId);
 		var param = {};
 		param.id = loginId;
-		var myPoint = 110;
 		$.ajax({
 			type : "POST",
 			url : "../pointPop",
@@ -81,7 +81,6 @@ h2 {
 <script>
 var param = {};
 param.id = "${sessionScope.loginId}";
-
 	$("input[name='outPoint']").keyup(function(e) {
 		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
 			var inputVal = $(this).val();
@@ -92,10 +91,10 @@ param.id = "${sessionScope.loginId}";
 			function() {
 
 				if ($("input[name='outPoint']").val() == ""
-						|| $("input[name='outPoint']").val() == 0) {
-					alert("금액을 입력해 주세요!");
+						|| $("input[name='outPoint']").val() == 0 || Number($("input[name='outPoint']").val()) >Number(myPoint)) {
+					alert("정확한 금액을 입력해 주세요!");
 					$("input[name='outPoint']").focus();
-				} else {
+				}else {
 					param.outPoint = $("input[name='outPoint']").val();
 					console.log("인출할 포인트  :" , param.outPoint);
 					$.ajax({

@@ -96,7 +96,7 @@ a:visited {
 	param.id = loginId;
 	var allPoint =0;
 	function chargePopup() { window.open("./chargePopup.jsp", "chargePop", "width=600, height=500, left=1200, top=200"); }
-	function outPointPopup() { window.open("./outPointPopup.jsp","outPointPop","width=600, height=500, left=1200, top=200")}
+	function outPointPopup() { window.open("./outPointPopup.jsp?allPoint="+allPoint,"outPointPop","width=600, height=500, left=1200, top=200")}
 	listCall();
 	
 	$("button").click(function(){
