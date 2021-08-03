@@ -519,5 +519,11 @@ dao.resClose();
 		
 	}
 
+	public ArrayList<GGDto> commList() {
+
+		
+		return null;
+	}
+
 	
 }
