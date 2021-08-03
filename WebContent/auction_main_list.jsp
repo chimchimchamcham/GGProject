@@ -214,7 +214,7 @@ $(".categor tr td").click(function(){//카테고리
 			
 			auctionmainlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
-				content+= "<div class='item-one' onclick="+ "'window.location.href= auctionDetail?p_no=" + item.p_no  +"'>"
+				content+= "<div class='item-one' onclick="+"window.location.href='auctionDetail?p_no=" + item.p_no  +"\'" +">"
 				content+= 	"<div class='img-zoon'>";
 				content+=		"<img src="+item.i_newName+">";	
 				content+=	"</div>";
