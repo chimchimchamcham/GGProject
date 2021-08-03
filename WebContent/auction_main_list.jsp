@@ -21,7 +21,14 @@
         table{
             border: 1px solid black;
         }
-
+        h2{
+        margin-right:25vh;
+        }
+		.categor{
+		margin-top:10vh;
+		white-space: nowrap;
+			
+		}
         .categor th,td{
             padding: 15px;
             padding-right: 200px;
