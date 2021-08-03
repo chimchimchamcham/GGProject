@@ -18,14 +18,13 @@
 #main {
 	background-color: gray;
 	width: 1200px;
-	height: 2000px;
+	height: auto;
 	position: absolute;
 	top: 150px;
 	z-index: -1;
 }
 
 #wrap {
-	width: 1200px;
 	margin: 0 auto;
 	text-align: left;
 }
@@ -48,7 +47,7 @@ console.log("오늘 날짜 : ",currDate);
 			<h2>판매글 수정</h2>
 			<div id="saleForm">
 				<p>
-					<input type="text" name="title" value="${salesUpdate.p_title }" style='width: "1000px"' />
+					<input type="text" name="title" value="${salesUpdate.p_title }" style='width: "1000px"' placeholder="제목을 입력해주세요"/>
 				</p>
 				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
 					<label for='test'>
@@ -62,21 +61,22 @@ console.log("오늘 날짜 : ",currDate);
 					<input type="file" name="imgFile" style="display: none" id="test" />
 				</form>
 				<p>
-					<textarea name="content" rows="30" cols="100" id ="update" style="overflow-y: scroll" >${salesUpdate.p_content}</textarea>
+					<textarea name="content" rows="30" cols="100" id ="update" style="overflow-y: scroll" placeholder="내용입력" >${salesUpdate.p_content}</textarea>
 				</p>
 				<div id="update_cnt">(0 / 1000)</div>
-				<p id="salePr">
-					<input type="text" name="price" value="" placeholder="가격 입력(숫자입력)" />&nbsp;Point
+				<p>
+					<input type="text" name="price" value="${salesUpdate.ns_pr}" /> P
 				</p>
 				<p>
-					거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
-						value="Y">택배<input type="radio" name="deliveryYN"
-						value="N">직거래
+					거래방식(필수선택) &nbsp;&nbsp;&nbsp;
+					<input type="radio" name="deliveryYN" value="Y">택배
+					<input type="radio" name="deliveryYN" value="N">직거래
 				</p>
-				<p id="category">
-					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
+				<p>
+					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
+					<select name="saleCat">
 						<c:forEach items="${saleCat }" var="SaleCategory">
-							<option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
+							<option value="${SaleCategory.c_code}"></option>
 						</c:forEach>
 					</select>
 				</p>
@@ -91,22 +91,16 @@ console.log("오늘 날짜 : ",currDate);
 				<input type="button" onclick="location.href='./index.jsp'" value="취소" />
 			</div>
 		</div>
-	</div>
+	</div><!-- main div end -->
 </body>
-<script>
 
+<script>
 console.log("${salesUpdate.NS_name}");
-$("select[name=saleCat]").val("${salesUpdate.p_cate}").prop("selected", true);
+//$("select[name=saleCat]").val("${salesUpdate.p_cate}").prop("selected", true);
 
 	var success = false;
-  	//초기상태 - 판매폼만 보이는 상태
-	//폼 선택 버튼  클릭시 해당 값이 달라짐
 	var param = {};
 	param.userId = "${sessionScope.loginId}";
- 	
-	//커뮤니티버튼 클릭시
-		param.select = "P004";
-		console.log(param.select);
 
 	// 전역변수로 설정해주어야 한다.
 	var form = new FormData();
@@ -119,37 +113,37 @@ $("select[name=saleCat]").val("${salesUpdate.p_cate}").prop("selected", true);
 		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
 		console.log(data);
 
-			param.p_no = ${salesUpdate.p_no};
-			param.title = $("input[name='title']").val();
-			param.content = $("textarea[name='content']").val();
-			param.category = $("select[name='commuCat']").val();
-			console.log(param);
-
-			$.ajax({
-				type : 'POST',
-				url : 'salesUpdate',
-				data : param,
-				dataType : 'JSON',
-				success : function(data) {
-					if (data.sucP_no == '${salesUpdate.p_no}') {
-						
-						form.append("p_no",data.sucP_no);
-						FileUpload(); //사진 업로드
-						alert("글 수정에 성공했습니다.");
-						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
-						location.href = "./commDetail?P_no="+data.sucP_no;
-						
-					} else {
-						alert("글 수정을 실패하였습니다. 다시 시도해 주세요.");
-						location.href = "./salesUpdateForm?P_no="+${salesUpdate.p_no};
-					}
-				},
-				error : function(e) {
-					console.log(e);
+		param.title = $("input[name='title']").val();
+		param.content = $("textarea[name='content']").val();
+		param.category = $("select[name='saleCat']").val();
+		param.deliveryYN = $("input[name='deliveryYN']:checked").val();
+		param.price = $("input[name='price']").val();
+		param.disclosure = $("input[name='disclosure']:checked").val();
+		
+		//ajax url="sale"
+		console.log(param);
+		$.ajax({
+			type : 'POST',
+			url : 'salesUpdate',
+			data : param,
+			dataType : 'JSON',
+			success : function(data) {
+				if (data.p_no>0) {
+					form.append("p_no",data.p_no);
+					FileUpload();
+					alert("판매글 수정을 성공했습니다.");
+					location.href="./salesDetail?p_no="+data.p_no;
+				} else {
+					alert("판매글 수정을 실패하였습니다! ");
 				}
-				
-			});
+			},
+			error : function(e) {
+				console.log(e);
+			}
+
+		});
 	});
+	
 	///////사진 선택시 미리보기 변경/////////
 	function readImage(input) {
 	    // 인풋 태그에 파일이 있는 경우

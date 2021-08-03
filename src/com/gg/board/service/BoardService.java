@@ -509,11 +509,11 @@ dao.resClose();
 
 	
 	/*판매 글 수정*/
-	public Object salesUpdateForm() {
-		int p_no = Integer.parseInt(req.getParameter("P_no"));
-		System.out.println("수정 요청 글 번호 : "+p_no);
+	public GGDto salesUpdateForm() {
+		int SalesP_no = Integer.parseInt(req.getParameter("p_no"));
+		System.out.println("수정 요청 글 번호 : "+SalesP_no);
 		BoardDAO dao = new BoardDAO();
-		GGDto dto = dao.salesDetail(p_no);
+		GGDto dto = dao.salesDetail(SalesP_no);
 		System.out.println("수정요청 dto : "+ dto);
 		dao.resClose();
 		return dto;

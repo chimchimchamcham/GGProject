@@ -19,17 +19,10 @@ import com.gg.board.service.UploadService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
-<<<<<<< HEAD
+
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist",
 		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/writeCommunity", "/auctionDetail", "/commDetail",
 		"/commUpdateForm", "/commUpdate", "/communitylist","/salesUpdateForm" })
-=======
-
-
-@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
-	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
-		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" })
->>>>>>> 86e679e6ab3b0710859a9f23ceb6dd2ff84b45f8
 
 public class BoardController extends HttpServlet {
 
