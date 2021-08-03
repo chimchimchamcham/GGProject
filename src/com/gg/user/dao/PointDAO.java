@@ -142,6 +142,19 @@ public class PointDAO {
 		}
 	}
 
+	public boolean outPoint(int outPoint, String id) throws SQLException {
+		sql = "INSERT INTO point(pnt_id,pnt_point,pnt_tm,pnt_otherid,pnt_code) VALUES(?,?,SYSDATE,'SYSTEM','PNT002')";
+		boolean success = false;
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, id);
+		ps.setInt(2, outPoint);
+		int checker = ps.executeUpdate();
+		if (checker > 0) {
+			success = true;
+		}
+		return success;
+	}
+
 	
 
 }
