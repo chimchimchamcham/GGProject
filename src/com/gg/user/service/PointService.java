@@ -73,7 +73,7 @@ public class PointService {
 	}
 
 	public String getNname(String id) {
-		System.out.println("닉네임을 가져와야 한다니~");
+		System.out.println("닉네임 요청");
 		PointDAO dao = new PointDAO();
 		String nname = "";
 		try {
