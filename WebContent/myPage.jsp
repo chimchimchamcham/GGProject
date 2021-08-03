@@ -660,7 +660,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				<th>전화번호</th>
 				<td>${myPageInfo.u_phone }</td>
 			</tr>
-			<tr >
+			<tr>
 				<td colspan="2" style="padding-top:20px;"><button onclick="location.href='./userUpdateForm?id=${loginId}'">회원정보 수정</button></td>
 			</tr>
 		</table>
@@ -725,7 +725,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				<img src="./img/default-profile.png" width="130px"/>
 			</c:if>
 			<c:if test="${myPageInfo.u_newName  ne 'default-profile.png'}">
-				<img src="/photo/${myPageInfo.u_newName }" width="130px"/>
+				<img src="/photo/${myPageInfo.u_newName}" width="130px"/>
 			</c:if>
 			</tr>
 			<tr>
