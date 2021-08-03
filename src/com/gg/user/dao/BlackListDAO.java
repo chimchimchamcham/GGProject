@@ -4,12 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
-
 import com.gg.dto.GGDto;
 
 public class BlackListDAO {
@@ -20,15 +17,16 @@ public class BlackListDAO {
 		try {
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource)ctx.lookup("java:/comp/env/jdbc/Oracle");
-			Connection conn = ds.getConnection();
+			conn = ds.getConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public boolean notifyUser(String loginId, GGDto dto) {
+	public boolean notifyUser(GGDto dto) {
 		String sql = "INSERT INTO notify VALUES(n_no_seq.NEXTVAL,?,?,?,?,?)";
 		boolean success = false;
+		System.out.println(dto.getN_sendId());
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getN_receivedId());
@@ -46,6 +44,7 @@ public class BlackListDAO {
 		}
 		return success;
 	}
+	
 	public void resClose() {
 		try {
 			if(conn != null && !conn.isClosed()) {conn.close();}

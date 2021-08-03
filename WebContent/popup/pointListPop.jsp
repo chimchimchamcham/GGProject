@@ -98,7 +98,6 @@ button {
 				console.log("마이 포인트 : " ,data.myPoint);
 				drawList(data.list);
 				myPoint(data.myPoint);
-				
 			},
 			error : function(e) {
 				console.log("에러");
@@ -113,6 +112,7 @@ button {
 		console.log(myPoint);
 		$("#myPoint").empty();
 		$("#myPoint").append("총 보유 포인트 : "+myPoint);
+		opener.parent.location.reload();
 		
 	};	
 	

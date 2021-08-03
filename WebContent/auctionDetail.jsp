@@ -287,7 +287,7 @@
 		$.ajax({
 			type : 'get',
 			url : 'lovePlus2',
-			data : {'p_no' : ${dto.p_no}},
+			data : {'p_no' : ${ dto.p_no }},
 			dataType : 'JSON',
 			success : function(data){
 				console.log(data);

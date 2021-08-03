@@ -33,11 +33,36 @@
 		<input type="hidden" id="endpr" value="${param.endpr }">
 		<div><p>${param.title } 에 <b>즉시구매하기</b></p></div>
 		<div><input type="text" name="au_instantpr" id="au_instantpr" value="${param.endpr }" readonly><button id="bid">즉시구매</button></div>
-		<div><div>잔여 포인트 <span id="wallet">500000</span>P</div><input type="button" id="charge" value="포인트충전"></div>
+		<div><div>잔여 포인트 <span id="wallet">0</span>P</div><input type="button" id="charge" value="포인트충전"></div>
 		<span>P</span>
 	</div>
 </body>
 <script>
+	var loginId = "${sessionScope.loginId}";
+	var param = {};
+	param.id = loginId;
+	$.ajax({
+		type : "POST",
+		url : "../pointPop",
+		data : param,
+		dataType : "JSON",
+		success : function(data) {
+			console.log(data.success);
+			console.log(data.myPoint);
+			if (data.success) {
+				myPoint = data.myPoint;
+				nickname = data.nickname;
+				console.log("내포인트 : ", myPoint);
+				$("#wallet").text(myPoint);
+			} else {
+				alert("페이지 로딩 중 오류가 발생하였습니다.");
+			}
+		},
+		error : function(e) {
+			console.log(e);
+		}
+	
+	});
 	$("#bid").click(function(){
 		/* if($("#au_instantpr").val()==0){
 			alert("즉결구매가를 입력하세요");

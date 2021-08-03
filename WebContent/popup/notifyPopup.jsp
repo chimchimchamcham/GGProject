@@ -163,6 +163,17 @@
 	</form>
 </body>
 <script type="text/javascript">
+console.log("${loginId}");
+if("${loginId}" == ""){
+	alert("로그인이 필요한 서비스 입니다.");
+	window.close();
+}
+
+if("${msg}" != ""){
+	alert("${msg}");
+	window.close();
+}
+
 function drop(){
 	var drop = $("select[name=drop]").val();
 	console.log(drop);
@@ -189,5 +200,7 @@ function drop(){
 }
 
 $("select[name=drop]").onchange(drop($("select[name=drop]").val()));
+
+
 </script>
 </html>

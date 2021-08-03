@@ -15,13 +15,13 @@ public class BlackListService {
 
 	public boolean notifyUser() {
 		GGDto dto = new GGDto();
-		String loginId = (String)req.getSession().getAttribute("loginId");
+		
 		dto.setN_receivedId(req.getParameter("N_receiveId"));
+		dto.setN_sendId((String)req.getSession().getAttribute("loginId"));
+		dto.setN_content(req.getParameter("N_content"));
 		dto.setN1_code(req.getParameter("N1_code"));
 		dto.setN2_code(req.getParameter("N2_code"));
-		dto.setN_content(req.getParameter("N_content"));
-		System.out.println(loginId+req.getParameter("N_receiveId"));
-		boolean success = dao.notifyUser(loginId,dto);
+		boolean success = dao.notifyUser(dto);
 		return success;
 	}
 	
