@@ -21,7 +21,7 @@ var myPoint =0;
 	$(document).ready(function() {
 		
 		$("#cancelBtn").click(function() {
-			alert("포인트 충전이 취소되었습니다.");
+			alert("포인트 인출이 취소되었습니다.");
 			
 			window.close();
 		});

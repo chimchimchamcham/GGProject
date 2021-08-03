@@ -509,7 +509,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			soldlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
-				content += "<div class='img-zoon'><img src="+item.i_newName+"></div>";
+				content += "<div class='img-zoon'><img src=/photo/"+item.i_newName+"></div>";
 				content += "<div class='dretion-zoon'>";
 				content += "	<div class='itemindex'>"+"<a href="+"salesDetail?p_no="+item.p_no+">"+item.p_title+"</a>"+"</div>";
 				content += "	<div class='itempoint'>"+item.ns_pr+"p"+"</div>";
