@@ -484,6 +484,29 @@ dao.resClose();
 		return dao.commDetail(P_no);
 	}
 
+	public void mainauc_list(int auctionlistwhatadd, int auctionmainlisthowaline) throws IOException {//경매 목록
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		BoardDAO dao = new BoardDAO();
+		ArrayList<GGDto> auctionmainlist = null;
+		
+		try {
+			auctionmainlist = dao.auction_main_list(auctionlistwhatadd,auctionmainlisthowaline);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+			map.put("auctionmainlist", auctionmainlist);
+		}
+		System.out.println("auc_main_map:"+map);
+		
+		resp.setContentType("text/html; charset=UTF-8");		
+		resp.getWriter().println(new Gson().toJson(map));
+		map.clear();
+		dao.resClose();
+		
+	}
+
 	
 	/*판매 글 수정*/
 	public Object salesUpdateForm() {

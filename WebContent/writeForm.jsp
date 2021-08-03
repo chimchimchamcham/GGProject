@@ -245,7 +245,7 @@ console.log("오늘 날짜 : ",currDate);
 						FileUpload();
 						alert("글 작성 성공했습니다.");
 						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
-						location.href = "./salesDetail?p_no="+data.p_no;
+						location.href = "./commuDetailForm?p_no="+data.p_no;
 						
 					} else {
 						alert("커뮤니티 글 작성을 실패하였습니다! ");
@@ -316,7 +316,7 @@ console.log("오늘 날짜 : ",currDate);
 						form.append("p_no",data.p_no);
 						FileUpload();
 						//향후 변경사항 경매상세보기 만들고 보내주는 페이지 편집
-						location.href='./salesDetail?p_no='+data.p_no;
+						location.href='./auctionDetail?p_no='+data.p_no;
 					},
 					error : function(e) {
 						console.log(e);

@@ -227,8 +227,8 @@
                         <span><c:if test="${dto.au_instantPr ne 999999999999 }">${dto.au_instantPr}P</c:if>/시작가 ${dto.au_startPr }P</span>
                         <span>입찰 수</span>
                         <span>${dto.au_count }회</span>
-                        <span>종료 시간</span>
-                        <span>${dto.au_endTm}</span>
+                        <span>시작시간 / 종료 시간</span>
+                        <span>${dto.au_startTm} / ${dto.au_endTm}</span>
                         <span>거래방식 :
                         	<c:if test="${dto.s_DeliveryYN eq 'Y' }">택배</c:if>
                        		<c:if test="${dto.s_DeliveryYN eq 'N' }">직거래</c:if>  
@@ -287,7 +287,7 @@
 		$.ajax({
 			type : 'get',
 			url : 'lovePlus2',
-			data : {'p_no' : ${dto.p_no}},
+			data : {'p_no' : ${ dto.p_no }},
 			dataType : 'JSON',
 			success : function(data){
 				console.log(data);

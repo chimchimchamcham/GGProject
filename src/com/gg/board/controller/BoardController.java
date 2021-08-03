@@ -19,9 +19,17 @@ import com.gg.board.service.UploadService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
+<<<<<<< HEAD
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist",
 		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/writeCommunity", "/auctionDetail", "/commDetail",
 		"/commUpdateForm", "/commUpdate", "/communitylist","/salesUpdateForm" })
+=======
+
+
+@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
+	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
+		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" })
+>>>>>>> 86e679e6ab3b0710859a9f23ceb6dd2ff84b45f8
 
 public class BoardController extends HttpServlet {
 
@@ -133,13 +141,28 @@ public class BoardController extends HttpServlet {
 			String userid1 = (String) req.getSession().getAttribute("loginId");
 
 			int auctionlistwhatadd = Integer.parseInt(req.getParameter("index1"));
-
+			int auctionlisthowaline = Integer.parseInt(req.getParameter("index2"));
+			
 			System.out.println("listwhatadd:" + auctionlistwhatadd);
-
 			service.auc_list(userid1, auctionlistwhatadd);
 
 			break;
+			
+		case "/auctionmainlist":
+			System.out.println("경매 매인 리스트 요청");
 
+			//String userid1 = (String) req.getSession().getAttribute("loginId");
+
+			int auctionmainlistwhatadd = Integer.parseInt(req.getParameter("index1"));
+			int auctionmainlisthowaline = Integer.parseInt(req.getParameter("index2"));
+			
+			System.out.println("auctionmainlisthowaline:" + auctionmainlistwhatadd);
+			System.out.println("auctionmainlisthowaline:" + auctionmainlisthowaline);
+			
+			service.mainauc_list(auctionmainlistwhatadd,auctionmainlisthowaline);
+
+			break;
+			
 		case "/maidelist":
 			System.out.println("판매 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
