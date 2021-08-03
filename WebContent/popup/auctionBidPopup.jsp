@@ -133,7 +133,8 @@
 	
 	//포인트버튼 클릭시 알람 뜸
 	$("#charge").click(function(){
-		alert("포인트 충전 팝업 이동");
+		/* alert("포인트 충전 팝업 이동"); */
+		window.open("./chargePopup.jsp","chargePopup", "width=400, height=200, left=1100, top=400");
 	});
 	
 	//입력한 값이 잔여 포인트보다 클 경우 입찰 버튼 비활성화, 검정색으로 바뀜
