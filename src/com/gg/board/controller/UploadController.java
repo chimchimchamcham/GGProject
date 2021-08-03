@@ -67,7 +67,7 @@ public class UploadController extends HttpServlet {
 			String delFileName = dao.getFileName(dto.getP_no()).getI_newName();
 			System.out.println("삭제할 사진 파일 : "+ delFileName);
 			
-			if(delFileName != null) {
+			if(delFileName != null ) {
 				cheker = dao.PhotoUpdate(dto);
 				//기존 파일을 지우고
 				service.del(delFileName);
