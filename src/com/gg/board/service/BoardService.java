@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
@@ -444,19 +445,26 @@ dao.resClose();
 				
 				Date endTm = dto.getAu_endTm();//경매종료시간
 				String au_code = dto.getAu_code();//경매상태
+				System.out.println("경매종료시간 : "+endTm);
+				System.out.println("경매상태 : "+au_code);
 				
 				java.util.Date nowDate = new java.util.Date();
 				System.out.println("현재 시간 : "+ nowDate);
-				if()
-
-				dto2 = t_dao.endAuction(endTm,au_code); 
-
-				dto.setAu_code(dto2.getAu_code());
-				dto.setAu_endTm(dto2.getAu_endTm());
 				
 				
-				//경매종료 
+				//현재시간 > 경매 종료시간 and 경매상태 = '경매중' 
+				if(nowDate.before(endTm)&&au_code.equals("Au001")) {
+					
+					//경매종료상태 메서드 실행
+					dto2 = t_dao.endAuction(endTm,au_code); 
+
+					//dto 내용 변경
+					dto.setAu_code(dto2.getAu_code());
+					dto.setAu_endTm(dto2.getAu_endTm());
+				}
+				////////////////////////////////////////////////
 			}
+			
 			if(dto == null) {
 				dao.conn.rollback();
 			}else {
