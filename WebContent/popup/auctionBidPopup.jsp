@@ -43,10 +43,10 @@
 		if($("#ha_bidPr").val()==0){
 			alert("입찰가격을 입력하세요");
 			$("#ha_bidPr").focus();
-		}/* else if($("#ha_bidPr").val()<$("#toppr").val()){
+		}else if(Number($("#ha_bidPr").val())<=Number($("#toppr").val())){
 			alert("현재 입찰 가격보다 큰 값을 입력하세요.");
 			$("#ha_bidPr").focus();
-		} */else{
+		}else{
 			//즉결가 보다 큰 값을 입력한 경우, 즉결가 가격으로 변경
 			/* var $bidpr = 0;
 			if($("#ha_bidPr").val()>$("#endpr").val()){
@@ -56,37 +56,52 @@
 			}
 			console.log($bidpr); */
 			
-			alert("입찰 하시겠습니까?");
-			
-			//ajax로 보낼 파라미터 값
-			var param = {};
-			param.p_no = $("#p_no").val();
-			param.ha_bidPr = $("#ha_bidPr").val();
-			console.log(param);
-			
-		 	 $.ajax({
-				type : 'post',
-				url : '../bid',
-				data : param,
-				dataType : 'JSON',
-				success : function(data){
-					console.log(data);
-					if(data.success){
-						alert(data.msg);
-						opener.parent.location.reload();
-						window.close();
-					}else{
-						alert(data.msg);
-					}
-				},
-				error : function(e){
-					console.log("접속 실패");
-					console.log(e);
+			console.log(Number($("#ha_bidPr").val())>=Number($("#endpr").val()));
+			console.log($("#ha_bidPr").val());
+			console.log($("#endpr").val());
+			//즉결가 보다 큰 값을 입력한 경우 컨펌 창을 띄운다
+			if(Number($("#ha_bidPr").val())>=Number($("#endpr").val())){
+				if(confirm("즉시구매 처리됩니다. 진행하시겠습니까?")){	
+					bid();
 				}
-			}); 
-			/* alert("입찰 완료 bidpr : "+bidpr);
-			opener.parent.location.reload();
-			window.close(); */
+			}else{
+				if(confirm("입찰 진행하시겠습니까?")){
+					bid();
+				}
+			}
+			
+			//ajax 함수
+			function bid(){
+				//ajax로 보낼 파라미터 값
+				var param = {};
+				param.p_no = $("#p_no").val();
+				param.ha_bidPr = $("#ha_bidPr").val();
+				console.log(param);
+				
+			 	 $.ajax({
+					type : 'post',
+					url : '../bid',
+					data : param,
+					dataType : 'JSON',
+					success : function(data){
+						console.log(data);
+						if(data.success){
+							alert(data.msg);
+							opener.parent.location.reload();
+							window.close();
+						}else{
+							alert(data.msg);
+						}
+					},
+					error : function(e){
+						console.log("접속 실패");
+						console.log(e);
+					}
+				}); 
+				/* alert("입찰 완료 bidpr : "+bidpr);
+				opener.parent.location.reload();
+				window.close(); */
+			}
 		}
 	});
 	
@@ -96,14 +111,14 @@
 	});
 	
 	//입력한 값이 잔여 포인트보다 클 경우 입찰 버튼 비활성화, 검정색으로 바뀜
-	/* $("#ha_bidPr").on("propertychange change keyup paste input",function(){
+	$("#ha_bidPr").on("propertychange change keyup paste input",function(){
 		var $bidpr = $("#ha_bidPr").val();
 		var $wallet = $("#wallet").text();
-		if($bidpr>$wallet){
+		if(Number($bidpr)>Number($wallet)){
 			$("#bid").attr("disabled", true).css({"background-color":"black"});
 		}else{
 			$("#bid").attr("disabled", false).css({"background-color":"#6E6E6E"});
 		}
-	}); */
+	});
 </script>
 </html>
