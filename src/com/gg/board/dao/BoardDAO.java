@@ -659,7 +659,7 @@ public class BoardDAO {
 				"    INNER JOIN codes c ON p.p_cate = c.c_code" + 
 				"    LEFT OUTER JOIN Img i ON p.p_no = i.p_no" + 
 				"    LEFT OUTER JOIN Post_Comment pc ON p.p_no = pc.p_no" + 
-				"    WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_no=?";
+				"    WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_no=? AND c.c_code";
 		GGDto dto = new GGDto();
 		try {
 			ps = conn.prepareStatement(sql);
