@@ -11,9 +11,9 @@
 *{margin:0;padding:0;border-width:0;list-style-type:none;}
 body{width:100%;background-color:gray;}
 #wrap{width:900px;height:600px;background-color:white;position:relative;}
-#twoButton{position:relative; width:200px;}
-#trade_cancel{display:inline-block; width:80px;height:35px; position:absolute; top:10px; left:10px; font-size:0.8rem; border-radius:5px/5px;background-color:#919999;color:white;}
-#report{display:inline-block; width:80px;height:35px; position:absolute; top:10px; left:100px; font-size:0.8rem; border-radius:5px/5px;}
+#twoButton{width:200px; background-color:orange; position:absolute; height:40px}
+#twoButton>button{width:80px;height:35px; margin:5px;font-size:0.8rem; border-radius:5px/5px;float:left}
+#trade_cancel{background-color:#919999;color:white;}
 
 #condition{position:relative; left: 280px; top:15px; color:#C1C6C6}
 #send,#approval,#shipping,#receive{display:inline-block; position:absolute;} 
