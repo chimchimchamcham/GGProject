@@ -244,6 +244,9 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		public GGDto endAuction(int p_no,String au_code,String ha_bidusr) throws SQLException {
 			
 			GGDto dto = new GGDto();
+			PointDAO dao = new PointDAO();
+			int instantpr = 0;
+			boolean insertRS = false;
 			
 			//낙찰시간,경매상태,낙찰자 변경
 			String sql = "update auction set au_suctm = SYSDATE, au_code= 'Au002' ,au_successer = (select u_id from userinfo where u_nname= ?) where p_no=? ";
@@ -255,7 +258,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			
 			//성공했을 때 경매상태, 낙찰시간, 낙찰자 데이터 가져와서 담아주기
 			if(success > 0) {
-				sql ="select au_code,au_successer,au_suctm from auction where p_no=?";
+				sql ="select au_code,au_successer,au_suctm,au_instantpr from auction where p_no=?";
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1, p_no);
 				
@@ -265,12 +268,29 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 					dto.setAu_code(rs.getString("au_code"));
 					dto.setAu_successer(rs.getString("au_successer"));
 					dto.setAu_sucTm(rs.getDate("au_suctm"));
+					instantpr = rs.getInt("au_instantpr");
 				}
 				
 				///입찰금반환 메서드 실행
+				sql = "select distinct ha_bidusr from his_auction where ha_bidusr <> '(select au_successer from auction where p_no=?)' and p_no=?";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, p_no);
+				ps.setInt(2, p_no);
 				
-				
-				
+				rs = ps.executeQuery();
+				System.out.println("=========입찰금 반환 목록==========");
+				while(rs.next()) {
+					String bid_id = rs.getString("ha_bidusr");
+					insertRS = dao.insertPoint(bid_id, instantpr, "SYSTEM", "PNT007", p_no);
+					
+					if(insertRS) {
+						System.out.println("입찰금 반환 id :"+bid_id+"/ 반환할 입찰금 : "+instantpr);
+					}
+					
+					
+				}
+				System.out.println("==========================");
+
 			}
 			
 			return dto;
@@ -308,6 +328,11 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			}
 			
 			return success;
+			
+		}
+		
+		public void returnStartPr() {
+			
 			
 		}
 		
