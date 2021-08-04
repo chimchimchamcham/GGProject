@@ -299,6 +299,31 @@ map.clear();
 dao.resClose();
 	
 }
+
+//팔로잉 팔로워 리스트
+public void flow_list(String userid, int flowORflowing) throws IOException {
+	
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	
+	BoardDAO dao = new BoardDAO();
+	ArrayList<GGDto> flowlist = null;
+	
+	try {
+		flowlist = dao.flowlist(userid,flowORflowing);
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		dao.resClose();
+		map.put("flowlist", flowlist);
+	}
+	System.out.println("auc_map:"+map);
+	
+	resp.setContentType("text/html; charset=UTF-8");		
+	resp.getWriter().println(new Gson().toJson(map));
+	map.clear();
+	dao.resClose();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 	public HashMap<String, ArrayList<GGDto>> category() {
 		BoardDAO dao = new BoardDAO();
@@ -670,5 +695,9 @@ dao.resClose();
 		}
 		return des;
 	}
+
+
+
+
 
 }
