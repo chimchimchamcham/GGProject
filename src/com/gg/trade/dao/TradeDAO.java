@@ -198,12 +198,13 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		//경매히스토리에 이력을 저장
 		String sql4 = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE)";
 		int success = 0;
+		int au_instantpr = 0;
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
 			rs = ps.executeQuery();
 			System.out.println("DAO buyNow 즉결가 조회");
-			int au_instantpr = 0;
+			
 			if(rs.next()) {
 				au_instantpr = rs.getInt("au_instantpr");
 				System.out.println("DAO buyNow au_instantpr : "+au_instantpr);
@@ -236,6 +237,8 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		
 		boolean result = bidRecordYN(p_no,u_id);
 		System.out.println("시작금 인출 여부 : "+result);
+		//입찰금 반환 메서드 실행
+		returnStartPr(p_no, au_instantpr);
 		
 		return success>0?true:false;
 	}
@@ -244,10 +247,8 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		public GGDto endAuction(int p_no,String au_code,String ha_bidusr) throws SQLException {
 			
 			GGDto dto = new GGDto();
-			PointDAO dao = new PointDAO();
 			int instantpr = 0;
-			boolean insertRS = false;
-			
+	
 			//낙찰시간,경매상태,낙찰자 변경
 			String sql = "update auction set au_suctm = SYSDATE, au_code= 'Au002' ,au_successer = (select u_id from userinfo where u_nname= ?) where p_no=? ";
 			ps = conn.prepareStatement(sql);
@@ -271,25 +272,8 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 					instantpr = rs.getInt("au_instantpr");
 				}
 				
-				///입찰금반환 메서드 실행
-				sql = "select distinct ha_bidusr from his_auction where ha_bidusr <> '(select au_successer from auction where p_no=?)' and p_no=?";
-				ps = conn.prepareStatement(sql);
-				ps.setInt(1, p_no);
-				ps.setInt(2, p_no);
-				
-				rs = ps.executeQuery();
-				System.out.println("=========입찰금 반환 목록==========");
-				while(rs.next()) {
-					String bid_id = rs.getString("ha_bidusr");
-					insertRS = dao.insertPoint(bid_id, instantpr, "SYSTEM", "PNT007", p_no);
-					
-					if(insertRS) {
-						System.out.println("입찰금 반환 id :"+bid_id+"/ 반환할 입찰금 : "+instantpr);
-					}
-					
-					
-				}
-				System.out.println("==========================");
+				//입찰금 반환 메서드 실행
+				returnStartPr(p_no, instantpr);
 
 			}
 			
@@ -331,8 +315,31 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			
 		}
 		
-		public void returnStartPr() {
+		public void returnStartPr(int p_no,int instantpr) throws SQLException {
 			
+			boolean insertRs = false; 
+			PointDAO dao = new PointDAO();
+			
+			///입찰금반환 메서드 실행
+			String sql = "select distinct ha_bidusr from his_auction where ha_bidusr <> '(select au_successer from auction where p_no=?)' and p_no=?";
+		
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, p_no);
+			ps.setInt(2, p_no);
+			
+			rs = ps.executeQuery();
+			System.out.println("=========입찰금 반환 목록==========");
+			while(rs.next()) {
+				String bid_id = rs.getString("ha_bidusr");
+				insertRs = dao.insertPoint(bid_id, instantpr, "SYSTEM", "PNT007", p_no);
+				
+				if(insertRs) {
+					System.out.println("입찰금 반환 id :"+bid_id+"/ 반환할 입찰금 : "+instantpr);
+				}
+				
+				
+			}
+			System.out.println("==========================");
 			
 		}
 		
