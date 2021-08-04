@@ -65,6 +65,14 @@
     
     /*뎃글*/
     #second	div.board{border: 1px solid #D8D8D8;width: 143vh;height: 50vh;float: left;margin: 10px;padding: 20px;}
+    .board_text{border: 1px solid #D8D8D8; width: 143vh;height:5vh;float: left;margin: 10px;padding: 20px;}
+    .enter{ margin-bottom: 10px;margin-left: 10px;padding: 20px;}
+
+    .one-text{border: 1px solid black;border-radius: 10px;width: 60vh;height: 10vh}
+    .one-text .one-img-time{display: flex;justify-content: space-between;align-items: center;}
+    .one-text .one-img-time img{max-width: 100px;max-height: 100px;border-radius: 50px;}
+    
+    
     
     
     #follow{background-color:#E6E6E6;width:340px;height:60px;color:black;font-size:1.5rem;font-weight:700;margin:20px;border-radius:5px/5px;}
@@ -203,7 +211,7 @@
                     </div>
                     <div id="twoButton">
                         <button>상세정보</button>
-                        <button class ='board'>댓글</button>
+                        <button class ='board_button'>댓글</button>
                     </div>
                     <!-- #first>div:nth-of-type(1) -->
                     <div id="first">
@@ -240,6 +248,10 @@
                     	<div class="board">
                     		
                     	</div>
+                    	<div class="board_t_b">
+							<textarea class="board_text" style="resize: none;"></textarea>
+							<button class="enter">enter</button>
+						</div>
                     </div>
                     
                 </article>
@@ -294,8 +306,8 @@
 			}
 		});
 	});
-	//뎃글
-	$("div#twoButton>button.board").click(function(){
+	//뎃글 버튼 누르면 이상세 페이지에서 마지막에 쓴 뎃글 보여주기
+	$("div#twoButton>button.board_button").click(function(){
 		$.ajax({
 			type : 'post',
 			url : './saleboardlist',
@@ -304,8 +316,8 @@
 			success : function(data){
 				console.log(data);
 				if(data!= null){
-					alert('sucess');
 					console.log("data.sold_board_list:",data.sold_board_list);
+					saleboardlist(data.sold_board_list)
 				}else{
 					alert('뎃글 등록 실패.');
 				}
@@ -315,6 +327,29 @@
 			}
 		});
 	});
+	
+	//데이터 가져와서 뿌려주는 뎃글 리스트
+	function saleboardlist(sold_board_list){	
+		console.log("sold_board_list=="+sold_board_list)
+		var content="";
+		
+		sold_board_list.forEach(function(item,idx){
+			console.log("idx:",idx,item);
+			content+= "<div class='one-text'>";
+			content+= 	"<div class='one-img-time'>";
+			content+= 	"<div  class='uploadimg'>";
+			content+=         "<img src='test.jpg'>";
+			content+=         "<div class='usertext'>유지호</div>";
+			content+=  	"</div>";
+			content+= 	"<div class='content'>내용임ㅅㄱ</div>"
+			content+= 	"<div class='uploadtime'>";
+			content+=   	"<div>2021-08-04</div>";
+			content+= 	"</div>";
+			content+= "</div>";
+		    });	
+		$('.board').append(content);
+	}// 경매 리스트 end	
+	
 	
 	
 </script>
