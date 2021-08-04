@@ -555,13 +555,14 @@ dao.resClose();
 	}
 
 	public GGDto commDetail() {
-		String P_no = req.getParameter("P_no");
+		String p_no = req.getParameter("p_no");
+		System.out.println(p_no);
 		BoardDAO dao = new BoardDAO();
 		GGDto dto = null;
 		try {
 			dao.conn.setAutoCommit(false);
-			if(0<dao.upP_view(Integer.parseInt(P_no))) {
-				dto = dao.commDetail(P_no);
+			if(0<dao.upP_view(Integer.parseInt(p_no))) {
+				dto = dao.commDetail(p_no);
 			}
 			if(dto == null) {
 				dao.conn.rollback();
@@ -602,18 +603,19 @@ dao.resClose();
 
 	public ArrayList<GGDto> commList() {
 		
-		BoardDAO dao = new BoardDAO();
-		
-		String codes = null; ;
-		if((String) req.getAttribute("codes") == " like('%')") {
-			codes = " like('%')";
-		}else {
-			
+		String code ="";
+		String[] list = req.getParameterValues("categorys[]");//ajax에서 배열 형태로 보낼때 받는 방법
+		for(String a:list) {
+			if(a=="null") {}
+			code +=a;
 		}
-		return dao.commList();
+		code = code.substring(0,code.length()-1)+")";
+		// 마지막 문자 자르고 ) 를 추가해서 sql문을 완성
+		BoardDAO dao = new BoardDAO();
+
+		return dao.commList(code);
 	}
 
-	
 	/*판매 글 수정*/
 	public GGDto salesUpdateForm() {
 		int SalesP_no = Integer.parseInt(req.getParameter("p_no"));

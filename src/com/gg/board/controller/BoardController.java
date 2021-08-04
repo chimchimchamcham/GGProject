@@ -324,6 +324,7 @@ public class BoardController extends HttpServlet {
 			
 		/* ========================= */
 		case "/details":
+
 			System.out.println("걸러주는 디테일즈");
 			p_no = Integer.parseInt(req.getParameter("p_no"));
 			String id = req.getParameter("id");
@@ -454,10 +455,12 @@ public class BoardController extends HttpServlet {
 			break;
 
 		case "/commList":
+			resp.setCharacterEncoding("UTF-8");
 			ArrayList<GGDto> list = service.commList();
-			req.setAttribute("list", list);
-			dis = req.getRequestDispatcher("commListForm.jsp");
-			dis.forward(req, resp);
+			HashMap<String, ArrayList<GGDto>> list_map = new HashMap<String, ArrayList<GGDto>>();
+			list_map.put("list", list);
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().println(new Gson().toJson(list_map));
 			break;
 		}
 
