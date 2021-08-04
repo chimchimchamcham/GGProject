@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
 	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
 		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" 
-		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate"})
+		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate","/flowlist"})
 
 public class BoardController extends HttpServlet {
 
@@ -170,6 +170,14 @@ public class BoardController extends HttpServlet {
 			userid = (String) req.getSession().getAttribute("loginId");
 
 			service.community_list(userid);
+
+			break;
+		case "/flowlist":
+			System.out.println("팔로잉리스트 리스트 요청");
+			userid = (String) req.getSession().getAttribute("loginId");
+
+			int flowORflowing = Integer.parseInt(req.getParameter("index1"));
+			service.flow_list(userid,flowORflowing);
 
 			break;
 		/* ====== 글쓰기 ====== */
@@ -324,6 +332,7 @@ public class BoardController extends HttpServlet {
 			
 		/* ========================= */
 		case "/details":
+
 			System.out.println("걸러주는 디테일즈");
 			p_no = Integer.parseInt(req.getParameter("p_no"));
 			String id = req.getParameter("id");
@@ -454,10 +463,12 @@ public class BoardController extends HttpServlet {
 			break;
 
 		case "/commList":
+			resp.setCharacterEncoding("UTF-8");
 			ArrayList<GGDto> list = service.commList();
-			req.setAttribute("list", list);
-			dis = req.getRequestDispatcher("commListForm.jsp");
-			dis.forward(req, resp);
+			HashMap<String, ArrayList<GGDto>> list_map = new HashMap<String, ArrayList<GGDto>>();
+			list_map.put("list", list);
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().println(new Gson().toJson(list_map));
 			break;
 		}
 

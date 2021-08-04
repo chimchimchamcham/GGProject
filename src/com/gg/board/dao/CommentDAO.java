@@ -16,6 +16,7 @@ public class CommentDAO {
 	public Connection conn = null;
 	public ResultSet rs = null;
 	public PreparedStatement ps = null;
+	
 	public CommentDAO() {
 		try {
 			Context ctx = new InitialContext();
@@ -43,9 +44,9 @@ public class CommentDAO {
 		
 	}
 	
-	public ArrayList<GGDto> sold_board_dao(String p_id, int p_no)throws SQLException {
+	public ArrayList<GGDto> sale_commentlist(String p_id, int p_no)throws SQLException {
 		System.out.println("DAO salesDetail의 댓글들 호출");
-		ArrayList<GGDto> sale_board_list = new ArrayList<GGDto>();
+		ArrayList<GGDto> list = new ArrayList<GGDto>();
 		
 		System.out.println("p_id:"+p_id);
 		System.out.println("p_no:"+p_no);
@@ -62,13 +63,54 @@ public class CommentDAO {
 				dto.setPc_content(rs.getString("pc_content"));
 				dto.setPc_tm(rs.getDate("pc_tm"));
 				dto.setPc_parentno(rs.getInt("pc_parentno"));
-				sale_board_list.add(dto);
+				list.add(dto);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return sale_board_list;
+		return list;
+	}
+
+	public GGDto pushComment(GGDto dto) throws Exception {
+		
+		String sql = "INSERT INTO post_comment VALUES(pc_no_seq.NEXTVAL,?,?,SYSDATE,?,'N',?)";
+		
+		//pc_no,p_no,pc_content,pc_tm,pc_parentno,pc_blindYN,pc_id;
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, dto.getP_no());
+		ps.setString(2, dto.getPc_content());
+		ps.setInt(3, dto.getPc_parentno());
+		ps.setString(4, dto.getPc_id());
+		
+		int success = ps.executeUpdate();
+		if(success>0) {
+			System.out.println("댓글 등록 성공.");
+		}
+		
+		return dto;
+	}
+
+	public ArrayList<GGDto> commentListCall(GGDto dto) throws Exception {
+		ArrayList<GGDto> list = new ArrayList<GGDto>();
+		
+		// 부모댓글이 없는 것들만 가져온다!
+		String sql = "SELECT pc_id, pc_content FROM post_comment WHERE p_no=? AND pc_parentno=0 AND pc_blindyn ='N' " + 
+				"ORDER BY pc_no ASC";
+		
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, dto.getP_no());
+		rs = ps.executeQuery();
+		while(rs.next()) {
+			dto = new GGDto();
+			dto.setPc_id(rs.getString("pc_id"));
+			dto.setPc_content(rs.getString("pc_content"));
+			list.add(dto);
+		}
+		
+		
+		
+		return list;
 	}
 
 }

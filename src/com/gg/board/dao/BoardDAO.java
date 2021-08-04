@@ -412,6 +412,45 @@ public class BoardDAO {
 		return communitylist;
 	}
 
+	
+	public ArrayList<GGDto> flowlist(String userid, int flowORflowing) throws SQLException {
+		String sql = "";
+		if (flowORflowing == 0) {// 전체 Au001 Au003
+			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND  and  p.p_code ='P001' and (a.Au_code = 'Au001' or a.Au_code = 'Au003') and P.P_ID = ? ";
+		} else if (flowORflowing == 1) {// 경매중 Au001
+			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND  and  p.p_code ='P001' and a.Au_code = 'Au001' and P.P_ID = ? ";
+		}
+
+		ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
+
+		System.out.println("flowlist:" + flowlist);
+
+		ps = conn.prepareStatement(sql);
+
+		System.out.println("daouserID:" + userid);
+
+		ps.setString(1, userid);
+		rs = ps.executeQuery();
+		System.out.println("rs:" + rs);
+
+		while (rs.next()) {
+			GGDto dto = new GGDto();
+			dto.setP_no(rs.getInt("P_NO"));
+			dto.setP_id(rs.getString("P_ID"));
+			dto.setP_title(rs.getString("P_TITLE"));
+			dto.setHa_bidUsr(rs.getString("HA_BIDUSR"));
+			dto.setAu_count(rs.getInt("au_count"));
+			dto.setAu_endTm(rs.getDate("au_endTm"));
+			dto.setHm(rs.getLong("TOPPR"));
+			dto.setI_newName(rs.getString("I_NEWNAME"));
+			dto.setAu_startPr(rs.getInt("Au_startPr"));
+			dto.setAu_instantPr(rs.getInt("Au_instantPr"));
+			dto.setP_tm(rs.getDate("P_TM"));
+			flowlist.add(dto);
+		}
+		System.out.println("actionlist:" + flowlist);
+		return flowlist;
+	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public HashMap<String, ArrayList<GGDto>> category() {
 		String sql = "select * from codes where c_code like 'S%'";
@@ -677,7 +716,7 @@ public class BoardDAO {
 				+ "    UserInfo u INNER JOIN Post p ON u.u_id = p.p_id"
 				+ "    INNER JOIN codes c ON p.p_cate = c.c_code" + "    LEFT OUTER JOIN Img i ON p.p_no = i.p_no"
 				+ "    LEFT OUTER JOIN Post_Comment pc ON p.p_no = pc.p_no"
-				+ "    WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_no=? AND c.c_code";
+				+ "    WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_no=?";
 
 		GGDto dto = new GGDto();
 		try {
@@ -881,23 +920,29 @@ public class BoardDAO {
 
 	}
 
-	public ArrayList<GGDto> commList() {
+	public ArrayList<GGDto> commList(String code) {		
 		ArrayList<GGDto> list = new ArrayList<GGDto>();
-		String sql = "SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code "
-				+ "INNER JOIN userinfo u on p.p_id = u.u_id " + "LEFT OUTER JOIN love l ON p.p_no = l.p_no "
-				+ "LEFT OUTER JOIN img i ON p.p_no = i.p_no " + "WHERE p.p_code = 'P004'AND p.p_blindyn = 'N'";
-
+		String sql ="SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code " + 
+						"INNER JOIN userinfo u on p.p_id = u.u_id " + 
+						"LEFT OUTER JOIN love l ON p.p_no = l.p_no " + 
+						"LEFT OUTER JOIN img i ON p.p_no = i.p_no " + 
+						"WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_cate IN (";
+		// 추가된 문자열을 추가함.
+		GGDto dto = null;
+		sql += code;
 		try {
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-			while (rs.next()) {
-				GGDto dto = new GGDto();
+			while(rs.next()) {
+				dto = new GGDto();
 				dto.setC_name(rs.getString("c_name"));
 				dto.setP_title(rs.getString("p_title"));
 				dto.setU_id(rs.getString("p_id"));
 				dto.setU_nname(rs.getString("u_nname"));
 				dto.setP_tm(rs.getDate("p_tm"));
 				dto.setP_view(rs.getInt("p_view"));
+				dto.setP_likeCount(rs.getInt("p_likecount"));
+				dto.setP_no(rs.getInt("p_no"));
 				list.add(dto);
 			}
 		} catch (SQLException e) {
@@ -923,5 +968,7 @@ public class BoardDAO {
 
 		return code;
 	}
+
+
 
 }

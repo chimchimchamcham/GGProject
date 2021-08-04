@@ -63,7 +63,7 @@
     #reviewAvg{font-weight:500;font-size:1.3rem;margin:10px;}
     
     
-    /*뎃글*/
+    /*댓글*/
     #second	div.board{border: 1px solid #D8D8D8;width: 143vh;height: 50vh;float: left;margin: 10px;padding: 20px;overflow: scroll;}
     .board_text{border: 1px solid #D8D8D8; width: 143vh;height:5vh;float: left;margin: 10px;padding: 20px;}
     .enter{ margin-bottom: 10px;margin-left: 10px;padding: 20px;}
@@ -240,9 +240,7 @@
                     		</div>
                     		<p><a href="#">판매자의 다른 상품 더보기 > </a></p>
                     		
-                    	</div>
-             
-                    	
+                    	</div>	
                     </div>
                     <div id="second"><!-- 댓글처리 -->
                     	<div class="board">
@@ -262,11 +260,11 @@
 </body>
 <script>
 	//좋아요 등록
-	$("#threeButton>button:nth-of-type(1)").click(function(){
+	$("#threeButton > button:nth-of-type(1)").click(function(){
 		$.ajax({
 			type : 'get',
 			url : 'lovePlus2',
-			data : {'p_no' : ${dto.p_no}},
+			data : {'p_no' : "${dto.p_no}"},
 			dataType : 'JSON',
 			success : function(data){
 				console.log(data);
@@ -289,7 +287,7 @@
 		$.ajax({
 			type : 'get',
 			url : 'loveMinus2',
-			data : {'p_no' : ${dto.p_no}},
+			data : {'p_no' : "${dto.p_no}"},
 			dataType : 'JSON',
 			success : function(data){
 				console.log(data);
@@ -306,29 +304,86 @@
 			}
 		});
 	});
-	//뎃글 버튼 누르면 이상세 페이지에서 마지막에 쓴 뎃글 보여주기
+	//댓글 버튼 누르면 이상세 페이지에서 마지막에 쓴 댓글 보여주기
 	$("div#twoButton>button.board_button").click(function(){
-		$.ajax({
+		/* $.ajax({
 			type : 'post',
-			url : './saleboardlist',
-			data : {p_no : ${dto.p_no},p_id:"${dto.p_id}"},
+			url : './commentlist',
+			data : {p_no : "${dto.p_no}",p_id:"${dto.p_id}"},
 			dataType : 'JSON',
 			success : function(data){
-				console.log(data);
-				if(data!= null){
-					console.log("data.sold_board_list:",data.sold_board_list);
-					saleboardlist(data.sold_board_list)
+				console.log("data",data);
+				if(data.list != null){
+					console.log("data.list:",data.list);
+					saleboardlist(data.list);
 				}else{
-					alert('뎃글 등록 실패.');
+					alert('등록된 댓글이 없습니다.');
 				}
 			},
 			error : function(e){
 				console.log(e);
 			}
-		});
+		}); */
+		commentListCall();
 	});
+	var comment ={};
 	
-	//데이터 가져와서 뿌려주는 뎃글 리스트
+	$(".enter").click(function(){
+		comment.id = "${sessionScope.loginId}";
+		comment.p_no = "${dto.p_no}";
+		comment.pc_content = $(".board_text").val();
+		comment.pc_parentno = 0;
+		console.log("댓글 다는 아이디 : " , comment.id);
+		console.log("댓글 달리는 게시글 : ", comment.p_no);
+		console.log("댓글 내용 : " , comment.pc_content);
+		console.log("부모 댓글 번호 :",comment.pc_parentno);
+		console.log("댓글 등록")
+		
+		$.ajax({
+			type: "POST",
+			url: "./pushComment",
+			data : comment,
+			dataType: "JSON",
+			success : function(data){
+				console.log("반환 데이터 : " , data);
+				commentListCall();
+			},
+			error : function(e){
+				console.log("에러 발생 : " ,e);
+			}
+			
+		});
+		
+		});
+	
+	
+	
+	function commentListCall(){
+		console.log("댓글 리스트 요청 ");
+		var param ={};
+		param.p_no = "${dto.p_no}";
+		$.ajax({
+			type:"POST",
+			url: "commentListCall",
+			data : param,
+			dataType : "JSON",
+			success : function(data){
+				console.log("받아온 데이터 확인 : ", data.list);
+			},
+			error : function(e){
+				console.log(e);	
+			}
+		});
+		
+			
+		
+		
+	
+	};
+	
+	
+	
+	//데이터 가져와서 뿌려주는 댓글 리스트
 	function saleboardlist(sold_board_list){	
 		console.log("sold_board_list=="+sold_board_list)
 		var content="";

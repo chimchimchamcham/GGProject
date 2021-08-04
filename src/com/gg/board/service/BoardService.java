@@ -299,6 +299,31 @@ map.clear();
 dao.resClose();
 	
 }
+
+//팔로잉 팔로워 리스트
+public void flow_list(String userid, int flowORflowing) throws IOException {
+	
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	
+	BoardDAO dao = new BoardDAO();
+	ArrayList<GGDto> flowlist = null;
+	
+	try {
+		flowlist = dao.flowlist(userid,flowORflowing);
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		dao.resClose();
+		map.put("flowlist", flowlist);
+	}
+	System.out.println("auc_map:"+map);
+	
+	resp.setContentType("text/html; charset=UTF-8");		
+	resp.getWriter().println(new Gson().toJson(map));
+	map.clear();
+	dao.resClose();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 	public HashMap<String, ArrayList<GGDto>> category() {
 		BoardDAO dao = new BoardDAO();
@@ -555,13 +580,14 @@ dao.resClose();
 	}
 
 	public GGDto commDetail() {
-		String P_no = req.getParameter("P_no");
+		String p_no = req.getParameter("p_no");
+		System.out.println(p_no);
 		BoardDAO dao = new BoardDAO();
 		GGDto dto = null;
 		try {
 			dao.conn.setAutoCommit(false);
-			if(0<dao.upP_view(Integer.parseInt(P_no))) {
-				dto = dao.commDetail(P_no);
+			if(0<dao.upP_view(Integer.parseInt(p_no))) {
+				dto = dao.commDetail(p_no);
 			}
 			if(dto == null) {
 				dao.conn.rollback();
@@ -602,18 +628,19 @@ dao.resClose();
 
 	public ArrayList<GGDto> commList() {
 		
-		BoardDAO dao = new BoardDAO();
-		
-		String codes = null; ;
-		if((String) req.getAttribute("codes") == " like('%')") {
-			codes = " like('%')";
-		}else {
-			
+		String code ="";
+		String[] list = req.getParameterValues("categorys[]");//ajax에서 배열 형태로 보낼때 받는 방법
+		for(String a:list) {
+			if(a=="null") {}
+			code +=a;
 		}
-		return dao.commList();
+		code = code.substring(0,code.length()-1)+")";
+		// 마지막 문자 자르고 ) 를 추가해서 sql문을 완성
+		BoardDAO dao = new BoardDAO();
+
+		return dao.commList(code);
 	}
 
-	
 	/*판매 글 수정*/
 	public GGDto salesUpdateForm() {
 		int SalesP_no = Integer.parseInt(req.getParameter("p_no"));
@@ -668,5 +695,9 @@ dao.resClose();
 		}
 		return des;
 	}
+
+
+
+
 
 }

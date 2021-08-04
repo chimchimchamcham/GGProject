@@ -20,29 +20,115 @@
 	magin:0 auto;
 	text-align:center;
 }
+#tableHeader{
+	width:80%;
+	margin: auto;
+}
+.category{
+	display:none;
+	margin:auto;
+}
+.commLagel{
+	color:white;
+	background-color:black;
+}
 </style>
 <body>
 <div id="mainHeader"><jsp:include page="header.jsp" /></div>
 <div id="main">
-<h3>커뮤니티</h3><label for="test">테스트</label><input type='checkbox' id="test">
-<input type = "button" class ="category" value=" like('%')"/>
-<input type = "button" class ="category" value="'C001'"/>구매대행
-<input type = "button" class ="category" value="''C002"/>동네이야기
-<input type = "button" class ="category" value="'C003'"/>같이해요
-<input type = "button" class ="category" value="'C004'"/>자랑해요
-<input type = "button" class ="category" value="'C005'"/>공유해요
-<input type = "button" class ="category" value="'C006'"/>잡담해요
-<input type = "button" class ="category" value="'C007'"/>홍보해요
-	<c:forEach items="${list }" var="item">
-		<div>
-			<span>${item.c_name}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-			<span>${item.u_id}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-			<span>${item.u_nname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-			<span>${item.p_title}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-			<span>${item.p_tm}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-			<span>${item.p_view}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-		</div>
-	</c:forEach>
+	<h3>커뮤니티</h3>
+	<input type = "checkbox" id="C001" class = "category" name = "C001" value="'C001'," checked/><label class="commLagel" for="C001"># 구매대행</label>
+	<input type = "checkbox" id="C002" class = "category" name = "C002" value="'C002'," checked/><label class="commLagel" for="C002"># 동네이야기</label>
+	<input type = "checkbox" id="C003" class = "category" name = "C003" value="'C003'," checked/><label class="commLagel" for="C003"># 같이해요</label>
+	<input type = "checkbox" id="C004" class = "category" name = "C004" value="'C004'," checked/><label class="commLagel" for="C004"># 자랑해요</label>
+	<input type = "checkbox" id="C005" class = "category" name = "C005" value="'C005'," checked/><label class="commLagel" for="C005"># 공유해요</label>
+	<input type = "checkbox" id="C006" class = "category" name = "C006" value="'C006'," checked/><label class="commLagel" for="C006"># 잡담해요</label>
+	<input type = "checkbox" id="C007" class = "category" name = "C007" value="'C007'," checked/><label class="commLagel" for="C007"># 홍보해요</label>
+	<table id = "tableHeader">
+		<thead>
+			<tr>
+				<th>카테고리</th>
+				<th>제목</th> 
+				<th>작성자</th> 
+				<th>작성일</th> 
+				<th>조회수</th> 
+				<th>좋아요</th> 
+			</tr>
+			<tr><hr></hr></tr>
+		</thead>
+		<tbody></tbody>
+	</table>
 </div>
 </body>
+<script type="text/javascript">
+var lists = [];
+$("input.category:checked").each(function(idx,value){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+ 	lists.push($(this).val());
+});
+
+$.ajax({
+	type:"POST",
+	data:{
+		'categorys':lists
+		},
+	url:"commList",
+	dataType:'JSON',
+	success:function(data) {
+		drawList(data.list);
+		lists=[];
+	},
+	error:function(e){
+		console.log(e);
+	}
+});
+
+ $("input.category").change(function(){ 
+ 	$("input.category:checked").each(function(idx,value){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+	 	lists.push($(this).val());
+ 	});
+
+	$.ajax({type:"POST",
+			data:{
+				'categorys':lists
+				},
+			url:"commList",
+			dataType:'JSON',
+			success:function(data) {
+				drawList(data.list);
+				lists=[];
+    		},
+    		error:function(e){
+    			console.log(e);
+    		}
+ 		});
+});
+ 
+ $(".category").change(function(){
+    if($(this).is(":checked")){
+    	$(this).next("label").css({"color":"white","background-color":"black"});
+    }else{
+    	$(this).next("label").css({"color":"black","background-color":"white"});
+    }
+ });
+
+ function drawList(list){
+		console.log("드로우 리스트");
+		console.log(list);
+		var content= "";
+		
+		console.log("forEach문");
+		//자바스크립트 foreach문
+		list.forEach(function(item,idx){
+			console.log(idx,item);
+			content += "<tr><td>"+item.c_name+"</td>";
+			content += "<td><a href='commDetail?p_no="+item.p_no+"'>"+item.p_title+"</td>";
+			content += "<td><a href='myPage?id="+item.u_id+"'>"+item.u_nname+"</td>";
+			content += "<td>"+item.p_tm+"</td>";
+			content += "<td>"+item.p_view+"</td>";
+			content += "<td>"+item.p_likecount+"</td></tr>";
+		});
+		$("tbody").empty();
+		$("tbody").append(content);
+	}
+</script>
 </html>
