@@ -8,6 +8,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gg.dto.GGDto;
 import com.gg.trade.dao.TradeDAO;
 import com.gg.user.dao.PointDAO;
 import com.google.gson.Gson;
@@ -169,21 +170,22 @@ public void buyNow(){
 		PointDAO pdao = new PointDAO();
 		
 		try {
+			dao.conn.setAutoCommit(false);
 			pdao.conn.setAutoCommit(false);
 			insertPointSuccess = pdao.insertPoint(t_buyer, ht_point, "SYSTEM", "PNT003", p_no);
 			System.out.println("[TRADESERVICE]/SENDPOINT INSERTPOINTSUCCESS : "+insertPointSuccess);
 			if(insertPointSuccess) {
 				insertHisTradeSuccess = dao.insertHisTrade(t_no,ht_point,"HT002");
-				System.out.println("[TRADESERVICE]/SENDPOINT INSERTHISTRADESUCCESS : "+insertHisTradeSuccess);
-				if(insertHisTradeSuccess) {
-					pdao.conn.commit();
-					dao.conn.commit();
-					System.out.println("[TRADESERVICE]/SENDPOINT INSERTPOINTSUCCESS COMMIT");
-				}else {
-					pdao.conn.rollback();
-					dao.conn.rollback();
-					System.out.println("[TRADESERVICE]/SENDPOINT INSERTPOINTSUCCESS ROLLBACK");
-				}
+				System.out.println("[TRADESERVICE]/SENDPOINT INSERTHISTRADESUCCESS : "+insertHisTradeSuccess);	
+			}
+			if(insertHisTradeSuccess) {
+				pdao.conn.commit();
+				dao.conn.commit();
+				System.out.println("[TRADESERVICE]/SENDPOINT INSERTPOINTSUCCESS COMMIT");
+			}else {
+				pdao.conn.rollback();
+				dao.conn.rollback();
+				System.out.println("[TRADESERVICE]/SENDPOINT INSERTPOINTSUCCESS ROLLBACK");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -226,6 +228,7 @@ public void buyNow(){
 		PointDAO pdao = new PointDAO();
 		
 		try {
+			dao.conn.setAutoCommit(false);
 			pdao.conn.setAutoCommit(false);
 			insertPointSuccess = pdao.insertPoint(t_buyer, ht_point, "SYSTEM", "PNT008", p_no);
 			System.out.println("[TRADESERVICE]/POINTDENY INSERTPOINTSUCCESS : "+insertPointSuccess);
@@ -271,17 +274,65 @@ public void buyNow(){
 	//구매자가 수취확인
 	public boolean productReceive() {
 		System.out.println("[TRADESERVICE]/PRODUCTRECEIVE START");
+		String t_buyer = req.getParameter("t_buyer");
+		int ht_point = Integer.parseInt(req.getParameter("ht_point"));
+		String t_saler = req.getParameter("t_saler");
+		int p_no = Integer.parseInt(req.getParameter("p_no"));
 		int t_no = Integer.parseInt(req.getParameter("t_no"));
+		int ha_bidPr = Integer.parseInt(req.getParameter("ha_bidPr"));
+		int au_startPr = Integer.parseInt(req.getParameter("au_startPr"));
+		String p_code = req.getParameter("p_code");
 		
+		boolean insertPointToBuyerSuccess = false;
+		boolean insertPointToSalerSuccess = false;
 		boolean insertHisTradeSuccess = false;
+		boolean endTrade = false;
 		TradeDAO dao = new TradeDAO();
+		PointDAO pdao = new PointDAO();
 		
-		insertHisTradeSuccess = dao.insertHisTrade(t_no,0,"HT006");
-		System.out.println("[TRADESERVICE]/PRODUCTRECEIVE INSERTHISTRADESUCCESS : "+insertHisTradeSuccess);
-				
+		try {
+			dao.conn.setAutoCommit(false);
+			pdao.conn.setAutoCommit(false);
+			//경매 거래일 경우 입찰금을 반환
+			if(p_code.equals("P001")) {
+				insertPointToBuyerSuccess = pdao.insertPoint(t_buyer, au_startPr, "SYSTEM", "PNT007", p_no);
+				System.out.println("[TRADESERVICE]/PRODUCTRECEIVE INSERTPOINTBUYERSUCCESS : "+insertPointToBuyerSuccess);
+			}
+			//판매자에게 포인트를 송금
+			insertPointToSalerSuccess = pdao.insertPoint(t_saler, ht_point, t_buyer, "PNT004", p_no);
+			System.out.println("[TRADESERVICE]/PRODUCTRECEIVE INSERTPOINTSALERSUCCESS : "+insertPointToSalerSuccess);
+			if(insertPointToSalerSuccess) {
+				//거래히스토리에 수취확인 상태로 변경
+				insertHisTradeSuccess = dao.insertHisTrade(t_no,0,"HT006");
+				System.out.println("[TRADESERVICE]/PRODUCTRECEIVE INSERTHISTRADESUCCESS : "+insertHisTradeSuccess);
+				if(insertHisTradeSuccess) {
+					//판매 or 경매 판매종료로 변경
+					if(p_code.equals("P001")) {
+						endTrade = dao.updateAuctionAu_code(p_no, "Au003");
+					}else {
+						endTrade = dao.updateNsaleNscode(p_no, "NS_003");
+					}
+					System.out.println("[TRADESERVICE]/PRODUCTRECEIVE ENDTRADE : "+endTrade);
+				}
+			}
+			
+			if(endTrade) {
+				pdao.conn.commit();
+				dao.conn.commit();
+				System.out.println("[TRADESERVICE]/PRODUCTRECEIVE INSERTPOINTSUCCESS COMMIT");
+			}else {
+				pdao.conn.rollback();
+				dao.conn.rollback();
+				System.out.println("[TRADESERVICE]/PRODUCTRECEIVE INSERTPOINTSUCCESS ROLLBACK");
+			}	
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		dao.resClose();
+		pdao.resClose();
 		System.out.println("[TRADESERVICE]/PRODUCTRECEIVE END");
-		return insertHisTradeSuccess;
+		return endTrade;
 	}
 	
 	//판매자 또는 구매자가 거래취소
@@ -300,6 +351,7 @@ public void buyNow(){
 		PointDAO pdao = new PointDAO();
 		
 		try {
+			dao.conn.setAutoCommit(false);
 			pdao.conn.setAutoCommit(false);
 			insertPointSuccess = pdao.insertPoint(t_buyer, ht_point, "SYSTEM", "PNT005", p_no);
 			System.out.println("[TRADESERVICE]/CANCELTRADE INSERTPOINTSUCCESS : "+insertPointSuccess);
@@ -309,17 +361,17 @@ public void buyNow(){
 				if(insertHisTradeSuccess) {
 					updateTradeT_cancleIdSuccess = dao.updateTradeT_cancleId(t_cancleId, t_no);
 					System.out.println("[TRADESERVICE]/CANCELTRADE UPDATETRADET_CANCLEIDSUCCESS : "+updateTradeT_cancleIdSuccess);
-					if(updateTradeT_cancleIdSuccess) {
-						pdao.conn.commit();
-						dao.conn.commit();
-						System.out.println("[TRADESERVICE]/CANCELTRADE INSERTPOINTSUCCESS COMMIT");
-					}else {
-						pdao.conn.rollback();
-						dao.conn.rollback();
-						System.out.println("[TRADESERVICE]/CANCELTRADE INSERTPOINTSUCCESS ROLLBACK");
-					}
 				}
 			}
+			if(updateTradeT_cancleIdSuccess) {
+				pdao.conn.commit();
+				dao.conn.commit();
+				System.out.println("[TRADESERVICE]/CANCELTRADE INSERTPOINTSUCCESS COMMIT");
+			}else {
+				pdao.conn.rollback();
+				dao.conn.rollback();
+				System.out.println("[TRADESERVICE]/CANCELTRADE INSERTPOINTSUCCESS ROLLBACK");
+			}	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -327,5 +379,11 @@ public void buyNow(){
 		pdao.resClose();
 		System.out.println("[TRADESERVICE]/CANCELTRADE END");
 		return updateTradeT_cancleIdSuccess;
+	}
+
+	public GGDto tradeDetail() {
+		int t_no = Integer.parseInt(req.getParameter("t_no"));
+		TradeDAO dao = new TradeDAO();
+		return dao.tradeDetail(t_no);
 	}
 }
