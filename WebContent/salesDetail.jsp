@@ -248,6 +248,7 @@
                     	</div>
                     	<div class="board_t_b">
 							<textarea class="board_text" style="resize: none;"></textarea>
+							<div id="board_text_controll">(0 / 300)</div>
 							<button class="enter">enter</button>
 						</div>
                     </div>
@@ -329,6 +330,10 @@
 	var comment ={};
 	
 	$(".enter").click(function(){
+		
+		if("${sessionScope.loginId}"==null){
+			alert("로그인 해주세요!");
+		}else{
 		comment.id = "${sessionScope.loginId}";
 		comment.p_no = "${dto.p_no}";
 		comment.pc_content = $(".board_text").val();
@@ -353,8 +358,8 @@
 			}
 			
 		});
-		
-		});
+		}
+	});
 	
 	
 	
@@ -369,23 +374,39 @@
 			dataType : "JSON",
 			success : function(data){
 				console.log("받아온 데이터 확인 : ", data.list);
+				drawComment(data.list);
 			},
 			error : function(e){
 				console.log(e);	
 			}
 		});
-		
-			
-		
-		
-	
 	};
-	
-	
+	function drawComment(list){
+		console.log("리스트 정보 확인 : ", list);
+		var comment ="";
+		list.forEach(function(item,idx){
+			comment += "<div class = 'one-text'>";
+			comment += "<div class='one-img-time'>";
+			comment += "<div class='uploadimg'>";
+			comment += "<img src='/photo'";
+			
+		});
+		$(".board").append(comment);
+		
+	}
+	/*글자수 제한*/
+    $(".board_text").on('keyup', function() {
+           $('#board_text_controll').html("("+$(this).val().length+" / 300)");
+    
+           if($(this).val().length > 300) {
+               $(this).val($(this).val().substring(0, 300));
+               $('#board_text_controll').html("(300 / 300)");
+           }
+       });
 	
 	//데이터 가져와서 뿌려주는 댓글 리스트
 	function saleboardlist(sold_board_list){	
-		console.log("sold_board_list=="+sold_board_list)
+		console.log("sold_board_list=="+sold_board_list);
 		var content="";
 		
 		sold_board_list.forEach(function(item,idx){
@@ -403,7 +424,7 @@
 			content+= "</div>";
 		    });	
 		$('.board').append(content);
-	}// 경매 리스트 end	
+	};// 경매 리스트 end	
 	
 	
 	
