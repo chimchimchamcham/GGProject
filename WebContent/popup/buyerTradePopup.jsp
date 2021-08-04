@@ -26,12 +26,14 @@ body{width:100%;background-color:gray;}
 #s_a_code{display:inline-block;background-color:#C1C6C6;border-radius:5px/5px;text-align:center;}
 
 #subject{display:inline-block;}
-#content{position:absolute; left:380px; top:100px}
+#content{position:absolute; left:380px; top:100px;width:300px;height:200px;background-color:green;}
 #top_content{display:block; }
 #send_price{display:inline-block; position:relative; top:10px;width:240px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;border:1px solid gray;border-radius:5px/5px;}
 .p{font-size:2.5rem; position:absolute; top:30px;left:210px }
 #remainPoint{position:relative;top:15px;background-color:#C1C6C6;border-radius:5px/5px;text-align:center;}
-
+#sendTwoBtn{position:relative; top:25px;background-color:blue;}
+#sendY{display:inline-block; border-radius:5px/5px; left:50px; width:50px; height:30px;}
+#chargeBtn{display:inline-block;position:relative;left:10px;width:80px;height:30px;border-radius:5px/5px;}
 </style>
 </head>
 <body>
@@ -59,7 +61,11 @@ body{width:100%;background-color:gray;}
 		<input type="text" name="send_price" id="send_price" value="5500">
 		<span class="p"><b>P</b></span>
 		<div id="remainPoint"><span>둘리</span>님의 잔여 포인트 : <span>25000</span>P</div>
-		<div id="sendTwoBtn"><button>송금</button><button>포인트 충전</button></div>
+		<div id="sendTwoBtn">
+			<button id="sendY">송금</button>
+			<button id="receiveY">수취확인</button>
+			<button id="chargeBtn">포인트 충전</button>
+		</div>
 	</div>
 	
 	
