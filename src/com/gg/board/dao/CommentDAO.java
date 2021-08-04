@@ -110,6 +110,7 @@ public class CommentDAO {
 			dto.setPc_content(rs.getString("pc_content"));
 			dto.setU_newName(rs.getString("u_newname"));
 			dto.setPc_tm(rs.getDate("pc_tm"));
+			
 			list.add(dto);
 		}
 		

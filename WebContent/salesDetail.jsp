@@ -391,7 +391,7 @@
 			comment += "<div class='one-img-time'>";
 			comment += "<div class='uploadimg'>";
 			comment += "<a href='#'>";
-			comment += "<img src='/photo"+item.u_newname+"'/></a>";
+			comment += "<img src='/photo/"+item.u_newName+"'/></a>";
 			comment += "<div class='usertext'>"+item.u_nname+"</div>";
 			comment += "</div>";
 			comment += "<div class='content'>"+item.pc_content+"</div>";
