@@ -63,7 +63,7 @@
     #reviewAvg{font-weight:500;font-size:1.3rem;margin:10px;}
     
     
-    /*뎃글*/
+    /*댓글*/
     #second	div.board{border: 1px solid #D8D8D8;width: 143vh;height: 50vh;float: left;margin: 10px;padding: 20px;overflow: scroll;}
     .board_text{border: 1px solid #D8D8D8; width: 143vh;height:5vh;float: left;margin: 10px;padding: 20px;}
     .enter{ margin-bottom: 10px;margin-left: 10px;padding: 20px;}
@@ -306,7 +306,7 @@
 	});
 	//댓글 버튼 누르면 이상세 페이지에서 마지막에 쓴 댓글 보여주기
 	$("div#twoButton>button.board_button").click(function(){
-		$.ajax({
+		/* $.ajax({
 			type : 'post',
 			url : './commentlist',
 			data : {p_no : "${dto.p_no}",p_id:"${dto.p_id}"},
@@ -323,7 +323,8 @@
 			error : function(e){
 				console.log(e);
 			}
-		});
+		}); */
+		commentListCall();
 	});
 	var comment ={};
 	
@@ -345,6 +346,7 @@
 			dataType: "JSON",
 			success : function(data){
 				console.log("반환 데이터 : " , data);
+				commentListCall();
 			},
 			error : function(e){
 				console.log("에러 발생 : " ,e);
@@ -353,6 +355,32 @@
 		});
 		
 		});
+	
+	
+	
+	function commentListCall(){
+		console.log("댓글 리스트 요청 ");
+		var param ={};
+		param.p_no = "${dto.p_no}";
+		$.ajax({
+			type:"POST",
+			url: "commentListCall",
+			data : param,
+			dataType : "JSON",
+			success : function(data){
+				console.log("받아온 데이터 확인 : ", data.list);
+			},
+			error : function(e){
+				console.log(e);	
+			}
+		});
+		
+			
+		
+		
+	
+	};
+	
 	
 	
 	//데이터 가져와서 뿌려주는 댓글 리스트
