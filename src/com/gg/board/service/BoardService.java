@@ -484,6 +484,9 @@ dao.resClose();
 						  dto.setAu_code(dto2.getAu_code());
 						  dto.setAu_successer(dto2.getAu_successer());
 						  
+						
+						  
+						  
 						 
 					}else {
 						System.out.println("경매 종료 전 상태");
@@ -623,11 +626,13 @@ dao.resClose();
 			String code = dao.details(p_no,id);
 			System.out.println("code : " + code);
 			if(code.equals("P001")) {
-				des = "";
+				des = "auctionDetail.jsp?p_no="+p_no;
 			}else if(code.equals("P002")) {
-				
+				des = "salesDetail.jsp?p_no="+p_no;
 			}else if(code.equals("P003")){
-				
+				des = "commDetailForm.jsp?p_no="+p_no;
+			}else {
+				des = "";
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

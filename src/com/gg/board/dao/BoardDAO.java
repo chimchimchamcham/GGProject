@@ -652,6 +652,7 @@ public class BoardDAO {
 			System.out.println(dto.getU_addr());
 			System.out.println("경매 상태: " + dto.getAu_code());
 			System.out.println(dto.getP_code());
+			System.out.println(dto.getAu_endTm());
 		}
 
 		// 경매 상세보기 (히스토리 테이블)

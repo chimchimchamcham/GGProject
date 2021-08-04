@@ -19,12 +19,10 @@ import com.gg.board.service.UploadService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
-
-
-@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
-	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
-		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" 
-		,"/commList","/salesUpdateForm","/salesUpdate","/details"})
+@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist",
+		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/writeCommunity", "/auctionDetail", "/commDetail",
+		"/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist", "/commList", "/salesUpdateForm",
+		"/salesUpdate", "/details" })
 
 public class BoardController extends HttpServlet {
 
@@ -137,27 +135,27 @@ public class BoardController extends HttpServlet {
 
 			int auctionlistwhatadd = Integer.parseInt(req.getParameter("index1"));
 			int auctionlisthowaline = Integer.parseInt(req.getParameter("index2"));
-			
+
 			System.out.println("listwhatadd:" + auctionlistwhatadd);
 			service.auc_list(userid1, auctionlistwhatadd);
 
 			break;
-			
+
 		case "/auctionmainlist":
 			System.out.println("경매 매인 리스트 요청");
 
-			//String userid1 = (String) req.getSession().getAttribute("loginId");
+			// String userid1 = (String) req.getSession().getAttribute("loginId");
 
 			String auctionmainlistwhatadd = req.getParameter("index_button_auction");
 			int auctionmainlisthowaline = Integer.parseInt(req.getParameter("index2"));
-			
+
 			System.out.println("auctionmainlisthowaline:" + auctionmainlistwhatadd);
 			System.out.println("auctionmainlisthowaline:" + auctionmainlisthowaline);
-			
-			service.mainauc_list(auctionmainlistwhatadd,auctionmainlisthowaline);
+
+			service.mainauc_list(auctionmainlistwhatadd, auctionmainlisthowaline);
 
 			break;
-			
+
 		case "/maidelist":
 			System.out.println("판매 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
@@ -169,7 +167,7 @@ public class BoardController extends HttpServlet {
 		case "/communitylist":
 			System.out.println("커뮤니티 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
-			
+
 			service.community_list(userid);
 
 			break;
@@ -266,14 +264,14 @@ public class BoardController extends HttpServlet {
 			saleCat = map.get("saleCat");
 			System.out.println("saleCat list size : " + saleCat.size());
 			req.setAttribute("saleCat", saleCat);
-			
+
 			// 글 내용
 			req.setAttribute("salesUpdate", service.salesUpdateForm());
 			dis = req.getRequestDispatcher("salesUpdate.jsp");
 			dis.forward(req, resp);
 
 			break;
-			
+
 		case "/salesUpdate":
 			System.out.println("판매 글 수정 요청");
 			p_no = Integer.parseInt(req.getParameter("p_no"));
@@ -290,18 +288,88 @@ public class BoardController extends HttpServlet {
 
 		/* ========================= */
 		case "/details":
-			
-			  System.out.println("걸러주는 디테일즈"); p_no =
-			  Integer.parseInt(req.getParameter("p_no")); String id =
-			  req.getParameter("id"); System.out.println("이것이 번호다 : " + p_no);
-			  System.out.println("이것이 아이디다 : " + id); service = new BoardService(req,
-			  resp); String code = service.details(p_no,id);
-			 
-			
-			
-			
+
+			System.out.println("걸러주는 디테일즈");
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			String id = req.getParameter("id");
+			System.out.println("이것이 번호다 : " + p_no);
+			System.out.println("이것이 아이디다 : " + id);
+			service = new BoardService(req, resp);
+			String des = service.details(p_no, id);
+			if (des.equals("auctionDetail.jsp?p_no=" + p_no)) {
+				System.out.println("경매글 상세보기 요청");
+				dto = service.auctionDetail(); // 경매글 해당 글번호 내용 dto로 반환
+				// System.out.println("[Controller] 경매글 상세보기 반환:"+dto);
+				// System.out.println("[Controller] 경매 내용 : "+dto.getP_content());
+				// System.out.println("[Controller] 경매 제목 : "+dto.getP_title());
+
+				//// 시작 시간, 종료시간 형식 변환/////
+				DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+				Date au_endTm = dto.getAu_endTm();
+				Date au_startTm = dto.getAu_startTm();
+
+				System.out.println("au_endTm : " + au_endTm);
+				System.out.println("au_startTm : " + au_startTm);
+
+				String endTm = dateFormat.format(au_endTm);
+				String startTm = dateFormat.format(au_startTm);
+				///////////////
+
+				// 좋아요를 눌렀는지 확인
+				isLiked = false;
+				isLiked = service.isLiked();
+
+				// 구매요청을 눌렀는지 확인
+				isBuyRequested = false;
+				isBuyRequested = service.isBuyRequested();
+
+				req.setAttribute("dto", dto);
+				req.setAttribute("isLiked", isLiked); // 좋아요여부
+
+				req.setAttribute("endTm", endTm);
+				req.setAttribute("startTm", startTm);
+
+				dis = req.getRequestDispatcher("auctionDetail.jsp");
+				dis.forward(req, resp);
+			} else if (des.equals("salesDetail.jsp?p_no=" + p_no)) {
+				System.out.println("판매글 상세보기");
+				dto = service.salesDetail();
+
+				// 좋아요를 눌렀는지 확인
+				isLiked = false;
+				isLiked = service.isLiked();
+
+				// 구매요청을 눌렀는지 확인
+				isBuyRequested = false;
+				isBuyRequested = service.isBuyRequested();
+
+				// 판매자의 판매목록 3개를 가져오기
+				p_id = dto.getP_id();
+				System.out.println("p_id : " + p_id);
+				sale3List = service.sale3List(p_id);
+				System.out.println("sale3List size" + sale3List.size());
+
+				req.setAttribute("dto", dto);
+				req.setAttribute("isLiked", isLiked);
+				req.setAttribute("isBuyRequested", isBuyRequested);
+				req.setAttribute("sale3List", sale3List);
+
+				dis = req.getRequestDispatcher("salesDetail.jsp");
+				dis.forward(req, resp);
+
+			} else if (des.equals("commDetailForm.jsp?p_no=" + p_no)) {
+				System.out.println("커뮤니티 상세보기 요청");
+				dto = service.commDetail();
+				req.setAttribute("dto", dto);
+				dis = req.getRequestDispatcher("commDetailForm.jsp");
+				dis.forward(req, resp);
+			} else {
+				dis = req.getRequestDispatcher("index.jsp");
+				dis.forward(req, resp);
+			}
+
 			break;
-			
+
 		/* ======================== */
 		case "/auctionDetail":
 			System.out.println("경매글 상세보기 요청");
@@ -349,7 +417,7 @@ public class BoardController extends HttpServlet {
 			dis.forward(req, resp);
 
 			break;
-	
+
 		case "/commList":
 			resp.setCharacterEncoding("UTF-8");
 			ArrayList<GGDto> list = service.commList();

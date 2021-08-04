@@ -99,7 +99,12 @@ public void buyNow(){
 	System.out.println("p_no: "+p_no+" / u_id:"+u_id+" / bidPr: "+ha_bidPr);
 	
 	TradeDAO dao = new TradeDAO();
-	success = dao.buyNow(p_no, u_id, ha_bidPr);
+	try {
+		success = dao.buyNow(p_no, u_id, ha_bidPr);
+	} catch (SQLException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
 	System.out.println("즉결구매 성공 여부 :"+success);
 	if(success) {
 		msg = "즉결구매에 성공하였습니다.";
