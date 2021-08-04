@@ -530,9 +530,9 @@ dao.resClose();
 		BoardDAO dao = new BoardDAO();
 		
 		if(price != null) { //판매글 수정
-			System.out.println("판매글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+followLimYN);
+			System.out.println("판매 글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+followLimYN);
 		} else if(startPr !=null ){ //경매글 수정
-			System.out.println("판매글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+followLimYN+"/ 즉결가 : "+instantPr+"/ 시작가 : "+startPr+"/ 시작시간 : "+startTm+"/ 종료시간 : "+endTm);
+			System.out.println("경매 글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+followLimYN+"/ 즉결가 : "+instantPr+"/ 시작가 : "+startPr+"/ 시작시간 : "+startTm+"/ 종료시간 : "+endTm);
 		}else {//커뮤니티 수정
 			System.out.println("커뮤니티 수정 값 : "+title+"/"+content+"/"+category);
 		}
