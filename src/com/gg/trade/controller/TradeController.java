@@ -95,6 +95,7 @@ public class TradeController extends HttpServlet {
 			}
 			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);
+			System.out.println("[TRADECONTROLLER]/TRADEDETAIL END");
 			break;
 		case "/sendPoint":
 			System.out.println("[TRADECONTROLLER]/SENDPOINT START");
@@ -102,6 +103,7 @@ public class TradeController extends HttpServlet {
 			success = service.sendPoint();
 			dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
 			dis.forward(req, resp);
+			System.out.println("[TRADECONTROLLER]/SENDPOINT END");
 			break;
 		case "/pointApproval":
 			System.out.println("[TRADECONTROLLER]/POINTAPPROVAL START");
@@ -109,6 +111,7 @@ public class TradeController extends HttpServlet {
 			success = service.pointApproval();
 			dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
 			dis.forward(req, resp);
+			System.out.println("[TRADECONTROLLER]/POINTAPPROVAL END");
 			break;
 		case "/pointDeny":
 			System.out.println("[TRADECONTROLLER]/POINTDENY START");
@@ -123,6 +126,7 @@ public class TradeController extends HttpServlet {
 			success = service.productShipping();
 			dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
 			dis.forward(req, resp);
+			System.out.println("[TRADECONTROLLER]/PRODUCTSHIPPING END");
 			break;
 		case "/productReceive":
 			System.out.println("[TRADECONTROLLER]/PRODUCTRECEIVE START");
@@ -130,6 +134,7 @@ public class TradeController extends HttpServlet {
 			success = service.productReceive();
 			dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
 			dis.forward(req, resp);
+			System.out.println("[TRADECONTROLLER]/PRODUCTRECEIVE END");
 			break;
 		case "/cancelTrade":
 			System.out.println("[TRADECONTROLLER]/CANCELTRADE START");
@@ -137,6 +142,7 @@ public class TradeController extends HttpServlet {
 			success = service.cancelTrade();
 			dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
 			dis.forward(req, resp);
+			System.out.println("[TRADECONTROLLER]/CANCELTRADE END");
 			break;
 		
 		}
