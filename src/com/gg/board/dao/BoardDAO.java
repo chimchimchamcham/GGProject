@@ -850,6 +850,7 @@ public class BoardDAO {
 				dto.setU_nname(rs.getString("u_nname"));
 				dto.setP_tm(rs.getDate("p_tm"));
 				dto.setP_view(rs.getInt("p_view"));
+				dto.setP_likeCount(rs.getInt("p_likecount"));
 				list.add(dto);
 			}
 		} catch (SQLException e) {

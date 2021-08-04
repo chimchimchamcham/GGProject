@@ -32,48 +32,55 @@
 	<input type = "checkbox" class = "category" name = "C005" value="'C005'," checked/>공유해요
 	<input type = "checkbox" class = "category" name = "C006" value="'C006'," checked/>잡담해요
 	<input type = "checkbox" class = "category" name = "C007" value="'C007'," checked/>홍보해요
-	<c:forEach items="${data.list}" var="item">
-		<div>
-			<span>${item.c_name}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-			<span>${item.u_id}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-			<span>${item.u_nname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-			<span>${item.p_title}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-			<span>${item.p_tm}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-			<span>${item.p_view}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-		</div>
-	</c:forEach>
+	<table>
+		<thead>
+			<tr>
+				<th>카테고리</th>
+				<th>제목</th> 
+				<th>작성자</th> 
+				<th>작성일</th> 
+				<th>조회수</th> 
+				<th>좋아요</th> 
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
 </div>
 </body>
 <script type="text/javascript">
-$.ajax({type:"POST",
+var lists = [];
+$("input.category:checked").each(function(idx,value){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+ 	lists.push($(this).val());
+});
+$.ajax({
+	type:"POST",
 	data:{
 		'categorys':lists
 		},
 	url:"commList",
 	dataType:'JSON',
 	success:function(data) {
-		console.log(data.list[0]);
+		drawList(data.list);
 	},
 	error:function(e){
 		console.log(e);
 	}
-	});
 });
+
  $("input.category").change(function(){ 
- var lists = [];
- $("input.category:checked").each(function(idx,value){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
-	 lists.push($(this).val());
- });
+ 	$("input.category:checked").each(function(idx,value){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
+	 	lists.push($(this).val());
+ 	});
 
  
-$.ajax({type:"POST",
+	$.ajax({type:"POST",
 			data:{
 				'categorys':lists
 				},
 			url:"commList",
 			dataType:'JSON',
 			success:function(data) {
-				console.log(data.list[0]);
+				drawList(data.list);
     		},
     		error:function(e){
     			console.log(e);
@@ -93,5 +100,24 @@ $.ajax({type:"POST",
 
  });
  		
+ function drawList(list){
+		console.log("드로우 리스트");
+		console.log(list);
+		var content= "";
+		
+		console.log("forEach문");
+		//자바스크립트 foreach문
+		list.forEach(function(item,idx){
+			console.log(idx,item);
+			content += "<tr><td>"+item.c_name+"</td>";
+			content += "<td>"+item.p_title+"</td>";
+			content += "<td>"+item.u_nname+"</td>";
+			content += "<td>"+item.p_tm+"</td>";
+			content += "<td>"+item.p_view+"</td>";
+			content += "<td>"+item.p_likecount+"</td></tr>";
+		});
+		$("tbody").empty();
+		$("tbody").append(content);
+	}
 </script>
 </html>
