@@ -50,27 +50,20 @@ textarea {
 <script>
 // 오늘 날짜 설정
 var currDate = new Date().toISOString().substring(0,10);
-console.log("오늘 날짜 : ",currDate);
-</script>
 
+</script>
 </head>
 <body>
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
 		<div id="wrap">
 			<h2>경매 글 수정</h2>
-			<div id="tradeForm">
 				<p>
 					<input type="text" name="title" value="${auctionUpdate.p_title }" style='width: "1000px"' placeholder="제목을 입력해주세요" />
 				</p>
 				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
 					<label for='test'>
-						<c:if test="${auctionUpdate.i_newName  eq null}">
-							<img src="img/plus-icon.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
-						</c:if>
-						<c:if test="${auctionUpdate.i_newName  ne null}">
-							<img src="/photo/${auctionUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
-						</c:if>
+							<img src="/photo/${auctionUpdatei_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
 					</label>
 					<input type="file" name="oriFileImg" style="display: none" id="test" />
 				</form>
@@ -79,12 +72,11 @@ console.log("오늘 날짜 : ",currDate);
 					${auctionUpdate.p_content}</textarea>
 				</p>
 				<div id="update_cnt">( 0 / 1000)</div>
-				<p>경매시간 설정</p>
 				<div id="saleForm">
 					<p id='delivery'>
-						거래방식(필수선택) &nbsp;&nbsp;&nbsp; <input type="radio"
-							name="deliveryYN" value="Y">택배 <input type="radio"
-							name="deliveryYN" value="N">직거래
+						거래방식(필수선택) &nbsp;&nbsp;&nbsp;
+						<input type="radio" name="deliveryYN" value="Y">택배
+						<input type="radio" name="deliveryYN" value="N">직거래
 					</p>
 					<p id="category">
 						카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
@@ -94,33 +86,33 @@ console.log("오늘 날짜 : ",currDate);
 						</select>
 					</p>
 					<p>
-						공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
-							value="N">전체공개 <input type="radio" name="disclosure"
-							value="Y">팔로우한정
+						공개범위&nbsp;&nbsp;&nbsp;
+						<input type="radio" name="disclosure" value="N">전체공개
+						<input type="radio" name="disclosure" value="Y">팔로우한정
 					</p>
 				</div>
 				<!--예약 경매 버튼 클릭시-->
+				<p>경매시간 설정</p>
 				<div id="reservForm">
 					<p>
-						<input type="date" id="from" name="from" style="width: 120px;">
-						~ <input type="date" id="to" name="to" style="width: 120px;">
+						<input type="date" id="from" name="from" style="width: 120px;" value="${auctionUpdate.au_startTm}">
+						<%-- ~ <input type="date" id="to" name="to" style="width: 120px;" value="${auctionUpdate.au_endtm}"> --%>
 					</p>
 					<!--아래에 선택 일자 표시-->
 					<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
 				</div>
 				<p>
-					시작가격&nbsp;<input type="text" name="startPrice" value=""
+					시작가격&nbsp;<input type="text" name="startPrice" value="${auctionUpdate.au_startPr}"
 						placeholder="시작가격 입력(숫자입력)" />&nbsp;Point
 				</p>
 				<p>
-					즉결가격&nbsp;<input type="text" name="promptPrice" value=""
+					즉결가격&nbsp;<input type="text" name="promptPrice" value="${auctionUpdate.au_instantPr}"
 						placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
 				</p>
-			</div>
 		</div>
 		<div id="twoButton">
-			<input type="button" id="submit" value="등록" /> <input type="button"
-				onclick="location.href='./index.jsp'" value="취소" />
+			<input type="button" id="submit" value="등록" />
+			<input type="button" onclick="location.href='./index.jsp'" value="취소" />
 		</div>
 	</div>
 	<!-- main div end -->
@@ -128,6 +120,7 @@ console.log("오늘 날짜 : ",currDate);
 </body>
 
 <script>
+
 
 //예약
 // 경매 예약 시작 시간 초기 설정 (오늘)
@@ -160,9 +153,11 @@ $("#to").click(function(){
 
 	});
 
-/* $("select[name=saleCat]").val("${auctionUpdate.s_code}").prop("selected", true);
+$("select[name=saleCat]").val("${auctionUpdate.s_code}").prop("selected", true);
 $("input[name=deliveryYN]").val("${auctionUpdate.s_DeliveryYN}").prop("checked", true);
-$("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked", true); */
+$("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked", true);
+$("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked", true);
+$("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked", true);
 
 	var success = false;
 	var param = {};
