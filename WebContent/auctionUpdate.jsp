@@ -57,61 +57,68 @@ var currDate = new Date().toISOString().substring(0,10);
 	<div id="main">
 		<div id="wrap">
 			<h2>경매 글 수정</h2>
-				<p>
-					<input type="text" name="title" value="${auctionUpdate.p_title }" style='width: "1000px"' placeholder="제목을 입력해주세요" />
-				</p>
-				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
-					<label for='test'>
-							<img src="/photo/${auctionUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
-					</label>
-					<input type="file" name="oriFileImg" style="display: none" id="test" />
-				</form>
-				<p>
-					<textarea name="content" rows="30" cols="100" id="update" style="overflow-y: scroll" placeholder="내용입력">
+			<p>
+				<input type="text" name="title" value="${auctionUpdate.p_title }"
+					style='width: "1000px"' placeholder="제목을 입력해주세요" />
+			</p>
+			<form method='POST' enctype="multipart/form-date" id='uploadForm'>
+				<label for='test'> <img
+					src="/photo/${auctionUpdate.i_newName}" id="preview-image"
+					width="100px" height="100px" style="border: solid 1px gray" />
+				</label> <input type="file" name="oriFileImg" style="display: none"
+					id="test" /> <input type="file" name="oriFileImg"
+					style="display: none" id="test" />
+			</form>
+			<p>
+				<textarea name="content" rows="30" cols="100" id="update"
+					style="overflow-y: scroll" placeholder="내용입력">
 					${auctionUpdate.p_content}</textarea>
+			</p>
+			<div id="update_cnt">( 0 / 1000)</div>
+			<div id="saleForm">
+				<p id='delivery'>
+					거래방식(필수선택) &nbsp;&nbsp;&nbsp;
+						<input type="radio" name="deliveryYN" value="Y" <c:if test="${auctionUpdate.s_DeliveryYN eq 'Y'}">checked="checked"</c:if>/>택배
+						<input type="radio" name="deliveryYN" value="N" <c:if test="${auctionUpdate.s_DeliveryYN eq 'N'}">checked="checked"</c:if>/>직거래
 				</p>
-				<div id="update_cnt">( 0 / 1000)</div>
-				<div id="saleForm">
-					<p id='delivery'>
-						거래방식(필수선택) &nbsp;&nbsp;&nbsp;
-						<input type="radio" name="deliveryYN" value="Y">택배
-						<input type="radio" name="deliveryYN" value="N">직거래
-					</p>
-					<p id="category">
-						카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
-							<c:forEach items="${saleCat }" var="SaleCategory">
-								<option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
-							</c:forEach>
-						</select>
-					</p>
-					<p>
-						공개범위&nbsp;&nbsp;&nbsp;
-						<input type="radio" name="disclosure" value="N">전체공개
-						<input type="radio" name="disclosure" value="Y">팔로우한정
-					</p>
-				</div>
-				<!--예약 경매 버튼 클릭시-->
-				<p>경매시간 설정</p>
-				<div id="reservForm">
-					<p>
-						<input type="date" id="from" name="from" style="width: 120px;" value="${auctionUpdate.au_startTm}">
-						~ <input type="date" id="to" name="to" style="width: 120px;" value="${auctionUpdate.au_endTm}">
-					</p>
-					<!--아래에 선택 일자 표시-->
-					<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
-				</div>
-				<p>
-					시작가격&nbsp;<input type="text" name="startPrice" value="${auctionUpdate.au_startPr}"
-						placeholder="시작가격 입력(숫자입력)" />&nbsp;Point
+				<p id="category">
+					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
+					<select name="saleCat">
+						<c:forEach items="${saleCat }" var="SaleCategory">
+							<option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
+						</c:forEach>
+					</select>
 				</p>
 				<p>
-					즉결가격&nbsp;<input type="text" name="promptPrice" value="${auctionUpdate.au_instantPr}"
-						placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
+					공개범위&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="disclosure" value="N" <c:if test="${auctionUpdate.s_followLimYN eq 'N'}">checked="checked"</c:if>>전체공개
+					<input type="radio" name="disclosure" value="Y" <c:if test="${auctionUpdate.s_followLimYN eq 'Y'}">checked="checked"</c:if>>팔로우한정
 				</p>
+			</div>
+			<!--예약 경매 버튼 클릭시-->
+			<p>경매시간 설정</p>
+			<div id="reservForm">
+				<p>
+					<input type="date" id="from" name="from" style="width: 120px;"
+						value="${auctionUpdate.au_startTm}"> ~ <input type="date"
+						id="to" name="to" style="width: 120px;"
+						value="${auctionUpdate.au_endTm}">
+				</p>
+				<!--아래에 선택 일자 표시-->
+				<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
+			</div>
+			<p>
+				시작가격&nbsp;<input type="text" name="startPrice"
+					value="${auctionUpdate.au_startPr}" placeholder="시작가격 입력(숫자입력)" />&nbsp;Point
+			</p>
+			<p>
+				즉결가격&nbsp;<input type="text" name="promptPrice"
+					value="${auctionUpdate.au_instantPr}" placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
+			</p>
 		</div>
 		<div id="twoButton">
-			<input type="button" id="submit" value="등록" />
-			<input type="button" onclick="location.href='./index.jsp'" value="취소" />
+			<input type="button" id="submit" value="등록" /> <input type="button"
+				onclick="location.href='./index.jsp'" value="취소" />
 		</div>
 	</div>
 	<!-- main div end -->
@@ -119,7 +126,8 @@ var currDate = new Date().toISOString().substring(0,10);
 </body>
 
 <script>
-
+console.log($('input[name=deliveryYN]').val());
+console.log("${auctionUpdate.s_DeliveryYN}");
 
 //예약
 // 경매 예약 시작 시간 초기 설정 (오늘)
@@ -155,7 +163,6 @@ $("#to").click(function(){
 $("select[name=saleCat]").val("${auctionUpdate.s_code}").prop("selected", true);
 $("input[name=deliveryYN]").val("${auctionUpdate.s_DeliveryYN}").prop("checked", true);
 $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked", true);
-$("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked", true);
 
 	var success = false;
 	var param = {};
@@ -172,11 +179,15 @@ $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked"
 		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
 		console.log(data);
 
-		if(data==null){
-			alert("사진을 등록하셔야만 합니다!");
-			
-		}else {
-			if($("input[name='startPrice']").val() ==""){
+		if($("input[name='title']").val() ==""){
+			alert("제목을 입력해주세요!");
+			$("input[name='title']").focus();
+			return false;
+		}else if($("input[name='content']").val() ==""){
+			alert("내용을 입력해주세요!");
+			$("input[name='startPrice']").focus();
+			return false;
+		}else if($("input[name='startPrice']").val() ==""){
 				alert("시작 가격을 설정해주세요!");
 				$("input[name='startPrice']").focus();
 				return false;
@@ -200,8 +211,8 @@ $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked"
 				param.title = $("input[name='title']").val();// 제목
 				param.content = $("textarea[name='content']").val(); //내용
 				param.category = $("select[name='saleCat']").val();//카테고리
-				param.deliveryYN = $("input[name=deliveryYN]").val(); //택배여부
-				param.followLimYN = $("input[name=disclosure]").val(); //팔로워한정 판매 여부
+				param.deliveryYN = $("input[name='deliveryYN']:checked").val(); //택배여부
+				param.followYN = $("input[name='disclosure']:checked").val();; //팔로워한정 판매 여부
 				param.instantPr = $("input[name=promptPrice]").val(); // 즉결가
 				param.startPr = $("input[name=startPrice]").val(); // 시작가
 				param.startTm = $("input[name=from]").val(); // 시작 시간
@@ -223,18 +234,18 @@ $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked"
 					data : param,
 					dataType : 'JSON',
 					success : function(data) {
-						console.log("글 작성 번호 :",data.p_no);
-						form.append("p_no",data.p_no);
+						console.log("글 작성 번호 :",data.sucP_no);
+						form.append("p_no",data.sucP_no);
 						FileUpload();
-						//향후 변경사항 경매상세보기 만들고 보내주는 페이지 편집
-						location.href='./auctionDetail?p_no='+data.p_no;
+						alert("경매 글 수정을 성공했습니다.");
+						location.href="./auctionDetail?p_no="+data.sucP_no;
 					},
 					error : function(e) {
-						console.log(e);
+						alert("경매 글 수정을 실패하였습니다!");
+						location.href = "./auctionUpdateForm?P_no="+ ${auctionUpdate.p_no};
 					}
 				})
 			}
-		}
 		}
 		})
 
