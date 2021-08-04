@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
 	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
 		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" 
-		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate"})
+		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate","/flowlist"})
 
 public class BoardController extends HttpServlet {
 
@@ -170,6 +170,14 @@ public class BoardController extends HttpServlet {
 			userid = (String) req.getSession().getAttribute("loginId");
 
 			service.community_list(userid);
+
+			break;
+		case "/flowlist":
+			System.out.println("팔로잉리스트 리스트 요청");
+			userid = (String) req.getSession().getAttribute("loginId");
+
+			int flowORflowing = Integer.parseInt(req.getParameter("index1"));
+			service.flow_list(userid,flowORflowing);
 
 			break;
 		/* ====== 글쓰기 ====== */
