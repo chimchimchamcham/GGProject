@@ -852,6 +852,7 @@ public class BoardDAO {
 				dto.setP_tm(rs.getDate("p_tm"));
 				dto.setP_view(rs.getInt("p_view"));
 				dto.setP_likeCount(rs.getInt("p_likecount"));
+				dto.setP_no(rs.getInt("p_no"));
 				list.add(dto);
 			}
 		} catch (SQLException e) {

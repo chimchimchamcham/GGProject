@@ -547,13 +547,13 @@ dao.resClose();
 	}
 
 	public GGDto commDetail() {
-		String P_no = req.getParameter("p_no");
+		String p_no = req.getParameter("p_no");
 		BoardDAO dao = new BoardDAO();
 		GGDto dto = null;
 		try {
 			dao.conn.setAutoCommit(false);
-			if(0<dao.upP_view(Integer.parseInt(P_no))) {
-				dto = dao.commDetail(P_no);
+			if(0<dao.upP_view(Integer.parseInt(p_no))) {
+				dto = dao.commDetail(p_no);
 			}
 			if(dto == null) {
 				dao.conn.rollback();
