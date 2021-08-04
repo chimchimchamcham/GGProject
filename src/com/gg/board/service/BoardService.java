@@ -652,9 +652,8 @@ dao.resClose();
 			e.printStackTrace();
 		}finally {
 			dao.resClose();
-
+		}
 		return des;
 	}
 
-	
 }

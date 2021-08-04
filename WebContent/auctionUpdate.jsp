@@ -50,7 +50,6 @@ textarea {
 <script>
 // 오늘 날짜 설정
 var currDate = new Date().toISOString().substring(0,10);
-
 </script>
 </head>
 <body>
@@ -63,7 +62,7 @@ var currDate = new Date().toISOString().substring(0,10);
 				</p>
 				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
 					<label for='test'>
-							<img src="/photo/${auctionUpdatei_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
+							<img src="/photo/${auctionUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
 					</label>
 					<input type="file" name="oriFileImg" style="display: none" id="test" />
 				</form>
@@ -96,7 +95,7 @@ var currDate = new Date().toISOString().substring(0,10);
 				<div id="reservForm">
 					<p>
 						<input type="date" id="from" name="from" style="width: 120px;" value="${auctionUpdate.au_startTm}">
-						<%-- ~ <input type="date" id="to" name="to" style="width: 120px;" value="${auctionUpdate.au_endtm}"> --%>
+						~ <input type="date" id="to" name="to" style="width: 120px;" value="${auctionUpdate.au_endTm}">
 					</p>
 					<!--아래에 선택 일자 표시-->
 					<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
@@ -157,7 +156,6 @@ $("select[name=saleCat]").val("${auctionUpdate.s_code}").prop("selected", true);
 $("input[name=deliveryYN]").val("${auctionUpdate.s_DeliveryYN}").prop("checked", true);
 $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked", true);
 $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked", true);
-$("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked", true);
 
 	var success = false;
 	var param = {};
@@ -178,9 +176,6 @@ $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked"
 			alert("사진을 등록하셔야만 합니다!");
 			
 		}else {
-			param.title = $("input[name='title']").val();// 제목
-			param.content = $("textarea[name='content']").val(); //내용
-			param.category = $("select[name='saleCat']").val();//select name으로 값 받기
 			if($("input[name='startPrice']").val() ==""){
 				alert("시작 가격을 설정해주세요!");
 				$("input[name='startPrice']").focus();
@@ -199,14 +194,19 @@ $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked"
 			}else if($("#to").val()==""){
 				alert("경매 종료 날짜를 선택해 주세요!");
 				return false;
-			}
+			}else{
 			
-			param.startPr = $("input[name='startPrice']").val(); //시작가
-			param.instantPr = $("input[name='promptPrice']").val(); // 즉결가
-			param.deliveryYN = $("input[name='deliveryYN']:checked").val(); //택배여부
-			param.followYN = $("input[name='disclosure']:checked").val(); // 팔로워 한정 여부
-			param.startTm = $("#from").val(); // 시작 날짜
-			param.endTm = $("#to").val();
+				param.p_no = ${auctionUpdate.p_no};
+				param.title = $("input[name='title']").val();// 제목
+				param.content = $("textarea[name='content']").val(); //내용
+				param.category = $("select[name='saleCat']").val();//카테고리
+				param.deliveryYN = $("input[name=deliveryYN]").val(); // 택배여부
+				param.followLimYN = $("input[name=disclosure]").val(); // 팔로워한정 판매 여부
+				param.instantPr = $("input[name=promptPrice]").val(); // 즉결가
+				param.startPr = $("input[name=startPrice]").val(); // 시작가
+				param.startTm = $("input[name=from]").val(); // 시작 시간
+				param.endTm = $("input[name=to]").val(); // 종료 시간
+
 			var checker = true;
 			console.log(param);
 			//ajax url="trade"
@@ -219,7 +219,7 @@ $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked"
 			if (checker == true) {
 				$.ajax({
 					type : 'POST',
-					url : 'writeTrade',
+					url : 'auctionUpdate',
 					data : param,
 					dataType : 'JSON',
 					success : function(data) {
@@ -236,8 +236,8 @@ $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked"
 			}
 		}
 		}
-		
-	});
+		})
+
 		
 	///////사진 선택시 미리보기 변경/////////
 	function readImage(input) {

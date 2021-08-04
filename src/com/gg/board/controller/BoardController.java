@@ -308,6 +308,24 @@ public class BoardController extends HttpServlet {
 
 			break;
 			
+		case "/auctionUpdate":
+			System.out.println("경매 글 수정 요청");
+			
+			// 카테고리
+			map = service.category();
+			System.out.println("[Controller ] category success : " + map);
+
+			saleCat = map.get("saleCat");
+			System.out.println("saleCat list size : " + saleCat.size());
+			req.setAttribute("saleCat", saleCat);
+
+			// 글 내용
+			req.setAttribute("auctionUpdate", service.auctionUpdateForm());
+			dis = req.getRequestDispatcher("auctionUpdate.jsp");
+			dis.forward(req, resp);
+
+			break;
+			
 			
 			
 		/* ========================= */
