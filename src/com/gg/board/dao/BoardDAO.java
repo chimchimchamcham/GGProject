@@ -704,7 +704,7 @@ public class BoardDAO {
 
 	/* 글 수정 */
 	public int commUpdate(int p_no, String title, String content, String category, String deliveryYN, String price,
-			String disclosure, String instantPr, String startPr, String startTm, String endTm) {
+			String followLimYN, String instantPr, String startPr, String startTm, String endTm) {
 
 		System.out.println("테스트 category" + category);
 		int sucP_no = 0;
@@ -734,7 +734,7 @@ public class BoardDAO {
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, category);
 				ps.setString(2, deliveryYN);
-				ps.setString(3, disclosure);
+				ps.setString(3, followLimYN);
 				ps.setInt(4, p_no);
 				int success = ps.executeUpdate();
 				if (success > 0) {
@@ -761,7 +761,7 @@ public class BoardDAO {
 			}
 
 			/* ==== 경매글 수정 ==== */
-		} else if (instantPr != null) {
+		} else if (startPr != null) {
 			// post 테이블 업데이트
 			sql = "UPDATE post SET p_title=?, p_content=? WHERE p_no=?";
 			try {
@@ -784,7 +784,7 @@ public class BoardDAO {
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, category);
 				ps.setString(2, deliveryYN);
-				ps.setString(3, disclosure);
+				ps.setString(3, followLimYN);
 				ps.setInt(4, p_no);
 				int success = ps.executeUpdate();
 				if (success > 0) {

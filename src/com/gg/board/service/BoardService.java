@@ -520,7 +520,7 @@ dao.resClose();
 		//판매글 수정
 		String deliveryYN = req.getParameter("deliveryYN");
 		String price = req.getParameter("price");
-		String disclosure = req.getParameter("disclosure");
+		String followLimYN = req.getParameter("followLimYN");
 		//경매글 수정
 		String instantPr = req.getParameter("instantPr");
 		String startPr = req.getParameter("startPr");
@@ -530,14 +530,14 @@ dao.resClose();
 		BoardDAO dao = new BoardDAO();
 		
 		if(price != null) { //판매글 수정
-			System.out.println("판매글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+disclosure);
-		} else if(instantPr !=null ){ //경매글 수정
-			System.out.println("판매글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+disclosure+"/ 즉결가 : "+instantPr+"/ 시작가 : "+startPr+"/ 시작시간 : "+startTm+"/ 종료시간 : "+endTm);
+			System.out.println("판매글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+followLimYN);
+		} else if(startPr !=null ){ //경매글 수정
+			System.out.println("판매글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+followLimYN+"/ 즉결가 : "+instantPr+"/ 시작가 : "+startPr+"/ 시작시간 : "+startTm+"/ 종료시간 : "+endTm);
 		}else {//커뮤니티 수정
 			System.out.println("커뮤니티 수정 값 : "+title+"/"+content+"/"+category);
 		}
 		
-		sucP_no = dao.commUpdate(p_no, title,content,category,deliveryYN,price,disclosure,instantPr,startPr,startTm,endTm);
+		sucP_no = dao.commUpdate(p_no, title,content,category,deliveryYN,price,followLimYN,instantPr,startPr,startTm,endTm);
 		
 		dao.resClose();
 		return sucP_no;

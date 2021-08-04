@@ -200,8 +200,8 @@ $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked"
 				param.title = $("input[name='title']").val();// 제목
 				param.content = $("textarea[name='content']").val(); //내용
 				param.category = $("select[name='saleCat']").val();//카테고리
-				param.deliveryYN = $("input[name=deliveryYN]").val(); // 택배여부
-				param.followLimYN = $("input[name=disclosure]").val(); // 팔로워한정 판매 여부
+				param.deliveryYN = $("input[name=deliveryYN]").val(); //택배여부
+				param.followLimYN = $("input[name=disclosure]").val(); //팔로워한정 판매 여부
 				param.instantPr = $("input[name=promptPrice]").val(); // 즉결가
 				param.startPr = $("input[name=startPrice]").val(); // 시작가
 				param.startTm = $("input[name=from]").val(); // 시작 시간
