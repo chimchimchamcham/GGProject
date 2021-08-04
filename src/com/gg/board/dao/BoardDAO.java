@@ -412,6 +412,35 @@ public class BoardDAO {
 		return communitylist;
 	}
 
+	
+	public ArrayList<GGDto> flowlist(String userid, int flowORflowing) throws SQLException {
+		String sql = "";
+		if (flowORflowing == 0) {//나를 팔로우 한
+			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_newname,u.u_nname FROM follow f,userinfo u where f.f_receiveid = ? and f.f_sendid = u.u_id";
+		} else if (flowORflowing == 1) {//내가 팔로잉한
+			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_newname,u.u_nname FROM follow f,userinfo u where f.f_sendid = 'user1' and f.f_receiveid = u.u_id";
+		}
+
+		ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
+
+		System.out.println("flowlist:" + flowlist);
+
+		ps = conn.prepareStatement(sql);
+
+		System.out.println("daouserID:" + userid);
+
+		ps.setString(1, userid);
+		rs = ps.executeQuery();
+		System.out.println("rs:" + rs);
+
+		while (rs.next()) {
+			GGDto dto = new GGDto();
+
+			flowlist.add(dto);
+		}
+		System.out.println("actionlist:" + flowlist);
+		return flowlist;
+	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public HashMap<String, ArrayList<GGDto>> category() {
 		String sql = "select * from codes where c_code like 'S%'";
@@ -929,5 +958,7 @@ public class BoardDAO {
 
 		return code;
 	}
+
+
 
 }

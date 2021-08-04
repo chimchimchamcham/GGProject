@@ -269,6 +269,8 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				url ='./maidelist';
 			}else if($index == 3){
 				url ='./communitylist';
+			}else if($index == 4){
+				url ='./flowlist';
 			}
 			console.log("url:"+url);
 
@@ -474,10 +476,11 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			},
 			dataType:'JSON',
 			success:function(data){
-				console.log("soldlist:",data.soldlist);
-				console.log("auctionlist:",data.auctionlist);
-				console.log("maidelist:",data.maidelist);
-				console.log("communitylist:",data.communitylist);
+				//console.log("soldlist:",data.soldlist);
+				//console.log("auctionlist:",data.auctionlist);
+				//console.log("maidelist:",data.maidelist);
+				//console.log("communitylist:",data.communitylist);
+				console.log("flowlist:",data.flowlist);
 				if(data != null){
 					console.log("index",$index);
 					console.log(url);
@@ -489,6 +492,8 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 						maide_list(data.maidelist);
 					}else if ($index == 3) {//커뮤니티
 						community_list(data.communitylist);
+					}else if ($index == 4) {//팔로우 팔로잉
+						flow_list(data.flowlist);
 					}
 				}
 			},
@@ -570,7 +575,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				content += "<div class='item-one'>";
 				content += "<div class='img-zoon'><img src=/photo"+item.i_newName+" class='itemimg' style='margin:3%'></div>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
-				content +="		<a href = maidelist?p_no="+item.p_no+">"+item.p_title+"</a>";
+				content +="		<a href = ./details?p_no="+item.p_no+">"+item.p_title+"</a>";
 				content += "	<div style='font-size: 25px; justify-self: center;'>"+item.pnt_point+"p</div>";
 				content += "</div>";
 				content += "<div class='c_zoon'>";
@@ -618,6 +623,32 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			$("#commu .item-box").append(content);
 			
 		}//판매 리스트 end
+		
+		//데이터 가져와서 뿌려주는 팔로워 팔로잉 리스트
+		function flow_list(flowlist){	
+			console.log("flowlist:", flowlist);
+			var content="";
+			
+			$(".button-layout_sold").hide();
+			$(".alien_list_sold").hide();
+			$(".button-layout_auction").hide();
+			
+			flowlist.forEach(function(item,idx){
+				console.log("idx:",idx,item);
+				content += "<div class='item-one-flow'>"
+					content += "<div class='img-zoon'><img src='test.jpg'></div>"
+					content += "<div class=''>애플</div>"
+					content += "<div class=''>4.5</div>"
+					content += " <div class=''>팔로워5</div>"
+					content += "<button>+팔로우</button>"
+				content += " </div>"
+			});	
+
+			$("#follow .item-box").empty();
+			$("#follow .item-box").append(content);
+			
+		}//팔로워 팔로잉 리스트 end
+		
 </script>
 <body>
 <div id="mainHeader"><jsp:include page="header.jsp" /></div>
@@ -695,7 +726,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
    <div id="trade"  class="categori" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
    <div id="sell"  class="categori" style="background-color:yellow; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
    <div id="commu"  class="categori" style="background-color:green; padding:20px;"><jsp:include page="./mypage_list/community.jsp"></jsp:include></div>
-   <div id="follow"  class="categori" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
+   <div id="follow"  class="categori" style="background-color:blue; padding:20px;"><jsp:include page="./mypage_list/flows.jsp"></jsp:include></div>
    <div id="want"  class="categori" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
    <div id="like"  class="categori" style="background-color:purple; padding:20px;">좋아요목록입니다.</div>
    <div id="alarm"  class="categori" style="background-color:lime; padding:20px;">신고목록입니다.</div>

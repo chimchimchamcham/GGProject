@@ -53,21 +53,40 @@
             margin-right: 50vh;
             margin-bottom: 5vh;
         }
+.content-zoon_flow{
+border:  1px solid rgb(176 176 176);
+}
+.img-zoon img{
+    border-radius:75px;
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.item-box *{
+    text-align: center;
+}
         /*기본*/
-        .alien_list_auction button{
-            border: none;
+        .button-layout_flow button{
+            width: 10vh;
+            height: 5vh;
             font-size: 15px;
             background-color:transparent;
             color: black;
         }
         /*버튼위에 마우스포인터 있을때*/
-        .alien_list_auction button:hover{
-            color:	gray;
+        .button-layout_flow button:hover{
+            width: 10vh;
+            height: 5vh;
+            color:	white;
+            background-color:gray;
             cursor: pointer;
         }
         /*버튼을 클릭해서 jq로 버튼애 .clicked 클라스 추가될때*/
-        .alien_list_auction button.clicked{
-            color: gray;
+        .button-layout_flow button.clicked{
+            width: 10vh;
+            height: 5vh;
+            color:	white;
+            background-color:gray;
             cursor: pointer;
         }
 

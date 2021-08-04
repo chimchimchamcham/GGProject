@@ -299,6 +299,31 @@ map.clear();
 dao.resClose();
 	
 }
+
+//팔로잉 팔로워 리스트
+public void flow_list(String userid, int flowORflowing) throws IOException {
+	
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	
+	BoardDAO dao = new BoardDAO();
+	ArrayList<GGDto> flowlist = null;
+	
+	try {
+		flowlist = dao.flowlist(userid,flowORflowing);
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		dao.resClose();
+		map.put("flowlist", flowlist);
+	}
+	System.out.println("auc_map:"+map);
+	
+	resp.setContentType("text/html; charset=UTF-8");		
+	resp.getWriter().println(new Gson().toJson(map));
+	map.clear();
+	dao.resClose();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 	public HashMap<String, ArrayList<GGDto>> category() {
 		BoardDAO dao = new BoardDAO();
@@ -530,9 +555,9 @@ dao.resClose();
 		BoardDAO dao = new BoardDAO();
 		
 		if(price != null) { //판매글 수정
-			System.out.println("판매글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+followLimYN);
+			System.out.println("판매 글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+followLimYN);
 		} else if(startPr !=null ){ //경매글 수정
-			System.out.println("판매글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+followLimYN+"/ 즉결가 : "+instantPr+"/ 시작가 : "+startPr+"/ 시작시간 : "+startTm+"/ 종료시간 : "+endTm);
+			System.out.println("경매 글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+followLimYN+"/ 즉결가 : "+instantPr+"/ 시작가 : "+startPr+"/ 시작시간 : "+startTm+"/ 종료시간 : "+endTm);
 		}else {//커뮤니티 수정
 			System.out.println("커뮤니티 수정 값 : "+title+"/"+content+"/"+category);
 		}
@@ -670,5 +695,9 @@ dao.resClose();
 		}
 		return des;
 	}
+
+
+
+
 
 }
