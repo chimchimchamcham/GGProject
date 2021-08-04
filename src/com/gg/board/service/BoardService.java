@@ -556,6 +556,7 @@ dao.resClose();
 
 	public GGDto commDetail() {
 		String p_no = req.getParameter("p_no");
+		System.out.println(p_no);
 		BoardDAO dao = new BoardDAO();
 		GGDto dto = null;
 		try {
