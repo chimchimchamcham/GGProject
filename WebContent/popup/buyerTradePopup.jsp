@@ -15,7 +15,7 @@ body{width:100%;background-color:gray;}
 #trade_cancel{display:inline-block; width:80px;height:35px; position:absolute; top:10px; left:10px; font-size:0.8rem; border-radius:5px/5px;background-color:#919999;color:white;}
 #report{display:inline-block; width:80px;height:35px; position:absolute; top:10px; left:100px; font-size:0.8rem; border-radius:5px/5px;}
 
-#condition{position:relative; left: 250px; top:15px; color:#C1C6C6}
+#condition{position:relative; left: 280px; top:15px; color:#C1C6C6}
 #send,#approval,#shipping,#receive{display:inline-block; position:absolute;} 
 #approval{left:100px}
 #shipping{left:200px}
@@ -28,12 +28,15 @@ body{width:100%;background-color:gray;}
 
 #subject{display:inline-block; font-size:0.8rem;}
 #content{position:absolute; left:380px; top:100px;width:300px;height:200px;background-color:green;}
-
+#top_content{position:relative; background-color:yellow; width:200px; left:30px}
 #send_price{display:inline-block; position:relative; top:10px;left:30px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;border:1px solid gray;border-radius:5px/5px;padding-left:10px;padding-right:40px;}
 .p{font-size:2.5rem; position:absolute; top:30px;left:230px }
 #remainPoint{position:relative;top:25px;background-color:#C1C6C6;border-radius:5px/5px;text-align:center;}
-#sendTwoBtn{position:relative; top:50px;background-color:blue; width:200px; left:55px}
-#sendTwoBtn>button{width:60px; height:35px; border-radius:5px/5px;font-size:0.7rem;}
+#threeBtn{position:absolute; top:140px;background-color:blue; width:140px; left:80px}
+#threeBtn>button{width:60px; height:35px; border-radius:5px/5px;font-size:0.7rem; float:left;margin:5px}
+
+#comment{position:absolute; top:350px; background-color:red;width:900px; height:230px}
+#comment_cnt{position:relative; left:30px;}
 
 </style>
 </head>
@@ -60,17 +63,24 @@ body{width:100%;background-color:gray;}
 	</div>
 	
 	<div id="content">
-		<div id="top_content"><span>애플</span>님에게 <span>승인요청</span>중..</div>
+		<div id="top_content"><span>애플</span>님에게 <span>승인요청</span>중...</div>
+		<!-- <div id="top_content">배송대기중...</div> -->
+		<!-- <div id="top_content">수취대기확인중...</div> -->
 		<div id="writePoint"><input type="text" name="send_price" id="send_price" value="5500"></div>
 		<span class="p"><b>P</b></span>
 		<div id="remainPoint"><span>둘리</span>님의 잔여 포인트 : <span>25000</span>P</div>
-		<div id="sendTwoBtn">
+		<div id="threeBtn">
 			<button id="sendY">송금</button>
-			<button id="receiveY">수취확인</button>
+			<!-- <button id="receiveY">수취확인</button> -->
 			<button id="chargeBtn">포인트 충전</button>
 		</div>
 	</div>
 	
+	<div id="comment">
+		<div id="comment_cnt">댓글&nbsp;<span>6</span></div>
+		<div id="commentBox"></div>
+		
+	</div>
 	
 </div>
 
