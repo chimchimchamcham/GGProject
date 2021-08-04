@@ -19,7 +19,7 @@ public class UserUploadService {
 	}
 
 	public GGDto PhotoUpload() {
-		String savePath = "/photo/";// 1.저장경로 저장
+		String savePath = "C:/photo/";// 1.저장경로 저장
 		int maxSize = 10 * 1024 * 1024;// 2.용량제한(10MB)
 
 		GGDto dto = null;
@@ -73,8 +73,6 @@ public class UserUploadService {
 			dto.setU_detailAddr(u_detailAddr);
 			dto.setU_intro(u_intro);
 			
-			// 4.이름 변경
-			UserDAO dao = new UserDAO();
 			//새로운 사진 원래 파일명
 			String oriFileName = multi.getFilesystemName("photo"); //새로운 사진 파일명 변경 전
 			System.out.println("기존파일 : " + oriFileName);
@@ -109,7 +107,7 @@ public class UserUploadService {
 		boolean success = false;
 		
 		// 기존파일이름
-		File file = new File("/photo/" + delFileName);
+		File file = new File("C:/photo/" + delFileName);
 		
 		// 파일이 존재한다면 삭제해라
 		if (file.exists()) {

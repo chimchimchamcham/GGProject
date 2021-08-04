@@ -605,8 +605,7 @@ public class BoardDAO {
 
 	public GGDto auctionDetail(int p_no) throws SQLException {
 
-		
-		//경매 상세보기(경매 히스토리 테이블 제외)
+		// 경매 상세보기(경매 히스토리 테이블 제외)
 		String sql = "select p.p_no, p.p_id, p.p_title, p.p_content, p.p_view, p.p_likeCount, p.p_blindYN, p.p_code,(select c_name from codes where c_code = p.p_code) as p_name ,(select u.u_nname from userinfo u where u.u_id = p_id) as u_nname,(select u.u_addr from userinfo u where u.u_id= p_id) as u_addr, s.s_deliveryyn, s.s_followlimyn, s.s_code,(select c_name from codes where c_code=s.s_code) as s_name ,a.au_code ,(select c.c_name from codes c where c.c_code = a.au_code) as au_c_name, a.au_startpr,a.au_instantpr,a.au_starttm,a.au_endtm ,a.au_count, i.i_newname from post p, sale s, auction a, img i where p.p_no=s.p_no and p.p_no= i.p_no and s.p_no = a.p_no and p.p_no=?";
 
 		GGDto dto = new GGDto();
@@ -614,37 +613,36 @@ public class BoardDAO {
 		ps.setInt(1, p_no);
 		rs = ps.executeQuery();
 
-		if(rs.next()) {
-			dto.setP_no(rs.getInt("p_no")); //글번호
-			dto.setP_id(rs.getString("p_id")); //글작성자
-			dto.setP_title(rs.getString("p_title")); //글제목
-			dto.setP_content(rs.getString("p_content")); //글내용
-			dto.setP_view(rs.getInt("p_view")); //조회수
-			dto.setP_likeCount(rs.getInt("p_likeCount")); //좋아요수
-			dto.setP_blindYN(rs.getString("p_blindYN")); //블라인드 여부
-			dto.setP_code(rs.getString("p_code")); //게시글 카테고리
-			
+		if (rs.next()) {
+			dto.setP_no(rs.getInt("p_no")); // 글번호
+			dto.setP_id(rs.getString("p_id")); // 글작성자
+			dto.setP_title(rs.getString("p_title")); // 글제목
+			dto.setP_content(rs.getString("p_content")); // 글내용
+			dto.setP_view(rs.getInt("p_view")); // 조회수
+			dto.setP_likeCount(rs.getInt("p_likeCount")); // 좋아요수
+			dto.setP_blindYN(rs.getString("p_blindYN")); // 블라인드 여부
+			dto.setP_code(rs.getString("p_code")); // 게시글 카테고리
+
 			dto.setP_name(rs.getString("p_name"));
-			
-			dto.setU_nname(rs.getString("u_nname"));//판매자 닉네임
-			dto.setU_addr(rs.getString(("u_addr"))); //간편주소
-			dto.setS_DeliveryYN(rs.getString("s_deliveryyn")); //택배여부
-			dto.setS_followLimYN(rs.getString("s_followlimyn")); //팔로워한정판매여부
-			dto.setS_code(rs.getString("s_code")); //판매, 경매 카테고리
-			
-			dto.setS_name(rs.getString("s_name"));//판매,경매 카테고리(한글)
-			
-			dto.setAu_code(rs.getString("au_code")); //경매상태(코드)
-			dto.setC_name(rs.getString("au_c_name")); //경매상태(한글)
-			dto.setAu_startPr(rs.getInt("au_startpr")); //경매 시작 가격
-			dto.setAu_instantPr(rs.getInt("au_instantpr")); //경매 즉결 가격
-			dto.setAu_startTm(rs.getDate("au_starttm")); //경매 종료 시간
-			dto.setAu_endTm(rs.getDate("au_endtm")); //경매 종료 시간
-			dto.setAu_count(rs.getInt("au_count")); //입찰횟수
-			//dto.setHa_bidPr(rs.getInt("ha_bidpr"));
-			//dto.setHa_bidUsr(rs.getString("ha_bidusr"));
-			dto.setI_newName(rs.getString("i_newname")); //사진명 
-			
+
+			dto.setU_nname(rs.getString("u_nname"));// 판매자 닉네임
+			dto.setU_addr(rs.getString(("u_addr"))); // 간편주소
+			dto.setS_DeliveryYN(rs.getString("s_deliveryyn")); // 택배여부
+			dto.setS_followLimYN(rs.getString("s_followlimyn")); // 팔로워한정판매여부
+			dto.setS_code(rs.getString("s_code")); // 판매, 경매 카테고리
+
+			dto.setS_name(rs.getString("s_name"));// 판매,경매 카테고리(한글)
+
+			dto.setAu_code(rs.getString("au_code")); // 경매상태(코드)
+			dto.setC_name(rs.getString("au_c_name")); // 경매상태(한글)
+			dto.setAu_startPr(rs.getInt("au_startpr")); // 경매 시작 가격
+			dto.setAu_instantPr(rs.getInt("au_instantpr")); // 경매 즉결 가격
+			dto.setAu_startTm(rs.getDate("au_starttm")); // 경매 시작 시간
+			dto.setAu_endTm(rs.getDate("au_endtm")); // 경매 종료 시간
+			dto.setAu_count(rs.getInt("au_count")); // 입찰횟수
+			// dto.setHa_bidPr(rs.getInt("ha_bidpr"));
+			// dto.setHa_bidUsr(rs.getString("ha_bidusr"));
+			dto.setI_newName(rs.getString("i_newname")); // 사진명
 
 			System.out.println(dto.getAu_count());
 			System.out.println(rs.getString("i_newname"));
@@ -652,6 +650,7 @@ public class BoardDAO {
 			System.out.println(dto.getU_addr());
 			System.out.println("경매 상태: " + dto.getAu_code());
 			System.out.println(dto.getP_code());
+			System.out.println(dto.getAu_endTm());
 		}
 
 		// 경매 상세보기 (히스토리 테이블)
@@ -671,15 +670,13 @@ public class BoardDAO {
 		return dto;
 
 	}
-	
 
 	public GGDto commDetail(String p_no) {
-		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname,c_name,u_id,p_cate FROM "+ 
-				"    UserInfo u INNER JOIN Post p ON u.u_id = p.p_id" + 
-				"    INNER JOIN codes c ON p.p_cate = c.c_code" + 
-				"    LEFT OUTER JOIN Img i ON p.p_no = i.p_no" + 
-				"    LEFT OUTER JOIN Post_Comment pc ON p.p_no = pc.p_no" + 
-				"    WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_no=? AND c.c_code";
+		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname,c_name,u_id,p_cate FROM "
+				+ "    UserInfo u INNER JOIN Post p ON u.u_id = p.p_id"
+				+ "    INNER JOIN codes c ON p.p_cate = c.c_code" + "    LEFT OUTER JOIN Img i ON p.p_no = i.p_no"
+				+ "    LEFT OUTER JOIN Post_Comment pc ON p.p_no = pc.p_no"
+				+ "    WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_no=? AND c.c_code";
 
 		GGDto dto = new GGDto();
 		try {
@@ -707,15 +704,14 @@ public class BoardDAO {
 
 	/* 글 수정 */
 	public int commUpdate(int p_no, String title, String content, String category, String deliveryYN, String price,
-			String disclosure) {
+			String followLimYN, String instantPr, String startPr, String startTm, String endTm) {
 
-		System.out.println("테스트 category"+category);
+		System.out.println("테스트 category" + category);
 		int sucP_no = 0;
-		String sql="";
+		String sql = "";
 
-		// 판매 수정
+		/*==== 판매글 수정 ====*/
 		if (price != null) {
-
 			// post 테이블 업데이트
 			sql = "UPDATE post SET p_title=?, p_content=? WHERE p_no=?";
 			try {
@@ -738,7 +734,7 @@ public class BoardDAO {
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, category);
 				ps.setString(2, deliveryYN);
-				ps.setString(3, disclosure);
+				ps.setString(3, followLimYN);
 				ps.setInt(4, p_no);
 				int success = ps.executeUpdate();
 				if (success > 0) {
@@ -764,8 +760,61 @@ public class BoardDAO {
 				e.printStackTrace();
 			}
 
+			/* ==== 경매글 수정 ==== */
+		} else if (startPr != null) {
+			// post 테이블 업데이트
+			sql = "UPDATE post SET p_title=?, p_content=? WHERE p_no=?";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, title);
+				ps.setString(2, content);
+				ps.setInt(3, p_no);
+				int success = ps.executeUpdate();
+				if (success > 0) {
+					sucP_no = p_no;
+					System.out.println("post테이블 업데이트 성공");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			// sale 테이블 업데이트
+			sql = "UPDATE sale SET s_code=?, s_deliveryyn=?, s_followlimyn=? WHERE p_no=?";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, category);
+				ps.setString(2, deliveryYN);
+				ps.setString(3, followLimYN);
+				ps.setInt(4, p_no);
+				int success = ps.executeUpdate();
+				if (success > 0) {
+					sucP_no = p_no;
+					System.out.println("sale테이블 업데이트 성공");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			// auction 테이블 업데이트
+			sql = "UPDATE auction SET au_startTm=?, au_endTm=?, au_startPr=?, au_instantPr=? WHERE p_no=?";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, startTm);
+				ps.setString(2, endTm);
+				ps.setString(3, startPr);
+				ps.setString(4, instantPr);
+				ps.setInt(5, p_no);
+				int success = ps.executeUpdate();
+				if (success > 0) {
+					sucP_no = p_no;
+					System.out.println("auction 테이블 업데이트 성공");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			/* ==== 커뮤니티 글 수정 ==== */
 		} else {
-			// 커뮤니티 글 수정
 			sql = "UPDATE post SET p_title=?, p_content=?, p_cate=? WHERE p_no=?";
 
 			try {
@@ -781,8 +830,10 @@ public class BoardDAO {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+
 		}
 		return sucP_no;
+
 	}
 
 ///////////////////////////////////////////////////////
@@ -829,18 +880,16 @@ public class BoardDAO {
 
 	}
 
-	public ArrayList<GGDto> commList() {		
+	public ArrayList<GGDto> commList() {
 		ArrayList<GGDto> list = new ArrayList<GGDto>();
-		String sql ="SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code " + 
-						"INNER JOIN userinfo u on p.p_id = u.u_id " + 
-						"LEFT OUTER JOIN love l ON p.p_no = l.p_no " + 
-						"LEFT OUTER JOIN img i ON p.p_no = i.p_no " + 
-						"WHERE p.p_code = 'P004'AND p.p_blindyn = 'N'";
-		
+		String sql = "SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code "
+				+ "INNER JOIN userinfo u on p.p_id = u.u_id " + "LEFT OUTER JOIN love l ON p.p_no = l.p_no "
+				+ "LEFT OUTER JOIN img i ON p.p_no = i.p_no " + "WHERE p.p_code = 'P004'AND p.p_blindyn = 'N'";
+
 		try {
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				GGDto dto = new GGDto();
 				dto.setC_name(rs.getString("c_name"));
 				dto.setP_title(rs.getString("p_title"));
@@ -852,7 +901,7 @@ public class BoardDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			resClose();
 		}
 		return list;
@@ -861,17 +910,16 @@ public class BoardDAO {
 
 	public String details(int p_no, String id) throws SQLException {
 		String code = "";
-		
-		String sql="SELECT p_code FROM post WHERE p_no=?";
+
+		String sql = "SELECT p_code FROM post WHERE p_no=?";
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, p_no);
-		
+
 		rs = ps.executeQuery();
-		if(rs.next()) {
+		if (rs.next()) {
 			code = rs.getString(1);
 		}
-		
-		
+
 		return code;
 	}
 
