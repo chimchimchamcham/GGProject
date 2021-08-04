@@ -72,4 +72,23 @@ public class CommentDAO {
 		return list;
 	}
 
+	public GGDto pushComment(GGDto dto) throws Exception {
+		
+		String sql = "INSERT INTO post_comment VALUES(pc_no_seq.NEXTVAL,?,?,SYSDATE,?,'N',?)";
+		
+		//pc_no,p_no,pc_content,pc_tm,pc_parentno,pc_blindYN,pc_id;
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, dto.getP_no());
+		ps.setString(2, dto.getPc_content());
+		ps.setInt(3, dto.getPc_parentno());
+		ps.setString(4, dto.getPc_id());
+		
+		int success = ps.executeUpdate();
+		if(success>0) {
+			System.out.println("댓글 등록 성공.");
+		}
+		
+		return dto;
+	}
+
 }

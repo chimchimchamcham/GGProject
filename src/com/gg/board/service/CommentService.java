@@ -46,4 +46,23 @@ public class CommentService {
 		map.clear();
 	}
 
+
+
+	public GGDto pushComment(GGDto dto) {
+		System.out.println("리스트 진입 완료.");
+		ArrayList<GGDto> list = null;
+		CommentDAO dao = new CommentDAO();
+		
+		try {
+			dto = dao.pushComment(dto);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		return dto;
+	}
+
 }
