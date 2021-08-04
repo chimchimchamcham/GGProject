@@ -162,6 +162,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		
 		//입찰금액 입력 쿼리
 		System.out.println("경매 히스토리 입력여부 : "+success);
+		
 		boolean instantYN = false;
 		
 		//시작금액 빼가는 쿼리
@@ -187,7 +188,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		return success;
 	}
 	
-	public boolean buyNow(int p_no, String u_id, int ha_bidPr) {
+	public boolean buyNow(int p_no, String u_id, int ha_bidPr) throws SQLException {
 		//즉결가 조회
 		String sql = "SELECT AU_INSTANTPR FROM AUCTION WHERE P_NO = ?";
 		//낙찰자를 등록
@@ -232,6 +233,10 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		}catch(Exception e) {
 			
 		}
+		
+		boolean result = bidRecordYN(p_no,u_id);
+		System.out.println("시작금 인출 여부 : "+result);
+		
 		return success>0?true:false;
 	}
 	
@@ -262,6 +267,10 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 					dto.setAu_sucTm(rs.getDate("au_suctm"));
 				}
 				
+				///입찰금반환 메서드 실행
+				
+				
+				
 			}
 			
 			return dto;
@@ -274,14 +283,16 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			PointDAO dao = new PointDAO();
 			
 			//입찰내역이 있는지 확인 
-			String sql="select p_no from his_auction where ha_bidusr =? and p_no=?";
+			String sql="select count(*) as count from (select * from his_auction where p_no=?) where ha_bidusr = ? group by ha_bidusr";
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, user_id);
-			ps.setInt(2, p_no);
+			ps.setInt(1, p_no);
+			ps.setString(2, user_id);
+			
 			
 			rs = ps.executeQuery();
-			
-			if(!rs.next()) {
+			rs.next();
+			int count = rs.getInt("count");
+			if(count == 1) {			
 				//입찰한 내역이 없는 경우
 				sql = "select au_startpr from auction where p_no=?";
 				
@@ -293,7 +304,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				int pnt_point =  rs.getInt("au_startpr"); //시작가격 가져오기
 				System.out.println("시작가격 pnt_point : "+pnt_point);
 				success = dao.insertPoint(user_id, pnt_point, "SYSTEM", "PNT006", p_no);
-				
+				System.out.println("시작금 인출여부 : "+success);
 			}
 			
 			return success;
