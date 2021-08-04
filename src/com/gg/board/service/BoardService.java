@@ -615,20 +615,28 @@ dao.resClose();
 		return dto;
 	}
 
-	
-	  public String details(int p_no, String id) {
-	  System.out.println("찾아가야 할 글 번호 : " + p_no); BoardDAO dao = new BoardDAO();
-	  String destiny =""; try { String code = dao.details(p_no,id);
-	  System.out.println("code : " + code); if(code.equals("P001")) { destiny = "";
-	  }else if(code.equals("P002")) {
-	  
-	  }else if(code.equals("P003")){
-	  
-	  } } catch (SQLException e) { // TODO Auto-generated catch block
-	  e.printStackTrace(); }finally { dao.resClose(); }
-	  
-	  return code; }
-	 
+	public String details(int p_no, String id) {
+		System.out.println("찾아가야 할 글 번호 : " + p_no);
+		BoardDAO dao = new BoardDAO();
+		String des ="";
+		try {
+			String code = dao.details(p_no,id);
+			System.out.println("code : " + code);
+			if(code.equals("P001")) {
+				des = "";
+			}else if(code.equals("P002")) {
+				
+			}else if(code.equals("P003")){
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		return des;
+	}
 
-	
 }

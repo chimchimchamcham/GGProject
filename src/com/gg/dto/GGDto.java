@@ -154,6 +154,35 @@ public class GGDto {
 	private String c_name;
 	private boolean myYN;
 	
+	//게시판 뎃글
+	private String pc_content;//내용
+	private Date pc_tm;//작성날짜
+	private int pc_parentno;// 나중에 물어봐야함 무엇이 댓글 대댓글인지
+	
+	public Date getPc_tm() {
+		return pc_tm;
+	}
+
+	public void setPc_tm(Date pc_tm) {
+		this.pc_tm = pc_tm;
+	}
+
+	public int getPc_parentno() {
+		return pc_parentno;
+	}
+
+	public void setPc_parentno(int pc_parentno) {
+		this.pc_parentno = pc_parentno;
+	}
+
+	public String getPc_content() {
+		return pc_content;
+	}
+
+	public void setPc_content(String pc_content) {
+		this.pc_content = pc_content;
+	}
+
 	public String getU_id() {
 		return u_id;
 	}
