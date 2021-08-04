@@ -65,7 +65,10 @@
     		</tr>
     		<tr>
     			<td colspan ="5" id = "c_name" style="text-align:left"><h5>#  ${dto.c_name }</h5></td>
-    			<td id="updatebutton" style="text-align:left"><input type = button value="수정"></td>
+    			<td id="updatebutton" style="text-align:left">
+    				<input type = button value="삭제">
+    				<input type = button value="수정" onclick="location.href='./commUpdateForm?p_no=${dto.p_no}'">
+    			</td>
     		</tr>
     		<tr>
     			<td>
