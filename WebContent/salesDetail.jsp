@@ -392,10 +392,10 @@
 			console.log("idx:",idx,item);
 			content+= "<div class='one-text'>";
 			content+= 	"<div class='one-img-time'>";
-			content+= 	"<div  class='uploadimg'>";
-			content+=         "<img src='test.jpg'>";
-			content+=         "<div class='usertext'>유지호</div>";
-			content+=  	"</div>";
+				content+= 	"<div  class='uploadimg'>";
+				content+=         "<img src='test.jpg'>";
+				content+=         "<div class='usertext'>유지호</div>";
+				content+=  	"</div>";
 			content+= 	"<div class='content'>내용임ㅅㄱ</div>"
 			content+= 	"<div class='uploadtime'>";
 			content+=   	"<div>2021-08-04</div>";

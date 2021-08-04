@@ -122,7 +122,7 @@ border:  1px solid rgb(176 176 176);
 		console.log("$center_index:"+$index1);
 		
 		
-		auctionlistCall($index1);
+		flowlistCall($index1);
 		
 		$button1.removeClass('clicked');
 		$index_button.addClass('clicked');
@@ -130,7 +130,7 @@ border:  1px solid rgb(176 176 176);
 		
     })
     
-    function auctionlistCall($index1){
+    function flowlistCall($index1){
 		
 		console.log("$index1:"+$index1);
 		
@@ -141,8 +141,8 @@ border:  1px solid rgb(176 176 176);
 			dataType:'JSON',
 			success:function(data){
 				console.log("data:"+data);
-				if(data.auctionlist != null){
-					auction_list(data.auctionlist);
+				if(data != null){
+					flow_list(data.flowlist);
 				}
 			},
 			error:function(e){

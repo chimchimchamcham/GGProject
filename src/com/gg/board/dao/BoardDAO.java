@@ -418,7 +418,7 @@ public class BoardDAO {
 		if (flowORflowing == 0) {//나를 팔로우 한
 			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_newname,u.u_nname FROM follow f,userinfo u where f.f_receiveid = ? and f.f_sendid = u.u_id";
 		} else if (flowORflowing == 1) {//내가 팔로잉한
-			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_newname,u.u_nname FROM follow f,userinfo u where f.f_sendid = 'user1' and f.f_receiveid = u.u_id";
+			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_newname,u.u_nname FROM follow f,userinfo u where f.f_sendid = ? and f.f_receiveid = u.u_id";
 		}
 
 		ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
@@ -435,10 +435,13 @@ public class BoardDAO {
 
 		while (rs.next()) {
 			GGDto dto = new GGDto();
-
+			dto.setF_receiveid(rs.getString("f_receiveid"));
+			dto.setF_sendid(rs.getString("f_sendid"));
+			dto.setU_newName(rs.getString("u_newname"));
+			dto.setU_nname(rs.getString("u_nname"));
 			flowlist.add(dto);
 		}
-		System.out.println("actionlist:" + flowlist);
+		System.out.println("flowlist:" + flowlist);
 		return flowlist;
 	}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

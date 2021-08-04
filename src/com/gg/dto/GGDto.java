@@ -160,7 +160,46 @@ public class GGDto {
 	private int pc_parentno;// 나중에 물어봐야함 무엇이 댓글 대댓글인지
 	private String pc_id;// 댓글 등록한 아이디.
 	
+	//팔로워
+	private String f_receiveid;
+	private String f_sendid;
+	private Date f_tm; 
+	private int Resive_flow_count;//자신을 팔로잉 한사람들의 수
 	
+	
+	
+	public int getResive_flow_count() {
+		return Resive_flow_count;
+	}
+
+	public void setResive_flow_count(int resive_flow_count) {
+		Resive_flow_count = resive_flow_count;
+	}
+
+	public String getF_receiveid() {
+		return f_receiveid;
+	}
+
+	public void setF_receiveid(String f_receiveid) {
+		this.f_receiveid = f_receiveid;
+	}
+
+	public String getF_sendid() {
+		return f_sendid;
+	}
+
+	public void setF_sendid(String f_sendid) {
+		this.f_sendid = f_sendid;
+	}
+
+	public Date getF_tm() {
+		return f_tm;
+	}
+
+	public void setF_tm(Date f_tm) {
+		this.f_tm = f_tm;
+	}
+
 	public Date getPc_tm() {
 		return pc_tm;
 	}

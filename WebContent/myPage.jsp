@@ -636,14 +636,12 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			flowlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one-flow'>"
-					content += "<div class='img-zoon'><img src='test.jpg'></div>"
-					content += "<div class=''>애플</div>"
-					content += "<div class=''>4.5</div>"
-					content += " <div class=''>팔로워5</div>"
+					content += "<div class='img-zoon'><img src='/photo"+item.u_newname+"'></div>"
+					content += "<div class=''>"+item.u_nname+"</div>"
+					content += " <div class=''>팔로워:5</div>"
 					content += "<button>+팔로우</button>"
 				content += " </div>"
 			});	
-
 			$("#follow .item-box").empty();
 			$("#follow .item-box").append(content);
 			
