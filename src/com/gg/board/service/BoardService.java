@@ -484,6 +484,9 @@ dao.resClose();
 						  dto.setAu_code(dto2.getAu_code());
 						  dto.setAu_successer(dto2.getAu_successer());
 						  
+						
+						  
+						  
 						 
 					}else {
 						System.out.println("경매 종료 전 상태");
