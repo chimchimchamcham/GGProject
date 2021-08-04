@@ -50,6 +50,7 @@ textarea {
 <script>
 // 오늘 날짜 설정
 var currDate = new Date().toISOString().substring(0,10);
+
 </script>
 </head>
 <body>
@@ -75,11 +76,10 @@ var currDate = new Date().toISOString().substring(0,10);
 					${auctionUpdate.p_content}</textarea>
 			</p>
 			<div id="update_cnt">( 0 / 1000)</div>
-			<div id="saleForm">
-				<p id='delivery'>
+				<p>
 					거래방식(필수선택) &nbsp;&nbsp;&nbsp;
-						<input type="radio" name="deliveryYN" value="Y" <c:if test="${auctionUpdate.s_DeliveryYN eq 'Y'}">checked="checked"</c:if>/>택배
-						<input type="radio" name="deliveryYN" value="N" <c:if test="${auctionUpdate.s_DeliveryYN eq 'N'}">checked="checked"</c:if>/>직거래
+						<input type="radio" name="deliveryYN" value="Y"   <c:if test="${auctionUpdate.s_DeliveryYN eq 'Y'}">checked="checked"</c:if>/>택배
+						<input type="radio" name="deliveryYN" value="N"   <c:if test="${auctionUpdate.s_DeliveryYN eq 'N'}">checked="checked"</c:if>/>직거래
 				</p>
 				<p id="category">
 					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
@@ -91,18 +91,15 @@ var currDate = new Date().toISOString().substring(0,10);
 				</p>
 				<p>
 					공개범위&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="disclosure" value="N" <c:if test="${auctionUpdate.s_followLimYN eq 'N'}">checked="checked"</c:if>>전체공개
-					<input type="radio" name="disclosure" value="Y" <c:if test="${auctionUpdate.s_followLimYN eq 'Y'}">checked="checked"</c:if>>팔로우한정
+					<input type="radio" name="disclosure" value="N"  <c:if test="${auctionUpdate.s_followLimYN eq 'N'}">checked="checked"</c:if>>전체공개
+					<input type="radio" name="disclosure" value="Y"  <c:if test="${auctionUpdate.s_followLimYN eq 'Y'}">checked="checked"</c:if>>팔로우한정
 				</p>
-			</div>
 			<!--예약 경매 버튼 클릭시-->
 			<p>경매시간 설정</p>
-			<div id="reservForm">
+			<div >
 				<p>
-					<input type="date" id="from" name="from" style="width: 120px;"
-						value="${auctionUpdate.au_startTm}"> ~ <input type="date"
-						id="to" name="to" style="width: 120px;"
-						value="${auctionUpdate.au_endTm}">
+					<input type="date" id="from" name="from" style="width: 120px;" value="${auctionUpdate.au_startTm}" >
+					 ~ <input type="date" id="to" name="to" style="width: 120px;" value="${auctionUpdate.au_endTm}" >
 				</p>
 				<!--아래에 선택 일자 표시-->
 				<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
@@ -111,7 +108,7 @@ var currDate = new Date().toISOString().substring(0,10);
 				시작가격&nbsp;<input type="text" name="startPrice"
 					value="${auctionUpdate.au_startPr}" placeholder="시작가격 입력(숫자입력)" />&nbsp;Point
 			</p>
-			<p>
+			<p >
 				즉결가격&nbsp;<input type="text" name="promptPrice"
 					value="${auctionUpdate.au_instantPr}" placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
 			</p>
@@ -128,6 +125,36 @@ var currDate = new Date().toISOString().substring(0,10);
 <script>
 console.log($('input[name=deliveryYN]').val());
 console.log("${auctionUpdate.s_DeliveryYN}");
+
+/*경매중인지 여부*/
+var now = new Date();
+console.log(now);
+console.log(now.getTime());
+
+var startTm = "${auctionUpdate.au_startTm}";
+var startTime = new Date(startTm);
+console.log(startTm);
+console.log(startTime);
+console.log(startTime.getTime()-now.getTime());
+
+/*경매중 일때만*/
+if(startTime.getTime()-now.getTime()<0){
+    console.log("경매중");
+    if(${auctionUpdate.au_count} > 0){ //입찰자가 있을 때
+    	console.log("입찰자 있음");
+    	$("input[name=deliveryYN]").attr('disabled', 'disabled'); //택배 여부
+    	 $("input[name=disclosure]").attr('disabled', 'disabled');  //팔로우 한정여부
+    	 $("#from").attr("readonly",true); //시작시간
+    	 $("#to").attr("readonly",true); //종료시간
+    	 $("input[name=startPrice]").attr("readonly",true);//시작가
+    	 $("input[name=promptPrice]").attr("readonly",true); //즉결가
+    }else{ //입찰자가 없을 때 
+    	console.log("입찰자 없음");
+    	document.getElementById('from').readOnly = true;
+    }
+}else{
+	console.log("경매 전");
+}
 
 //예약
 // 경매 예약 시작 시간 초기 설정 (오늘)
@@ -152,13 +179,6 @@ $("#to").click(function(){
 });
 /////////////////////////////////////
 
-
-//경매폼에서 예약경매하기 버튼 클릭시
-	$("#reservBtn").click(function() {
-		$("#endDate").toggle();
-		$("#reservForm").toggle();
-
-	});
 
 $("select[name=saleCat]").val("${auctionUpdate.s_code}").prop("selected", true);
 $("input[name=deliveryYN]").val("${auctionUpdate.s_DeliveryYN}").prop("checked", true);

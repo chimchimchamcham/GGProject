@@ -307,24 +307,6 @@
 	});
 	//댓글 버튼 누르면 이상세 페이지에서 마지막에 쓴 댓글 보여주기
 	$("div#twoButton>button.board_button").click(function(){
-		/* $.ajax({
-			type : 'post',
-			url : './commentlist',
-			data : {p_no : "${dto.p_no}",p_id:"${dto.p_id}"},
-			dataType : 'JSON',
-			success : function(data){
-				console.log("data",data);
-				if(data.list != null){
-					console.log("data.list:",data.list);
-					saleboardlist(data.list);
-				}else{
-					alert('등록된 댓글이 없습니다.');
-				}
-			},
-			error : function(e){
-				console.log(e);
-			}
-		}); */
 		commentListCall();
 	});
 	var comment ={};
@@ -388,16 +370,16 @@
 		console.log("시간 확인 : ",list.pc_tm);
 		list.forEach(function(item,idx){
 			comment += "<div class = 'one-text'>";
-			comment += "<div class='one-img-time'>";
-			comment += "<div class='uploadimg'>";
-			comment += "<a href='#'>";
-			comment += "<img src='/photo/"+item.u_newName+"'/></a>";
-			comment += "<div class='usertext'>"+item.u_nname+"</div>";
-			comment += "</div>";
-			comment += "<div class='content'>"+item.pc_content+"</div>";
-			comment += "<div class='uploadtime'>";
-			comment += "<div>"+item.pc_tm+"</div>";
-			comment += "</div>";
+			comment += 		"<div class='one-img-time'>";
+			comment += 			"<div class='uploadimg'>";
+			comment += 				"<a href='./myPage?id='>"+item.pc_id+"<img src='/photo/"+item.u_newName+"'/></a>";
+			comment += 				"<div class='usertext'>"+item.u_nname+"</div>";
+			comment += 			"</div>";
+			comment += 			"<div class='content'>"+item.pc_content+"</div>";
+			comment += 			"<div class='uploadtime'>";
+			comment += 				"<div>"+item.pc_tm+"</div>";
+			comment += 			"</div>";
+			comment += 		"</div>";
 			comment += "</div>";
 		});
 		$(".board").empty();
