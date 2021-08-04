@@ -91,21 +91,25 @@ public class UploadDAO {
 	   }
 
 	public int PhotoUpdate(GGDto dto) {
-		String sql = "UPDATE img SET i_newName=? WHERE p_no=?";
-	      int success = 0;
-	      try {
-	         ps = conn.prepareStatement(sql);
-	         ps.setString(1, dto.getI_newName());
-	         ps.setInt(2, dto.getP_no());
-	         success = ps.executeUpdate();
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      }finally {
-	         resClose();
-	      }
-	      if(success>0) {
-	         System.out.println("글 사진 수정 성공");
-	      }
+		int success = 0;
+		if(dto.getI_newName() != null) {
+			String sql = "UPDATE img SET i_newName=? WHERE p_no=?";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, dto.getI_newName());
+				ps.setInt(2, dto.getP_no());
+				success = ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				resClose();
+			}
+			if(success>0) {
+				System.out.println("글 사진 수정 성공");
+			}			
+		}else {
+			success = 1;
+		}
 	      
 	      return success;
 		
