@@ -347,6 +347,196 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			System.out.println("==========================");
 			
 		}
+		//====================구매 요청 수락, 거절=====================
+		//구매요청을 수락하면 거래페이지 생성, 거절하면 끝
+		public boolean buyRequestProcess(int rq_no, String rq_YN, int p_no, String t_saler, String t_buyer) {
+			System.out.println("[TRADEDAO]/BUYREQUESTPROCESS START");
+			String sql = "UPDATE REQUEST SET RQ_YN = ? WHERE RQ_NO = ?; ";
+			int success = 0;
+			boolean insertNsaleNscodeSuccess = false;
+			boolean insertTradeSuccess = false;
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, rq_YN);
+				ps.setInt(2, rq_no);
+				success = ps.executeUpdate();
+				System.out.println("[TRADEDAO]/BUYREQUESTPROCESS SUCCESS : "+success);
+				if(success>0) {
+					//수락했을 경우
+					System.out.println("[TRADEDAO]/BUYREQUESTPROCESS RQ_YN : "+rq_YN);
+					if(rq_YN.toUpperCase().equals("Y")) {
+						//판매글의 상태를 거래중으로 변경
+						insertNsaleNscodeSuccess = updateNsaleNscode(p_no, "NS_002");
+						System.out.println("[TRADEDAO]/BUYREQUESTPROCESS INSETNSALENSCODESUCCESS : "+insertNsaleNscodeSuccess);
+						if(insertNsaleNscodeSuccess) {
+							//구매요청자의 id는 href, 판매자의 id는 session를 받아서 거래페이지 생성
+							insertTradeSuccess = insertTrade(p_no, t_saler, t_buyer);
+							System.out.println("[TRADEDAO]/BUYREQUESTPROCESS INSETTTADESUCCESS : "+insertTradeSuccess);
+						}
+					}
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return insertTradeSuccess;
+		}
 		
+		//판매글 상태를 변경하는 기능
+		public boolean updateNsaleNscode(int p_no, String ns_code) {
+			System.out.println("[TRADEDAO]/UPDATENSALENSCODE START");
+			String sql = "UPDATE N_SALE SET NS_CODE = ? WHERE P_NO = ?";
+			int success = 0;
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, ns_code);
+				ps.setInt(2, p_no);
+				success = ps.executeUpdate();
+				System.out.println("[TRADEDAO]/UPDATENSALENSCODE SUCCESS : "+success);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return success>0?true:false;
+		}
 		
+		//====================거래 페이지=======================
+		//거래페이지 생성, 구매요청 수락 또는 경매완료시 실행
+		public boolean insertTrade(int p_no, String t_saler, String t_buyer) {
+			System.out.println("[TRADEDAO]/INSERTTRADE START");
+			String sql = "INSERT INTO TRADE (T_NO, P_NO, T_SALER, T_BUYER, T_CANCLEID, T_ADMACC) VALUES(T_NO_SEQ.NEXTVAL, ?, ?, ?, NULL, 'N')";
+			int success = 0;
+			boolean insertHisTradeSuccess = false;
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, p_no);
+				ps.setString(2, t_saler);
+				ps.setString(3, t_buyer);
+				success = ps.executeUpdate();
+				System.out.println("[TRADEDAO]/INSERTTRADE SUCCESS : "+success);
+				if(success>0) {
+					//거래히스토리에 0원, 생성 추가
+					int t_no = selectTradeT_no(p_no,t_saler,t_buyer);
+					insertHisTradeSuccess = insertHisTrade(t_no, 0, "HT001");
+					System.out.println("[TRADEDAO]/INSERTTRADE T_NO : "+t_no);
+					System.out.println("[TRADEDAO]/INSERTTRADE insertHisTradeSuccess : "+insertHisTradeSuccess);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			return insertHisTradeSuccess;
+		}
+		
+		//거래페이지번호를 조회하는 기능 (필요값 : 글번호, 구매자, 판매자)
+		public int selectTradeT_no(int p_no, String t_saler, String t_buyer) {
+			System.out.println("[TRADEDAO]/SELECTTRADET_NO START");
+			String sql = "SELECT T_NO FROM TRADE WHERE P_NO = ? AND T_SALER = ? AND T_BUYER = ?";
+			int t_no = 0;
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, p_no);
+				ps.setString(2, t_saler);
+				ps.setString(3, t_buyer);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					t_no = rs.getInt("t_no");
+					System.out.println("[TRADEDAO]/SELECTTRADET_NO T_NO : "+t_no);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return t_no;
+			
+		}
+		
+		//거래히스토리에 행을 추가하는 기능
+		public boolean insertHisTrade(int t_no, int ht_point, String ht_code) {
+			System.out.println("[TRADEDAO]/INSERTHISTRADE START");
+			String sql = "INSERT INTO HIS_TRADE (T_NO, HT_DATE, HT_POINT, HT_CODE) VALUES(?, SYSDATE, ?, ?)";
+			int success = 0;
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, t_no);
+				ps.setInt(2, ht_point);
+				ps.setString(3, ht_code);
+				success = ps.executeUpdate();
+				System.out.println("[TRADEDAO]/INSERTHISTRADE SUCCESS : "+success);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return success>0?true:false;
+		}
+
+		//거래페이지에서 취소한 사람 ID를 넣는 기능
+		public boolean updateTradeT_cancleId(String t_cancleId, int t_no) {
+			System.out.println("[TRADEDAO]/UPDATETRADET_CANCLEID START");
+			String sql = "UPDATE TRADE SET T_CANCLEID = ? WHERE T_NO = ?";
+			int success = 0;
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, t_cancleId);
+				ps.setInt(2, t_no);
+				success = ps.executeUpdate();
+				System.out.println("[TRADEDAO]/UPDATETRADET_CANCLEID SUCCESS : "+success);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return success>0?true:false;
+		}
+		
+		//거래페이지의 글번호로 게시글이 판매인지 경매인지 확인하는 기능
+		public String selectPostP_code(int p_no) {
+			System.out.println("[TRADEDAO]/CHECKP_CODE START");
+			String sql = "SELECT P_CODE FROM POST WHERE P_NO = ?";
+			String p_code = "";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, p_no);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					p_code = rs.getString("p_code");
+					System.out.println("[TRADEDAO]/CHECKP_CODE P_CODE : "+p_code);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return p_code;
+		}
+		
+		//경매테이블에서 글번호로 시작가를 가져오는 기능
+		public int selectAuctionAu_startPr(int p_no) {
+			System.out.println("[TRADEDAO]/SELECTAUCTIONAU_STARTPR START");
+			String sql = "SELECT AU_STARTPR FROM AUCTION WHERE P_NO = ?";
+			int au_startPr = 0;
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, p_no);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					au_startPr = rs.getInt("au_startpr");
+					System.out.println("[TRADEDAO]/SELECTAUCTIONAU_STARTPR AU_STARTPR : "+au_startPr);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return au_startPr;
+		}
+		
+		//경매글을 경우 경매완료로 변경하는 기능
+		public boolean updateAuctionAu_code(int p_no, String au_code) {
+			System.out.println("[TRADEDAO]/UPDATEAUCTIONAU_CODE START");
+			String sql = "UPDATE AUCTION SET AU_CODE = ? FROM AUCTION WHERE P_NO = ?";
+			int success = 0;
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, au_code);
+				ps.setInt(2, p_no);
+				success = ps.executeUpdate();	
+				System.out.println("[TRADEDAO]/UPDATEAUCTIONAU_CODE SUCCESS : "+success);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return success>0?true:false;
+		}
 }

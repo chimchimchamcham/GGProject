@@ -28,18 +28,116 @@ body{width:100%;background-color:gray;}
 #s_a_code{background-color:#C1C6C6;border-radius:5px/5px;text-align:center;font-size:0.8rem; padding:2px}
 #subject{font-size:0.8rem;}
 
-#content{position:absolute; left:380px; top:100px;width:300px;height:200px;background-color:green;}
+#content{position:absolute; left:420px; top:100px;width:320px;height:200px;background-color:green;}
 #top_content{position:relative; background-color:yellow; width:200px; left:30px}
-#send_price{display:inline-block; position:relative; top:10px;left:30px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;border:1px solid gray;border-radius:5px/5px;padding-left:10px;padding-right:40px;}
+#send_price{display:inline-block; position:relative; top:10px;left:38px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;border:1px solid gray;border-radius:5px/5px;padding-left:10px;padding-right:40px;}
 .p{font-size:2.5rem; position:absolute; top:30px;left:230px }
 #remainPoint{position:relative;top:25px;background-color:#C1C6C6;border-radius:5px/5px;text-align:center;}
-#threeBtn{position:absolute; top:140px;background-color:blue; width:140px; left:80px}
+#threeBtn{position:absolute; top:140px;background-color:blue; width:140px; left:90px}
 #threeBtn>button{width:60px; height:35px; border-radius:5px/5px;font-size:0.7rem; float:left;margin:5px}
+#sendY{background-color:#FF7E00;color:white}
+#chargeBtn{color:white;background-color:#0048FF;}
+#receiveY{background-color:#FF7E00;color:white;}
+
+#reply{position:absolute; left:420px; top:100px;width:320px;height:200px;background-color:yellow;}
+#reply>span{position:relative; left:110px; top:10px;font-size:1.5rem;}
+#reply_content>span{position:relative; top:10px; left:10px; font-size:0.8rem}
+#write_content{position:relative; top:20px; left:10px;}
+#sendReply{position:relative; top:25px;left:130px; width:60px;height:35px;border-radius:5px/5px;font-size:0.7rem;background-color:#0048FF; color:white}
+
 
 #comment{position:absolute; top:350px; background-color:red;width:900px; height:230px}
-#comment_cnt{position:relative; left:30px;}
+#comment_cnt{position:relative; left:30px; }
+
 
 </style>
+
+<script>
+	$(document).ready(function(){
+		
+	//초기상태 
+	 $("#condition").css({"color":"#C1C6C6"});
+	$("#sendY").css({"background-color":"#FF7E00"});
+	$("#chargeBtn").css({"backgroud-color":"#0048FF"});
+	 $("#top_content_1").show();
+	$("#top_content_2,#top_content_3").hide(); 
+	$("#receiveY").hide();
+	$("#sendY,#chargeBtn").attr("disabled",true);	
+	$("#reply").hide();
+	//$("#content").show();
+	//$("#reply").hide();	 
+	
+	/* /* 향후 삭제 */
+	//$("#content").hide();
+	//$("#reply").show();	
+	//$("#chargeBtn").hide();
+	/*-------------*/ 
+		
+	//신고하기 버튼을 누르면 팝업창 띄우기
+	$("#report").click(function(){
+		var N_receiveId = "${dto.p_id}"
+  		window.open("./popup/notifyPopup.jsp?N_receiveId="+N_receiveId, "notifyPopup", "width=400, height=400, left=700, top=400");
+    });
+	 
+	var trade_con = "${dto.c_code}"; 
+	//거래페이지 생성상태인 경우 
+	//dto.c_code ="HT001" = 초기상태
+	
+	//거래페이지 송금상태인 경우
+	//dto.c_code ="HT002"
+	 if(trade_con == "HT002"){ 
+		$("#send").css({"color":"#3BC312"}); //송금상태 불들어오는거
+		$("#sendY,#chargeBtn").css({"background-color":"gray"});
+		$("#sendY,#chargeBtn").attr("disabled",false);
+	}else if(trade_con == "HT003"){//거래페이지 승인거부인 경우 -> 송금 전 상태와 동일
+		$("#condition").css({"color":"#C1C6C6"});
+		$("#sendY").css({"background-color":"#FF7E00"});
+		$("#chargeBtn").css({"backgroud-color":"#0048FF"});
+		$("#sendY,#chargeBtn").attr("disabled",true);	
+	}else if(trade_con == "HT004"){//거래페이지 배송대기의 경우
+		$("#send_price").attr('readonly',true);
+		$("#send,#approval").css({"color":"#3BC312"}); 
+		$("#sendY,#chargeBtn").css({"background-color":"gray"});
+		$("#sendY,#chargeBtn").attr("disabled",false);
+		$("#top_content_2").show();
+		$("#top_content_1,#top_content_3").hide();
+	}else if(trade_con == "HT005"){//거래페이지 수취대기 상태의 경우
+		$("#send_price").attr('readonly',true);
+		$("#send,#approval,#shipping").css({"color":"#3BC312"}); 
+		$("#chargeBtn").css({"background-color":"gray"});
+		$("#chargeBtn").attr("disabled",false);
+		$("#sendY").hide();
+		$("#receiveY").show();
+	}else if(trade_con == "HT006"){//거래페이지 수취확인 상태의 경우 
+		$("#send,#approval,#shipping,#receive").css({"color":"#3BC312"}); 
+		$("#reply").show();
+		$("#content,#chargeBtn").hide();
+		$("#sendY").hide();
+		$("#reply").show();
+	 }else if(trade_con == "HT007"){
+		
+	}
+	 
+	
+	
+	
+	
+	
+	
+	//dto.c_code ="HT004"
+	
+	
+	//dto.c_code ="HT005"
+	
+	
+	//dto.c_code ="HT006"
+	
+	//거래페이지 거래취소인 상태의 경우
+	//dto.c_code ="HT007"
+	
+	});
+</script>
+
 </head>
 <body>
 <div id="wrap">
@@ -58,22 +156,31 @@ body{width:100%;background-color:gray;}
 	<div id="imgDiv">
 		<img class="img" src="../img/notebook.PNG"/>
 		<div id="img_condition">
-			<span id="s_a_code">판매중</span>
+			<span id="s_a_code">거래중</span>
 			<span id="subject">아이패드 파우치</span>
 		</div>
 	</div>
 	
 	<div id="content">
-		<div id="top_content"><span>애플</span>님에게 <span>승인요청</span>중...</div>
-		<!-- <div id="top_content">배송대기중...</div> -->
-		<!-- <div id="top_content">수취대기확인중...</div> -->
+		<div id="top_content_1"><span>애플</span>님에게 <span>승인요청</span>중...</div>
+		<div id="top_content_2">배송대기중...</div>
+		<div id="top_content_3">수취대기확인중...</div>
 		<div id="writePoint"><input type="text" name="send_price" id="send_price" value="5500"></div>
 		<span class="p"><b>P</b></span>
 		<div id="remainPoint"><span>둘리</span>님의 잔여 포인트 : <span>25000</span>P</div>
 		<div id="threeBtn">
 			<button id="sendY">송금</button>
-			<!-- <button id="receiveY">수취확인</button> -->
+			<button id="receiveY">수취확인</button>
 			<button id="chargeBtn">포인트 충전</button>
+		</div>
+	</div>
+	
+	<div id="reply">
+		<span><b>거래후기</b></span>
+		<div id="reply_content">
+		<span><b>후기작성(선택사항)</b></span>
+		<div id="write_content"><textarea rows="5" cols="40">좋은 상품, 좋은 가격에 잘 구매하였습니다.</textarea></div>
+		<input type="button" id="sendReply" value="작성완료">
 		</div>
 	</div>
 	
