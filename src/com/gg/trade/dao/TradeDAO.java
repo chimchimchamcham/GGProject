@@ -328,7 +328,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			PointDAO dao = new PointDAO();
 			
 			///입찰금반환 메서드 실행
-			String sql = "select distinct ha_bidusr from his_auction where ha_bidusr <> '(select au_successer from auction where p_no=?)' and p_no=?";
+			String sql = "select distinct ha_bidusr from his_auction where ha_bidusr <> (select au_successer from auction where p_no=?) and p_no=?";
 		
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
