@@ -73,8 +73,6 @@ public class UserUploadService {
 			dto.setU_detailAddr(u_detailAddr);
 			dto.setU_intro(u_intro);
 			
-			// 4.이름 변경
-			UserDAO dao = new UserDAO();
 			//새로운 사진 원래 파일명
 			String oriFileName = multi.getFilesystemName("photo"); //새로운 사진 파일명 변경 전
 			System.out.println("기존파일 : " + oriFileName);
