@@ -95,7 +95,9 @@ public class CommentDAO {
 		ArrayList<GGDto> list = new ArrayList<GGDto>();
 		
 		// 부모댓글이 없는 것들만 가져온다!
-		String sql = "SELECT pc_id, pc_content FROM post_comment WHERE p_no=? AND pc_parentno=0 AND pc_blindyn ='N' " + 
+		String sql ="SELECT u.u_nname,pc.pc_id,pc.pc_content, u.u_newname, pc.pc_tm FROM post_comment pc " + 
+				"LEFT OUTER JOIN userinfo u ON (u.u_id = pc.pc_id) " + 
+				"WHERE pc.p_no= ? AND pc.pc_parentno=0 AND pc.pc_blindyn ='N' " + 
 				"ORDER BY pc_no ASC";
 		
 		ps = conn.prepareStatement(sql);
@@ -104,7 +106,10 @@ public class CommentDAO {
 		while(rs.next()) {
 			dto = new GGDto();
 			dto.setPc_id(rs.getString("pc_id"));
+			dto.setU_nname(rs.getString("u_nname"));
 			dto.setPc_content(rs.getString("pc_content"));
+			dto.setU_newName(rs.getString("u_newname"));
+			dto.setPc_tm(rs.getDate("pc_tm"));
 			list.add(dto);
 		}
 		
