@@ -299,21 +299,23 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			
 			
 			rs = ps.executeQuery();
-			rs.next();
-			int count = rs.getInt("count");
-			if(count == 1) {			
-				//입찰한 내역이 없는 경우
-				sql = "select au_startpr from auction where p_no=?";
-				
-				ps = conn.prepareStatement(sql);
-				ps.setInt(1, p_no);
-				rs = ps.executeQuery();
-				rs.next();
-				
-				int pnt_point =  rs.getInt("au_startpr"); //시작가격 가져오기
-				System.out.println("시작가격 pnt_point : "+pnt_point);
-				success = dao.insertPoint(user_id, pnt_point, "SYSTEM", "PNT006", p_no);
-				System.out.println("시작금 인출여부 : "+success);
+			int count = 0;
+			if(rs.next()) {
+				count = rs.getInt("count");
+				if(count == 1) {			
+					//입찰한 내역이 없는 경우
+					sql = "select au_startpr from auction where p_no=?";
+					
+					ps = conn.prepareStatement(sql);
+					ps.setInt(1, p_no);
+					rs = ps.executeQuery();
+					rs.next();
+					
+					int pnt_point =  rs.getInt("au_startpr"); //시작가격 가져오기
+					System.out.println("시작가격 pnt_point : "+pnt_point);
+					success = dao.insertPoint(user_id, pnt_point, "SYSTEM", "PNT006", p_no);
+					System.out.println("시작금 인출여부 : "+success);
+				}
 			}
 			
 			return success;
