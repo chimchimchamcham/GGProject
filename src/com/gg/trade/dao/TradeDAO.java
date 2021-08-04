@@ -170,10 +170,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		
 		//입찰금액 입력 쿼리
 		System.out.println("경매 히스토리 입력여부 : "+success);
-		
-		
-		
-		//시작금액 빼가는 쿼리
+	
 		
 		
 		map.put("success", success);
@@ -336,6 +333,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			System.out.println("=========입찰금 반환 목록==========");
 			while(rs.next()) {
 				String bid_id = rs.getString("ha_bidusr");
+				System.out.println("bid_id:"+bid_id);
 				insertRs = dao.insertPoint(bid_id, instantpr, "SYSTEM", "PNT007", p_no);
 				
 				if(insertRs) {
