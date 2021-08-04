@@ -357,7 +357,7 @@ public class BoardDAO {
 
 	public ArrayList<GGDto> maide_list(String userid) throws SQLException {
 
-		String sql = "select p.p_title,pi.pnt_point,pi.pnt_tm,i.i_newname,pi.pnt_otherid,c.c_name,pi.PNT_otherId from post p,point pi,img i,codes c where (p.p_code='P002' or p.p_code='P001') and p.p_code = c.c_code and pi.pnt_code='PNT003' and p.p_no = pi.p_no and p.p_no = i.p_no and p.p_id = pi.PNT_id and pi.PNT_id = ?";
+		String sql = "select p.p_no,p.p_title,pi.pnt_point,pi.pnt_tm,i.i_newname,pi.pnt_otherid,c.c_name,pi.PNT_otherId from post p,point pi,img i,codes c where (p.p_code='P002' or p.p_code='P001') and p.p_code = c.c_code and pi.pnt_code='PNT003' and p.p_no = pi.p_no and p.p_no = i.p_no and p.p_id = pi.PNT_id and pi.PNT_id = ?";
 
 		ArrayList<GGDto> maidelist = new ArrayList<GGDto>();
 
@@ -371,6 +371,7 @@ public class BoardDAO {
 
 		while (rs.next()) {
 			GGDto dto = new GGDto();
+			dto.setP_no(rs.getInt("p_no"));
 			dto.setP_title(rs.getString("P_title"));
 			dto.setPnt_point(rs.getInt("pnt_point"));
 			dto.setPnt_tm(rs.getDate("pnt_tm"));

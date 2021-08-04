@@ -64,11 +64,11 @@
     
     
     /*뎃글*/
-    #second	div.board{border: 1px solid #D8D8D8;width: 143vh;height: 50vh;float: left;margin: 10px;padding: 20px;}
+    #second	div.board{border: 1px solid #D8D8D8;width: 143vh;height: 50vh;float: left;margin: 10px;padding: 20px;overflow: scroll;}
     .board_text{border: 1px solid #D8D8D8; width: 143vh;height:5vh;float: left;margin: 10px;padding: 20px;}
     .enter{ margin-bottom: 10px;margin-left: 10px;padding: 20px;}
 
-    .one-text{border: 1px solid black;border-radius: 10px;width: 60vh;height: 10vh}
+    .one-text{border: 1px solid black;border-radius: 10px;width: 60vh;height: 10vh;margin-bottom: 10vh};
     .one-text .one-img-time{display: flex;justify-content: space-between;align-items: center;}
     .one-text .one-img-time img{max-width: 100px;max-height: 100px;border-radius: 50px;}
     
