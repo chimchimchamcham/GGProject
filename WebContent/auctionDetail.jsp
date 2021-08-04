@@ -232,7 +232,7 @@
                     <div id="description">
                         <h1>${dto.p_title}<sup>${dto.c_name }</sup></h1>
                         <a href="#">신고하기</a>
-                        <div><a href="#">수정 /</a>&nbsp;<a href="#">삭제</a></div>
+                        <div><a href="./auctionUpdateForm?p_no=${dto.p_no}">수정 /</a>&nbsp;<a href="#">삭제</a></div>
                         <span>현재최고 입찰가</span>
                         <div><sup>${dto.ha_bidUsr }</sup><span>${dto.ha_bidPr }P</span></div>
                         <span>즉시구매가</span>

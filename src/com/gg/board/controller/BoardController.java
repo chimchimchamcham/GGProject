@@ -19,10 +19,11 @@ import com.gg.board.service.UploadService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
-@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist",
-		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/writeCommunity", "/auctionDetail", "/commDetail",
-		"/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist", "/commList", "/salesUpdateForm",
-		"/salesUpdate", "/details" })
+
+@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
+	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
+		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" 
+		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate"})
 
 public class BoardController extends HttpServlet {
 
@@ -286,6 +287,41 @@ public class BoardController extends HttpServlet {
 
 			break;
 
+			
+			/* ====== 경매 글수정 ====== */
+		case "/auctionUpdateForm":
+			System.out.println("경매 수정 폼 요청");
+			
+			// 카테고리
+			map = service.category();
+			System.out.println("[Controller ] category success : " + map);
+
+			saleCat = map.get("saleCat");
+			System.out.println("saleCat list size : " + saleCat.size());
+			req.setAttribute("saleCat", saleCat);
+
+			// 글 내용
+			req.setAttribute("auctionUpdate", service.auctionUpdateForm());
+			dis = req.getRequestDispatcher("auctionUpdate.jsp");
+			dis.forward(req, resp);
+
+			break;
+			
+		case "/auctionUpdate":
+			System.out.println("경매 글 수정 요청");
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			System.out.println("수정요청 글 번호 : " + p_no);
+			sucP_no = service.commUpdate(p_no);
+			System.out.println("수정 성공 글 번호 : " + sucP_no);
+
+			HashMap<String, Object> auctionUpdateMap = new HashMap<String, Object>();
+			auctionUpdateMap.put("sucP_no", sucP_no);
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().println(new Gson().toJson(auctionUpdateMap));
+
+			break;
+
+			
 		/* ========================= */
 		case "/details":
 			System.out.println("걸러주는 디테일즈");

@@ -276,7 +276,6 @@ public int userUpdate(String id) {
 		dto.setU_detailAddr(u_detailAddr);
 		
 		dao = new UserDAO();
-		Gson gson = null;
 
 			//기존사진 이름 가져와서 delFileName에 넣음
 			String delFileName = dao.getFileName(id).getU_newName();
