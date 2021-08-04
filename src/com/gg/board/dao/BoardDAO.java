@@ -415,10 +415,10 @@ public class BoardDAO {
 	
 	public ArrayList<GGDto> flowlist(String userid, int flowORflowing) throws SQLException {
 		String sql = "";
-		if (flowORflowing == 0) {// 전체 Au001 Au003
-			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND  and  p.p_code ='P001' and (a.Au_code = 'Au001' or a.Au_code = 'Au003') and P.P_ID = ? ";
-		} else if (flowORflowing == 1) {// 경매중 Au001
-			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND  and  p.p_code ='P001' and a.Au_code = 'Au001' and P.P_ID = ? ";
+		if (flowORflowing == 0) {//나를 팔로우 한
+			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_newname,u.u_nname FROM follow f,userinfo u where f.f_receiveid = ? and f.f_sendid = u.u_id";
+		} else if (flowORflowing == 1) {//내가 팔로잉한
+			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_newname,u.u_nname FROM follow f,userinfo u where f.f_sendid = 'user1' and f.f_receiveid = u.u_id";
 		}
 
 		ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
@@ -435,17 +435,7 @@ public class BoardDAO {
 
 		while (rs.next()) {
 			GGDto dto = new GGDto();
-			dto.setP_no(rs.getInt("P_NO"));
-			dto.setP_id(rs.getString("P_ID"));
-			dto.setP_title(rs.getString("P_TITLE"));
-			dto.setHa_bidUsr(rs.getString("HA_BIDUSR"));
-			dto.setAu_count(rs.getInt("au_count"));
-			dto.setAu_endTm(rs.getDate("au_endTm"));
-			dto.setHm(rs.getLong("TOPPR"));
-			dto.setI_newName(rs.getString("I_NEWNAME"));
-			dto.setAu_startPr(rs.getInt("Au_startPr"));
-			dto.setAu_instantPr(rs.getInt("Au_instantPr"));
-			dto.setP_tm(rs.getDate("P_TM"));
+
 			flowlist.add(dto);
 		}
 		System.out.println("actionlist:" + flowlist);
