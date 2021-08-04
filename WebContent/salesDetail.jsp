@@ -303,8 +303,9 @@
 			dataType : 'JSON',
 			success : function(data){
 				console.log(data);
-				if(data.success){
+				if(data!= null){
 					alert('sucess');
+					console.log("data.sold_board_list:",data.sold_board_list);
 				}else{
 					alert('뎃글 등록 실패.');
 				}
