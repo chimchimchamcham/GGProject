@@ -22,22 +22,22 @@ public class CommentService {
 	
 	
 	
-	public void sold_board_list(String p_id, int p_no)throws IOException {
+	public void sale_commentlist(String p_id, int p_no)throws IOException {
 		System.out.println("p_id:"+p_id);
 		System.out.println("p_no:"+p_no);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		CommentDAO dao = new CommentDAO();
-		ArrayList<GGDto> sold_board_list = null;
+		ArrayList<GGDto> list = null;
 		
 		try {
-			sold_board_list = dao.sold_board_dao(p_id,p_no);
+			list = dao.sale_commentlist(p_id,p_no);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			dao.resClose();
-			map.put("sold_board_list", sold_board_list);
+			map.put("sold_board_list", list);
 		}
 		System.out.println("auc_map:"+map);
 		

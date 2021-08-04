@@ -16,6 +16,7 @@ public class CommentDAO {
 	public Connection conn = null;
 	public ResultSet rs = null;
 	public PreparedStatement ps = null;
+	
 	public CommentDAO() {
 		try {
 			Context ctx = new InitialContext();
@@ -43,9 +44,9 @@ public class CommentDAO {
 		
 	}
 	
-	public ArrayList<GGDto> sold_board_dao(String p_id, int p_no)throws SQLException {
+	public ArrayList<GGDto> sale_commentlist(String p_id, int p_no)throws SQLException {
 		System.out.println("DAO salesDetail의 댓글들 호출");
-		ArrayList<GGDto> sale_board_list = new ArrayList<GGDto>();
+		ArrayList<GGDto> list = new ArrayList<GGDto>();
 		
 		System.out.println("p_id:"+p_id);
 		System.out.println("p_no:"+p_no);
@@ -62,13 +63,13 @@ public class CommentDAO {
 				dto.setPc_content(rs.getString("pc_content"));
 				dto.setPc_tm(rs.getDate("pc_tm"));
 				dto.setPc_parentno(rs.getInt("pc_parentno"));
-				sale_board_list.add(dto);
+				list.add(dto);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return sale_board_list;
+		return list;
 	}
 
 }

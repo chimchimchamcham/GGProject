@@ -240,9 +240,7 @@
                     		</div>
                     		<p><a href="#">판매자의 다른 상품 더보기 > </a></p>
                     		
-                    	</div>
-             
-                    	
+                    	</div>	
                     </div>
                     <div id="second"><!-- 댓글처리 -->
                     	<div class="board">
@@ -262,11 +260,11 @@
 </body>
 <script>
 	//좋아요 등록
-	$("#threeButton>button:nth-of-type(1)").click(function(){
+	$("#threeButton > button:nth-of-type(1)").click(function(){
 		$.ajax({
 			type : 'get',
 			url : 'lovePlus2',
-			data : {'p_no' : ${dto.p_no}},
+			data : {'p_no' : "${dto.p_no}"},
 			dataType : 'JSON',
 			success : function(data){
 				console.log(data);
@@ -289,7 +287,7 @@
 		$.ajax({
 			type : 'get',
 			url : 'loveMinus2',
-			data : {'p_no' : ${dto.p_no}},
+			data : {'p_no' : "${dto.p_no}"},
 			dataType : 'JSON',
 			success : function(data){
 				console.log(data);
@@ -306,20 +304,20 @@
 			}
 		});
 	});
-	//뎃글 버튼 누르면 이상세 페이지에서 마지막에 쓴 뎃글 보여주기
+	//댓글 버튼 누르면 이상세 페이지에서 마지막에 쓴 댓글 보여주기
 	$("div#twoButton>button.board_button").click(function(){
 		$.ajax({
 			type : 'post',
-			url : './saleboardlist',
-			data : {p_no : ${dto.p_no},p_id:"${dto.p_id}"},
+			url : './sale_commentlist',
+			data : {p_no : "${dto.p_no}",p_id:"${dto.p_id}"},
 			dataType : 'JSON',
 			success : function(data){
-				console.log(data);
-				if(data!= null){
-					console.log("data.sold_board_list:",data.sold_board_list);
-					saleboardlist(data.sold_board_list)
+				console.log("data",data);
+				if(data.list != null){
+					console.log("data.list:",data.list);
+					saleboardlist(data.list)
 				}else{
-					alert('뎃글 등록 실패.');
+					alert('등록된 댓글이 없습니다.');
 				}
 			},
 			error : function(e){
@@ -328,7 +326,7 @@
 		});
 	});
 	
-	//데이터 가져와서 뿌려주는 뎃글 리스트
+	//데이터 가져와서 뿌려주는 댓글 리스트
 	function saleboardlist(sold_board_list){	
 		console.log("sold_board_list=="+sold_board_list)
 		var content="";
