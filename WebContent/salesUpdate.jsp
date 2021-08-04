@@ -89,8 +89,7 @@ console.log("오늘 날짜 : ",currDate);
 				</p>
 			</div>
 			<div id="twoButton">
-				<input type="button" id="submit" value="등록" /> 
-				<input type="button" id="console" value="콘솔" /> 
+				<input type="button" id="submit" value="등록" />
 				<input type="button" onclick="location.href='./index.jsp'" value="취소" />
 			</div>
 		</div>
@@ -134,7 +133,6 @@ $("select[name=saleCat]").val("${salesUpdate.s_code}").prop("selected", true);
 		param.content = $("textarea[name='content']").val();
 		param.category = $("select[name='saleCat']:selected").val();
 		param.deliveryYN =$("input[name=deliveryYN]:checked").val();
-		//param.deliveryYN = $("input[name='deliveryYN']:checked").val();
 		param.price = $("input[name='price']").val();
 		param.followLimYN = $("input[name=disclosure]:checked").val();
 		

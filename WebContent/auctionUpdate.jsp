@@ -128,6 +128,7 @@ var currDate = new Date().toISOString().substring(0,10);
 <script>
 console.log($('input[name=deliveryYN]').val());
 console.log("${auctionUpdate.s_DeliveryYN}");
+console.log("${auctionUpdate.au_code}");
 
 //예약
 // 경매 예약 시작 시간 초기 설정 (오늘)
@@ -151,6 +152,11 @@ $("#to").click(function(){
 	document.getElementById('to').max = maxDate.toISOString().substring(0,10);
 });
 /////////////////////////////////////
+
+//경매중일때
+if(${auctionUpdate.au_code eq 'Au001'}){
+	
+}
 
 
 //경매폼에서 예약경매하기 버튼 클릭시
