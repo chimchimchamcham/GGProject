@@ -81,6 +81,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		//msg를 뿌려줄 예정 (성공/ 현재입찰자 = 최고입찰자 / 입찰금액 <최고입찰긍)
 		int checker = 0;
 		boolean success = false;
+		boolean instantYN = false;
 		int instantPr =0;
 		String sql = "";
 		String msg = "";
@@ -140,7 +141,10 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 					if(checker>0) {
 						success = true;
 						msg = "입찰에 성공하였습니다.";
-						
+						if(success) {
+							instantYN = bidRecordYN(p_no,ha_bidUsr);
+							System.out.println("시작금 인출 여부 : "+instantYN);
+						}
 					}
 				}
 			}else {//이전 입찰자가 없었을 때
@@ -155,6 +159,10 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				if(checker>0) {
 					success = true;
 					msg = "입찰에 성공하였습니다.";
+					if(success) {
+						instantYN = bidRecordYN(p_no,ha_bidUsr);
+						System.out.println("시작금 인출 여부 : "+instantYN);
+					}
 					
 				}
 			}
@@ -162,14 +170,8 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		
 		//입찰금액 입력 쿼리
 		System.out.println("경매 히스토리 입력여부 : "+success);
+	
 		
-		boolean instantYN = false;
-		
-		//시작금액 빼가는 쿼리
-		if(success) {
-			instantYN = bidRecordYN(p_no,ha_bidUsr);
-			System.out.println("시작금 인출 여부 : "+instantYN);
-		}
 		
 		map.put("success", success);
 		System.out.println("메세지 확인 : "+msg);
@@ -294,21 +296,23 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			
 			
 			rs = ps.executeQuery();
-			rs.next();
-			int count = rs.getInt("count");
-			if(count == 1) {			
-				//입찰한 내역이 없는 경우
-				sql = "select au_startpr from auction where p_no=?";
-				
-				ps = conn.prepareStatement(sql);
-				ps.setInt(1, p_no);
-				rs = ps.executeQuery();
-				rs.next();
-				
-				int pnt_point =  rs.getInt("au_startpr"); //시작가격 가져오기
-				System.out.println("시작가격 pnt_point : "+pnt_point);
-				success = dao.insertPoint(user_id, pnt_point, "SYSTEM", "PNT006", p_no);
-				System.out.println("시작금 인출여부 : "+success);
+			int count = 0;
+			if(rs.next()) {
+				count = rs.getInt("count");
+				if(count == 1) {			
+					//입찰한 내역이 없는 경우
+					sql = "select au_startpr from auction where p_no=?";
+					
+					ps = conn.prepareStatement(sql);
+					ps.setInt(1, p_no);
+					rs = ps.executeQuery();
+					rs.next();
+					
+					int pnt_point =  rs.getInt("au_startpr"); //시작가격 가져오기
+					System.out.println("시작가격 pnt_point : "+pnt_point);
+					success = dao.insertPoint(user_id, pnt_point, "SYSTEM", "PNT006", p_no);
+					System.out.println("시작금 인출여부 : "+success);
+				}
 			}
 			
 			return success;
@@ -321,7 +325,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			PointDAO dao = new PointDAO();
 			
 			///입찰금반환 메서드 실행
-			String sql = "select distinct ha_bidusr from his_auction where ha_bidusr <> '(select au_successer from auction where p_no=?)' and p_no=?";
+			String sql = "select distinct ha_bidusr from his_auction where ha_bidusr <> (select au_successer from auction where p_no=?) and p_no=?";
 		
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
@@ -331,6 +335,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			System.out.println("=========입찰금 반환 목록==========");
 			while(rs.next()) {
 				String bid_id = rs.getString("ha_bidusr");
+				System.out.println("bid_id:"+bid_id);
 				insertRs = dao.insertPoint(bid_id, instantpr, "SYSTEM", "PNT007", p_no);
 				
 				if(insertRs) {
