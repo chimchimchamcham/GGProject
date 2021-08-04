@@ -859,4 +859,20 @@ public class BoardDAO {
 
 	}
 
+	public String details(int p_no, String id) throws SQLException {
+		String code = "";
+		
+		String sql="SELECT p_code FROM post WHERE p_no=?";
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, p_no);
+		
+		rs = ps.executeQuery();
+		if(rs.next()) {
+			code = rs.getString(1);
+		}
+		
+		
+		return code;
+	}
+
 }

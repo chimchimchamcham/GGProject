@@ -30,14 +30,13 @@ public class CommentController extends HttpServlet {
 		dual(req,resp);
 	}
 
-	private void dual(HttpServletRequest req, HttpServletResponse resp) {
+	private void dual(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String uri = req.getRequestURI();
 		String ctx = req.getContextPath();
 		String addr = uri.substring(ctx.length());
 		System.out.println("addr : " + addr);
 
 		RequestDispatcher dis = null;
-		BoardService boardservice = new BoardService(req, resp);
 		CommentService commentservice = new CommentService(req, resp);
 		GGDto bdto = null;
 		boolean success = false;
@@ -50,7 +49,8 @@ public class CommentController extends HttpServlet {
 			
 			p_id = req.getParameter("p_id");
 			p_no = Integer.parseInt(req.getParameter("p_no"));
-
+			
+			commentservice.sold_board_list(p_id,p_no);
 
 			break;
 		
