@@ -69,10 +69,11 @@ console.log("오늘 날짜 : ",currDate);
 				</p>
 				<p>
 					거래방식(필수선택) &nbsp;&nbsp;&nbsp;
-					<input type="radio" name="deliveryYN" value="Y">택배
-					<input type="radio" name="deliveryYN" value="N">직거래
+					<input type="radio" name="deliveryYN" value="Y" <c:if test = "${salesUpdate.s_DeliveryYN eq 'Y'}">checked="checked"</c:if>/>택배
+					<input type="radio" name="deliveryYN" value="N" <c:if test = "${salesUpdate.s_DeliveryYN eq 'N'}">checked="checked"</c:if>/>직거래
 				</p>
-				<p>
+				
+				<p id="commuCategory">
 					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
 					<select name="saleCat">
 						<c:forEach items="${saleCat }" var="SaleCategory">
@@ -80,14 +81,16 @@ console.log("오늘 날짜 : ",currDate);
 						</c:forEach>
 					</select>
 				</p>
+
 				<p>
 					공개범위&nbsp;&nbsp;&nbsp;
-					<input type="radio" name="disclosure" value="N">전체공개
-					<input type="radio" name="disclosure" value="Y">팔로우한정
+					<input type="radio" name="disclosure" value="N" <c:if test="${salesUpdate.s_followLimYN eq 'N'}">checked="checked"</c:if>>전체공개
+					<input type="radio" name="disclosure" value="Y" <c:if test="${salesUpdate.s_followLimYN eq 'Y'}">checked="checked"</c:if>>팔로우한정
 				</p>
 			</div>
 			<div id="twoButton">
 				<input type="button" id="submit" value="등록" /> 
+				<input type="button" id="console" value="콘솔" /> 
 				<input type="button" onclick="location.href='./index.jsp'" value="취소" />
 			</div>
 		</div>
@@ -95,11 +98,17 @@ console.log("오늘 날짜 : ",currDate);
 </body>
 
 <script>
-console.log("${salesUpdate.ns_code}");
+console.log("${salesUpdate.s_DeliveryYN}");
+console.log("${salesUpdate.s_followLimYN}");
 
+//카테고리 기존값 뿌려주기
 $("select[name=saleCat]").val("${salesUpdate.s_code}").prop("selected", true);
-$("input[name=deliveryYN]").val("${salesUpdate.s_DeliveryYN}").prop("checked", true);
-$("input[name=disclosure]").val("${salesUpdate.s_followLimYN}").prop("checked", true);
+
+//택배여부, 팔로우 여부 뿌려주기
+//var deliveryInput = $("input[name=deliveryYN]").val();
+
+//$("input[name=deliveryYN]").val("${salesUpdate.s_DeliveryYN}").prop("checked",true);
+//$("input[name=disclosure]").val("${salesUpdate.s_followLimYN}").prop("checked",true);
 
 	var success = false;
 	var param = {};
@@ -107,6 +116,10 @@ $("input[name=disclosure]").val("${salesUpdate.s_followLimYN}").prop("checked", 
 
 	// 전역변수로 설정해주어야 한다.
 	var form = new FormData();
+	$("#console").click(function() {
+		console.log($("input[name=deliveryYN]:checked").val());
+		console.log($("input[name=disclosure]:checked").val());
+	})
 	
 	//등록버튼 클릭시 
 	$("#submit").click(function() {
@@ -119,10 +132,11 @@ $("input[name=disclosure]").val("${salesUpdate.s_followLimYN}").prop("checked", 
 		param.p_no = ${salesUpdate.p_no};
 		param.title = $("input[name='title']").val();
 		param.content = $("textarea[name='content']").val();
-		param.category = $("select[name='saleCat']").val();
-		param.deliveryYN = $("input[name='deliveryYN']:checked").val();
+		param.category = $("select[name='saleCat']:selected").val();
+		param.deliveryYN =$("input[name=deliveryYN]:checked").val();
+		//param.deliveryYN = $("input[name='deliveryYN']:checked").val();
 		param.price = $("input[name='price']").val();
-		param.disclosure = $("input[name='disclosure']:checked").val();
+		param.followLimYN = $("input[name=disclosure]:checked").val();
 		
 		//ajax url="sale"
 		console.log(param);
