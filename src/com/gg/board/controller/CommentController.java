@@ -14,7 +14,7 @@ import com.gg.board.service.BoardService;
 import com.gg.board.service.CommentService;
 import com.gg.dto.GGDto;
 
-@WebServlet({"/sale_commentlist"})
+@WebServlet({"/commentlist","/pushComment"})
 public class CommentController extends HttpServlet {
 
 	
@@ -44,7 +44,7 @@ public class CommentController extends HttpServlet {
 		String p_id;
 		switch (addr) {
 		
-		case "/sale_commentlist":
+		case "/commentlist":
 			System.out.println("댓글 리스트 요청");
 			
 			p_id = req.getParameter("p_id");
@@ -53,6 +53,14 @@ public class CommentController extends HttpServlet {
 			System.out.println("댓글 달리는 게시글"+p_no);
 			service.sale_commentlist(p_id,p_no);
 
+			break;
+		case "/pushComment":
+			System.out.println("댓글 등록 요청");
+			String pc_id = 
+			
+			
+			
+			
 			break;
 		
 		

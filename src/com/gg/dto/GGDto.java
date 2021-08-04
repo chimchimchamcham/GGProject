@@ -158,6 +158,8 @@ public class GGDto {
 	private String pc_content;//내용
 	private Date pc_tm;//작성날짜
 	private int pc_parentno;// 나중에 물어봐야함 무엇이 댓글 대댓글인지
+	private String pc_id;// 댓글 등록한 아이디.
+	
 	
 	public Date getPc_tm() {
 		return pc_tm;
@@ -861,6 +863,14 @@ public class GGDto {
 
 	public void setHm(long l) {
 		this.hm = l;
+	}
+
+	public String getPc_id() {
+		return pc_id;
+	}
+
+	public void setPc_id(String pc_id) {
+		this.pc_id = pc_id;
 	}
 	
 

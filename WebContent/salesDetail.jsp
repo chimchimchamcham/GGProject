@@ -308,14 +308,14 @@
 	$("div#twoButton>button.board_button").click(function(){
 		$.ajax({
 			type : 'post',
-			url : './sale_commentlist',
+			url : './commentlist',
 			data : {p_no : "${dto.p_no}",p_id:"${dto.p_id}"},
 			dataType : 'JSON',
 			success : function(data){
 				console.log("data",data);
 				if(data.list != null){
 					console.log("data.list:",data.list);
-					saleboardlist(data.list)
+					saleboardlist(data.list);
 				}else{
 					alert('등록된 댓글이 없습니다.');
 				}
@@ -325,6 +325,35 @@
 			}
 		});
 	});
+	var comment ={};
+	
+	$(".enter").click(function(){
+		comment.id = "${sessionScope.loginId}";
+		comment.p_no = "${dto.p_no}";
+		comment.pc_content = $(".board_text").val();
+		comment.pc_parentNo = 0;
+		console.log("댓글 다는 아이디 : " , comment.id);
+		console.log("댓글 달리는 게시글 : ", comment.p_no);
+		console.log("댓글 내용 : " , comment.pc_content);
+		console.log("부모 댓글 여부 :",comment.pc_parentNo);
+		console.log("댓글 등록")
+		
+		$.ajax({
+			type: "POST",
+			url: "./pushComment",
+			data : comment,
+			dataType: "JSON",
+			success : function(data){
+				console.log("반환 데이터 : " , data);
+			},
+			error : function(e){
+				console.log("에러 발생 : " ,e);
+			}
+			
+		});
+		
+		});
+	
 	
 	//데이터 가져와서 뿌려주는 댓글 리스트
 	function saleboardlist(sold_board_list){	
