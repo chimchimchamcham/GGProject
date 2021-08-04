@@ -591,18 +591,19 @@ dao.resClose();
 
 	public ArrayList<GGDto> commList() {
 		
-		BoardDAO dao = new BoardDAO();
-		
-		String codes = null; ;
-		if((String) req.getAttribute("codes") == " like('%')") {
-			codes = " like('%')";
-		}else {
-			
+		String code ="";
+		String[] list = req.getParameterValues("categorys[]");//ajax에서 배열 형태로 보낼때 받는 방법
+		for(String a:list) {
+			if(a=="null") {}
+			code +=a;
 		}
-		return dao.commList();
+		code = code.substring(0,code.length()-1)+")";
+		// 마지막 문자 자르고 ) 를 추가해서 sql문을 완성
+		BoardDAO dao = new BoardDAO();
+
+		return dao.commList(code);
 	}
 
-	
 	/*판매 글 수정*/
 	public GGDto salesUpdateForm() {
 		int SalesP_no = Integer.parseInt(req.getParameter("p_no"));
@@ -614,29 +615,20 @@ dao.resClose();
 		return dto;
 	}
 
-	public String details(int p_no, String id) {
-		System.out.println("찾아가야 할 글 번호 : " + p_no);
-		BoardDAO dao = new BoardDAO();
-		String destiny ="";
-		try {
-			String code = dao.details(p_no,id);
-			System.out.println("code : " + code);
-			if(code.equals("P001")) {
-				destiny = "";
-			}else if(code.equals("P002")) {
-				
-			}else if(code.equals("P003")){
-				
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			dao.resClose();
-		}
-		
-		return code;
-	}
+	
+	  public String details(int p_no, String id) {
+	  System.out.println("찾아가야 할 글 번호 : " + p_no); BoardDAO dao = new BoardDAO();
+	  String destiny =""; try { String code = dao.details(p_no,id);
+	  System.out.println("code : " + code); if(code.equals("P001")) { destiny = "";
+	  }else if(code.equals("P002")) {
+	  
+	  }else if(code.equals("P003")){
+	  
+	  } } catch (SQLException e) { // TODO Auto-generated catch block
+	  e.printStackTrace(); }finally { dao.resClose(); }
+	  
+	  return code; }
+	 
 
 	
 }

@@ -829,19 +829,21 @@ public class BoardDAO {
 
 	}
 
-	public ArrayList<GGDto> commList() {		
+	public ArrayList<GGDto> commList(String code) {		
 		ArrayList<GGDto> list = new ArrayList<GGDto>();
 		String sql ="SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code " + 
 						"INNER JOIN userinfo u on p.p_id = u.u_id " + 
 						"LEFT OUTER JOIN love l ON p.p_no = l.p_no " + 
 						"LEFT OUTER JOIN img i ON p.p_no = i.p_no " + 
-						"WHERE p.p_code = 'P004'AND p.p_blindyn = 'N'";
-		
+						"WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_cate IN (";
+		// 추가된 문자열을 추가함.
+		GGDto dto = null;
+		sql += code;
 		try {
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				GGDto dto = new GGDto();
+				dto = new GGDto();
 				dto.setC_name(rs.getString("c_name"));
 				dto.setP_title(rs.getString("p_title"));
 				dto.setU_id(rs.getString("p_id"));
