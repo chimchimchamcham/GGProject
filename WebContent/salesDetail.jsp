@@ -64,13 +64,13 @@
     
     
     /*댓글*/
-    #second	div.board{border: 1px solid #D8D8D8;width: 143vh;height: 50vh;float: left;margin: 10px;padding: 20px;overflow: scroll;}
-    .board_text{border: 1px solid #D8D8D8; width: 143vh;height:5vh;float: left;margin: 10px;padding: 20px;}
+    #second	div.board{border: 1px solid #D8D8D8;width: 1196px; height: 50vh;float: left; overflow: scroll;}
+    .board_text{border: 1px solid #D8D8D8; width: 1198px; height:5vh;float: left;margin :}
     .enter{ margin-bottom: 10px;margin-left: 10px;padding: 20px;}
 
-    .one-text{border: 1px solid black;border-radius: 10px;width: 60vh;height: 10vh;margin-bottom: 10vh};
+    .one-text{border: 1px solid black; border-radius: 10px;width: 1198px;height: 10vh;margin-bottom: 10vh};
     .one-text .one-img-time{display: flex;justify-content: space-between;align-items: center;}
-    .one-text .one-img-time img{max-width: 100px;max-height: 100px;border-radius: 50px;}
+    .one-text .one-img-time img{max-width: 100px;max-height: 100px;border-radius: 50px; float:left;}
     
     
     
@@ -84,7 +84,14 @@
     #first>div:nth-of-type(2)>p:last-child{text-align:center;margin:10px;}
     #first>div:nth-of-type(2)>p:last-child>a{text-decoration:none;color:#6E6E6E;font-size:1.3rem;}
     
-    
+    #commentNickname {
+    	float: left;
+    	height: 10px;
+    	width : 100px;
+    	text-align: center;
+    	font-weight: bold;
+    	color : skyblue;
+    }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -372,10 +379,10 @@
 			comment += "<div class = 'one-text'>";
 			comment += 		"<div class='one-img-time'>";
 			comment += 			"<div class='uploadimg'>";
-			comment += 				"<a href='./myPage?id='>"+item.pc_id+"<img src='/photo/"+item.u_newName+"'/></a>";
+			comment += 				"<a id='commentNickname' href='./myPage?id='>"+item.pc_id+"<img src='/photo/"+item.u_newName+"'/></a>";
 			comment += 				"<div class='usertext'>"+item.u_nname+"</div>";
 			comment += 			"</div>";
-			comment += 			"<div class='content'>"+item.pc_content+"</div>";
+			comment += 			"<div class='content'><textarea style='float:left' readonly>"+item.pc_content+"</textarea></div>";
 			comment += 			"<div class='uploadtime'>";
 			comment += 				"<div>"+item.pc_tm+"</div>";
 			comment += 			"</div>";
