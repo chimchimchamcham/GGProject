@@ -511,6 +511,7 @@ dao.resClose();
 
 	/*글 수정*/
 	public int commUpdate(int p_no) {
+		
 		int sucP_no = 0;
 		
 		String title=req.getParameter("title");
@@ -519,17 +520,24 @@ dao.resClose();
 		//판매글 수정
 		String deliveryYN = req.getParameter("deliveryYN");
 		String price = req.getParameter("price");
-		String disclosure = req.getParameter("disclosure");
+		String followLimYN = req.getParameter("followLimYN");
+		//경매글 수정
+		String instantPr = req.getParameter("instantPr");
+		String startPr = req.getParameter("startPr");
+		String startTm = req.getParameter("startTm");
+		String endTm = req.getParameter("endTm");
 		
 		BoardDAO dao = new BoardDAO();
 		
 		if(price != null) { //판매글 수정
-			System.out.println("판매글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+disclosure);
-		} else {//커뮤니티 수정
+			System.out.println("판매글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+followLimYN);
+		} else if(startPr !=null ){ //경매글 수정
+			System.out.println("판매글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+followLimYN+"/ 즉결가 : "+instantPr+"/ 시작가 : "+startPr+"/ 시작시간 : "+startTm+"/ 종료시간 : "+endTm);
+		}else {//커뮤니티 수정
 			System.out.println("커뮤니티 수정 값 : "+title+"/"+content+"/"+category);
 		}
 		
-		sucP_no = dao.commUpdate(p_no, title,content,category,deliveryYN,price,disclosure);
+		sucP_no = dao.commUpdate(p_no, title,content,category,deliveryYN,price,followLimYN,instantPr,startPr,startTm,endTm);
 		
 		dao.resClose();
 		return sucP_no;
@@ -617,6 +625,26 @@ dao.resClose();
 		return dto;
 	}
 
+	/*경매 글 수정*/
+	public GGDto auctionUpdateForm() {
+		int AuctionP_no = Integer.parseInt(req.getParameter("p_no"));
+		System.out.println("수정 요청 글 번호 : "+AuctionP_no);
+		BoardDAO dao = new BoardDAO();
+		GGDto dto = new GGDto();
+		
+		try {
+			dto = dao.auctionDetail(AuctionP_no);
+			System.out.println("수정요청 dto : "+ dto);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		return dto;
+		}
+
 	public String details(int p_no, String id) {
 		System.out.println("찾아가야 할 글 번호 : " + p_no);
 		BoardDAO dao = new BoardDAO();
@@ -634,14 +662,11 @@ dao.resClose();
 				des = "";
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			dao.resClose();
 		}
-		
 		return des;
 	}
 
-	
 }
