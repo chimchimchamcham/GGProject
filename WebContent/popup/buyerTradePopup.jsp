@@ -55,19 +55,19 @@ body{width:100%;background-color:gray;}
 <script>
 	$(document).ready(function(){
 		
-	//초기상태 
-	 $("#condition").css({"color":"#C1C6C6"});
+	 //초기상태 
+	$("#condition").css({"color":"#C1C6C6"});
 	$("#sendY").css({"background-color":"#FF7E00"});
 	$("#chargeBtn").css({"backgroud-color":"#0048FF"});
-	 $("#top_content_1").show();
+	$("#top_content_1").show();
 	$("#top_content_2,#top_content_3").hide(); 
 	$("#receiveY").hide();
 	$("#sendY,#chargeBtn").attr("disabled",true);	
 	$("#reply").hide();
-	//$("#content").show();
-	//$("#reply").hide();	 
+	$("#content").show();
+	$("#reply").hide();	  
 	
-	/* /* 향후 삭제 */
+	/* /* 거래 후기 >>>> 향후 삭제 */
 	//$("#content").hide();
 	//$("#reply").show();	
 	//$("#chargeBtn").hide();
@@ -79,7 +79,7 @@ body{width:100%;background-color:gray;}
   		window.open("./popup/notifyPopup.jsp?N_receiveId="+N_receiveId, "notifyPopup", "width=400, height=400, left=700, top=400");
     });
 	 
-	var trade_con = "${dto.c_code}"; 
+	var trade_con = "${dto.ht_code}"; 
 	//거래페이지 생성상태인 경우 
 	//dto.c_code ="HT001" = 초기상태
 	
@@ -114,7 +114,7 @@ body{width:100%;background-color:gray;}
 		$("#content,#chargeBtn").hide();
 		$("#sendY").hide();
 		$("#reply").show();
-	 }else if(trade_con == "HT007"){
+	 }else if(trade_con == "HT007"){//거래페이지 거래취소인 상태의 경우
 		
 	}
 	 
@@ -132,7 +132,7 @@ body{width:100%;background-color:gray;}
 	
 	//dto.c_code ="HT006"
 	
-	//거래페이지 거래취소인 상태의 경우
+	
 	//dto.c_code ="HT007"
 	
 	});
@@ -140,6 +140,7 @@ body{width:100%;background-color:gray;}
 
 </head>
 <body>
+<form action="" method="post">
 <div id="wrap">
 	<div id="twoButton">
 		<input type="button" id="trade_cancel" value="거래취소"/>
@@ -191,6 +192,6 @@ body{width:100%;background-color:gray;}
 	</div>
 	
 </div>
-
+</form>
 </body>
 </html>
