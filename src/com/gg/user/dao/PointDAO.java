@@ -14,9 +14,9 @@ import com.gg.dto.GGDto;
 
 public class PointDAO {
 
-	ResultSet rs = null;
-	PreparedStatement ps = null;
-	Connection conn = null;
+	public ResultSet rs = null;
+	public PreparedStatement ps = null;
+	public Connection conn = null;
 	String sql = "";
 
 	public PointDAO() {

@@ -141,7 +141,7 @@ console.log(startTime.getTime()-now.getTime());
 if(startTime.getTime()-now.getTime()<0){
     console.log("경매중");
     if(${auctionUpdate.au_count} > 0){ //입찰자가 있을 때
-    	console.log("입찰자 있음");
+    	console.log("입찰자 있음"); 
     	$("input[name=deliveryYN]").attr('disabled', 'disabled'); //택배 여부
     	 $("input[name=disclosure]").attr('disabled', 'disabled');  //팔로우 한정여부
     	 $("#from").attr("readonly",true); //시작시간
@@ -214,13 +214,6 @@ $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked"
 			}else if($("input[name='promptPrice']").val() ==""){
 				alert("즉결 가격을 설정해 주세요!");
 				$("input[name='promptPrice']").focus();
-				return false;
-			}else if(!$("input[name='deliveryYN']").is(":checked") ){
-				alert("택배/ 직거래 선택을 하셔야 합니다!");
-				$("input[name='deliveryYN']").focus();
-				return false;
-			}else if(!$("input[name='disclosure']").is(":checked")){
-				alert("팔로우 공개 여부를 선택해주세요!");
 				return false;
 			}else if($("#to").val()==""){
 				alert("경매 종료 날짜를 선택해 주세요!");

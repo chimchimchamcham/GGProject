@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -8,30 +8,30 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
-   src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <style>
 #mainHeader {
-   z-index: 1000;
+	z-index: 1000;
 }
 
 #main {
-   background-color: gray;
-   width: 1200px;
-   height: auto;
-   position: absolute;
-   top: 150px;
-   z-index: -1;
+	background-color: gray;
+	width: 1200px;
+	height: auto;
+	position: absolute;
+	top: 150px;
+	z-index: -1;
 }
 
 #wrap {
-   margin: 0 auto;
-   text-align: left;
+	margin: 0 auto;
+	text-align: left;
 }
 
 textarea {
-   resize: none;
-} 
+	resize: none;
+}
 </style>
 <script>
 // 오늘 날짜 설정
@@ -41,60 +41,68 @@ console.log("오늘 날짜 : ",currDate);
 
 </head>
 <body>
-   <div id="mainHeader"><jsp:include page="header.jsp" /></div>
-   <div id="main">
-      <div id="wrap">
-         <h2>판매글 수정</h2>
-         <div id="saleForm">
-            <p>
-               <input type="text" name="title" value="${salesUpdate.p_title }" style='width: "1000px"' placeholder="제목을 입력해주세요"/>
-            </p>
-            <form method='POST' enctype="multipart/form-date" id='uploadForm'>
-               <label for='test'>
-               <c:if test="${salesUpdate.i_newName  eq null}">
-                  <img src="img/plus-icon.png" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
-               </c:if>
-               <c:if test="${salesUpdate.i_newName  ne null}">
-                  <img src="/photo/${salesUpdate.i_newName}" id="preview-image" width="100px" height="100px" style="border: solid 1px gray" />
-               </c:if>
-               </label>
-               <input type="file" name="oriFileImg" style="display: none" id="test" />
-            </form>
-            <p>
-               <textarea name="content" rows="30" cols="100" id ="update" style="overflow-y: scroll" placeholder="내용입력" >${salesUpdate.p_content}</textarea>
-            </p>
-            <div id="update_cnt">( 0 / 1000)</div>
-            <p>
-               <input type="text" name="price" value="${salesUpdate.ns_pr}" placeholder="가격 입력(숫자입력)"/> P
-            </p>
-            <p>
-               거래방식(필수선택) &nbsp;&nbsp;&nbsp;
-               <input type="radio" name="deliveryYN" value="Y" <c:if test = "${salesUpdate.s_DeliveryYN eq 'Y'}">checked="checked"</c:if>/>택배
-               <input type="radio" name="deliveryYN" value="N" <c:if test = "${salesUpdate.s_DeliveryYN eq 'N'}">checked="checked"</c:if>/>직거래
-            </p>
-            
-            <p id="commuCategory">
-               카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
-               <select name="saleCat">
-                  <c:forEach items="${saleCat }" var="SaleCategory">
-                     <option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
-                  </c:forEach>
-               </select>
-            </p>
+	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
+	<div id="main">
+		<div id="wrap">
+			<h2>판매글 수정</h2>
+			<div id="saleForm">
+				<p>
+					<input type="text" name="title" value="${salesUpdate.p_title }"
+						style='width: "1000px"' placeholder="제목을 입력해주세요" />
+				</p>
+				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
+					<label for='test'> <c:if
+							test="${salesUpdate.i_newName  eq null}">
+							<img src="img/plus-icon.png" id="preview-image" width="100px"
+								height="100px" style="border: solid 1px gray" />
+						</c:if> <c:if test="${salesUpdate.i_newName  ne null}">
+							<img src="/photo/${salesUpdate.i_newName}" id="preview-image"
+								width="100px" height="100px" style="border: solid 1px gray" />
+						</c:if>
+					</label> <input type="file" name="oriFileImg" style="display: none"
+						id="test" />
+				</form>
+				<p>
+					<textarea name="content" rows="30" cols="100" id="update"
+						style="overflow-y: scroll" placeholder="내용입력">${salesUpdate.p_content}</textarea>
+				</p>
+				<div id="update_cnt">( 0 / 1000)</div>
+				<p>
+					<input type="text" name="price" value="${salesUpdate.ns_pr}"
+						placeholder="가격 입력(숫자입력)" /> P
+				</p>
+				<p>
+					거래방식(필수선택) &nbsp;&nbsp;&nbsp; <input type="radio" name="deliveryYN"
+						value="Y"
+						<c:if test = "${salesUpdate.s_DeliveryYN eq 'Y'}">checked="checked"</c:if> />택배
+					<input type="radio" name="deliveryYN" value="N"
+						<c:if test = "${salesUpdate.s_DeliveryYN eq 'N'}">checked="checked"</c:if> />직거래
+				</p>
 
-            <p>
-               공개범위&nbsp;&nbsp;&nbsp;
-               <input type="radio" name="disclosure" value="N" <c:if test="${salesUpdate.s_followLimYN eq 'N'}">checked="checked"</c:if>>전체공개
-               <input type="radio" name="disclosure" value="Y" <c:if test="${salesUpdate.s_followLimYN eq 'Y'}">checked="checked"</c:if>>팔로우한정
-            </p>
-         </div>
-         <div id="twoButton">
-            <input type="button" id="submit" value="등록" /> 
-            <input type="button" id="console" value="콘솔" /> 
-            <input type="button" onclick="location.href='./index.jsp'" value="취소" />
-         </div>
-      </div>
-   </div><!-- main div end -->
+				<p id="commuCategory">
+					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
+						<c:forEach items="${saleCat }" var="SaleCategory">
+							<option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
+						</c:forEach>
+					</select>
+				</p>
+
+				<p>
+					공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
+						value="N"
+						<c:if test="${salesUpdate.s_followLimYN eq 'N'}">checked="checked"</c:if>>전체공개
+					<input type="radio" name="disclosure" value="Y"
+						<c:if test="${salesUpdate.s_followLimYN eq 'Y'}">checked="checked"</c:if>>팔로우한정
+				</p>
+			</div>
+			<div id="twoButton">
+				<input type="button" id="submit" value="등록" /> <input type="button"
+					id="console" value="콘솔" /> <input type="button"
+					onclick="location.href='./index.jsp'" value="취소" />
+			</div>
+		</div>
+	</div>
+	<!-- main div end -->
 </body>
 
 <script>
@@ -129,6 +137,19 @@ $("select[name=saleCat]").val("${salesUpdate.s_code}").prop("selected", true);
       form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
       console.log(data);
 
+      if($("input[name='title']").val() ==""){
+			alert("제목을 입력해주세요!");
+			$("input[name='title']").focus();
+			return false;
+		}else if($("textarea[name='content']").val() ==""){
+			alert("내용을 입력해주세요!");
+			$("textarea[name='content']").focus();
+			return false;
+		}else if($("input[name='price']").val() ==""){
+				alert("가격을 설정해주세요!");
+				$("input[name='price']").focus();
+				return false;
+			}else{
       param.p_no = ${salesUpdate.p_no};
       param.title = $("input[name='title']").val();
       param.content = $("textarea[name='content']").val();
@@ -162,6 +183,7 @@ $("select[name=saleCat]").val("${salesUpdate.s_code}").prop("selected", true);
          }
 
       });
+			}
    });
    
    ///////사진 선택시 미리보기 변경/////////
