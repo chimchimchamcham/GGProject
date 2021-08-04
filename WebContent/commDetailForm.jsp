@@ -64,7 +64,11 @@
     			<td colspan ="6" id = "p_title"><h2>${dto.p_title }</h2></td>
     		</tr>
     		<tr>
-    			<td colspan ="6" id = "c_name" style="text-align:left"><h5>#  ${dto.c_name }</h5></td>
+    			<td colspan ="5" id = "c_name" style="text-align:left"><h5>#  ${dto.c_name }</h5></td>
+    			<td id="updatebutton" style="text-align:left">
+    				<input type = button value="삭제">
+    				<input type = button value="수정" onclick="location.href='./commUpdateForm?p_no=${dto.p_no}'">
+    			</td>
     		</tr>
     		<tr>
     			<td>
@@ -94,6 +98,11 @@
     </div>
 </body>
 <script>
+	console.log("${loginId}");
+	console.log("${dto.u_id}");
+	if("${loginId}"!=="${dto.u_id}"){
+		$("#updatebutton").css("visibility","hidden");
+	}
 
 </script>
 </html>

@@ -569,7 +569,7 @@ public void flow_list(String userid, int flowORflowing) throws IOException {
 	}
 
 	public GGDto commUpdateForm() {
-		String p_no = req.getParameter("P_no");
+		String p_no = req.getParameter("p_no");
 		System.out.println("수정 요청 글 번호 : "+p_no);
 		BoardDAO dao = new BoardDAO();
 		GGDto dto = dao.commDetail(p_no);

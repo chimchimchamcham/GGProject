@@ -128,11 +128,11 @@ $("select[name=commuCat]").val("${commUpdate.p_cate}").prop("selected", true);
 						FileUpload(); //사진 업로드
 						alert("글 수정에 성공했습니다.");
 						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
-						location.href = "./commDetail?P_no="+data.sucP_no;
+						location.href = "./commDetail?p_no="+data.sucP_no;
 						
 					} else {
 						alert("글 수정을 실패하였습니다. 다시 시도해 주세요.");
-						location.href = "./commUpdateForm?P_no="+${commUpdate.p_no};
+						location.href = "./commUpdateForm?p_no="+${commUpdate.p_no};
 					}
 				},
 				error : function(e) {
