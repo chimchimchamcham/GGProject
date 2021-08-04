@@ -570,7 +570,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				content += "<div class='item-one'>";
 				content += "<div class='img-zoon'><img src=/photo"+item.i_newName+" class='itemimg' style='margin:3%'></div>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
-				content +="		<h2>"+item.p_title+"</h2>";
+				content +="		<a href = maidelist?p_no="+item.p_no+">"+item.p_title+"</a>";
 				content += "	<div style='font-size: 25px; justify-self: center;'>"+item.pnt_point+"p</div>";
 				content += "</div>";
 				content += "<div class='c_zoon'>";
