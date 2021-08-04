@@ -50,16 +50,15 @@ public class CommentDAO {
 		System.out.println("p_id:"+p_id);
 		System.out.println("p_no:"+p_no);
 		
-		String sql = "SELECT p.p_no,p.p_id,pc.pc_content,pc_tm,pc.pc_parentno FROM post p,post_comment pc where p.p_id = ? and pc.p_no = p.p_no and pc.p_no = ? and pc.pc_blindyn = 'N' and pc.pc_parentno = 0";
+		String sql = "SELECT DISTINCT p.p_no,u.u_nname,pc.pc_content,pc_tm,pc.pc_parentno FROM post p,post_comment pc ,UserInfo u where u.u_id = p.p_id and pc.p_no = p.p_no and pc.p_no = ? and pc.pc_blindyn = 'N' and pc.pc_parentno = 0";
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, p_id);
-			ps.setInt(2, p_no);
+			ps.setInt(1, p_no);
 			rs = ps.executeQuery();
 			while(rs.next()){
 				GGDto dto = new GGDto();
-				dto.setP_no(rs.getInt("P_no"));
-				dto.setP_id(rs.getString("P_id"));
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setU_nname(rs.getString("u_nname"));
 				dto.setPc_content(rs.getString("pc_content"));
 				dto.setPc_tm(rs.getDate("pc_tm"));
 				dto.setPc_parentno(rs.getInt("pc_parentno"));
