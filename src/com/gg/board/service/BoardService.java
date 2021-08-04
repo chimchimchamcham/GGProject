@@ -511,6 +511,7 @@ dao.resClose();
 
 	/*글 수정*/
 	public int commUpdate(int p_no) {
+		
 		int sucP_no = 0;
 		
 		String title=req.getParameter("title");
@@ -520,16 +521,23 @@ dao.resClose();
 		String deliveryYN = req.getParameter("deliveryYN");
 		String price = req.getParameter("price");
 		String disclosure = req.getParameter("disclosure");
+		//경매글 수정
+		String instantPr = req.getParameter("instantPr");
+		String startPr = req.getParameter("startPr");
+		String startTm = req.getParameter("startTm");
+		String endTm = req.getParameter("endTm");
 		
 		BoardDAO dao = new BoardDAO();
 		
 		if(price != null) { //판매글 수정
 			System.out.println("판매글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+disclosure);
-		} else {//커뮤니티 수정
+		} else if(instantPr !=null ){ //경매글 수정
+			System.out.println("판매글 수정 값 : "+title+"/"+content+"/"+category+"/ 택배여부 : "+deliveryYN+"/ 가격 : "+price+"/ 공개여부 : "+disclosure+"/ 즉결가 : "+instantPr+"/ 시작가 : "+startPr+"/ 시작시간 : "+startTm+"/ 종료시간 : "+endTm);
+		}else {//커뮤니티 수정
 			System.out.println("커뮤니티 수정 값 : "+title+"/"+content+"/"+category);
 		}
 		
-		sucP_no = dao.commUpdate(p_no, title,content,category,deliveryYN,price,disclosure);
+		sucP_no = dao.commUpdate(p_no, title,content,category,deliveryYN,price,disclosure,instantPr,startPr,startTm,endTm);
 		
 		dao.resClose();
 		return sucP_no;
