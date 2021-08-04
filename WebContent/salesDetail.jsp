@@ -369,18 +369,16 @@
 			dataType : "JSON",
 			success : function(data){
 				console.log("받아온 데이터 확인 : ", data.list);
+				drawComment(data.list);
 			},
 			error : function(e){
 				console.log(e);	
 			}
 		});
-		
-			
-		
-		
-	
 	};
-	
+	function drawComment(list){
+		console.log("리스트 정보 확인 : ", list);
+	}
 	
 	
 	//데이터 가져와서 뿌려주는 댓글 리스트
