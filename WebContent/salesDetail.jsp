@@ -361,8 +361,6 @@
 		}
 	});
 	
-	
-	
 	function commentListCall(){
 		console.log("댓글 리스트 요청 ");
 		var param ={};
@@ -374,6 +372,7 @@
 			dataType : "JSON",
 			success : function(data){
 				console.log("받아온 데이터 확인 : ", data.list);
+				
 				drawComment(data.list);
 			},
 			error : function(e){
@@ -381,18 +380,28 @@
 			}
 		});
 	};
+	
+	
 	function drawComment(list){
 		console.log("리스트 정보 확인 : ", list);
 		var comment ="";
+		console.log("시간 확인 : ",list.pc_tm);
 		list.forEach(function(item,idx){
 			comment += "<div class = 'one-text'>";
 			comment += "<div class='one-img-time'>";
 			comment += "<div class='uploadimg'>";
-			comment += "<img src='/photo'";
-			
+			comment += "<a href='#'>";
+			comment += "<img src='/photo/"+item.u_newName+"'/></a>";
+			comment += "<div class='usertext'>"+item.u_nname+"</div>";
+			comment += "</div>";
+			comment += "<div class='content'>"+item.pc_content+"</div>";
+			comment += "<div class='uploadtime'>";
+			comment += "<div>"+item.pc_tm+"</div>";
+			comment += "</div>";
+			comment += "</div>";
 		});
+		$(".board").empty();
 		$(".board").append(comment);
-		
 	}
 	/*글자수 제한*/
     $(".board_text").on('keyup', function() {
@@ -403,28 +412,7 @@
                $('#board_text_controll').html("(300 / 300)");
            }
        });
-	
-	//데이터 가져와서 뿌려주는 댓글 리스트
-	function saleboardlist(sold_board_list){	
-		console.log("sold_board_list=="+sold_board_list);
-		var content="";
-		
-		sold_board_list.forEach(function(item,idx){
-			console.log("idx:",idx,item);
-			content+= "<div class='one-text'>";
-			content+= 	"<div class='one-img-time'>";
-			content+= 	"<div  class='uploadimg'>";
-			content+=         "<img src='test.jpg'>";
-			content+=         "<div class='usertext'>유지호</div>";
-			content+=  	"</div>";
-			content+= 	"<div class='content'>내용임ㅅㄱ</div>"
-			content+= 	"<div class='uploadtime'>";
-			content+=   	"<div>2021-08-04</div>";
-			content+= 	"</div>";
-			content+= "</div>";
-		    });	
-		$('.board').append(content);
-	};// 경매 리스트 end	
+// 경매 리스트 end	
 	
 	
 	

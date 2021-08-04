@@ -11,22 +11,23 @@
 *{margin:0;padding:0;border-width:0;list-style-type:none;}
 body{width:100%;background-color:gray;}
 #wrap{width:900px;height:600px;background-color:white;position:relative;}
-#twoButton{position:relative; width:200px;}
-#trade_cancel{display:inline-block; width:80px;height:35px; position:absolute; top:10px; left:10px; font-size:0.8rem; border-radius:5px/5px;background-color:#919999;color:white;}
-#report{display:inline-block; width:80px;height:35px; position:absolute; top:10px; left:100px; font-size:0.8rem; border-radius:5px/5px;}
 
-#condition{position:relative; left: 280px; top:15px; color:#C1C6C6}
+#twoButton{position:absolute; top:15px; width:200px; background-color:orange; height:45px}
+#twoButton>input{ width:80px; height:35px; border-radius:5px/5px;font-size:0.8rem; float:left;margin:5px}
+#trade_cancel{background-color:#919999;color:white;}
+
+#condition{position:absolute; left: 280px; top:15px; color:#C1C6C6; background-color:purple; width:400px; height:45px}
 #send,#approval,#shipping,#receive{display:inline-block; position:absolute;} 
 #approval{left:100px}
 #shipping{left:200px}
 #receive{left:300px}
 
-#imgDiv{left:130px; top:100px; position:relative; background-color:pink; width:200px; height:200px}
-.img{display:block; width:180px; height:180px; position:absoulte;}
-#img_condition{position:relative; left:10px}
-#s_a_code{display:inline-block;background-color:#C1C6C6;border-radius:5px/5px;text-align:center;font-size:0.8rem; width:60px}
+#imgDiv{left:130px; top:100px; position:absolute; background-color:pink; width:200px; height:200px}
+.img{display:block; width:180px; height:180px;}
+#img_condition{position:absolute; left:20px; bottom:-5px;}
+#s_a_code{background-color:#C1C6C6;border-radius:5px/5px;text-align:center;font-size:0.8rem; padding:2px}
+#subject{font-size:0.8rem;}
 
-#subject{display:inline-block; font-size:0.8rem;}
 #content{position:absolute; left:380px; top:100px;width:300px;height:200px;background-color:green;}
 #top_content{position:relative; background-color:yellow; width:200px; left:30px}
 #send_price{display:inline-block; position:relative; top:10px;left:30px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;border:1px solid gray;border-radius:5px/5px;padding-left:10px;padding-right:40px;}
@@ -57,8 +58,8 @@ body{width:100%;background-color:gray;}
 	<div id="imgDiv">
 		<img class="img" src="../img/notebook.PNG"/>
 		<div id="img_condition">
-			<div id="s_a_code">판매중</div>
-			<p id="subject">아이패드 파우치</p>
+			<span id="s_a_code">판매중</span>
+			<span id="subject">아이패드 파우치</span>
 		</div>
 	</div>
 	
