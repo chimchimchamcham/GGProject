@@ -302,8 +302,6 @@ public class UserDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			resClose();
 		}
 
 		return dto;
@@ -323,8 +321,6 @@ public void updateFileName(String delFileName, GGDto dto) {
 		System.out.println("사진 변경 성공 : "+success);
 	} catch (SQLException e) {
 		e.printStackTrace();
-	}finally {
-		resClose();
 	}
 }
 
