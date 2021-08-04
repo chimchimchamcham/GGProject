@@ -77,21 +77,22 @@ var currDate = new Date().toISOString().substring(0,10);
 			<div id="update_cnt">( 0 / 1000)</div>
 			<div id="saleForm">
 				<p id='delivery'>
-					거래방식(필수선택) &nbsp;&nbsp;&nbsp; <input type="radio" name="deliveryYN"
-						value="Y">택배 <input type="radio" name="deliveryYN"
-						value="N">직거래
+					거래방식(필수선택) &nbsp;&nbsp;&nbsp;
+						<input type="radio" name="deliveryYN" value="Y" <c:if test="${auctionUpdate.s_DeliveryYN eq 'Y'}">checked="checked"</c:if>/>택배
+						<input type="radio" name="deliveryYN" value="N" <c:if test="${auctionUpdate.s_DeliveryYN eq 'N'}">checked="checked"</c:if>/>직거래
 				</p>
 				<p id="category">
-					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp; <select name="saleCat">
+					카테고리 선택(필수선택) &nbsp;&nbsp;&nbsp;
+					<select name="saleCat">
 						<c:forEach items="${saleCat }" var="SaleCategory">
 							<option value="${SaleCategory.c_code}">${SaleCategory.c_name}</option>
 						</c:forEach>
 					</select>
 				</p>
 				<p>
-					공개범위&nbsp;&nbsp;&nbsp; <input type="radio" name="disclosure"
-						value="N">전체공개 <input type="radio" name="disclosure"
-						value="Y">팔로우한정
+					공개범위&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="disclosure" value="N" <c:if test="${auctionUpdate.s_followLimYN eq 'N'}">checked="checked"</c:if>>전체공개
+					<input type="radio" name="disclosure" value="Y" <c:if test="${auctionUpdate.s_followLimYN eq 'Y'}">checked="checked"</c:if>>팔로우한정
 				</p>
 			</div>
 			<!--예약 경매 버튼 클릭시-->
@@ -125,7 +126,8 @@ var currDate = new Date().toISOString().substring(0,10);
 </body>
 
 <script>
-
+console.log($('input[name=deliveryYN]').val());
+console.log("${auctionUpdate.s_DeliveryYN}");
 
 //예약
 // 경매 예약 시작 시간 초기 설정 (오늘)
@@ -160,7 +162,6 @@ $("#to").click(function(){
 
 $("select[name=saleCat]").val("${auctionUpdate.s_code}").prop("selected", true);
 $("input[name=deliveryYN]").val("${auctionUpdate.s_DeliveryYN}").prop("checked", true);
-$("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked", true);
 $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked", true);
 
 	var success = false;
@@ -210,8 +211,8 @@ $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked"
 				param.title = $("input[name='title']").val();// 제목
 				param.content = $("textarea[name='content']").val(); //내용
 				param.category = $("select[name='saleCat']").val();//카테고리
-				param.deliveryYN = $("input[name=deliveryYN]").val(); //택배여부
-				param.followLimYN = $("input[name=disclosure]").val(); //팔로워한정 판매 여부
+				param.deliveryYN = $("input[name='deliveryYN']:checked").val(); //택배여부
+				param.followYN = $("input[name='disclosure']:checked").val();; //팔로워한정 판매 여부
 				param.instantPr = $("input[name=promptPrice]").val(); // 즉결가
 				param.startPr = $("input[name=startPrice]").val(); // 시작가
 				param.startTm = $("input[name=from]").val(); // 시작 시간
