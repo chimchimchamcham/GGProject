@@ -64,13 +64,13 @@
     
     
     /*댓글*/
-    #second	div.board{border: 1px solid #D8D8D8;width: 143vh;height: 50vh;float: left;margin: 10px;padding: 20px;overflow: scroll;}
-    .board_text{border: 1px solid #D8D8D8; width: 143vh;height:5vh;float: left;margin: 10px;padding: 20px;}
+    #second	div.board{border: 1px solid #D8D8D8;width: 1196px; height: 50vh;float: left; overflow: scroll;}
+    .board_text{border: 1px solid #D8D8D8; width: 1198px; height:5vh;float: left;margin :}
     .enter{ margin-bottom: 10px;margin-left: 10px;padding: 20px;}
 
-    .one-text{border: 1px solid black;border-radius: 10px;width: 60vh;height: 10vh;margin-bottom: 10vh};
+    .one-text{border: 1px solid black; border-radius: 10px;width: 1198px;height: 10vh;margin-bottom: 10vh};
     .one-text .one-img-time{display: flex;justify-content: space-between;align-items: center;}
-    .one-text .one-img-time img{max-width: 100px;max-height: 100px;border-radius: 50px;}
+    .one-text .one-img-time img{max-width: 100px;max-height: 100px;border-radius: 50px; float:left;}
     
     
     
@@ -84,7 +84,14 @@
     #first>div:nth-of-type(2)>p:last-child{text-align:center;margin:10px;}
     #first>div:nth-of-type(2)>p:last-child>a{text-decoration:none;color:#6E6E6E;font-size:1.3rem;}
     
-    
+    #commentNickname {
+    	float: left;
+    	height: 10px;
+    	width : 100px;
+    	text-align: center;
+    	font-weight: bold;
+    	color : skyblue;
+    }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -248,6 +255,7 @@
                     	</div>
                     	<div class="board_t_b">
 							<textarea class="board_text" style="resize: none;"></textarea>
+							<div id="board_text_controll">(0 / 300)</div>
 							<button class="enter">enter</button>
 						</div>
                     </div>
@@ -306,29 +314,15 @@
 	});
 	//댓글 버튼 누르면 이상세 페이지에서 마지막에 쓴 댓글 보여주기
 	$("div#twoButton>button.board_button").click(function(){
-		/* $.ajax({
-			type : 'post',
-			url : './commentlist',
-			data : {p_no : "${dto.p_no}",p_id:"${dto.p_id}"},
-			dataType : 'JSON',
-			success : function(data){
-				console.log("data",data);
-				if(data.list != null){
-					console.log("data.list:",data.list);
-					saleboardlist(data.list);
-				}else{
-					alert('등록된 댓글이 없습니다.');
-				}
-			},
-			error : function(e){
-				console.log(e);
-			}
-		}); */
 		commentListCall();
 	});
 	var comment ={};
 	
 	$(".enter").click(function(){
+		
+		if("${sessionScope.loginId}"==null){
+			alert("로그인 해주세요!");
+		}else{
 		comment.id = "${sessionScope.loginId}";
 		comment.p_no = "${dto.p_no}";
 		comment.pc_content = $(".board_text").val();
@@ -353,10 +347,8 @@
 			}
 			
 		});
-		
-		});
-	
-	
+		}
+	});
 	
 	function commentListCall(){
 		console.log("댓글 리스트 요청 ");
@@ -369,19 +361,17 @@
 			dataType : "JSON",
 			success : function(data){
 				console.log("받아온 데이터 확인 : ", data.list);
+				
+				drawComment(data.list);
 			},
 			error : function(e){
 				console.log(e);	
 			}
 		});
-		
-			
-		
-		
-	
 	};
 	
 	
+
 	
 	//데이터 가져와서 뿌려주는 댓글 리스트
 	function saleboardlist(sold_board_list){	
@@ -404,6 +394,39 @@
 		    });	
 		$('.board').append(content);
 	}// 경매 리스트 end	
+
+	function drawComment(list){
+		console.log("리스트 정보 확인 : ", list);
+		var comment ="";
+		console.log("시간 확인 : ",list.pc_tm);
+		list.forEach(function(item,idx){
+			comment += "<div class = 'one-text'>";
+			comment += 		"<div class='one-img-time'>";
+			comment += 			"<div class='uploadimg'>";
+			comment += 				"<a id='commentNickname' href='./myPage?id='>"+item.pc_id+"<img src='/photo/"+item.u_newName+"'/></a>";
+			comment += 				"<div class='usertext'>"+item.u_nname+"</div>";
+			comment += 			"</div>";
+			comment += 			"<div class='content'><textarea style='float:left' readonly>"+item.pc_content+"</textarea></div>";
+			comment += 			"<div class='uploadtime'>";
+			comment += 				"<div>"+item.pc_tm+"</div>";
+			comment += 			"</div>";
+			comment += 		"</div>";
+			comment += "</div>";
+		});
+		$(".board").empty();
+		$(".board").append(comment);
+	}
+	/*글자수 제한*/
+    $(".board_text").on('keyup', function() {
+           $('#board_text_controll').html("("+$(this).val().length+" / 300)");
+    
+           if($(this).val().length > 300) {
+               $(this).val($(this).val().substring(0, 300));
+               $('#board_text_controll').html("(300 / 300)");
+           }
+       });
+// 경매 리스트 end	
+
 	
 	
 	

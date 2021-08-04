@@ -164,16 +164,18 @@ public class GGDto {
 	private String f_receiveid;
 	private String f_sendid;
 	private Date f_tm; 
-	private int Resive_flow_count;//자신을 팔로잉 한사람들의 수
+	private int flow_count;//자신,타인이 팔로잉 한사람들의 수
 	
 	
 	
-	public int getResive_flow_count() {
-		return Resive_flow_count;
+
+
+	public int getFlow_count() {
+		return flow_count;
 	}
 
-	public void setResive_flow_count(int resive_flow_count) {
-		Resive_flow_count = resive_flow_count;
+	public void setFlow_count(int flow_count) {
+		this.flow_count = flow_count;
 	}
 
 	public String getF_receiveid() {

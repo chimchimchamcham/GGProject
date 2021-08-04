@@ -221,10 +221,6 @@ console.log("오늘 날짜 : ",currDate);
 		var data = $("#test")[0].files[0]; // input type='file'의 id 인 test 에서 첫 번째 파일데이터를 가져온다.
 		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
 		console.log(data);
-		if(data==null){
-			alert("사진을 등록하셔야만 합니다!");
-			
-		}else {
 		//글을 작성하지 않았을 경우.
 		if($("input[name='title']").val() == ""){
 			alert("제목을 입력하셔야 합니다.");
@@ -256,7 +252,7 @@ console.log("오늘 날짜 : ",currDate);
 						FileUpload();
 						alert("글 작성 성공했습니다.");
 						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
-						location.href = "./commuDetailForm?p_no="+data.p_no;
+						location.href = "./commDetail?p_no="+data.p_no;
 						
 					} else {
 						alert("커뮤니티 글 작성을 실패하였습니다! ");
@@ -272,7 +268,10 @@ console.log("오늘 날짜 : ",currDate);
 
 			param.title = $("input[name='title']").val();
 			param.content = $("textarea[name='content']").val();
-			if($("input[name='price']").val() == ""){
+			if(data==null){
+				alert("사진을 등록하셔야만 합니다!");
+				
+			}else if($("input[name='price']").val() == ""){
 				alert("가격을 선택하셔야 합니다!");
 				$("input[name='price']").focus();
 				return false;
@@ -314,7 +313,10 @@ console.log("오늘 날짜 : ",currDate);
 			param.title = $("input[name='title']").val();// 제목
 			param.content = $("textarea[name='content']").val(); //내용
 			param.category = $("select[name='saleCat']").val();//select name으로 값 받기
-			if($("input[name='startPrice']").val() ==""){
+			if(data==null){
+				alert("사진을 등록하셔야만 합니다!");
+				
+			}else if($("input[name='startPrice']").val() ==""){
 				alert("시작 가격을 설정해주세요!");
 				$("input[name='startPrice']").focus();
 				return false;
@@ -365,13 +367,11 @@ console.log("오늘 날짜 : ",currDate);
 					error : function(e) {
 						console.log(e);
 					}
-				})
+				});
 			}
 
 		} else {
 			alert("폼을 선택해주세요!");
-		}
-			
 		}
 		
 		

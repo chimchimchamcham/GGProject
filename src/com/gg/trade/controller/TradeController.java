@@ -78,6 +78,32 @@ public class TradeController extends HttpServlet {
 		case "/buyNow":
 			System.out.println("즉결 구매 요청");
 			service.buyNow();
+			break;
+			
+		case "/tradeDetail":
+			System.out.println("[TRADECONTROLLER]/TRADEDETAIL START");
+			
+			break;
+		case "/sendPoint":
+			System.out.println("[TRADECONTROLLER]/SENDPOINT START");
+			
+			break;
+		case "/pointApproval":
+			System.out.println("[TRADECONTROLLER]/POINTAPPROVAL START");
+			break;
+		case "/pointDeny":
+			System.out.println("[TRADECONTROLLER]/POINTDENY START");
+			break;
+		case "/productShipping":
+			System.out.println("[TRADECONTROLLER]/PRODUCTSHIPPING START");
+			break;
+		case "/productReceive":
+			System.out.println("[TRADECONTROLLER]/PRODUCTRECEIVE START");
+			break;
+		case "/cancelTrade":
+			System.out.println("[TRADECONTROLLER]/CANCELTRADE START");
+			break;
+		
 		}
 		
 	}

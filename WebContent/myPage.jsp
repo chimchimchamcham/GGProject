@@ -461,6 +461,8 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 		    $("#alarm").show();
 		    
 		});
+	
+	
 		
 	});
 	
@@ -632,20 +634,24 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			$(".button-layout_sold").hide();
 			$(".alien_list_sold").hide();
 			$(".button-layout_auction").hide();
-			
+			console.log('flowlist:'+flowlist.length);
 			flowlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one-flow'>"
 					content += "<div class='img-zoon'><img src='/photo"+item.u_newname+"'></div>"
 					content += "<div class=''>"+item.u_nname+"</div>"
-					content += " <div class=''>팔로워:5</div>"
-					content += "<button>+팔로우</button>"
+					content += " <div class=''>팔로워:"+item.flow_count+"</div>"
 				content += " </div>"
-			});	
+			});
 			$("#follow .item-box").empty();
 			$("#follow .item-box").append(content);
+			$(".count p").empty();
+			$(".count p").append(flowlist.length);
+			var aaa=  $(".count").text();
 			
 		}//팔로워 팔로잉 리스트 end
+		
+
 		
 </script>
 <body>
