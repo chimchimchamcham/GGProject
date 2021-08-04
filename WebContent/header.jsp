@@ -10,7 +10,8 @@
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
 <script>
-	var loginId = "${sessionScope.loginId}"
+	var loginId = "${sessionScope.loginId}";
+	var adminYN = "${sessionScope.adminYN}";
 
 	$(document).ready(function() {
 		
@@ -294,14 +295,18 @@ margin-left:7px;
 				</c:if>
 				
 				<!-- 로그인이 되어있을 때 -->
-				<c:if test="${loginId ne null }"> 
+				<c:if test="${loginId ne null}"> 
 					<a href="logout"  class="logoutA">로그아웃</a>
 				</c:if>
 
+				<c:if test="${adminYN eq 'N' || loginId eq null}"> 
 				<a href="#"  class="messageA">쪽지</a>
 				<a href="#"  class="alarmA">알람</a>
+				</c:if>
 				<a href="#"  class="myPageA">마이페이지</a>
+				<c:if test="${adminYN eq 'N' || loginId eq null}">
 				<a href="#"  class="tradeA">거래톡</a>
+				</c:if>
 				<button class="writeA">글쓰기</button>
 				</div>
 			</div>
