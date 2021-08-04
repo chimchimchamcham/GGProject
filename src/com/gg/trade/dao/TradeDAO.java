@@ -81,6 +81,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		//msg를 뿌려줄 예정 (성공/ 현재입찰자 = 최고입찰자 / 입찰금액 <최고입찰긍)
 		int checker = 0;
 		boolean success = false;
+		boolean instantYN = false;
 		int instantPr =0;
 		String sql = "";
 		String msg = "";
@@ -140,7 +141,10 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 					if(checker>0) {
 						success = true;
 						msg = "입찰에 성공하였습니다.";
-						
+						if(success) {
+							instantYN = bidRecordYN(p_no,ha_bidUsr);
+							System.out.println("시작금 인출 여부 : "+instantYN);
+						}
 					}
 				}
 			}else {//이전 입찰자가 없었을 때
@@ -155,6 +159,10 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				if(checker>0) {
 					success = true;
 					msg = "입찰에 성공하였습니다.";
+					if(success) {
+						instantYN = bidRecordYN(p_no,ha_bidUsr);
+						System.out.println("시작금 인출 여부 : "+instantYN);
+					}
 					
 				}
 			}
@@ -163,13 +171,10 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		//입찰금액 입력 쿼리
 		System.out.println("경매 히스토리 입력여부 : "+success);
 		
-		boolean instantYN = false;
+		
 		
 		//시작금액 빼가는 쿼리
-		if(success) {
-			instantYN = bidRecordYN(p_no,ha_bidUsr);
-			System.out.println("시작금 인출 여부 : "+instantYN);
-		}
+		
 		
 		map.put("success", success);
 		System.out.println("메세지 확인 : "+msg);
