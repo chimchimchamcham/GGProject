@@ -16,7 +16,7 @@ import com.gg.board.service.CommentService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
-@WebServlet({"/commentlist","/pushComment"})
+@WebServlet({"/commentlist","/pushComment","/commentListCall"})
 public class CommentController extends HttpServlet {
 
 	
@@ -83,7 +83,17 @@ public class CommentController extends HttpServlet {
 			resp.getWriter().println(new Gson().toJson(map));
 			break;
 		
-		
+		case "/commentListCall":
+			System.out.println("댓글 리스트 불러오기");
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			System.out.println("댓글 리스트 불러올 글 번호 : "+p_no);
+			
+			ArrayList<GGDto> list = service.commentListCall(p_no);
+			map = new HashMap<String, Object>();
+			map.put("list", list);
+			resp.getWriter().println(new Gson().toJson(map));
+			
+			break;
 		}
 		
 	}

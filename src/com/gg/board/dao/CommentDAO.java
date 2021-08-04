@@ -91,4 +91,26 @@ public class CommentDAO {
 		return dto;
 	}
 
+	public ArrayList<GGDto> commentListCall(GGDto dto) throws Exception {
+		ArrayList<GGDto> list = new ArrayList<GGDto>();
+		
+		// 부모댓글이 없는 것들만 가져온다!
+		String sql = "SELECT pc_id, pc_content FROM post_comment WHERE p_no=? AND pc_parentno=0 AND pc_blindyn ='N' " + 
+				"ORDER BY pc_no ASC";
+		
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, dto.getP_no());
+		rs = ps.executeQuery();
+		while(rs.next()) {
+			dto = new GGDto();
+			dto.setPc_id(rs.getString("pc_id"));
+			dto.setPc_content(rs.getString("pc_content"));
+			list.add(dto);
+		}
+		
+		
+		
+		return list;
+	}
+
 }
