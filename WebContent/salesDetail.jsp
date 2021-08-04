@@ -331,11 +331,11 @@
 		comment.id = "${sessionScope.loginId}";
 		comment.p_no = "${dto.p_no}";
 		comment.pc_content = $(".board_text").val();
-		comment.pc_parentNo = 0;
+		comment.pc_parentno = 0;
 		console.log("댓글 다는 아이디 : " , comment.id);
 		console.log("댓글 달리는 게시글 : ", comment.p_no);
 		console.log("댓글 내용 : " , comment.pc_content);
-		console.log("부모 댓글 여부 :",comment.pc_parentNo);
+		console.log("부모 댓글 번호 :",comment.pc_parentno);
 		console.log("댓글 등록")
 		
 		$.ajax({
