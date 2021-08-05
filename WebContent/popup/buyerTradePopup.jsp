@@ -10,64 +10,66 @@
 <style>
 *{margin:0;padding:0;border-width:0;list-style-type:none;}
 body{width:100%;background-color:gray;}
-#wrap{width:900px;height:600px;background-color:white;position:relative;}
+#wrap{width:900px;height:650px;background-color:white;position:relative;}
 
-#twoButton{position:absolute; top:15px; width:200px; background-color:orange; height:45px}
-#twoButton>input{ width:80px; height:35px; border-radius:5px/5px;font-size:0.8rem; float:left;margin:5px}
+#twoButton{position:absolute; left:10px;top:15px; width:200px; /* background-color:orange; */ height:45px}
+#twoButton>input{ width:65px; height:30px; border-radius:5px/5px;font-size:0.8rem; float:left;margin:5px}
 #trade_cancel{background-color:#919999;color:white;}
 
-#condition{position:absolute; left: 280px; top:15px; color:#C1C6C6; background-color:purple; width:400px; height:45px}
+#condition{position:absolute; left: 280px; top:20px; color:#C1C6C6; /* background-color:purple; */ width:400px; height:45px}
 #send,#approval,#shipping,#receive{display:inline-block; position:absolute;} 
 #approval{left:100px}
 #shipping{left:200px}
 #receive{left:300px}
 
-#imgDiv{left:130px; top:100px; position:absolute; background-color:pink; width:200px; height:200px}
+#imgDiv{left:140px; top:100px; position:absolute; /* background-color:pink; */ width:200px; height:200px}
 .img{display:block; width:180px; height:180px;}
 #img_condition{position:absolute; left:20px; bottom:-5px;}
 #s_a_code{background-color:#C1C6C6;border-radius:5px/5px;text-align:center;font-size:0.8rem; padding:2px}
 #subject{font-size:0.8rem;}
 
-#content{position:absolute; left:420px; top:100px;width:320px;height:200px;background-color:green;}
-#top_content{position:relative; background-color:yellow; width:200px; left:30px}
-#send_price{display:inline-block; position:relative; top:10px;left:38px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;border:1px solid gray;border-radius:5px/5px;padding-left:10px;padding-right:40px;}
-.p{font-size:2.5rem; position:absolute; top:30px;left:230px }
-#remainPoint{position:relative;top:25px;background-color:#C1C6C6;border-radius:5px/5px;text-align:center;}
-#threeBtn{position:absolute; top:140px;background-color:blue; width:140px; left:90px}
-#threeBtn>button{width:60px; height:35px; border-radius:5px/5px;font-size:0.7rem; float:left;margin:5px}
+#content{position:absolute; left:420px; top:100px;width:320px;height:200px;background-color:#F9F9F4;/*  border:2px solid #5F5F5F; */}
+
+#top_content{position:relative; /* background-color:yellow; */ width:200px; top:15px;left:60px;text-align:center;}
+
+#send_price{display:inline-block; position:relative; top:25px;left:38px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;border:1px solid gray;border-radius:5px/5px;padding-left:10px;padding-right:40px;}
+.p{font-size:2.5rem; position:absolute; top:46px;left:240px }
+#remainPoint{position:relative;top:36px;left:45px;width:230px; height:25px; background-color:#C1C6C6;border-radius:5px/5px;text-align:center;font-size:0.9rem}
+#threeBtn{position:absolute; top:140px; /* background-color:blue; */width:180px; left:75px}
+#threeBtn>button{width:80px; height:40px; border-radius:5px/5px;font-size:0.8rem; float:left;margin:5px}
 #sendY{background-color:#FF7E00;color:white}
 #chargeBtn{color:white;background-color:#0048FF;}
 #receiveY{background-color:#FF7E00;color:white;}
 
-#reply{position:absolute; left:420px; top:100px;width:320px;height:200px;background-color:yellow;}
+#reply{position:absolute; left:420px; top:100px;width:320px;height:200px;background-color:#F9F9F4;}
 #reply>span{position:relative; left:110px; top:10px;font-size:1.5rem;}
 #reply_content>span{position:relative; top:10px; left:10px; font-size:0.8rem}
 #write_content{position:relative; top:20px; left:10px;}
 #sendReply{position:relative; top:25px;left:130px; width:60px;height:35px;border-radius:5px/5px;font-size:0.7rem;background-color:#0048FF; color:white}
 
 
-#comment{position:absolute; top:350px; background-color:red;width:900px; height:230px}
-#comment_cnt{position:relative; left:30px; }
-
-
+#comment{position:absolute; top:350px;  background-color:red; width:900px; height:300px}
+#comment_cnt{position:relative; left:30px; height:20px;}
+#comment_cnt>#refresh_btn{background-color:white; top:3px;position:relative;}
+#commentBox{background-color:yellow; width:900px; height:277px;position:relative; top:3px}
 </style>
 
 <script>
 	$(document).ready(function(){
 		
-	//초기상태 
-	 $("#condition").css({"color":"#C1C6C6"});
+	 //초기상태 
+	$("#condition").css({"color":"#C1C6C6"});
 	$("#sendY").css({"background-color":"#FF7E00"});
 	$("#chargeBtn").css({"backgroud-color":"#0048FF"});
-	 $("#top_content_1").show();
+	$("#top_content_1").show();
 	$("#top_content_2,#top_content_3").hide(); 
 	$("#receiveY").hide();
 	$("#sendY,#chargeBtn").attr("disabled",true);	
 	$("#reply").hide();
-	//$("#content").show();
-	//$("#reply").hide();	 
+	$("#content").show();
+	$("#reply").hide();	  
 	
-	/* /* 향후 삭제 */
+	/* /* 거래 후기 >>>> 향후 삭제 */
 	//$("#content").hide();
 	//$("#reply").show();	
 	//$("#chargeBtn").hide();
@@ -76,10 +78,11 @@ body{width:100%;background-color:gray;}
 	//신고하기 버튼을 누르면 팝업창 띄우기
 	$("#report").click(function(){
 		var N_receiveId = "${dto.p_id}"
-  		window.open("./popup/notifyPopup.jsp?N_receiveId="+N_receiveId, "notifyPopup", "width=400, height=400, left=700, top=400");
+  		window.open("./notifyPopup.jsp?N_receiveId="+N_receiveId, "notifyPopup", "width=400, height=400, left=700, top=400");
     });
 	 
-	var trade_con = "${dto.c_code}"; 
+	//거래상태 받아와서 상태 변경
+	var trade_con ="${dto.ht_code}"; //${dto.ht_code}
 	//거래페이지 생성상태인 경우 
 	//dto.c_code ="HT001" = 초기상태
 	
@@ -114,32 +117,28 @@ body{width:100%;background-color:gray;}
 		$("#content,#chargeBtn").hide();
 		$("#sendY").hide();
 		$("#reply").show();
-	 }else if(trade_con == "HT007"){
+	 }else if(trade_con == "HT007"){//거래페이지 거래취소인 상태의 경우
+		 $("#sendY,#chargeBtn").css({"background-color":"gray"});
+		 $("#sendY,#chargeBtn,#trade_cancel,#report").attr("disabled",true);
+		 $("#send_price").attr('readonly',true);
+	 }
 		
+	//경매냐 판매냐에 따라 가격 입력 부분 조정
+	var p_code ="${dto.p_code}";
+	if(p_code=="P001"){//경매인경우 넘겨준 가격 그대로 설정
+		$("#send_price").attr('readonly',true);
+	}else{//판매인경우 입력가능 
+		$("#send_price").attr('readonly',false);
 	}
-	 
 	
-	
-	
-	
-	
-	
-	//dto.c_code ="HT004"
-	
-	
-	//dto.c_code ="HT005"
-	
-	
-	//dto.c_code ="HT006"
-	
-	//거래페이지 거래취소인 상태의 경우
-	//dto.c_code ="HT007"
+	//
 	
 	});
 </script>
 
 </head>
 <body>
+<form action="" method="post">
 <div id="wrap">
 	<div id="twoButton">
 		<input type="button" id="trade_cancel" value="거래취소"/>
@@ -162,9 +161,11 @@ body{width:100%;background-color:gray;}
 	</div>
 	
 	<div id="content">
-		<div id="top_content_1"><span>애플</span>님에게 <span>승인요청</span>중...</div>
-		<div id="top_content_2">배송대기중...</div>
-		<div id="top_content_3">수취대기확인중...</div>
+		<div id="top_content">
+			<div id="top_content_1"><span>애플</span>님에게 <span>승인요청</span>중...</div>
+			<div id="top_content_2">배송대기중...</div>
+			<div id="top_content_3">수취대기확인중...</div>
+		</div>
 		<div id="writePoint"><input type="text" name="send_price" id="send_price" value="5500"></div>
 		<span class="p"><b>P</b></span>
 		<div id="remainPoint"><span>둘리</span>님의 잔여 포인트 : <span>25000</span>P</div>
@@ -185,12 +186,14 @@ body{width:100%;background-color:gray;}
 	</div>
 	
 	<div id="comment">
-		<div id="comment_cnt">댓글&nbsp;<span>6</span></div>
-		<div id="commentBox"></div>
+		<div id="comment_cnt">댓글&nbsp;<span><b>6</b></span>&nbsp;<button type="button" id="refresh_btn"><img src="../img/refresh_btn.png" width="15px" height="15px"/></button></div>
+		<div id="commentBox">
+			<textarea>댓글창 예시</textarea>
+		</div>
 		
 	</div>
 	
 </div>
-
+</form>
 </body>
 </html>
