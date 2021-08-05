@@ -85,7 +85,7 @@ body{width:100%;background-color:gray;}
     });
 	 
 	//거래상태 받아와서 상태 변경
-	var trade_con ="HT007"; //${dto.ht_code}
+	var trade_con ="${dto.ht_code}"; //${dto.ht_code}
 	//거래페이지 생성상태인 경우 
 	//dto.c_code ="HT001" = 초기상태
 	
