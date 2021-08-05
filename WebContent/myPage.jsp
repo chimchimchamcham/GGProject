@@ -273,6 +273,8 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				url ='./flowlist';
 			}else if($index == 5){
 				url ='./requestlist';
+			}else if($index == 6){
+				url ='./lovelist';
 			}
 			console.log("url:"+url);
 
@@ -501,7 +503,9 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 					}else if ($index == 4) {//팔로우 팔로잉
 						flow_list(data.flowlist);
 					}else if ($index == 5) {//거래 요청
-						flow_list(data.requestlist);
+						request_list(data.reqlist);
+					}else if ($index == 6) {//거래 요청
+						love_list(data.lovelist);
 					}
 				}
 			},
@@ -640,7 +644,9 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			$(".button-layout_sold").hide();
 			$(".alien_list_sold").hide();
 			$(".button-layout_auction").hide();
+			
 			console.log('flowlist:'+flowlist.length);
+			
 			flowlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one-flow'>"
@@ -657,7 +663,66 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			
 		}//팔로워 팔로잉 리스트 end
 		
+		//데이터 가져와서 뿌려주는 구매요청 리스트
+		function request_list(reqlist){
+			
+			console.log("reqlist:", reqlist);
+			var content="";
+			
+			$(".button-layout_sold").hide();
+			$(".alien_list_sold").hide();
+			$(".button-layout_auction").hide();
+			
+			requestlist.forEach(function(item,idx){
+				console.log("idx:",idx,item);
+				content += "<div class='item-one'>";
+				content += "<div class='dretion-zoon style='margin: 3%'>";
+				content += "	<div>"+item.p_cateName+"</div>";
+				content += "	<div><a href = commDetail?p_no="+item.p_no+">"+item.p_title+"</a></div>";///경로 고쳐야함 거래요청?
+				content += "</div>";
+				content += "<div class='c_zoon'>";
+				content += "	<div>"+item.p_tm+"</div>";	
+				content += "</div>";
+				content += "<div class='mai-time'>";
+				content += "	<div>"+item.p_view+"</div>";
+				content += "</div></div>";
+			});	
 
+			$("#want .item-box").empty();
+			$("#want .item-box").append(content);
+			
+		}//구매요청 리스트 end
+		
+		
+		//데이터 가져와서 뿌려주는 구매요청 리스트
+		function love_list(lovelist){
+			
+			console.log("lovelist:", lovelist);
+			var content="";
+			
+			$(".button-layout_sold").hide();
+			$(".alien_list_sold").hide();
+			$(".button-layout_auction").hide();
+			
+			lovelist.forEach(function(item,idx){
+				console.log("idx:",idx,item);
+				content += "<div class='item-one'>";
+				content += "<div class='dretion-zoon style='margin: 3%'>";
+				content += "	<div>"+item.p_cateName+"</div>";
+				content += "	<div><a href = commDetail?p_no="+item.p_no+">"+item.p_title+"</a></div>";///경로 고쳐야함 거래요청?
+				content += "</div>";
+				content += "<div class='c_zoon'>";
+				content += "	<div>"+item.p_tm+"</div>";	
+				content += "</div>";
+				content += "<div class='mai-time'>";
+				content += "	<div>"+item.p_view+"</div>";
+				content += "</div></div>";
+			});	
+
+			$("#like .item-box").empty();
+			$("#like .item-box").append(content);
+			
+		}//구매요청 리스트 end
 		
 </script>
 <body>
