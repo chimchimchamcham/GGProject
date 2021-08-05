@@ -271,6 +271,8 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				url ='./communitylist';
 			}else if($index == 4){
 				url ='./flowlist';
+			}else if($index == 5){
+				url ='./requestlist';
 			}
 			console.log("url:"+url);
 
@@ -482,6 +484,8 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				//console.log("auctionlist:",data.auctionlist);
 				//console.log("maidelist:",data.maidelist);
 				//console.log("communitylist:",data.communitylist);
+				//console.log("communitylist:",data.flowlist);
+				//console.log("communitylist:",data.);
 				console.log("flowlist:",data.flowlist);
 				if(data != null){
 					console.log("index",$index);
@@ -496,6 +500,8 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 						community_list(data.communitylist);
 					}else if ($index == 4) {//팔로우 팔로잉
 						flow_list(data.flowlist);
+					}else if ($index == 5) {//거래 요청
+						flow_list(data.requestlist);
 					}
 				}
 			},
