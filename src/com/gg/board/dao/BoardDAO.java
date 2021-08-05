@@ -491,9 +491,12 @@ public class BoardDAO {
 			if(userid.equals(sid)) {
 				System.out.println("수신");
 				dto.setSered("수신");
+				dto.setButtonORtext("<div><button>수락</button><button>거절</button></div>");
 			}else if(userid.equals(rid)){
 				System.out.println("발신");
 				dto.setSered("발신");
+				dto.setButtonORtext("<div>대기중</div>");
+				
 			}
 			
 			

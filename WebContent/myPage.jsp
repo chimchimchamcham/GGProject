@@ -688,7 +688,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				content += "	<div>"+item.rq_id+"</div>";	
 				content += "</div>";
 				content += "<div class='mai-time'>";
-				content += "	<div>"+item.p_view+"</div>";
+				content += "	<div>"+item.buttonORtext+"</div>";
 				content += "</div></div>";
 			});
 			$("#want .item-box").empty();
