@@ -1,7 +1,6 @@
 package com.gg.trade.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,6 +10,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.gg.board.dao.BoardDAO;
 import com.gg.dto.GGDto;
 import com.gg.user.dao.PointDAO;
 
@@ -572,7 +572,14 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		public GGDto tradeDetail(int t_no) {
 			System.out.println("[TRADEDAO]/TRADEDETAIL START");
 			String sql = "SELECT T.T_NO, T.P_NO, T.T_SALER, T.T_BUYER, NVL(T.T_CANCLEID,'NULL') T_CANCLEID, T.T_ADMACC, H.HT_DATE, H.HT_POINT, H.HT_CODE, (SELECT C_NAME FROM CODES WHERE C_CODE = H.HT_CODE) HT_NAME FROM TRADE T, (SELECT * FROM HIS_TRADE WHERE T_NO = ? AND HT_DATE = (SELECT MAX(HT_DATE) FROM HIS_TRADE WHERE T_NO = ?)) H WHERE T.T_NO = H.T_NO";
-			GGDto dto = new GGDto();
+			GGDto dto = null;
+			
+			//게시글 정보 담기 위해서 실행
+			BoardDAO dao = new BoardDAO();
+			GGDto bdto = null;
+			
+			//구매자의 보유포인트를 담기 위해서 실행
+			
 			
 			try {
 				ps = conn.prepareStatement(sql);
@@ -580,11 +587,12 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				ps.setInt(2, t_no);
 				rs = ps.executeQuery();
 				if(rs.next()) {
+					dto = new GGDto();
 					dto.setT_no(rs.getInt("t_no"));//거래페이지 번호
 					dto.setP_no(rs.getInt("p_no"));//글번호
 					dto.setT_saler(rs.getString("t_saler"));//판매자
 					dto.setT_buyer(rs.getString("t_buyer"));//구매자
-					dto.setT_cancleId(rs.getString("t_cancleId"));//거래취소한 사람의 id (없을 경우 'X')
+					//dto.setT_cancleId(rs.getString("t_cancleId"));//거래취소한 사람의 id (없을 경우 'NULL')
 					dto.setT_admAcc(rs.getString("t_admacc"));//관리자 접근가능 여부
 					dto.setHt_point(rs.getInt("ht_point"));//송금 포인트
 					dto.setHt_code(rs.getString("ht_code"));//거래히스토리 분류코드
@@ -597,9 +605,9 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 					dto.setP_code(p_code);
 					//시작가 최고입찰가 추가
 					if(p_code.equals("P001")) {
-						int au_startPr = selectAuctionAu_startPr(dto.getP_no());
-						System.out.println("[TRADEDAO]/TRADEDETAIL AU_STARTPR : "+au_startPr);//경매 시작가
-						dto.setAu_startPr(au_startPr);
+						//int au_startPr = selectAuctionAu_startPr(dto.getP_no());
+						//System.out.println("[TRADEDAO]/TRADEDETAIL AU_STARTPR : "+au_startPr);//경매 시작가
+						//dto.setAu_startPr(au_startPr);
 						
 						int max_ha_bidPr = selectHis_AuctionMax_Ha_bidPr(dto.getP_no());
 						System.out.println("[TRADEDAO]/TRADEDETAIL MAX_HA_BIDPR : "+max_ha_bidPr);//경매 최고입찰자 or 낙찰가

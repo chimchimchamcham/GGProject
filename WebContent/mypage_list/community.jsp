@@ -9,7 +9,7 @@
 <body>
 <body>
     <div class="contents">
-        <div class="content-zoon_auction">
+        <div class="content-zoon_coom">
             <div class="item-box">
                 
             </div>
