@@ -324,6 +324,56 @@ public void flow_list(String userid, int flowORflowing) throws IOException {
 	dao.resClose();
 }
 
+//구매요청리스트
+public void req_list(String userid, int reqindex) throws IOException {
+	
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	
+	BoardDAO dao = new BoardDAO();
+	ArrayList<GGDto> reqlist = null;
+	
+	try {
+		reqlist = dao.reqlist(userid,reqindex);
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		dao.resClose();
+		map.put("reqlist", reqlist);
+	}
+	System.out.println("auc_map:"+map);
+	
+	resp.setContentType("text/html; charset=UTF-8");		
+	resp.getWriter().println(new Gson().toJson(map));
+	map.clear();
+	dao.resClose();
+	
+}
+
+//좋아요리스트
+public void love_list(String userid, int loveindex) throws IOException {
+	
+	HashMap<String, Object> map = new HashMap<String, Object>();
+	
+	BoardDAO dao = new BoardDAO();
+	ArrayList<GGDto> lovelist = null;
+	
+	try {
+		lovelist = dao.lovelist(userid,loveindex);
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally {
+		dao.resClose();
+		map.put("lovelist", lovelist);
+	}
+	System.out.println("auc_map:"+map);
+	
+	resp.setContentType("text/html; charset=UTF-8");		
+	resp.getWriter().println(new Gson().toJson(map));
+	map.clear();
+	dao.resClose();
+	
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 	public HashMap<String, ArrayList<GGDto>> category() {
 		BoardDAO dao = new BoardDAO();
@@ -695,6 +745,8 @@ public void flow_list(String userid, int flowORflowing) throws IOException {
 		}
 		return des;
 	}
+
+
 
 
 

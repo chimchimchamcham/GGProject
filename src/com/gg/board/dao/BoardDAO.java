@@ -445,6 +445,72 @@ public class BoardDAO {
 		System.out.println("flowlist:" + flowlist);
 		return flowlist;
 	}
+	
+	//구매요청
+	public ArrayList<GGDto> reqlist(String userid, int reqindex) throws SQLException {
+		String sql = "";
+		if (reqindex == 0) {//전체
+			sql = ""; 
+		} else if (reqindex == 1) {//수신
+			sql = "";
+		} else if (reqindex == 2) {//발신
+			sql = "";
+
+		}
+		//System.out.println("success req");
+		
+		ArrayList<GGDto> reqlist = new ArrayList<GGDto>();
+
+		System.out.println("reqlist:" + reqlist);
+
+		ps = conn.prepareStatement(sql);
+
+		System.out.println("daouserID:" + userid);
+
+		ps.setString(1, userid);
+		rs = ps.executeQuery();
+		System.out.println("rs:" + rs);
+
+		while (rs.next()) {
+			GGDto dto = new GGDto();
+			
+			reqlist.add(dto);
+		}
+		System.out.println("flowlist:" + reqlist);
+		return reqlist;
+	}
+	
+	//좋아요
+		public ArrayList<GGDto> lovelist(String userid, int loveindex) throws SQLException {
+			String sql = "";
+			if (loveindex == 0) {//최신
+				sql = ""; 
+			} else if (loveindex == 1) {//인기
+				sql = "";
+			}
+			//System.out.println("success love");
+			
+			ArrayList<GGDto> lovelist = new ArrayList<GGDto>();
+
+			System.out.println("lovelist:" + lovelist);
+
+			ps = conn.prepareStatement(sql);
+
+			System.out.println("daouserID:" + userid);
+
+			ps.setString(1, userid);
+			rs = ps.executeQuery();
+			System.out.println("rs:" + rs);
+
+			while (rs.next()) {
+				GGDto dto = new GGDto();
+				
+				lovelist.add(dto);
+			}
+			System.out.println("lovelist:" + lovelist);
+			return lovelist;
+		}
+	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public HashMap<String, ArrayList<GGDto>> category() {
 		String sql = "select * from codes where c_code like 'S%'";
@@ -962,6 +1028,8 @@ public class BoardDAO {
 
 		return code;
 	}
+
+	
 
 
 

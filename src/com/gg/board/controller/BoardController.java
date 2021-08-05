@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
 	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
 		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" 
-		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate","/flowlist"})
+		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate","/flowlist","/requestlist","/lovelist"})
 
 public class BoardController extends HttpServlet {
 
@@ -178,6 +178,23 @@ public class BoardController extends HttpServlet {
 			int flowORflowing = Integer.parseInt(req.getParameter("index1"));
 			
 			service.flow_list(userid,flowORflowing);
+
+			break;
+		case "/requestlist":
+			System.out.println("거래요청리스트 리스트 요청");
+			userid = (String) req.getSession().getAttribute("loginId");
+			int reqindex = Integer.parseInt(req.getParameter("index1"));
+			
+			service.req_list(userid,reqindex);
+
+			break;
+			
+		case "/lovelist":
+			System.out.println("좋아요리스트 리스트 요청");
+			userid = (String) req.getSession().getAttribute("loginId");
+			int loveindex = Integer.parseInt(req.getParameter("index"));
+			
+			service.love_list(userid,loveindex);
 
 			break;
 		/* ====== 글쓰기 ====== */
