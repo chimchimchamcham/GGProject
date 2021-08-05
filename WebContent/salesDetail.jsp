@@ -65,11 +65,11 @@
     
     /*댓글*/
     #second	div.board{border: 1px solid #D8D8D8;width: 1196px; height: 50vh;float: left; overflow: scroll;}
-    .board_text{border: 1px solid #D8D8D8; width: 1198px; height:5vh;float: left;margin :}
+    .board_text{border: 1px solid #D8D8D8; width: 1198px; height:5vh;float: left;}
     .enter{ margin-bottom: 10px;margin-left: 10px;padding: 20px;}
 
     .one-text{border: 1px solid black; border-radius: 10px;width: 1198px;height: 10vh;margin-bottom: 10vh};
-    .one-text .one-img-time{display: flex;justify-content: space-between;align-items: center;}
+    .one-text .one-img-time{display: block;justify-content: space-between;align-items: center;}
     .one-text .one-img-time img{max-width: 100px;max-height: 100px;border-radius: 50px; float:left;}
     
     
@@ -379,10 +379,10 @@
 			comment += "<div class = 'one-text'>";
 			comment += 		"<div class='one-img-time'>";
 			comment += 			"<div class='uploadimg'>";
-			comment += 				"<a id='commentNickname' href='./myPage?id='>"+item.pc_id+"<img src='/photo/"+item.u_newName+"'/></a>";
-			comment += 				"<div class='usertext'>"+item.u_nname+"</div>";
+			comment += 				"<a id='commentNickname' href='./myPage?id="+item.pc_id+"'><img src='/photo/"+item.u_newName+"'/>";
+			comment += 				"<div class='usertext'>"+item.u_nname+"</div></a>";
 			comment += 			"</div>";
-			comment += 			"<div class='content'><textarea style='float:left' readonly>"+item.pc_content+"</textarea></div>";
+			comment += 			"<div class='content'><p>"+item.pc_content+"</p></div>";
 			comment += 			"<div class='uploadtime'>";
 			comment += 				"<div>"+item.pc_tm+"</div>";
 			comment += 			"</div>";
