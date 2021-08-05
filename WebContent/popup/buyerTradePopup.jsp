@@ -207,14 +207,20 @@ body{width:100%;background-color:gray;}
 </body>
 <script>
 //수취확인 눌렀을 때 
+var ht_point = $("input[name=ht_point]").val();
+var t_saler = "${dto.t_saler}";
+var p_no = $("input[name=p_no]").val();
+var t_no = $("input[name=t_no]").val();
+var p_code = $("input[name=p_code]").val();
+
 $("#receiveY").click(function(){
-	window.open("./checkReceipt.jsp", "checkReceipt", "width=400, height=250,left=700, top=400");
+	window.open("./checkReceipt.jsp?t_buyer="+loginId+"&ht_point="+ht_point+"&t_saler="+t_saler+"&p_no="+p_no+"&t_no="+t_no+"&p_code="+p_code, "checkReceipt", "width=400, height=250,left=700, top=400");
 });
 //송금하기를 눌렀을 때
 $("#sendY").click(function(){
 	console.log("click");
-	/* $("form").attr("action", "sendPoint");
-	$("form").submit(); */
+	$("form").attr("action", "sendPoint");
+	$("form").submit(); 
 });
 
 //입력한 값이 잔여 포인트보다 클 경우 입찰 버튼 비활성화, 검정색으로 바뀜

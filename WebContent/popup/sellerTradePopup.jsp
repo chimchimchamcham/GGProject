@@ -193,11 +193,37 @@ body{width:100%;background-color:gray;}
 	</div>
 	
 </div>
+
+	<input type="hidden" name="t_no" value="${dto.t_no}"/>
+	<input type="hidden" name="p_no" value="${dto.p_no }"/>
+	<input type="hidden" name="t_buyer" value="${dto.t_buyer }"/>
+	<input type="hidden" name="t_saler" value="${dto.t_saler }"/>
+	<input type="hidden" name="p_code" value="${dto.p_code }"/>
+
 </form>
 </body>
 <script>
+
+var view_pnt = $("#view_pnt").text();
+var  t_no = $("input[name=t_no]").val();
+
+//배송하기를 눌렀을 때
 $("#shippingOK").click(function(){
-	window.open("./checkShipping.jsp", "checkShipping", "width=400, height=250,left=700, top=400");
+	window.open("./checkShipping.jsp?ht_point="+view_pnt+"&t_no="+t_no, "checkShipping", "width=400, height=250,left=700, top=400");
+});
+
+//송금확인을 눌렀을 때
+$("#sendOk").click(function(){
+	console.log("click");
+	$("form").attr("action", "pointApproval");
+	$("form").submit(); 
+});
+
+//송금거절을 눌렀을 때
+$("#sendRF").click(function(){
+	console.log("click");
+	$("form").attr("action", "pointDeny");
+	$("form").submit(); 
 });
 
 

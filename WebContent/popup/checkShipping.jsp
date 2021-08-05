@@ -20,6 +20,7 @@ body{width:100%;background-color:gray;}
 </style>
 </head>
 <body>
+<form action="productShipping" method="post">
 	<div id="wrap">
 		<div id="message">
 			<span id="title"><b>반드시 확인해주세요!!!</b></span>
@@ -35,19 +36,32 @@ body{width:100%;background-color:gray;}
 			</div>
 		</div>
 	</div>
+	
+	<input type="hidden" name="t_no" value="${param.t_no}"/>
+	<input type="hidden" name="ht_point" value="${param.ht_point}"/>
+	</form>
 </body>
 <script> 
+//체크박스 체크여부 확인
 $("input:checkbox").click(function(){
 	var isChecked = $(this).prop('checked');
 	console.log("check!");
 	if(isChecked){
 		$("button").css({"background-color":"#21641B"});
-		$("button").attr("disabled",true);
+		$("button").attr("disabled",false);
 	}else{
 		$("button").css({"background-color":"gray"});
-		$("button").attr("disabled",false);
+		$("button").attr("disabled",true);
 	}
 });
+
+//배송완료를 클릭했을 경우
+$("button").click(function(){
+	$("form").submit();
+	opener.parent.location.reload();
+	window.close();
+});
+
 
 </script>
 </html>
