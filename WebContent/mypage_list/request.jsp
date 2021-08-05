@@ -24,12 +24,13 @@
 
 $(".button-layout_req button").click(function(){
     $button1 = $(".button-layout_req button");
+    
+ // 버튼중 중 자신이 몇 번째인지 확인
     $index1 = $button1.index(this);
     
     $index_button = $(".button-layout_req button:eq(" + $index1 + ")");
     
 	console.log("$center_index:"+$index1);
-	
 	
 	reqlistCall($index1);
 	
