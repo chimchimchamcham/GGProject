@@ -386,6 +386,8 @@ public void buyNow(){
 	public GGDto tradeDetail() {
 		int t_no = Integer.parseInt(req.getParameter("t_no"));
 		TradeDAO dao = new TradeDAO();
-		return dao.tradeDetail(t_no);
+		GGDto dto = dao.tradeDetail(t_no);
+		dao.resClose();
+		return dto;
 	}
 }

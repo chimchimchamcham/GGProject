@@ -55,6 +55,7 @@ body{width:100%;background-color:gray;}
 </style>
 
 <script>
+var loginId = "${sessionScope.loginId}";
 	$(document).ready(function(){
 		
 	 //초기상태 
@@ -64,7 +65,7 @@ body{width:100%;background-color:gray;}
 	$("#top_content_1").show();
 	$("#top_content_2,#top_content_3").hide(); 
 	$("#receiveY").hide();
-	$("#sendY,#chargeBtn").attr("disabled",true);	
+	$("#sendY,#chargeBtn").attr("disabled",false);	
 	$("#reply").hide();
 	$("#content").show();
 	$("#replyBtn").hide();	 	  
@@ -77,7 +78,7 @@ body{width:100%;background-color:gray;}
 		
 	//신고하기 버튼을 누르면 팝업창 띄우기
 	//세션 아이디 가져오기
-	var loginId = "${sessionScope.loginId}";
+	
 	$("#report").click(function(){
 		
   		window.open("./notifyPopup.jsp?N_receiveId="+loginId, "notifyPopup", "width=400, height=250, left=700, top=400");
@@ -93,24 +94,24 @@ body{width:100%;background-color:gray;}
 	 if(trade_con == "HT002"){ 
 		$("#send").css({"color":"#3BC312"}); //송금상태 불들어오는거
 		$("#sendY,#chargeBtn").css({"background-color":"gray"});
-		$("#sendY,#chargeBtn").attr("disabled",false);
+		$("#sendY,#chargeBtn").attr("disabled",true);
 	}else if(trade_con == "HT003"){//거래페이지 승인거부인 경우 -> 송금 전 상태와 동일
 		$("#condition").css({"color":"#C1C6C6"});
 		$("#sendY").css({"background-color":"#FF7E00"});
 		$("#chargeBtn").css({"backgroud-color":"#0048FF"});
-		$("#sendY,#chargeBtn").attr("disabled",true);	
+		$("#sendY,#chargeBtn").attr("disabled",false);	
 	}else if(trade_con == "HT004"){//거래페이지 배송대기의 경우
 		$("#send_price").attr('readonly',true);
 		$("#send,#approval").css({"color":"#3BC312"}); 
 		$("#sendY,#chargeBtn").css({"background-color":"gray"});
-		$("#sendY,#chargeBtn").attr("disabled",false);
+		$("#sendY,#chargeBtn").attr("disabled",true);
 		$("#top_content_2").show();
 		$("#top_content_1,#top_content_3").hide();
 	}else if(trade_con == "HT005"){//거래페이지 수취대기 상태의 경우
 		$("#send_price").attr('readonly',true);
 		$("#send,#approval,#shipping").css({"color":"#3BC312"}); 
 		$("#chargeBtn").css({"background-color":"gray"});
-		$("#chargeBtn").attr("disabled",false);
+		$("#chargeBtn").attr("disabled",true);
 		$("#sendY").hide();
 		$("#receiveY").show();
 	}else if(trade_con == "HT006"){//거래페이지 수취확인 상태의 경우 
@@ -207,13 +208,22 @@ body{width:100%;background-color:gray;}
 </body>
 <script>
 //수취확인 눌렀을 때 
+
+var ht_point = $("input[name=ht_point]").val();
+var t_saler = "${dto.t_saler}";
+var p_no = $("input[name=p_no]").val();
+var t_no = $("input[name=t_no]").val();
+var p_code = $("input[name=p_code]").val();
+
 $("#receiveY").click(function(){
-	window.open("./checkReceipt.jsp", "checkReceipt", "width=400, height=250,left=700, top=400");
+	console.log(loginId);
+	window.open("./popup/checkReceipt.jsp?t_buyer="+loginId+"&ht_point="+ht_point+"&t_saler="+t_saler+"&p_no="+p_no+"&t_no="+t_no+"&p_code="+p_code, "checkReceipt", "width=400, height=250,left=700, top=400");
 });
 //송금하기를 눌렀을 때
 $("#sendY").click(function(){
+	console.log("click");
 	$("form").attr("action", "sendPoint");
-	$("form").submit();
+	$("form").submit(); 
 });
 
 //입력한 값이 잔여 포인트보다 클 경우 입찰 버튼 비활성화, 검정색으로 바뀜
@@ -226,6 +236,11 @@ $("#send_price").on("propertychange change keyup paste input",function(){
 		$("#bid").attr("disabled", false).css({"background-color":"#FF7E00"});
 	}
 });
+
+function receiptClick(){
+	$("form").attr("action", "productReceive");
+	$("form").submit(); 
+}
 
 </script>
 </html>

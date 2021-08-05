@@ -42,12 +42,18 @@ $("input:checkbox").click(function(){
 	console.log("check!");
 	if(isChecked){
 		$("button").css({"background-color":"#21641B"});
-		$("button").attr("disabled",true);
+		$("button").attr("disabled",false);
 	}else{
 		$("button").css({"background-color":"gray"});
-		$("button").attr("disabled",false);
+		$("button").attr("disabled",true);
 	}
 });
+
+//수취완료를 클릭했을 경우
+$("button").click(function(){
+	receiptClick();
+	window.close(); 
+})
 
 </script>
 </html>

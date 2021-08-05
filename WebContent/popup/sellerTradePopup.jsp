@@ -85,7 +85,7 @@ body{width:100%;background-color:gray;}
     });
 	 
 	//거래상태 받아와서 상태 변경
-	var trade_con ="HT007"; //${dto.ht_code}
+	var trade_con ="${dto.ht_code}"; //${dto.ht_code}
 	//거래페이지 생성상태인 경우 
 	//dto.c_code ="HT001" = 초기상태
 	
@@ -114,6 +114,8 @@ body{width:100%;background-color:gray;}
 		$("#send,#approval,#shipping").css({"color":"#3BC312"}); 
 		$("#replyBtn,#shippingOK").show();
 		$("#sendOk,#sendRF").hide();
+		$("#replyBtn,#shippingOK").css({"background-color":"gray"});
+		$("#replyBtn,#shippingOK").attr("disabled",true);	
 		$("#view_pnt").hide();
 		$(".p").hide();
 		$("#top_content_3").show();
@@ -193,13 +195,43 @@ body{width:100%;background-color:gray;}
 	</div>
 	
 </div>
+
+	<input type="hidden" name="t_no" value="${dto.t_no}"/>
+	<input type="hidden" name="p_no" value="${dto.p_no }"/>
+	<input type="hidden" name="t_buyer" value="${dto.t_buyer }"/>
+	<input type="hidden" name="t_saler" value="${dto.t_saler }"/>
+	<input type="hidden" name="p_code" value="${dto.p_code }"/>
+
 </form>
 </body>
 <script>
+
+var view_pnt = $("#view_pnt").text();
+var  t_no = $("input[name=t_no]").val();
+
+//배송하기를 눌렀을 때
 $("#shippingOK").click(function(){
-	window.open("./checkShipping.jsp", "checkShipping", "width=400, height=250,left=700, top=400");
+	window.open("./popup/checkShipping.jsp?ht_point="+view_pnt+"&t_no="+t_no, "checkShipping", "width=400, height=250,left=700, top=400");
 });
 
+//송금확인을 눌렀을 때
+$("#sendOk").click(function(){
+	console.log("click");
+	$("form").attr("action", "pointApproval");
+	$("form").submit(); 
+});
+
+//송금거절을 눌렀을 때
+$("#sendRF").click(function(){
+	console.log("click");
+	$("form").attr("action", "pointDeny");
+	$("form").submit(); 
+});
+
+function receiptClick(){
+	$("form").attr("action", "productReceive");
+	$("form").submit(); 
+}
 
 </script>
 </html>
