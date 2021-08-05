@@ -161,8 +161,8 @@ body {
 	color: gray;
 }
 
-#menu1 button{
-margin-left:7px;
+#writeBtn{
+	margin-left:7px;
 	padding: 7px 15px;
 	text-decoration: none;
 	background-color: #D8D8D8;
@@ -171,7 +171,7 @@ margin-left:7px;
 	border-radius: 5px;
 }
 
-#menu1 button:hover{
+#writeBtn:hover{
 	background-color: gray;
 	color: white;
 	cursor:pointer;
@@ -275,6 +275,28 @@ margin-left:7px;
 	text-align: center;
 }
 
+/*회원가입 버튼*/
+.joinBtn{
+	margin-left:7px;
+	padding: 7px 15px;
+	text-decoration: none;
+	background-color:	#fff;
+	color: #424242;
+	border: 1.5px solid #cecece;
+	border-radius: 5px;
+}
+
+/*로그인 버튼*/
+.loginBtn{
+	margin-left:7px;
+	padding: 7px 15px;
+	text-decoration: none;
+	background-color: #D8D8D8;
+	color:#424242;
+	border: 1.5px #D8D8D8;
+	border-radius: 5px;
+}
+
 </style>
 <body>
 	<div id="hWrap">
@@ -286,28 +308,28 @@ margin-left:7px;
 					<img src="img/search-icon.png" alt="search-icon">
 				</div>
 				<div id="menu1">
-				
 
 				<!-- 로그인이 안되어있을 때 -->
 				<c:if test="${loginId eq null }">
-				<a href="joinForm.jsp" class="joinA">회원가입</a>
-					<a href="login.jsp"  class="loginA">로그인</a>
+				<button onclick="location.href='joinForm.jsp'" class="joinBtn">회원가입</button>
+				<button onclick="location.href='login.jsp'" class="loginBtn">로그인</button>
 				</c:if>
 				
 				<!-- 로그인이 되어있을 때 -->
 				<c:if test="${loginId ne null}"> 
 					<a href="logout"  class="logoutA">로그아웃</a>
+					<!-- 사용자 상단바 -->
+				<c:if test="${adminYN eq 'N'}"> 
+					<a href="#"  class="messageA"><img src="img/message-icon.png" alt="쪽지" width="20"></a>
+					<a href="#"  class="alarmA"><img src="img/notify-icon.png" alt="알람" width="20"></a>
 				</c:if>
-
-				<c:if test="${adminYN eq 'N' || loginId eq null}"> 
-				<a href="#"  class="messageA">쪽지</a>
-				<a href="#"  class="alarmA">알람</a>
+					<a href="#"  class="myPageA">마이페이지</a>
+					<!-- 사용자 상단바 -->
+				<c:if test="${adminYN eq 'N'}"> 
+					<a href="#"  class="tradeA"><img src="img/ggTalk.png" alt="거래톡" width="20"></a>
 				</c:if>
-				<a href="#"  class="myPageA">마이페이지</a>
-				<c:if test="${adminYN eq 'N' || loginId eq null}">
-				<a href="#"  class="tradeA">거래톡</a>
+				<button id="writeBtn">글쓰기</button>
 				</c:if>
-				<button class="writeA">글쓰기</button>
 				</div>
 			</div>
 		</header>

@@ -831,10 +831,14 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			<tr>
 				<td colspan="2">
 			<c:if test="${myPageInfo.u_newName  eq 'default-profile.png'}">
-				<img src="./img/default-profile.png" width="130px"/>
+			<div class="box" >
+    			<img src="./img/default-profile.png" width="130px"/>
+			</div>
 			</c:if>
 			<c:if test="${myPageInfo.u_newName  ne 'default-profile.png'}">
-				<img src="/photo/${myPageInfo.u_newName}" width="130px"/>
+			<div class="box" >
+    			<img src="/photo/${myPageInfo.u_newName}" width="130px"/>
+			</div>
 			</c:if>
 			</tr>
 			<tr>

@@ -30,16 +30,18 @@ body{width:100%;background-color:gray;}
 
 #content{position:absolute; left:420px; top:100px;width:320px;height:200px;background-color:#F9F9F4;/*  border:2px solid #5F5F5F; */}
 
-#top_content{position:relative; /* background-color:yellow; */ width:200px; top:15px;left:60px;text-align:center;}
+#top_content{position:relative; /* background-color:yellow; */ width:200px; top:30px;left:60px;text-align:center;}
 
-#send_price{display:inline-block; position:relative; top:25px;left:38px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;border:1px solid gray;border-radius:5px/5px;padding-left:10px;padding-right:40px;}
-.p{font-size:2.5rem; position:absolute; top:46px;left:240px }
-#remainPoint{position:relative;top:36px;left:45px;width:230px; height:25px; background-color:#C1C6C6;border-radius:5px/5px;text-align:center;font-size:0.9rem}
-#threeBtn{position:absolute; top:140px; /* background-color:blue; */width:180px; left:75px}
+/*----------해당 부분 이후 변경---------*/
+#view_pnt{display:inline-block; position:relative; top:40px;left:38px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;/* border:1px solid gray; */border-radius:5px/5px;padding-left:10px;padding-right:40px;}
+.p{font-size:2.0rem; position:absolute; top:65px;left:230px }
+
+#threeBtn{position:absolute; top:130px; background-color:pink;width:180px; left:75px}
 #threeBtn>button{width:80px; height:40px; border-radius:5px/5px;font-size:0.8rem; float:left;margin:5px}
-#sendY{background-color:#FF7E00;color:white}
-#chargeBtn{color:white;background-color:#0048FF;}
-#receiveY{background-color:#FF7E00;color:white;}
+#sendOk{background-color:#0048FF;color:white}
+#sendRF{color:white;background-color:#FF7E00;}
+#shippingOK{background-color:#21641B;color:white;}
+#replyBtn{background-color:#0048FF; color:white;}
 
 #reply{position:absolute; left:420px; top:100px;width:320px;height:200px;background-color:#F9F9F4;}
 #reply>span{position:relative; left:110px; top:10px;font-size:1.5rem;}
@@ -58,16 +60,14 @@ body{width:100%;background-color:gray;}
 	$(document).ready(function(){
 		
 	 //초기상태 
-	$("#condition").css({"color":"#C1C6C6"});
-	$("#sendY").css({"background-color":"#FF7E00"});
-	$("#chargeBtn").css({"backgroud-color":"#0048FF"});
+	$("#condition").css({"color":"#C1C6C6"}); //상단 거래페이지 상태 
+	$("#sendOk,#sendRF").css({"background-color":"#919999"});
 	$("#top_content_1").show();
 	$("#top_content_2,#top_content_3").hide(); 
-	$("#receiveY").hide();
-	$("#sendY,#chargeBtn").attr("disabled",true);	
-	$("#reply").hide();
+	$("#sendOk,#sendRF").attr("disabled",true);	
+	$("#replyBtn,#shippingOK").hide();
 	$("#content").show();
-	$("#reply").hide();	  
+	$("#reply").hide();	 
 	
 	/* /* 거래 후기 >>>> 향후 삭제 */
 	//$("#content").hide();
@@ -76,13 +76,16 @@ body{width:100%;background-color:gray;}
 	/*-------------*/ 
 		
 	//신고하기 버튼을 누르면 팝업창 띄우기
+	
+	//세션 아이디 가져오기
+	var loginId = "${sessionScope.loginId}";
 	$("#report").click(function(){
-		var N_receiveId = "${dto.p_id}"
-  		window.open("./notifyPopup.jsp?N_receiveId="+N_receiveId, "notifyPopup", "width=400, height=250, left=700, top=400");
+		
+  		window.open("./notifyPopup.jsp?N_receiveId="+loginId, "notifyPopup", "width=400, height=250, left=700, top=400");
     });
 	 
 	//거래상태 받아와서 상태 변경
-	var trade_con ="HT005"; //${dto.ht_code}
+	var trade_con ="HT007"; //${dto.ht_code}
 	//거래페이지 생성상태인 경우 
 	//dto.c_code ="HT001" = 초기상태
 	
@@ -90,39 +93,43 @@ body{width:100%;background-color:gray;}
 	//dto.c_code ="HT002"
 	 if(trade_con == "HT002"){ 
 		$("#send").css({"color":"#3BC312"}); //송금상태 불들어오는거
-		$("#sendY,#chargeBtn").css({"background-color":"gray"});
-		$("#sendY,#chargeBtn").attr("disabled",false);
+		$("#sendRF").css({"background-color":"#FF7E00"});
+		$("#sendOk").css({"background-color":"#0048FF"});
+		$("#sendRF,#sendOk").attr("disabled",false);
 	}else if(trade_con == "HT003"){//거래페이지 승인거부인 경우 -> 송금 전 상태와 동일
 		$("#condition").css({"color":"#C1C6C6"});
-		$("#sendY").css({"background-color":"#FF7E00"});
-		$("#chargeBtn").css({"backgroud-color":"#0048FF"});
+		$("#sendOk,#sendRF").css({"background-color":"gray"});
 		$("#sendY,#chargeBtn").attr("disabled",true);	
 	}else if(trade_con == "HT004"){//거래페이지 배송대기의 경우
-		$("#send_price").attr('readonly',true);
 		$("#send,#approval").css({"color":"#3BC312"}); 
-		$("#sendY,#chargeBtn").css({"background-color":"gray"});
-		$("#sendY,#chargeBtn").attr("disabled",false);
+		$("#replyBtn,#shippingOK").show();
+		$("#replyBtn").css({"background-color":"gray"});
+		$("#replyBtn").attr("disabled",true);	
+		$("#sendOk,#sendRF").hide();
+		$("#view_pnt").hide();
+		$(".p").hide();
 		$("#top_content_2").show();
 		$("#top_content_1,#top_content_3").hide();
 	}else if(trade_con == "HT005"){//거래페이지 수취대기 상태의 경우
-		$("#send_price").attr('readonly',true);
 		$("#send,#approval,#shipping").css({"color":"#3BC312"}); 
-		$("#chargeBtn").css({"background-color":"gray"});
-		$("#chargeBtn").attr("disabled",false);
-		$("#sendY").hide();
-		$("#receiveY").show();
+		$("#replyBtn,#shippingOK").show();
+		$("#sendOk,#sendRF").hide();
+		$("#view_pnt").hide();
+		$(".p").hide();
+		$("#top_content_3").show();
+		$("#top_content_1,#top_content_2").hide();
 	}else if(trade_con == "HT006"){//거래페이지 수취확인 상태의 경우 
 		$("#send,#approval,#shipping,#receive").css({"color":"#3BC312"}); 
 		$("#reply").show();
-		$("#content,#chargeBtn").hide();
-		$("#sendY").hide();
-		$("#reply").show();
+		$("#content").hide();
+		$("#sendOk,#sendRF").hide();
 	 }else if(trade_con == "HT007"){//거래페이지 거래취소인 상태의 경우
-		 $("#sendY,#chargeBtn").css({"background-color":"gray"});
-		 $("#sendY,#chargeBtn,#trade_cancel,#report").attr("disabled",true);
-		 $("#send_price").attr('readonly',true);
+		 $("#trade_cancel,#report").attr("disabled",true);
 	 }
 		
+
+
+	
 	
 	});
 </script>
@@ -144,27 +151,28 @@ body{width:100%;background-color:gray;}
 	</div>
 	
 	<div id="imgDiv">
-		<img class="img" src="../img/notebook.PNG"/>
+		<img class="img" src="/photo/${dto.i_newName}"/>
 		<div id="img_condition">
-			<span id="s_a_code">거래중</span>
-			<span id="subject">아이패드 파우치</span>
+			<span id="s_a_code">${dto.p_name}</span>
+			<span id="subject">${dto.p_title }</span>
 		</div>
 	</div>
 	
 	<div id="content">
 		<div id="top_content">
-			<div id="top_content_1"><span>${dto.t_saler}</span>님에게 <span>승인요청</span>중...</div>
+			<div id="top_content_1"><span>${dto.t_buyer}</span>님이 보낸 포인트</div>
 			<div id="top_content_2">배송대기중...</div>
-			<div id="top_content_3">수취대기확인중...</div>
+			<div id="top_content_3">수취대기중...</div>
 		</div>
-		<div id="writePoint"><input type="text" name="send_price" id="send_price" value="5500"></div>
+		<div id="writePoint"><p id="view_pnt">${dto.ht_point}</p><input type="hidden" name="ht_point" id="send_price" value="${dto.ht_point}"></div>
 		<span class="p"><b>P</b></span>
-		<div id="remainPoint"><span>둘리</span>님의 잔여 포인트 : <span>25000</span>P</div>
 		<div id="threeBtn">
-			<button type="button" id="sendY">송금</button>
-			<button type="button" id="receiveY">배송</button>
-			<button type="button" id="chargeBtn">포인트 충전</button>
+			<button type="button" id="sendOk">송금확인</button>
+			<button type="button" id="shippingOK">배송</button>
+			<button type="button" id="sendRF">송금거절</button>
+			<button type="button" id="replyBtn">거래후기</button>
 		</div>
+		<div></div>
 	</div>
 	
 	<div id="reply">
@@ -185,18 +193,13 @@ body{width:100%;background-color:gray;}
 	</div>
 	
 </div>
-	<input type="hidden" name="t_no" value="${dto.t_no}"/>
-	<input type="hidden" name="p_no" value="${dto.p_no }"/>
-	<input type="hidden" name="t_saler" value="${dto.t_saler}"/>
-	<input type="hidden"
-	
-
-	<p>${dto.t_no}</p>
 </form>
 </body>
 <script>
-$("#receiveY").click(function(){
-	window.open("./checkShipping.jsp", "checkShipping", "width=400, height=400,left=700, top=400");
+$("#shippingOK").click(function(){
+	window.open("./checkShipping.jsp", "checkShipping", "width=400, height=250,left=700, top=400");
 });
+
+
 </script>
 </html>
