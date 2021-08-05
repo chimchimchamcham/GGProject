@@ -602,7 +602,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 					
 					
 					//구매자의 보유포인트
-					dto.setT_point(pdao.pointPop("t_buyer"));//구매자의 보유포인트
+					dto.setT_point(pdao.pointPop(dto.getT_buyer()));//구매자의 보유포인트
 					System.out.println("[TRADEDAO]/TRADEDETAIL T_POINT : "+dto.getT_point());
 					
 					//경매 or 판매 여부
