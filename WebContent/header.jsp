@@ -29,6 +29,7 @@
       $(".messageA").click(function(){
          $("#messageList").slideToggle('slow');
          $("#alarmList").hide();
+         $("#tradeList").hide();
       });
       
       /*알람 토글기능*/
@@ -36,6 +37,15 @@
       $(".alarmA").click(function(){
          $("#alarmList").slideToggle('slow');
          $("#messageList").hide();
+         $("#tradeList").hide();
+      });
+      
+      /*거래톡 토글기능*/
+      $("#tradeList").hide();
+      $(".tradeA").click(function(){
+         $("#tradeList").slideToggle('slow');
+         $("#messageList").hide();
+         $("#alarmList").hide();
       });
       
       /*쪽지 로그인 체크*/
@@ -149,12 +159,14 @@ body {
 #menu1 {
    float: right;
    padding: 10px;
+   width:440px;
 }
 
 #menu1 a {
-   padding: 5px;
+   padding: 0 7px;
    text-decoration: none;
    color: black;
+	float: right;
 }
 
 #menu1 a:hover {
@@ -169,6 +181,7 @@ body {
    color:#424242;
    border: 3px #D8D8D8;
    border-radius: 5px;
+   float: right;
 }
 
 #writeBtn:hover{
@@ -263,10 +276,11 @@ body {
    background-color:#E6E6E6;
    z-index: 1000;
    top:60px;
-   right:400px;
+   right:470px;
    text-align: center;
    }
 
+/*알람 목록*/
 #alarmList{
    width: 420px;
    height:500px;
@@ -274,32 +288,21 @@ body {
    background-color:#E6E6E6;
    z-index: 1000;
    top:60px;
-   right:360px;
+   right:420px;
    text-align: center;
 }
 
 /*거래톡*/
-#messageList{
+#tradeList{
    width: 420px;
    height:500px;
    position: fixed;
    background-color:#E6E6E6;
    z-index: 1000;
    top:60px;
-   right:400px;
+   right:380px;
    text-align: center;
    }
-
-#alarmList{
-   width: 420px;
-   height:500px;
-   position: fixed;
-   background-color:#E6E6E6;
-   z-index: 1000;
-   top:60px;
-   right:360px;
-   text-align: center;
-}
 
 /*회원가입 버튼*/
 .joinBtn{
@@ -310,6 +313,7 @@ body {
    color: #424242;
    border: 1.5px solid #cecece;
    border-radius: 5px;
+   float:right;
 }
 
 .joinBtn:hover{
@@ -328,6 +332,7 @@ body {
    color:#424242;
    border: 1.5px #D8D8D8;
    border-radius: 5px;
+   float:right;
 }
 
 .loginBtn:hover{
@@ -348,7 +353,6 @@ body {
                <img src="img/search-icon.png" alt="search-icon">
             </div>
             <div id="menu1">
-
             <!-- 로그인이 안되어있을 때 -->
             <c:if test="${loginId eq null }">
             <button onclick="location.href='joinForm.jsp'" class="joinBtn">회원가입</button>
@@ -359,18 +363,18 @@ body {
             <c:if test="${loginId ne null}"> 
               
                <!-- 사용자 상단바 -->
-            <c:if test="${adminYN eq 'N'}"> 
-               <a href="#"  class="messageA" title="쪽지"><img src="img/message-icon.png" alt="쪽지" width="25" style="opacity:80%;"></a>
-               <a href="#"  class="alarmA" title="알람"><img src="img/notify-icon.png" alt="알람" width="25" style="opacity:80%;"></a>
-            </c:if>
-              
-               <!-- 사용자 상단바 -->
-            <c:if test="${adminYN eq 'N'}"> 
-               <a href="#"  class="tradeA" title="거래톡"><img src="img/ggTalk.png" alt="거래톡" width="25" style="opacity:80%;"></a>
-            </c:if>
-             <a href="#"  class="myPageA">마이페이지</a>
+               
+          <button id="writeBtn">글쓰기</button>
+      
              <a href="logout"  class="logoutA">로그아웃</a>
-            <button id="writeBtn">글쓰기</button>
+            
+            
+             <a href="#"  class="myPageA">마이페이지</a>
+              <c:if test="${adminYN eq 'N'}"> 
+               <a href="#"  class="tradeA" title="거래톡"><img src="img/ggTalk.png" alt="거래톡" width="25" style="opacity:80%;  margin-right:30px; padding:0 5px;"></a>
+               <a href="#"  class="alarmA" title="알람"><img src="img/notify-icon.png" alt="알람" width="25" style="opacity:80%; padding:0 5px;" ></a>
+               <a href="#"  class="messageA" title="쪽지"><img src="img/message-icon.png" alt="쪽지" width="25" style="opacity:80%; padding:0 5px;"></a>
+            </c:if>
             </c:if>
             </div>
          </div>
@@ -418,6 +422,22 @@ body {
    </div>
    <div id="alarmList">
       <h2>알람</h2>
+   </div>
+   <div id="tradeList">
+      <h2>거래톡</h2>
+      <button>판매</button>
+       <button >경매</button>
+       
+       
+      <table style="border:1px solid black;">
+      
+      	<tr>
+      		<td>d;lsjf;ldksjf;ldfsjs</td>
+      	</tr>
+      	<tr>
+      		<td>d;lsjf;ldksjf;ldfsjs</td>
+      	</tr>
+      </table>
    </div>
 </body>
 </html>
