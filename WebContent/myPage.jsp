@@ -681,7 +681,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				content += "<div class='item-one'>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
 				content += "	<div>"+item.sered+"</div>";
-				content += "	<div><a href = commDetail?p_no="+item.p_no+">"+item.p_title+"</a></div>";///경로 고쳐야함 거래요청?
+				content += "	<div><a href = salesDetail?p_no="+item.p_no+">"+item.p_title+"</a></div>";
 				content += "</div>";
 				content += "<div>"+item.rq_tm+"</div>"
 				content += "<div class='c_zoon'>";
@@ -697,7 +697,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 		}//구매요청 리스트 end
 		
 		
-		//데이터 가져와서 뿌려주는 구매요청 리스트
+		//데이터 가져와서 뿌려주는 좋아요 리스트
 		function love_list(lovelist){
 			
 			console.log("lovelist:", lovelist);
@@ -712,7 +712,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				content += "<div class='item-one'>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
 				content += "	<div>"+item.p_cateName+"</div>";
-				content += "	<div><a href = commDetail?p_no="+item.p_no+">"+item.p_title+"</a></div>";///경로 고쳐야함 거래요청?
+				content += "	<div><a href = commDetail?p_no="+item.p_no+">"+item.p_title+"</a></div>";
 				content += "</div>";
 				content += "<div class='c_zoon'>";
 				content += "	<div>"+item.p_tm+"</div>";	
@@ -725,7 +725,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			$("#like .item-box").empty();
 			$("#like .item-box").append(content);
 			
-		}//구매요청 리스트 end
+		}//좋아요 리스트 end
 		
 </script>
 <body>
