@@ -128,13 +128,11 @@ body{width:100%;background-color:gray;}
 	if(p_code=="P001"){//경매인경우 넘겨준 가격 그대로 설정
 		$("#send_price").attr('readonly',true);
 		$("#send_price").attr('value',${dto.ha_bidPr});
-		
+
 	}else{//판매인경우 입력가능 (거래히스토리에 저장된 값을 불러옴)
 		$("#send_price").attr('readonly',false);
 		$("#send_price").attr('value',${dto.ht_point});
 	}
-	
-	//
 	
 	});
 </script>
@@ -173,9 +171,10 @@ body{width:100%;background-color:gray;}
 		<span class="p"><b>P</b></span>
 		<div id="remainPoint"><span>${dto.t_buyer}</span>님의 잔여 포인트 : <span>${dto.t_point }</span>P</div>
 		<div id="threeBtn">
-			<button id="sendY">송금</button>
-			<button id="receiveY">수취확인</button>
-			<button id="chargeBtn">포인트 충전</button>
+			<button type="button" id="sendY">송금</button>
+			<button type="button" id="receiveY">수취확인</button>
+			<button type="button" id="chargeBtn">포인트 충전</button>
+			<button type="button" id="reply">거래후기</button>
 		</div>
 	</div>
 	
