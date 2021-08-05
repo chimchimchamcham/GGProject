@@ -127,14 +127,12 @@ body{width:100%;background-color:gray;}
 	var p_code ="${dto.p_code}";
 	if(p_code=="P001"){//경매인경우 넘겨준 가격 그대로 설정
 		$("#send_price").attr('readonly',true);
-		$("#send_price").attr('value',${dto.ha_bidpr});
-		
-	}else{//판매인경우 입력가능 
+		$("#send_price").attr('value',${dto.ha_bidPr});
+
+	}else{//판매인경우 입력가능 (거래히스토리에 저장된 값을 불러옴)
 		$("#send_price").attr('readonly',false);
-		$("#send_price").attr('value',0);
+		$("#send_price").attr('value',${dto.ht_point});
 	}
-	
-	//
 	
 	});
 </script>
@@ -169,9 +167,9 @@ body{width:100%;background-color:gray;}
 			<div id="top_content_2">배송대기중...</div>
 			<div id="top_content_3">수취대기확인중...</div>
 		</div>
-		<div id="writePoint"><input type="text" name="send_price" id="send_price" value="5500"></div>
+		<div id="writePoint"><input type="text" name="ht_point" id="send_price" value="0"></div>
 		<span class="p"><b>P</b></span>
-		<div id="remainPoint"><span>${dto.t_buyer}</span>님의 잔여 포인트 : <span>25000</span>P</div>
+		<div id="remainPoint"><span>${dto.t_buyer}</span>님의 잔여 포인트 : <span>${dto.t_point }</span>P</div>
 		<div id="threeBtn">
 			<button type="button" id="sendY">송금</button>
 			<button type="button" id="receiveY">수취확인</button>
@@ -196,16 +194,13 @@ body{width:100%;background-color:gray;}
 		</div>
 		
 	</div>
-	
 
 	<input type="hidden" name="t_no" value="${dto.t_no}"/>
 	<input type="hidden" name="p_no" value="${dto.p_no }"/>
-	
-	
-	
+	<input type="hidden" name="t_buyer" value="${dto.t_buyer }"/>
+	<input type="hidden" name="t_saler" value="${dto.t_saler }"/>
+	<input type="hidden" name="p_code" value="${dto.p_code }"/>
 
-	<p>${dto.t_no}/${dto.ht_code }</p>
-	
 </div>
 </form>
 </body>

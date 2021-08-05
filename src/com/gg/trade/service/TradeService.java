@@ -279,8 +279,8 @@ public void buyNow(){
 		String t_saler = req.getParameter("t_saler");
 		int p_no = Integer.parseInt(req.getParameter("p_no"));
 		int t_no = Integer.parseInt(req.getParameter("t_no"));
-		int ha_bidPr = Integer.parseInt(req.getParameter("ha_bidPr"));
-		int au_startPr = Integer.parseInt(req.getParameter("au_startPr"));
+		//int ha_bidPr = Integer.parseInt(req.getParameter("ha_bidPr"));
+		//int au_startPr = Integer.parseInt(req.getParameter("au_startPr"));
 		String p_code = req.getParameter("p_code");
 		
 		boolean insertPointToBuyerSuccess = false;
@@ -295,6 +295,8 @@ public void buyNow(){
 			pdao.conn.setAutoCommit(false);
 			//경매 거래일 경우 입찰금을 반환
 			if(p_code.equals("P001")) {
+				int au_startPr = dao.selectAuctionAu_startPr(p_no);//경매 시작가
+				System.out.println("[TRADESERVICE]/PRODUCTRECEIVE AU_STARTPR : "+au_startPr);
 				insertPointToBuyerSuccess = pdao.insertPoint(t_buyer, au_startPr, "SYSTEM", "PNT007", p_no);
 				System.out.println("[TRADESERVICE]/PRODUCTRECEIVE INSERTPOINTBUYERSUCCESS : "+insertPointToBuyerSuccess);
 			}
