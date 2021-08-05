@@ -114,8 +114,17 @@ public class GGDto {
 	private String t_buyer; // 구매자ID
 	private String t_cancleId; //거래취소ID
 	private String t_admAcc; //관리자 접근가능 여부
+	private int t_point; //구매자의 보유포인트
 	// 거래취소ID의 경우 불러올일이 없을거같아서 안넣음
 	// 관리자 접근 가능여부 .... 안넣었음
+
+	public int getT_point() {
+		return t_point;
+	}
+
+	public void setT_point(int t_point) {
+		this.t_point = t_point;
+	}
 
 	// 거래 히스토리
 	private int ht_point; // 포인트값
