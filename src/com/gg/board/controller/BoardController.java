@@ -181,7 +181,7 @@ public class BoardController extends HttpServlet {
 
 			break;
 		case "/requestlist":
-			System.out.println("거래요청리스트 리스트 요청");
+			System.out.println("거래요청리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
 			int reqindex = Integer.parseInt(req.getParameter("index1"));
 			

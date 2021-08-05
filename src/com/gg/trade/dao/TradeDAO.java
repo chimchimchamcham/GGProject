@@ -553,7 +553,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		//경매글을 경매완료로 변경하는 기능
 		public boolean updateAuctionAu_code(int p_no, String au_code) {
 			System.out.println("[TRADEDAO]/UPDATEAUCTIONAU_CODE START");
-			String sql = "UPDATE AUCTION SET AU_CODE = ? FROM AUCTION WHERE P_NO = ?";
+			String sql = "UPDATE AUCTION SET AU_CODE = ? WHERE P_NO = ?";
 			int success = 0;
 			try {
 				ps = conn.prepareStatement(sql);
@@ -598,9 +598,11 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 					dto.setHt_code(rs.getString("ht_code"));//거래히스토리 분류코드
 					dto.setHt_name(rs.getString("ht_name"));//거래히스토리 분류명
 					System.out.println("[TRADEDAO]/TRADEDETAIL P_NO : "+dto.getP_no());
+					System.out.println("[TRADEDAO]/TRADEDETAIL HT_CODE : "+dto.getHt_code());
+					
 					
 					//구매자의 보유포인트
-					dto.setT_point(pdao.pointPop("t_buyer"));//구매자의 보유포인트
+					dto.setT_point(pdao.pointPop(dto.getT_buyer()));//구매자의 보유포인트
 					System.out.println("[TRADEDAO]/TRADEDETAIL T_POINT : "+dto.getT_point());
 					
 					//경매 or 판매 여부

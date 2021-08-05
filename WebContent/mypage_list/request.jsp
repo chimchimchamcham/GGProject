@@ -31,7 +31,7 @@ $(".button-layout_req button").click(function(){
 	console.log("$center_index:"+$index1);
 	
 	
-	auctionlistCall($index1);
+	reqlistCall($index1);
 	
 	$button1.removeClass('clicked');
 	$index_button.addClass('clicked');
@@ -39,7 +39,7 @@ $(".button-layout_req button").click(function(){
 	
 })
 
-function auctionlistCall($index1){
+function reqlistCall($index1){
 	
 	console.log("$index1:"+$index1);
 	
@@ -50,8 +50,8 @@ function auctionlistCall($index1){
 		dataType:'JSON',
 		success:function(data){
 			console.log("data:"+data);
-			if(data.requestlist != null){
-				request_list(data.requestlist);
+			if(data != null){
+				request_list(data.reqlist);
 			}
 		},
 		error:function(e){

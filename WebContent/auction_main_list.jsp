@@ -21,7 +21,7 @@
         table{
             border: 1px solid black;
         }
-        h2{
+        h2.bbb{
         margin-right:25vh;
         }
 		.categor{
@@ -116,7 +116,7 @@
     <tr><td>도서기타</td></tr>
 </table>
     <div class="main_auc">
-        <h2>경매</h2>
+        <h2 class= "bbb">경매</h2>
         <div class="itembox">
             <div class="alinebutton">
                 <button class="checked" style="margin-right: 1px;">신규등록순</button><button>마감임박순</button>

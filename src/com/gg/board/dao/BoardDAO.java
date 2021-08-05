@@ -449,44 +449,73 @@ public class BoardDAO {
 	//구매요청
 	public ArrayList<GGDto> reqlist(String userid, int reqindex) throws SQLException {
 		String sql = "";
-		if (reqindex == 0) {//전체
-			sql = ""; 
-		} else if (reqindex == 1) {//수신
-			sql = "";
-		} else if (reqindex == 2) {//발신
-			sql = "";
-
-		}
-		//System.out.println("success req");
+		String sid;	
+		String rid;
 		
 		ArrayList<GGDto> reqlist = new ArrayList<GGDto>();
 
 		System.out.println("reqlist:" + reqlist);
-
-		ps = conn.prepareStatement(sql);
-
 		System.out.println("daouserID:" + userid);
 
-		ps.setString(1, userid);
+		if (reqindex == 0) {//전체
+			sql = "select u.u_id,s.S_saler,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and (  s.s_saler = ? or r.rq_id = ? ) and r.rq_yn is null"; 
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, userid);
+			ps.setString(2, userid);
+		} else if (reqindex == 1) {//수신만
+			sql = "select u.u_id,s.S_saler,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and  s.s_saler = ? and r.rq_yn is null";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, userid);
+		} else if (reqindex == 2) {//발신만
+			sql = "select u.u_id,s.S_saler,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and r.rq_id = ? and r.rq_yn is null";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, userid);
+		}
+
 		rs = ps.executeQuery();
 		System.out.println("rs:" + rs);
-
+		GGDto dto = new GGDto();
 		while (rs.next()) {
-			GGDto dto = new GGDto();
+			dto.setU_id(rs.getString("u_id"));
+			dto.setS_saler(rs.getString("S_saler"));
+			
+			dto.setP_no(rs.getInt("P_no"));
+			dto.setP_title(rs.getString("p_title"));
+			dto.setRq_id(rs.getString("rq_id"));
+			dto.setRq_tm(rs.getDate("rq_tm"));
+			
+			
+			sid = dto.getS_saler();
+			rid = dto.getRq_id();
+			
+			if(userid.equals(sid)) {
+				System.out.println("수신");
+				dto.setSered("수신");
+				dto.setButtonORtext("<div><button>수락</button><button>거절</button></div>");
+			}else if(userid.equals(rid)){
+				System.out.println("발신");
+				dto.setSered("발신");
+				dto.setButtonORtext("<div>대기중</div>");
+				
+			}
+			
 			
 			reqlist.add(dto);
 		}
-		System.out.println("flowlist:" + reqlist);
+		System.out.println("reqlist:" + reqlist);
 		return reqlist;
 	}
 	
+	
+	
+	
 	//좋아요
 		public ArrayList<GGDto> lovelist(String userid, int loveindex) throws SQLException {
-			String sql = "";
-			if (loveindex == 0) {//최신
-				sql = ""; 
-			} else if (loveindex == 1) {//인기
-				sql = "";
+				String sql = "";
+			if (loveindex == 0) {//판매
+				sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE, P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,n.ns_pr from post p, n_sale n, love l where p.p_no = n.p_no and p.p_no = l.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P002'";
+			} else if (loveindex == 1) {//경매
+				sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE, P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,a.au_instantpr from post p, auction a, love l where  p.p_no = a.p_no and p.p_no = l.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P001'";
 			}
 			//System.out.println("success love");
 			
@@ -504,7 +533,14 @@ public class BoardDAO {
 
 			while (rs.next()) {
 				GGDto dto = new GGDto();
-				
+				dto.setP_no(rs.getInt("P_no"));
+				dto.setP_title(rs.getString("P_title"));
+				dto.setP_tm(rs.getDate("p_tm"));
+				dto.setP_likeCount(rs.getInt("p_likecount"));
+				dto.setNs_pr(rs.getInt("NS_pr"));
+				dto.setI_newName(rs.getString("I_newName"));
+				dto.setNs_pr(rs.getInt("ns_pr"));
+				dto.setAu_instantPr(rs.getInt("au_instantpr"));
 				lovelist.add(dto);
 			}
 			System.out.println("lovelist:" + lovelist);

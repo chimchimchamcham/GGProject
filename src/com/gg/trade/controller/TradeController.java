@@ -89,10 +89,10 @@ public class TradeController extends HttpServlet {
 			userid = (String) req.getSession().getAttribute("loginId");
 			//접속한 id가 구매자일 경우 구매자 거래페이지로 이동
 			if(userid.equals(bdto.getT_buyer())) {
-				page = "/buyerTradePopup.jsp";
+				page = "/popup/buyerTradePopup.jsp";
 			//접속한 id가 판매자일 경우 판매자 거래페이지로 이동
 			}else {
-				page = "/sellerTradePopup.jsp";
+				page = "/popup/sellerTradePopup.jsp";
 			}
 			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);
@@ -102,47 +102,53 @@ public class TradeController extends HttpServlet {
 			System.out.println("[TRADECONTROLLER]/SENDPOINT START");
 			t_no = Integer.parseInt(req.getParameter("t_no"));
 			success = service.sendPoint();
-			dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
-			dis.forward(req, resp);
+			//dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
+			//dis.forward(req, resp);
+			resp.sendRedirect("./tradeDetail?t_no="+t_no);
 			System.out.println("[TRADECONTROLLER]/SENDPOINT END");
 			break;
 		case "/pointApproval":
 			System.out.println("[TRADECONTROLLER]/POINTAPPROVAL START");
 			t_no = Integer.parseInt(req.getParameter("t_no"));
 			success = service.pointApproval();
-			dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
-			dis.forward(req, resp);
+			//dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
+			//dis.forward(req, resp);
+			resp.sendRedirect("./tradeDetail?t_no="+t_no);
 			System.out.println("[TRADECONTROLLER]/POINTAPPROVAL END");
 			break;
 		case "/pointDeny":
 			System.out.println("[TRADECONTROLLER]/POINTDENY START");
 			t_no = Integer.parseInt(req.getParameter("t_no"));
 			success = service.pointDeny();
-			dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
-			dis.forward(req, resp);
+			//dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
+			//dis.forward(req, resp);
+			resp.sendRedirect("./tradeDetail?t_no="+t_no);
 			break;
 		case "/productShipping":
 			System.out.println("[TRADECONTROLLER]/PRODUCTSHIPPING START");
 			t_no = Integer.parseInt(req.getParameter("t_no"));
 			success = service.productShipping();
-			dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
-			dis.forward(req, resp);
+			//dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
+			//dis.forward(req, resp);
+			resp.sendRedirect("./tradeDetail?t_no="+t_no);
 			System.out.println("[TRADECONTROLLER]/PRODUCTSHIPPING END");
 			break;
 		case "/productReceive":
 			System.out.println("[TRADECONTROLLER]/PRODUCTRECEIVE START");
 			t_no = Integer.parseInt(req.getParameter("t_no"));
 			success = service.productReceive();
-			dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
-			dis.forward(req, resp);
+			//dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
+			//dis.forward(req, resp);
+			resp.sendRedirect("./tradeDetail?t_no="+t_no);
 			System.out.println("[TRADECONTROLLER]/PRODUCTRECEIVE END");
 			break;
 		case "/cancelTrade":
 			System.out.println("[TRADECONTROLLER]/CANCELTRADE START");
 			t_no = Integer.parseInt(req.getParameter("t_no"));
 			success = service.cancelTrade();
-			dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
-			dis.forward(req, resp);
+			//dis = req.getRequestDispatcher("/tradeDetail?t_no="+t_no);
+			//dis.forward(req, resp);
+			resp.sendRedirect("./tradeDetail?t_no="+t_no);
 			System.out.println("[TRADECONTROLLER]/CANCELTRADE END");
 			break;
 		
