@@ -75,11 +75,9 @@
       /*거래톡 로그인 체크*/
    $(".tradeA").click(function(){
          if(loginId == ""){
-            alert("로그인이 필요한 서비스 입니다.");
+        	 $("#messageList").html("<h2>로그인이 필요한 서비스 입니다.</h2><br><a href='login.jsp'>로그인 하러가기</a>");
             location.href="login.jsp";
-         }else{
-            alert("거래톡보여주기~~~");
-         }   
+         } 
          });
       
       /*글쓰기 로그인 체크*/
@@ -358,22 +356,19 @@ body {
             <button onclick="location.href='joinForm.jsp'" class="joinBtn">회원가입</button>
             <button onclick="location.href='login.jsp'" class="loginBtn">로그인</button>
             </c:if>
-            
             <!-- 로그인이 되어있을 때 -->
             <c:if test="${loginId ne null}"> 
-              
                <!-- 사용자 상단바 -->
-               
-          <button id="writeBtn">글쓰기</button>
-      
-             <a href="logout"  class="logoutA">로그아웃</a>
-            
-            
-             <a href="#"  class="myPageA">마이페이지</a>
+          <button id="writeBtn">글쓰기</button>  
+             	<a href="logout"  class="logoutA">로그아웃</a>
+             	<a href="#"  class="myPageA">마이페이지</a>
+             <c:if test="${adminYN eq 'Y'}">
+            	 <a href="#">관리페이지</a>
+             </c:if>
               <c:if test="${adminYN eq 'N'}"> 
-               <a href="#"  class="tradeA" title="거래톡"><img src="img/ggTalk.png" alt="거래톡" width="25" style="opacity:80%;  margin-right:30px; padding:0 5px;"></a>
-               <a href="#"  class="alarmA" title="알람"><img src="img/notify-icon.png" alt="알람" width="25" style="opacity:80%; padding:0 5px;" ></a>
-               <a href="#"  class="messageA" title="쪽지"><img src="img/message-icon.png" alt="쪽지" width="25" style="opacity:80%; padding:0 5px;"></a>
+               	<a href="#"  class="tradeA" title="거래톡"><img src="img/ggTalk.png" alt="거래톡" width="25" style="opacity:80%;  margin-right:30px; padding:0 5px;"></a>
+               	<a href="#"  class="alarmA" title="알람"><img src="img/notify-icon.png" alt="알람" width="25" style="opacity:80%; padding:0 5px;" ></a>
+               	<a href="#"  class="messageA" title="쪽지"><img src="img/message-icon.png" alt="쪽지" width="25" style="opacity:80%; padding:0 5px;"></a>
             </c:if>
             </c:if>
             </div>
