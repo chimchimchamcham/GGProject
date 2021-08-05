@@ -64,13 +64,14 @@
     
     
     /*댓글*/
-    #second	div.board{border: 1px solid #D8D8D8;width: 1196px; height: 50vh;float: left; overflow: scroll;}
-    .board_text{border: 1px solid #D8D8D8; width: 1198px; height:5vh;float: left;}
+    #second	div.board{border: 1px solid #D8D8D8; width: 1196px; height: 50vh;float: left; overflow: scroll; background-color: lightpink;}
+    .board_text{border: 1px solid #D8D8D8; width: 1190px; height:5vh;float: left; }
     .enter{ margin-bottom: 10px;margin-left: 10px;padding: 20px;}
-
-    .one-text{border: 1px solid black; border-radius: 10px;width: 1198px;height: 10vh;margin-bottom: 10vh};
+    .content {float :left;  margin-left : 3px; background-color: white; height: 120px; width: 950px;}
+	/* .content p{ float : left; background-color: white; } */
+    .one-text{border: 1px solid black; border-radius: 10px;width: 1190px;height: 10vh;margin-bottom: 10px; };
     .one-text .one-img-time{display: block;justify-content: space-between;align-items: center;}
-    .one-text .one-img-time img{max-width: 100px;max-height: 100px;border-radius: 50px; float:left;}
+    .one-text .one-img-time img{width: 90px; height: 90px;border-radius: 50px; float:right; overflow: hidden; margin: 0px auto; border: 0.5px solid lightgray;}
     
     
     
@@ -78,19 +79,19 @@
     #follow{background-color:#E6E6E6;width:340px;height:60px;color:black;font-size:1.5rem;font-weight:700;margin:20px;border-radius:5px/5px;}
     
     #first>div:nth-of-type(2)>div:nth-of-type(2){width:340px;height:100px;margin:10px 20px;}
-    #first>div:nth-of-type(2)>div:nth-of-type(2)>div{width:98px;height:98px;margin:0 6px;float:left;position:relative;border:1px solid gray;border-radius:5px/5px;}
+    #first>div:nth-of-type(2)>div:nth-of-type(2)>div{width:98px;height:98px;margin:0 6px;float:left;position:relative;border:1px solid gray; border-radius:5px/5px;}
     #first>div:nth-of-type(2)>div:nth-of-type(2)>div>p{color:white;background-color:black;opacity:0.5;bottom:0;left:10px;;position:absolute;}
     
     #first>div:nth-of-type(2)>p:last-child{text-align:center;margin:10px;}
-    #first>div:nth-of-type(2)>p:last-child>a{text-decoration:none;color:#6E6E6E;font-size:1.3rem;}
-    
+
     #commentNickname {
     	float: left;
     	height: 10px;
     	width : 100px;
     	text-align: center;
     	font-weight: bold;
-    	color : skyblue;
+    	color : lightblue;
+    	text-decoration: none;
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -250,9 +251,12 @@
                     	</div>	
                     </div>
                     <div id="second"><!-- 댓글처리 -->
-                    	<div class="board">
+                    	<table class='board'>
                     		
-                    	</div>
+                    	
+                    	
+                    	
+                    	</table>
                     	<div class="board_t_b">
 							<textarea class="board_text" style="resize: none;"></textarea>
 							<div id="board_text_controll">(0 / 300)</div>
@@ -341,6 +345,7 @@
 			success : function(data){
 				console.log("반환 데이터 : " , data);
 				commentListCall();
+				$(".board_text").val().empty();
 			},
 			error : function(e){
 				console.log("에러 발생 : " ,e);
@@ -368,50 +373,28 @@
 				console.log(e);	
 			}
 		});
-	};
-	
-	
-
-	
-	//데이터 가져와서 뿌려주는 댓글 리스트
-	function saleboardlist(sold_board_list){	
-		console.log("sold_board_list=="+sold_board_list)
-		var content="";
-		
-		sold_board_list.forEach(function(item,idx){
-			console.log("idx:",idx,item);
-			content+= "<div class='one-text'>";
-			content+= 	"<div class='one-img-time'>";
-				content+= 	"<div  class='uploadimg'>";
-				content+=         "<img src='test.jpg'>";
-				content+=         "<div class='usertext'>유지호</div>";
-				content+=  	"</div>";
-			content+= 	"<div class='content'>내용임ㅅㄱ</div>"
-			content+= 	"<div class='uploadtime'>";
-			content+=   	"<div>2021-08-04</div>";
-			content+= 	"</div>";
-			content+= "</div>";
-		    });	
-		$('.board').append(content);
-	}// 경매 리스트 end	
+	};	
 
 	function drawComment(list){
 		console.log("리스트 정보 확인 : ", list);
 		var comment ="";
 		console.log("시간 확인 : ",list.pc_tm);
 		list.forEach(function(item,idx){
+			
+			comment += "<tr><td>";
 			comment += "<div class = 'one-text'>";
 			comment += 		"<div class='one-img-time'>";
 			comment += 			"<div class='uploadimg'>";
-			comment += 				"<a id='commentNickname' href='./myPage?id="+item.pc_id+"'><img src='/photo/"+item.u_newName+"'/>";
+			comment += 				"<a id='commentNickname' href='./myPage?id="+item.pc_id+"'><img class='commentProfile' src='/photo/"+item.u_newName+"'/>";
 			comment += 				"<div class='usertext'>"+item.u_nname+"</div></a>";
 			comment += 			"</div>";
-			comment += 			"<div class='content'><p>"+item.pc_content+"</p></div>";
-			comment += 			"<div class='uploadtime'>";
-			comment += 				"<div>"+item.pc_tm+"</div>";
+			comment += 			"<div class='content'>"+item.pc_content+"</div>";
+			comment += 			"<div class='uploadtime'><img src=";
+			comment += 				"<div style='float:right'>"+item.pc_tm+"</div>";
 			comment += 			"</div>";
 			comment += 		"</div>";
 			comment += "</div>";
+			comment += "</td></tr>";
 		});
 		$(".board").empty();
 		$(".board").append(comment);
