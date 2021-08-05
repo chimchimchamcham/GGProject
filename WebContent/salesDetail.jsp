@@ -64,14 +64,14 @@
     
     
     /*댓글*/
-    #second	div.board{border: 1px solid #D8D8D8; width: 1196px; height: 50vh;float: left; overflow: scroll; background-color: lightpink;}
+    #second	table.board{border: 1px solid #D8D8D8; width: 1196px; height: 50vh; float: left;  background-color: lightpink; border-collapse: collapse;}
     .board_text{border: 1px solid #D8D8D8; width: 1190px; height:5vh;float: left; }
     .enter{ margin-bottom: 10px;margin-left: 10px;padding: 20px;}
     .content {float :left;  margin-left : 3px; background-color: white; height: 120px; width: 950px;}
 	/* .content p{ float : left; background-color: white; } */
     .one-text{border: 1px solid black; border-radius: 10px;width: 1190px;height: 10vh;margin-bottom: 10px; };
     .one-text .one-img-time{display: block;justify-content: space-between;align-items: center;}
-    .one-text .one-img-time img{width: 90px; height: 90px;border-radius: 50px; float:right; overflow: hidden; margin: 0px auto; border: 0.5px solid lightgray;}
+    .one-text .one-img-time img.commentProfile{width: 90px; height: 90px;border-radius: 50px; float:right; overflow: hidden; margin: 0px auto; border: 0.5px solid lightgray;}
     
     
     
@@ -84,14 +84,22 @@
     
     #first>div:nth-of-type(2)>p:last-child{text-align:center;margin:10px;}
 
+	.usertext:hover {
+		color: lightblue;
+	}
+
     #commentNickname {
     	float: left;
     	height: 10px;
     	width : 100px;
     	text-align: center;
     	font-weight: bold;
-    	color : lightblue;
+    	color : black;
     	text-decoration: none;
+    }
+    #report img{
+    	cursor : pointer;
+    	float: right;
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -316,6 +324,13 @@
 			}
 		});
 	});
+	
+	$(document).on('click','.uploadtime',function(){
+		var N_receiveId= $('input[name="reportId"]').val();
+		console.log(N_receiveId);
+		window.open("./popup/notifyPopup.jsp?N_receiveId="+N_receiveId, "notifyPopup", "width=400, height=400, left=700, top=400");
+	});
+	
 	//댓글 버튼 누르면 이상세 페이지에서 마지막에 쓴 댓글 보여주기
 	$("div#twoButton>button.board_button").click(function(){
 		commentListCall();
@@ -344,8 +359,9 @@
 			dataType: "JSON",
 			success : function(data){
 				console.log("반환 데이터 : " , data);
+				$(".board_text").empty();
 				commentListCall();
-				$(".board_text").val().empty();
+				
 			},
 			error : function(e){
 				console.log("에러 발생 : " ,e);
@@ -389,9 +405,8 @@
 			comment += 				"<div class='usertext'>"+item.u_nname+"</div></a>";
 			comment += 			"</div>";
 			comment += 			"<div class='content'>"+item.pc_content+"</div>";
-			comment += 			"<div class='uploadtime'><img src=";
-			comment += 				"<div style='float:right'>"+item.pc_tm+"</div>";
-			comment += 			"</div>";
+			comment += 			"<div class='uploadtime' id='report' ><input type='text' value='"+item.pc_id+"' name='reportId' hidden='hidden'/><img src='./img/notify-icon.png'/ style='width:20px; height: 20px;'></div>";
+			comment += 			"<div style='float:right;'>"+item.pc_tm+"</div>";
 			comment += 		"</div>";
 			comment += "</div>";
 			comment += "</td></tr>";
