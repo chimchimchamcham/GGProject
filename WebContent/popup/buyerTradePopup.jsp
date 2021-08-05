@@ -171,7 +171,7 @@ var loginId = "${sessionScope.loginId}";
 		</div>
 		<div id="writePoint"><input type="text" name="ht_point" id="send_price" value="0"></div>
 		<span class="p"><b>P</b></span>
-		<div id="remainPoint"><span>${dto.t_buyer}</span>님의 잔여 포인트 : <span>${dto.t_point }</span>P</div>
+		<div id="remainPoint"><span>${dto.t_buyer}</span>님의 잔여 포인트 : <span id="wallet">${dto.t_point }</span>P</div>
 		<div id="threeBtn">
 			<button type="button" id="sendY">송금</button>
 			<button type="button" id="receiveY">수취확인</button>
@@ -226,10 +226,10 @@ $("#sendY").click(function(){
 	$("form").submit(); 
 });
 
-//입력한 값이 잔여 포인트보다 클 경우 입찰 버튼 비활성화, 검정색으로 바뀜
+//입력한 값이 잔여 포인트보다 클 경우 입찰 버튼 비활성화, 검정색으로 바뀜 //
 $("#send_price").on("propertychange change keyup paste input",function(){
 	var $bidpr = $("#send_price").val();
-	var $wallet = "${dto.t_point }";
+	var $wallet = $("#wallet").text();
 	if(Number($bidpr)>Number($wallet)){
 		$("#bid").attr("disabled", true).css({"background-color":"gray"});
 	}else{
