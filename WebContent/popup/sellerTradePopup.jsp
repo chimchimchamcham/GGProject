@@ -89,7 +89,7 @@ body{width:100%;background-color:gray;}
 	//dto.c_code ="HT001" = 초기상태
 	
 	//거래페이지 생성 상태, 승인거절 상태에서 0으로 표시
-	if(trade_con="HT001" || trade_con="HT003"){
+	if(trade_con=="HT001" || trade_con=="HT003"){
 		$("#view_pnt").text("0");
 	};
 	
