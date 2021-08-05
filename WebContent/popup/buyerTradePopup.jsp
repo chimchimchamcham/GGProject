@@ -67,7 +67,7 @@ body{width:100%;background-color:gray;}
 	$("#sendY,#chargeBtn").attr("disabled",true);	
 	$("#reply").hide();
 	$("#content").show();
-	$("#reply").hide();	  
+	$("#replyBtn").hide();	 	  
 	
 	/* /* 거래 후기 >>>> 향후 삭제 */
 	//$("#content").hide();
@@ -124,7 +124,6 @@ body{width:100%;background-color:gray;}
 		 $("#sendY,#chargeBtn,#trade_cancel,#report").attr("disabled",true);
 		 $("#send_price").attr('readonly',true);
 	 }
-		
 	//경매냐 판매냐에 따라 가격 입력 부분 조정
 	var p_code ="${dto.p_code}";
 	if(p_code=="P001"){//경매인경우 넘겨준 가격 그대로 설정
@@ -176,7 +175,7 @@ body{width:100%;background-color:gray;}
 			<button type="button" id="sendY">송금</button>
 			<button type="button" id="receiveY">수취확인</button>
 			<button type="button" id="chargeBtn">포인트 충전</button>
-			<button type="button" id="reply">거래후기</button>
+			<button type="button" id="replyBtn">거래후기</button>
 		</div>
 	</div>
 	
