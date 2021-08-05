@@ -89,10 +89,10 @@ public class TradeController extends HttpServlet {
 			userid = (String) req.getSession().getAttribute("loginId");
 			//접속한 id가 구매자일 경우 구매자 거래페이지로 이동
 			if(userid.equals(bdto.getT_buyer())) {
-				page = "/buyerTradePopup.jsp";
+				page = "/popup/buyerTradePopup.jsp";
 			//접속한 id가 판매자일 경우 판매자 거래페이지로 이동
 			}else {
-				page = "/sellerTradePopup.jsp";
+				page = "/popup/sellerTradePopup.jsp";
 			}
 			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);
