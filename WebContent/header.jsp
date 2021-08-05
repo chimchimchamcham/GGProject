@@ -286,7 +286,6 @@ margin-left:7px;
 					<img src="img/search-icon.png" alt="search-icon">
 				</div>
 				<div id="menu1">
-				
 
 				<!-- 로그인이 안되어있을 때 -->
 				<c:if test="${loginId eq null }">
@@ -297,17 +296,18 @@ margin-left:7px;
 				<!-- 로그인이 되어있을 때 -->
 				<c:if test="${loginId ne null}"> 
 					<a href="logout"  class="logoutA">로그아웃</a>
+					<!-- 사용자 상단바 -->
+				<c:if test="${adminYN eq 'N'}"> 
+					<a href="#"  class="messageA"><img src="img/message-icon.png" alt="쪽지" width="20"></a>
+					<a href="#"  class="alarmA"><img src="img/notify-icon.png" alt="알람" width="20"></a>
 				</c:if>
-
-				<c:if test="${adminYN eq 'N' || loginId eq null}"> 
-				<a href="#"  class="messageA">쪽지</a>
-				<a href="#"  class="alarmA">알람</a>
-				</c:if>
-				<a href="#"  class="myPageA">마이페이지</a>
-				<c:if test="${adminYN eq 'N' || loginId eq null}">
-				<a href="#"  class="tradeA">거래톡</a>
+					<a href="#"  class="myPageA">마이페이지</a>
+					<!-- 사용자 상단바 -->
+				<c:if test="${adminYN eq 'N'}"> 
+					<a href="#"  class="tradeA"><img src="img/ggTalk.png" alt="거래톡" width="20"></a>
 				</c:if>
 				<button class="writeA">글쓰기</button>
+				</c:if>
 				</div>
 			</div>
 		</header>
