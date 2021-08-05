@@ -7,6 +7,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<body>
+    <div class="contents">
+        <div class="content-zoon_auction">
+            <div class="item-box">
+                
+            </div>
+        </div>
+    </div>
+</body>
 </body>
 </html>
