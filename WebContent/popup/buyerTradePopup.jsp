@@ -55,6 +55,7 @@ body{width:100%;background-color:gray;}
 </style>
 
 <script>
+var loginId = "${sessionScope.loginId}";
 	$(document).ready(function(){
 		
 	 //초기상태 
@@ -77,7 +78,7 @@ body{width:100%;background-color:gray;}
 		
 	//신고하기 버튼을 누르면 팝업창 띄우기
 	//세션 아이디 가져오기
-	var loginId = "${sessionScope.loginId}";
+	
 	$("#report").click(function(){
 		
   		window.open("./notifyPopup.jsp?N_receiveId="+loginId, "notifyPopup", "width=400, height=250, left=700, top=400");
@@ -207,6 +208,7 @@ body{width:100%;background-color:gray;}
 </body>
 <script>
 //수취확인 눌렀을 때 
+
 var ht_point = $("input[name=ht_point]").val();
 var t_saler = "${dto.t_saler}";
 var p_no = $("input[name=p_no]").val();
@@ -214,6 +216,7 @@ var t_no = $("input[name=t_no]").val();
 var p_code = $("input[name=p_code]").val();
 
 $("#receiveY").click(function(){
+	console.log(loginId);
 	window.open("./popup/checkReceipt.jsp?t_buyer="+loginId+"&ht_point="+ht_point+"&t_saler="+t_saler+"&p_no="+p_no+"&t_no="+t_no+"&p_code="+p_code, "checkReceipt", "width=400, height=250,left=700, top=400");
 });
 //송금하기를 눌렀을 때
@@ -233,6 +236,11 @@ $("#send_price").on("propertychange change keyup paste input",function(){
 		$("#bid").attr("disabled", false).css({"background-color":"#FF7E00"});
 	}
 });
+
+function receiptClick(){
+	$("form").attr("action", "productReceive");
+	$("form").submit(); 
+}
 
 </script>
 </html>
