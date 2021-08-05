@@ -746,6 +746,12 @@ public void love_list(String userid, int loveindex) throws IOException {
 		return des;
 	}
 
+	public boolean postDel() {
+		String p_no = req.getParameter("p_no");
+		BoardDAO dao = new BoardDAO();
+		return dao.postDel(p_no);
+	}
+
 
 
 

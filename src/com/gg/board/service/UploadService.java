@@ -44,7 +44,7 @@ public class UploadService {
 			String oriFileName = multi.getFilesystemName("imgFile");
 			System.out.println("oriFileName : "+oriFileName);
 			
-			//orifilename이 있다면 파일이름을 바꿔라
+			//orifilename이 있다면 파일이름을 바꿔라 -- oriFileName = 새로 올리는 파일의 이름
 			if(oriFileName != null) {
 				String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
 				String i_newName = System.currentTimeMillis() + ext;

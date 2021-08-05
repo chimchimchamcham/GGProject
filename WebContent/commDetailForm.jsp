@@ -46,6 +46,13 @@
     height: 100%;
     object-fit: cover;
 	}
+	#commTextarea{
+	width:95%;
+	height:300px;
+	margin-top:20px;
+	resize:none;
+	padding:10px;
+	}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -66,13 +73,13 @@
     		<tr>
     			<td colspan ="5" id = "c_name" style="text-align:left"><h5>#  ${dto.c_name }</h5></td>
     			<td id="updatebutton" style="text-align:left">
-    				<input type = button value="삭제">
+    				<input type = button value="삭제" onclick="location.href='./postDel?p_no=${dto.p_no}'">
     				<input type = button value="수정" onclick="location.href='./commUpdateForm?p_no=${dto.p_no}'">
     			</td>
     		</tr>
     		<tr>
     			<td>
-    				<c:if test="${dto.u_newName  eq 'default-profile.png'}">
+    				<c:if test="${dto.u_newName  ne ''}">
 						<div class="box" ><a href="myPage?id=${dto.u_id}">
 	    				<img class="profile" src="./img/default-profile.png">
 						</a></div>
@@ -87,11 +94,13 @@
 	    	<tr>
 	    		<td colspan = "6"><hr></hr></td>
 	    	</tr>
+    		<c:if test = "${dto.i_newName ne null}">
+    			<tr>
+    				<td colspan ="6" id = "i_newName" style="text-align:left"><img src = "/photo/${dto.i_newName }" width=300px/></td>
+    			</tr>
+    		</c:if>
     		<tr>
-    			<td colspan ="6" id = "i_newName" style="text-align:left"><img src = "/photo/${dto.i_newName }" width=100px/></td>
-    		</tr>
-    		<tr>
-    			<td colspan ="6" id = "p_content"><textarea style="width:100%" readonly>${dto.p_content }</textarea></td>
+    			<td colspan ="6" id = "p_content"><textarea id="commTextarea" readonly>${dto.p_content }</textarea></td>
     		</tr>
     	</table>
     </div>
@@ -100,6 +109,7 @@
 <script>
 	console.log("${loginId}");
 	console.log("${dto.u_id}");
+	console.log("${dto.i_newName }");
 	if("${loginId}"!=="${dto.u_id}"){
 		$("#updatebutton").css("visibility","hidden");
 	}
