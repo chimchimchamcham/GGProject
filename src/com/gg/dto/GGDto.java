@@ -112,11 +112,17 @@ public class GGDto {
 	private int t_no; // 거래번호
 	private String t_saler; // 판매자ID
 	private String t_buyer; // 구매자ID
+	private String t_cancleId; //거래취소ID
+	private String t_admAcc; //관리자 접근가능 여부
 	// 거래취소ID의 경우 불러올일이 없을거같아서 안넣음
 	// 관리자 접근 가능여부 .... 안넣었음
 
 	// 거래 히스토리
 	private int ht_point; // 포인트값
+	private String ht_code; //분류코드
+	private String ht_name; //분류이름
+
+	
 
 	// 거래댓글
 	private String tc_content; // 거래 댓글 내용
@@ -160,7 +166,48 @@ public class GGDto {
 	private int pc_parentno;// 나중에 물어봐야함 무엇이 댓글 대댓글인지
 	private String pc_id;// 댓글 등록한 아이디.
 	
+	//팔로워
+	private String f_receiveid;
+	private String f_sendid;
+	private Date f_tm; 
+	private int flow_count;//자신,타인이 팔로잉 한사람들의 수
 	
+	
+	
+
+
+	public int getFlow_count() {
+		return flow_count;
+	}
+
+	public void setFlow_count(int flow_count) {
+		this.flow_count = flow_count;
+	}
+
+	public String getF_receiveid() {
+		return f_receiveid;
+	}
+
+	public void setF_receiveid(String f_receiveid) {
+		this.f_receiveid = f_receiveid;
+	}
+
+	public String getF_sendid() {
+		return f_sendid;
+	}
+
+	public void setF_sendid(String f_sendid) {
+		this.f_sendid = f_sendid;
+	}
+
+	public Date getF_tm() {
+		return f_tm;
+	}
+
+	public void setF_tm(Date f_tm) {
+		this.f_tm = f_tm;
+	}
+
 	public Date getPc_tm() {
 		return pc_tm;
 	}
@@ -873,5 +920,35 @@ public class GGDto {
 		this.pc_id = pc_id;
 	}
 	
+	public String getT_cancleId() {
+		return t_cancleId;
+	}
 
+	public void setT_cancleId(String t_cancleId) {
+		this.t_cancleId = t_cancleId;
+	}
+
+	public String getT_admAcc() {
+		return t_admAcc;
+	}
+
+	public void setT_admAcc(String t_admAcc) {
+		this.t_admAcc = t_admAcc;
+	}
+
+	public String getHt_code() {
+		return ht_code;
+	}
+
+	public void setHt_code(String ht_code) {
+		this.ht_code = ht_code;
+	}
+
+	public String getHt_name() {
+		return ht_name;
+	}
+
+	public void setHt_name(String ht_name) {
+		this.ht_name = ht_name;
+	}
 }
