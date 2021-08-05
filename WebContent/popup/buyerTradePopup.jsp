@@ -231,9 +231,9 @@ $("#send_price").on("propertychange change keyup paste input",function(){
 	var $bidpr = $("#send_price").val();
 	var $wallet = $("#wallet").text();
 	if(Number($bidpr)>Number($wallet)){
-		$("#send_price").attr("disabled", true).css({"background-color":"gray"});
+		$("#sendY").attr("disabled", true).css({"background-color":"gray"});
 	}else{
-		$("#send_price").attr("disabled", false).css({"background-color":"#FF7E00"});
+		$("#sendY").attr("disabled", false).css({"background-color":"#FF7E00"});
 	}
 });
 //팝업창에서 실행할 함수 >수취확인시
