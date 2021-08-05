@@ -502,18 +502,12 @@ public class BoardDAO {
 			
 			reqlist.add(dto);
 		}
-		
-		
-
-
-		
-		
-
-		
-		
 		System.out.println("reqlist:" + reqlist);
 		return reqlist;
 	}
+	
+	
+	
 	
 	//좋아요
 		public ArrayList<GGDto> lovelist(String userid, int loveindex) throws SQLException {
