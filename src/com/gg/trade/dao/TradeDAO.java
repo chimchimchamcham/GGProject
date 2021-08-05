@@ -553,7 +553,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		//경매글을 경매완료로 변경하는 기능
 		public boolean updateAuctionAu_code(int p_no, String au_code) {
 			System.out.println("[TRADEDAO]/UPDATEAUCTIONAU_CODE START");
-			String sql = "UPDATE AUCTION SET AU_CODE = ? FROM AUCTION WHERE P_NO = ?";
+			String sql = "UPDATE AUCTION SET AU_CODE = ? WHERE P_NO = ?";
 			int success = 0;
 			try {
 				ps = conn.prepareStatement(sql);
