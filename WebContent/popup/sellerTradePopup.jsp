@@ -209,7 +209,7 @@ var  t_no = $("input[name=t_no]").val();
 
 //배송하기를 눌렀을 때
 $("#shippingOK").click(function(){
-	window.open("./checkShipping.jsp?ht_point="+view_pnt+"&t_no="+t_no, "checkShipping", "width=400, height=250,left=700, top=400");
+	window.open("../popup/checkShipping.jsp?ht_point="+view_pnt+"&t_no="+t_no, "checkShipping", "width=400, height=250,left=700, top=400");
 });
 
 //송금확인을 눌렀을 때
