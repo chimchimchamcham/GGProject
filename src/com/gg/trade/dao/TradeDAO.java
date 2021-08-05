@@ -575,11 +575,11 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			GGDto dto = null;
 			
 			//게시글 정보 담기 위해서 실행
-			BoardDAO dao = new BoardDAO();
+			BoardDAO bdao = new BoardDAO();
 			GGDto bdto = null;
 			
 			//구매자의 보유포인트를 담기 위해서 실행
-			
+			PointDAO pdao = new PointDAO();
 			
 			try {
 				ps = conn.prepareStatement(sql);
@@ -599,24 +599,45 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 					dto.setHt_name(rs.getString("ht_name"));//거래히스토리 분류명
 					System.out.println("[TRADEDAO]/TRADEDETAIL P_NO : "+dto.getP_no());
 					
+					//구매자의 보유포인트
+					dto.setT_point(pdao.pointPop("t_buyer"));//구매자의 보유포인트
+					System.out.println("[TRADEDAO]/TRADEDETAIL T_POINT : "+dto.getT_point());
+					
 					//경매 or 판매 여부
 					String p_code = selectPostP_code(dto.getP_no());
 					System.out.println("[TRADEDAO]/TRADEDETAIL P_CODE : "+p_code);//글 분류코드
 					dto.setP_code(p_code);
-					//시작가 최고입찰가 추가
+					
+					//경매일 경우
 					if(p_code.equals("P001")) {
 						//int au_startPr = selectAuctionAu_startPr(dto.getP_no());
 						//System.out.println("[TRADEDAO]/TRADEDETAIL AU_STARTPR : "+au_startPr);//경매 시작가
 						//dto.setAu_startPr(au_startPr);
 						
+						bdto = bdao.auctionDetail(dto.getP_no());
+						dto.setP_title(bdto.getP_title());//게시글 제목
+						dto.setP_name(bdto.getP_name());//글 분류명
+						dto.setI_newName(bdto.getI_newName());//이미지이름
+						System.out.println("[TRADEDAO]/TRADEDETAIL AUCTION BDTO : "+bdto);
+						
 						int max_ha_bidPr = selectHis_AuctionMax_Ha_bidPr(dto.getP_no());
-						System.out.println("[TRADEDAO]/TRADEDETAIL MAX_HA_BIDPR : "+max_ha_bidPr);//경매 최고입찰자 or 낙찰가
-						dto.setHa_bidPr(max_ha_bidPr);
+						System.out.println("[TRADEDAO]/TRADEDETAIL MAX_HA_BIDPR : "+max_ha_bidPr);
+						dto.setHa_bidPr(max_ha_bidPr);//경매 최고입찰자 or 낙찰가
+					//판매일 경우
+					}else {
+						bdto = bdao.salesDetail(dto.getP_no());
+						dto.setP_title(bdto.getP_title());//게시글 제목
+						dto.setP_name(bdto.getP_name());//글 분류명
+						dto.setI_newName(bdto.getI_newName());//이미지이름
+						System.out.println("[TRADEDAO]/TRADEDETAIL AUCTION BDTO : "+bdto);
 					}
 				}
 			}catch (SQLException e) {
 				e.printStackTrace();
 			}
+			
+			bdao.resClose();
+			pdao.resClose();
 			System.out.println("[TRADEDAO]/TRADEDETAIL END");
 			return dto;
 		}
