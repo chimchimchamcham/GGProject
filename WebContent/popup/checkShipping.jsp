@@ -13,7 +13,7 @@ body{width:100%;background-color:gray;}
 #wrap{width:400px;height:250px;background-color:white;position:relative;}
 #message>#title{color:red; font-size:1.2rem; position:relative;/* background-color:yellow; */  top:10px; left:10px}
 #message>#inner{font-size:0.95rem; position:relative;/* background-color:pink; */ top:30px; left:10px}
-#message>#last{position:relative;  /* background-color:green;  */ top:140px; left:10px}
+#message>#last{position:relative;  /* background-color:green;  */ top:120px; left:10px}
 #last>#check{font-size:1.1rem; /* color:gray; */}
 #last>input{top:10px; float:left;}
 #last>button{width:60px; height:30px; border-radius:3px/3px; background-color:gray; color:white;}
@@ -22,16 +22,16 @@ body{width:100%;background-color:gray;}
 <body>
 	<div id="wrap">
 		<div id="message">
-			<span id="title"><b>물건을 받으셨나요?</b></span>
+			<span id="title"><b>반드시 확인해주세요!!!</b></span>
 			<div id="inner">
-				<p><b>1. 물품을 수취한 후에 수취확인 버튼을 누르셨나요?</b></p>
-	
-				<p><b>2. 판매 사진과 동일한 상품이 도착했나요?</b></p>
+				<p><b>1. 물품을 배송한 후에 배송버튼을 누르셨나요?</b></p>
+				<p><b>2. 발송지를 제대로 확인하고 보내셨나요?</b></p>
+				<p><b>3. 다른 물품으로 바꿔서 보내진 않으셨나요?</b></p>
 			</div>
 			<div id="last">
 				<span id="check"><b>제대로 확인하셨으면 체크해주세요.</b></span>
 				<input style="zoom:1.8;" type="checkbox" name="checkRC" value="get"/>
-				<button type="button">수취확인</button>
+				<button type="button">배송완료</button>
 			</div>
 		</div>
 	</div>

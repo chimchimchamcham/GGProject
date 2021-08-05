@@ -78,11 +78,11 @@ body{width:100%;background-color:gray;}
 	//신고하기 버튼을 누르면 팝업창 띄우기
 	$("#report").click(function(){
 		var N_receiveId = "${dto.p_id}"
-  		window.open("./notifyPopup.jsp?N_receiveId="+N_receiveId, "notifyPopup", "width=400, height=400, left=700, top=400");
+  		window.open("./notifyPopup.jsp?N_receiveId="+N_receiveId, "notifyPopup", "width=400, height=250, left=700, top=400");
     });
 	 
 	//거래상태 받아와서 상태 변경
-	var trade_con ="${dto.ht_code}"; //${dto.ht_code}
+	var trade_con ="HT005"; //${dto.ht_code}
 	//거래페이지 생성상태인 경우 
 	//dto.c_code ="HT001" = 초기상태
 	
@@ -161,9 +161,9 @@ body{width:100%;background-color:gray;}
 		<span class="p"><b>P</b></span>
 		<div id="remainPoint"><span>둘리</span>님의 잔여 포인트 : <span>25000</span>P</div>
 		<div id="threeBtn">
-			<button id="sendY">송금</button>
-			<button id="receiveY">수취확인</button>
-			<button id="chargeBtn">포인트 충전</button>
+			<button type="button" id="sendY">송금</button>
+			<button type="button" id="receiveY">배송</button>
+			<button type="button" id="chargeBtn">포인트 충전</button>
 		</div>
 	</div>
 	
@@ -187,4 +187,9 @@ body{width:100%;background-color:gray;}
 </div>
 </form>
 </body>
+<script>
+$("#receiveY").click(function(){
+	window.open("./checkShipping.jsp", "checkShipping", "width=400, height=400,left=700, top=400");
+});
+</script>
 </html>
