@@ -228,6 +228,10 @@ $("#sendRF").click(function(){
 	$("form").submit(); 
 });
 
+function receiptClick(){
+	$("form").attr("action", "productReceive");
+	$("form").submit(); 
+}
 
 </script>
 </html>
