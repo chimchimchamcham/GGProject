@@ -236,11 +236,22 @@ $("#send_price").on("propertychange change keyup paste input",function(){
 		$("#bid").attr("disabled", false).css({"background-color":"#FF7E00"});
 	}
 });
-
+//팝업창에서 실행할 함수 >수취확인시
 function receiptClick(){
 	$("form").attr("action", "productReceive");
 	$("form").submit(); 
 }
+
+//거래취소를 눌렀을 때
+$("#trade_cancel").click(function(){
+	console.log("click");
+	var trade_cancel = cofirm("거래취소하시겠습니까?");
+	if(trade_cancel){
+		$("form").attr("action", "cancelTrade");
+		$("form").submit(); 
+	}
+	
+})
 
 </script>
 </html>

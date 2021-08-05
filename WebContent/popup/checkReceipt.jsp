@@ -51,7 +51,7 @@ $("input:checkbox").click(function(){
 
 //수취완료를 클릭했을 경우
 $("button").click(function(){
-	receiptClick();
+	window.opener.receiptClick();
 	window.close(); 
 })
 
