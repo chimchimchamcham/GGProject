@@ -173,9 +173,10 @@ body{width:100%;background-color:gray;}
 		<span class="p"><b>P</b></span>
 		<div id="remainPoint"><span>${dto.t_buyer}</span>님의 잔여 포인트 : <span>25000</span>P</div>
 		<div id="threeBtn">
-			<button id="sendY">송금</button>
-			<button id="receiveY">수취확인</button>
-			<button id="chargeBtn">포인트 충전</button>
+			<button type="button" id="sendY">송금</button>
+			<button type="button" id="receiveY">수취확인</button>
+			<button type="button" id="chargeBtn">포인트 충전</button>
+			<button type="button" id="reply">거래후기</button>
 		</div>
 	</div>
 	

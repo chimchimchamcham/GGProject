@@ -30,16 +30,18 @@ body{width:100%;background-color:gray;}
 
 #content{position:absolute; left:420px; top:100px;width:320px;height:200px;background-color:#F9F9F4;/*  border:2px solid #5F5F5F; */}
 
-#top_content{position:relative; /* background-color:yellow; */ width:200px; top:15px;left:60px;text-align:center;}
+#top_content{position:relative; /* background-color:yellow; */ width:200px; top:30px;left:60px;text-align:center;}
 
-#send_price{display:inline-block; position:relative; top:25px;left:38px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;/* border:1px solid gray; */border-radius:5px/5px;padding-left:10px;padding-right:40px;}
-.p{font-size:2.5rem; position:absolute; top:46px;left:240px }
+/*----------해당 부분 이후 변경---------*/
+#view_pnt{display:inline-block; position:relative; top:40px;left:38px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;/* border:1px solid gray; */border-radius:5px/5px;padding-left:10px;padding-right:40px;}
+.p{font-size:2.0rem; position:absolute; top:65px;left:230px }
 
-#threeBtn{position:absolute; top:140px; /* background-color:blue; */width:180px; left:75px}
+#threeBtn{position:absolute; top:135px; background-color:pink;width:180px; left:75px}
 #threeBtn>button{width:80px; height:40px; border-radius:5px/5px;font-size:0.8rem; float:left;margin:5px}
-#sendY{background-color:#FF7E00;color:white}
-#chargeBtn{color:white;background-color:#0048FF;}
-#receiveY{background-color:#FF7E00;color:white;}
+#sendOk{background-color:#0048FF;color:white}
+#sendRF{color:white;background-color:#FF7E00;}
+#shippingOK{background-color:#21641B;color:white;}
+#replyBtn{background-color:#0048FF; color:white;}
 
 #reply{position:absolute; left:420px; top:100px;width:320px;height:200px;background-color:#F9F9F4;}
 #reply>span{position:relative; left:110px; top:10px;font-size:1.5rem;}
@@ -58,17 +60,15 @@ body{width:100%;background-color:gray;}
 	$(document).ready(function(){
 		
 	 //초기상태 
-	$("#condition").css({"color":"#C1C6C6"});
-	$("#sendY").css({"background-color":"#FF7E00"});
-	$("#chargeBtn").css({"backgroud-color":"#0048FF"});
+	$("#condition").css({"color":"#C1C6C6"}); //상단 거래페이지 상태 
+	$("#sendOk").css({"background-color":"#919999"});
+	$("#sendRF").css({"background-color":"#919999"});
 	$("#top_content_1").show();
 	$("#top_content_2,#top_content_3").hide(); 
-	$("#receiveY").hide();
-	$("#sendY,#chargeBtn").attr("disabled",true);	
-	$("#reply").hide();
+	$("#sendOk,#sendRF").attr("disabled",true);	
+	$("#replyBtn,#shippingOK").hide();
 	$("#content").show();
-	$("#reply").hide();	  
-	 $("#send_price").attr('readonly',true);
+	$("#reply").hide();	 
 	
 	/* /* 거래 후기 >>>> 향후 삭제 */
 	//$("#content").hide();
@@ -158,11 +158,13 @@ body{width:100%;background-color:gray;}
 			<div id="top_content_2">배송대기중...</div>
 			<div id="top_content_3">수취대기확인중...</div>
 		</div>
-		<div id="writePoint"><input type="text" name="send_price" id="send_price" value="5500"></div>
+		<div id="writePoint"><p id="view_pnt">5500</p><input type="hidden" name="send_price" id="send_price" value="5500"></div>
 		<span class="p"><b>P</b></span>
 		<div id="threeBtn">
 			<button type="button" id="sendOk">송금확인</button>
+			<button type="button" id="shippingOK">배송</button>
 			<button type="button" id="sendRF">송금거절</button>
+			<button type="button" id="replyBtn">거래후기</button>
 		</div>
 		<div></div>
 	</div>
