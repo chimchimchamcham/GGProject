@@ -67,7 +67,7 @@ body{width:100%;background-color:gray;}
 	$("#sendY,#chargeBtn").attr("disabled",true);	
 	$("#reply").hide();
 	$("#content").show();
-	$("#reply").hide();	  
+	$("#replyBtn").hide();	 	  
 	
 	/* /* 거래 후기 >>>> 향후 삭제 */
 	//$("#content").hide();
@@ -76,9 +76,11 @@ body{width:100%;background-color:gray;}
 	/*-------------*/ 
 		
 	//신고하기 버튼을 누르면 팝업창 띄우기
+	//세션 아이디 가져오기
+	var loginId = "${sessionScope.loginId}";
 	$("#report").click(function(){
-		var N_receiveId = "${dto.p_id}"
-  		window.open("./notifyPopup.jsp?N_receiveId="+N_receiveId, "notifyPopup", "width=400, height=400, left=700, top=400");
+		
+  		window.open("./notifyPopup.jsp?N_receiveId="+loginId, "notifyPopup", "width=400, height=250, left=700, top=400");
     });
 	 
 	//거래상태 받아와서 상태 변경
@@ -122,19 +124,16 @@ body{width:100%;background-color:gray;}
 		 $("#sendY,#chargeBtn,#trade_cancel,#report").attr("disabled",true);
 		 $("#send_price").attr('readonly',true);
 	 }
-		
 	//경매냐 판매냐에 따라 가격 입력 부분 조정
 	var p_code ="${dto.p_code}";
 	if(p_code=="P001"){//경매인경우 넘겨준 가격 그대로 설정
 		$("#send_price").attr('readonly',true);
-		$("#send_price").attr('value',${dto.au_startPr});
-		
-	}else{//판매인경우 입력가능 
+		$("#send_price").attr('value',${dto.ha_bidPr});
+
+	}else{//판매인경우 입력가능 (거래히스토리에 저장된 값을 불러옴)
 		$("#send_price").attr('readonly',false);
-		$("#send_price").attr('value',0);
+		$("#send_price").attr('value',${dto.ht_point});
 	}
-	
-	//
 	
 	});
 </script>
@@ -169,13 +168,14 @@ body{width:100%;background-color:gray;}
 			<div id="top_content_2">배송대기중...</div>
 			<div id="top_content_3">수취대기확인중...</div>
 		</div>
-		<div id="writePoint"><input type="text" name="send_price" id="send_price" value="5500"></div>
+		<div id="writePoint"><input type="text" name="ht_point" id="send_price" value="0"></div>
 		<span class="p"><b>P</b></span>
-		<div id="remainPoint"><span>${dto.t_buyer}</span>님의 잔여 포인트 : <span>25000</span>P</div>
+		<div id="remainPoint"><span>${dto.t_buyer}</span>님의 잔여 포인트 : <span>${dto.t_point }</span>P</div>
 		<div id="threeBtn">
-			<button id="sendY">송금</button>
-			<button id="receiveY">수취확인</button>
-			<button id="chargeBtn">포인트 충전</button>
+			<button type="button" id="sendY">송금</button>
+			<button type="button" id="receiveY">수취확인</button>
+			<button type="button" id="chargeBtn">포인트 충전</button>
+			<button type="button" id="replyBtn">거래후기</button>
 		</div>
 	</div>
 	
@@ -195,17 +195,37 @@ body{width:100%;background-color:gray;}
 		</div>
 		
 	</div>
-	
 
 	<input type="hidden" name="t_no" value="${dto.t_no}"/>
 	<input type="hidden" name="p_no" value="${dto.p_no }"/>
-	
-	
-	
+	<input type="hidden" name="t_buyer" value="${dto.t_buyer }"/>
+	<input type="hidden" name="t_saler" value="${dto.t_saler }"/>
+	<input type="hidden" name="p_code" value="${dto.p_code }"/>
 
-	<p>${dto.t_no}/${dto.ht_code }</p>
-	
 </div>
 </form>
 </body>
+<script>
+//수취확인 눌렀을 때 
+$("#receiveY").click(function(){
+	window.open("./checkReceipt.jsp", "checkReceipt", "width=400, height=250,left=700, top=400");
+});
+//송금하기를 눌렀을 때
+$("#sendY").click(function(){
+	$("form").attr("action", "sendPoint");
+	$("form").submit();
+});
+
+//입력한 값이 잔여 포인트보다 클 경우 입찰 버튼 비활성화, 검정색으로 바뀜
+$("#send_price").on("propertychange change keyup paste input",function(){
+	var $bidpr = $("#send_price").val();
+	var $wallet = "${dto.t_point }";
+	if(Number($bidpr)>Number($wallet)){
+		$("#bid").attr("disabled", true).css({"background-color":"gray"});
+	}else{
+		$("#bid").attr("disabled", false).css({"background-color":"#FF7E00"});
+	}
+});
+
+</script>
 </html>
