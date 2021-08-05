@@ -253,5 +253,11 @@ $("#trade_cancel").click(function(){
 	
 })
 
+//포인트버튼 클릭시 알람 뜸
+$("#chargeBtn").click(function(){
+	/* alert("포인트 충전 팝업 이동"); */
+	window.open("./popup/chargePopup.jsp","chargePopup", "width=400, height=200, left=1100, top=400");
+});
+
 </script>
 </html>
