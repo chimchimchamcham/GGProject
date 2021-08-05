@@ -196,6 +196,7 @@ body{width:100%;background-color:gray;}
 		
 	</div>
 	
+
 	<input type="hidden" name="t_no" value="${dto.t_no}"/>
 	<input type="hidden" name="p_no" value="${dto.p_no }"/>
 	
