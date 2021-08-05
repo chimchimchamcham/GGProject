@@ -72,6 +72,34 @@ public class GGDto {
 	
 	private String s_name; //!!추가 필요
 	private String s_code; //일반 판매 카테고리
+	
+	private String S_saler; // 판매자 id 
+	private String sered;//수신인지 발신인지
+	private String buttonORtext;//버튼으로 줄지 대기중이라고 그냥 text로 줄지
+	
+	public String getSered() {
+		return sered;
+	}
+
+	public String getButtonORtext() {
+		return buttonORtext;
+	}
+
+	public void setButtonORtext(String buttonORtext) {
+		this.buttonORtext = buttonORtext;
+	}
+
+	public void setSered(String sered) {
+		this.sered = sered;
+	}
+
+	public String getS_saler() {
+		return S_saler;
+	}
+
+	public void setS_saler(String s_saler) {
+		S_saler = s_saler;
+	}
 
 	// 일반판매관련
 	private int ns_pr; // 판매가격

@@ -616,6 +616,9 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			$(".alien_list_sold").hide();
 			$(".button-layout_auction").hide();
 			
+			
+			
+			
 			communitylist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
@@ -673,21 +676,21 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			$(".alien_list_sold").hide();
 			$(".button-layout_auction").hide();
 			
-			requestlist.forEach(function(item,idx){
+			reqlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
-				content += "	<div>"+item.p_cateName+"</div>";
+				content += "	<div>"+item.sered+"</div>";
 				content += "	<div><a href = commDetail?p_no="+item.p_no+">"+item.p_title+"</a></div>";///경로 고쳐야함 거래요청?
 				content += "</div>";
+				content += "<div>"+item.rq_tm+"</div>"
 				content += "<div class='c_zoon'>";
-				content += "	<div>"+item.p_tm+"</div>";	
+				content += "	<div>"+item.rq_id+"</div>";	
 				content += "</div>";
 				content += "<div class='mai-time'>";
-				content += "	<div>"+item.p_view+"</div>";
+				content += "	<div>"+item.buttonORtext+"</div>";
 				content += "</div></div>";
-			});	
-
+			});
 			$("#want .item-box").empty();
 			$("#want .item-box").append(content);
 			
