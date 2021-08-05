@@ -127,7 +127,7 @@ body{width:100%;background-color:gray;}
 	var p_code ="${dto.p_code}";
 	if(p_code=="P001"){//경매인경우 넘겨준 가격 그대로 설정
 		$("#send_price").attr('readonly',true);
-		$("#send_price").attr('value',${dto.au_startPr});
+		$("#send_price").attr('value',${dto.ha_bidpr});
 		
 	}else{//판매인경우 입력가능 
 		$("#send_price").attr('readonly',false);

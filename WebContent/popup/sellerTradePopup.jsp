@@ -36,7 +36,7 @@ body{width:100%;background-color:gray;}
 #view_pnt{display:inline-block; position:relative; top:40px;left:38px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;/* border:1px solid gray; */border-radius:5px/5px;padding-left:10px;padding-right:40px;}
 .p{font-size:2.0rem; position:absolute; top:65px;left:230px }
 
-#threeBtn{position:absolute; top:135px; background-color:pink;width:180px; left:75px}
+#threeBtn{position:absolute; top:130px; background-color:pink;width:180px; left:75px}
 #threeBtn>button{width:80px; height:40px; border-radius:5px/5px;font-size:0.8rem; float:left;margin:5px}
 #sendOk{background-color:#0048FF;color:white}
 #sendRF{color:white;background-color:#FF7E00;}
@@ -61,8 +61,7 @@ body{width:100%;background-color:gray;}
 		
 	 //초기상태 
 	$("#condition").css({"color":"#C1C6C6"}); //상단 거래페이지 상태 
-	$("#sendOk").css({"background-color":"#919999"});
-	$("#sendRF").css({"background-color":"#919999"});
+	$("#sendOk,#sendRF").css({"background-color":"#919999"});
 	$("#top_content_1").show();
 	$("#top_content_2,#top_content_3").hide(); 
 	$("#sendOk,#sendRF").attr("disabled",true);	
@@ -83,7 +82,7 @@ body{width:100%;background-color:gray;}
     });
 	 
 	//거래상태 받아와서 상태 변경
-	var trade_con ="${dto.ht_code}"; //${dto.ht_code}
+	var trade_con ="HT007"; //${dto.ht_code}
 	//거래페이지 생성상태인 경우 
 	//dto.c_code ="HT001" = 초기상태
 	
@@ -91,39 +90,51 @@ body{width:100%;background-color:gray;}
 	//dto.c_code ="HT002"
 	 if(trade_con == "HT002"){ 
 		$("#send").css({"color":"#3BC312"}); //송금상태 불들어오는거
-		$("#sendY,#chargeBtn").css({"background-color":"gray"});
-		$("#sendY,#chargeBtn").attr("disabled",false);
+		$("#sendRF").css({"background-color":"#FF7E00"});
+		$("#sendOk").css({"background-color":"#0048FF"});
+		$("#sendRF,#sendOk").attr("disabled",false);
 	}else if(trade_con == "HT003"){//거래페이지 승인거부인 경우 -> 송금 전 상태와 동일
 		$("#condition").css({"color":"#C1C6C6"});
-		$("#sendY").css({"background-color":"#FF7E00"});
-		$("#chargeBtn").css({"backgroud-color":"#0048FF"});
+		$("#sendOk,#sendRF").css({"background-color":"gray"});
 		$("#sendY,#chargeBtn").attr("disabled",true);	
 	}else if(trade_con == "HT004"){//거래페이지 배송대기의 경우
-		$("#send_price").attr('readonly',true);
 		$("#send,#approval").css({"color":"#3BC312"}); 
-		$("#sendY,#chargeBtn").css({"background-color":"gray"});
-		$("#sendY,#chargeBtn").attr("disabled",false);
+		$("#replyBtn,#shippingOK").show();
+		$("#replyBtn").css({"background-color":"gray"});
+		$("#replyBtn").attr("disabled",true);	
+		$("#sendOk,#sendRF").hide();
+		$("#view_pnt").hide();
+		$(".p").hide();
 		$("#top_content_2").show();
 		$("#top_content_1,#top_content_3").hide();
 	}else if(trade_con == "HT005"){//거래페이지 수취대기 상태의 경우
-		$("#send_price").attr('readonly',true);
 		$("#send,#approval,#shipping").css({"color":"#3BC312"}); 
-		$("#chargeBtn").css({"background-color":"gray"});
-		$("#chargeBtn").attr("disabled",false);
-		$("#sendY").hide();
-		$("#receiveY").show();
+		$("#replyBtn,#shippingOK").show();
+		$("#sendOk,#sendRF").hide();
+		$("#view_pnt").hide();
+		$(".p").hide();
+		$("#top_content_3").show();
+		$("#top_content_1,#top_content_2").hide();
 	}else if(trade_con == "HT006"){//거래페이지 수취확인 상태의 경우 
 		$("#send,#approval,#shipping,#receive").css({"color":"#3BC312"}); 
 		$("#reply").show();
-		$("#content,#chargeBtn").hide();
-		$("#sendY").hide();
-		$("#reply").show();
+		$("#content").hide();
+		$("#sendOk,#sendRF").hide();
 	 }else if(trade_con == "HT007"){//거래페이지 거래취소인 상태의 경우
-		 $("#sendY,#chargeBtn").css({"background-color":"gray"});
-		 $("#sendY,#chargeBtn,#trade_cancel,#report").attr("disabled",true);
-		 $("#send_price").attr('readonly',true);
+		 $("#trade_cancel,#report").attr("disabled",true);
 	 }
 		
+	//경매냐 판매냐에 따라 가격 부분 조정
+		var p_code ="${dto.p_code}";//${dto.p_code}
+		if(p_code=="P001"){//경매인경우 넘겨준 가격 그대로 설정
+			$("#view_pnt").text("${dto.ht_point}");//${dto.ht_point}
+			
+		}else{//판매인경우 입력가능 
+			
+		}
+		
+		//
+	
 	
 	});
 </script>
@@ -156,9 +167,9 @@ body{width:100%;background-color:gray;}
 		<div id="top_content">
 			<div id="top_content_1"><span>애플</span>님이 보낸 포인트</div>
 			<div id="top_content_2">배송대기중...</div>
-			<div id="top_content_3">수취대기확인중...</div>
+			<div id="top_content_3">수취대기중...</div>
 		</div>
-		<div id="writePoint"><p id="view_pnt">5500</p><input type="hidden" name="send_price" id="send_price" value="5500"></div>
+		<div id="writePoint"><p id="view_pnt">5500</p><input type="hidden" name="ht_point" id="send_price" value="5500"></div>
 		<span class="p"><b>P</b></span>
 		<div id="threeBtn">
 			<button type="button" id="sendOk">송금확인</button>
@@ -190,8 +201,8 @@ body{width:100%;background-color:gray;}
 </form>
 </body>
 <script>
-$("#receiveY").click(function(){
-	window.open("./checkShipping.jsp", "checkShipping", "width=400, height=400,left=700, top=400");
+$("#shippingOK").click(function(){
+	window.open("./checkShipping.jsp", "checkShipping", "width=400, height=250,left=700, top=400");
 });
 </script>
 </html>
