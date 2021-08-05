@@ -127,9 +127,9 @@
   
 <body>
     <div class="contents">   
-        <div class="alien_list_love">
-                <button class="clicked" >최신</button>/
-                <button>인기</button>
+        <div class="button-layout_love">
+                <button class="clicked" >판매</button>/
+                <button>경매</button>
         </div>
         
         <div class="content-zoon">
@@ -143,7 +143,7 @@
 	let $index = 0;
 	
 	
-    $(".alien_list_love button").click(function(){
+    $(".button-layout_love button").click(function(){
 	    
 	    $button = $(".alien_list_love button");
 	    $index = $button.index(this);
