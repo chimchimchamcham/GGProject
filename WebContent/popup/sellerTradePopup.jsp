@@ -114,6 +114,8 @@ body{width:100%;background-color:gray;}
 		$("#send,#approval,#shipping").css({"color":"#3BC312"}); 
 		$("#replyBtn,#shippingOK").show();
 		$("#sendOk,#sendRF").hide();
+		$("#replyBtn,#shippingOK").css({"background-color":"gray"});
+		$("#replyBtn,#shippingOK").attr("disabled",true);	
 		$("#view_pnt").hide();
 		$(".p").hide();
 		$("#top_content_3").show();

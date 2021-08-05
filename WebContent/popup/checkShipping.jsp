@@ -20,7 +20,7 @@ body{width:100%;background-color:gray;}
 </style>
 </head>
 <body>
-<form action="productShipping" method="post">
+<form action="../productShipping" method="post">
 	<div id="wrap">
 		<div id="message">
 			<span id="title"><b>반드시 확인해주세요!!!</b></span>
@@ -58,8 +58,9 @@ $("input:checkbox").click(function(){
 //배송완료를 클릭했을 경우
 $("button").click(function(){
 	$("form").submit();
+	console.log($("form").attr("action"));
 	opener.parent.location.reload();
-	window.close();
+	window.close(); 
 });
 
 

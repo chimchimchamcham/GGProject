@@ -20,6 +20,7 @@ body{width:100%;background-color:gray;}
 </style>
 </head>
 <body>
+<form action="">
 	<div id="wrap">
 		<div id="message">
 			<span id="title"><b>물건을 받으셨나요?</b></span>
@@ -35,6 +36,8 @@ body{width:100%;background-color:gray;}
 			</div>
 		</div>
 	</div>
+	
+	</form>
 </body>
 <script> 
 $("input:checkbox").click(function(){
@@ -52,8 +55,8 @@ $("input:checkbox").click(function(){
 //수취완료를 클릭했을 경우
 $("button").click(function(){
 	$("form").submit();
-	opener.parent.location.reload();
-	window.close();
+	/* opener.parent.location.reload();
+	window.close(); */
 })
 
 </script>
