@@ -76,9 +76,12 @@ body{width:100%;background-color:gray;}
 	/*-------------*/ 
 		
 	//신고하기 버튼을 누르면 팝업창 띄우기
+	
+	//세션 아이디 가져오기
+	var loginId = "${sessionScope.loginId}";
 	$("#report").click(function(){
-		var N_receiveId = "${dto.p_id}"
-  		window.open("./notifyPopup.jsp?N_receiveId="+N_receiveId, "notifyPopup", "width=400, height=250, left=700, top=400");
+		
+  		window.open("./notifyPopup.jsp?N_receiveId="+loginId, "notifyPopup", "width=400, height=250, left=700, top=400");
     });
 	 
 	//거래상태 받아와서 상태 변경
@@ -124,16 +127,8 @@ body{width:100%;background-color:gray;}
 		 $("#trade_cancel,#report").attr("disabled",true);
 	 }
 		
-	//경매냐 판매냐에 따라 가격 부분 조정
-		var p_code ="${dto.p_code}";//${dto.p_code}
-		if(p_code=="P001"){//경매인경우 넘겨준 가격 그대로 설정
-			$("#view_pnt").text("${dto.ht_point}");//${dto.ht_point}
-			
-		}else{//판매인경우 입력가능 
-			
-		}
-		
-		//
+
+
 	
 	
 	});
@@ -156,20 +151,20 @@ body{width:100%;background-color:gray;}
 	</div>
 	
 	<div id="imgDiv">
-		<img class="img" src="../img/notebook.PNG"/>
+		<img class="img" src="/photo/${dto.i_newName}"/>
 		<div id="img_condition">
-			<span id="s_a_code">거래중</span>
-			<span id="subject">아이패드 파우치</span>
+			<span id="s_a_code">${dto.p_name}</span>
+			<span id="subject">${dto.p_title }</span>
 		</div>
 	</div>
 	
 	<div id="content">
 		<div id="top_content">
-			<div id="top_content_1"><span>애플</span>님이 보낸 포인트</div>
+			<div id="top_content_1"><span>${dto.t_buyer}</span>님이 보낸 포인트</div>
 			<div id="top_content_2">배송대기중...</div>
 			<div id="top_content_3">수취대기중...</div>
 		</div>
-		<div id="writePoint"><p id="view_pnt">5500</p><input type="hidden" name="ht_point" id="send_price" value="5500"></div>
+		<div id="writePoint"><p id="view_pnt">${dto.ht_point}</p><input type="hidden" name="ht_point" id="send_price" value="${dto.ht_point}"></div>
 		<span class="p"><b>P</b></span>
 		<div id="threeBtn">
 			<button type="button" id="sendOk">송금확인</button>
@@ -204,5 +199,7 @@ body{width:100%;background-color:gray;}
 $("#shippingOK").click(function(){
 	window.open("./checkShipping.jsp", "checkShipping", "width=400, height=250,left=700, top=400");
 });
+
+
 </script>
 </html>

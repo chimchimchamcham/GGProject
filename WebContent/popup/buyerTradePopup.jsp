@@ -76,9 +76,11 @@ body{width:100%;background-color:gray;}
 	/*-------------*/ 
 		
 	//신고하기 버튼을 누르면 팝업창 띄우기
+	//세션 아이디 가져오기
+	var loginId = "${sessionScope.loginId}";
 	$("#report").click(function(){
-		var N_receiveId = "${dto.p_id}"
-  		window.open("./notifyPopup.jsp?N_receiveId="+N_receiveId, "notifyPopup", "width=400, height=400, left=700, top=400");
+		
+  		window.open("./notifyPopup.jsp?N_receiveId="+loginId, "notifyPopup", "width=400, height=250, left=700, top=400");
     });
 	 
 	//거래상태 받아와서 상태 변경
@@ -204,4 +206,27 @@ body{width:100%;background-color:gray;}
 </div>
 </form>
 </body>
+<script>
+//수취확인 눌렀을 때 
+$("#receiveY").click(function(){
+	window.open("./checkReceipt.jsp", "checkReceipt", "width=400, height=250,left=700, top=400");
+});
+//송금하기를 눌렀을 때
+$("#sendY").click(function(){
+	$("form").attr("action", "sendPoint");
+	$("form").submit();
+});
+
+//입력한 값이 잔여 포인트보다 클 경우 입찰 버튼 비활성화, 검정색으로 바뀜
+$("#send_price").on("propertychange change keyup paste input",function(){
+	var $bidpr = $("#send_price").val();
+	var $wallet = "${dto.t_point }";
+	if(Number($bidpr)>Number($wallet)){
+		$("#bid").attr("disabled", true).css({"background-color":"gray"});
+	}else{
+		$("#bid").attr("disabled", false).css({"background-color":"#FF7E00"});
+	}
+});
+
+</script>
 </html>
