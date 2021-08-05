@@ -49,48 +49,48 @@
       });
       
       /*쪽지 로그인 체크*/
-      /* $(".messageA").click(function(){
+       $(".messageA").click(function(){
       if(loginId == ""){
          $("#messageList").html("<h2>로그인이 필요한 서비스 입니다.</h2><br><a href='login.jsp'>로그인 하러가기</a>");
       }
-      }); */
+      });
 
       /*알람 로그인 체크*/
-     /* $(".alarmA").click(function(){
+     $(".alarmA").click(function(){
       if(loginId == ""){
          $("#alarmList").html("<h2>로그인이 필요한 서비스 입니다.</h2><br><a href='login.jsp'>로그인 하러가기</a>");
       }
-      }); */
+      });
       
       /*마이페이지 로그인 체크*/
-      /* $(".myPageA").click(function(){
+       $(".myPageA").click(function(){
          if(loginId == ""){
             alert("로그인이 필요한 서비스 입니다.");
             location.href="login.jsp";
          }else{
             location.href="myPage";
          }   
-         }); */
+         });
       
       /*거래톡 로그인 체크*/
-   /*  $(".tradeA").click(function(){
+   $(".tradeA").click(function(){
          if(loginId == ""){
             alert("로그인이 필요한 서비스 입니다.");
             location.href="login.jsp";
          }else{
             alert("거래톡보여주기~~~");
          }   
-         }); */
+         });
       
       /*글쓰기 로그인 체크*/
-     /* $(".writeA").click(function(){
+     $(".writeA").click(function(){
           if(loginId == ""){
             alert("로그인이 필요한 서비스 입니다.");
             location.href="login.jsp";
          }else{
             location.href="writeForm";
          }   
-         }); */
+         });
 
    });
    
