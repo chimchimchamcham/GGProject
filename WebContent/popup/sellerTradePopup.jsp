@@ -57,6 +57,7 @@ body{width:100%;background-color:gray;}
 </style>
 
 <script>
+	var loginId = "${sessionScope.loginId}";
 	$(document).ready(function(){
 		
 	 //초기상태 
@@ -75,19 +76,24 @@ body{width:100%;background-color:gray;}
 	//$("#chargeBtn").hide();
 	/*-------------*/ 
 		
-	//신고하기 버튼을 누르면 팝업창 띄우기
 	
-	//세션 아이디 가져오기
-	var loginId = "${sessionScope.loginId}";
-	$("#report").click(function(){
-		
-  		window.open("./notifyPopup.jsp?N_receiveId="+loginId, "notifyPopup", "width=400, height=250, left=700, top=400");
-    });
+	
+	
+	
+	
+	
 	 
 	//거래상태 받아와서 상태 변경
 	var trade_con ="${dto.ht_code}"; //${dto.ht_code}
 	//거래페이지 생성상태인 경우 
 	//dto.c_code ="HT001" = 초기상태
+	
+	//거래페이지 생성 상태, 승인거절 상태에서 0으로 표시
+	if(trade_con=="HT001" || trade_con=="HT003"){
+		$("#view_pnt").text("0");
+	};
+	
+	
 	
 	//거래페이지 송금상태인 경우
 	//dto.c_code ="HT002"
@@ -105,6 +111,8 @@ body{width:100%;background-color:gray;}
 		$("#replyBtn,#shippingOK").show();
 		$("#replyBtn").css({"background-color":"gray"});
 		$("#replyBtn").attr("disabled",true);	
+		/* $("#trade_cancel").attr("disabled",true);
+		$("#trade_cancel").css({"background-color":"black"}); */
 		$("#sendOk,#sendRF").hide();
 		$("#view_pnt").hide();
 		$(".p").hide();
@@ -115,18 +123,23 @@ body{width:100%;background-color:gray;}
 		$("#replyBtn,#shippingOK").show();
 		$("#sendOk,#sendRF").hide();
 		$("#replyBtn,#shippingOK").css({"background-color":"gray"});
-		$("#replyBtn,#shippingOK").attr("disabled",true);	
+		$("#replyBtn,#shippingOK").attr("disabled",true);
+		$("#trade_cancel").css({"background-color":"black"});
+		 $("#trade_cancel").attr("disabled",true);
 		$("#view_pnt").hide();
 		$(".p").hide();
 		$("#top_content_3").show();
 		$("#top_content_1,#top_content_2").hide();
 	}else if(trade_con == "HT006"){//거래페이지 수취확인 상태의 경우 
 		$("#send,#approval,#shipping,#receive").css({"color":"#3BC312"}); 
+		$("#trade_cancel").attr("disabled",true);
+		$("#trade_cancel").css({"background-color":"black"});
 		$("#reply").show();
 		$("#content").hide();
 		$("#sendOk,#sendRF").hide();
 	 }else if(trade_con == "HT007"){//거래페이지 거래취소인 상태의 경우
-		 $("#trade_cancel,#report").attr("disabled",true);
+		 $("#trade_cancel").attr("disabled",true);
+		 $("#trade_cancel").css({"background-color":"black"});
 	 }
 		
 
@@ -209,6 +222,14 @@ body{width:100%;background-color:gray;}
 var view_pnt = $("#view_pnt").text();
 var  t_no = $("input[name=t_no]").val();
 
+
+//신고하기 버튼을 누르면 팝업창 띄우기
+$("#report").click(function(){
+		window.open("./popup/notifyPopup.jsp?N_receiveId="+loginId, "notifyPopup", "width=400, height=400, left=700, top=400");
+});
+
+
+
 //배송하기를 눌렀을 때
 $("#shippingOK").click(function(){
 	window.open("./popup/checkShipping.jsp?ht_point="+view_pnt+"&t_no="+t_no, "checkShipping", "width=400, height=250,left=700, top=400");
@@ -228,10 +249,22 @@ $("#sendRF").click(function(){
 	$("form").submit(); 
 });
 
+//팝업창에서 실행할 함수 >배송확인시
 function receiptClick(){
-	$("form").attr("action", "productReceive");
+	$("form").attr("action", "productShipping");
 	$("form").submit(); 
 }
+
+//거래취소를 눌렀을 때
+$("#trade_cancel").click(function(){
+	console.log("click");
+	var trade_cancel = confirm("거래취소하시겠습니까?");
+	if(trade_cancel){
+		$("form").attr("action", "cancelTrade");
+		$("form").submit(); 
+	}
+	
+})
 
 </script>
 </html>

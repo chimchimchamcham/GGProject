@@ -52,7 +52,7 @@ $("input:checkbox").click(function(){
 
 //배송완료를 클릭했을 경우
 $("button").click(function(){
-	receiptClick();
+	window.opener.receiptClick();
 	window.close(); 
 });
 

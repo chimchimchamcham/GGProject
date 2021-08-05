@@ -81,7 +81,7 @@ var loginId = "${sessionScope.loginId}";
 	
 	$("#report").click(function(){
 		
-  		window.open("./notifyPopup.jsp?N_receiveId="+loginId, "notifyPopup", "width=400, height=250, left=700, top=400");
+  		window.open("./popup/notifyPopup.jsp?N_receiveId="+loginId, "notifyPopup", "width=400, height=250, left=700, top=400");
     });
 	 
 	//거래상태 받아와서 상태 변경
@@ -171,7 +171,7 @@ var loginId = "${sessionScope.loginId}";
 		</div>
 		<div id="writePoint"><input type="text" name="ht_point" id="send_price" value="0"></div>
 		<span class="p"><b>P</b></span>
-		<div id="remainPoint"><span>${dto.t_buyer}</span>님의 잔여 포인트 : <span>${dto.t_point }</span>P</div>
+		<div id="remainPoint"><span>${dto.t_buyer}</span>님의 잔여 포인트 : <span id="wallet">${dto.t_point }</span>P</div>
 		<div id="threeBtn">
 			<button type="button" id="sendY">송금</button>
 			<button type="button" id="receiveY">수취확인</button>
@@ -226,21 +226,38 @@ $("#sendY").click(function(){
 	$("form").submit(); 
 });
 
-//입력한 값이 잔여 포인트보다 클 경우 입찰 버튼 비활성화, 검정색으로 바뀜
+//입력한 값이 잔여 포인트보다 클 경우 입찰 버튼 비활성화, 검정색으로 바뀜 //
 $("#send_price").on("propertychange change keyup paste input",function(){
 	var $bidpr = $("#send_price").val();
-	var $wallet = "${dto.t_point }";
+	var $wallet = $("#wallet").text();
 	if(Number($bidpr)>Number($wallet)){
-		$("#bid").attr("disabled", true).css({"background-color":"gray"});
+		$("#sendY").attr("disabled", true).css({"background-color":"gray"});
 	}else{
-		$("#bid").attr("disabled", false).css({"background-color":"#FF7E00"});
+		$("#sendY").attr("disabled", false).css({"background-color":"#FF7E00"});
 	}
 });
-
+//팝업창에서 실행할 함수 >수취확인시
 function receiptClick(){
 	$("form").attr("action", "productReceive");
 	$("form").submit(); 
 }
+
+//거래취소를 눌렀을 때
+$("#trade_cancel").click(function(){
+	console.log("click");
+	var trade_cancel = confirm("거래취소하시겠습니까?");
+	if(trade_cancel){
+		$("form").attr("action", "cancelTrade");
+		$("form").submit(); 
+	}
+	
+})
+
+//포인트버튼 클릭시 알람 뜸
+$("#chargeBtn").click(function(){
+	/* alert("포인트 충전 팝업 이동"); */
+	window.open("./popup/chargePopup.jsp","chargePopup", "width=400, height=200, left=1100, top=400");
+});
 
 </script>
 </html>
