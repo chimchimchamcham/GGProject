@@ -64,7 +64,7 @@ body{width:100%;background-color:gray;}
 	$("#top_content_1").show();
 	$("#top_content_2,#top_content_3").hide(); 
 	$("#receiveY").hide();
-	$("#sendY,#chargeBtn").attr("disabled",true);	
+	$("#sendY,#chargeBtn").attr("disabled",false);	
 	$("#reply").hide();
 	$("#content").show();
 	$("#replyBtn").hide();	 	  
@@ -93,24 +93,24 @@ body{width:100%;background-color:gray;}
 	 if(trade_con == "HT002"){ 
 		$("#send").css({"color":"#3BC312"}); //송금상태 불들어오는거
 		$("#sendY,#chargeBtn").css({"background-color":"gray"});
-		$("#sendY,#chargeBtn").attr("disabled",false);
+		$("#sendY,#chargeBtn").attr("disabled",true);
 	}else if(trade_con == "HT003"){//거래페이지 승인거부인 경우 -> 송금 전 상태와 동일
 		$("#condition").css({"color":"#C1C6C6"});
 		$("#sendY").css({"background-color":"#FF7E00"});
 		$("#chargeBtn").css({"backgroud-color":"#0048FF"});
-		$("#sendY,#chargeBtn").attr("disabled",true);	
+		$("#sendY,#chargeBtn").attr("disabled",false);	
 	}else if(trade_con == "HT004"){//거래페이지 배송대기의 경우
 		$("#send_price").attr('readonly',true);
 		$("#send,#approval").css({"color":"#3BC312"}); 
 		$("#sendY,#chargeBtn").css({"background-color":"gray"});
-		$("#sendY,#chargeBtn").attr("disabled",false);
+		$("#sendY,#chargeBtn").attr("disabled",true);
 		$("#top_content_2").show();
 		$("#top_content_1,#top_content_3").hide();
 	}else if(trade_con == "HT005"){//거래페이지 수취대기 상태의 경우
 		$("#send_price").attr('readonly',true);
 		$("#send,#approval,#shipping").css({"color":"#3BC312"}); 
 		$("#chargeBtn").css({"background-color":"gray"});
-		$("#chargeBtn").attr("disabled",false);
+		$("#chargeBtn").attr("disabled",true);
 		$("#sendY").hide();
 		$("#receiveY").show();
 	}else if(trade_con == "HT006"){//거래페이지 수취확인 상태의 경우 
@@ -212,8 +212,9 @@ $("#receiveY").click(function(){
 });
 //송금하기를 눌렀을 때
 $("#sendY").click(function(){
-	$("form").attr("action", "sendPoint");
-	$("form").submit();
+	console.log("click");
+	/* $("form").attr("action", "sendPoint");
+	$("form").submit(); */
 });
 
 //입력한 값이 잔여 포인트보다 클 경우 입찰 버튼 비활성화, 검정색으로 바뀜
