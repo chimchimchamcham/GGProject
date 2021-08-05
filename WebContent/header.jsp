@@ -147,6 +147,7 @@ body {
 
 /*상단 우측 메뉴*/
 #menu1 {
+	margin-top:5px;
 	float: right;
 	padding: 10px;
 }
@@ -177,6 +178,69 @@ body {
 	cursor:pointer;
 }
 
+#icon-box{
+	width:35px;
+	height:35px;
+	
+	background-color:#e8e8e8;
+	border-radius: 70%;
+	float:left;
+	margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#icon-box:hover{
+	background-color:#e2e2e2;
+}
+
+#icon-box img{
+	width : 16px;
+}
+
+/*글쓰기*/
+#icon-box2{
+	width:35px;
+	height:35px;
+	background-color:#878787;
+	border-radius: 70%;
+	float:left;
+	margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#icon-box2:hover{
+	background-color:#bfbfbf;
+}
+
+#icon-box2 img{
+	width : 16px;
+}
+
+#profile-box{
+	float:left;
+}
+#profile-img{
+float:left;
+	width:33px;
+	height:33px;
+	background-color:#e2e2e2;
+	border-radius: 70%;
+	margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    overflow: hidden;
+}
+
+#profile-img img{
+	width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 /*메인메뉴*/
 .header_nav {
@@ -275,27 +339,45 @@ body {
 	text-align: center;
 }
 
+.loginA {
+	margin-right: 10px;
+}
+
+
 /*회원가입 버튼*/
-.joinBtn{
+/* .joinBtn{
 	margin-left:7px;
 	padding: 7px 15px;
 	text-decoration: none;
 	background-color:	#fff;
 	color: #424242;
 	border: 1.5px solid #cecece;
-	border-radius: 5px;
+	border-radius: 7px;
 }
 
+.joinBtn:hover{
+	background-color: #f2f2f2;
+	color:#424242;
+	cursor: pointer;
+}
+ */
 /*로그인 버튼*/
-.loginBtn{
+/* .loginBtn{
 	margin-left:7px;
-	padding: 7px 15px;
+	padding: 8.5px 16.5px;
 	text-decoration: none;
 	background-color: #D8D8D8;
 	color:#424242;
-	border: 1.5px #D8D8D8;
-	border-radius: 5px;
+	border-radius: 7px;
+	border:0px;
+	margin-right: 10px;
 }
+
+.loginBtn:hover{
+	background-color: #c4c4c4;
+	color:#2b2b2b;
+	cursor: pointer;
+} */
 
 </style>
 <body>
@@ -311,24 +393,29 @@ body {
 
 				<!-- 로그인이 안되어있을 때 -->
 				<c:if test="${loginId eq null }">
-				<button onclick="location.href='joinForm.jsp'" class="joinBtn">회원가입</button>
-				<button onclick="location.href='login.jsp'" class="loginBtn">로그인</button>
+				<a href="login.jsp" class="loginBtn" >로그인</a>
+				<a href="joinForm.jsp" class="joinA">회원가입</a>
 				</c:if>
 				
 				<!-- 로그인이 되어있을 때 -->
 				<c:if test="${loginId ne null}"> 
-					<a href="logout"  class="logoutA">로그아웃</a>
+				<div style="float:left; margin-right:30px;  width : 140px; overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;">
+				<a href="#"  class="myPageA" >
+						<div id="profile-img"><img src="test/default-profile.png"></div>닉네임닉네임ㅇㄴ라멍리ㅏㅓ라런일
+				</a></div>
 					<!-- 사용자 상단바 -->
 				<c:if test="${adminYN eq 'N'}"> 
-					<a href="#"  class="messageA"><img src="img/message-icon.png" alt="쪽지" width="20"></a>
-					<a href="#"  class="alarmA"><img src="img/notify-icon.png" alt="알람" width="20"></a>
+					<div id="icon-box"  title="쪽지"><a href="#"  class="messageA"><img src="img/message-icon.png"></a></div>
+					<div id="icon-box" title="알람"><a href="#"  class="alarmA"><img src="img/notify-icon.png" ></a></div>
 				</c:if>
-					<a href="#"  class="myPageA">마이페이지</a>
 					<!-- 사용자 상단바 -->
 				<c:if test="${adminYN eq 'N'}"> 
-					<a href="#"  class="tradeA"><img src="img/ggTalk.png" alt="거래톡" width="20"></a>
+					<div id="icon-box" title="거래톡"><a href="#"  class="tradeA"><img src="img/ggTalk.png" ></a></div>
 				</c:if>
-				<button id="writeBtn">글쓰기</button>
+				<a href="logout"  class="logoutA">로그아웃</a>
+				<div id="icon-box2" title="글쓰기"><a href=""  class="writeBtn"><img src="img/edit.png" ></a></div>
 				</c:if>
 				</div>
 			</div>
