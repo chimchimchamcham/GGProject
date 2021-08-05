@@ -214,7 +214,7 @@ var t_no = $("input[name=t_no]").val();
 var p_code = $("input[name=p_code]").val();
 
 $("#receiveY").click(function(){
-	window.open("./checkReceipt.jsp?t_buyer="+loginId+"&ht_point="+ht_point+"&t_saler="+t_saler+"&p_no="+p_no+"&t_no="+t_no+"&p_code="+p_code, "checkReceipt", "width=400, height=250,left=700, top=400");
+	window.open("./popup/checkReceipt.jsp?t_buyer="+loginId+"&ht_point="+ht_point+"&t_saler="+t_saler+"&p_no="+p_no+"&t_no="+t_no+"&p_code="+p_code, "checkReceipt", "width=400, height=250,left=700, top=400");
 });
 //송금하기를 눌렀을 때
 $("#sendY").click(function(){

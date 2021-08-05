@@ -59,8 +59,8 @@ $("input:checkbox").click(function(){
 $("button").click(function(){
 	$("form").submit();
 	console.log($("form").attr("action"));
-	opener.parent.location.reload();
-	window.close(); 
+	/* opener.parent.location.reload();
+	window.close();  */
 });
 
 
