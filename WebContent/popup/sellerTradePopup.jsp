@@ -103,7 +103,8 @@ body{width:100%;background-color:gray;}
 		$("#replyBtn,#shippingOK").show();
 		$("#replyBtn").css({"background-color":"gray"});
 		$("#replyBtn").attr("disabled",true);	
-		 $("#trade_cancel").attr("disabled",true);
+		/* $("#trade_cancel").attr("disabled",true);
+		$("#trade_cancel").css({"background-color":"black"}); */
 		$("#sendOk,#sendRF").hide();
 		$("#view_pnt").hide();
 		$(".p").hide();
@@ -114,7 +115,8 @@ body{width:100%;background-color:gray;}
 		$("#replyBtn,#shippingOK").show();
 		$("#sendOk,#sendRF").hide();
 		$("#replyBtn,#shippingOK").css({"background-color":"gray"});
-		$("#replyBtn,#shippingOK").attr("disabled",true);	
+		$("#replyBtn,#shippingOK").attr("disabled",true);
+		$("#trade_cancel").css({"background-color":"black"});
 		 $("#trade_cancel").attr("disabled",true);
 		$("#view_pnt").hide();
 		$(".p").hide();
@@ -123,11 +125,13 @@ body{width:100%;background-color:gray;}
 	}else if(trade_con == "HT006"){//거래페이지 수취확인 상태의 경우 
 		$("#send,#approval,#shipping,#receive").css({"color":"#3BC312"}); 
 		$("#trade_cancel").attr("disabled",true);
+		$("#trade_cancel").css({"background-color":"black"});
 		$("#reply").show();
 		$("#content").hide();
 		$("#sendOk,#sendRF").hide();
 	 }else if(trade_con == "HT007"){//거래페이지 거래취소인 상태의 경우
 		 $("#trade_cancel").attr("disabled",true);
+		 $("#trade_cancel").css({"background-color":"black"});
 	 }
 		
 
@@ -213,7 +217,7 @@ var  t_no = $("input[name=t_no]").val();
 
 //신고하기 버튼을 누르면 팝업창 띄우기
 $("#report").click(function(){
-		window.open("./notifyPopup.jsp?N_receiveId="+loginId, "notifyPopup", "width=400, height=250, left=700, top=400");
+		window.open("./popup/notifyPopup.jsp?N_receiveId="+loginId, "notifyPopup", "width=400, height=400, left=700, top=400");
 });
 
 
@@ -246,7 +250,7 @@ function receiptClick(){
 //거래취소를 눌렀을 때
 $("#trade_cancel").click(function(){
 	console.log("click");
-	var trade_cancel = cofirm("거래취소하시겠습니까?");
+	var trade_cancel = confirm("거래취소하시겠습니까?");
 	if(trade_cancel){
 		$("form").attr("action", "cancelTrade");
 		$("form").submit(); 

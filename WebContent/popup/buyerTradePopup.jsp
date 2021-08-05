@@ -81,7 +81,7 @@ var loginId = "${sessionScope.loginId}";
 	
 	$("#report").click(function(){
 		
-  		window.open("./notifyPopup.jsp?N_receiveId="+loginId, "notifyPopup", "width=400, height=250, left=700, top=400");
+  		window.open("./popup/notifyPopup.jsp?N_receiveId="+loginId, "notifyPopup", "width=400, height=250, left=700, top=400");
     });
 	 
 	//거래상태 받아와서 상태 변경
@@ -245,7 +245,7 @@ function receiptClick(){
 //거래취소를 눌렀을 때
 $("#trade_cancel").click(function(){
 	console.log("click");
-	var trade_cancel = cofirm("거래취소하시겠습니까?");
+	var trade_cancel = confirm("거래취소하시겠습니까?");
 	if(trade_cancel){
 		$("form").attr("action", "cancelTrade");
 		$("form").submit(); 
