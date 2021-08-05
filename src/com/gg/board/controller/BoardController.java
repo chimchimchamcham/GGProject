@@ -191,8 +191,8 @@ public class BoardController extends HttpServlet {
 			
 		case "/lovelist":
 			System.out.println("좋아요리스트 리스트 요청");
-			userid = (String) req.getSession().getAttribute("loginId");
-			int loveindex = Integer.parseInt(req.getParameter("index"));
+			userid = (String)req.getSession().getAttribute("loginId");
+			int loveindex = Integer.parseInt(req.getParameter("index1"));
 			
 			service.love_list(userid,loveindex);
 
