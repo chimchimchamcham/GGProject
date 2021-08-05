@@ -32,9 +32,9 @@ body{width:100%;background-color:gray;}
 
 #top_content{position:relative; /* background-color:yellow; */ width:200px; top:15px;left:60px;text-align:center;}
 
-#send_price{display:inline-block; position:relative; top:25px;left:38px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;border:1px solid gray;border-radius:5px/5px;padding-left:10px;padding-right:40px;}
+#send_price{display:inline-block; position:relative; top:25px;left:38px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;/* border:1px solid gray; */border-radius:5px/5px;padding-left:10px;padding-right:40px;}
 .p{font-size:2.5rem; position:absolute; top:46px;left:240px }
-#remainPoint{position:relative;top:36px;left:45px;width:230px; height:25px; background-color:#C1C6C6;border-radius:5px/5px;text-align:center;font-size:0.9rem}
+
 #threeBtn{position:absolute; top:140px; /* background-color:blue; */width:180px; left:75px}
 #threeBtn>button{width:80px; height:40px; border-radius:5px/5px;font-size:0.8rem; float:left;margin:5px}
 #sendY{background-color:#FF7E00;color:white}
@@ -68,6 +68,7 @@ body{width:100%;background-color:gray;}
 	$("#reply").hide();
 	$("#content").show();
 	$("#reply").hide();	  
+	 $("#send_price").attr('readonly',true);
 	
 	/* /* 거래 후기 >>>> 향후 삭제 */
 	//$("#content").hide();
@@ -82,7 +83,7 @@ body{width:100%;background-color:gray;}
     });
 	 
 	//거래상태 받아와서 상태 변경
-	var trade_con ="HT005"; //${dto.ht_code}
+	var trade_con ="${dto.ht_code}"; //${dto.ht_code}
 	//거래페이지 생성상태인 경우 
 	//dto.c_code ="HT001" = 초기상태
 	
@@ -153,18 +154,17 @@ body{width:100%;background-color:gray;}
 	
 	<div id="content">
 		<div id="top_content">
-			<div id="top_content_1"><span>${dto.t_saler}</span>님에게 <span>승인요청</span>중...</div>
+			<div id="top_content_1"><span>애플</span>님이 보낸 포인트</div>
 			<div id="top_content_2">배송대기중...</div>
 			<div id="top_content_3">수취대기확인중...</div>
 		</div>
 		<div id="writePoint"><input type="text" name="send_price" id="send_price" value="5500"></div>
 		<span class="p"><b>P</b></span>
-		<div id="remainPoint"><span>둘리</span>님의 잔여 포인트 : <span>25000</span>P</div>
 		<div id="threeBtn">
-			<button type="button" id="sendY">송금</button>
-			<button type="button" id="receiveY">배송</button>
-			<button type="button" id="chargeBtn">포인트 충전</button>
+			<button type="button" id="sendOk">송금확인</button>
+			<button type="button" id="sendRF">송금거절</button>
 		</div>
+		<div></div>
 	</div>
 	
 	<div id="reply">
@@ -185,13 +185,6 @@ body{width:100%;background-color:gray;}
 	</div>
 	
 </div>
-	<input type="hidden" name="t_no" value="${dto.t_no}"/>
-	<input type="hidden" name="p_no" value="${dto.p_no }"/>
-	<input type="hidden" name="t_saler" value="${dto.t_saler}"/>
-	<input type="hidden"
-	
-
-	<p>${dto.t_no}</p>
 </form>
 </body>
 <script>
