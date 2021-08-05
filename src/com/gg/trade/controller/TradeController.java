@@ -14,7 +14,8 @@ import com.gg.dto.GGDto;
 import com.gg.trade.service.TradeService;
 import com.google.gson.Gson;
 
-@WebServlet({"/buyRequest","/buyRequestCancel","/bid","/buyNow"})
+@WebServlet({"/buyRequest","/buyRequestCancel","/bid","/buyNow",
+	"/tradeDetail","/sendPoint","/pointApproval","/pointDeny","/productShipping","/productReceive","/cancelTrade"})
 public class TradeController extends HttpServlet {
 	
 	
