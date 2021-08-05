@@ -461,6 +461,8 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 		    $("#alarm").show();
 		    
 		});
+	
+	
 		
 	});
 	
@@ -632,22 +634,24 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			$(".button-layout_sold").hide();
 			$(".alien_list_sold").hide();
 			$(".button-layout_auction").hide();
-			
+			console.log('flowlist:'+flowlist.length);
 			flowlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one-flow'>"
-					content += "<div class='img-zoon'><img src='test.jpg'></div>"
-					content += "<div class=''>애플</div>"
-					content += "<div class=''>4.5</div>"
-					content += " <div class=''>팔로워5</div>"
-					content += "<button>+팔로우</button>"
+					content += "<div class='img-zoon'><img src='/photo"+item.u_newname+"'></div>"
+					content += "<div class=''>"+item.u_nname+"</div>"
+					content += " <div class=''>팔로워:"+item.flow_count+"</div>"
 				content += " </div>"
-			});	
-
+			});
 			$("#follow .item-box").empty();
 			$("#follow .item-box").append(content);
+			$(".count p").empty();
+			$(".count p").append(flowlist.length);
+			var aaa=  $(".count").text();
 			
 		}//팔로워 팔로잉 리스트 end
+		
+
 		
 </script>
 <body>
@@ -727,8 +731,8 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
    <div id="sell"  class="categori" style="background-color:yellow; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
    <div id="commu"  class="categori" style="background-color:green; padding:20px;"><jsp:include page="./mypage_list/community.jsp"></jsp:include></div>
    <div id="follow"  class="categori" style="background-color:blue; padding:20px;"><jsp:include page="./mypage_list/flows.jsp"></jsp:include></div>
-   <div id="want"  class="categori" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
-   <div id="like"  class="categori" style="background-color:purple; padding:20px;">좋아요목록입니다.</div>
+   <div id="want"  class="categori" style="background-color:pink; padding:20px;"><jsp:include page="./mypage_list/request.jsp"></jsp:include></div>
+   <div id="like"  class="categori" style="background-color:purple; padding:20px;"><jsp:include page="./mypage_list/loving.jsp"></jsp:include></div>
    <div id="alarm"  class="categori" style="background-color:lime; padding:20px;">신고목록입니다.</div>
 </c:if>
 

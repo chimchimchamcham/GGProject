@@ -91,9 +91,7 @@ border:  1px solid rgb(176 176 176);
             <button class="clicked">팔로잉</button>
             <button>팔로워</button>
         </div>
-        
-        <div class="count">팔로워,팔로잉:40</div>
-
+        	<div class="count">팔로워 or 팔로잉:<p style="display: inline-block;"></p> </div>
         <div class="content-zoon_flow">
             <div class="item-box">
                 
@@ -112,6 +110,7 @@ border:  1px solid rgb(176 176 176);
 	let $index_how = 0;
 	let $index_aline_how = 0; */
 	
+
 	
     $(".button-layout_flow button").click(function(){
 	    $button1 = $(".button-layout_flow button");
@@ -122,7 +121,7 @@ border:  1px solid rgb(176 176 176);
 		console.log("$center_index:"+$index1);
 		
 		
-		auctionlistCall($index1);
+		flowlistCall($index1);
 		
 		$button1.removeClass('clicked');
 		$index_button.addClass('clicked');
@@ -130,7 +129,19 @@ border:  1px solid rgb(176 176 176);
 		
     })
     
-    function auctionlistCall($index1){
+    $("button.flowPlusMinus").click(function(){
+	    $button = $(".button.flowPlusMinus");
+	    $index = $button.index(this);
+	    $index_button = $(".button-layout_flow button:eq(" + $index + ")");
+	    
+	    console.log("$center_index:"+$index);
+	    
+	    var $indexval = $index_button.val();
+	    console.log("$indexval:"+$indexval);
+	    
+    });
+    
+    function flowlistCall($index1){
 		
 		console.log("$index1:"+$index1);
 		
@@ -141,8 +152,8 @@ border:  1px solid rgb(176 176 176);
 			dataType:'JSON',
 			success:function(data){
 				console.log("data:"+data);
-				if(data.auctionlist != null){
-					auction_list(data.auctionlist);
+				if(data != null){
+					flow_list(data.flowlist);
 				}
 			},
 			error:function(e){
