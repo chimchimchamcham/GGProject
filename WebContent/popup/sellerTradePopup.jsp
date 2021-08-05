@@ -153,7 +153,7 @@ body{width:100%;background-color:gray;}
 	
 	<div id="content">
 		<div id="top_content">
-			<div id="top_content_1"><span>애플</span>님에게 <span>승인요청</span>중...</div>
+			<div id="top_content_1"><span>${dto.t_saler}</span>님에게 <span>승인요청</span>중...</div>
 			<div id="top_content_2">배송대기중...</div>
 			<div id="top_content_3">수취대기확인중...</div>
 		</div>
@@ -185,6 +185,13 @@ body{width:100%;background-color:gray;}
 	</div>
 	
 </div>
+	<input type="hidden" name="t_no" value="${dto.t_no}"/>
+	<input type="hidden" name="p_no" value="${dto.p_no }"/>
+	<input type="hidden" name="t_saler" value="${dto.t_saler}"/>
+	<input type="hidden"
+	
+
+	<p>${dto.t_no}</p>
 </form>
 </body>
 <script>

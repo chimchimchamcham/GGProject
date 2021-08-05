@@ -127,8 +127,11 @@ body{width:100%;background-color:gray;}
 	var p_code ="${dto.p_code}";
 	if(p_code=="P001"){//경매인경우 넘겨준 가격 그대로 설정
 		$("#send_price").attr('readonly',true);
+		$("#send_price").attr('value',${dto.au_startPr});
+		
 	}else{//판매인경우 입력가능 
 		$("#send_price").attr('readonly',false);
+		$("#send_price").attr('value',0);
 	}
 	
 	//
@@ -153,22 +156,22 @@ body{width:100%;background-color:gray;}
 	</div>
 	
 	<div id="imgDiv">
-		<img class="img" src="../img/notebook.PNG"/>
+		<img class="img" src="/photo/${dto.i_newName}"/>
 		<div id="img_condition">
-			<span id="s_a_code">거래중</span>
-			<span id="subject">아이패드 파우치</span>
+			<span id="s_a_code">${dto.p_name}</span>
+			<span id="subject">${dto.p_title }</span>
 		</div>
 	</div>
 	
 	<div id="content">
 		<div id="top_content">
-			<div id="top_content_1"><span>애플</span>님에게 <span>승인요청</span>중...</div>
+			<div id="top_content_1"><span>${dto.t_saler}</span>님에게 <span>승인요청</span>중...</div>
 			<div id="top_content_2">배송대기중...</div>
 			<div id="top_content_3">수취대기확인중...</div>
 		</div>
 		<div id="writePoint"><input type="text" name="send_price" id="send_price" value="5500"></div>
 		<span class="p"><b>P</b></span>
-		<div id="remainPoint"><span>둘리</span>님의 잔여 포인트 : <span>25000</span>P</div>
+		<div id="remainPoint"><span>${dto.t_buyer}</span>님의 잔여 포인트 : <span>25000</span>P</div>
 		<div id="threeBtn">
 			<button id="sendY">송금</button>
 			<button id="receiveY">수취확인</button>
@@ -192,6 +195,14 @@ body{width:100%;background-color:gray;}
 		</div>
 		
 	</div>
+	
+	<input type="hidden" name="t_no" value="${dto.t_no}"/>
+	<input type="hidden" name="p_no" value="${dto.p_no }"/>
+	
+	
+	
+
+	<p>${dto.t_no}/${dto.ht_code }</p>
 	
 </div>
 </form>
