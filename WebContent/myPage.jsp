@@ -119,7 +119,7 @@ a{
 .introBox{
 width:500px;
 	height:150px;
-	overflow: scroll;
+	overflow-y: scroll;
 	background-color: #F2F2F2;
 	padding : 15px;
 }

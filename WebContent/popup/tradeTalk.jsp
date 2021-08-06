@@ -16,6 +16,7 @@
 }
 
 h2 {
+margin-top:20px;
 	text-align: center;
 }
 
@@ -47,12 +48,16 @@ background-color: #f7f7f7;
 	/*  border: 1px solid black; */
 }
 
+.content img:hover{
+opacity:0.9;
+}
+
 #buttonTwo {
 	width: 500px;
 	/* background-color: green; */
 	text-align: center;
 	display: inline-block;
-	margin-bottom: 30px;
+	margin : 20px 0 30px 0;
 }
 
 #buttonTwo button {
@@ -62,10 +67,17 @@ background-color: #f7f7f7;
 	display: inline-block;
 }
 
+a{
+	text-decoration: none;
+	color: black;
+}
+
+
 /*읽었을때*/
 .read {
 	opacity: 0.3;
 }
+
 </style>
 <body>
 	<h2>거래톡</h2>
@@ -77,15 +89,15 @@ background-color: #f7f7f7;
 		<div class="tableWrap">
 		<table class="content">
 				<tr>
-					<td rowspan="2"><a href="#"><img src="../test/default-profile.png" width="60"></a></td>
-					<th style="width:240px;  padding:0 20px; text-align: left;">ㅇㅇㅇ님과 거래중</th>
-					<td style="width:110px; text-align: right;"><small>2021.08.06 15:56</small></td>
+					<td rowspan="2"><a href="#"><img src="../test/default-profile.png" width="60" id="profile" ></a></td>
+					<th style="width:240px;  padding:0 20px; text-align: left;"><a href="#">ㅇㅇㅇ님과 거래중</a></th>
+					<td style="width:110px; text-align: right;"><a href="#"><small>2021.08.06 15:56</small></a></td>
 				</tr>
 				<tr>
 					<td><p  style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width:240px; padding:0 20px; text-align: left;">
-					안녕하세요~~!!@#^^^호ㅓㅎ외ㅓㅗ이ㅏㅓ노리아ㅓ로이ㅏ러ㄹ하어ㅣ헝라ㅣ허;하넝ㄹ</p>
+					<a href="#">안녕하세요~~!!@#^^^호ㅓㅎ외ㅓㅗ이ㅏㅓ노리아ㅓ로이ㅏ러ㄹ하어ㅣ헝라ㅣ허;하넝ㄹ</a></p>
 					</td>
-					<td style="width:110px; text-align: right;">배송중</td>
+					<td style="width:110px; text-align: right;"><a href="#">배송중</a></td>
 				</tr>
 					<tr>
 				<td style="border-bottom:1px solid black; padding-top:10px;" colspan="3"></td>
@@ -96,10 +108,6 @@ background-color: #f7f7f7;
 </body>
 <script>
 
-	/*클릭시 거래페이지 팝업*/
-	$(".content").click(function(){
-		console.log("거래페이지 팝업");
-	});
 	
 </script>
 </html>
