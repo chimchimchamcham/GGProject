@@ -748,13 +748,14 @@ section {
 		var param = {};
 		param.pc_no = del_comm;
 		console.log("변환 후 ", del_comm);
+		
 		$.ajax({
 			type: "POST",
 			url : "comm_del",
 			data: param,
 			dataType : "JSON",
-			successs : function(data){
-				console.log("삭제 성공");
+			success : function(data){
+				alert("삭제 성공 여부"+data.success);
 				commentListCall();
 			},
 			error : function(e){
