@@ -232,7 +232,7 @@
                     <div id="description">
                         <h1>${dto.p_title}<sup>${dto.c_name }</sup></h1>
                         <a href="#">신고하기</a>
-                        <div><a href="./auctionUpdateForm?p_no=${dto.p_no}">수정 /</a>&nbsp;<a href="#">삭제</a></div>
+                        <div><a href="./auctionUpdateForm?p_no=${dto.p_no}">수정 /</a>&nbsp;<a href="#" onclick="delChk()">삭제</a></div>
                         <span>현재최고 입찰가</span>
                         <div><sup>${dto.ha_bidUsr }</sup><span>${dto.ha_bidPr }P</span></div>
                         <span>즉시구매가</span>
@@ -340,5 +340,29 @@
 		});
 	});
 
+	
+	//경매글 삭제 버튼 클릭시
+	function delChk(){
+		var delChk = confirm("글을 삭제하시겠습니까?");
+		if(delChk){
+			location.href = "./auctionDetail?p_no="+${dto.p_no};
+			var delMsg = "${delMsg}";
+			alert(delMsg);
+		}
+	}
+	
+	//경매글 블라인드 체크 여부 확인
+	//판매자일경우 보이고 그 외의 사람들은 튕기기
+	var p_blindYN = "${dto.p_blindYN}";
+	if("${dto.p_blindYN}"=="Y"){
+		if("${sessionScope.loginId}"!="${dto.p_id}"){
+			alert("삭제된 경매글 입니다.");
+			history.go(-1);
+		}
+	}
+	
+	
+	
+	
 </script>
 </html>
