@@ -700,7 +700,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 							if ($index_button_f.text() == "+팔로잉") {
 								console.log("-팔로잉");
 								$index_button_f.text("-팔로잉");
-							}else if ($index_button_f.text() == "un팔로잉") {
+							}else if($index_button_f.text() == "-팔로잉") {
 								console.log("+팔로잉");
 								$index_button_f.text("+팔로잉");	
 							}
@@ -735,7 +735,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 						data:{ btntext : btntext,nick : nick},
 						dataType:'JSON',
 						success:function(data){
-								if ($index_button_f.text() == "un팔로잉") {
+								if ($index_button_f.text() == "-팔로잉") {
 									console.log("+팔로잉");
 									$index_button_f.text("+팔로잉");	
 								}else if($index_button_f.text() == "+팔로잉"){

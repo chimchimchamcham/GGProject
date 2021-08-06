@@ -450,7 +450,7 @@ public class BoardDAO {
 			if (userid.equals(reseveid)) {
 				dto.setthisuserFlowingYN("<button class='hellow'>+팔로잉</button>");// N
 			} else if (userid.equals(sendid)) {
-				dto.setthisuserFlowingYN("<button class='unhellow'>un팔로잉</button>");// Y
+				dto.setthisuserFlowingYN("<button class='unhellow'>-팔로잉</button>");// Y
 			}
 			flowlist.add(dto);
 		}
