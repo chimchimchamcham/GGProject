@@ -510,12 +510,21 @@ public class BoardDAO {
 	
 	
 	//좋아요
-		public ArrayList<GGDto> lovelist(String userid, int loveindex) throws SQLException {
+		public ArrayList<GGDto> lovelist(String userid, int index1, int index2) throws SQLException {
 				String sql = "";
-			if (loveindex == 0) {//판매
-				sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname,P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,a.au_instantpr from post p, auction a, love l ,img i where  p.p_no = a.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P002'";
-			} else if (loveindex == 1) {//경매
-				sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname,P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,a.au_instantpr from post p, auction a, love l ,img i where  p.p_no = a.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P001'";
+			if (index1 == 0) {//판매
+				if (index2 == 0) {
+					sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname, P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,n.ns_pr,c.c_name from post p, n_sale n, love l,img i,codes c where p.p_no = n.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P002' and p.p_code = c.c_code order BY p.p_tm DESC";
+				}else if(index2 == 1){
+					sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname, P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,n.ns_pr,c.c_name from post p, n_sale n, love l,img i,codes c where p.p_no = n.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P002'and p.p_code = c.c_code order BY p.P_likeCount DESC";
+				}
+			} else if (index1 == 1) {//경매
+				if (index2 == 0) {
+					sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname,P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,a.au_instantpr,c.c_name from post p, auction a, love l ,img i,codes c where  p.p_no = a.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P001' and p.p_code = c.c_code order BY p.p_tm DESC";
+				}else if (index2 == 1) {
+					sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname,P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,a.au_instantpr,c.c_name from post p, auction a, love l ,img i,codes c where  p.p_no = a.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P001' and p.p_code = c.c_code order BY p.P_likeCount DESC";					
+				}
+				
 			}
 			//System.out.println("success love");
 			
@@ -537,9 +546,21 @@ public class BoardDAO {
 				dto.setP_title(rs.getString("P_title"));
 				dto.setP_tm(rs.getDate("p_tm"));
 				dto.setP_likeCount(rs.getInt("p_likecount"));
-				dto.setNs_pr(rs.getInt("ns_pr"));
 				dto.setI_newName(rs.getString("I_newName"));
-				dto.setAu_instantPr(rs.getInt("au_instantpr"));
+				dto.setP_code(rs.getString("p_code"));
+				
+				String code = dto.getP_code(); 
+				
+				System.out.println("code:"+code);
+				
+				if (code.equals("P001")) {
+					dto.setAu_instantPr(rs.getInt("au_instantpr"));
+					dto.setC_name(rs.getString("c_name"));
+				}else if(code.equals("P002")) {
+					dto.setNs_pr(rs.getInt("ns_pr"));
+					dto.setC_name(rs.getString("c_name"));
+				}
+				
 				lovelist.add(dto);
 			}
 			

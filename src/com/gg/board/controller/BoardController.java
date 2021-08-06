@@ -192,9 +192,9 @@ public class BoardController extends HttpServlet {
 		case "/lovelist":
 			System.out.println("좋아요리스트 리스트 요청");
 			userid = (String)req.getSession().getAttribute("loginId");
-			int loveindex = Integer.parseInt(req.getParameter("index1"));
-			
-			service.love_list(userid,loveindex);
+			int index1 = Integer.parseInt(req.getParameter("index1"));
+			int index2 = Integer.parseInt(req.getParameter("index1"));
+			service.love_list(userid,index1,index2);
 
 			break;
 		/* ====== 글쓰기 ====== */

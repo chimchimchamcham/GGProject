@@ -350,20 +350,20 @@ public void req_list(String userid, int reqindex) throws IOException {
 }
 
 //좋아요리스트
-public void love_list(String userid, int loveindex) throws IOException {
+public void love_list(String userid, int index1, int index2) throws IOException {
 	
 	HashMap<String, Object> map = new HashMap<String, Object>();
 	
 	BoardDAO dao = new BoardDAO();
 	ArrayList<GGDto> lovelist = null;
-	System.out.println("살려줘");
+	
 	try {
-		lovelist = dao.lovelist(userid,loveindex);
+		lovelist = dao.lovelist(userid,index1,index2);
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}finally {
-		dao.resClose();
 		map.put("lovelist", lovelist);
+		dao.resClose();
 	}
 	System.out.println("auc_map:"+map);
 	
