@@ -746,6 +746,23 @@ public void love_list(String userid, int loveindex) throws IOException {
 		return des;
 	}
 
+	public String auctionDelete() {
+		String delMsg = null;
+		int p_no = Integer.parseInt(req.getParameter("p_no"));
+		System.out.println("삭제할 경매 글 번호:"+p_no);
+		BoardDAO dao = new BoardDAO();
+		try {
+			delMsg = dao.auctionDelete(p_no);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		return delMsg;
+	}
+
 
 
 
