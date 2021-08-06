@@ -448,22 +448,39 @@ public class BoardDAO {
 			
 			//유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
 			if (userid.equals(reseveid)) {
-				dto.setthisuserFlowingYN("<button class='hellow' onclick='flow_or_unflow()'>+팔로잉</button>");//N
-				
-				
-
+				dto.setthisuserFlowingYN("<button class='hellow' onclick=flow_or_unflow"+"("+"," +"\'"+reseveid+"\'"+"," +"\'"+sendid+"\'"+")"+">+팔로잉</button>");//N
 			}else if (userid.equals(sendid)) {
-				dto.setthisuserFlowingYN("<button class='hellow' onclick='flow_or_unflow()'>-팔로잉</button>");//Y
-				
+				dto.setthisuserFlowingYN("<button class='hellow' onclick=flow_or_unflow"+"("+"," +"\'"+reseveid+"\'"+"," +"\'"+sendid+"\'"+")"+">-팔로잉</button>");//Y
 			}
-			
-			
-			
 			flowlist.add(dto);
 		}
 		System.out.println("flowlist:" + flowlist);
 		return flowlist;
 	}
+			//delect or update
+			public ArrayList<GGDto> flowbut(String userid, String flow_addordelect, String reseveid, String sendid) throws SQLException {
+				String sql = "";
+				if (flow_addordelect == "-팔로우") {//내가 팔로잉 한사람을 팔로워 취소
+					sql = ""; 
+				} else if (flow_addordelect == "+팔로우") {//나를 팔로우 한사람을 팔로잉 추가
+					sql = "";
+				}
+
+				ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
+
+				System.out.println("flowlist:" + flowlist);
+
+				ps = conn.prepareStatement(sql);
+
+				System.out.println("daouserID:" + userid);
+
+				ps.setString(1, userid);
+				rs = ps.executeQuery();
+				System.out.println("rs:" + rs);
+
+				return null;
+			}
+
 	
 	//구매요청
 	public ArrayList<GGDto> reqlist(String userid, int reqindex) throws SQLException {
@@ -1144,6 +1161,8 @@ public class BoardDAO {
 		}
 		
 		return delMsg;
+
+	
 	}*/
 
 }

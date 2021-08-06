@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
+
 import com.gg.board.dao.BoardDAO;
 import com.gg.dto.GGDto;
 import com.gg.trade.dao.TradeDAO;
@@ -324,8 +326,22 @@ public void flow_list(String userid, int flowORflowing) throws IOException {
 	dao.resClose();
 }
 							//팔로워 버튼 +,- 여부 
-							public void flow_button(String userid, String flow_addordelect) {
-								System.out.println(flow_addordelect);
+							public void flow_button(String userid, String flow_addordelect, String reseveid, String sendid) throws IOException {
+								System.out.println("flow_addordelect:"+flow_addordelect);
+								if (flow_addordelect != null) {
+									BoardDAO dao = new BoardDAO();
+									try {
+										dao.flowbut(userid,flow_addordelect,reseveid,sendid);
+									} catch (SQLException e) {
+										e.printStackTrace();
+									}finally {
+										dao.resClose();
+	
+									}
+									dao.resClose();
+								}else {
+									System.out.println("null임");
+								}
 								
 							}
 //구매요청리스트
