@@ -640,24 +640,23 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 		}//판매 리스트 end
 		
 		//데이터 가져와서 뿌려주는 팔로워 팔로잉 리스트
+		var users = [];
+		var idxs;
 		function flow_list(flowlist){	
 			console.log("flowlist:", flowlist);
 			var content="";
-			
 			$(".button-layout_sold").hide();
 			$(".alien_list_sold").hide();
 			$(".button-layout_auction").hide();
 			
 			console.log('flowlist:'+flowlist.length);
-			
-			
+
 			flowlist.forEach(function(item,idx){
-				var flowlisting = idx+':'+item;
-				console.log("idx:",idx,item);
+				users[idx] = item.u_nname;
 				content += "<div class='item-one-flow'>"
 					content += "<div class='img-zoon'><img src='/photo"+item.u_newname+"'></div>"
-					content += "<div class=''>"+item.u_nname+"</div>"
-					content += " <div class=''>팔로워:"+item.flow_count+"</div>"
+					content += "<div class='flowerusername'>"+item.u_nname+"</div>"
+					content += "<div class=''>팔로워:"+item.flow_count+"</div>"
 					content += item.thisuserFlowingYN;
 				content += " </div>"
 			});
@@ -667,21 +666,26 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			$(".count p").append(flowlist.length);
 			var aaa=  $(".count").text();
 			
-		}//팔로워 팔로잉 리스트 end
-					function flow_or_unflow(){
-							    
+			}//팔로워 팔로잉 리스트 end
+					function flow_or_unflow(reseveid,sendid){//버튼을 누르면 flow_or_unflow함수 실행
 								    $button1 = $("button.hellow");
 								    $index1 = $button1.index(this);
-								    $index_button_sold = $("button.hellow:eq(" + $index1 + ")");
-							   
-								    var hellow = $index_button_sold.text();
-									//버튼을 누르면 flow_or_unflow함수 실행
-									console.log(hellow);
-									
+								    $index_button_f = $("button.hellow:eq(" + $index1 + ")");
+								    
+								    $user_div = $("div div.flowerusername");
+								    
+								    var udt = $user_div;
+
+								   
+								    
+								    var hellow = $index_button_f.text();
+
 									$.ajax({
 										type:'post',
 										url:'./flowadddelect',
-										data:{  hellow : hellow},
+										data:{  hellow : hellow,
+												reseveid : reseveid,
+												sendid : sendid },
 										dataType:'JSON',
 										success:function(data){
 											console.log("data",data);
@@ -691,7 +695,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 											console.log(e);
 										}
 									});
-								
+
 						}
 		
 		//데이터 가져와서 뿌려주는 구매요청 리스트
