@@ -163,7 +163,17 @@ border:  1px solid rgb(176 176 176);
 		
 		}
 		
-		
+    
+    
+    $("button.hellow").click(function(){
+	    $button1 = $(".button.hellow");
+	    $index1 = $button1.index(this);
+	    $index_button_hellow = $(".button.hellow:eq(" + $index1 + ")");
+	    
+		var hellow = $index_button_hellow.text();
+		//버튼을 누르면 flow_or_unflow함수 실행
+		console.log(hellow);
+    })
 		
     
    

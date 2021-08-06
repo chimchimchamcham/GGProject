@@ -131,7 +131,10 @@
                 <button class="clicked" >판매</button>/
                 <button>경매</button>
         </div>
-        
+        <div class="alien_list_love">
+                <button class="clicked" >최신</button>/
+                <button>인기</button>
+        </div>
         <div class="content-zoon">
             <div class="item-box">
                 
@@ -145,28 +148,48 @@
 	
     $(".button-layout_love button").click(function(){
 	    
-	    $button = $(".alien_list_love button");
-	    $index = $button.index(this);
+	    $button1 = $(".button-layout_love button");
+	    $index1 = $button1.index(this);
 	    
-	    $index_button = $(".alien_list_love button:eq(" + $index + ")");
+	    $index_button = $(".button-layout_love button:eq(" + $index1 + ")");
 	    
-		console.log("$center_index:"+$index);
-		console.log("$alien_list_love:"+$index);
+		console.log("$center_index:"+$index1);
+		console.log("$list_love:"+$index1);
 		
-		love_listCall($index);
+		love_listCall($index1,$index2);
 		
-		$button.removeClass('clicked');
+		$button1.removeClass('clicked');
 		$index_button.addClass('clicked');
 		
     })
     
-    function love_listCall(index2){
+    
+    $(".alien_list_love button").click(function(){
+	    
+	    $button2 = $(".alien_list_love button");
+	    $index2 = $button2.index(this);
+	    
+	    $index_button = $(".alien_list_love button:eq(" + $index2 + ")");
+	    
+		console.log("$center_index:"+$index1);
+		console.log("$alien_list_love:"+$index2);
+		
+		sold_listCall($index1,$index2);
+		
+		$button2.removeClass('clicked');
+		$index_button.addClass('clicked');
+		
+    })
+    
+    
+    function love_listCall($index){
 		
 		
 		$.ajax({
 			type:'post',
 			url:'./lovelist',
-			data:{index : $index},
+			data:{index1 : $index1,
+				index2 : $index2},
 			dataType:'JSON',
 			success:function(data){
 				console.log("data:"+data);

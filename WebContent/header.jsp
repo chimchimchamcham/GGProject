@@ -24,30 +24,48 @@
          $(this).children("#sub").stop().slideUp();
       });
       
+      
+      
+      /*거래톡 팝업*/
+      $(".tradeA").click(function(){
+         window.open("./popup/tradeTalk.jsp", "chargePop", "width=400, height=500, left=850, top=150");
+      });
+      
+      /*쪽지 팝업*/
+       $(".messageA").click(function(){
+          window.open("./popup/msgPop.jsp", "chargePop", "width=400, height=500, left=850, top=150");
+      });
+
+      /*알람 팝업*/
+     $(".alarmA").click(function(){
+        window.open("./popup/alarmPop.jsp", "chargePop", "width=400, height=500, left=850, top=150");
+      });
+      
+      
       /*쪽지함 토글기능*/
-      $("#messageList").hide();
+     /*  $("#messageList").hide();
       $(".messageA").click(function(){
          $("#messageList").slideToggle('slow');
          $("#alarmList").hide();
          $("#tradeList").hide();
-      });
+      }); */
       
       /*알람 토글기능*/
-      $("#alarmList").hide();
+    /*   $("#alarmList").hide();
       $(".alarmA").click(function(){
          $("#alarmList").slideToggle('slow');
          $("#messageList").hide();
          $("#tradeList").hide();
-      });
+      }); */
       
       /*거래톡 토글기능*/
-      $("#tradeList").hide();
+      /* $("#tradeList").hide();
       $(".tradeA").click(function(){
          $("#tradeList").slideToggle('slow');
          $("#messageList").hide();
          $("#alarmList").hide();
       });
-      
+       */
       /*쪽지 로그인 체크*/
        $(".messageA").click(function(){
       if(loginId == ""){
@@ -276,6 +294,7 @@ body {
    top:60px;
    right:470px;
    text-align: center;
+   overflow: scroll;
    }
 
 /*알람 목록*/
@@ -288,6 +307,7 @@ body {
    top:60px;
    right:420px;
    text-align: center;
+   overflow: scroll;
 }
 
 /*거래톡*/
@@ -300,6 +320,7 @@ body {
    top:60px;
    right:380px;
    text-align: center;
+   overflow: scroll;
    }
 
 /*회원가입 버튼*/
@@ -339,7 +360,7 @@ body {
 }
 
 
-
+    
 </style>
 <body>
    <div id="hWrap">
@@ -359,7 +380,7 @@ body {
             <!-- 로그인이 되어있을 때 -->
             <c:if test="${loginId ne null}"> 
                <!-- 사용자 상단바 -->
-          <button id="writeBtn">글쓰기</button>  
+          <button id="writeBtn" onclick="location.href='writeForm.jsp'">글쓰기</button>  
              	<a href="logout"  class="logoutA">로그아웃</a>
              	<a href="#"  class="myPageA">마이페이지</a>
              <c:if test="${adminYN eq 'Y'}">
@@ -412,27 +433,12 @@ body {
          </div>
       </nav>
    </div>
-   <div id="messageList">
-      <h2>쪽지</h2>
-   </div>
-   <div id="alarmList">
-      <h2>알람</h2>
-   </div>
-   <div id="tradeList">
-      <h2>거래톡</h2>
-      <button>판매</button>
-       <button >경매</button>
-       
-       
-      <table style="border:1px solid black;">
-      
-      	<tr>
-      		<td>d;lsjf;ldksjf;ldfsjs</td>
-      	</tr>
-      	<tr>
-      		<td>d;lsjf;ldksjf;ldfsjs</td>
-      	</tr>
-      </table>
-   </div>
 </body>
+<script>
+$("#allAL").click(function(){
+	$()
+})
+
+</script>
+
 </html>

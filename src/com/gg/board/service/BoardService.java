@@ -323,7 +323,11 @@ public void flow_list(String userid, int flowORflowing) throws IOException {
 	map.clear();
 	dao.resClose();
 }
-
+							//팔로워 버튼 +,- 여부 
+							public void flow_button(String userid, String flow_addordelect) {
+								System.out.println(flow_addordelect);
+								
+							}
 //구매요청리스트
 public void req_list(String userid, int reqindex) throws IOException {
 	
@@ -350,7 +354,7 @@ public void req_list(String userid, int reqindex) throws IOException {
 }
 
 //좋아요리스트
-public void love_list(String userid, int loveindex) throws IOException {
+public void love_list(String userid, int index1, int index2) throws IOException {
 	
 	HashMap<String, Object> map = new HashMap<String, Object>();
 	
@@ -358,12 +362,12 @@ public void love_list(String userid, int loveindex) throws IOException {
 	ArrayList<GGDto> lovelist = null;
 	
 	try {
-		lovelist = dao.lovelist(userid,loveindex);
+		lovelist = dao.lovelist(userid,index1,index2);
 	} catch (SQLException e) {
 		e.printStackTrace();
 	}finally {
-		dao.resClose();
 		map.put("lovelist", lovelist);
+		dao.resClose();
 	}
 	System.out.println("auc_map:"+map);
 	
@@ -752,10 +756,21 @@ public void love_list(String userid, int loveindex) throws IOException {
 		return dao.postDel(p_no);
 	}
 
-
-
-
-
-
+	public String auctionDelete() {
+		String delMsg = null;
+		int p_no = Integer.parseInt(req.getParameter("p_no"));
+		System.out.println("삭제할 경매 글 번호:"+p_no);
+		BoardDAO dao = new BoardDAO();
+		try {
+			delMsg = dao.auctionDelete(p_no);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		return delMsg;
+	}
 
 }

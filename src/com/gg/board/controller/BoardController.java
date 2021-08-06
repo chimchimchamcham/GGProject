@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
 	"/maidelist", "/writeForm", "/writeSale", "/writeTrade","/postDel",
 		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" 
-		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate","/flowlist","/requestlist","/lovelist"})
+		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate","/flowlist","/requestlist","/lovelist","/delAuction","/flowadddelect"})
 
 public class BoardController extends HttpServlet {
 
@@ -178,8 +178,16 @@ public class BoardController extends HttpServlet {
 			int flowORflowing = Integer.parseInt(req.getParameter("index1"));
 			
 			service.flow_list(userid,flowORflowing);
-
+			
+		case "/flowadddelect":
+			System.out.println("팔로잉리스트 리스트 요청");
+			req.setCharacterEncoding("utf-8");
+			userid = (String) req.getSession().getAttribute("loginId");
+			String flow_addordelect = req.getParameter("hellow");
+			
+			service.flow_button(userid,flow_addordelect);
 			break;
+			
 		case "/requestlist":
 			System.out.println("거래요청리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
@@ -191,10 +199,10 @@ public class BoardController extends HttpServlet {
 			
 		case "/lovelist":
 			System.out.println("좋아요리스트 리스트 요청");
-			userid = (String) req.getSession().getAttribute("loginId");
-			int loveindex = Integer.parseInt(req.getParameter("index"));
-			
-			service.love_list(userid,loveindex);
+			userid = (String)req.getSession().getAttribute("loginId");
+			int index1 = Integer.parseInt(req.getParameter("index1"));
+			int index2 = Integer.parseInt(req.getParameter("index1"));
+			service.love_list(userid,index1,index2);
 
 			break;
 		/* ====== 글쓰기 ====== */
@@ -488,6 +496,7 @@ public class BoardController extends HttpServlet {
 			resp.getWriter().println(new Gson().toJson(list_map));
 			break;
 			
+
 		case "/postDel":
 			System.out.println("게시글 삭제 요청");
 			success = false;
@@ -500,6 +509,13 @@ public class BoardController extends HttpServlet {
 			dis = req.getRequestDispatcher("index.jsp");
 			dis.forward(req, resp);
 			break;
+
+			
+		case "/delAuction":
+			System.out.println("경매글 삭제 요청");
+			req.setAttribute("delMsg", service.auctionDelete());
+			dis = req.getRequestDispatcher("auctionDetail.jsp");
+			dis.forward(req, resp);
 		}
 
 	}
