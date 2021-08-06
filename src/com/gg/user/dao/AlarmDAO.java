@@ -47,9 +47,35 @@ public class AlarmDAO {
 		}
 	}
 
-	public GGDto allALlst(String u_id) {
-		sql = "SELECT a_no,u_id,a_code,a_sendtm,a_checktm,a_content,a_readyn,a_delyn,a_impoyn,a_path from ALARM where u_id=?";
-		return null;
+	public GGDto ALlist(String u_id, String a_impoyn) throws SQLException {
+		GGDto dto = null;
+		
+		if(a_impoyn=="Y") {
+			sql = "SELECT a_no,u_id,a_code,a_sendtm,a_checktm,a_content,a_readyn,a_delyn,a_impoyn,a_path from ALARM where u_id=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, u_id);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				dto = new GGDto();
+				dto.setA_no(rs.getInt("a_no"));
+				dto.setU_id(rs.getString("u_id"));
+				dto.setA_code(rs.getString("a_code"));
+				dto.setA_sendTm(rs.getDate("a_sendtm"));
+				dto.setA_checkTm(rs.getDate("a_checktm"));
+				dto.setA_content(rs.getString("a_content"));
+				dto.setA_readYN(rs.getString("a_readyn"));
+				dto.setA_delYN(rs.getString("a_delyn"));
+				dto.setA_impoYN(rs.getString("a_impoyn"));
+				dto.setA_path(rs.getString("a_path"));
+				
+			}
+		}
+		System.out.println("알람번호 : "+dto.getA_no());
+		System.out.println("알람받은 아이디 : "+dto.getU_id());
+		System.out.println("알람코드 : "+dto.getA_code());
+		
+		return dto;
 	}
 
 	public GGDto impALlst(String u_id) throws SQLException {
@@ -67,9 +93,18 @@ public class AlarmDAO {
 			dto.setA_sendTm(rs.getDate("a_sendtm"));
 			dto.setA_checkTm(rs.getDate("a_checktm"));
 			dto.setA_content(rs.getString("a_content"));
+			dto.setA_readYN(rs.getString("a_readyn"));
+			dto.setA_delYN(rs.getString("a_delyn"));
+			dto.setA_impoYN(rs.getString("a_impoyn"));
+			dto.setA_path(rs.getString("a_path"));
+			
 		}
 		
-		return null;
+		System.out.println("알람번호 : "+dto.getA_no());
+		System.out.println("알람받은 아이디 : "+dto.getU_id());
+		System.out.println("알람코드 : "+dto.getA_code());
+		
+		return dto;
 	}
 	
 

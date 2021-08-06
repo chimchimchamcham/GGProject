@@ -1,5 +1,7 @@
 package com.gg.user.service;
 
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.gg.dto.GGDto;
@@ -13,11 +15,18 @@ public class AlarmService {
 		this.req = req;
 	}
 
-	public GGDto allALlst() {
+	public GGDto ALlist() {
 		String u_id = (String) req.getSession().getAttribute("loginId");
 		dao = new AlarmDAO();
 		GGDto dto = new GGDto();
-		dto = dao.allALlst(u_id);
+		try {
+			dto = dao.ALlist(u_id,a_impoyn);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
 		return dto;
 		
 		
@@ -27,7 +36,16 @@ public class AlarmService {
 		String u_id = (String) req.getSession().getAttribute("loginId");
 		dao = new AlarmDAO();
 		GGDto dto = new GGDto();
-		dto = dao.impALlst(u_id);
+		try {
+			dto = dao.impALlst(u_id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		
 		return dto;
 	}
 

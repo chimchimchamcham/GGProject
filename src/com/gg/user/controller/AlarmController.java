@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.gg.dto.GGDto;
 import com.gg.user.service.AlarmService;
 
-@WebServlet({"/allALlst","/impALlst"})
+@WebServlet({"/alarmlist","/impALlst"})
 public class AlarmController extends HttpServlet {
 
 	
@@ -38,8 +38,8 @@ public class AlarmController extends HttpServlet {
 		System.out.println("addr : "+addr);
 		
 		switch(addr) {
-		case "/allALlst":
-			System.out.println("알람 전체 목록 조회");
+		case "/alarmlist":
+			System.out.println("알람 목록 조회");
 			service = new AlarmService(req);
 			dto = new GGDto();
 			dto = service.allALlst();
@@ -50,6 +50,8 @@ public class AlarmController extends HttpServlet {
 			service = new AlarmService(req);
 			dto = new GGDto();
 			dto = service.impALlst();
+			
+			
 		}
 	
 	}
