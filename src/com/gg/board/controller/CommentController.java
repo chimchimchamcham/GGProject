@@ -102,6 +102,10 @@ public class CommentController extends HttpServlet {
 			
 			success = service.comm_del(pc_no);
 			
+			map = new HashMap<String, Object>();
+			map.put("success", success);
+			resp.getWriter().println(new Gson().toJson(map));
+			
 			break;
 		}
 		

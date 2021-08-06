@@ -93,6 +93,7 @@ public class CommentService {
 		CommentDAO dao = new CommentDAO();
 		try {
 			success = dao.comm_del(pc_no);
+			System.out.println("삭제 성공 : "+success);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

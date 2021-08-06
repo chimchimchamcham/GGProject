@@ -130,6 +130,7 @@ public class CommentDAO {
 		checker = ps.executeUpdate();
 		
 		if(checker >0) {
+			System.out.println("삭제 성공");
 			success = true;
 		}
 		
