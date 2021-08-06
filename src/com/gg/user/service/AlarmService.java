@@ -17,6 +17,7 @@ public class AlarmService {
 
 	public GGDto ALlist() {
 		String u_id = (String) req.getSession().getAttribute("loginId");
+		String a_impoyn =req.getParameter("a_impoyn");
 		dao = new AlarmDAO();
 		GGDto dto = new GGDto();
 		try {
@@ -32,21 +33,5 @@ public class AlarmService {
 		
 	}
 
-	public GGDto impALlst() {
-		String u_id = (String) req.getSession().getAttribute("loginId");
-		dao = new AlarmDAO();
-		GGDto dto = new GGDto();
-		try {
-			dto = dao.impALlst(u_id);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			dao.resClose();
-		}
-		
-		
-		return dto;
-	}
-
+	
 }
