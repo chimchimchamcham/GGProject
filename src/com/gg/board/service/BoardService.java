@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.gg.board.dao.BoardDAO;
@@ -682,17 +684,23 @@ public void love_list(String userid, int index1, int index2) throws IOException 
 
 	public ArrayList<GGDto> commList() {
 		
-		int currPage = Integer.parseInt(req.getParameter("currPage"));
+		int currPage = Integer.parseInt(req.getParameter("currPage"));//지금 페이지 번호를 받는 것.
+		int pagePerCnt = 14; 
+		int end = currPage*pagePerCnt; 
+		int start = end - pagePerCnt +1;
 		String[] categorys = req.getParameterValues("categorys[]");//ajax에서 배열 형태로 보낼때 받는 방법
 		BoardDAO dao = new BoardDAO();
 		ArrayList<GGDto> commList = new ArrayList<GGDto>();
 		commList = dao.commList(categorys);
-		int totalPage = commList.size();
-		int pagePerCnt = 14; 
-		int end = currPage*pagePerCnt; 
-		int start = end - pagePerCnt +1;
-		commList.subList(start-1, end-1);
-		return commList;
+		int totalPage = (int)Math.ceil((double)commList.size()/(double)pagePerCnt); //전체 페이지 넘버를 반환. -나누는 값들을 double으로 명시해야 올림한 정확한 값이 나옴
+		// 전체 ArrayList에서 특정 페이지의 목록들을 잘라내는 과정 (ArrayList에서 잘라줌) - 이때 List로 반환됨.
+		List<GGDto> list = commList.subList(start-1, end);	// 14개의 리스트를 자르기 위하여 사용.
+		// List를 ArrayList로 변환.
+		ArrayList<GGDto> arrayList = new ArrayList<GGDto>();
+		arrayList.addAll(list);
+		arrayList.get(0).setTotalPage(totalPage); //0번째 dto에 totalPage를 넣어줌.
+		System.out.println("arrayList : "+arrayList.size());
+		return arrayList;
 	}
 
 	/*판매 글 수정*/
