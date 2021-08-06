@@ -750,22 +750,34 @@ public void love_list(String userid, int index1, int index2) throws IOException 
 		return des;
 	}
 
-	public String auctionDelete() {
+	//메서드 통합으로 인하여 주석처리 
+	/*public String auctionDelete() {
 		String delMsg = null;
 		int p_no = Integer.parseInt(req.getParameter("p_no"));
 		System.out.println("삭제할 경매 글 번호:"+p_no);
 		BoardDAO dao = new BoardDAO();
+		TradeDAO tdao = new TradeDAO();
+		boolean success = false;
 		try {
+			dao.conn.setAutoCommit(false);
+			tdao.conn.setAutoCommit(false);
 			delMsg = dao.auctionDelete(p_no);
+			System.out.println("[BoardDAO]/actionDelete delMsg : "+delMsg);
+			if(!delMsg.equals("")) {
+				success = tdao.updateAuctionAu_code(p_no, "Au003");
+			}
+			if(success) {
+				dao.conn.commit();
+				tdao.conn.commit();
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			dao.resClose();
 		}
+		dao.resClose();
+		tdao.resClose();
 		
 		return delMsg;
-	}
+	}*/
 
 
 

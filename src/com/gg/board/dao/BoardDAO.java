@@ -1106,7 +1106,8 @@ public class BoardDAO {
 		return code;
 	}
 
-	public String auctionDelete(int p_no) throws SQLException {
+	//메서드 통합으로 인하여 주석처리
+	/*public String auctionDelete(int p_no) throws SQLException {
 		//경매글 삭제의 경우 
 		//post 테이블 블라인드 여부 Y로 바꾸고
 		//auctionDetail 불러올시 블라인드여부가 Y이면서 session loginId 값이 p_id와 같으면(=판매자 본인) 보여지게하고
@@ -1125,9 +1126,7 @@ public class BoardDAO {
 		}
 		
 		return delMsg;
-		
-		
-	}
+	}*/
 
 	
 

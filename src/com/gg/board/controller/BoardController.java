@@ -496,12 +496,14 @@ public class BoardController extends HttpServlet {
 			resp.getWriter().println(new Gson().toJson(list_map));
 			break;
 			
-			
-		case "/delAuction":
+		//메서드 통합으로 인하여 주석처리 	
+		/*case "/delAuction":
 			System.out.println("경매글 삭제 요청");
+			p_no = Integer.parseInt(req.getParameter("p_no"));
 			req.setAttribute("delMsg", service.auctionDelete());
-			dis = req.getRequestDispatcher("auctionDetail.jsp");
+			dis = req.getRequestDispatcher("/auctionDetail?p_no="+p_no);
 			dis.forward(req, resp);
+			break;*/
 		}
 
 	}
