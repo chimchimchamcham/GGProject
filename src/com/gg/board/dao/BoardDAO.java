@@ -513,9 +513,9 @@ public class BoardDAO {
 		public ArrayList<GGDto> lovelist(String userid, int loveindex) throws SQLException {
 				String sql = "";
 			if (loveindex == 0) {//판매
-				sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE, P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,n.ns_pr from post p, n_sale n, love l where p.p_no = n.p_no and p.p_no = l.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P002'";
+				sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname,P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,a.au_instantpr from post p, auction a, love l ,img i where  p.p_no = a.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P002'";
 			} else if (loveindex == 1) {//경매
-				sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE, P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,a.au_instantpr from post p, auction a, love l where  p.p_no = a.p_no and p.p_no = l.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P001'";
+				sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname,P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,a.au_instantpr from post p, auction a, love l ,img i where  p.p_no = a.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P001'";
 			}
 			//System.out.println("success love");
 			
@@ -537,12 +537,13 @@ public class BoardDAO {
 				dto.setP_title(rs.getString("P_title"));
 				dto.setP_tm(rs.getDate("p_tm"));
 				dto.setP_likeCount(rs.getInt("p_likecount"));
-				dto.setNs_pr(rs.getInt("NS_pr"));
-				dto.setI_newName(rs.getString("I_newName"));
 				dto.setNs_pr(rs.getInt("ns_pr"));
+				dto.setI_newName(rs.getString("I_newName"));
 				dto.setAu_instantPr(rs.getInt("au_instantpr"));
 				lovelist.add(dto);
 			}
+			
+			
 			System.out.println("lovelist:" + lovelist);
 			return lovelist;
 		}

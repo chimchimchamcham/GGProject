@@ -145,10 +145,10 @@
 	
     $(".button-layout_love button").click(function(){
 	    
-	    $button = $(".alien_list_love button");
+	    $button = $(".button-layout_love button");
 	    $index = $button.index(this);
 	    
-	    $index_button = $(".alien_list_love button:eq(" + $index + ")");
+	    $index_button = $(".button-layout_love button:eq(" + $index + ")");
 	    
 		console.log("$center_index:"+$index);
 		console.log("$alien_list_love:"+$index);
@@ -160,13 +160,13 @@
 		
     })
     
-    function love_listCall(index2){
+    function love_listCall($index){
 		
 		
 		$.ajax({
 			type:'post',
 			url:'./lovelist',
-			data:{index : $index},
+			data:{index1 : $index},
 			dataType:'JSON',
 			success:function(data){
 				console.log("data:"+data);

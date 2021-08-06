@@ -356,7 +356,7 @@ public void love_list(String userid, int loveindex) throws IOException {
 	
 	BoardDAO dao = new BoardDAO();
 	ArrayList<GGDto> lovelist = null;
-	
+	System.out.println("살려줘");
 	try {
 		lovelist = dao.lovelist(userid,loveindex);
 	} catch (SQLException e) {
