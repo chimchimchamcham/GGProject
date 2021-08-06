@@ -1168,42 +1168,6 @@ public class BoardDAO {
 		return success;
 	}
 	
-	//메서드 통합으로 인하여 주석처리
-	/*public String auctionDelete(int p_no) throws SQLException {
-
-<<<<<<< HEAD
-	public String auctionDelete(int p_no) throws SQLException {
-		// 경매글 삭제의 경우
-		// post 테이블 블라인드 여부 Y로 바꾸고
-		// auctionDetail 불러올시 블라인드여부가 Y이면서 session loginId 값이 p_id와 같으면(=판매자 본인) 보여지게하고
-		// 같지 않으면 보여지지 않게 한다.
-=======
-		//경매글 삭제의 경우 
-		//post 테이블 블라인드 여부 Y로 바꾸고
-		//auctionDetail 불러올시 블라인드여부가 Y이면서 session loginId 값이 p_id와 같으면(=판매자 본인) 보여지게하고
-		//같지 않으면 보여지지 않게 한다.
->>>>>>> 8fa23dca1987325bff6c31f47423193401381de2
-		String delMsg = "경매글 삭제 실패";
-
-		String sql = "update post set p_blindyn = 'Y' where p_no=?";
-
-		ps = conn.prepareStatement(sql);
-		ps.setInt(1, p_no);
-		int success = ps.executeUpdate();
-		System.out.println("경매글 삭제 성공여부(블라인드 처리 여부) : " + success);
-
-		if (success > 0) {
-			delMsg = "경매글 삭제 성공";
-		}
-
-		return delMsg;
-
-<<<<<<< HEAD
-	}
-=======
-	
-	}*/
-
 	// 메서드 통합으로 인하여 주석처리
 	/*
 	 * public String auctionDelete(int p_no) throws SQLException {
@@ -1224,5 +1188,4 @@ public class BoardDAO {
 	 * 
 	 * }
 	 */
-
 }

@@ -712,7 +712,6 @@ public class BoardService {
 	}
 
 	public ArrayList<GGDto> commList() {
-		
 		int currPage = Integer.parseInt(req.getParameter("currPage"));//지금 페이지 번호를 받는 것.
 		int pagePerCnt = 14; 
 		int end = currPage*pagePerCnt; 
@@ -793,7 +792,6 @@ public class BoardService {
 		return dao.postDel(p_no);
 	}
 
-
 	/*
 	 * 메서드 통합으로 주석 처리
 	 * public String auctionDelete() { String delMsg = null; int p_no =
@@ -802,6 +800,8 @@ public class BoardService {
 	 * delMsg = dao.auctionDelete(p_no); } catch (SQLException e) { // TODO
 	 * Auto-generated catch block e.printStackTrace(); }finally { dao.resClose(); }
 =======
+=======
+>>>>>>> 7803e8c5eb2476215148d00de6d8adaa7cd332c3
 	// 메서드 통합으로 인하여 주석처리
 	/*
 	 * public String auctionDelete() { String delMsg = null; int p_no =
@@ -814,6 +814,9 @@ public class BoardService {
 	 * if(!delMsg.equals("")) { success = tdao.updateAuctionAu_code(p_no, "Au003");
 	 * } if(success) { dao.conn.commit(); tdao.conn.commit(); } } catch
 	 * (SQLException e) { e.printStackTrace(); } dao.resClose(); tdao.resClose();
+<<<<<<< HEAD
+>>>>>>> 7803e8c5eb2476215148d00de6d8adaa7cd332c3
+=======
 >>>>>>> 7803e8c5eb2476215148d00de6d8adaa7cd332c3
 	 * 
 	 * return delMsg; }
