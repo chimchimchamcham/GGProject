@@ -708,17 +708,28 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			$(".button-layout_auction").hide();
 			
 			lovelist.forEach(function(item,idx){
+				if (item.au_instantPr != 0 && item.au_instantPr != 'undifinded' ) {
+					var price = item.au_instantPr;
+					var a = "auctionDetail";
+				}else if(item.ns_pr!= 0 && item.ns_pr != 'undifinded'){
+				 	var	price = item.ns_pr;
+				 	var a = "salesDetail";
+				}
+				
+				
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
-				content += "	<div>"+item.p_cateName+"</div>";
-				content += "	<div><a href = commDetail?p_no="+item.p_no+">"+item.p_title+"</a></div>";
+				content += "	<div><a href = "+a+"?p_no="+item.p_no+">"+item.p_title+"</a></div>";
 				content += "</div>";
+				content += "<div class='img-zoon'><img src=/photo"+item.i_newName+" class='itemimg' style='margin:3%'></div>";
 				content += "<div class='c_zoon'>";
-				content += "	<div>"+item.p_tm+"</div>";	
+				content += "	<div>"+price+"</div>";	
 				content += "</div>";
+				content += "<div>"+"♥:"+item.p_likeCount+"</div>";
+				content += "	<div>"+item.c_name+"</div>";
 				content += "<div class='mai-time'>";
-				content += "	<div>"+item.p_view+"</div>";
+				content += "	<div>"+item.p_tm+"</div>";
 				content += "</div></div>";
 			});	
 
