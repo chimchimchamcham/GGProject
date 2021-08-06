@@ -1,6 +1,7 @@
 package com.gg.user.service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,6 +30,24 @@ public class AlarmService {
 		}
 		return dto;
 		
+		
+	}
+
+	public void readAlarm() {
+		
+		boolean success = false;
+		HashMap<String, Object>map = new HashMap<String,Object>();
+		int a_no = Integer.parseInt(req.getParameter("a_no"));
+		dao = new AlarmDAO();
+		try {
+			success = dao.readAlarm(a_no);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+			map.put("success", success);
+		}
 		
 	}
 

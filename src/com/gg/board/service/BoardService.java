@@ -326,7 +326,7 @@ public void flow_list(String userid, int flowORflowing) throws IOException {
 	dao.resClose();
 }
 							//팔로워 버튼 +,- 여부 
-							public void flow_button(String userid, String flow_addordelect, String reseveid, String sendid) throws IOException {
+							public void flow_button(String userid,String flow_addordelect, String reseveid, String sendid) throws IOException {
 								System.out.println("flow_addordelect:"+flow_addordelect);
 								if (flow_addordelect != null) {
 									BoardDAO dao = new BoardDAO();
@@ -334,11 +334,7 @@ public void flow_list(String userid, int flowORflowing) throws IOException {
 										dao.flowbut(userid,flow_addordelect,reseveid,sendid);
 									} catch (SQLException e) {
 										e.printStackTrace();
-									}finally {
-										dao.resClose();
-	
 									}
-									dao.resClose();
 								}else {
 									System.out.println("null임");
 								}

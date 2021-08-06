@@ -1,6 +1,7 @@
 package com.gg.user.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.gg.dto.GGDto;
 import com.gg.user.service.AlarmService;
 
-@WebServlet({"/alarmlist"})
+@WebServlet({"/alarmlist","/readAlarm"})
 public class AlarmController extends HttpServlet {
 
 	
@@ -49,6 +50,15 @@ public class AlarmController extends HttpServlet {
 			req.setAttribute("dto", dto);
 			dis = req.getRequestDispatcher("");
 			dis.forward(req,resp);
+			
+		case "/readAlarm":
+			System.out.println("알람 읽음 처리");
+			service = new AlarmService(req);
+		
+			service.readAlarm();
+			
+			
+			
 		}
 	
 	}
