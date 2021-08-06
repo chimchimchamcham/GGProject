@@ -750,6 +750,12 @@ public void love_list(String userid, int index1, int index2) throws IOException 
 		return des;
 	}
 
+	public boolean postDel() {
+		String p_no = req.getParameter("p_no");
+		BoardDAO dao = new BoardDAO();
+		return dao.postDel(p_no);
+	}
+
 	public String auctionDelete() {
 		String delMsg = null;
 		int p_no = Integer.parseInt(req.getParameter("p_no"));
@@ -766,13 +772,5 @@ public void love_list(String userid, int index1, int index2) throws IOException 
 		
 		return delMsg;
 	}
-
-
-
-
-
-
-
-
 
 }

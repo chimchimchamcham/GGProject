@@ -1106,6 +1106,22 @@ public class BoardDAO {
 		return code;
 	}
 
+
+	public boolean postDel(String p_no) {
+		String sql = "UPDATE post SET p_blindyn = 'Y' WHERE p_no=?";
+		boolean success = false;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, p_no);		
+			if(ps.executeUpdate()>0) {
+				success = true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return success;
+	}
+
 	public String auctionDelete(int p_no) throws SQLException {
 		//경매글 삭제의 경우 
 		//post 테이블 블라인드 여부 Y로 바꾸고
@@ -1128,9 +1144,5 @@ public class BoardDAO {
 		
 		
 	}
-
-	
-
-
 
 }
