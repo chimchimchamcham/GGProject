@@ -198,7 +198,8 @@ public class GGDto {
 	private String c_name;
 	private boolean myYN;
 	
-	//게시판 뎃글
+	//게시판 댓글
+	private int pc_no;//댓글 번호.
 	private String pc_content;//내용
 	private Date pc_tm;//작성날짜
 	private int pc_parentno;// 나중에 물어봐야함 무엇이 댓글 대댓글인지
@@ -1004,5 +1005,13 @@ public class GGDto {
 
 	public void setA_code(String a_code) {
 		this.a_code = a_code;
+	}
+
+	public int getPc_no() {
+		return pc_no;
+	}
+
+	public void setPc_no(int pc_no) {
+		this.pc_no = pc_no;
 	}
 }

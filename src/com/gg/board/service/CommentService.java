@@ -85,4 +85,26 @@ public class CommentService {
 		return list;
 	}
 
+
+
+	public boolean comm_del(int pc_no) {
+		System.out.println("서비스 진입");
+		boolean success = false;
+		CommentDAO dao = new CommentDAO();
+		try {
+			success = dao.comm_del(pc_no);
+			System.out.println("삭제 성공 : "+success);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		
+		
+		
+		return success;
+	}
+
 }
