@@ -657,6 +657,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 					content += "<div class='img-zoon'><img src='/photo"+item.u_newname+"'></div>"
 					content += "<div class='flowerusername'>"+item.u_nname+"</div>"
 					content += "<div class=''>팔로워:"+item.flow_count+"</div>"
+					content += "<a href='myPage?id="+item.u_id+"'>프로필로가기</a>";
 					content += item.thisuserFlowingYN;
 				content += " </div>"
 			});
@@ -667,6 +668,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			var aaa=  $(".count").text();
 			
 			}//팔로워 팔로잉 리스트 end
+				
 			
 			
 			$(document).on("click","button.hellow,button.unhellow",function(){//버튼을 누르면 함수 실행,동적으로 실행
@@ -778,7 +780,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				content += "</div>";
 				content += "<div>"+item.rq_tm+"</div>"
 				content += "<div class='c_zoon'>";
-				content += "	<div>"+item.rq_id+"</div>";	
+				content += "	<div><a href='myPage?id="+item.rq_id+"'>"+item.rq_id+"</a></div>";	
 				content += "</div>";
 				content += "<div class='mai-time'>";
 				content += "	<div>"+item.buttonORtext+"</div>";
