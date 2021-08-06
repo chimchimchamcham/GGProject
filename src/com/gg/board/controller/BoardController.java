@@ -183,7 +183,7 @@ public class BoardController extends HttpServlet {
 				System.out.println("팔로워 버튼 처리 요청");
 				req.setCharacterEncoding("utf-8");
 				userid = (String) req.getSession().getAttribute("loginId");
-				String flow_addordelect = req.getParameter("btntext");
+				String btntext = req.getParameter("btntext");
 				String nick = req.getParameter("nick");
 				
 				/*
@@ -193,7 +193,7 @@ public class BoardController extends HttpServlet {
 				 */
 				
 				
-				service.flow_button(userid,flow_addordelect,nick);
+				service.flow_button(userid,btntext,nick);
 
 				break;
 			

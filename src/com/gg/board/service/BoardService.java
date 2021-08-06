@@ -328,17 +328,17 @@ public class BoardService {
 		dao.resClose();
 	}
 							//팔로워 버튼 +,- 여부 
-							public void flow_button(String userid,String flow_addordelect, String nick) throws IOException {
+							public void flow_button(String userid,String btntext, String nick) throws IOException {
 								
 								  System.out.println("userid_service:"+userid);
-								  System.out.println("flow_addordelect_service:"+flow_addordelect);
+								  System.out.println("btntext:"+btntext);
 								  System.out.println("nick_service:"+nick);
 								 
-								if (flow_addordelect != null) {
+								if (btntext != null) {
 									BoardDAO dao = new BoardDAO();
 									int success; 
 									try {
-										success = dao.flowbut(userid, flow_addordelect, nick);
+										success = dao.flowbut(userid, btntext, nick);
 										System.out.println("success:"+success);
 									} catch (SQLException e) {
 										e.printStackTrace();

@@ -458,20 +458,18 @@ public class BoardDAO {
 		return flowlist;
 	}
 			//delect or update
-	public int flowbut(String userid, String flow_addordelect, String nick) throws SQLException {
+	public int flowbut(String userid, String btntext, String nick) throws SQLException {
 				String sql = "";
 				int success = 0;
 				System.out.println("useriddao:" + userid);
-				System.out.println("flow_addordelectdao:" + flow_addordelect);
+				System.out.println("btntext:" + btntext);
 				
 				System.out.println("ninkdao:" + nick);
 				String wordplus = "+팔로잉";
-				String wordminus = "un팔로잉";
-				if (flow_addordelect.equals(wordplus)){//나를 팔로잉 한사람 팔로워 추가
+				String wordminus = "-팔로잉";
+				
+				if (btntext.equals(wordplus)){//나를 팔로잉 한사람 팔로워 추가
 					sql = "insert into follow VALUES (?,(select u_id from userinfo where userinfo.u_nname = ?),sysdate)";
-					//f_receiveid == 유저아이디
-					//f_sendid == 팔로잉한 아이디
-					//u.u_id == 팔로잉 받는 아이디
 					
 					System.out.println("useriddao:" + userid);
 					System.out.println("ninkdao:" + nick);
@@ -481,16 +479,15 @@ public class BoardDAO {
 					ps.setString(2, nick);
 					success = ps.executeUpdate();
 					
-				}else if (flow_addordelect.equals(wordminus)) {//내가 팔로잉 한사람 팔로워 취소
-					sql = "DELETE FROM follow WHERE f_receiveid = (select u_id from userinfo where userinfo.u_nname = ?) and  f_sendid = ?";
+				}else if (btntext.equals(wordminus)) {//내가 팔로잉 한사람 팔로워 취소
+					sql = "DELETE FROM follow WHERE f_receiveid = (select u_id from userinfo where userinfo.u_nname = ?) and f_sendid = ?";
 					
-					System.out.println("useriddao:" + userid);
 					System.out.println("ninkdao:" + nick);
+					System.out.println("useriddao:" + userid);
 					
 					ps = conn.prepareStatement(sql);
 					ps.setString(1, nick);
 					ps.setString(2, userid);
-					
 					success = ps.executeUpdate();
 				
 				}

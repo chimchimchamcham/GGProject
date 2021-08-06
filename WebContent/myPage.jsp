@@ -677,29 +677,30 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 	    	 		$index1 = $button1.index(this);
 	  	 	 		$index_button_f = $("button.hellow:eq(" + $index1 + ")");
 	  	 	 		
-		  	 	 	var	btntext = $index_button_f.text();
+		  	 	 	var	btntext1 = $index_button_f.text();
 	
 	  	 	 		$user_id = $('div.flowerusername'); 	 		
 	  	 	 		$index_user_id = $("div.flowerusername:eq(" + $index1 + ")");
 	  	 	 		$index_user_text = $index_user_id.text();	
 	  	 	 		
-	  	 	 		var nick = $index_user_text;
+	  	 	 		var nick1 = $index_user_text;
 	  	 	 		
 	  	 	 		
 	  	 	 		console.log($index1);
-	  	 	 		console.log(btntext);
-	  	 	 		console.log(nick);
+	  	 	 		console.log(btntext1);
+	  	 	 		console.log(nick1);
 	  	 	 		
 	  	 	 		
 	  	 	 	$.ajax({
 					type:'post',
 					url:'./flowadddelect',
-					data:{ btntext : btntext,nick : nick},
+					data:{ btntext : btntext1,nick : nick1},
 					dataType:'JSON',
 					success:function(data){
 							if ($index_button_f.text() == "+팔로잉") {
 								console.log("-팔로잉");
 								$index_button_f.text("-팔로잉");
+								
 							}else if($index_button_f.text() == "-팔로잉") {
 								console.log("+팔로잉");
 								$index_button_f.text("+팔로잉");	
@@ -714,25 +715,26 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 					alert('팔로잉,언팔로잉 하였습니다')
 	  		 		$button2 = $("button.unhellow");
 	    	 		$index2 = $button2.index(this);
-	  	 	 		$index_button_f = $("button.unhellow:eq(" + $index2 + ")");
 	  	 	 		
-		  	 	 	var	btntext = $index_button_f.text();
+	    	 		
+	    	 		$index_button_f = $("button.unhellow:eq(" + $index2 + ")");
+		  	 	 	
+	    	 		var	btntext2 = $index_button_f.text();
 	
 	  	 	 		$user_id = $('div.flowerusername'); 	 		
-	  	 	 		$index_user_id = $("div.flowerusername:eq(" + $index1 + ")");
+	  	 	 		$index_user_id = $("div.flowerusername:eq(" + $index2 + ")");
 	  	 	 		$index_user_text = $index_user_id.text();	
 	  	 	 		
-	  	 	 		var nick = $index_user_text;
+	  	 	 		var nick2 = $index_user_text;
 	  	 	 		
 	  	 	 		
-	  	 	 		console.log($index1);
-	  	 	 		console.log(btntext);
-	  	 	 		console.log(nick);
-	  	 	 		
+	  	 	 		console.log($index2);
+	  	 	 		console.log(btntext2);
+	  	 	 		console.log(nick2);
 		  	 	 	$.ajax({
 						type:'post',
 						url:'./flowadddelect',
-						data:{ btntext : btntext,nick : nick},
+						data:{ btntext : btntext2,nick : nick2},
 						dataType:'JSON',
 						success:function(data){
 								if ($index_button_f.text() == "-팔로잉") {
