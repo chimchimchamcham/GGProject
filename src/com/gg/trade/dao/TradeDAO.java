@@ -58,6 +58,7 @@ public class TradeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return success > 0 ? true : false;
 	}
 
@@ -73,6 +74,7 @@ public class TradeDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		return success > 0 ? true : false;
 	}
 	
@@ -178,6 +180,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		map.put("success", success);
 		System.out.println("메세지 확인 : "+msg);
 		map.put("msg", msg);
+
 		return map;
 	}
 	
@@ -237,13 +240,18 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				}
 			}
 		}catch(Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 		boolean result = bidRecordYN(p_no,u_id);
 		System.out.println("시작금 인출 여부 : "+result);
 		//입찰금 반환 메서드 실행
 		returnStartPr(p_no, au_instantpr);
+		//해당 글번호로 판매자를 알아오기
+		String p_id = selectPostP_id(p_no);
+		System.out.println("p_id : "+p_id);
+		//글번호, 판매자, 구매자를 인자값으로 넣어서, 거래페이지 생성과, 거래히스토리에 "0원" "생성" 추가
+		insertTrade(p_no, p_id, u_id);
 		
 		return success>0?true:false;
 	}
@@ -279,7 +287,11 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				
 				//입찰금 반환 메서드 실행
 				returnStartPr(p_no, instantpr);
-
+				
+				//해당 글번호로 판매자를 알아오기
+				String p_id = selectPostP_id(p_no);
+				//글번호, 판매자, 구매자를 인자값으로 넣어서, 거래페이지 생성과, 거래히스토리에 "0원" "생성" 추가
+				insertTrade(p_no, p_id, ha_bidusr);
 			}
 			
 			return dto;
@@ -318,6 +330,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				}
 			}
 			
+			dao.resClose();
 			return success;
 			
 		}
@@ -348,6 +361,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				
 			}
 			System.out.println("==========================");
+			dao.resClose();
 			
 		}
 		//====================구매 요청 수락, 거절=====================
@@ -383,6 +397,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				e.printStackTrace();
 			}
 			System.out.println("[TRADEDAO]/BUYREQUESTPROCESS END");
+			
 			return insertTradeSuccess;
 		}
 		
@@ -401,6 +416,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				e.printStackTrace();
 			}
 			System.out.println("[TRADEDAO]/UPDATENSALENSCODE END");
+			
 			return success>0?true:false;
 		}
 		
@@ -430,6 +446,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				e.printStackTrace();
 			}
 			System.out.println("[TRADEDAO]/INSERTTRADE END");
+			
 			return insertHisTradeSuccess;
 		}
 		
@@ -452,6 +469,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				e.printStackTrace();
 			}
 			System.out.println("[TRADEDAO]/SELECTTRADET_NO END");
+			
 			return t_no;
 			
 		}
@@ -472,6 +490,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				e.printStackTrace();
 			}
 			System.out.println("[TRADEDAO]/INSERTHISTRADE END");
+			
 			return success>0?true:false;
 		}
 
@@ -490,6 +509,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				e.printStackTrace();
 			}
 			System.out.println("[TRADEDAO]/UPDATETRADET_CANCLEID END");
+			
 			return success>0?true:false;
 		}
 		
@@ -510,6 +530,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				e.printStackTrace();
 			}
 			System.out.println("[TRADEDAO]/CHECKP_CODE END");
+			
 			return p_code;
 		}
 		
@@ -530,12 +551,13 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				e.printStackTrace();
 			}
 			System.out.println("[TRADEDAO]/SELECTAUCTIONAU_STARTPR END");
+			
 			return au_startPr;
 		}
 		
 		//경매히스토리에서 글번호로 최고입찰가를 가져오는 기능
 		public int selectHis_AuctionMax_Ha_bidPr(int p_no) {
-			System.out.println("[TRADEDAO]/SELECTAUCTIONAU_STARTPR START");
+			System.out.println("[TRADEDAO]/SELECTHIS_AUCTIONMAX_HA_BIDPR START");
 			String sql = "SELECT MAX(HA_BIDPR) MAX_HA_BIDPR FROM HIS_AUCTION WHERE P_NO = ?";
 			int max_ha_bidPr = 0;
 				try {
@@ -544,15 +566,37 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 					rs = ps.executeQuery();
 					if(rs.next()) {
 						max_ha_bidPr = rs.getInt("max_ha_bidpr");
-						System.out.println("[TRADEDAO]/SELECTAUCTIONAU_STARTPR MAX_HA_BIDPR : "+max_ha_bidPr);
+						System.out.println("[TRADEDAO]/SELECTHIS_AUCTIONMAX_HA_BIDPR MAX_HA_BIDPR : "+max_ha_bidPr);
 					}
 				}catch(Exception e) {
 					e.printStackTrace();
 				}
-				System.out.println("[TRADEDAO]/SELECTAUCTIONAU_STARTPR END");
+				System.out.println("[TRADEDAO]/SELECTHIS_AUCTIONMAX_HA_BIDPR END");
+				
 				return max_ha_bidPr;
 			}
 				
+		//경매히스토리에서 글번호로 최고입찰자를 가져오는 기능
+		public String selectHis_AuctionHa_bidUsr(int p_no) {
+			System.out.println("[TRADEDAO]/SELECTHIS_AUCTIONHA_BIDUSR START");
+			String sql = "SELECT hau.ha_bidusr FROM his_auction hau, (SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) haum WHERE hau.p_no = haum.p_no and hau.ha_bidpr = haum.toppr and hau.p_no=?";
+			String ha_bidUsr = "";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, p_no);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					ha_bidUsr = rs.getString("ha_bidusr");
+					System.out.println("[TRADEDAO]/SELECTHIS_AUCTIONHA_BIDUSR HA_BIDUSR : "+ha_bidUsr);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println("[TRADEDAO]/SELECTHIS_AUCTIONHA_BIDUSR END");
+			
+			return ha_bidUsr;
+		}
+
 		//경매글을 경매완료로 변경하는 기능
 		public boolean updateAuctionAu_code(int p_no, String au_code) {
 			System.out.println("[TRADEDAO]/UPDATEAUCTIONAU_CODE START");
@@ -568,6 +612,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				e.printStackTrace();
 			}
 			System.out.println("[TRADEDAO]/UPDATEAUCTIONAU_CODE END");
+			
 			return success>0?true:false;
 		}
 
@@ -645,5 +690,26 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			pdao.resClose();
 			System.out.println("[TRADEDAO]/TRADEDETAIL END");
 			return dto;
+		}
+
+		//글번호로 판매자를 알 수 있는 기능
+		public String selectPostP_id(int p_no) {
+			System.out.println("[TRADEDAO]/SELECTPOSTP_ID START");
+			String sql = "SELECT P_ID FROM POST WHERE P_NO = ?";
+			String p_id  = "";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, p_no);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					p_id = rs.getString("p_id");
+					System.out.println("[TRADEDAO]/SELECTPOSTP_ID P_ID : "+p_id);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println("[TRADEDAO]/SELECTPOSTP_ID END");
+			
+			return p_id;
 		}
 }
