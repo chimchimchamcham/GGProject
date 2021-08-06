@@ -1,6 +1,7 @@
 package com.gg.user.service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,6 +31,13 @@ public class AlarmService {
 		return dto;
 		
 		
+	}
+
+	public HashMap<String,Object> readAlarm() {
+		
+		
+		
+		return map;
 	}
 
 	

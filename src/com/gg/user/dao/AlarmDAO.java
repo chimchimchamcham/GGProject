@@ -97,6 +97,13 @@ public class AlarmDAO {
 			System.out.println("------------------------------");
 		}
 	}
+	
+	public void readAlarm(int a_no) {
+		String sql = "UPDATE alarm SET a_checktm=SYSDATE where a_no=?";
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, a_no);
+		
+	}
 
 	
 
