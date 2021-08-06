@@ -24,6 +24,7 @@ public class BoardDAO {
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle");
 			conn = ds.getConnection();
+			conn.setAutoCommit(false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -448,9 +449,9 @@ public class BoardDAO {
 			
 			//유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
 			if (userid.equals(reseveid)) {
-				dto.setthisuserFlowingYN("<button class='hellow' onclick=flow_or_unflow"+"("+"," +"\'"+reseveid+"\'"+"," +"\'"+sendid+"\'"+")"+">+팔로잉</button>");//N
+				dto.setthisuserFlowingYN("<button class='hellow'>+팔로잉</button>");//N
 			}else if (userid.equals(sendid)) {
-				dto.setthisuserFlowingYN("<button class='hellow' onclick=flow_or_unflow"+"("+"," +"\'"+reseveid+"\'"+"," +"\'"+sendid+"\'"+")"+">-팔로잉</button>");//Y
+				dto.setthisuserFlowingYN("<button class='hellow'>-팔로잉</button>");//Y
 			}
 			flowlist.add(dto);
 		}
@@ -460,24 +461,35 @@ public class BoardDAO {
 			//delect or update
 			public ArrayList<GGDto> flowbut(String userid, String flow_addordelect, String reseveid, String sendid) throws SQLException {
 				String sql = "";
-				if (flow_addordelect == "-팔로우") {//내가 팔로잉 한사람을 팔로워 취소
-					sql = ""; 
-				} else if (flow_addordelect == "+팔로우") {//나를 팔로우 한사람을 팔로잉 추가
-					sql = "";
+				
+				if (flow_addordelect == "+팔로우") {//나를 팔로잉 한사람 팔로워 추가
+					sql = "DELETE FROM follow where  f_receiveid = ? and f_sendid = ?";
+					//f_receiveid == 유저아이디
+					//f_sendid == 팔로잉한 아이디
+					//u.u_id == 팔로잉 받는 아이디
+					
+					ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
+					System.out.println("flowlist:" + flowlist);
+					ps = conn.prepareStatement(sql);
+					System.out.println("daouserID:" + userid);
+					ps.setString(1, userid);
+					ps.setString(2, sendid);
+					rs = ps.executeQuery();
+					System.out.println("rs:" + rs);
+					
+				} else if (flow_addordelect == "-팔로우") {//내가 팔로잉 한사람 팔로워 취소
+					sql = "insert into follow VALUES(?,?,sysdate)";
+					
+					ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
+					System.out.println("flowlist:" + flowlist);
+					ps = conn.prepareStatement(sql);
+					System.out.println("daouserID:" + userid);
+					ps.setString(1, reseveid);
+					ps.setString(2, userid);
+					rs = ps.executeQuery();
+					System.out.println("rs:" + rs);
 				}
-
-				ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
-
-				System.out.println("flowlist:" + flowlist);
-
-				ps = conn.prepareStatement(sql);
-
-				System.out.println("daouserID:" + userid);
-
-				ps.setString(1, userid);
-				rs = ps.executeQuery();
-				System.out.println("rs:" + rs);
-
+				resClose();
 				return null;
 			}
 
