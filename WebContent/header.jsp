@@ -38,7 +38,7 @@
 
       /*알람 팝업*/
      $(".alarmA").click(function(){ //./popup/alarmPop.jsp
-        window.open("./alarmlist?u_id="+loginId+"&a_impoyn=N", "chargePop", "width=500, height=500, left=850, top=150");
+        window.open("./alarmlist?u_id="+loginId+"&a_impoyn=N", "alarmPop", "width=500, height=500, left=850, top=150");
       });
       
       

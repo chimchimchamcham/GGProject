@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -47,22 +48,27 @@ public class AlarmDAO {
 		}
 	}
 
-	public GGDto ALlist(String u_id, String a_impoyn) throws SQLException {
+	public ArrayList<GGDto> ALlist(String u_id, String a_impoyn) throws SQLException {
 		GGDto dto = null;
 		String insert =null;
+		ArrayList<GGDto>list = null;
 		String sql = "SELECT a_no,u_id,a_code,a_sendtm,a_checktm,a_content,a_readyn,a_delyn,a_impoyn,a_path from ALARM where u_id=?";
-		String sql2 = "SELECT a_no,u_id,a_code,a_sendtm,a_checktm,a_content,a_readyn,a_delyn,a_impoyn,a_path from ALARM where u_id=? and where a_impoYN='Y'";
-		if(a_impoyn=="N") {
+		String sql2 = "SELECT a_no,u_id,a_code,a_sendtm,a_checktm,a_content,a_readyn,a_delyn,a_impoyn,a_path from ALARM where u_id=? and where a_impoYN=Y";
+		
+		System.out.println("넘어온 a_impoyn : "+a_impoyn);
+		
+		if(a_impoyn.equals("N")) {
 			insert = sql;	
 		}else {
 			insert = sql2;	
 		}
 		
 		System.out.println("선택된 sql:"+insert);
+		
 		ps = conn.prepareStatement(insert);
 		ps.setString(1, u_id);
 		rs = ps.executeQuery();
-		
+		list = new ArrayList<GGDto>();
 		while(rs.next()) {
 			dto = new GGDto();
 			dto.setA_no(rs.getInt("a_no"));
@@ -75,13 +81,14 @@ public class AlarmDAO {
 			dto.setA_delYN(rs.getString("a_delyn"));
 			dto.setA_impoYN(rs.getString("a_impoyn"));
 			dto.setA_path(rs.getString("a_path"));
+			list.add(dto);
 		}
 		
 		System.out.println("알람번호 : "+dto.getA_no());
 		System.out.println("알람받은 아이디 : "+dto.getU_id());
 		System.out.println("알람코드 : "+dto.getA_code());
 		
-		return dto;
+		return list;
 	}
 	
 	public void insertAlarm(String u_id,String a_code,String a_content,String a_impoyn,String a_path) throws SQLException {
