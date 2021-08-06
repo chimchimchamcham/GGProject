@@ -71,7 +71,7 @@
     #first>div:nth-of-type(2)>p:last-child{text-align:center;margin:10px;}
     #first>div:nth-of-type(2)>p:last-child>a{text-decoration:none;color:#6E6E6E;font-size:1.3rem;}
     
-    
+    #content_hide{width:1200px; height:1200px; background-color:gray; z-index:1000;}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -292,6 +292,7 @@
             </div>
         </section>
     </div>
+    <div id="content_hide">경매글 숨기기</div>
 </body>
 <script>
 	//좋아요 등록
@@ -356,6 +357,7 @@
 	var p_blindYN = "${dto.p_blindYN}";
 	if("${dto.p_blindYN}"=="Y"){
 		if("${sessionScope.loginId}"!="${dto.p_id}"){
+			$("#content_hide").show();
 			alert("삭제된 경매글 입니다.");
 			history.go(-1);
 		}
