@@ -260,7 +260,6 @@
                     </div>
                     <div id="second"><!-- 댓글처리 -->
                     	<table class='board'>
-                    		
                     	
                     	
                     	
@@ -271,7 +270,6 @@
 							<button class="enter">enter</button>
 						</div>
                     </div>
-                    
                 </article>
             </div>
         </section>
@@ -325,9 +323,11 @@
 		});
 	});
 	
-	$(document).on('click','.uploadtime',function(){
-		var N_receiveId= $('input[name="reportId"]').val();
-		console.log(N_receiveId);
+	$(document).on('click','.reporter',function(){
+		var test = $(this).attr('id');
+		console.log(test)
+		var N_receiveId= $("input[id="+test+"]").val();
+		console.log("신고할 아이디" ,N_receiveId);
 		window.open("./popup/notifyPopup.jsp?N_receiveId="+N_receiveId, "notifyPopup", "width=400, height=400, left=700, top=400");
 	});
 	
@@ -405,8 +405,9 @@
 			comment += 				"<div class='usertext'>"+item.u_nname+"</div></a>";
 			comment += 			"</div>";
 			comment += 			"<div class='content'>"+item.pc_content+"</div>";
-			comment += 			"<div class='uploadtime' id='report' ><input type='text' value='"+item.pc_id+"' name='reportId' hidden='hidden'/><img src='./img/notify-icon.png'/ style='width:20px; height: 20px;'></div>";
+			comment += 			"<div class='uploadtime' id='report' ><input type='text' value='"+item.pc_id+"' id='"+idx+"' hidden='hidden'/><label for='"+idx+"'id='"+idx+"' class='reporter'><img src='./img/notify-icon.png'/ style='width:20px; height: 20px;'></label></div>";
 			comment += 			"<div style='float:right;'>"+item.pc_tm+"</div>";
+			comment += 			"<div "
 			comment += 		"</div>";
 			comment += "</div>";
 			comment += "</td></tr>";
