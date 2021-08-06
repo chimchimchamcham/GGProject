@@ -48,7 +48,7 @@ public class AlarmController extends HttpServlet {
 			dto = service.ALlist();	
 			
 			req.setAttribute("dto", dto);
-			dis = req.getRequestDispatcher("");
+			dis = req.getRequestDispatcher("./popup/alarmPop.jsp");
 			dis.forward(req,resp);
 			
 		case "/readAlarm":

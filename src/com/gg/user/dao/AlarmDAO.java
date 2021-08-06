@@ -57,6 +57,8 @@ public class AlarmDAO {
 		}else {
 			insert = sql2;	
 		}
+		
+		System.out.println("선택된 sql:"+insert);
 		ps = conn.prepareStatement(insert);
 		ps.setString(1, u_id);
 		rs = ps.executeQuery();

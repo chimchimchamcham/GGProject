@@ -84,20 +84,20 @@ text-align: left;
 			<button id="importAL">중요알람</button>
 		</div>
 		<div class="tableWrap">
+		<c:if test="${dto eq null || dto eq ''}"><h2>알람이 존재하지 않습니다.</h2></c:if>
 		<table class="content">
-		<c:if test="${dto eq null || dto eq ''}">
-		<tr><td rowspan="2">알람이 존재하지 않습니다.</td></tr>
-		</c:if>
+		
+		<c:forEach items="${dto}" var="alarm">
 			<tr>
-				<td>${dto.a_content}</td>
+				<td>${alarm.a_content}</td>
 			</tr>
 			<tr>
-				<td ><small>${dto.a_sendTm }</small></td>
+				<td ><small>${alarm.a_sendTm }</small></td>
 			</tr>
 			<tr>
 				<td style="border-bottom:1px solid black; padding-top:10px;"></td>
 			</tr>
-		
+		</c:forEach>
 		</table>
 		</div>
 	</div>
