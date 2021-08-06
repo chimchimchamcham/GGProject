@@ -24,7 +24,6 @@ public class BoardDAO {
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle");
 			conn = ds.getConnection();
-			conn.setAutoCommit(false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -480,14 +479,14 @@ public class BoardDAO {
 					success = ps.executeUpdate();
 					
 				}else if (btntext.equals(wordminus)) {//내가 팔로잉 한사람 팔로워 취소
-					sql = "DELETE FROM follow WHERE f_receiveid = (select u_id from userinfo where userinfo.u_nname = ?) and f_sendid = ?";
+					sql = "DELETE FROM follow WHERE f_receiveid = ? and f_sendid = (select u_id from userinfo where userinfo.u_nname = ?)";
 					
 					System.out.println("ninkdao:" + nick);
 					System.out.println("useriddao:" + userid);
 					
 					ps = conn.prepareStatement(sql);
-					ps.setString(1, nick);
-					ps.setString(2, userid);
+					ps.setString(1, userid);
+					ps.setString(2, nick);
 					success = ps.executeUpdate();
 				
 				}
