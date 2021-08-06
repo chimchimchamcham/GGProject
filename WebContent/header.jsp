@@ -28,7 +28,7 @@
       
       /*거래톡 팝업*/
       $(".tradeA").click(function(){
-         window.open("./popup/tradeTalk.jsp", "chargePop", "width=400, height=500, left=850, top=150");
+         window.open("./popup/tradeTalk.jsp", "chargePop", "width=500, height=500, left=850, top=150");
       });
       
       /*쪽지 팝업*/

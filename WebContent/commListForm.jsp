@@ -35,7 +35,7 @@
 	border:3px solid black;
 }
 #listBody{
-	height:300px;
+	height:100px;
 }
 </style>
 <body>

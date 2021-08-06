@@ -46,6 +46,7 @@ public class TradeDAO {
 		}
 	}
 	
+	//구매요청
 	public boolean buyRequest(int p_no, String u_id) {
 		String sql = "INSERT INTO REQUEST VALUES(RQ_no_seq.NEXTVAL,?,?,NULL,SYSDATE)";
 		int success = 0;
@@ -60,6 +61,7 @@ public class TradeDAO {
 		return success > 0 ? true : false;
 	}
 
+	//구매요청 취소
 	public boolean buyRequestCancel(int p_no, String u_id) {
 		String sql = "DELETE FROM REQUEST WHERE P_NO = ? AND RQ_ID = ?";
 		int success = 0;
@@ -190,6 +192,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		return success;
 	}
 	
+	//즉시구매하는 기능
 	public boolean buyNow(int p_no, String u_id, int ha_bidPr) throws SQLException {
 		//즉결가 조회
 		String sql = "SELECT AU_INSTANTPR FROM AUCTION WHERE P_NO = ?";

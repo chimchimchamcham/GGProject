@@ -35,7 +35,8 @@ public class GGDto {
 	private String a_delYN; // 삭제여부 (없어도 될듯)
 	private String a_impoYN;// 중요여부
 	private String a_path; // 알람경로
-
+	private String a_code;//알람코드
+	
 	// 포인트
 	private int pnt_point; // 포인트 값
 	private Date pnt_tm; // 날짜
@@ -197,7 +198,8 @@ public class GGDto {
 	private String c_name;
 	private boolean myYN;
 	
-	//게시판 뎃글
+	//게시판 댓글
+	private int pc_no;//댓글 번호.
 	private String pc_content;//내용
 	private Date pc_tm;//작성날짜
 	private int pc_parentno;// 나중에 물어봐야함 무엇이 댓글 대댓글인지
@@ -995,5 +997,21 @@ public class GGDto {
 
 	public void setHt_name(String ht_name) {
 		this.ht_name = ht_name;
+	}
+
+	public String getA_code() {
+		return a_code;
+	}
+
+	public void setA_code(String a_code) {
+		this.a_code = a_code;
+	}
+
+	public int getPc_no() {
+		return pc_no;
+	}
+
+	public void setPc_no(int pc_no) {
+		this.pc_no = pc_no;
 	}
 }

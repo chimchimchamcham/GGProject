@@ -26,6 +26,7 @@ h2 {
 	/* 	text-align: center; */
 	display: inline-block;
 	margin-top: 30px;
+	
 }
 
 .content td {
@@ -47,6 +48,12 @@ h2 {
 	margin: 0px auto;
 	display: inline-block;
 }
+
+/*읽었을때*/
+.read{
+	opacity: 0.3;
+}
+
 </style>
 <body>
 	<h2>알람</h2>
@@ -63,7 +70,7 @@ h2 {
 				<td ><small>2021.08.06 13:43</small></td>
 			</tr>
 			<tr>
-				<td style="border-bottom:1px solid black; "></td>
+				<td style="border-bottom:1px solid black;"></td>
 			</tr>
 		</table>
 	</div>

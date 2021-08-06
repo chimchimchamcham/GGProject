@@ -447,20 +447,44 @@ public class BoardDAO {
 
 			// 유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
 			if (userid.equals(reseveid)) {
-				dto.setthisuserFlowingYN("<button class='hellow' onclick='flow_or_unflow()'>+팔로잉</button>");// N
-
-			} else if (userid.equals(sendid)) {
-				dto.setthisuserFlowingYN("<button class='hellow' onclick='flow_or_unflow()'>-팔로잉</button>");// Y
-
+				dto.setthisuserFlowingYN("<button class='hellow' onclick=flow_or_unflow"+"("+"," +"\'"+reseveid+"\'"+"," +"\'"+sendid+"\'"+")"+">+팔로잉</button>");//N
+			}else if (userid.equals(sendid)) {
+				dto.setthisuserFlowingYN("<button class='hellow' onclick=flow_or_unflow"+"("+"," +"\'"+reseveid+"\'"+"," +"\'"+sendid+"\'"+")"+">-팔로잉</button>");//Y
 			}
-
 			flowlist.add(dto);
 		}
 		System.out.println("flowlist:" + flowlist);
 		return flowlist;
 	}
 
+
 	// 구매요청
+			//delect or update
+			public ArrayList<GGDto> flowbut(String userid, String flow_addordelect, String reseveid, String sendid) throws SQLException {
+				String sql = "";
+				if (flow_addordelect == "-팔로우") {//내가 팔로잉 한사람을 팔로워 취소
+					sql = ""; 
+				} else if (flow_addordelect == "+팔로우") {//나를 팔로우 한사람을 팔로잉 추가
+					sql = "";
+				}
+
+				ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
+
+				System.out.println("flowlist:" + flowlist);
+
+				ps = conn.prepareStatement(sql);
+
+				System.out.println("daouserID:" + userid);
+
+				ps.setString(1, userid);
+				rs = ps.executeQuery();
+				System.out.println("rs:" + rs);
+
+				return null;
+			}
+
+	
+	//구매요청
 	public ArrayList<GGDto> reqlist(String userid, int reqindex) throws SQLException {
 		String sql = "";
 		String sid;
@@ -1112,12 +1136,22 @@ public class BoardDAO {
 		}
 		return success;
 	}
+	
+	//메서드 통합으로 인하여 주석처리
+	/*public String auctionDelete(int p_no) throws SQLException {
 
+<<<<<<< HEAD
 	public String auctionDelete(int p_no) throws SQLException {
 		// 경매글 삭제의 경우
 		// post 테이블 블라인드 여부 Y로 바꾸고
 		// auctionDetail 불러올시 블라인드여부가 Y이면서 session loginId 값이 p_id와 같으면(=판매자 본인) 보여지게하고
 		// 같지 않으면 보여지지 않게 한다.
+=======
+		//경매글 삭제의 경우 
+		//post 테이블 블라인드 여부 Y로 바꾸고
+		//auctionDetail 불러올시 블라인드여부가 Y이면서 session loginId 값이 p_id와 같으면(=판매자 본인) 보여지게하고
+		//같지 않으면 보여지지 않게 한다.
+>>>>>>> 8fa23dca1987325bff6c31f47423193401381de2
 		String delMsg = "경매글 삭제 실패";
 
 		String sql = "update post set p_blindyn = 'Y' where p_no=?";
@@ -1133,6 +1167,10 @@ public class BoardDAO {
 
 		return delMsg;
 
+<<<<<<< HEAD
 	}
+=======
+	
+	}*/
 
 }

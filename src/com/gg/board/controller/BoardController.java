@@ -179,14 +179,16 @@ public class BoardController extends HttpServlet {
 			
 			service.flow_list(userid,flowORflowing);
 			
-		case "/flowadddelect":
-			System.out.println("팔로잉리스트 리스트 요청");
-			req.setCharacterEncoding("utf-8");
-			userid = (String) req.getSession().getAttribute("loginId");
-			String flow_addordelect = req.getParameter("hellow");
-			
-			service.flow_button(userid,flow_addordelect);
-			break;
+			case "/flowadddelect":
+				System.out.println("팔로워 버튼 처리 요청");
+				req.setCharacterEncoding("utf-8");
+				userid = (String) req.getSession().getAttribute("loginId");
+				String flow_addordelect = req.getParameter("hellow");
+				String reseveid = req.getParameter("reseveid");
+				String sendid = req.getParameter("hellow");
+				
+				service.flow_button(userid,flow_addordelect,reseveid,sendid);
+				break;
 			
 		case "/requestlist":
 			System.out.println("거래요청리스트 요청");
@@ -495,7 +497,6 @@ public class BoardController extends HttpServlet {
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().println(new Gson().toJson(list_map));
 			break;
-			
 
 		case "/postDel":
 			System.out.println("게시글 삭제 요청");
@@ -511,11 +512,15 @@ public class BoardController extends HttpServlet {
 			break;
 
 			
-		case "/delAuction":
+		//메서드 통합으로 인하여 주석처리	
+		/*case "/delAuction":
+
 			System.out.println("경매글 삭제 요청");
+			p_no = Integer.parseInt(req.getParameter("p_no"));
 			req.setAttribute("delMsg", service.auctionDelete());
-			dis = req.getRequestDispatcher("auctionDetail.jsp");
+			dis = req.getRequestDispatcher("/auctionDetail?p_no="+p_no);
 			dis.forward(req, resp);
+			break;*/
 		}
 
 	}

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
+
 import com.gg.board.dao.BoardDAO;
 import com.gg.dto.GGDto;
 import com.gg.trade.dao.TradeDAO;
@@ -324,8 +326,22 @@ public void flow_list(String userid, int flowORflowing) throws IOException {
 	dao.resClose();
 }
 							//팔로워 버튼 +,- 여부 
-							public void flow_button(String userid, String flow_addordelect) {
-								System.out.println(flow_addordelect);
+							public void flow_button(String userid, String flow_addordelect, String reseveid, String sendid) throws IOException {
+								System.out.println("flow_addordelect:"+flow_addordelect);
+								if (flow_addordelect != null) {
+									BoardDAO dao = new BoardDAO();
+									try {
+										dao.flowbut(userid,flow_addordelect,reseveid,sendid);
+									} catch (SQLException e) {
+										e.printStackTrace();
+									}finally {
+										dao.resClose();
+	
+									}
+									dao.resClose();
+								}else {
+									System.out.println("null임");
+								}
 								
 							}
 //구매요청리스트
@@ -747,27 +763,40 @@ public void love_list(String userid, int index1, int index2) throws IOException 
 		return des;
 	}
 
+
 	public boolean postDel() {
 		String p_no = req.getParameter("p_no");
 		BoardDAO dao = new BoardDAO();
 		return dao.postDel(p_no);
 	}
-
-	public String auctionDelete() {
+	
+	//메서드 통합으로 인하여 주석처리 
+	/*public String auctionDelete() {
 		String delMsg = null;
 		int p_no = Integer.parseInt(req.getParameter("p_no"));
 		System.out.println("삭제할 경매 글 번호:"+p_no);
 		BoardDAO dao = new BoardDAO();
+		TradeDAO tdao = new TradeDAO();
+		boolean success = false;
 		try {
+			dao.conn.setAutoCommit(false);
+			tdao.conn.setAutoCommit(false);
 			delMsg = dao.auctionDelete(p_no);
+			System.out.println("[BoardDAO]/actionDelete delMsg : "+delMsg);
+			if(!delMsg.equals("")) {
+				success = tdao.updateAuctionAu_code(p_no, "Au003");
+			}
+			if(success) {
+				dao.conn.commit();
+				tdao.conn.commit();
+			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			dao.resClose();
 		}
+		dao.resClose();
+		tdao.resClose();
 		
 		return delMsg;
-	}
+	}*/
 
 }

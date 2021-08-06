@@ -71,7 +71,7 @@
     #first>div:nth-of-type(2)>p:last-child{text-align:center;margin:10px;}
     #first>div:nth-of-type(2)>p:last-child>a{text-decoration:none;color:#6E6E6E;font-size:1.3rem;}
     
-    #content_hide{width:1200px; height:1200px; background-color:gray; z-index:1000;}
+    #content_hide{position:fixed;width:1200px; height:1200px; background-color:gray; z-index:1000;}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -346,7 +346,7 @@
 	function delChk(){
 		var delChk = confirm("글을 삭제하시겠습니까?");
 		if(delChk){
-			location.href = "./auctionDetail?p_no="+${dto.p_no};
+			location.href = "./postDel?p_no="+${dto.p_no};
 			var delMsg = "${delMsg}";
 			alert(delMsg);
 		}
@@ -354,14 +354,14 @@
 	
 	//경매글 블라인드 체크 여부 확인
 	//판매자일경우 보이고 그 외의 사람들은 튕기기
-	var p_blindYN = "${dto.p_blindYN}";
+	/*var p_blindYN = "${dto.p_blindYN}";
 	if("${dto.p_blindYN}"=="Y"){
 		if("${sessionScope.loginId}"!="${dto.p_id}"){
 			$("#content_hide").show();
 			alert("삭제된 경매글 입니다.");
 			history.go(-1);
 		}
-	}
+	}*/
 	
 	
 	
