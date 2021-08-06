@@ -35,7 +35,8 @@ public class GGDto {
 	private String a_delYN; // 삭제여부 (없어도 될듯)
 	private String a_impoYN;// 중요여부
 	private String a_path; // 알람경로
-
+	private String a_code;//알람코드
+	
 	// 포인트
 	private int pnt_point; // 포인트 값
 	private Date pnt_tm; // 날짜
@@ -995,5 +996,13 @@ public class GGDto {
 
 	public void setHt_name(String ht_name) {
 		this.ht_name = ht_name;
+	}
+
+	public String getA_code() {
+		return a_code;
+	}
+
+	public void setA_code(String a_code) {
+		this.a_code = a_code;
 	}
 }
