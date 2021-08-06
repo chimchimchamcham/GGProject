@@ -23,7 +23,6 @@ public class AlarmService {
 		try {
 			dto = dao.ALlist(u_id,a_impoyn);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			dao.resClose();

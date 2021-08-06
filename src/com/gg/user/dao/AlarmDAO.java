@@ -82,19 +82,19 @@ public class AlarmDAO {
 		return dto;
 	}
 	
-	public void insertAlarm(String u_id,String a_code,String a_path) {
-		String a_content=null;//내용
-		String a_impoyn=null;//중요
-		
-		String sql = "INSERT INTO alarm(a_no,u_id,a_code,a_sendtm,a_content,a_impoyn,a_path) VALUES(a_no_seq.NEXTVAL, ?, ?, SYSDATE, ?, ?,?)";
-		if(a_code=="A001") {//댓글알람
-		
-		}else if(a_code=="A002"){//
-			
-		}else if(a_code=="A003") {
-			
-		}else if(a_code=="A004") {
-			
+	public void insertAlarm(String u_id,String a_code,String a_content,String a_impoyn,String a_path) throws SQLException {
+		String sql = "INSERT INTO alarm(a_no,u_id,a_code,a_sendtm,a_content,a_impoyn,a_path) VALUES(a_no_seq.NEXTVAL,?,?,SYSDATE,?,?,?)";
+		ps=conn.prepareStatement(sql);
+		ps.setString(1,u_id);
+		ps.setString(2,a_code);
+		ps.setString(3,a_content);
+		ps.setString(4,a_impoyn);
+		ps.setString(5,a_path);
+		int success = ps.executeUpdate();
+		if(success>0) {
+			System.out.println("-----알람이 전송 되었습니다.-----");
+			System.out.println(a_content);
+			System.out.println("------------------------------");
 		}
 	}
 
