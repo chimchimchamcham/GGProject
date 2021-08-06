@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet()
+import com.gg.dto.GGDto;
+import com.gg.user.service.AlarmService;
+
+@WebServlet({"/allALlst","/impALlst"})
 public class AlarmController extends HttpServlet {
 
 	
@@ -25,8 +28,29 @@ public class AlarmController extends HttpServlet {
 	}
 
 	private void dual(HttpServletRequest req, HttpServletResponse resp) {
+		String url = req.getRequestURI();
+		String ctx = req.getContextPath();
+		String addr =url.substring(ctx.length());
+		AlarmService service = null;
+		GGDto dto = null;
 		
 		
-	}
+		System.out.println("addr : "+addr);
+		
+		switch(addr) {
+		case "/allALlst":
+			System.out.println("알람 전체 목록 조회");
+			service = new AlarmService(req);
+			dto = new GGDto();
+			dto = service.allALlst();
+			
+		
+		case "/impALlst":
+			System.out.println("알람 중요 목록 조회");
+			service = new AlarmService(req);
+			dto = new GGDto();
+			dto = service.impALlst();
+		}
 	
+	}
 }
