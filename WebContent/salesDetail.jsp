@@ -228,7 +228,7 @@ section {
 	border-collapse: collapse;
 }
 
-.board_text {
+.board_text , .update_text {
 	border: 1px solid #D8D8D8;
 	width: 1190px;
 	height: 5vh;
@@ -253,8 +253,9 @@ section {
 	border: 1px solid black;
 	border-radius: 10px;
 	width: 1190px;
-	height: 10vh;
+	height: 150px;
 	margin-bottom: 10px;
+	
 }
 
 ;
@@ -336,12 +337,13 @@ section {
 
 .commentChange {
 	float: right;
+	cursor: hand;
+}
+#comm_update, #comm_del, .re{
 	cursor: pointer;
 }
-
 .commentChange:hover {
 	font-weight: bold;
-	color:
 }
 </style>
 <script
@@ -714,7 +716,7 @@ section {
 		list.forEach(function(item, idx) {
 
 					comment += "<tr><td>";
-					comment += "<div class = 'one-text'>";
+					comment += "<div class = 'one-text' id='"+item.pc_no+"'>";
 					comment += "<div class='one-img-time'>";
 					comment += "<div class='uploadimg'>";
 					comment += "<a id='commentNickname' href='./myPage?id="
@@ -729,15 +731,125 @@ section {
 					comment += "<div style='float:right;'>" + item.pc_tm
 							+ "</div>";
 					if( id == item.pc_id){
-					comment += "<div class='commentChange' id='comm_update'> 수정하기 </div> ";
-					comment += "<div class='commentChange' ><input type='text' value='"+item.pc_no+"' id='del_"+item.pc_no+"' hidden='hidden'/><label for='del_"+item.pc_no+"' id='comm_del'>삭제하기 </label></div>"
+					comment += "<div class='commentChange' ><input type='text' value='"+item.pc_no+"' id='update_"+item.pc_no+"' hidden='hidden'/><label for='update_"+item.pc_no+"' id='comm_update'> 수정하기 </label></div> ";
+					comment += "<div class='commentChange' ><input type='text' value='"+item.pc_no+"' id='del_"+item.pc_no+"' hidden='hidden'/><label for='del_"+item.pc_no+"' id='comm_del'>삭제하기 </label></div>";
 					}
+					//대댓글 영역
+					comment += "<div class='re_comment'><img src='./img/CommentArrow.png' style='float:right; width:30px; height: 30px; margin-top: 70px;' class='re' id='"+item.pc_no+"'></div>";
 					comment += "</div>";
 					comment += "</div>";
 					comment += "</td></tr>";
 				});
 		$(".board").empty();
 		$(".board").append(comment);
+	};
+
+	/* 대댓글 보여주며 쓰는 공간 만들어주기. */
+	$(document).on("click","img.re",function(){
+		var checker = $(this).attr("id");
+		console.log(checker);
+		var re_comm = {};
+		re_comm.pc_parentno = checker;
+		re_comm.p_no = "${dto.p_no}";
+		var comment ="";
+		
+		
+		$.ajax({
+			type: "POST",
+			data: re_comm,
+			dataType: "JSON",
+			url: "showReComment",
+			success : function(data){ 
+				console.log("대댓글 리스트 보여주기.");
+				console.log(data.list);
+			},
+			error : function(e) {
+				console.log(e);
+			}
+			
+			
+		
+		
+		
+		});
+	
+	
+	});
+	
+	/* 대댓글 추가하기 */
+	function plus_reComm(){
+		$.ajax({
+			type: "GET",
+			url : "re_comment",
+			data : re_comm,
+			dataType: "JSON",
+			success : function(data){
+				console.log("성공");
+			},
+			error : function(e){
+				console.log(e);	
+			}
+		});
+	};
+	
+	
+
+	
+	var check = true;
+	var update_no ={};
+	/* 수정 버튼 */
+	$(document).on('click','label#comm_update', function(){
+		var update_comm = $(this).attr("for");
+		console.log(update_comm);
+		update_comm = update_comm.substring(7); // update_ 부분을 잘라 idx만 가져오기input[id='update_"+ "']")
+		update_no.pc_no = update_comm;
+		console.log("변환 후 ", update_comm);
+
+		var update_comment ="";
+		update_comment += "<div class='updater'><textarea class='update_text' maxlength='300' placeholder='300자 제한입니다.' style='resize: none;'></textarea>";
+		update_comment += "<input type='text' value='"+update_comm + "' hidden='hidden'>";
+		update_comment += "<div class='update_button'><button class='update_enter' style='float:right'>수정</button></div>";
+		update_comment += "</div>";
+		if(check){
+			$(".updater").remove();
+			$(".one-text#"+update_comm).append(update_comment);
+			check = false;
+		}else {
+			$(".updater").remove();
+			check = true;
+		}
+		console.log(check);	
+		
+	});
+	// 수정 버튼 클릭 시.
+	$(document).on("click",".update_button",function(){
+		console.log("수정 버튼 클릭");
+		console.log(update_no.pc_no); // 해당 번호 클릭.
+		update_no.context = $(".update_text").val();
+		comm_update(update_no);
+	});
+	
+	
+	
+	
+	
+	/* 수정 기능 */
+	function comm_update(update_no){
+		
+		$.ajax({
+			type: "POST",
+			url : "comm_update",
+			data: update_no,
+			dataType : "JSON",
+			success : function(data){
+				console.log("성공");
+				commentListCall();
+				check=true;
+			},
+			error : function(e){
+				console.log("에러");		
+			}
+		});
 	}
 	
 	/* 삭제 버튼 */
@@ -761,9 +873,7 @@ section {
 			error : function(e){
 				console.log("에러");		
 			}
-		
 		});
-
 	});
 	
 	
@@ -777,13 +887,15 @@ section {
 					+ N_receiveId, "notifyPopup",
 					"width=400, height=400, left=700, top=400");
 	});
+	
+	
 	/*글자수 제한*/
-	$(".board_text").on('keyup', function() {
+	$(".board_text, .update_text").on('keyup', function() {
 		$('#board_text_controll').html("(" + $(this).val().length + " / 300)");
 
 		if ($(this).val().length > 300) {
 			$(this).val($(this).val().substring(0, 300));
-			$('#board_text_controll').html("(300 / 300)");
+			$('#board_text_controll, update_text_controll').html("(300 / 300)");
 		}
 	});
 	// 경매 리스트 end

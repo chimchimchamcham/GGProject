@@ -46,26 +46,28 @@
 	cursor: pointer;
 	border: 3px solid black;
 }
+input[name="currPage"]{
+	display:none;
+}
 </style>
 <body>
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
 		<h3>커뮤니티</h3>
 		<input type="checkbox" id="C001" class="category" name="C001"
-			value="C001" checked /><label class="commLagel" for="C001">#
-			구매대행</label> <input type="checkbox" id="C002" class="category" name="C002"
-			value="C002" checked /><label class="commLagel" for="C002">#
-			동네이야기</label> <input type="checkbox" id="C003" class="category" name="C003"
-			value="C003" checked /><label class="commLagel" for="C003">#
-			같이해요</label> <input type="checkbox" id="C004" class="category" name="C004"
-			value="C004" checked /><label class="commLagel" for="C004">#
-			자랑해요</label> <input type="checkbox" id="C005" class="category" name="C005"
-			value="C005" checked /><label class="commLagel" for="C005">#
-			공유해요</label> <input type="checkbox" id="C006" class="category" name="C006"
-			value="C006" checked /><label class="commLagel" for="C006">#
-			잡담해요</label> <input type="checkbox" id="C007" class="category" name="C007"
-			value="C007" checked /><label class="commLagel" for="C007">#
-			홍보해요</label>
+			value="C001" checked /><label class="commLagel" for="C001"># 구매대행</label> 
+		<input type="checkbox" id="C002" class="category" name="C002"
+			value="C002" checked /><label class="commLagel" for="C002"># 동네이야기</label>
+		<input type="checkbox" id="C003" class="category" name="C003"
+			value="C003" checked /><label class="commLagel" for="C003"># 같이해요</label> 
+		<input type="checkbox" id="C004" class="category" name="C004"
+			value="C004" checked /><label class="commLagel" for="C004"># 자랑해요</label> 
+		<input type="checkbox" id="C005" class="category" name="C005"
+			value="C005" checked /><label class="commLagel" for="C005"># 공유해요</label> 
+		<input type="checkbox" id="C006" class="category" name="C006"
+			value="C006" checked /><label class="commLagel" for="C006"># 잡담해요</label> 
+		<input type="checkbox" id="C007" class="category" name="C007"
+			value="C007" checked /><label class="commLagel" for="C007"># 홍보해요</label>
 		<div id="tableHeader">
 			<table>
 				<thead>
@@ -83,7 +85,10 @@
 				</thead>
 				<tbody id="listBody"></tbody>
 			</table>
-			<div id="pageNum"></div>
+			<div id="pageNum">
+				<input type="checkbox" name="currPage" id = "currPage" style="display:none" value="1" checked />
+				<label class="commLagel" for="currPage">1</label>
+			</div>
 		</div>
 	</div>
 </body>
@@ -114,7 +119,7 @@
 			}
 		});
 	}
-	$("input.category").change(function() {
+	$("input.category, input[name=currPage]").change(function() {
 		$("input.category:checked").each(function(idx, value) { //jQuery로 for문 돌면서 check 된값 배열에 담는다
 			lists.push($(this).val());
 		});
@@ -123,7 +128,7 @@
 			type : "POST",
 			data : {
 				'categorys' : lists,
-				'currPage' : "1"
+				'currPage' : $(input[name=currPage]).val()
 			},
 			url : "commList",
 			dataType : 'JSON',
@@ -136,9 +141,6 @@
 				console.log(e);
 			}
 		});
-	});
-
-	$(".category").change(function() {
 		if ($(this).is(":checked")) {
 			$(this).next("label").css({
 				"color" : "white",
@@ -177,8 +179,9 @@
 		$("tbody#listBody").append(content);
 		// 페이지 번호 뽑아주기.
 		content = "";
-		for (let i = 1; i <= list[0].totalPage; i++) {
-			content +="<span>"+i+"</span>";
+		for (let i = 2; i <= list[0].totalPage; i++) {
+			content +="<input type='checkbox' name='currPage' id = 'currPage' value='"+i+"'/>";
+			content +="<label class='commLagel' for='currPage'>"+i+"</label>"
 		}
 		$("div#pageNum").empty();
 		$("div#pageNum").append(content);

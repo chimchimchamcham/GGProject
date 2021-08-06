@@ -185,7 +185,7 @@ public class BoardController extends HttpServlet {
 				userid = (String) req.getSession().getAttribute("loginId");
 				String flow_addordelect = req.getParameter("hellow");
 				String reseveid = req.getParameter("reseveid");
-				String sendid = req.getParameter("hellow");
+				String sendid = req.getParameter("sendid");
 				
 				//service.flow_button(userid,flow_addordelect,reseveid,sendid);
 				break;

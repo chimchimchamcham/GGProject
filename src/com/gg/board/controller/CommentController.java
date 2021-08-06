@@ -14,9 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.gg.board.service.BoardService;
 import com.gg.board.service.CommentService;
 import com.gg.dto.GGDto;
+import com.gg.trade.controller.PostCommentController;
+import com.gg.trade.service.PostCommentService;
 import com.google.gson.Gson;
 
-@WebServlet({"/commentlist","/pushComment","/commentListCall","/comm_del"})
+@WebServlet({"/commentlist","/pushComment","/commentListCall","/comm_del","/comm_update","/re_comment","/showReComment"})
 public class CommentController extends HttpServlet {
 
 	
@@ -96,7 +98,7 @@ public class CommentController extends HttpServlet {
 			break;
 			
 		case "/comm_del":
-			System.out.println("DAO 진입");
+			System.out.println("댓글 삭제 컨트롤러 진입");
 			int pc_no = Integer.parseInt(req.getParameter("pc_no"));
 			System.out.println(pc_no);
 			
@@ -104,6 +106,38 @@ public class CommentController extends HttpServlet {
 			
 			map = new HashMap<String, Object>();
 			map.put("success", success);
+			resp.getWriter().println(new Gson().toJson(map));
+			
+			break;
+			
+		case "/comm_update":
+			System.out.println("댓글 수정 진입");
+			pc_no = Integer.parseInt(req.getParameter("pc_no"));
+			System.out.println(pc_no);
+			String pc_context = req.getParameter("context");
+			success = service.comm_update(pc_no,pc_context);
+			
+			
+			map = new HashMap<String, Object>();
+			map.put("success", success);
+			resp.getWriter().println(new Gson().toJson(map));
+			
+			
+			break;
+		case "/re_comment":
+			System.out.println("대댓글 달기 시작");
+			
+			
+			break;
+		case "/showReComment":
+			System.out.println("대댓글 리스트 보여주기.");
+			pc_parentno = Integer.parseInt(req.getParameter("pc_parentno"));
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			System.out.println("글 번호 :"+p_no+" 부모 댓글 번호 : " +pc_parentno);
+			list = service.showReComment(p_no,pc_parentno);
+			
+			map = new HashMap<String, Object>();
+			map.put("list", list);
 			resp.getWriter().println(new Gson().toJson(map));
 			
 			break;

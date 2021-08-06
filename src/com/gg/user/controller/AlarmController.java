@@ -1,6 +1,8 @@
 package com.gg.user.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.gg.dto.GGDto;
 import com.gg.user.service.AlarmService;
 
-@WebServlet({"/alarmlist"})
+@WebServlet({"/alarmlist","/readAlarm"})
 public class AlarmController extends HttpServlet {
 
 	
@@ -36,19 +38,33 @@ public class AlarmController extends HttpServlet {
 		AlarmService service = null;
 		GGDto dto = null;
 		RequestDispatcher dis = null;
+		String page = null;
 		
 		System.out.println("addr : "+addr);
 		
 		switch(addr) {
 		case "/alarmlist":
 			System.out.println("알람 목록 조회");
+			ArrayList<GGDto> list = new ArrayList<GGDto>();
 			service = new AlarmService(req);
-			dto = new GGDto();
-			dto = service.ALlist();	
+			list = service.ALlist();	
 			
-			req.setAttribute("dto", dto);
-			dis = req.getRequestDispatcher("");
+			page ="./popup/alarmPop.jsp"; 
+			
+			req.setAttribute("list", list);
+			dis = req.getRequestDispatcher(page);
 			dis.forward(req,resp);
+			
+			break;
+			
+		case "/readAlarm":
+			System.out.println("알람 읽음 처리");
+			service = new AlarmService(req);
+		
+			service.readAlarm();
+			
+			break;
+			
 		}
 	
 	}
