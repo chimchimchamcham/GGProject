@@ -459,38 +459,45 @@ public class BoardDAO {
 		return flowlist;
 	}
 			//delect or update
-			public ArrayList<GGDto> flowbut(String userid, String flow_addordelect, String reseveid, String sendid) throws SQLException {
+			
+	
+	public int flowbut(String userid, String flow_addordelect, String nick) throws SQLException {
 				String sql = "";
+				int success = 0;
+				System.out.println("useriddao:" + userid);
+				System.out.println("flow_addordelectdao:" + flow_addordelect);
 				
-				if (flow_addordelect == "+팔로우") {//나를 팔로잉 한사람 팔로워 추가
-					sql = "DELETE FROM follow where  f_receiveid = ? and f_sendid = ?";
+				System.out.println("ninkdao:" + nick);
+				
+				if (flow_addordelect.equals("+팔로우")){//나를 팔로잉 한사람 팔로워 추가
+					sql = "insert into follow VALUES (?,(select u_id from userinfo where userinfo.u_nname = ?),sysdate)";
 					//f_receiveid == 유저아이디
 					//f_sendid == 팔로잉한 아이디
 					//u.u_id == 팔로잉 받는 아이디
 					
-					ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
-					System.out.println("flowlist:" + flowlist);
+					System.out.println("useriddao:" + userid);
+					System.out.println("ninkdao:" + nick);
+					
 					ps = conn.prepareStatement(sql);
-					System.out.println("daouserID:" + userid);
 					ps.setString(1, userid);
-					ps.setString(2, sendid);
-					rs = ps.executeQuery();
-					System.out.println("rs:" + rs);
+					ps.setString(2, nick);
+					System.out.println("ps:" + ps);
+					success = ps.executeUpdate();
 					
-				} else if (flow_addordelect == "-팔로우") {//내가 팔로잉 한사람 팔로워 취소
-					sql = "insert into follow VALUES(?,?,sysdate)";
+				}else if (flow_addordelect.equals("-팔로우")) {//내가 팔로잉 한사람 팔로워 취소
+					sql = "DELETE FROM follow WHERE  f_receiveid = ? and f_sendid = (select u_id from userinfo where userinfo.u_nname = ?)";
 					
-					ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
-					System.out.println("flowlist:" + flowlist);
+					System.out.println("useriddao:" + userid);
+					System.out.println("ninkdao:" + nick);
+					
 					ps = conn.prepareStatement(sql);
-					System.out.println("daouserID:" + userid);
-					ps.setString(1, reseveid);
-					ps.setString(2, userid);
-					rs = ps.executeQuery();
-					System.out.println("rs:" + rs);
+					ps.setString(1, userid);
+					ps.setString(2, nick);
+					System.out.println("ps:" + ps);
+					success = ps.executeUpdate();
+				
 				}
-				resClose();
-				return null;
+				return success;
 			}
 
 	

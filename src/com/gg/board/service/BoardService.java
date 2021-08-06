@@ -326,14 +326,22 @@ public void flow_list(String userid, int flowORflowing) throws IOException {
 	dao.resClose();
 }
 							//팔로워 버튼 +,- 여부 
-							public void flow_button(String userid,String flow_addordelect, String reseveid, String sendid) throws IOException {
-								System.out.println("flow_addordelect:"+flow_addordelect);
+							public void flow_button(String userid,String flow_addordelect, String nick) throws IOException {
+								
+								  System.out.println("userid_service:"+userid);
+								  System.out.println("flow_addordelect_service:"+flow_addordelect);
+								  System.out.println("nick_service:"+nick);
+								 
 								if (flow_addordelect != null) {
 									BoardDAO dao = new BoardDAO();
+									int success; 
 									try {
-										dao.flowbut(userid,flow_addordelect,reseveid,sendid);
+										success = dao.flowbut(userid, flow_addordelect, nick);
+										System.out.println(success);
 									} catch (SQLException e) {
 										e.printStackTrace();
+									}finally {
+										dao.resClose();
 									}
 								}else {
 									System.out.println("null임");

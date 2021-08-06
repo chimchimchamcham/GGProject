@@ -183,11 +183,17 @@ public class BoardController extends HttpServlet {
 				System.out.println("팔로워 버튼 처리 요청");
 				req.setCharacterEncoding("utf-8");
 				userid = (String) req.getSession().getAttribute("loginId");
-				String flow_addordelect = req.getParameter("hellow");
-				String reseveid = req.getParameter("reseveid");
-				String sendid = req.getParameter("sendid");
+				String flow_addordelect = req.getParameter("btntext");
+				String nick = req.getParameter("nick");
 				
-				service.flow_button(userid,flow_addordelect,reseveid,sendid);
+				/*
+				 * System.out.println("userid:"+userid);
+				 * System.out.println("flow_addordelect:"+flow_addordelect);
+				 * System.out.println("nick:"+nick);
+				 */
+				
+				
+				service.flow_button(userid,flow_addordelect,nick);
 				break;
 			
 		case "/requestlist":

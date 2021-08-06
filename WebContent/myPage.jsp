@@ -688,7 +688,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				 $.ajax({
 					type:'post',
 					url:'./flowadddelect',
-					data:{ btntext:btntext,nick:nick},
+					data:{ btntext : btntext,nick : nick},
 					dataType:'JSON',
 					success:function(data){
 							if ($index_button_f.text() == '+팔로잉') {
