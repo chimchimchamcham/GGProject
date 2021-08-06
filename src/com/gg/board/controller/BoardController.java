@@ -21,7 +21,7 @@ import com.google.gson.Gson;
 
 
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
-	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
+	"/maidelist", "/writeForm", "/writeSale", "/writeTrade","/postDel",
 		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" 
 		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate","/flowlist","/requestlist","/lovelist","/delAuction","/flowadddelect"})
 
@@ -495,9 +495,24 @@ public class BoardController extends HttpServlet {
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().println(new Gson().toJson(list_map));
 			break;
+
+		case "/postDel":
+			System.out.println("게시글 삭제 요청");
+			success = false;
+			msg = null;
+			success = service.postDel();
+			if(success) {
+				msg = "삭제에 성공했습니다.";
+			}
+			req.setAttribute("msg", msg);
+			dis = req.getRequestDispatcher("index.jsp");
+			dis.forward(req, resp);
+			break;
+
 			
-		//메서드 통합으로 인하여 주석처리 	
+		//메서드 통합으로 인하여 주석처리	
 		/*case "/delAuction":
+
 			System.out.println("경매글 삭제 요청");
 			p_no = Integer.parseInt(req.getParameter("p_no"));
 			req.setAttribute("delMsg", service.auctionDelete());

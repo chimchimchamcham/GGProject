@@ -750,6 +750,13 @@ public void love_list(String userid, int index1, int index2) throws IOException 
 		return des;
 	}
 
+
+	public boolean postDel() {
+		String p_no = req.getParameter("p_no");
+		BoardDAO dao = new BoardDAO();
+		return dao.postDel(p_no);
+	}
+	
 	//메서드 통합으로 인하여 주석처리 
 	/*public String auctionDelete() {
 		String delMsg = null;
@@ -778,13 +785,5 @@ public void love_list(String userid, int index1, int index2) throws IOException 
 		
 		return delMsg;
 	}*/
-
-
-
-
-
-
-
-
 
 }
