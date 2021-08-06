@@ -61,16 +61,20 @@ public class UploadController extends HttpServlet {
 			service = new UploadService(req);
 			dao = new UploadDAO();
 			cheker = 0;
+			// 새로올린 파일이 있는지 확인하고 그 이름을 dto의 I_newName()에 담음
 			GGDto dto = service.PhotoUpload();
 			
 			//기존사진 이름 가져와서 delFileName에 넣음
-			String delFileName = dao.getFileName(dto.getP_no()).getI_newName();
+			String delFileName = dao.getFileName(dto.getP_no());
 			System.out.println("삭제할 사진 파일 : "+ delFileName);
 			
 			if(delFileName != null ) {
+				// DB에 파일의 이름을 업데이트
 				cheker = dao.PhotoUpdate(dto);
 				//기존 파일을 지우고
 				service.del(delFileName);
+			}else {
+				cheker = dao.PhotoUpload(dto);
 			}
 			
 			map = new HashMap<String, Object>();

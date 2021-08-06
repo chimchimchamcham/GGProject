@@ -142,7 +142,7 @@ public void buyNow(){
 		String rq_YN = req.getParameter("rq_YN");
 		int p_no = Integer.parseInt(req.getParameter("p_no"));
 		String t_saler = (String) req.getSession().getAttribute("loginId");
-		String t_buyer = req.getParameter("t_buyer");
+		String t_buyer = req.getParameter("rq_id");
 		
 		boolean success = false;
 		TradeDAO dao = new TradeDAO();

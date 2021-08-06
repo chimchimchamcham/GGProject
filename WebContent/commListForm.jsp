@@ -31,6 +31,8 @@
 .commLagel{
 	color:white;
 	background-color:black;
+	cursor:pointer;
+	border:3px solid black;
 }
 </style>
 <body>
@@ -105,9 +107,9 @@ $.ajax({
  
  $(".category").change(function(){
     if($(this).is(":checked")){
-    	$(this).next("label").css({"color":"white","background-color":"black"});
+    	$(this).next("label").css({"color":"white","background-color":"black", "border":"3px solid black"});
     }else{
-    	$(this).next("label").css({"color":"black","background-color":"white"});
+    	$(this).next("label").css({"color":"black","background-color":"white", "border":"3px solid white"});
     }
  });
 
