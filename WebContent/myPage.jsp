@@ -652,7 +652,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			console.log('flowlist:'+flowlist.length);
 
 			flowlist.forEach(function(item,idx){
-				users[idx] = item.u_nname;
+
 				content += "<div class='item-one-flow'>"
 					content += "<div class='img-zoon'><img src='/photo"+item.u_newname+"'></div>"
 					content += "<div class='flowerusername'>"+item.u_nname+"</div>"
@@ -667,36 +667,50 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			var aaa=  $(".count").text();
 			
 			}//팔로워 팔로잉 리스트 end
-					function flow_or_unflow(reseveid,sendid){//버튼을 누르면 flow_or_unflow함수 실행
-								    $button1 = $("button.hellow");
-								    $index1 = $button1.index(this);
-								    $index_button_f = $("button.hellow:eq(" + $index1 + ")");
-								    
-								    $user_div = $("div div.flowerusername");
-								    
-								    var udt = $user_div;
+			
+			
+			$(document).on("click","button.hellow",function(){//버튼을 누르면 함수 실행,동적으로 실행
+				
+				alert('팔로잉,언팔로잉 하였습니다')
+  		 		$button1 = $("button.hellow");
+    	 		$index1 = $button1.index(this);
+  	 	 		$index_button_f = $("button.hellow:eq(" + $index1 + ")");
+				var	btntext = $index_button_f.text();
 
-								   
-								    
-								    var hellow = $index_button_f.text();
+  	 	 		$user_id = $('div.flowerusername');
+  	 	 		$index_user_id = $("div.flowerusername:eq(" + $index1 + ")");
+  	 	 		$index_user_text = $index_user_id.text();	
+  	 	 		var nick = $index_user_text;
+  	 	 		
+  	 	 		console.log(btntext);
+  	 	 		console.log(nick);
+  	 	 		
+				 $.ajax({
+					type:'post',
+					url:'./flowadddelect',
+					data:{ btntext:btntext,nick:nick},
+					dataType:'JSON',
+					success:function(data){
+							if ($index_button_f.text() == '+팔로잉') {
+								console.log('-팔로잉');
+								$index_button_f.text('-팔로잉');
+							}else if ($index_button_f.text() == '-팔로잉') {
+								console.log('+팔로잉');
+								$index_button_f.text('+팔로잉');	
+							}
+					},
+					error:function(e){
+						console.log(e);
+					}
+				}); 
 
-									$.ajax({
-										type:'post',
-										url:'./flowadddelect',
-										data:{  hellow : hellow,
-												reseveid : reseveid,
-												sendid : sendid },
-										dataType:'JSON',
-										success:function(data){
-											console.log("data",data);
-
-										},
-										error:function(e){
-											console.log(e);
-										}
-									});
-
-						}
+			})
+			
+					
+									
+									
+									
+					
 		
 		//데이터 가져와서 뿌려주는 구매요청 리스트
 		function request_list(reqlist){
