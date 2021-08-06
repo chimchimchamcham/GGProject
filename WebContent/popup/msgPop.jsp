@@ -37,6 +37,10 @@ margin-top:20px;
 	margin:10px 0 0 0;
 }
 
+.content img:hover{
+opacity:0.9;
+}
+
 .tableWrap{
 	text-align:center;
 }
@@ -45,7 +49,7 @@ background-color: #f7f7f7;
 }
 
 .content td{
-	border: 1px solid black; 
+	/* border: 1px solid black;  */
 }
 
 #buttonTwo {
@@ -57,12 +61,16 @@ background-color: #f7f7f7;
 }
 
 #buttonTwo button {
-	width: 70px;
+	width: 90px;
 	text-align: center;
 	margin: 0px auto;
 	display: inline-block;
 }
 
+a{
+	text-decoration: none;
+	color: black;
+}
 /*읽었을때*/
 .read {
 	opacity: 0.3;
@@ -72,19 +80,18 @@ background-color: #f7f7f7;
 	<h2>쪽지</h2>
 	<div id="msgWrap">
 		<div id="buttonTwo">
-			<button id="receiveBtn">받은 쪽지</button>
+			<button id="receiveBtn">받은 쪽지(20)</button>
 			<button id="sendBtn">보낸 쪽지</button>
 		</div>
 		<div class="tableWrap">
 		<table class="content">
 				<tr>
 					<td rowspan="2"><a href="#"><img src="../test/default-profile.png" width="60"></a></td>
-					<th style="width:240px;  padding:0 20px; text-align: left;">ㅇㅇㅇ님과 거래중</th>
-					<td rowspan="2"><button>삭제</button></td>
+					<th ><a href="#"><p style="width:310px;  padding:0 20px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">안녕하세요? 이거 살려고하는데요^^하하하하하하하하</p></a></th>
+					<td rowspan="2"><button class="delBtn">삭제</button></td>
 				</tr>
 				<tr>
-					<td><p  style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width:240px; padding:0 20px; text-align: left;">
-					안녕하세요~~!!@#^^^호ㅓㅎ외ㅓㅗ이ㅏㅓ노리아ㅓ로이ㅏ러ㄹ하어ㅣ헝라ㅣ허;하넝ㄹ</p>
+					<td><p  style="width:310px; padding:0 20px; text-align: left;"><a href="#">보낸자</a> | 2021.08.06 13:45</p>
 					</td>	
 				</tr>
 					<tr>
@@ -95,11 +102,12 @@ background-color: #f7f7f7;
 	</div>
 </body>
 <script>
-
-	/*클릭시 거래페이지 팝업*/
-	$(".content").click(function(){
-		console.log("쪽지 상세 팝업");
+	
+	/*쪽지 삭제*/
+	$(".delBtn").click(function(){
+		console.log("쪽지 삭제");
 	});
+	
 	
 </script>
 </html>
