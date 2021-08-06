@@ -1104,35 +1104,39 @@ public class BoardDAO {
 
 	}
 
-	public ArrayList<GGDto> commList(String code) {
-		ArrayList<GGDto> list = new ArrayList<GGDto>();
+	public ArrayList<GGDto> commList(String[] categorys) {
+
 		String sql = "SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code "
 				+ "INNER JOIN userinfo u on p.p_id = u.u_id " + "LEFT OUTER JOIN love l ON p.p_no = l.p_no "
 				+ "LEFT OUTER JOIN img i ON p.p_no = i.p_no "
-				+ "WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_cate IN (";
-		// 추가된 문자열을 추가함.
+				+ "WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_cate = ?";
+		ArrayList<GGDto> list = new ArrayList<GGDto>();
 		GGDto dto = null;
-		sql += code;
+
 		try {
 			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				dto = new GGDto();
-				dto.setC_name(rs.getString("c_name"));
-				dto.setP_title(rs.getString("p_title"));
-				dto.setU_id(rs.getString("p_id"));
-				dto.setU_nname(rs.getString("u_nname"));
-				dto.setP_tm(rs.getDate("p_tm"));
-				dto.setP_view(rs.getInt("p_view"));
-				dto.setP_likeCount(rs.getInt("p_likecount"));
-				dto.setP_no(rs.getInt("p_no"));
-				list.add(dto);
+			for (String a : categorys) {
+				ps.setString(1, a);
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					dto = new GGDto();
+					dto.setC_name(rs.getString("c_name"));
+					dto.setP_title(rs.getString("p_title"));
+					dto.setU_id(rs.getString("p_id"));
+					dto.setU_nname(rs.getString("u_nname"));
+					dto.setP_tm(rs.getDate("p_tm"));
+					dto.setP_view(rs.getInt("p_view"));
+					dto.setP_likeCount(rs.getInt("p_likecount"));
+					dto.setP_no(rs.getInt("p_no"));
+					list.add(dto);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			resClose();
 		}
+		System.out.println(list.size());
 		return list;
 
 	}
@@ -1166,7 +1170,7 @@ public class BoardDAO {
 		}
 		return success;
 	}
-
+	
 	// 메서드 통합으로 인하여 주석처리
 	/*
 	 * public String auctionDelete(int p_no) throws SQLException {
@@ -1187,5 +1191,4 @@ public class BoardDAO {
 	 * 
 	 * }
 	 */
-
 }

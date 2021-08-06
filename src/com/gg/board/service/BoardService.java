@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.Session;
-
 import com.gg.board.dao.BoardDAO;
 import com.gg.dto.GGDto;
 import com.gg.trade.dao.TradeDAO;
@@ -718,19 +718,23 @@ public class BoardService {
 	}
 
 	public ArrayList<GGDto> commList() {
-
-		String code = "";
-		String[] list = req.getParameterValues("categorys[]");// ajax에서 배열 형태로 보낼때 받는 방법
-		for (String a : list) {
-			if (a == "null") {
-			}
-			code += a;
-		}
-		code = code.substring(0, code.length() - 1) + ")";
-		// 마지막 문자 자르고 ) 를 추가해서 sql문을 완성
+		int currPage = Integer.parseInt(req.getParameter("currPage"));//지금 페이지 번호를 받는 것.
+		int pagePerCnt = 14; 
+		int end = currPage*pagePerCnt; 
+		int start = end - pagePerCnt +1;
+		String[] categorys = req.getParameterValues("categorys[]");//ajax에서 배열 형태로 보낼때 받는 방법
 		BoardDAO dao = new BoardDAO();
-
-		return dao.commList(code);
+		ArrayList<GGDto> commList = new ArrayList<GGDto>();
+		commList = dao.commList(categorys);
+		int totalPage = (int)Math.ceil((double)commList.size()/(double)pagePerCnt); //전체 페이지 넘버를 반환. -나누는 값들을 double으로 명시해야 올림한 정확한 값이 나옴
+		// 전체 ArrayList에서 특정 페이지의 목록들을 잘라내는 과정 (ArrayList에서 잘라줌) - 이때 List로 반환됨.
+		List<GGDto> list = commList.subList(start-1, end);	// 14개의 리스트를 자르기 위하여 사용.
+		// List를 ArrayList로 변환.
+		ArrayList<GGDto> arrayList = new ArrayList<GGDto>();
+		arrayList.addAll(list);
+		arrayList.get(0).setTotalPage(totalPage); //0번째 dto에 totalPage를 넣어줌.
+		System.out.println("arrayList : "+arrayList.size());
+		return arrayList;
 	}
 
 	/* 판매 글 수정 */
@@ -794,6 +798,16 @@ public class BoardService {
 		return dao.postDel(p_no);
 	}
 
+	/*
+	 * 메서드 통합으로 주석 처리
+	 * public String auctionDelete() { String delMsg = null; int p_no =
+	 * Integer.parseInt(req.getParameter("p_no"));
+	 * System.out.println("삭제할 경매 글 번호:"+p_no); BoardDAO dao = new BoardDAO(); try {
+	 * delMsg = dao.auctionDelete(p_no); } catch (SQLException e) { // TODO
+	 * Auto-generated catch block e.printStackTrace(); }finally { dao.resClose(); }
+=======
+=======
+>>>>>>> 7803e8c5eb2476215148d00de6d8adaa7cd332c3
 	// 메서드 통합으로 인하여 주석처리
 	/*
 	 * public String auctionDelete() { String delMsg = null; int p_no =
@@ -806,6 +820,10 @@ public class BoardService {
 	 * if(!delMsg.equals("")) { success = tdao.updateAuctionAu_code(p_no, "Au003");
 	 * } if(success) { dao.conn.commit(); tdao.conn.commit(); } } catch
 	 * (SQLException e) { e.printStackTrace(); } dao.resClose(); tdao.resClose();
+<<<<<<< HEAD
+>>>>>>> 7803e8c5eb2476215148d00de6d8adaa7cd332c3
+=======
+>>>>>>> 7803e8c5eb2476215148d00de6d8adaa7cd332c3
 	 * 
 	 * return delMsg; }
 	 */

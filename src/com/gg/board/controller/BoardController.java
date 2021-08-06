@@ -194,6 +194,7 @@ public class BoardController extends HttpServlet {
 				
 				
 				service.flow_button(userid,flow_addordelect,nick);
+
 				break;
 			
 		case "/requestlist":
