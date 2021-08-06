@@ -37,8 +37,8 @@
       });
 
       /*알람 팝업*/
-     $(".alarmA").click(function(){
-        window.open("./popup/alarmPop.jsp", "chargePop", "width=500, height=500, left=850, top=150");
+     $(".alarmA").click(function(){ //./popup/alarmPop.jsp
+        window.open("./alarmlist?u_id="+loginId+"&a_impoyn=N", "alarmPop", "width=500, height=500, left=850, top=150");
       });
       
       
@@ -380,7 +380,7 @@ body {
             <!-- 로그인이 되어있을 때 -->
             <c:if test="${loginId ne null}"> 
                <!-- 사용자 상단바 -->
-          <button id="writeBtn" onclick="location.href='writeForm.jsp'">글쓰기</button>  
+          <button id="writeBtn" onclick="location.href='writeForm'">글쓰기</button>  
              	<a href="logout"  class="logoutA">로그아웃</a>
              	<a href="#"  class="myPageA">마이페이지</a>
              <c:if test="${adminYN eq 'Y'}">
@@ -435,9 +435,6 @@ body {
    </div>
 </body>
 <script>
-$("#allAL").click(function(){
-	$()
-})
 
 </script>
 

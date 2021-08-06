@@ -107,4 +107,48 @@ public class CommentService {
 		return success;
 	}
 
+
+
+	public boolean comm_update(int pc_no, String pc_context) {
+		System.out.println("댓글 수정 서비스 진입");
+		boolean success = false;
+		CommentDAO dao = new CommentDAO();
+		
+		try {
+			success = dao.comm_update(pc_no,pc_context);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		
+		
+		return success;
+	}
+
+
+
+	public ArrayList<GGDto> showReComment(int p_no, int pc_parentno) {
+		System.out.println("대댓글 보여주기 서비스 진입.");
+		CommentDAO dao = new CommentDAO();
+		GGDto dto = new GGDto();
+		dto.setP_no(p_no);
+		dto.setPc_parentno(pc_parentno);
+		ArrayList<GGDto> list= null;
+		try {
+			list = dao.showReComment(dto);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		
+		
+		return list;
+	}
+
 }

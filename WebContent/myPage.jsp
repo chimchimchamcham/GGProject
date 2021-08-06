@@ -669,40 +669,85 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			}//팔로워 팔로잉 리스트 end
 			
 			
-			$(document).on("click","button.hellow",function(){//버튼을 누르면 함수 실행,동적으로 실행
-				
-				alert('팔로잉,언팔로잉 하였습니다')
-  		 		$button1 = $("button.hellow");
-    	 		$index1 = $button1.index(this);
-  	 	 		$index_button_f = $("button.hellow:eq(" + $index1 + ")");
-				var	btntext = $index_button_f.text();
+			$(document).on("click","button.hellow,button.unhellow",function(){//버튼을 누르면 함수 실행,동적으로 실행
 
-  	 	 		$user_id = $('div.flowerusername');
-  	 	 		$index_user_id = $("div.flowerusername:eq(" + $index1 + ")");
-  	 	 		$index_user_text = $index_user_id.text();	
-  	 	 		var nick = $index_user_text;
-  	 	 		
-  	 	 		console.log(btntext);
-  	 	 		console.log(nick);
-  	 	 		
-				 $.ajax({
+			if ($('div.item-one-flow button').hasClass("hellow")) {
+					alert('팔로잉,언팔로잉 하였습니다')
+	  		 		$button1 = $("button.hellow");
+	    	 		$index1 = $button1.index(this);
+	  	 	 		$index_button_f = $("button.hellow:eq(" + $index1 + ")");
+	  	 	 		
+		  	 	 	var	btntext = $index_button_f.text();
+	
+	  	 	 		$user_id = $('div.flowerusername'); 	 		
+	  	 	 		$index_user_id = $("div.flowerusername:eq(" + $index1 + ")");
+	  	 	 		$index_user_text = $index_user_id.text();	
+	  	 	 		
+	  	 	 		var nick = $index_user_text;
+	  	 	 		
+	  	 	 		
+	  	 	 		console.log($index1);
+	  	 	 		console.log(btntext);
+	  	 	 		console.log(nick);
+	  	 	 		
+	  	 	 		
+	  	 	 	$.ajax({
 					type:'post',
 					url:'./flowadddelect',
 					data:{ btntext : btntext,nick : nick},
 					dataType:'JSON',
 					success:function(data){
-							if ($index_button_f.text() == '+팔로잉') {
-								console.log('-팔로잉');
-								$index_button_f.text('-팔로잉');
-							}else if ($index_button_f.text() == '-팔로잉') {
-								console.log('+팔로잉');
-								$index_button_f.text('+팔로잉');	
+							if ($index_button_f.text() == "+팔로잉") {
+								console.log("-팔로잉");
+								$index_button_f.text("-팔로잉");
+							}else if ($index_button_f.text() == "un팔로잉") {
+								console.log("+팔로잉");
+								$index_button_f.text("+팔로잉");	
 							}
 					},
 					error:function(e){
 						console.log(e);
 					}
 				}); 
+	  	 	 		
+				}else if($('div.item-one-flow button').hasClass('unhellow')){
+					alert('팔로잉,언팔로잉 하였습니다')
+	  		 		$button2 = $("button.unhellow");
+	    	 		$index2 = $button2.index(this);
+	  	 	 		$index_button_f = $("button.unhellow:eq(" + $index2 + ")");
+	  	 	 		
+		  	 	 	var	btntext = $index_button_f.text();
+	
+	  	 	 		$user_id = $('div.flowerusername'); 	 		
+	  	 	 		$index_user_id = $("div.flowerusername:eq(" + $index1 + ")");
+	  	 	 		$index_user_text = $index_user_id.text();	
+	  	 	 		
+	  	 	 		var nick = $index_user_text;
+	  	 	 		
+	  	 	 		
+	  	 	 		console.log($index1);
+	  	 	 		console.log(btntext);
+	  	 	 		console.log(nick);
+	  	 	 		
+		  	 	 	$.ajax({
+						type:'post',
+						url:'./flowadddelect',
+						data:{ btntext : btntext,nick : nick},
+						dataType:'JSON',
+						success:function(data){
+								if ($index_button_f.text() == "un팔로잉") {
+									console.log("+팔로잉");
+									$index_button_f.text("+팔로잉");	
+								}else if($index_button_f.text() == "+팔로잉"){
+									console.log("-팔로잉");
+									$index_button_f.text("-팔로잉");
+								}
+						},
+						error:function(e){
+							console.log(e);
+						}
+					}); 
+				}
 
 			})
 			
