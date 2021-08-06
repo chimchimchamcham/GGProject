@@ -33,12 +33,12 @@
       
       /*쪽지 팝업*/
        $(".messageA").click(function(){
-          window.open("./popup/msgPop.jsp", "chargePop", "width=400, height=500, left=850, top=150");
+          window.open("./popup/msgPop.jsp", "chargePop", "width=500, height=500, left=850, top=150");
       });
 
       /*알람 팝업*/
      $(".alarmA").click(function(){
-        window.open("./popup/alarmPop.jsp", "chargePop", "width=400, height=500, left=850, top=150");
+        window.open("./popup/alarmPop.jsp", "chargePop", "width=500, height=500, left=850, top=150");
       });
       
       
@@ -427,7 +427,7 @@ body {
                      <li><a href="#">도서기타</a></li>
                      <li><a href="#">기타</a></li>
                   </ul></li>
-               <li><a href="commListForm.jsp">커뮤니티</a></li>
+               <li><a href="commListForm">커뮤니티</a></li>
                <li><a href="#">공지사항</a></li>
             </ul>
          </div>

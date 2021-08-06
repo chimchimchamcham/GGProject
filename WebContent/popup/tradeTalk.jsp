@@ -16,6 +16,7 @@
 }
 
 h2 {
+margin-top:20px;
 	text-align: center;
 }
 
@@ -52,7 +53,7 @@ background-color: #f7f7f7;
 	/* background-color: green; */
 	text-align: center;
 	display: inline-block;
-	margin-bottom: 30px;
+	margin : 20px 0 30px 0;
 }
 
 #buttonTwo button {
