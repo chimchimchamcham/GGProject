@@ -54,8 +54,8 @@ public class AlarmController extends HttpServlet {
 		case "/readAlarm":
 			System.out.println("알람 읽음 처리");
 			service = new AlarmService(req);
-			HashMap<String,Object>map = new HashMap<String,Object>();
-			map = service.readAlarm();
+		
+			service.readAlarm();
 			
 			
 			
