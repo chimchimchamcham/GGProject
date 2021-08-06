@@ -14,9 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.gg.board.service.BoardService;
 import com.gg.board.service.CommentService;
 import com.gg.dto.GGDto;
+import com.gg.trade.controller.PostCommentController;
+import com.gg.trade.service.PostCommentService;
 import com.google.gson.Gson;
 
-@WebServlet({"/commentlist","/pushComment","/commentListCall","/comm_del","/comm_update"})
+@WebServlet({"/commentlist","/pushComment","/commentListCall","/comm_del","/comm_update","/re_comment","/showReComment"})
 public class CommentController extends HttpServlet {
 
 	
@@ -122,7 +124,23 @@ public class CommentController extends HttpServlet {
 			
 			
 			break;
-		
+		case "/re_comment":
+			System.out.println("대댓글 달기 시작");
+			
+			
+			break;
+		case "/showReComment":
+			System.out.println("대댓글 리스트 보여주기.");
+			pc_parentno = Integer.parseInt(req.getParameter("pc_parentno"));
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			System.out.println("글 번호 :"+p_no+" 부모 댓글 번호 : " +pc_parentno);
+			list = service.showReComment(p_no,pc_parentno);
+			
+			map = new HashMap<String, Object>();
+			map.put("list", list);
+			resp.getWriter().println(new Gson().toJson(map));
+			
+			break;
 		}
 		
 	}
