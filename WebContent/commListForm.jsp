@@ -21,7 +21,13 @@
 	text-align:center;
 }
 #tableHeader{
-	width:80%;
+	width:90%;
+	margin: auto;
+	height:430px;
+	overflow-y:scroll;
+}
+#tableHeader table{
+	width:100%;
 	margin: auto;
 }
 .category{
@@ -34,9 +40,7 @@
 	cursor:pointer;
 	border:3px solid black;
 }
-#listBody{
-	height:100px;
-}
+
 </style>
 <body>
 <div id="mainHeader"><jsp:include page="header.jsp" /></div>
@@ -49,7 +53,8 @@
 	<input type = "checkbox" id="C005" class = "category" name = "C005" value="C005" checked/><label class="commLagel" for="C005"># 공유해요</label>
 	<input type = "checkbox" id="C006" class = "category" name = "C006" value="C006" checked/><label class="commLagel" for="C006"># 잡담해요</label>
 	<input type = "checkbox" id="C007" class = "category" name = "C007" value="C007" checked/><label class="commLagel" for="C007"># 홍보해요</label>
-	<table id = "tableHeader">
+	<div id ="tableHeader">
+	<table>
 		<thead>
 			<tr>
 				<th>카테고리</th>
@@ -62,8 +67,13 @@
 			<tr><hr></hr></tr>
 		</thead>
 		<tbody id ="listBody"></tbody>
-		
+		<tr>
+			<td>
+				
+			</td>
+		</tr>
 	</table>
+	</div>
 </div>
 </body>
 <script type="text/javascript">
@@ -74,7 +84,8 @@ $("input.category:checked").each(function(idx,value){   //jQuery로 for문 돌�
 $.ajax({
 	type:"POST",
 	data:{
-		'categorys':lists
+		'categorys':lists,
+		'currPage':1
 		},
 	url:"commList",
 	dataType:'JSON',

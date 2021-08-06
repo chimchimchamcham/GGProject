@@ -187,7 +187,7 @@ public class BoardController extends HttpServlet {
 				String reseveid = req.getParameter("reseveid");
 				String sendid = req.getParameter("hellow");
 				
-				service.flow_button(userid,flow_addordelect,reseveid,sendid);
+				//service.flow_button(userid,flow_addordelect,reseveid,sendid);
 				break;
 			
 		case "/requestlist":
