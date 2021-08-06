@@ -92,9 +92,7 @@ text-align: left;
 				<td>${dto.a_content}</td>
 			</tr>
 			<tr>
-
 				<td ><small>${dto.a_sendTm }</small></td>
-
 			</tr>
 			<tr>
 				<td style="border-bottom:1px solid black; padding-top:10px;"></td>
