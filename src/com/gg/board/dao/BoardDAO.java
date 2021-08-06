@@ -413,12 +413,11 @@ public class BoardDAO {
 		return communitylist;
 	}
 
-	
 	public ArrayList<GGDto> flowlist(String userid, int flowORflowing) throws SQLException {
 		String sql = "";
-		if (flowORflowing == 0) {//나를 팔로우 한
-			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) AND f.f_receiveid = ? and f.f_sendid = u.u_id"; 
-		} else if (flowORflowing == 1) {//내가 팔로잉한
+		if (flowORflowing == 0) {// 나를 팔로우 한
+			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) AND f.f_receiveid = ? and f.f_sendid = u.u_id";
+		} else if (flowORflowing == 1) {// 내가 팔로잉한
 			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) and f.f_sendid = ? and f.f_receiveid = u.u_id";
 		}
 
@@ -442,79 +441,80 @@ public class BoardDAO {
 			dto.setU_newName(rs.getString("u_newname"));
 			dto.setU_nname(rs.getString("u_nname"));
 			dto.setFlow_count(rs.getInt("COUNT"));
-			
+
 			String u_id = dto.getU_id();
 			String reseveid = dto.getF_receiveid();
 			String sendid = dto.getF_sendid();
-			
-			//유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
+
+			// 유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
 			if (userid.equals(reseveid)) {
-				dto.setthisuserFlowingYN("<button class='hellow'>+팔로잉</button>");//N
-			}else if (userid.equals(sendid)) {
-				dto.setthisuserFlowingYN("<button class='hellow'>-팔로잉</button>");//Y
+				dto.setthisuserFlowingYN("<button class='hellow'>+팔로잉</button>");// N
+			} else if (userid.equals(sendid)) {
+				dto.setthisuserFlowingYN("<button class='hellow'>-팔로잉</button>");// Y
 			}
 			flowlist.add(dto);
 		}
 		System.out.println("flowlist:" + flowlist);
 		return flowlist;
 	}
-			//delect or update
-			public ArrayList<GGDto> flowbut(String userid, String flow_addordelect, String reseveid, String sendid) throws SQLException {
-				String sql = "";
-				
-				if (flow_addordelect == "+팔로우") {//나를 팔로잉 한사람 팔로워 추가
-					sql = "DELETE FROM follow where  f_receiveid = ? and f_sendid = ?";
-					//f_receiveid == 유저아이디
-					//f_sendid == 팔로잉한 아이디
-					//u.u_id == 팔로잉 받는 아이디
-					
-					ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
-					System.out.println("flowlist:" + flowlist);
-					ps = conn.prepareStatement(sql);
-					System.out.println("daouserID:" + userid);
-					ps.setString(1, userid);
-					ps.setString(2, sendid);
-					rs = ps.executeQuery();
-					System.out.println("rs:" + rs);
-					
-				} else if (flow_addordelect == "-팔로우") {//내가 팔로잉 한사람 팔로워 취소
-					sql = "insert into follow VALUES(?,?,sysdate)";
-					
-					ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
-					System.out.println("flowlist:" + flowlist);
-					ps = conn.prepareStatement(sql);
-					System.out.println("daouserID:" + userid);
-					ps.setString(1, reseveid);
-					ps.setString(2, userid);
-					rs = ps.executeQuery();
-					System.out.println("rs:" + rs);
-				}
-				resClose();
-				return null;
-			}
 
-	
-	//구매요청
+	// delect or update
+	public ArrayList<GGDto> flowbut(String userid, String flow_addordelect, String reseveid, String sendid)
+			throws SQLException {
+		String sql = "";
+
+		if (flow_addordelect == "+팔로우") {// 나를 팔로잉 한사람 팔로워 추가
+			sql = "DELETE FROM follow where  f_receiveid = ? and f_sendid = ?";
+			// f_receiveid == 유저아이디
+			// f_sendid == 팔로잉한 아이디
+			// u.u_id == 팔로잉 받는 아이디
+
+			ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
+			System.out.println("flowlist:" + flowlist);
+			ps = conn.prepareStatement(sql);
+			System.out.println("daouserID:" + userid);
+			ps.setString(1, userid);
+			ps.setString(2, sendid);
+			rs = ps.executeQuery();
+			System.out.println("rs:" + rs);
+
+		} else if (flow_addordelect == "-팔로우") {// 내가 팔로잉 한사람 팔로워 취소
+			sql = "insert into follow VALUES(?,?,sysdate)";
+
+			ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
+			System.out.println("flowlist:" + flowlist);
+			ps = conn.prepareStatement(sql);
+			System.out.println("daouserID:" + userid);
+			ps.setString(1, reseveid);
+			ps.setString(2, userid);
+			rs = ps.executeQuery();
+			System.out.println("rs:" + rs);
+		}
+		resClose();
+		return null;
+	}
+
+	// 구매요청
 	public ArrayList<GGDto> reqlist(String userid, int reqindex) throws SQLException {
 		String sql = "";
-		String sid;	
+		String sid;
 		String rid;
-		
+
 		ArrayList<GGDto> reqlist = new ArrayList<GGDto>();
 
 		System.out.println("reqlist:" + reqlist);
 		System.out.println("daouserID:" + userid);
 
-		if (reqindex == 0) {//전체
-			sql = "select u.u_id,s.S_saler,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and (  s.s_saler = ? or r.rq_id = ? ) and r.rq_yn is null"; 
+		if (reqindex == 0) {// 전체
+			sql = "select u.u_id,s.S_saler,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and (  s.s_saler = ? or r.rq_id = ? ) and r.rq_yn is null";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 			ps.setString(2, userid);
-		} else if (reqindex == 1) {//수신만
+		} else if (reqindex == 1) {// 수신만
 			sql = "select u.u_id,s.S_saler,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and  s.s_saler = ? and r.rq_yn is null";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
-		} else if (reqindex == 2) {//발신만
+		} else if (reqindex == 2) {// 발신만
 			sql = "select u.u_id,s.S_saler,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and r.rq_id = ? and r.rq_yn is null";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
@@ -526,97 +526,91 @@ public class BoardDAO {
 		while (rs.next()) {
 			dto.setU_id(rs.getString("u_id"));
 			dto.setS_saler(rs.getString("S_saler"));
-			
+
 			dto.setP_no(rs.getInt("P_no"));
 			dto.setP_title(rs.getString("p_title"));
 			dto.setRq_id(rs.getString("rq_id"));
 			dto.setRq_tm(rs.getDate("rq_tm"));
-			
-			
+
 			sid = dto.getS_saler();
 			rid = dto.getRq_id();
-			
-			if(userid.equals(sid)) {
+
+			if (userid.equals(sid)) {
 				System.out.println("수신");
 				dto.setSered("수신");
 				dto.setButtonORtext("<div><button>수락</button><button>거절</button></div>");
-			}else if(userid.equals(rid)){
+			} else if (userid.equals(rid)) {
 				System.out.println("발신");
 				dto.setSered("발신");
 				dto.setButtonORtext("<div>대기중</div>");
-				
+
 			}
-			
-			
+
 			reqlist.add(dto);
 		}
 		System.out.println("reqlist:" + reqlist);
 		return reqlist;
 	}
-	
-	
-	
-	
-	//좋아요
-		public ArrayList<GGDto> lovelist(String userid, int index1, int index2) throws SQLException {
-				String sql = "";
-			if (index1 == 0) {//판매
-				if (index2 == 0) {
-					sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname, P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,n.ns_pr,c.c_name from post p, n_sale n, love l,img i,codes c where p.p_no = n.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P002' and p.p_code = c.c_code order BY p.p_tm DESC";
-				}else if(index2 == 1){
-					sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname, P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,n.ns_pr,c.c_name from post p, n_sale n, love l,img i,codes c where p.p_no = n.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P002'and p.p_code = c.c_code order BY p.P_likeCount DESC";
-				}
-			} else if (index1 == 1) {//경매
-				if (index2 == 0) {
-					sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname,P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,a.au_instantpr,c.c_name from post p, auction a, love l ,img i,codes c where  p.p_no = a.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P001' and p.p_code = c.c_code order BY p.p_tm DESC";
-				}else if (index2 == 1) {
-					sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname,P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,a.au_instantpr,c.c_name from post p, auction a, love l ,img i,codes c where  p.p_no = a.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P001' and p.p_code = c.c_code order BY p.P_likeCount DESC";					
-				}
-				
+
+	// 좋아요
+	public ArrayList<GGDto> lovelist(String userid, int index1, int index2) throws SQLException {
+		String sql = "";
+		if (index1 == 0) {// 판매
+			if (index2 == 0) {
+				sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname, P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,n.ns_pr,c.c_name from post p, n_sale n, love l,img i,codes c where p.p_no = n.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P002' and p.p_code = c.c_code order BY p.p_tm DESC";
+			} else if (index2 == 1) {
+				sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname, P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,n.ns_pr,c.c_name from post p, n_sale n, love l,img i,codes c where p.p_no = n.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P002'and p.p_code = c.c_code order BY p.P_likeCount DESC";
 			}
-			//System.out.println("success love");
-			
-			ArrayList<GGDto> lovelist = new ArrayList<GGDto>();
-
-			System.out.println("lovelist:" + lovelist);
-
-			ps = conn.prepareStatement(sql);
-
-			System.out.println("daouserID:" + userid);
-
-			ps.setString(1, userid);
-			rs = ps.executeQuery();
-			System.out.println("rs:" + rs);
-
-			while (rs.next()) {
-				GGDto dto = new GGDto();
-				dto.setP_no(rs.getInt("P_no"));
-				dto.setP_title(rs.getString("P_title"));
-				dto.setP_tm(rs.getDate("p_tm"));
-				dto.setP_likeCount(rs.getInt("p_likecount"));
-				dto.setI_newName(rs.getString("I_newName"));
-				dto.setP_code(rs.getString("p_code"));
-				
-				String code = dto.getP_code(); 
-				
-				System.out.println("code:"+code);
-				
-				if (code.equals("P001")) {
-					dto.setAu_instantPr(rs.getInt("au_instantpr"));
-					dto.setC_name(rs.getString("c_name"));
-				}else if(code.equals("P002")) {
-					dto.setNs_pr(rs.getInt("ns_pr"));
-					dto.setC_name(rs.getString("c_name"));
-				}
-				
-				lovelist.add(dto);
+		} else if (index1 == 1) {// 경매
+			if (index2 == 0) {
+				sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname,P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,a.au_instantpr,c.c_name from post p, auction a, love l ,img i,codes c where  p.p_no = a.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P001' and p.p_code = c.c_code order BY p.p_tm DESC";
+			} else if (index2 == 1) {
+				sql = "SELECT  DISTINCT p.p_id,P.P_NO, P.P_TITLE,i.i_newname,P.P_TM, P.P_LIKECOUNT, p.p_code,l.l_id,a.au_instantpr,c.c_name from post p, auction a, love l ,img i,codes c where  p.p_no = a.p_no and p.p_no = l.p_no and p.p_no = i.p_no and p.p_id != l.l_id and l.l_id = ? and p.p_code = 'P001' and p.p_code = c.c_code order BY p.P_likeCount DESC";
 			}
-			
-			
-			System.out.println("lovelist:" + lovelist);
-			return lovelist;
+
 		}
-	
+		// System.out.println("success love");
+
+		ArrayList<GGDto> lovelist = new ArrayList<GGDto>();
+
+		System.out.println("lovelist:" + lovelist);
+
+		ps = conn.prepareStatement(sql);
+
+		System.out.println("daouserID:" + userid);
+
+		ps.setString(1, userid);
+		rs = ps.executeQuery();
+		System.out.println("rs:" + rs);
+
+		while (rs.next()) {
+			GGDto dto = new GGDto();
+			dto.setP_no(rs.getInt("P_no"));
+			dto.setP_title(rs.getString("P_title"));
+			dto.setP_tm(rs.getDate("p_tm"));
+			dto.setP_likeCount(rs.getInt("p_likecount"));
+			dto.setI_newName(rs.getString("I_newName"));
+			dto.setP_code(rs.getString("p_code"));
+
+			String code = dto.getP_code();
+
+			System.out.println("code:" + code);
+
+			if (code.equals("P001")) {
+				dto.setAu_instantPr(rs.getInt("au_instantpr"));
+				dto.setC_name(rs.getString("c_name"));
+			} else if (code.equals("P002")) {
+				dto.setNs_pr(rs.getInt("ns_pr"));
+				dto.setC_name(rs.getString("c_name"));
+			}
+
+			lovelist.add(dto);
+		}
+
+		System.out.println("lovelist:" + lovelist);
+		return lovelist;
+	}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public HashMap<String, ArrayList<GGDto>> category() {
 		String sql = "select * from codes where c_code like 'S%'";
@@ -725,23 +719,44 @@ public class BoardDAO {
 		int checker = 0;
 		int p_no = 0;
 
-		String sql = "INSERT INTO post VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?,?)";
+		// 공지사항
+		if (dto.getU_adminYN().equals("Y")) {
+			String sql = "INSERT INTO post VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
 
-		ps = conn.prepareStatement(sql, new String[] { "p_no" });
-		ps.setString(1, dto.getP_id());
-		ps.setString(2, dto.getP_title());
-		ps.setString(3, dto.getP_content());
-		ps.setString(4, "N");
-		ps.setString(5, dto.getP_code());
-		ps.setString(6, dto.getP_cate());
-		checker = ps.executeUpdate();
-		rs = ps.getGeneratedKeys();
-		if (checker > 0) {
-			rs.next();
-			success = true;
-			p_no = rs.getInt(1);
-			System.out.println("글 작성 번호 : " + p_no);
-			System.out.println("글 작성 성공 여부 :" + success);
+			ps = conn.prepareStatement(sql, new String[] { "p_no" });
+			ps.setString(1, dto.getP_id());
+			ps.setString(2, dto.getP_title());
+			ps.setString(3, dto.getP_content());
+			ps.setString(4, "N");
+			ps.setString(5, dto.getP_code());
+			checker = ps.executeUpdate();
+			rs = ps.getGeneratedKeys();
+			if (checker > 0) {
+				rs.next();
+				success = true;
+				p_no = rs.getInt(1);
+				System.out.println("글 작성 번호 : " + p_no);
+				System.out.println("글 작성 성공 여부 :" + success);
+			}
+		} else { // 커뮤니티
+			String sql = "INSERT INTO post VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?,?)";
+
+			ps = conn.prepareStatement(sql, new String[] { "p_no" });
+			ps.setString(1, dto.getP_id());
+			ps.setString(2, dto.getP_title());
+			ps.setString(3, dto.getP_content());
+			ps.setString(4, "N");
+			ps.setString(5, dto.getP_code());
+			ps.setString(6, dto.getP_cate());
+			checker = ps.executeUpdate();
+			rs = ps.getGeneratedKeys();
+			if (checker > 0) {
+				rs.next();
+				success = true;
+				p_no = rs.getInt(1);
+				System.out.println("글 작성 번호 : " + p_no);
+				System.out.println("글 작성 성공 여부 :" + success);
+			}
 		}
 
 		return p_no;
@@ -916,7 +931,7 @@ public class BoardDAO {
 		int sucP_no = 0;
 		String sql = "";
 
-		/*==== 판매글 수정 ====*/
+		/* ==== 판매글 수정 ==== */
 		if (price != null) {
 			// post 테이블 업데이트
 			sql = "UPDATE post SET p_title=?, p_content=? WHERE p_no=?";
@@ -1086,20 +1101,19 @@ public class BoardDAO {
 
 	}
 
-	public ArrayList<GGDto> commList(String code) {		
+	public ArrayList<GGDto> commList(String code) {
 		ArrayList<GGDto> list = new ArrayList<GGDto>();
-		String sql ="SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code " + 
-						"INNER JOIN userinfo u on p.p_id = u.u_id " + 
-						"LEFT OUTER JOIN love l ON p.p_no = l.p_no " + 
-						"LEFT OUTER JOIN img i ON p.p_no = i.p_no " + 
-						"WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_cate IN (";
+		String sql = "SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code "
+				+ "INNER JOIN userinfo u on p.p_id = u.u_id " + "LEFT OUTER JOIN love l ON p.p_no = l.p_no "
+				+ "LEFT OUTER JOIN img i ON p.p_no = i.p_no "
+				+ "WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_cate IN (";
 		// 추가된 문자열을 추가함.
 		GGDto dto = null;
 		sql += code;
 		try {
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				dto = new GGDto();
 				dto.setC_name(rs.getString("c_name"));
 				dto.setP_title(rs.getString("p_title"));
@@ -1135,15 +1149,13 @@ public class BoardDAO {
 		return code;
 	}
 
-
-
 	public boolean postDel(String p_no) {
 		String sql = "UPDATE post SET p_blindyn = 'Y' WHERE p_no=?";
 		boolean success = false;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, p_no);		
-			if(ps.executeUpdate()>0) {
+			ps.setString(1, p_no);
+			if (ps.executeUpdate() > 0) {
 				success = true;
 			}
 		} catch (SQLException e) {
@@ -1151,30 +1163,26 @@ public class BoardDAO {
 		}
 		return success;
 	}
-	
-	//메서드 통합으로 인하여 주석처리
-	/*public String auctionDelete(int p_no) throws SQLException {
 
-		//경매글 삭제의 경우 
-		//post 테이블 블라인드 여부 Y로 바꾸고
-		//auctionDetail 불러올시 블라인드여부가 Y이면서 session loginId 값이 p_id와 같으면(=판매자 본인) 보여지게하고
-		//같지 않으면 보여지지 않게 한다.
-		String delMsg = "경매글 삭제 실패";
-		
-		String sql = "update post set p_blindyn = 'Y' where p_no=?";
-		
-		ps = conn.prepareStatement(sql);
-		ps.setInt(1, p_no);
-		int success = ps.executeUpdate();
-		System.out.println("경매글 삭제 성공여부(블라인드 처리 여부) : "+success);
-		
-		if(success>0) {
-			delMsg = "경매글 삭제 성공";
-		}
-		
-		return delMsg;
-
-	
-	}*/
+	// 메서드 통합으로 인하여 주석처리
+	/*
+	 * public String auctionDelete(int p_no) throws SQLException {
+	 * 
+	 * //경매글 삭제의 경우 //post 테이블 블라인드 여부 Y로 바꾸고 //auctionDetail 불러올시 블라인드여부가 Y이면서
+	 * session loginId 값이 p_id와 같으면(=판매자 본인) 보여지게하고 //같지 않으면 보여지지 않게 한다. String
+	 * delMsg = "경매글 삭제 실패";
+	 * 
+	 * String sql = "update post set p_blindyn = 'Y' where p_no=?";
+	 * 
+	 * ps = conn.prepareStatement(sql); ps.setInt(1, p_no); int success =
+	 * ps.executeUpdate(); System.out.println("경매글 삭제 성공여부(블라인드 처리 여부) : "+success);
+	 * 
+	 * if(success>0) { delMsg = "경매글 삭제 성공"; }
+	 * 
+	 * return delMsg;
+	 * 
+	 * 
+	 * }
+	 */
 
 }
