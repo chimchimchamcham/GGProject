@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,15 +64,19 @@ h2 {
 			<button id="importAL">중요알람</button>
 		</div>
 		<table class="content">
+		<c:if test="${dto eq null || dto eq ''}">
+		<tr><td rowspan="2">알람이 존재하지 않습니다.</td></tr>
+		</c:if>
 			<tr>
-				<td>닉네임님이 댓글을 달았습니다.</td>
+				<td>${dto.a_content}</td>
 			</tr>
 			<tr>
-				<td ><small>2021.08.06 13:43</small></td>
+				<td ><small>${dto.a_sendTm }</small></td>
 			</tr>
 			<tr>
 				<td style="border-bottom:1px solid black;"></td>
 			</tr>
+		
 		</table>
 	</div>
 </body>
