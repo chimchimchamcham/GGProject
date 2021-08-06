@@ -650,12 +650,15 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			
 			console.log('flowlist:'+flowlist.length);
 			
+			
 			flowlist.forEach(function(item,idx){
+				var flowlisting = idx+':'+item;
 				console.log("idx:",idx,item);
 				content += "<div class='item-one-flow'>"
 					content += "<div class='img-zoon'><img src='/photo"+item.u_newname+"'></div>"
 					content += "<div class=''>"+item.u_nname+"</div>"
 					content += " <div class=''>팔로워:"+item.flow_count+"</div>"
+					content += item.thisuserFlowingYN;
 				content += " </div>"
 			});
 			$("#follow .item-box").empty();
@@ -665,6 +668,31 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			var aaa=  $(".count").text();
 			
 		}//팔로워 팔로잉 리스트 end
+					function flow_or_unflow(){
+							    
+								    $button1 = $("button.hellow");
+								    $index1 = $button1.index(this);
+								    $index_button_sold = $("button.hellow:eq(" + $index1 + ")");
+							   
+								    var hellow = $index_button_sold.text();
+									//버튼을 누르면 flow_or_unflow함수 실행
+									console.log(hellow);
+									
+									$.ajax({
+										type:'post',
+										url:'./flowadddelect',
+										data:{  hellow : hellow},
+										dataType:'JSON',
+										success:function(data){
+											console.log("data",data);
+
+										},
+										error:function(e){
+											console.log(e);
+										}
+									});
+								
+						}
 		
 		//데이터 가져와서 뿌려주는 구매요청 리스트
 		function request_list(reqlist){

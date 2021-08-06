@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
 	"/maidelist", "/writeForm", "/writeSale", "/writeTrade",
 		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" 
-		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate","/flowlist","/requestlist","/lovelist","/delAuction"})
+		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate","/flowlist","/requestlist","/lovelist","/delAuction","/flowadddelect"})
 
 public class BoardController extends HttpServlet {
 
@@ -178,8 +178,16 @@ public class BoardController extends HttpServlet {
 			int flowORflowing = Integer.parseInt(req.getParameter("index1"));
 			
 			service.flow_list(userid,flowORflowing);
-
+			
+		case "/flowadddelect":
+			System.out.println("팔로잉리스트 리스트 요청");
+			req.setCharacterEncoding("utf-8");
+			userid = (String) req.getSession().getAttribute("loginId");
+			String flow_addordelect = req.getParameter("hellow");
+			
+			service.flow_button(userid,flow_addordelect);
 			break;
+			
 		case "/requestlist":
 			System.out.println("거래요청리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");

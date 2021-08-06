@@ -323,7 +323,11 @@ public void flow_list(String userid, int flowORflowing) throws IOException {
 	map.clear();
 	dao.resClose();
 }
-
+							//팔로워 버튼 +,- 여부 
+							public void flow_button(String userid, String flow_addordelect) {
+								System.out.println(flow_addordelect);
+								
+							}
 //구매요청리스트
 public void req_list(String userid, int reqindex) throws IOException {
 	
@@ -762,6 +766,8 @@ public void love_list(String userid, int index1, int index2) throws IOException 
 		
 		return delMsg;
 	}
+
+
 
 
 

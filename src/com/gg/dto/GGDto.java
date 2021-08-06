@@ -208,10 +208,18 @@ public class GGDto {
 	private String f_sendid;
 	private Date f_tm; 
 	private int flow_count;//자신,타인이 팔로잉 한사람들의 수
-	
+	private String thisuserFlowingYN;
 	
 	
 
+
+	public String getthisuserFlowingYN() {
+		return thisuserFlowingYN;
+	}
+
+	public void setthisuserFlowingYN(String thisuserFlowingYN) {
+		this.thisuserFlowingYN = thisuserFlowingYN;
+	}
 
 	public int getFlow_count() {
 		return flow_count;
