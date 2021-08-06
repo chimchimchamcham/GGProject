@@ -416,9 +416,9 @@ public class BoardDAO {
 	public ArrayList<GGDto> flowlist(String userid, int flowORflowing) throws SQLException {
 		String sql = "";
 		if (flowORflowing == 0) {//나를 팔로우 한
-			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) AND f.f_receiveid = ? and f.f_sendid = u.u_id"; 
+			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) AND f.f_receiveid = ? and f.f_sendid = u.u_id"; 
 		} else if (flowORflowing == 1) {//내가 팔로잉한
-			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) and f.f_sendid = ? and f.f_receiveid = u.u_id";
+			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) and f.f_sendid = ? and f.f_receiveid = u.u_id";
 		}
 
 		ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
@@ -435,11 +435,30 @@ public class BoardDAO {
 
 		while (rs.next()) {
 			GGDto dto = new GGDto();
+			dto.setU_id(rs.getString("U_id"));
 			dto.setF_receiveid(rs.getString("f_receiveid"));
 			dto.setF_sendid(rs.getString("f_sendid"));
 			dto.setU_newName(rs.getString("u_newname"));
 			dto.setU_nname(rs.getString("u_nname"));
 			dto.setFlow_count(rs.getInt("COUNT"));
+			
+			String u_id = dto.getU_id();
+			String reseveid = dto.getF_receiveid();
+			String sendid = dto.getF_sendid();
+			
+			//유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
+			if (userid.equals(reseveid)) {
+				dto.setthisuserFlowingYN("<button class='hellow' onclick='flow_or_unflow()'>+팔로잉</button>");//N
+				
+				
+
+			}else if (userid.equals(sendid)) {
+				dto.setthisuserFlowingYN("<button class='hellow' onclick='flow_or_unflow()'>-팔로잉</button>");//Y
+				
+			}
+			
+			
+			
 			flowlist.add(dto);
 		}
 		System.out.println("flowlist:" + flowlist);
