@@ -16,7 +16,7 @@ import com.gg.board.service.CommentService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
-@WebServlet({"/commentlist","/pushComment","/commentListCall","/comm_del"})
+@WebServlet({"/commentlist","/pushComment","/commentListCall","/comm_del","/comm_update"})
 public class CommentController extends HttpServlet {
 
 	
@@ -96,7 +96,7 @@ public class CommentController extends HttpServlet {
 			break;
 			
 		case "/comm_del":
-			System.out.println("DAO 진입");
+			System.out.println("댓글 삭제 컨트롤러 진입");
 			int pc_no = Integer.parseInt(req.getParameter("pc_no"));
 			System.out.println(pc_no);
 			
@@ -107,6 +107,22 @@ public class CommentController extends HttpServlet {
 			resp.getWriter().println(new Gson().toJson(map));
 			
 			break;
+			
+		case "/comm_update":
+			System.out.println("댓글 수정 진입");
+			pc_no = Integer.parseInt(req.getParameter("pc_no"));
+			System.out.println(pc_no);
+			String pc_context = req.getParameter("context");
+			success = service.comm_update(pc_no,pc_context);
+			
+			
+			map = new HashMap<String, Object>();
+			map.put("success", success);
+			resp.getWriter().println(new Gson().toJson(map));
+			
+			
+			break;
+		
 		}
 		
 	}

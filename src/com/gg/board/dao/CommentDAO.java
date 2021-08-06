@@ -138,4 +138,22 @@ public class CommentDAO {
 		return success;
 	}
 
+	public boolean comm_update(int pc_no, String pc_context) throws Exception {
+		boolean success =false;
+		
+		int checker=  0;
+		
+		String sql = "UPDATE post_comment SET pc_content=? WHERE pc_no=?";
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, pc_context);
+		ps.setInt(2, pc_no);
+		checker = ps.executeUpdate();
+		if(checker >0) {
+			success = true;
+		}
+
+		
+		return success;
+	}
+
 }

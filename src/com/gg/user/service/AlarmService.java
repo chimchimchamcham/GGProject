@@ -1,6 +1,7 @@
 package com.gg.user.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,19 +17,23 @@ public class AlarmService {
 		this.req = req;
 	}
 
-	public GGDto ALlist() {
+	public ArrayList<GGDto> ALlist() {
 		String u_id = (String) req.getSession().getAttribute("loginId");
 		String a_impoyn =req.getParameter("a_impoyn");
+		
+		System.out.println("u_id : "+u_id);
+		System.out.println("a_impoyn : "+a_impoyn);
+		
+		ArrayList<GGDto> list = new ArrayList<GGDto>();
 		dao = new AlarmDAO();
-		GGDto dto = new GGDto();
 		try {
-			dto = dao.ALlist(u_id,a_impoyn);
+			list = dao.ALlist(u_id,a_impoyn);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			dao.resClose();
 		}
-		return dto;
+		return list;
 		
 		
 	}
