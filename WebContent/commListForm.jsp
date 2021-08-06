@@ -34,18 +34,21 @@
 	cursor:pointer;
 	border:3px solid black;
 }
+#listBody{
+	height:300px;
+}
 </style>
 <body>
 <div id="mainHeader"><jsp:include page="header.jsp" /></div>
 <div id="main">
 	<h3>커뮤니티</h3>
-	<input type = "checkbox" id="C001" class = "category" name = "C001" value="'C001'," checked/><label class="commLagel" for="C001"># 구매대행</label>
-	<input type = "checkbox" id="C002" class = "category" name = "C002" value="'C002'," checked/><label class="commLagel" for="C002"># 동네이야기</label>
-	<input type = "checkbox" id="C003" class = "category" name = "C003" value="'C003'," checked/><label class="commLagel" for="C003"># 같이해요</label>
-	<input type = "checkbox" id="C004" class = "category" name = "C004" value="'C004'," checked/><label class="commLagel" for="C004"># 자랑해요</label>
-	<input type = "checkbox" id="C005" class = "category" name = "C005" value="'C005'," checked/><label class="commLagel" for="C005"># 공유해요</label>
-	<input type = "checkbox" id="C006" class = "category" name = "C006" value="'C006'," checked/><label class="commLagel" for="C006"># 잡담해요</label>
-	<input type = "checkbox" id="C007" class = "category" name = "C007" value="'C007'," checked/><label class="commLagel" for="C007"># 홍보해요</label>
+	<input type = "checkbox" id="C001" class = "category" name = "C001" value="C001" checked/><label class="commLagel" for="C001"># 구매대행</label>
+	<input type = "checkbox" id="C002" class = "category" name = "C002" value="C002" checked/><label class="commLagel" for="C002"># 동네이야기</label>
+	<input type = "checkbox" id="C003" class = "category" name = "C003" value="C003" checked/><label class="commLagel" for="C003"># 같이해요</label>
+	<input type = "checkbox" id="C004" class = "category" name = "C004" value="C004" checked/><label class="commLagel" for="C004"># 자랑해요</label>
+	<input type = "checkbox" id="C005" class = "category" name = "C005" value="C005" checked/><label class="commLagel" for="C005"># 공유해요</label>
+	<input type = "checkbox" id="C006" class = "category" name = "C006" value="C006" checked/><label class="commLagel" for="C006"># 잡담해요</label>
+	<input type = "checkbox" id="C007" class = "category" name = "C007" value="C007" checked/><label class="commLagel" for="C007"># 홍보해요</label>
 	<table id = "tableHeader">
 		<thead>
 			<tr>
@@ -58,7 +61,8 @@
 			</tr>
 			<tr><hr></hr></tr>
 		</thead>
-		<tbody></tbody>
+		<tbody id ="listBody"></tbody>
+		
 	</table>
 </div>
 </body>
@@ -67,7 +71,6 @@ var lists = [];
 $("input.category:checked").each(function(idx,value){   //jQuery로 for문 돌면서 check 된값 배열에 담는다
  	lists.push($(this).val());
 });
-
 $.ajax({
 	type:"POST",
 	data:{

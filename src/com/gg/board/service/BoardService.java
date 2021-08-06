@@ -681,18 +681,15 @@ public void love_list(String userid, int index1, int index2) throws IOException 
 	}
 
 	public ArrayList<GGDto> commList() {
+		/*
+		 * int pagePerCnt = 5; int end = page*pagePerCnt; int start = end - pagePerCnt +
+		 * 1;
+		 */
 		
-		String code ="";
-		String[] list = req.getParameterValues("categorys[]");//ajax에서 배열 형태로 보낼때 받는 방법
-		for(String a:list) {
-			if(a=="null") {}
-			code +=a;
-		}
-		code = code.substring(0,code.length()-1)+")";
-		// 마지막 문자 자르고 ) 를 추가해서 sql문을 완성
+		String[] categorys = req.getParameterValues("categorys[]");//ajax에서 배열 형태로 보낼때 받는 방법
 		BoardDAO dao = new BoardDAO();
-
-		return dao.commList(code);
+		
+		return dao.commList(categorys);
 	}
 
 	/*판매 글 수정*/
