@@ -78,7 +78,7 @@ h2 {
 			<c:forEach items="${noticeList}" var="noticeList">
 				<tr>
 					<td>${noticeList.p_no}</td>
-					<td style="text-align: left;"><a href="noticeDetail?${noticeList.p_no}">${noticeList.p_title}</a></td>
+					<td style="text-align: left;"><a href="noticeDetail?p_no=${noticeList.p_no}">${noticeList.p_title}</a></td>
 					<td>${noticeList.u_nname}</td>
 					<td>${noticeList.p_tm}</td>
 					<td>${noticeList.p_view}</td>
