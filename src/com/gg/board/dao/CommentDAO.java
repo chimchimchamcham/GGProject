@@ -156,4 +156,32 @@ public class CommentDAO {
 		return success;
 	}
 
+	public ArrayList<GGDto> showReComment(GGDto dto) throws Exception {
+		ArrayList<GGDto> list = new ArrayList<GGDto>();
+		String sql = "SELECT u.u_nname,pc.pc_id,pc.pc_content, u.u_newname, pc.pc_tm, pc.pc_no " + 
+				"FROM post_comment pc " + 
+				"LEFT OUTER JOIN userinfo u ON (u.u_id = pc.pc_id) " + 
+				"WHERE pc.p_no= ? AND pc.pc_parentno=? AND pc.pc_blindyn ='N' " + 
+				"ORDER BY pc_no ASC";
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, dto.getP_no());
+		ps.setInt(2, dto.getPc_parentno());
+		rs = ps.executeQuery();
+
+		while(rs.next()) {
+			dto = new GGDto();
+			dto.setU_nname(rs.getString("u_nname"));
+			dto.setPc_id(rs.getString("pc_id"));
+			dto.setPc_content(rs.getString("pc_content"));
+			dto.setU_newName(rs.getString("u_newname"));
+			dto.setPc_tm(rs.getDate("pc_tm"));
+			dto.setPc_no(rs.getInt("pc_no"));
+			
+			list.add(dto);
+			
+		}
+		
+		return list;
+	}
+
 }

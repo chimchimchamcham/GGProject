@@ -52,6 +52,9 @@ textarea {
 // 오늘 날짜 설정
 var currDate = new Date().toISOString().substring(0,10);
 console.log("오늘 날짜 : ",currDate);
+
+
+
 </script>
 </head>
 <body>
@@ -61,11 +64,13 @@ console.log("오늘 날짜 : ",currDate);
 		<div id="wrap">
 			<h2>글쓰기</h2>
 			<!--글쓰기 폼 선택 버튼-->
-			<div id="selectForm">
-				<button id="sale">판매</button>
-				<button id="trade">경매</button>
-				<button id="community">커뮤니티</button>
-			</div>
+			<c:if test="${sessionScope.adminYN eq 'N'}">
+				<div id="selectForm">
+					<button id="sale">판매</button>
+					<button id="trade">경매</button>
+					<button id="community">커뮤니티</button>
+				</div>
+			</c:if>
 			<div id="communityForm">
 				<p>
 					<input type="text" name="title" value="" placeholder="제목을 입력해주세요"
@@ -78,8 +83,8 @@ console.log("오늘 날짜 : ",currDate);
 						name="imgFile" style="display: none" id="test" />
 				</form>
 				<p>
-					<textarea name="content" rows="30" cols="100" placeholder="내용입력" id ="input"
-						style="overflow-y: scroll"></textarea>
+					<textarea name="content" rows="30" cols="100" placeholder="내용입력"
+						id="input" style="overflow-y: scroll"></textarea>
 				</p>
 				<div id="intro_cnt">(0 / 1000)</div>
 				<p id="commuCategory">
@@ -142,6 +147,8 @@ console.log("오늘 날짜 : ",currDate);
 	</div>
 </body>
 <script>
+
+
 	// 예약
 	// 경매 예약 시작 시간 초기 설정 (오늘)
 	document.getElementById('from').value = currDate;
@@ -169,14 +176,25 @@ console.log("오늘 날짜 : ",currDate);
 	//폼 선택 버튼  클릭시 해당 값이 달라짐
 	var param = {};
 	param.userId = "${sessionScope.loginId}";
- 	
+    var adminYN = "${sessionScope.adminYN}";
+    console.log(adminYN);
+	
+	if(adminYN == "N"){
 	//경매하단부분 숨겨져있음
 	$("#saleForm").show();
 	$("#communityForm").show();
 	$("#tradeForm").hide();
 	$("#reservForm").hide();
 	$("#commuCategory").hide();
+	}else{//공지사항
+		$("#saleForm").hide();
+		$("#communityForm").show();
+		$("#tradeForm").hide();
+		$("#reservForm").hide();
+		$("#commuCategory").hide();
+	}
 
+	
 	//경매버튼클릭시
 	$("#trade").click(function() {
 		param.select = "P001";
@@ -370,11 +388,38 @@ console.log("오늘 날짜 : ",currDate);
 				});
 			}
 
-		} else {
+		}else if(adminYN == "Y"){ //공지사항
+			   param.title = $("input[name='title']").val();
+			   param.content = $("textarea[name='content']").val();
+			   param.adminYN = adminYN;
+			   param.select = "P003";
+			   console.log(param);
+			   
+			   $.ajax({
+			      type : 'POST',
+			      url : 'writeCommunity',
+			      data : param,
+			      dataType : 'JSON',
+			      success : function(data) {
+			         if (data.p_no > 0) {
+			            form.append("p_no",data.p_no);
+			            FileUpload();
+			            alert("공지사항 글 작성 성공했습니다.");
+			            location.href = "./noticeDetail?p_no="+data.p_no;
+			            
+			         } else {
+			            alert("공지사항 글 작성을 실패하였습니다! ");
+			         }
+			      },
+			      error : function(e) {
+			         console.log(e);
+			      }
+			   }); 
+		
+		}else {
 			alert("폼을 선택해주세요!");
 		}
-		
-		
+
 	});
 	
 	///////사진 선택시 미리보기 변경/////////
@@ -432,5 +477,9 @@ console.log("오늘 날짜 : ",currDate);
            }
        });
 	
+	
+	
+
+
 </script>
 </html>
