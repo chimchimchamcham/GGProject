@@ -97,14 +97,15 @@ h2 {
 							<span class="a_no">${dto.a_no }</span>
 							<span class="a_readYN">${dto.a_readYN}</span>
 							<span class="a_path">${dto.a_path }</span>
-							${dto.a_content}
+							<p  style="width:310px;  padding:0 20px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${dto.a_content}</p>
 						</td>
+						<td><button class="delBtn">삭제</button></td>
 					</tr>
 					<tr>
-						<td><small>${dto.a_sendTm }</small></td>
+						<td colspan='2'><p style="width:310px;  padding:0 20px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><small>${dto.a_sendTm }</small></p></td>
 					</tr>
 					<tr>
-						<td style="border-bottom: 1px solid black; padding-top: 10px;"></td>
+						<td colspan='2' style="border-bottom: 1px solid black; padding-top: 10px;"></td>
 					</tr>
 
 				</table>
