@@ -1198,14 +1198,23 @@ public class BoardDAO {
 	}
 
 	
-	   public ArrayList<GGDto> noticeList() {
+	   public ArrayList<GGDto> noticeList(int paging) {
 		      
-		      String sql = "select p_no, p_title, p_id, p_tm, p_view, (select u_nname from userinfo where u_id = p_id) as u_nname from post where p_code='P003' ORDER BY p_no DESC";
+		      String sql = "SELECT rnum ,p_no, p_title, p_id, p_tm, p_view, (select u_nname from userinfo where u_id = p_id) as u_nname FROM " + 
+		      		"(SELECT ROW_NUMBER() OVER(ORDER BY p_no DESC) AS rnum,p_no, p_title, p_id, p_tm, p_view FROM post) WHERE rnum BETWEEN ? AND ?";
+
 		      ArrayList<GGDto> noticeList = null;
 		      GGDto dto = null;
 		      
+		      int pagePerCnt = 15;
+		      
+		      int end = paging*pagePerCnt;
+		      int start = (end-pagePerCnt)+1;
+		      
 		      try {
 		         ps = conn.prepareStatement(sql);
+		         ps.setInt(1, start);
+		         ps.setInt(2, end);
 		         rs = ps.executeQuery();
 		         noticeList = new ArrayList<GGDto>();
 		         while(rs.next()) {
@@ -1218,12 +1227,35 @@ public class BoardDAO {
 		            dto.setU_nname(rs.getString("u_nname"));
 		            noticeList.add(dto);
 		         }
+		         
+		         int total = noticeCount();
+		         noticeList.get(0).setTotalPost(total);
+		         noticeList.get(0).setCurrPage(paging);
+		         int pages = (int) Math.ceil((double)total/(double)pagePerCnt);
+		         noticeList.get(0).setTotalPage(pages);
 		      } catch (SQLException e) {
 		         e.printStackTrace();
 		      }
 
 		      return noticeList;
 		   }
+	   
+	   	private int noticeCount() throws SQLException {
+			
+			String sql = "SELECT COUNT(p_no) FROM post where p_code='P003'";
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			int total = 0;
+			
+			if (rs.next()) {
+				total = rs.getInt(1); //받아온 컬럼이 어차피 한개니까 1을 넣어도된다.
+				System.out.println("total : "+total);
+			}
+			
+			
+			return total;
+	   	}
 	// 메서드 통합으로 인하여 주석처리
 	/*
 	 * public String auctionDelete(int p_no) throws SQLException {

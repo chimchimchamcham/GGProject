@@ -538,16 +538,19 @@ public class BoardController extends HttpServlet {
 		case "/noticeList":
 			System.out.println("공지사항 리스트 요청");
 			
-			String paging = req.getParameter("page");
-			
+			/* int paging = 0; */
+			String currPageNum = req.getParameter("currPageNum");
+			System.out.println("currPageNum : "+currPageNum);
+			String paging = req.getParameter("paging");
 			if(paging == null) {
 				paging = "1";
 			}
+			System.out.println("paging : "+paging);
 			
 			/* HashMap<String, Object> map = service. */
 			
-			req.setAttribute("noticeList", service.noticeList());
-			req.setAttribute("noticeListSize", service.noticeList().size());
+			req.setAttribute("noticeList", service.noticeList(Integer.parseInt(paging)));
+			req.setAttribute("noticeListSize", service.noticeList(Integer.parseInt(paging)).get(0).getTotalPost());
 			dis = req.getRequestDispatcher("noticeList.jsp");
 			dis.forward(req, resp);
 
@@ -564,9 +567,6 @@ public class BoardController extends HttpServlet {
 		 * resp); break;
 		 */
 		}
-		
-		
-	
 
 	}
 
