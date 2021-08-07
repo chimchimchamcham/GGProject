@@ -19,11 +19,13 @@ import com.gg.board.service.UploadService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
+
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist",
 		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/postDel", "/writeCommunity", "/auctionDetail",
 		"/commDetail", "/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist", "/commList",
 		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist",
-		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail" })
+		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail","/applyreqlist","/noticeList"})
+
 
 public class BoardController extends HttpServlet {
 
@@ -202,6 +204,17 @@ public class BoardController extends HttpServlet {
 			int reqindex = Integer.parseInt(req.getParameter("index1"));
 
 			service.req_list(userid, reqindex);
+
+			break;
+			
+			case "/applyreqlist"://수락 버튼눌렀을시 
+				System.out.println("거래수락 요청");
+				userid = (String) req.getSession().getAttribute("loginId");
+				int rqno = Integer.parseInt(req.getParameter("rqno"));
+				String a = req.getParameter("a");
+				System.out.println(userid+'/'+rqno+'/'+a);
+				
+				service.req_list_apply(userid,rqno,a);
 
 			break;
 
@@ -502,14 +515,14 @@ public class BoardController extends HttpServlet {
 			break;
 
 		case "/commList":
-			resp.setCharacterEncoding("UTF-8");
-			ArrayList<GGDto> list = service.commList();
-			HashMap<String, ArrayList<GGDto>> list_map = new HashMap<String, ArrayList<GGDto>>();
-			list_map.put("list", list);
-			resp.setContentType("text/html; charset=UTF-8");
-			resp.getWriter().println(new Gson().toJson(list_map));
-			break;
-
+	         resp.setCharacterEncoding("UTF-8");
+	         ArrayList<GGDto> list = service.commList();
+	         HashMap<String, ArrayList<GGDto>> list_map = new HashMap<String, ArrayList<GGDto>>();
+	         list_map.put("list", list);
+	         resp.setContentType("text/html; charset=UTF-8");
+	         resp.getWriter().println(new Gson().toJson(list_map));
+	         break;
+			
 		case "/postDel":
 			System.out.println("게시글 삭제 요청");
 			success = false;
@@ -521,6 +534,16 @@ public class BoardController extends HttpServlet {
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher("index.jsp");
 			dis.forward(req, resp);
+			break;
+			
+			
+		//공지사항 목록
+		case "/noticeList":
+			System.out.println("공지사항 리스트 요청");
+			req.setAttribute("noticeList", service.noticeList());
+			dis = req.getRequestDispatcher("noticeList.jsp");
+			dis.forward(req, resp);
+
 			break;
 
 		// 메서드 통합으로 인하여 주석처리
@@ -534,6 +557,9 @@ public class BoardController extends HttpServlet {
 		 * resp); break;
 		 */
 		}
+		
+		
+	
 
 	}
 

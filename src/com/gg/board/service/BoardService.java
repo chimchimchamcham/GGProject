@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.gg.board.dao.BoardDAO;
@@ -376,7 +377,38 @@ public class BoardService {
 		dao.resClose();
 
 	}
+			public void req_list_apply(String userid, int rqno, String a) throws IOException {
+				HashMap<String, Object> map = new HashMap<String, Object>();
 
+				BoardDAO dao = new BoardDAO();
+				ArrayList<GGDto> reqlist = null;
+				RequestDispatcher dis = null;
+				int success=0;
+				try {
+					success = dao.reqlistapply(userid,rqno,a);
+					System.out.println("successudate:"+success);				
+					reqlist = dao.reqlist_goto_url(userid,rqno,a);
+					
+					
+					
+					
+					
+					dis = req.getRequestDispatcher(page);
+					dis.forward(req, resp);
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally {
+					dao.resClose();
+				}
+				System.out.println("auc_map:" + map);
+
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().println(new Gson().toJson(map));
+				map.clear();
+				dao.resClose();
+				
+			}
 //좋아요리스트
 	public void love_list(String userid, int index1, int index2) throws IOException {
 
@@ -845,16 +877,18 @@ public class BoardService {
 		return dao.postDel(p_no);
 	}
 
-	/*
-	 * 메서드 통합으로 주석 처리
-	 * public String auctionDelete() { String delMsg = null; int p_no =
-	 * Integer.parseInt(req.getParameter("p_no"));
-	 * System.out.println("삭제할 경매 글 번호:"+p_no); BoardDAO dao = new BoardDAO(); try {
-	 * delMsg = dao.auctionDelete(p_no); } catch (SQLException e) { // TODO
-	 * Auto-generated catch block e.printStackTrace(); }finally { dao.resClose(); }
-=======
-=======
->>>>>>> 7803e8c5eb2476215148d00de6d8adaa7cd332c3
+
+	public ArrayList<GGDto> noticeList() {
+		
+		BoardDAO dao = new BoardDAO();
+		ArrayList<GGDto> noticeList = dao.noticeList();
+		System.out.println("공지사항 글 갯수 : "+noticeList.size());
+		dao.resClose();
+		
+		return noticeList;
+	}
+
+
 	// 메서드 통합으로 인하여 주석처리
 	/*
 	 * public String auctionDelete() { String delMsg = null; int p_no =
@@ -867,10 +901,6 @@ public class BoardService {
 	 * if(!delMsg.equals("")) { success = tdao.updateAuctionAu_code(p_no, "Au003");
 	 * } if(success) { dao.conn.commit(); tdao.conn.commit(); } } catch
 	 * (SQLException e) { e.printStackTrace(); } dao.resClose(); tdao.resClose();
-<<<<<<< HEAD
->>>>>>> 7803e8c5eb2476215148d00de6d8adaa7cd332c3
-=======
->>>>>>> 7803e8c5eb2476215148d00de6d8adaa7cd332c3
 	 * 
 	 * return delMsg; }
 	 */

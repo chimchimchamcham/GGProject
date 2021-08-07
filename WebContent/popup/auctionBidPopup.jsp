@@ -67,6 +67,10 @@
 
 	//입찰버튼 클릭시 알람 뜸
 	$("#bid").click(function(){
+		console.log("입찰가격 : "+$("#ha_bidPr").val());
+		console.log("시작가격 : "+$("#startpr").val());
+		console.log("현재최고입찰가격 : "+$("#toppr").val());
+		console.log("즉결가격 : "+$("#endpr").val());
 		if($("#ha_bidPr").val()==0){
 			alert("입찰가격을 입력하세요");
 			$("#ha_bidPr").focus();

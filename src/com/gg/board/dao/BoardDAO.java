@@ -552,6 +552,64 @@ public class BoardDAO {
 		return reqlist;
 	}
 
+	
+	public int reqlistapply(String userid, int rqno, String a)throws SQLException {
+		
+		
+		//System.out.println(userid);
+		//System.out.println(rqno);
+			String sql = "UPDATE request SET rq_yn = 'y' WHERE RQ_NO = ? AND rq_id = ?";
+			int success = 0;
+			try {
+				 ps = conn.prepareStatement(sql);
+				 ps.setInt(1, rqno);
+				 ps.setString(2, a);
+				 success=ps.executeUpdate();
+				 System.out.println("success:"+success);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		 /*
+		  * 수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
+		  * 
+		  * 
+		  * */
+		 
+		 
+		 return success;
+
+	}
+	
+	public ArrayList<GGDto> reqlist_goto_url(String userid, int rqno, String a) throws SQLException {
+		
+		String sql = "select r.rq_no,p.p_no,r.rq_id,r.rq_yn from request r,post p where  r.RQ_NO = ? AND r.rq_id = ? and p.p_no = r.p_no and rq_yn = 'Y'";
+			String url_rqno;
+			String url_rqid;
+			String url_pno;
+		ps = conn.prepareStatement(sql);
+
+		System.out.println("daouserID:" + userid);
+		 ps.setInt(1, rqno);
+		 ps.setString(2, a);
+		rs = ps.executeQuery();
+		
+		if (rs.next()) {
+			GGDto dto = new GGDto();
+			dto.setRq_no(rs.getInt("rq_no"));
+			dto.setP_no(rs.getInt("p_no"));
+			dto.setRq_id(rs.getString("rq_id"));
+			
+			
+		}
+		
+		
+		//수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
+		String url = "./buyRequestProcess?rq_no="+${dto.rq_no}+"&"+"rq_YN=Y&p_no="+"${dto.p_no}"+"&rq_id="+${dto.rq_id}+";
+		
+		
+		return url;
+
+	}
 	// 좋아요
 	public ArrayList<GGDto> lovelist(String userid, int index1, int index2) throws SQLException {
 		String sql = "";
@@ -1194,7 +1252,33 @@ public class BoardDAO {
 		}
 		return success;
 	}
+
 	
+	   public ArrayList<GGDto> noticeList() {
+		      
+		      String sql = "SELECT p_no,p_title,p_id,p_tm,p_view FROM post WHERE p_code='P003' ORDER BY p_no DESC";
+		      ArrayList<GGDto> noticeList = null;
+		      GGDto dto = null;
+		      
+		      try {
+		         ps = conn.prepareStatement(sql);
+		         rs = ps.executeQuery();
+		         noticeList = new ArrayList<GGDto>();
+		         while(rs.next()) {
+		            dto = new GGDto();
+		            dto.setP_no(rs.getInt("p_no"));
+		            dto.setP_title(rs.getString("p_title"));
+		            dto.setP_id(rs.getString("p_id"));
+		            dto.setP_tm(rs.getDate("p_tm"));
+		            dto.setP_view(rs.getInt("p_view"));
+		            noticeList.add(dto);
+		         }
+		      } catch (SQLException e) {
+		         e.printStackTrace();
+		      }
+
+		      return noticeList;
+		   }
 	// 메서드 통합으로 인하여 주석처리
 	/*
 	 * public String auctionDelete(int p_no) throws SQLException {
