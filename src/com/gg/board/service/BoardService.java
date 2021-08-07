@@ -379,14 +379,6 @@ public class BoardService {
 
 	}
 
-	public String req_list_apply(int rqno) throws IOException, SQLException {		
-		BoardDAO dao = new BoardDAO();
-		String page = dao.reqlistapply(rqno);
-		System.out.println("update page : "+page);
-		dao.resClose();
-		
-		return page;
-	}
 
 //좋아요리스트
 	public void love_list(String userid, int index1, int index2) throws IOException {

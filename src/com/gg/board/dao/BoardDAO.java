@@ -553,21 +553,7 @@ public class BoardDAO {
 	}
 
 	
-	public String reqlistapply(int rqno)throws SQLException {
-		
-			String sql = "UPDATE request SET rq_yn = 'Y' WHERE RQ_NO = ?";
-			int success = 0;
-			try {
-				ps = conn.prepareStatement(sql);
-				ps.setInt(1, rqno);
-				success = ps.executeUpdate();
-				System.out.println("업데이트 성공 : "+success);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		 return page;
-
-	}
+	
 	// 좋아요
 	public ArrayList<GGDto> lovelist(String userid, int index1, int index2) throws SQLException {
 		String sql = "";
