@@ -84,8 +84,9 @@ h2 {
 			<h2>알람이 존재하지 않습니다.</h2>
 		</c:if>
 		<c:forEach items="${list}" var="dto">
-			<div class="tableWrap">
-				<table class="content">
+		
+			<div class="tableWrap" >
+				<table class="content 	">
 					<tr>
 						<td>${dto.a_content}</td>
 					</tr>
@@ -98,12 +99,14 @@ h2 {
 
 				</table>
 			</div>
+			
 		</c:forEach>
 	</div>
 </body>
 <script>
 	var loginId = "${sessionScope.loginId}";
-
+	
+	
 	/*전체 알람 보이기*/
 	$("#allAL").click(function() {
 		console.log("전체 알람 보이기");
@@ -116,5 +119,11 @@ h2 {
 		console.log("중요 알람 보이기");
 		location.href="./alarmlist?u_id="+loginId+"&a_impoyn=Y";
 	});
+	
+	
+	/*클릭시 읽음 처리*/
+	$("#tableWrap").click(function(){
+		console.log("알림클릭");
+	})
 </script>
 </html>
