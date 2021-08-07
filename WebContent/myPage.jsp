@@ -810,6 +810,11 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 						success:function(data){
 							if (data!=null) {
 							console.log(data);
+							console.log('data1:'+data.info.p_no);
+							console.log('data1:'+data.info.rq_id);
+							console.log('data1:'+data.info.rq_no);
+							console.log('data1:'+data.info.Rq_YN);
+							document.location.href="./buyRequestProcess?rq_no="+data.info.rq_no+"&rq_YN=Y&p_no="+data.info.p_no+"&rq_id="+data.info.rq_id;
 							}
 						},
 						error:function(e){

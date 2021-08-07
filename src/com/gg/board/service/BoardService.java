@@ -869,10 +869,10 @@ public class BoardService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		boolean success = false;
 		try {
-			updatereqlist(rqno);
-			
 			dto = dao.urllist(rqno);
 			success = true;
+		}catch (Exception e) {
+			e.printStackTrace();
 		}finally {
 			dao.resClose();
 			System.out.println("가져올 글의 번호 : "+dto.getP_no());

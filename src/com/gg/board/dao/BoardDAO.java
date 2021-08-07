@@ -1277,7 +1277,7 @@ public class BoardDAO {
 	}
 
 	public GGDto urllist(String rqno) {
-		String sql ="select r.rq_no,p.p_no,r.rq_id,r.rq_yn from request r,post p where  r.RQ_NO = ? and p.p_no = r.p_no and r.rq_yn";
+		String sql ="select r.rq_no,p.p_no,r.rq_id,r.rq_yn from request r,post p where  r.RQ_NO = ? and p.p_no = r.p_no ";
 	      GGDto dto = null;
 	      
 	      try {
@@ -1297,6 +1297,7 @@ public class BoardDAO {
 	         System.out.println("p_no:"+dto.getP_no());
 	         System.out.println("rq_id:"+dto.getRq_id());
 	         System.out.println("rq_yn:"+dto.getRq_YN());
+	         
 	         
 	      } catch (SQLException e) {
 	         e.printStackTrace();
