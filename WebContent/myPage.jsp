@@ -794,10 +794,9 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				$(document).on("click","button.ok",function(){
 					alert('ok');
 					$rqno=$('button.ok').val();
-					$a = $('a.a').text();
-
+					
+					$a = $('a.a');
 	    	 		$aindex = $a.index(this);
-	  	 	 		
 	    	 		
 	    	 		$index_button_f = $("button.unhellow:eq(" + $index2 + ")");
 		  	 	 	

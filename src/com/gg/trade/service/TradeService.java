@@ -137,7 +137,7 @@ public void buyNow(){
 
 	//====================구매 요청 수락, 거절=====================
 	//구매요청을 수락하면 거래페이지 생성, 거절하면 끝
-	public boolean buyRequestProcess() {
+	public int buyRequestProcess() {
 		System.out.println("[TRADESERVICE]/BUYREQUESTPROCESS START");
 		int rq_no = Integer.parseInt(req.getParameter("rq_no"));
 		String rq_YN = req.getParameter("rq_YN");
@@ -145,15 +145,15 @@ public void buyNow(){
 		String t_saler = (String) req.getSession().getAttribute("loginId");
 		String t_buyer = req.getParameter("rq_id");
 		
-		boolean success = false;
+		int t_no = 0;
 		TradeDAO dao = new TradeDAO();
 		
-		success = dao.buyRequestProcess(rq_no, rq_YN, p_no, t_saler, t_buyer);
-		System.out.println("[TRADESERVICE]/BUYREQUESTPROCESS success : "+success);
+		t_no = dao.buyRequestProcess(rq_no, rq_YN, p_no, t_saler, t_buyer);
+		System.out.println("[TRADESERVICE]/BUYREQUESTPROCESS T_NO : "+t_no);
 		
 		dao.resClose();
 		System.out.println("[TRADESERVICE]/BUYREQUESTPROCESS END");
-		return success;
+		return t_no;
 	}
 	//====================거래 페이지============================
 	//구매자가 송금

@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 
 import com.gg.board.dao.BoardDAO;
 import com.gg.dto.GGDto;
+import com.gg.user.dao.AlarmDAO;
 import com.gg.user.dao.PointDAO;
 
 public class TradeDAO {
@@ -252,7 +253,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		String p_id = selectPostP_id(p_no);
 		System.out.println("p_id : "+p_id);
 		//글번호, 판매자, 구매자를 인자값으로 넣어서, 거래페이지 생성과, 거래히스토리에 "0원" "생성" 추가
-		insertTrade(p_no, p_id, u_id);
+		int t_no = insertTrade(p_no, p_id, u_id);
 		
 		return success>0?true:false;
 	}
@@ -262,6 +263,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			
 			GGDto dto = new GGDto();
 			int instantpr = 0;
+			AlarmDAO Aldao = new AlarmDAO();
 	
 			//낙찰시간,경매상태,낙찰자 변경
 			String sql = "update auction set au_suctm = SYSDATE, au_code= 'Au002' ,au_successer = (select u_id from userinfo where u_nname= ?) where p_no=? ";
@@ -273,18 +275,25 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			
 			//성공했을 때 경매상태, 낙찰시간, 낙찰자 데이터 가져와서 담아주기
 			if(success > 0) {
-				sql ="select au_code,au_successer,au_suctm,au_instantpr from auction where p_no=?";
+				sql ="select au_code,au_successer,au_suctm,au_instantpr, (select p_title from post where p_no=?) as p_title from auction where p_no=?";
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1, p_no);
+				ps.setInt(2, p_no);
 				
 				rs = ps.executeQuery();
 				
+				String p_title = null;
 				if(rs.next()) {
 					dto.setAu_code(rs.getString("au_code"));
 					dto.setAu_successer(rs.getString("au_successer"));
 					dto.setAu_sucTm(rs.getDate("au_suctm"));
 					instantpr = rs.getInt("au_instantpr");
+					p_title = rs.getString("p_title");
 				}
+				
+				String successer = dto.getAu_successer();
+				String cutTitle = Aldao.cutTitle(p_title);
+				
 				
 				//입찰금 반환 메서드 실행
 				returnStartPr(p_no, instantpr);
@@ -292,7 +301,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				//해당 글번호로 판매자를 알아오기
 				String p_id = selectPostP_id(p_no);
 				//글번호, 판매자, 구매자를 인자값으로 넣어서, 거래페이지 생성과, 거래히스토리에 "0원" "생성" 추가
-				insertTrade(p_no, p_id, ha_bidusr);
+				int t_no = insertTrade(p_no, p_id, ha_bidusr);
 			}
 			
 			return dto;
@@ -340,19 +349,31 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			
 			boolean insertRs = false; 
 			PointDAO dao = new PointDAO();
-			
+			AlarmDAO Aldao = new AlarmDAO();
 			///입찰금반환 메서드 실행
-			String sql = "select distinct ha_bidusr from his_auction where ha_bidusr <> (select au_successer from auction where p_no=?) and p_no=?";
-		
+			String sql = "select distinct ha_bidusr,(select p_title from post where p_no=?) as p_title from his_auction where ha_bidusr <> (select au_successer from auction where p_no=?) and p_no=?";
+			
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
 			ps.setInt(2, p_no);
+			ps.setInt(3, p_no);
 			
 			rs = ps.executeQuery();
 			System.out.println("=========입찰금 반환 목록==========");
 			while(rs.next()) {
 				String bid_id = rs.getString("ha_bidusr");
+				String p_title = rs.getString("p_title");
+				String subTitle = null;
 				System.out.println("bid_id:"+bid_id);
+				System.out.println("p_title:"+p_title);
+				
+				if(p_title.length()>8) {
+					subTitle = p_title.substring(0, 7);
+				}else {
+					subTitle = p_title;
+				}
+				//경매종료 알람보내기
+				Aldao.insertAlarm(bid_id, "A011", "["+subTitle+"..]게시글의 경매가 종료 되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
 				insertRs = dao.insertPoint(bid_id, instantpr, "SYSTEM", "PNT007", p_no);
 				
 				if(insertRs) {
@@ -362,17 +383,20 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				
 			}
 			System.out.println("==========================");
+			
+			Aldao.resClose();
 			dao.resClose();
+			
 			
 		}
 		//====================구매 요청 수락, 거절=====================
 		//구매요청을 수락하면 거래페이지 생성, 거절하면 끝
-		public boolean buyRequestProcess(int rq_no, String rq_YN, int p_no, String t_saler, String t_buyer) {
+		public int buyRequestProcess(int rq_no, String rq_YN, int p_no, String t_saler, String t_buyer) {
 			System.out.println("[TRADEDAO]/BUYREQUESTPROCESS START");
 			String sql = "UPDATE REQUEST SET RQ_YN = ? WHERE RQ_NO = ?; ";
 			int success = 0;
 			boolean insertNsaleNscodeSuccess = false;
-			boolean insertTradeSuccess = false;
+			int t_no = 0;
 			try {
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, rq_YN);
@@ -388,8 +412,8 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 						System.out.println("[TRADEDAO]/BUYREQUESTPROCESS INSETNSALENSCODESUCCESS : "+insertNsaleNscodeSuccess);
 						if(insertNsaleNscodeSuccess) {
 							//구매요청자의 id는 href, 판매자의 id는 session를 받아서 거래페이지 생성
-							insertTradeSuccess = insertTrade(p_no, t_saler, t_buyer);
-							System.out.println("[TRADEDAO]/BUYREQUESTPROCESS INSETTTADESUCCESS : "+insertTradeSuccess);
+							t_no = insertTrade(p_no, t_saler, t_buyer);
+							System.out.println("[TRADEDAO]/BUYREQUESTPROCESS T_NO : "+t_no);
 						}
 					}
 				}
@@ -399,7 +423,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			}
 			System.out.println("[TRADEDAO]/BUYREQUESTPROCESS END");
 			
-			return insertTradeSuccess;
+			return t_no;
 		}
 		
 		//판매글 상태를 변경하는 기능
@@ -423,10 +447,11 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		
 		//====================거래 페이지=======================
 		//거래페이지 생성, 구매요청 수락 또는 경매완료시 실행
-		public boolean insertTrade(int p_no, String t_saler, String t_buyer) {
+		public int insertTrade(int p_no, String t_saler, String t_buyer) {
 			System.out.println("[TRADEDAO]/INSERTTRADE START");
 			String sql = "INSERT INTO TRADE (T_NO, P_NO, T_SALER, T_BUYER, T_CANCLEID, T_ADMACC) VALUES(T_NO_SEQ.NEXTVAL, ?, ?, ?, NULL, 'N')";
 			int success = 0;
+			int t_no = 0;
 			boolean insertHisTradeSuccess = false;
 			try {
 				ps = conn.prepareStatement(sql);
@@ -437,7 +462,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				System.out.println("[TRADEDAO]/INSERTTRADE SUCCESS : "+success);
 				if(success>0) {
 					//거래히스토리에 0원, 생성 추가
-					int t_no = selectTradeT_no(p_no,t_saler,t_buyer);
+					t_no = selectTradeT_no(p_no,t_saler,t_buyer);
 					insertHisTradeSuccess = insertHisTrade(t_no, 0, "HT001");
 					System.out.println("[TRADEDAO]/INSERTTRADE T_NO : "+t_no);
 					System.out.println("[TRADEDAO]/INSERTTRADE insertHisTradeSuccess : "+insertHisTradeSuccess);
@@ -448,7 +473,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			}
 			System.out.println("[TRADEDAO]/INSERTTRADE END");
 			
-			return insertHisTradeSuccess;
+			return t_no;
 		}
 		
 		//거래페이지번호를 조회하는 기능 (필요값 : 글번호, 구매자, 판매자)
@@ -717,7 +742,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		//거래페이지 목록을 보여주는 기능
 		public ArrayList<GGDto> tradeList (String id){
 			System.out.println("[TRADEDAO]/TRADELIST START");
-			String sql = "SELECT T.T_NO, T.P_NO, T.T_SALER, T.T_BUYER, (SELECT U_NEWNAME FROM USERINFO WHERE U_ID = T_SALER) T_SALER_NEWNAME, (SELECT U_NEWNAME FROM USERINFO WHERE U_ID = T_BUYER) T_BUYER_NEWNAME, H.HT_DATE, H.HT_POINT, H.HT_CODE, (SELECT C_NAME FROM CODES WHERE C_CODE = H.HT_CODE) HT_NAME, TC.TC_CONTENT, TC.TC_TM, TC.TC_ID FROM TRADE T, HIS_TRADE H,(SELECT T_NO, MAX(HT_DATE) HT_DATE FROM HIS_TRADE GROUP BY T_NO) HM, TRADE_COMMENT TC, (SELECT T_NO, MAX(TC_TM) TC_TM FROM TRADE_COMMENT GROUP BY T_NO) TCM WHERE T.T_NO = H.T_NO AND H.T_NO = HM.T_NO AND HM.T_NO = TC.T_NO AND TC.T_NO = TCM.T_NO AND TC.TC_TM = TCM.TC_TM AND H.HT_DATE = HM.HT_DATE AND (T_SALER = ? OR T_BUYER = ?) ORDER BY H.HT_DATE DESC";
+			String sql = "SELECT T.T_NO, T.P_NO, T.T_SALER, T.T_BUYER, (SELECT U_NNAME FROM USERINFO WHERE U_ID = T_SALER) T_SALER_NNAME, (SELECT U_NNAME FROM USERINFO WHERE U_ID = T_BUYER) T_BUYER_NNAME, (SELECT U_NEWNAME FROM USERINFO WHERE U_ID = T_SALER) T_SALER_NEWNAME, (SELECT U_NEWNAME FROM USERINFO WHERE U_ID = T_BUYER) T_BUYER_NEWNAME, (SELECT P_TITLE FROM POST WHERE P_NO = T.P_NO) P_TITLE, H.HT_DATE, H.HT_POINT, H.HT_CODE, (SELECT C_NAME FROM CODES WHERE C_CODE = H.HT_CODE) HT_NAME, TC.TC_CONTENT, TC.TC_TM, TC.TC_ID FROM TRADE T, HIS_TRADE H,(SELECT T_NO, MAX(HT_DATE) HT_DATE FROM HIS_TRADE GROUP BY T_NO) HM, TRADE_COMMENT TC, (SELECT T_NO, MAX(TC_TM) TC_TM FROM TRADE_COMMENT GROUP BY T_NO) TCM WHERE T.T_NO = H.T_NO AND H.T_NO = HM.T_NO AND HM.T_NO = TC.T_NO AND TC.T_NO = TCM.T_NO AND TC.TC_TM = TCM.TC_TM AND H.HT_DATE = HM.HT_DATE AND (T_SALER = ? OR T_BUYER = ?) ORDER BY H.HT_DATE DESC";
 			ArrayList<GGDto> list = new ArrayList<GGDto>();
 			try {
 				ps = conn.prepareStatement(sql);
@@ -730,8 +755,11 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 					dto.setP_no(rs.getInt("p_no"));
 					dto.setT_saler(rs.getString("t_saler"));
 					dto.setT_buyer(rs.getString("t_buyer"));
+					dto.setT_buyer_nname(rs.getString("t_buyer_nname"));
+					dto.setT_saler_nname(rs.getString("t_saler_nname"));
 					dto.setT_saler_newName(rs.getString("t_saler_newname"));
 					dto.setT_buyer_newName(rs.getString("t_buyer_newname"));
+					dto.setP_title(rs.getString("p_title"));
 					dto.setHt_date(rs.getDate("ht_date"));
 					dto.setHt_point(rs.getInt("ht_point"));
 					dto.setHt_code(rs.getString("ht_code"));
