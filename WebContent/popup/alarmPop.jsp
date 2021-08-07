@@ -68,13 +68,14 @@ h2 {
 	display: inline-block;
 }
 
-/*읽었을때*/
+/*읽었을때 */
+/*불러올때 읽음 여부 체크해서 read class 추가*/
 .read {
 	opacity: 0.3;
 }
 
 /*알람번호, 읽음 여부 숨기기*/
-.a_no, .a_readYN{
+.a_no, .a_readYN, .a_path{
 	display:none;
 }
 </style>
@@ -89,13 +90,13 @@ h2 {
 			<h2>알람이 존재하지 않습니다.</h2>
 		</c:if>
 		<c:forEach items="${list}" var="dto">
-		
 			<div class="tableWrap <c:if test="${dto.a_readYN eq 'Y'}">read</c:if> ">
 				<table class="content">
 					<tr>
 						<td>
 							<span class="a_no">${dto.a_no }</span>
 							<span class="a_readYN">${dto.a_readYN}</span>
+							<span class="a_path">${dto.a_path }</span>
 							${dto.a_content}
 						</td>
 					</tr>
@@ -116,6 +117,8 @@ h2 {
 	var loginId = "${sessionScope.loginId}";
 	var a_no = ''; //알람 번호 가져오기
 	var a_readYN = ''; //읽음 여부 가져오기
+	var a_path=''; //경로 가져오기
+	var insert_success = '';
 	
 	/*전체 알람 보이기*/
 	$("#allAL").click(function() {
@@ -136,27 +139,36 @@ h2 {
 	//해당 링크로 부모 페이지 이동시키기
 	$(".tableWrap").click(function(){
 		console.log("알림클릭");
-		$(this).addClass("read"); //클릭했을 경우 읽음 표시로
+		
 		a_no=$(this).find('.a_no').text(); 	//자손에 있는 값 가져오기
 		a_readYN = $(this).find('.a_readYN').text();
+		a_path = $(this).find('.a_path').text();
 		console.log("알람번호 : ",a_no);
-		console.log("알람 읽음 여부 : "+a_readYN);
+		console.log("알람 읽음 여부 : ",a_readYN);
+		console.log("알람 경로 : ",a_path);
 		if(a_readYN == "N"){
-		$.ajax({
-			type:'GET',
-			url:'readAlarm',
-			data:{"a_no":a_no},
-			dataType:'JSON',
-			success:function(data){
-				console.log(data.success);
-			},
-			error:function(e){
-				console.log(e);
+			$.ajax({
+				type:'GET',
+				url:'readAlarm',
+				data:{"a_no":a_no},
+				dataType:'JSON',
+				success:function(data){
+					console.log(data.success);
+					insert_success = data.success;
+					
+				},
+				error:function(e){
+					console.log(e);
+				}
+				
+			});
+			console.log("ajax 처리 결과",insert_success);
+			if(insert_success){
+				$(this).addClass("read"); //클릭했을 경우 읽음 표시로
 			}
-			
-		});
 		}
-	})
+		opener.parent.location=a_path;
+	});
 	
 	
 </script>
