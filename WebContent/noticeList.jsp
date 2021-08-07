@@ -91,7 +91,7 @@ h2 {
 		
 		<div class="pageArea">
 		currPage : ${noticeList[0].currPage} / totalPage : ${noticeList[0].totalPage}
-		<span onclick=function(){currPageNum-=1;}><a href="noticeList?currPageNum=currPageNum">이전</a></span>
+		<span onclick="function(){currPageNum-=1;}"><a href="noticeList?currPageNum=$(currPageNum)">이전</a></span>
 		<c:forEach var="i" begin="1" end="${noticeList[0].totalPage}" step="1">
 		<span class="page">
 			<c:if test="${i ne noticeList[0].currPage}"><a href="noticeList?paging=${i}">${i}</a></c:if>

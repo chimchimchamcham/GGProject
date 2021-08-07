@@ -555,8 +555,9 @@ public class BoardController extends HttpServlet {
 			System.out.println("공지사항 리스트 요청");
 			
 			/* int paging = 0; */
-			String paging = req.getParameter("paging");
 			String currPageNum = req.getParameter("currPageNum");
+			System.out.println("currPageNum : "+currPageNum);
+			String paging = req.getParameter("paging");
 			if(paging == null) {
 				paging = "1";
 			}
