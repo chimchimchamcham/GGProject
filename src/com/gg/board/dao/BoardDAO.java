@@ -1326,4 +1326,20 @@ public class BoardDAO {
 	 * 
 	 * }
 	 */
+	   
+	 public String getTitle(int p_no) throws SQLException {
+		String p_title = null;
+		String sql = "select p_title from post where p_no=?";
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, p_no);
+		
+		rs = ps.executeQuery();
+		
+		if(rs.next()) {
+			p_title = rs.getString("p_title");
+		}
+		
+		return p_title;
+		   
+	   }
 }
