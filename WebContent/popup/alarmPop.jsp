@@ -86,7 +86,7 @@ h2 {
 		<c:forEach items="${list}" var="dto">
 		
 			<div class="tableWrap" >
-				<table class="content <c:if test="${dto.a_checktm ne null || dto.a_checktm ne ''}">read</c:if><c:if test="${dto.a_checktm eq null || dto.a_checktm eq ''}"></c:if>">
+				<table class="content 	">
 					<tr>
 						<td>${dto.a_content}</td>
 					</tr>
@@ -105,7 +105,8 @@ h2 {
 </body>
 <script>
 	var loginId = "${sessionScope.loginId}";
-
+	
+	
 	/*전체 알람 보이기*/
 	$("#allAL").click(function() {
 		console.log("전체 알람 보이기");
@@ -121,7 +122,7 @@ h2 {
 	
 	
 	/*클릭시 읽음 처리*/
-	$("#content").click(function(){
+	$("#tableWrap").click(function(){
 		console.log("알림클릭");
 	})
 </script>
