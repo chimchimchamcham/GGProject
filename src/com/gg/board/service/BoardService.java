@@ -742,37 +742,43 @@ public class BoardService {
 	}
 
 	public ArrayList<GGDto> commList() {
-		BoardDAO dao = new BoardDAO();
-		int currPageNum = Integer.parseInt(req.getParameter("currPageNum")); //페이지의 넘버를 받는것.
-		if(currPageNum<=0) {
-			currPageNum = 1;
-		}
-		int currPageStart = (currPageNum-1)*5+1;
-		int currPageEnd = currPageNum*5;
-		int currPage = Integer.parseInt(req.getParameter("currPage")); //지금 페이지 번호를 받는 것.
 		int pagePerCnt = 14; 
-		int end = currPage*pagePerCnt; 
-		int start = end - pagePerCnt +1;
+		BoardDAO dao = new BoardDAO();
+		ArrayList<GGDto> arrayList = new ArrayList<GGDto>();
 		String[] categorys = req.getParameterValues("categorys[]");//ajax에서 배열 형태로 보낼때 받는 방법
-		// 카테고리 목록으로 검색한 dto값들을 ArrayList(commList)에 담아줌. 
 		ArrayList<GGDto> commList = dao.commList(categorys);	
 		int totalPage = (int)Math.ceil((double)commList.size()/(double)pagePerCnt); //전체 페이지 넘버를 반환. -나누는 값들을 double으로 명시해야 올림한 정확한 값이 나옴
-		if(currPageEnd>totalPage) {
-			currPageEnd=totalPage;
+		int currPageNum = Integer.parseInt(req.getParameter("currPageNum")); //페이지의 넘버를 받는것.
+		if(currPageNum*5>totalPage) { // 페이지 넘버가 범위를 벗어날 경우 잡아주는 코드
+			currPageNum=(int) Math.ceil((double)totalPage/(double)5);
+		}else if(currPageNum<0) {
+			currPageNum=1;
 		}
+		int currPageEnd = currPageNum*5;
+		if(currPageEnd>totalPage) {
+			currPageEnd=totalPage; // 배열의 범위를 벗어나면 애러가 발생하므로 배열의 범위까지 정해주는 작업
+		}
+		int currPageStart = (currPageNum-1)*5+1;
+		int currPage = Integer.parseInt(req.getParameter("currPage"));
+		if(currPage>currPageEnd || currPageStart>currPage) { // 불러온 현제 페이지의 위치가 범위를 벗어날 경우 강제로 처음과 끝에 지정해주는 역활
+			currPage = currPageStart;
+		}
+		// 카테고리 목록으로 검색한 dto값들을 ArrayList(commList)에 담아줌. 
+		int end = currPage*pagePerCnt; 
+		int start = end - pagePerCnt +1;
 		if(commList.size() <= end) {
 			end = commList.size(); // 14개보다 적은 크기의 배열이면 끝까지만 잘라서 보여주기 위하여	
 		}
 		// 전체 ArrayList에서 특정 페이지의 목록들을 잘라내는 과정 (ArrayList에서 잘라줌) - 이때 List로 반환됨.
 		List<GGDto> list = commList.subList(start-1, end);	// 14개의 리스트를 자르기 위하여 사용.
 		// List를 ArrayList로 변환.
-		ArrayList<GGDto> arrayList = new ArrayList<GGDto>();
 		arrayList.addAll(list);
 		arrayList.get(0).setTotalPage(totalPage); //0번째 dto에 totalPage를 넣어줌.
-		if(currPage<currPageEnd) {
-			currPage=currPageEnd;
+		if(currPage>currPageEnd) {
+			currPageEnd=currPage;
 		}
 		arrayList.get(0).setCurrPage(currPage);
+		System.out.println("currPage : "+currPage);
 		arrayList.get(0).setCurrPageEnd(currPageEnd); // 0번째 dto에 currPage를 넣어줌.
 		arrayList.get(0).setCurrPageStart(currPageStart);
 		return arrayList;
