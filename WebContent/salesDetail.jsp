@@ -337,12 +337,13 @@ section {
 
 .commentChange {
 	float: right;
+	cursor: hand;
+}
+#comm_update, #comm_del, .re{
 	cursor: pointer;
 }
-
 .commentChange:hover {
 	font-weight: bold;
-	color:
 }
 </style>
 <script
@@ -537,7 +538,7 @@ section {
 								<p>상점정보</p>
 								<div>
 									<div>
-										<a href="#"><img src="./img/profile.PNG" width="100"
+										<a href="myPage?id=${dto.p_id }"><img src="./img/profile.PNG" width="100"
 											height="100"></a>
 									</div>
 									<div>
@@ -557,7 +558,7 @@ section {
 
 								</div>
 								<p>
-									<a href="#">판매자의 다른 상품 더보기 > </a>
+									<a href="myPage?id=${dto.p_id }">판매자의 다른 상품 더보기 > </a>
 								</p>
 
 							</div>
@@ -733,13 +734,67 @@ section {
 					comment += "<div class='commentChange' ><input type='text' value='"+item.pc_no+"' id='update_"+item.pc_no+"' hidden='hidden'/><label for='update_"+item.pc_no+"' id='comm_update'> 수정하기 </label></div> ";
 					comment += "<div class='commentChange' ><input type='text' value='"+item.pc_no+"' id='del_"+item.pc_no+"' hidden='hidden'/><label for='del_"+item.pc_no+"' id='comm_del'>삭제하기 </label></div>";
 					}
+					//대댓글 영역
+					comment += "<div class='re_comment'><img src='./img/CommentArrow.png' style='float:right; width:30px; height: 30px; margin-top: 70px;' class='re' id='"+item.pc_no+"'></div>";
 					comment += "</div>";
 					comment += "</div>";
 					comment += "</td></tr>";
 				});
 		$(".board").empty();
 		$(".board").append(comment);
-	}
+	};
+
+	/* 대댓글 보여주며 쓰는 공간 만들어주기. */
+	$(document).on("click","img.re",function(){
+		var checker = $(this).attr("id");
+		console.log(checker);
+		var re_comm = {};
+		re_comm.pc_parentno = checker;
+		re_comm.p_no = "${dto.p_no}";
+		var comment ="";
+		
+		
+		$.ajax({
+			type: "POST",
+			data: re_comm,
+			dataType: "JSON",
+			url: "showReComment",
+			success : function(data){ 
+				console.log("대댓글 리스트 보여주기.");
+				console.log(data.list);
+			},
+			error : function(e) {
+				console.log(e);
+			}
+			
+			
+		
+		
+		
+		});
+	
+	
+	});
+	
+	/* 대댓글 추가하기 */
+	function plus_reComm(){
+		$.ajax({
+			type: "GET",
+			url : "re_comment",
+			data : re_comm,
+			dataType: "JSON",
+			success : function(data){
+				console.log("성공");
+			},
+			error : function(e){
+				console.log(e);	
+			}
+		});
+	};
+	
+	
+
+	
 	var check = true;
 	var update_no ={};
 	/* 수정 버튼 */

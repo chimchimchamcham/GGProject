@@ -1,6 +1,7 @@
 package com.gg.trade.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -91,16 +92,28 @@ public class TradeController extends HttpServlet {
 			System.out.println("[TRADECONTROLLER]/TRADEDETAIL START");
 			bdto = service.tradeDetail();
 			req.setAttribute("dto", service.tradeDetail());
-			userid = (String) req.getSession().getAttribute("loginId");
+			userid = ((String) req.getSession().getAttribute("loginId")) == null?"NULL":(String) req.getSession().getAttribute("loginId");
+			System.out.println("[TRADECONTROLLER]/TRADEDETAIL userid : "+userid);
 			//접속한 id가 구매자일 경우 구매자 거래페이지로 이동
 			if(userid.equals(bdto.getT_buyer())) {
 				page = "/popup/buyerTradePopup.jsp";
+				dis = req.getRequestDispatcher(page);
+				dis.forward(req, resp);
 			//접속한 id가 판매자일 경우 판매자 거래페이지로 이동
-			}else {
+			}else if(userid.equals(bdto.getT_saler())){
 				page = "/popup/sellerTradePopup.jsp";
+				dis = req.getRequestDispatcher(page);
+				dis.forward(req, resp);
+			//다른 id가 접속 했을 경우
+			}else {
+				resp.setCharacterEncoding("UTF-8");
+				resp.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = resp.getWriter();
+				out.print("<script>");
+				out.print("alert('접근할 수 없는 페이지 입니다.');");
+				out.print("self.close();");
+				out.print("</script>");
 			}
-			dis = req.getRequestDispatcher(page);
-			dis.forward(req, resp);
 			System.out.println("[TRADECONTROLLER]/TRADEDETAIL END");
 			break;
 		case "/sendPoint":
