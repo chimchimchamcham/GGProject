@@ -236,9 +236,10 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 
 	
 	$(document).ready(function() {
+		url = './soldlist'
 		$.ajax({
 			type:'post',
-			url:'./soldlist',
+			url:url,
 			data:{  index1 : 0,
 					index2 : 0 },
 			dataType:'JSON',
