@@ -263,6 +263,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			
 			GGDto dto = new GGDto();
 			int instantpr = 0;
+			AlarmDAO Aldao = new AlarmDAO();
 	
 			//낙찰시간,경매상태,낙찰자 변경
 			String sql = "update auction set au_suctm = SYSDATE, au_code= 'Au002' ,au_successer = (select u_id from userinfo where u_nname= ?) where p_no=? ";
@@ -274,18 +275,25 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			
 			//성공했을 때 경매상태, 낙찰시간, 낙찰자 데이터 가져와서 담아주기
 			if(success > 0) {
-				sql ="select au_code,au_successer,au_suctm,au_instantpr from auction where p_no=?";
+				sql ="select au_code,au_successer,au_suctm,au_instantpr, (select p_title from post where p_no=?) as p_title from auction where p_no=?";
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1, p_no);
+				ps.setInt(2, p_no);
 				
 				rs = ps.executeQuery();
 				
+				String p_title = null;
 				if(rs.next()) {
 					dto.setAu_code(rs.getString("au_code"));
 					dto.setAu_successer(rs.getString("au_successer"));
 					dto.setAu_sucTm(rs.getDate("au_suctm"));
 					instantpr = rs.getInt("au_instantpr");
+					p_title = rs.getString("p_title");
 				}
+				
+				String successer = dto.getAu_successer();
+				String cutTitle = Aldao.cutTitle(p_title);
+				
 				
 				//입찰금 반환 메서드 실행
 				returnStartPr(p_no, instantpr);
@@ -355,10 +363,17 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			while(rs.next()) {
 				String bid_id = rs.getString("ha_bidusr");
 				String p_title = rs.getString("p_title");
+				String subTitle = null;
 				System.out.println("bid_id:"+bid_id);
 				System.out.println("p_title:"+p_title);
+				
+				if(p_title.length()>8) {
+					subTitle = p_title.substring(0, 7);
+				}else {
+					subTitle = p_title;
+				}
 				//경매종료 알람보내기
-
+				Aldao.insertAlarm(bid_id, "A011", "["+subTitle+"..]게시글의 경매가 종료 되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
 				insertRs = dao.insertPoint(bid_id, instantpr, "SYSTEM", "PNT007", p_no);
 				
 				if(insertRs) {
@@ -368,7 +383,10 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				
 			}
 			System.out.println("==========================");
+			
+			Aldao.resClose();
 			dao.resClose();
+			
 			
 		}
 		//====================구매 요청 수락, 거절=====================

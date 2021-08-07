@@ -128,6 +128,20 @@ public class AlarmDAO {
 		
 		return success;
 	}
+	
+	public String cutTitle(String p_title) {
+		
+		String title = null;
+		
+		if(p_title.length()>8) {
+			title = p_title.substring(0, 6);
+		}else {
+			title = p_title;
+		}
+		
+		return title;
+		
+	}
 
 	
 
