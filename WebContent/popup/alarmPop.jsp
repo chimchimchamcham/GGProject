@@ -49,7 +49,7 @@ h2 {
 .content td {
 	width: 500px;
 	text-align: left;
-	/* display: inline-block; */
+	display: inline-block;
 	/* border: 1px solid black; */
 }
 
@@ -78,6 +78,12 @@ h2 {
 .a_no, .a_readYN, .a_path{
 	display:none;
 }
+
+
+.delBtn{
+	display:inline;
+}
+
 </style>
 <body>
 	<h2>알람</h2>
@@ -97,11 +103,13 @@ h2 {
 							<span class="a_no">${dto.a_no }</span>
 							<span class="a_readYN">${dto.a_readYN}</span>
 							<span class="a_path">${dto.a_path }</span>
-							${dto.a_content}
+							<p  style="width:310px;  padding:0 20px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${dto.a_content}</p>
 						</td>
+				
+						<td></td>
 					</tr>
 					<tr>
-						<td><small>${dto.a_sendTm }</small></td>
+						<td><p style="width:310px;  padding:0 20px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><small>${dto.a_sendTm }</small></p></td>
 					</tr>
 					<tr>
 						<td style="border-bottom: 1px solid black; padding-top: 10px;"></td>
@@ -109,7 +117,6 @@ h2 {
 
 				</table>
 			</div>
-			
 		</c:forEach>
 	</div>
 </body>
@@ -118,7 +125,8 @@ h2 {
 	var a_no = ''; //알람 번호 가져오기
 	var a_readYN = ''; //읽음 여부 가져오기
 	var a_path=''; //경로 가져오기
-	var insert_success = '';
+	
+	var insert_success = ''; //읽은 시간과 읽음여부 집어넣은 결과 확인용
 	
 	/*전체 알람 보이기*/
 	$("#allAL").click(function() {
@@ -139,6 +147,7 @@ h2 {
 	//해당 링크로 부모 페이지 이동시키기
 	$(".tableWrap").click(function(){
 		console.log("알림클릭");
+		$(this).addClass("read"); //클릭했을 경우 읽음 표시로
 		
 		a_no=$(this).find('.a_no').text(); 	//자손에 있는 값 가져오기
 		a_readYN = $(this).find('.a_readYN').text();
@@ -146,6 +155,11 @@ h2 {
 		console.log("알람번호 : ",a_no);
 		console.log("알람 읽음 여부 : ",a_readYN);
 		console.log("알람 경로 : ",a_path);
+		
+		//읽음여부 상관없이 클릭시 해당 페이지로 부모페이지 이동
+		opener.parent.location=a_path;
+		
+		//읽음여부 확인하고 변경
 		if(a_readYN == "N"){
 			$.ajax({
 				type:'GET',
@@ -162,12 +176,9 @@ h2 {
 				}
 				
 			});
-			console.log("ajax 처리 결과",insert_success);
-			if(insert_success){
-				$(this).addClass("read"); //클릭했을 경우 읽음 표시로
-			}
+			
 		}
-		opener.parent.location=a_path;
+		
 	});
 	
 	
