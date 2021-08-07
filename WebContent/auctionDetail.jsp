@@ -72,10 +72,20 @@
     #first>div:nth-of-type(2)>p:last-child{text-align:center;margin:10px;}
     #first>div:nth-of-type(2)>p:last-child>a{text-decoration:none;color:#6E6E6E;font-size:1.3rem;}
     
+    
+    
+    /* 댓글달기 영역 */
+	.board_text  {
+	border: 1px solid #D8D8D8;
+	width: 1190px;
+	height: 5vh;
+	float: left;
+	}
+    
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
- 
+ var page = 0;
  $(document).ready(function(){
 	//수정 삭제버튼 숨기기
 	$("#description>div:nth-of-type(1)").hide();
@@ -92,6 +102,7 @@
     $("#twoButton>button:nth-of-type(2)").click(function(){
         $("#twoButton>button:nth-of-type(2)").css({"background-color":"gray","color":"white"});
         $("#twoButton>button:nth-of-type(1)").css({"background-color":"white","color":"black"});
+        page =1; // 댓글을 눌렀을 때, 페이징 처리 1로 초기화가 된다.
         $("#second").show();
         $("#first").hide();
     });
@@ -102,6 +113,7 @@
         $("#twoButton>button:nth-of-type(2)").css({"background-color":"white","color":"black"});
         $("#first").show();
         $("#second").hide();
+        
     });
     
     //찜+버튼 클릭시 숨겨짐
@@ -313,6 +325,13 @@
                     	</div>          
                     </div>
                     <div id="second">
+                    
+                    
+                    <div class="board_t_b">
+						<textarea class="board_text" style="resize: none;"></textarea>
+						<div id="board_text_controll">(0 / 300)</div>
+						<button class="enter">enter</button>
+					</div>
                     </div>
                 </article>
             </div>
@@ -389,7 +408,15 @@
 	}*/
 	
 	
-	
+	/*글자수 제한*/
+	$(".board_text, .update_text").on('keyup', function() {
+		$('#board_text_controll').html("(" + $(this).val().length + " / 300)");
+		console.log(page);
+		if ($(this).val().length > 300) {
+			$(this).val($(this).val().substring(0, 300));
+			$('#board_text_controll, update_text_controll').html("(300 / 300)");
+		}
+	});
 	
 </script>
 </html>
