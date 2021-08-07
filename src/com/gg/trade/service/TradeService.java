@@ -3,6 +3,7 @@ package com.gg.trade.service;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -383,11 +384,36 @@ public void buyNow(){
 		return updateTradeT_cancleIdSuccess;
 	}
 
+	//거래페이지 상세보기
 	public GGDto tradeDetail() {
 		int t_no = Integer.parseInt(req.getParameter("t_no"));
 		TradeDAO dao = new TradeDAO();
 		GGDto dto = dao.tradeDetail(t_no);
 		dao.resClose();
 		return dto;
+	}
+
+	//거래페이지 목록보기
+	public void tradeList() throws IOException{
+		System.out.println("[TRADESERVICE]/TRADELIST START");
+		String id = (String) req.getSession().getAttribute("loginId");
+		TradeDAO dao = new TradeDAO();
+		HashMap<String, Object> map = new HashMap<>();
+		boolean success = false;
+		ArrayList<GGDto> list = dao.tradeList(id);
+		if(list != null) {
+			success = true;
+			map.put("list", list);
+		}
+		
+		dao.resClose();
+		map.put("success", success);
+		System.out.println("[TRADESERVICE]/TRADELIST SUCCESS : "+success);
+		resp.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/html; charset=UTF-8");		
+		resp.getWriter().println(new Gson().toJson(map));
+		
+		System.out.println("[TRADESERVICE]/TRADELIST END");
+
 	}
 }

@@ -169,7 +169,11 @@ public class TradeController extends HttpServlet {
 			resp.sendRedirect("./tradeDetail?t_no="+t_no);
 			System.out.println("[TRADECONTROLLER]/CANCELTRADE END");
 			break;
-		
+		case "/tradeList":
+			System.out.println("[TRADECONTROLLER]/TRADELIST START");
+			service.tradeList();
+			System.out.println("[TRADECONTROLLER]/TRADELIST END");
+			break;
 		}
 		
 	}

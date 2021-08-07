@@ -146,25 +146,23 @@ public class GGDto {
 	private int t_point; //구매자의 보유포인트
 	// 거래취소ID의 경우 불러올일이 없을거같아서 안넣음
 	// 관리자 접근 가능여부 .... 안넣었음
-
-	public int getT_point() {
-		return t_point;
-	}
-
-	public void setT_point(int t_point) {
-		this.t_point = t_point;
-	}
+	private String t_saler_newName;//판매자 프로필사진 경로
+	private String t_buyer_newName;//구매자 프로필사진 경로
 
 	// 거래 히스토리
 	private int ht_point; // 포인트값
 	private String ht_code; //분류코드
 	private String ht_name; //분류이름
+	private Date ht_date; //거래히스토리 날짜
 
+	
 	
 
 	// 거래댓글
 	private String tc_content; // 거래 댓글 내용
-
+	private Date tc_tm; //댓글 작성 날짜
+	private String tc_id; //댓글 작성자
+	
 	// 후기
 	private String rv_id; // 후기 작성자ID
 	private int rv_score; // 후기 평점
@@ -1024,4 +1022,58 @@ public class GGDto {
 		this.totalPage = totalPage;
 	}
 	
+	public String getT_saler_newName() {
+		return t_saler_newName;
+	}
+
+	public void setT_saler_newName(String t_saler_newName) {
+		this.t_saler_newName = t_saler_newName;
+	}
+
+	public String getT_buyer_newName() {
+		return t_buyer_newName;
+	}
+
+	public void setT_buyer_newName(String t_buyer_newName) {
+		this.t_buyer_newName = t_buyer_newName;
+	}
+
+	public Date getTc_tm() {
+		return tc_tm;
+	}
+
+	public void setTc_tm(Date tc_tm) {
+		this.tc_tm = tc_tm;
+	}
+
+	public String getTc_id() {
+		return tc_id;
+	}
+
+	public void setTc_id(String tc_id) {
+		this.tc_id = tc_id;
+	}
+
+	public String getThisuserFlowingYN() {
+		return thisuserFlowingYN;
+	}
+
+	public void setThisuserFlowingYN(String thisuserFlowingYN) {
+		this.thisuserFlowingYN = thisuserFlowingYN;
+	}
+
+	public int getT_point() {
+		return t_point;
+	}
+
+	public void setT_point(int t_point) {
+		this.t_point = t_point;
+	}
+	public Date getHt_date() {
+		return ht_date;
+	}
+
+	public void setHt_date(Date ht_date) {
+		this.ht_date = ht_date;
+	}
 }

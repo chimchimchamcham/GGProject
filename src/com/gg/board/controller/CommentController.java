@@ -126,9 +126,26 @@ public class CommentController extends HttpServlet {
 			break;
 		case "/re_comment":
 			System.out.println("대댓글 달기 시작");
+			pc_content = req.getParameter("pc_content");
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			pc_parentno = Integer.parseInt(req.getParameter("pc_parentno"));
+			pc_id = req.getParameter("pc_id");
+			System.out.println("대댓글 내용 : " + pc_content + " 대댓글 부모 번호 : " + pc_parentno + " 글 번호 : " + p_no + " 아이디 :"+pc_id);
+			success= false;
+			success = service.re_comment(pc_content,pc_parentno,p_no,pc_id);
+			
+			if(success == true) {
+				list = service.showReComment(p_no, pc_parentno);
+				map = new HashMap<String, Object>();
+				map.put("list", list);
+				resp.getWriter().println(new Gson().toJson(map));
+			}
+			
 			
 			
 			break;
+			
+			
 		case "/showReComment":
 			System.out.println("대댓글 리스트 보여주기.");
 			pc_parentno = Integer.parseInt(req.getParameter("pc_parentno"));

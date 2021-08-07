@@ -40,7 +40,7 @@ margin-top:20px;
 .tableWrap{
 	text-align:center;
 }
-.tableWrap:hover{
+.content:hover{
 background-color: #f7f7f7;
 }
 
@@ -94,20 +94,25 @@ a{
 					<td style="width:110px; text-align: right;"><a href="#"><small>2021.08.06 15:56</small></a></td>
 				</tr>
 				<tr>
-					<td><p  style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width:240px; padding:0 20px; text-align: left;">
-					<a href="#">안녕하세요~~!!@#^^^호ㅓㅎ외ㅓㅗ이ㅏㅓ노리아ㅓ로이ㅏ러ㄹ하어ㅣ헝라ㅣ허;하넝ㄹ</a></p>
+					<td>
+						<p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width:240px; padding:0 20px; text-align: left;">
+							<a href="#">안녕하세요~~!!@#^^^호ㅓㅎ외ㅓㅗ이ㅏㅓ노리아ㅓ로이ㅏ러ㄹ하어ㅣ헝라ㅣ허;하넝ㄹ</a>
+						</p>
 					</td>
 					<td style="width:110px; text-align: right;"><a href="#">배송중</a></td>
 				</tr>
-					<tr>
-				<td style="border-bottom:1px solid black; padding-top:10px;" colspan="3"></td>
-			</tr>
+				<tr>
+					<td style="border-bottom:1px solid black; padding-top:10px;" colspan="3"></td>
+				</tr>
 		</table>
 		</div>
 	</div>
 </body>
 <script>
-
+	listCall();
+	function listCall(){
+		
+	}
 	
 </script>
 </html>
