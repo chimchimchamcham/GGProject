@@ -1,6 +1,5 @@
 package com.gg.board.dao;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -506,16 +505,16 @@ public class BoardDAO {
 		System.out.println("daouserID:" + userid);
 
 		if (reqindex == 0) {// 전체
-			sql = "select u.u_id,s.S_saler,r.rq_no,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and (  s.s_saler = ? or r.rq_id = ? ) and r.rq_yn is null";
+			sql = "select u.u_id,s.S_saler,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and (  s.s_saler = ? or r.rq_id = ? ) and r.rq_yn is null";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 			ps.setString(2, userid);
 		} else if (reqindex == 1) {// 수신만
-			sql = "select u.u_id,s.S_saler,r.rq_no,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and  s.s_saler = ? and r.rq_yn is null";
+			sql = "select u.u_id,s.S_saler,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and  s.s_saler = ? and r.rq_yn is null";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 		} else if (reqindex == 2) {// 발신만
-			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and r.rq_id = ? and r.rq_yn is null";
+			sql = "select u.u_id,s.S_saler,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and r.rq_id = ? and r.rq_yn is null";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 		}
@@ -528,7 +527,6 @@ public class BoardDAO {
 			dto.setS_saler(rs.getString("S_saler"));
 
 			dto.setP_no(rs.getInt("P_no"));
-			dto.setRq_no(rs.getInt("rq_no"));
 			dto.setP_title(rs.getString("p_title"));
 			dto.setRq_id(rs.getString("rq_id"));
 			dto.setRq_tm(rs.getDate("rq_tm"));
@@ -539,7 +537,7 @@ public class BoardDAO {
 			if (userid.equals(sid)) {
 				System.out.println("수신");
 				dto.setSered("수신");
-				dto.setButtonORtext("<div><button value='"+dto.getRq_no()+"' class = 'ok'>수락</button><button>거절</button></div>");
+				dto.setButtonORtext("<div><button>수락</button><button>거절</button></div>");
 			} else if (userid.equals(rid)) {
 				System.out.println("발신");
 				dto.setSered("발신");
@@ -553,39 +551,6 @@ public class BoardDAO {
 		return reqlist;
 	}
 
-	
-	public ArrayList<GGDto> reqlistapply(String userid, int rqno, String a)throws SQLException {
-		
-		
-		//System.out.println(userid);
-		//System.out.println(rqno);
-			String sql = "UPDATE request SET rq_yn = 'y' WHERE RQ_NO = ? AND rq_id = ?";
-			
-			
-			
-		 /* 
-		 * ArrayList<GGDto> reqlist = new ArrayList<GGDto>();
-		 * 
-		 * System.out.println("daouserID:" + userid);
-		 * 
-		 * String sql = "";
-		 * 
-		 * 
-		 * 
-		 * System.out.println("rs:" + rs); GGDto dto = new GGDto(); while (rs.next()) {
-		 * dto.setU_id(rs.getString("u_id")); dto.setS_saler(rs.getString("S_saler"));
-		 * 
-		 * dto.setP_no(rs.getInt("P_no")); dto.setP_title(rs.getString("p_title"));
-		 * dto.setRq_id(rs.getString("rq_id")); dto.setRq_tm(rs.getDate("rq_tm"));
-		 * 
-		 * sid = dto.getS_saler(); rid = dto.getRq_id();
-		 * 
-		 * reqlist.add(dto); }*/
-		 return null;
-
-	}
-	
-	
 	// 좋아요
 	public ArrayList<GGDto> lovelist(String userid, int index1, int index2) throws SQLException {
 		String sql = "";
@@ -755,8 +720,7 @@ public class BoardDAO {
 
 		// 공지사항
 		if (dto.getU_adminYN().equals("Y")) {
-			String sql = "INSERT INTO post VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
-
+			String sql = "INSERT INTO post(p_no,p_id,p_title,p_content,p_TM,p_view,p_likecount,p_blindYN,p_code) VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
 			ps = conn.prepareStatement(sql, new String[] { "p_no" });
 			ps.setString(1, dto.getP_id());
 			ps.setString(2, dto.getP_title());
@@ -954,6 +918,34 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println("dto:"+dto);
+		return dto;
+	}
+	
+	public GGDto noticeDetail(String p_no) {
+		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname,u_id FROM UserInfo u " + 
+				"INNER JOIN Post p ON u.u_id = p.p_id LEFT OUTER JOIN Img i ON p.p_no = i.p_no WHERE p.p_code = 'P003' AND p.p_blindyn = 'N' AND p.p_no=?";
+
+		GGDto dto = new GGDto();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, p_no);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				dto.setU_nname(rs.getString("u_nname"));
+				dto.setU_newName(rs.getString("u_newName"));
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setP_title(rs.getString("p_title"));
+				dto.setP_content(rs.getString("p_content"));
+				dto.setP_tm(rs.getDate("p_tm"));
+				dto.setP_view(rs.getInt("p_view"));
+				dto.setI_newName(rs.getString("i_newName"));
+				dto.setU_id(rs.getString("u_id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("공지사항 dto:"+dto);
 		return dto;
 	}
 
@@ -1201,33 +1193,32 @@ public class BoardDAO {
 		}
 		return success;
 	}
-
-	public ArrayList<GGDto> noticeList() {
-		
-		String sql = "SELECT p_no,p_title,p_id,p_tm,p_view FROM post WHERE p_code='P003' ORDER BY p_no DESC";
-		ArrayList<GGDto> noticeList = null;
-		GGDto dto = null;
-		
-		try {
-			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			noticeList = new ArrayList<GGDto>();
-			while(rs.next()) {
-				dto = new GGDto();
-				dto.setP_no(rs.getInt("p_no"));
-				dto.setP_title(rs.getString("p_title"));
-				dto.setP_id(rs.getString("p_id"));
-				dto.setP_tm(rs.getDate("p_tm"));
-				dto.setP_view(rs.getInt("p_view"));
-				noticeList.add(dto);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return noticeList;
-	}
 	
+	   public ArrayList<GGDto> noticeList() {
+		      
+		      String sql = "SELECT p_no,p_title,p_id,p_tm,p_view FROM post WHERE p_code='P003' ORDER BY p_no DESC";
+		      ArrayList<GGDto> noticeList = null;
+		      GGDto dto = null;
+		      
+		      try {
+		         ps = conn.prepareStatement(sql);
+		         rs = ps.executeQuery();
+		         noticeList = new ArrayList<GGDto>();
+		         while(rs.next()) {
+		            dto = new GGDto();
+		            dto.setP_no(rs.getInt("p_no"));
+		            dto.setP_title(rs.getString("p_title"));
+		            dto.setP_id(rs.getString("p_id"));
+		            dto.setP_tm(rs.getDate("p_tm"));
+		            dto.setP_view(rs.getInt("p_view"));
+		            noticeList.add(dto);
+		         }
+		      } catch (SQLException e) {
+		         e.printStackTrace();
+		      }
+
+		      return noticeList;
+		   }
 	// 메서드 통합으로 인하여 주석처리
 	/*
 	 * public String auctionDelete(int p_no) throws SQLException {
