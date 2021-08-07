@@ -92,6 +92,8 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		String sql = "";
 		String msg = "";
 		HashMap<String,Object> map = new HashMap<String,Object>();
+		AlarmDAO Aldao = new AlarmDAO();
+		BoardDAO Bdao = new BoardDAO();
 		
 		//즉결구매가 이상을 입력한 경우
 		sql = "select au_instantpr from auction where p_no=?";
@@ -119,7 +121,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				}
 				
 		}else {
-			//최고입찰자와 최고입찰금액 가져오는 쿼리
+			//이전 최고입찰자와 최고입찰금액 가져오는 쿼리
 			sql = "select his.ha_bidpr, his.ha_bidusr from his_auction his where his.ha_bidpr =(select max(ha_bidpr) from his_auction  group by p_no having p_no=?) and p_no = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
@@ -150,6 +152,13 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 						if(success) {
 							instantYN = bidRecordYN(p_no,ha_bidUsr);
 							System.out.println("시작금 인출 여부 : "+instantYN);
+							
+							//입찰자 변경알람 보내기
+							String title = Bdao.getTitle(p_no);
+							title = Aldao.cutTitle(title);
+							Aldao.insertAlarm(bidUsr, "A010", "["+title+"]입찰자가 변경되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
+							Aldao.resClose();
+							Bdao.resClose();
 						}
 					}
 				}
@@ -264,7 +273,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			GGDto dto = new GGDto();
 			int instantpr = 0;
 			AlarmDAO Aldao = new AlarmDAO();
-	
+			BoardDAO Bdao = new BoardDAO();
 			//낙찰시간,경매상태,낙찰자 변경
 			String sql = "update auction set au_suctm = SYSDATE, au_code= 'Au002' ,au_successer = (select u_id from userinfo where u_nname= ?) where p_no=? ";
 			ps = conn.prepareStatement(sql);
@@ -275,33 +284,39 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			
 			//성공했을 때 경매상태, 낙찰시간, 낙찰자 데이터 가져와서 담아주기
 			if(success > 0) {
-				sql ="select au_code,au_successer,au_suctm,au_instantpr, (select p_title from post where p_no=?) as p_title from auction where p_no=?";
+				sql ="select au_code,au_successer,au_suctm,au_instantpr from auction where p_no=?";
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1, p_no);
 				ps.setInt(2, p_no);
+				ps.setInt(3, p_no);
 				
 				rs = ps.executeQuery();
 				
-				String p_title = null;
 				if(rs.next()) {
 					dto.setAu_code(rs.getString("au_code"));
 					dto.setAu_successer(rs.getString("au_successer"));
 					dto.setAu_sucTm(rs.getDate("au_suctm"));
 					instantpr = rs.getInt("au_instantpr");
-					p_title = rs.getString("p_title");
+					
 				}
 				
 				String successer = dto.getAu_successer();
-				String cutTitle = Aldao.cutTitle(p_title);
-				
 				
 				//입찰금 반환 메서드 실행
 				returnStartPr(p_no, instantpr);
 				
-				//해당 글번호로 판매자를 알아오기
+				//해당 글번호로 판매자, 제목을 알아오기
 				String p_id = selectPostP_id(p_no);
+				String p_title = Bdao.getTitle(p_no);
+				p_title = Aldao.cutTitle(p_title);
 				//글번호, 판매자, 구매자를 인자값으로 넣어서, 거래페이지 생성과, 거래히스토리에 "0원" "생성" 추가
 				int t_no = insertTrade(p_no, p_id, ha_bidusr);
+				
+				//알람보내기
+				Aldao.insertAlarm(successer, "A004", "["+p_title+"..]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
+				Aldao.insertAlarm(p_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 작성자
+				Aldao.resClose();
+				Bdao.resClose();
 			}
 			
 			return dto;
@@ -363,17 +378,13 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			while(rs.next()) {
 				String bid_id = rs.getString("ha_bidusr");
 				String p_title = rs.getString("p_title");
-				String subTitle = null;
 				System.out.println("bid_id:"+bid_id);
 				System.out.println("p_title:"+p_title);
 				
-				if(p_title.length()>8) {
-					subTitle = p_title.substring(0, 7);
-				}else {
-					subTitle = p_title;
-				}
+				p_title = Aldao.cutTitle(p_title);
+				
 				//경매종료 알람보내기
-				Aldao.insertAlarm(bid_id, "A011", "["+subTitle+"..]게시글의 경매가 종료 되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
+				Aldao.insertAlarm(bid_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
 				insertRs = dao.insertPoint(bid_id, instantpr, "SYSTEM", "PNT007", p_no);
 				
 				if(insertRs) {
