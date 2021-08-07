@@ -388,8 +388,8 @@ console.log("오늘 날짜 : ",currDate);
 				});
 			}
 
-		}else if(adminYN == "Y"){ //공지사항
-			   param.title = $("input[name='title']").val();
+		}else if(adminYN == 'Y'){ //공지사항
+			   param.title = '(공지)'+$("input[name='title']").val();
 			   param.content = $("textarea[name='content']").val();
 			   param.adminYN = adminYN;
 			   param.select = "P003";
@@ -409,6 +409,7 @@ console.log("오늘 날짜 : ",currDate);
 			            
 			         } else {
 			            alert("공지사항 글 작성을 실패하였습니다! ");
+			            location.href = "./writeForm";
 			         }
 			      },
 			      error : function(e) {

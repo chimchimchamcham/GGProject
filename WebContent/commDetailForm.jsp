@@ -88,7 +88,7 @@
     			<td>글 번호 : ${dto.p_no }</td>
 				<td>작성자 : ${dto.u_nname }</td>
     			<td>작성 일시 : ${dto.p_tm }</td>
-    			<td>조회 수 : ${dto.p_view }</td>
+    			<td>조회수 : ${dto.p_view }</td>
     			<td></td>
 			</tr>
 	    	<tr>

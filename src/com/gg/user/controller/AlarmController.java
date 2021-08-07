@@ -36,6 +36,7 @@ public class AlarmController extends HttpServlet {
 		String ctx = req.getContextPath();
 		String addr =url.substring(ctx.length());
 		AlarmService service = null;
+		
 		GGDto dto = null;
 		RequestDispatcher dis = null;
 		String page = null;
@@ -59,8 +60,7 @@ public class AlarmController extends HttpServlet {
 			
 		case "/readAlarm":
 			System.out.println("알람 읽음 처리");
-			service = new AlarmService(req);
-		
+			service = new AlarmService(req,resp);
 			service.readAlarm();
 			
 			break;

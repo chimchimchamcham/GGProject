@@ -752,8 +752,7 @@ public class BoardDAO {
 
 		// 공지사항
 		if (dto.getU_adminYN().equals("Y")) {
-			String sql = "INSERT INTO post VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
-
+			String sql = "INSERT INTO post(p_no,p_id,p_title,p_content,p_TM,p_view,p_likecount,p_blindYN,p_code) VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
 			ps = conn.prepareStatement(sql, new String[] { "p_no" });
 			ps.setString(1, dto.getP_id());
 			ps.setString(2, dto.getP_title());
@@ -951,6 +950,34 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println("dto:"+dto);
+		return dto;
+	}
+	
+	public GGDto noticeDetail(String p_no) {
+		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname,u_id FROM UserInfo u " + 
+				"INNER JOIN Post p ON u.u_id = p.p_id LEFT OUTER JOIN Img i ON p.p_no = i.p_no WHERE p.p_code = 'P003' AND p.p_blindyn = 'N' AND p.p_no=?";
+
+		GGDto dto = new GGDto();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, p_no);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				dto.setU_nname(rs.getString("u_nname"));
+				dto.setU_newName(rs.getString("u_newName"));
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setP_title(rs.getString("p_title"));
+				dto.setP_content(rs.getString("p_content"));
+				dto.setP_tm(rs.getDate("p_tm"));
+				dto.setP_view(rs.getInt("p_view"));
+				dto.setI_newName(rs.getString("i_newName"));
+				dto.setU_id(rs.getString("u_id"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("공지사항 dto:"+dto);
 		return dto;
 	}
 
