@@ -151,4 +151,29 @@ public class CommentService {
 		return list;
 	}
 
+
+
+	public boolean re_comment(String pc_content, int pc_parentno, int p_no, String pc_id) {
+		boolean success = false;
+		
+		CommentDAO dao = new CommentDAO();
+		int check = 0 ;
+		try {
+			check = dao.re_comment(pc_content, pc_parentno, p_no,pc_id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		if(check >0) {
+			success = true;
+		}
+		
+		
+		
+		return success;
+	}
+
 }

@@ -24,7 +24,8 @@ import com.google.gson.Gson;
 		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/postDel", "/writeCommunity", "/auctionDetail",
 		"/commDetail", "/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist", "/commList",
 		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist",
-		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail","/applyreqlist"})
+		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail","/applyreqlist","/noticeList"})
+
 
 public class BoardController extends HttpServlet {
 
@@ -534,6 +535,16 @@ public class BoardController extends HttpServlet {
 			dis = req.getRequestDispatcher("index.jsp");
 			dis.forward(req, resp);
 			break;
+			
+			
+		//공지사항 목록
+		case "/noticeList":
+			System.out.println("공지사항 리스트 요청");
+			req.setAttribute("noticeList", service.noticeList());
+			dis = req.getRequestDispatcher("noticeList.jsp");
+			dis.forward(req, resp);
+
+			break;
 
 		// 메서드 통합으로 인하여 주석처리
 		/*
@@ -546,6 +557,9 @@ public class BoardController extends HttpServlet {
 		 * resp); break;
 		 */
 		}
+		
+		
+	
 
 	}
 
