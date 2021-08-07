@@ -327,23 +327,29 @@ public class BoardService {
 		map.clear();
 		dao.resClose();
 	}
-
-	// 팔로워 버튼 +,- 여부
-	public void flow_button(String userid, String flow_addordelect, String reseveid, String sendid) throws IOException {
-		System.out.println("flow_addordelect:" + flow_addordelect);
-		if (flow_addordelect != null) {
-			BoardDAO dao = new BoardDAO();
-			try {
-				dao.flowbut(userid, flow_addordelect, reseveid, sendid);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		} else {
-			System.out.println("null임");
-		}
-
-	}
-
+							//팔로워 버튼 +,- 여부 
+							public void flow_button(String userid,String btntext, String nick) throws IOException {
+								
+								  System.out.println("userid_service:"+userid);
+								  System.out.println("btntext:"+btntext);
+								  System.out.println("nick_service:"+nick);
+								 
+								if (btntext != null) {
+									BoardDAO dao = new BoardDAO();
+									int success; 
+									try {
+										success = dao.flowbut(userid, btntext, nick);
+										System.out.println("success:"+success);
+									} catch (SQLException e) {
+										e.printStackTrace();
+									}finally {
+										dao.resClose();
+									}
+								}else {
+									System.out.println("null임");
+								}
+								
+							}
 //구매요청리스트
 	public void req_list(String userid, int reqindex) throws IOException {
 

@@ -657,6 +657,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 					content += "<div class='img-zoon'><img src='/photo"+item.u_newname+"'></div>"
 					content += "<div class='flowerusername'>"+item.u_nname+"</div>"
 					content += "<div class=''>팔로워:"+item.flow_count+"</div>"
+					content += "<a href='myPage?id="+item.u_id+"'>프로필로가기</a>";
 					content += item.thisuserFlowingYN;
 				content += " </div>"
 			});
@@ -667,42 +668,90 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			var aaa=  $(".count").text();
 			
 			}//팔로워 팔로잉 리스트 end
-			
-			
-			$(document).on("click","button.hellow",function(){//버튼을 누르면 함수 실행,동적으로 실행
 				
-				alert('팔로잉,언팔로잉 하였습니다')
-  		 		$button1 = $("button.hellow");
-    	 		$index1 = $button1.index(this);
-  	 	 		$index_button_f = $("button.hellow:eq(" + $index1 + ")");
-				var	btntext = $index_button_f.text();
+			
+			
+			$(document).on("click","button.hellow,button.unhellow",function(){//버튼을 누르면 함수 실행,동적으로 실행
 
-  	 	 		$user_id = $('div.flowerusername');
-  	 	 		$index_user_id = $("div.flowerusername:eq(" + $index1 + ")");
-  	 	 		$index_user_text = $index_user_id.text();	
-  	 	 		var nick = $index_user_text;
-  	 	 		
-  	 	 		console.log(btntext);
-  	 	 		console.log(nick);
-  	 	 		
-				 $.ajax({
+			if ($('div.item-one-flow button').hasClass("hellow")) {
+					alert('팔로잉,언팔로잉 하였습니다')
+	  		 		$button1 = $("button.hellow");
+	    	 		$index1 = $button1.index(this);
+	  	 	 		$index_button_f = $("button.hellow:eq(" + $index1 + ")");
+	  	 	 		
+		  	 	 	var	btntext1 = $index_button_f.text();
+	
+	  	 	 		$user_id = $('div.flowerusername'); 	 		
+	  	 	 		$index_user_id = $("div.flowerusername:eq(" + $index1 + ")");
+	  	 	 		$index_user_text = $index_user_id.text();	
+	  	 	 		
+	  	 	 		var nick1 = $index_user_text;
+	  	 	 		
+	  	 	 		
+	  	 	 		console.log($index1);
+	  	 	 		console.log(btntext1);
+	  	 	 		console.log(nick1);
+	  	 	 		
+	  	 	 		
+	  	 	 	$.ajax({
 					type:'post',
 					url:'./flowadddelect',
-					data:{ btntext:btntext,nick:nick},
+					data:{ btntext : btntext1,nick : nick1},
 					dataType:'JSON',
 					success:function(data){
-							if ($index_button_f.text() == '+팔로잉') {
-								console.log('-팔로잉');
-								$index_button_f.text('-팔로잉');
-							}else if ($index_button_f.text() == '-팔로잉') {
-								console.log('+팔로잉');
-								$index_button_f.text('+팔로잉');	
+							if ($index_button_f.text() == "+팔로잉") {
+								console.log("-팔로잉");
+								$index_button_f.text("-팔로잉");
+								
+							}else if($index_button_f.text() == "-팔로잉") {
+								console.log("+팔로잉");
+								$index_button_f.text("+팔로잉");	
 							}
 					},
 					error:function(e){
 						console.log(e);
 					}
 				}); 
+	  	 	 		
+				}else if($('div.item-one-flow button').hasClass('unhellow')){
+					alert('팔로잉,언팔로잉 하였습니다')
+	  		 		$button2 = $("button.unhellow");
+	    	 		$index2 = $button2.index(this);
+	  	 	 		
+	    	 		
+	    	 		$index_button_f = $("button.unhellow:eq(" + $index2 + ")");
+		  	 	 	
+	    	 		var	btntext2 = $index_button_f.text();
+	
+	  	 	 		$user_id = $('div.flowerusername'); 	 		
+	  	 	 		$index_user_id = $("div.flowerusername:eq(" + $index2 + ")");
+	  	 	 		$index_user_text = $index_user_id.text();	
+	  	 	 		
+	  	 	 		var nick2 = $index_user_text;
+	  	 	 		
+	  	 	 		
+	  	 	 		console.log($index2);
+	  	 	 		console.log(btntext2);
+	  	 	 		console.log(nick2);
+		  	 	 	$.ajax({
+						type:'post',
+						url:'./flowadddelect',
+						data:{ btntext : btntext2,nick : nick2},
+						dataType:'JSON',
+						success:function(data){
+								if ($index_button_f.text() == "-팔로잉") {
+									console.log("+팔로잉");
+									$index_button_f.text("+팔로잉");	
+								}else if($index_button_f.text() == "+팔로잉"){
+									console.log("-팔로잉");
+									$index_button_f.text("-팔로잉");
+								}
+						},
+						error:function(e){
+							console.log(e);
+						}
+					}); 
+				}
 
 			})
 			
@@ -731,7 +780,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				content += "</div>";
 				content += "<div>"+item.rq_tm+"</div>"
 				content += "<div class='c_zoon'>";
-				content += "	<div>"+item.rq_id+"</div>";	
+				content += "	<div><a href='myPage?id="+item.rq_id+"'>"+item.rq_id+"</a></div>";	
 				content += "</div>";
 				content += "<div class='mai-time'>";
 				content += "	<div>"+item.buttonORtext+"</div>";

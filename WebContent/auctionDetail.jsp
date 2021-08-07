@@ -7,13 +7,14 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+	#mainHeader{position: relative;z-index: 1}
     *{margin:0;padding:0;border-width:0;list-style-type:none;}
     body{width:100%;background-color:white;}
-	#wrap{margin-top:120px;}
+	#wrap{position: absolute;top:150px;}
 	
 	#category{font-weight:600;font-color:#848484;font-size:1.2rem;}
     section{width:100%;}
-    #sectionWrap{width:1200px;margin:0 auto;border-top:1px solid gray;padding:30px;}
+    #sectionWrap{width:1200px;margin:0 auto;/*border-top:1px solid gray; padding:30px; */}
     #sectionWrap>article{width:1200px;height:1000px;/* border:1px solid black; */clear: both;}
     #imgWrap{width:400px;height:400px;/* background-color:green; */float:left;}
     
@@ -39,7 +40,7 @@
     #description>span:nth-of-type(11){position:absolute;top:350px;right:30px;font-size:1.1rem;color:gray;}
      
     #threeButton{line-height:100px;margin-left:400px;width:600px;height:100px;/* background-color:rosybrown; */float:right;}
-    button{margin:3px;width:190px;height:80px;}
+    #threeButton>button{margin:3px;width:190px;height:80px;}
     
     #threeButton>button{color:white;font-size:1.5rem;font-weight:700}
     #threeButton>button:nth-last-of-type(4){background-color: red;}
@@ -71,7 +72,6 @@
     #first>div:nth-of-type(2)>p:last-child{text-align:center;margin:10px;}
     #first>div:nth-of-type(2)>p:last-child>a{text-decoration:none;color:#6E6E6E;font-size:1.3rem;}
     
-    #content_hide{position:fixed;width:1200px; height:1200px; background-color:gray; z-index:1000;}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -130,11 +130,12 @@
 	//즉시구매 버튼을 누르면 팝업창 띄우기
   	$("#threeButton>button:nth-last-of-type(2)").click(function(){
   	
-  	    	var p_no = ${dto.p_no};
-  	  		var toppr = ${dto.ha_bidPr};
-  	  		var endpr = ${dto.au_instantPr};
+  	    	var p_no = "${dto.p_no}";
+  	  		var toppr = "${dto.ha_bidPr}";
+  	  		var endpr = "${dto.au_instantPr}";
   	  		var title = "${dto.p_title}";
-  	  		window.open("./popup/buyNowPopup.jsp?p_no="+p_no+"&toppr="+toppr+"&endpr="+endpr+"&title="+title, "buyNowPopup", "width=400, height=200, left=700, top=400");
+  	  		var startpr = "${dto.au_startPr}";
+  	  		window.open("./popup/buyNowPopup.jsp?p_no="+p_no+"&toppr="+toppr+"&endpr="+endpr+"&startpr="+startpr+"&title="+title, "buyNowPopup", "width=400, height=200, left=700, top=400");
   	    
   	});
   	
@@ -168,6 +169,15 @@
     	$("#follow").css({"background-color":"gray"}).attr("disabled", true);
     	$("#description>a:nth-of-type(1)").hide();
     	$("#description>div:nth-of-type(1)").show();
+    }
+    
+  //로그인이 안된 상태로 경매글 진입시, 모든 버튼과 팔로우 숨기기, 버튼 색상변경과 비활성화 시키기
+    if("${sessionScope.loginId}" == ""){
+    //if("user2" == "${dto.p_id}"){
+    	$("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
+    	$("#follow").css({"background-color":"gray"}).attr("disabled", true);
+    	$("#description>a:nth-of-type(1)").hide();
+    	$("#description>div:nth-of-type(1)").hide();
     }
     
     //즉결 가격이 999999999999 일 경우, 즉결 버튼이 비활성화 된다.
@@ -220,6 +230,7 @@
 </script>
 </head>
 <body>
+	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
     <div id="wrap">
     	<p id="category">${dto.p_name } > ${dto.s_name }</p>
         <section>
@@ -268,7 +279,7 @@
                     	<div>
                     		<p>상점정보</p>
                     		<div>
-	                    		<div><a href="#"><img src="./img/profile.PNG" width="100" height="100"></a></div>
+	                    		<div><a href="myPage?id=${dto.p_id }"><img src="./img/profile.PNG" width="100" height="100"></a></div>
 	                    		<div>
 	                    			<p id="u_nname">${dto.u_nname }</p>
 	                    			<p id="reviewAvg">별점 4.5</p>
@@ -283,7 +294,7 @@
                     					</div>
                     				</c:forEach> --%>
                     		</div>
-                    		<p><a href="#">판매자의 다른 상품 더보기 > </a></p>                    	
+                    		<p><a href="myPage?id=${dto.p_id }">판매자의 다른 상품 더보기 > </a></p>                    	
                     	</div>          
                     </div>
                     <div id="second">
@@ -292,7 +303,6 @@
             </div>
         </section>
     </div>
-    <div id="content_hide">경매글 숨기기</div>
 </body>
 <script>
 	//좋아요 등록
