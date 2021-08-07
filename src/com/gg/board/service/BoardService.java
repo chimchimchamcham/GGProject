@@ -374,7 +374,28 @@ public class BoardService {
 		dao.resClose();
 
 	}
+			public void req_list_apply(String userid, int rqno, String a) throws IOException {
+				HashMap<String, Object> map = new HashMap<String, Object>();
 
+				BoardDAO dao = new BoardDAO();
+				ArrayList<GGDto> reqlist = null;
+
+				try {
+					reqlist = dao.reqlistapply(userid,rqno,a);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally {
+					dao.resClose();
+					map.put("reqlist", reqlist);
+				}
+				System.out.println("auc_map:" + map);
+
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().println(new Gson().toJson(map));
+				map.clear();
+				dao.resClose();
+				
+			}
 //좋아요리스트
 	public void love_list(String userid, int index1, int index2) throws IOException {
 
@@ -820,6 +841,7 @@ public class BoardService {
 		return dao.postDel(p_no);
 	}
 
+<<<<<<< HEAD
 	public ArrayList<GGDto> noticeList() {
 		
 		BoardDAO dao = new BoardDAO();
@@ -829,6 +851,9 @@ public class BoardService {
 		
 		return noticeList;
 	}
+=======
+
+>>>>>>> 4a0e78c3df1d2ad60b95db63b05f374b7dface2f
 
 	/*
 	 * 메서드 통합으로 주석 처리
