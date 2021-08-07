@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.naming.Context;
@@ -711,5 +712,39 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			System.out.println("[TRADEDAO]/SELECTPOSTP_ID END");
 			
 			return p_id;
+		}
+		
+		//거래페이지 목록을 보여주는 기능
+		public ArrayList<GGDto> tradeList (String id){
+			System.out.println("[TRADEDAO]/TRADELIST START");
+			String sql = "SELECT T.T_NO, T.P_NO, T.T_SALER, T.T_BUYER, (SELECT U_NEWNAME FROM USERINFO WHERE U_ID = T_SALER) T_SALER_NEWNAME, (SELECT U_NEWNAME FROM USERINFO WHERE U_ID = T_BUYER) T_BUYER_NEWNAME, H.HT_DATE, H.HT_POINT, H.HT_CODE, (SELECT C_NAME FROM CODES WHERE C_CODE = H.HT_CODE) HT_NAME, TC.TC_CONTENT, TC.TC_TM, TC.TC_ID FROM TRADE T, HIS_TRADE H,(SELECT T_NO, MAX(HT_DATE) HT_DATE FROM HIS_TRADE GROUP BY T_NO) HM, TRADE_COMMENT TC, (SELECT T_NO, MAX(TC_TM) TC_TM FROM TRADE_COMMENT GROUP BY T_NO) TCM WHERE T.T_NO = H.T_NO AND H.T_NO = HM.T_NO AND HM.T_NO = TC.T_NO AND TC.T_NO = TCM.T_NO AND TC.TC_TM = TCM.TC_TM AND H.HT_DATE = HM.HT_DATE AND (T_SALER = ? OR T_BUYER = ?) ORDER BY H.HT_DATE DESC";
+			ArrayList<GGDto> list = new ArrayList<GGDto>();
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, id);
+				ps.setString(2, id);
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					GGDto dto = new GGDto();
+					dto.setT_no(rs.getInt("t_no"));
+					dto.setP_no(rs.getInt("p_no"));
+					dto.setT_saler(rs.getString("t_saler"));
+					dto.setT_buyer(rs.getString("t_buyer"));
+					dto.setT_saler_newName(rs.getString("t_saler_newname"));
+					dto.setT_buyer_newName(rs.getString("t_buyer_newname"));
+					dto.setHt_date(rs.getDate("ht_date"));
+					dto.setHt_point(rs.getInt("ht_point"));
+					dto.setHt_code(rs.getString("ht_code"));
+					dto.setHt_name(rs.getString("ht_name"));
+					dto.setTc_content(rs.getString("tc_content"));
+					dto.setTc_tm(rs.getDate("tc_tm"));
+					dto.setTc_id(rs.getString("tc_id"));
+					list.add(dto);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println("[TRADEDAO]/TRADELIST LIST_SIZE : "+list.size());
+			return list;
 		}
 }

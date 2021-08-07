@@ -119,11 +119,19 @@
   	//입찰하기 버튼을 누르면 팝업창 띄우기
   	$("#threeButton>button:nth-last-of-type(1)").click(function(){
   		
-  	    	var p_no = ${dto.p_no};
-  	  		var toppr = ${dto.ha_bidPr};
-  	  		var endpr = ${dto.au_instantPr};
+  	    	var p_no = "${dto.p_no}";
+  	  		var toppr = "${dto.ha_bidPr}";
+  	  		var endpr = "${dto.au_instantPr}";
   	  		var title = "${dto.p_title}";
-  	  		window.open("./popup/auctionBidPopup.jsp?p_no="+p_no+"&toppr="+toppr+"&endpr="+endpr+"&title="+title, "auctionBidPopup", "width=400, height=200, left=700, top=400"); 	
+  	  		var startpr = "${dto.au_startPr}";
+	  		
+	  		console.log("글번호 : "+p_no);
+	  		console.log("시작가격 : "+toppr);
+	  		console.log("즉결가격 : "+endpr);
+	  		console.log("현재최고입찰가격 : "+title);
+	  		console.log("타이틀 : "+startpr);
+	  		
+  	  		window.open("./popup/auctionBidPopup.jsp?p_no="+p_no+"&startpr="+startpr+"&toppr="+toppr+"&endpr="+endpr+"&title="+title, "auctionBidPopup", "width=400, height=200, left=700, top=400"); 	
   	    
   	});
   	
@@ -135,7 +143,14 @@
   	  		var endpr = "${dto.au_instantPr}";
   	  		var title = "${dto.p_title}";
   	  		var startpr = "${dto.au_startPr}";
-  	  		window.open("./popup/buyNowPopup.jsp?p_no="+p_no+"&toppr="+toppr+"&endpr="+endpr+"&startpr="+startpr+"&title="+title, "buyNowPopup", "width=400, height=200, left=700, top=400");
+  	  		
+  	  		console.log("글번호 : "+p_no);
+  	  		console.log("시작가격 : "+toppr);
+  	  		console.log("즉결가격 : "+endpr);
+  	  		console.log("현재최고입찰가격 : "+title);
+  	  		console.log("타이틀 : "+startpr);
+	  		
+  	  		window.open("./popup/buyNowPopup.jsp?p_no="+p_no+"&startpr="+startpr+"&toppr="+toppr+"&endpr="+endpr+"&title="+title, "buyNowPopup", "width=400, height=200, left=700, top=400");
   	    
   	});
   	
@@ -279,7 +294,7 @@
                     	<div>
                     		<p>상점정보</p>
                     		<div>
-	                    		<div><a href="myPage?id=${dto.p_id }"><img src="./img/profile.PNG" width="100" height="100"></a></div>
+	                    		<div><a href="myPage?id=${dto.p_id }&url=./auctionlist"><img src="./img/profile.PNG" width="100" height="100"></a></div>
 	                    		<div>
 	                    			<p id="u_nname">${dto.u_nname }</p>
 	                    			<p id="reviewAvg">별점 4.5</p>
@@ -294,7 +309,7 @@
                     					</div>
                     				</c:forEach> --%>
                     		</div>
-                    		<p><a href="myPage?id=${dto.p_id }">판매자의 다른 상품 더보기 > </a></p>                    	
+                    		<p><a href="myPage?id=${dto.p_id }&list=1">판매자의 다른 상품 더보기 > </a></p>                    	
                     	</div>          
                     </div>
                     <div id="second">
