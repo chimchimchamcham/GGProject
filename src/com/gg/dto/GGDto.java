@@ -192,6 +192,7 @@ public class GGDto {
    private int currPage;
    private int currPageEnd;
    private int currPageStart;
+   private int totalPost;
 
 
 public String getU_id() {
@@ -1112,5 +1113,13 @@ public int getCurrPageStart() {
 
 public void setCurrPageStart(int currPageStart) {
 	this.currPageStart = currPageStart;
+}
+
+public int getTotalPost() {
+	return totalPost;
+}
+
+public void setTotalPost(int totalPost) {
+	this.totalPost = totalPost;
 }
 }
