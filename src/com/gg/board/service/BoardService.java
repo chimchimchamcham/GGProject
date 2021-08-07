@@ -430,7 +430,7 @@ public class BoardService {
 		//공지사항
 		if (adminYN.equals("Y")) {
 			System.out.println("아이디 : " + p_id);
-			System.out.println("공지사항 글쓰기 제목 : " + p_title + " 내용 : " + p_content + " 관리자여부 :" + adminYN);
+			System.out.println("공지사항 글쓰기 제목 : " + p_title + " / 내용 : " + p_content + " / 관리자여부 :" + adminYN+" / 코드분류 :" + p_code);
 
 			dto.setP_id(p_id);
 			dto.setP_title(p_title);
@@ -439,7 +439,7 @@ public class BoardService {
 			dto.setP_code(p_code);
 		
 		} else { // 커뮤니티
-			System.out.println("커뮤니티글쓰기 제목 : " + p_title + " 내용 : " + p_content + " 카테고리 :" + p_cate);
+			System.out.println("커뮤니티글쓰기 제목 : " + p_title + " 내용 : " + p_content + " 카테고리 :" + p_cate+" 코드분류 :" + p_code);
 			System.out.println("아이디 : " + p_id);
 			System.out.println("p_code : " + p_code);
 			
@@ -674,7 +674,7 @@ public class BoardService {
 
 	public GGDto commDetail() {
 		String p_no = req.getParameter("p_no");
-		System.out.println(p_no);
+		System.out.println("상세보기 p_no : "+p_no);
 		BoardDAO dao = new BoardDAO();
 		GGDto dto = null;
 		try {
@@ -688,7 +688,29 @@ public class BoardService {
 				dao.conn.commit();
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			dao.resClose();
+		}
+		return dto;
+	}
+	
+	public GGDto noticeDetail() {
+		String p_no = req.getParameter("p_no");
+		System.out.println("공지사항 상세보기 p_no : "+p_no);
+		BoardDAO dao = new BoardDAO();
+		GGDto dto = null;
+		try {
+			dao.conn.setAutoCommit(false);
+			if (0 < dao.upP_view(Integer.parseInt(p_no))) {
+				dto = dao.noticeDetail(p_no);
+			}
+			if (dto == null) {
+				dao.conn.rollback();
+			} else {
+				dao.conn.commit();
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			dao.resClose();
