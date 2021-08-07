@@ -382,11 +382,11 @@ body {
                <!-- 사용자 상단바 -->
           <button id="writeBtn" onclick="location.href='writeForm'">글쓰기</button>  
              	<a href="logout"  class="logoutA">로그아웃</a>
-             	<a href="#"  class="myPageA">마이페이지</a>
              <c:if test="${adminYN eq 'Y'}">
             	 <a href="#">관리페이지</a>
              </c:if>
               <c:if test="${adminYN eq 'N'}"> 
+              <a href="#"  class="myPageA">마이페이지</a>
                	<a href="#"  class="tradeA" title="거래톡"><img src="img/ggTalk.png" alt="거래톡" width="25" style="opacity:80%;  margin-right:30px; padding:0 5px;"></a>
                	<a href="#"  class="alarmA" title="알람"><img src="img/notify-icon.png" alt="알람" width="25" style="opacity:80%; padding:0 5px;" ></a>
                	<a href="#"  class="messageA" title="쪽지"><img src="img/message-icon.png" alt="쪽지" width="25" style="opacity:80%; padding:0 5px;"></a>
@@ -428,7 +428,7 @@ body {
                      <li><a href="#">기타</a></li>
                   </ul></li>
                <li><a href="commListForm.jsp">커뮤니티</a></li>
-               <li><a href="#">공지사항</a></li>
+               <li><a href="noticeList.jsp">공지사항</a></li>
             </ul>
          </div>
       </nav>

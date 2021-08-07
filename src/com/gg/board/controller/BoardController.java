@@ -522,6 +522,16 @@ public class BoardController extends HttpServlet {
 			dis = req.getRequestDispatcher("index.jsp");
 			dis.forward(req, resp);
 			break;
+			
+			
+		//공지사항 목록
+		case "/noticeList":
+			System.out.println("공지사항 리스트 요청");
+			req.setAttribute("noticeList", service.noticeList());
+			dis = req.getRequestDispatcher("noticeList.jsp");
+			dis.forward(req, resp);
+
+			break;
 
 		// 메서드 통합으로 인하여 주석처리
 		/*
@@ -534,6 +544,9 @@ public class BoardController extends HttpServlet {
 		 * resp); break;
 		 */
 		}
+		
+		
+	
 
 	}
 

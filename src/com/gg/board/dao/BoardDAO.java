@@ -1193,6 +1193,34 @@ public class BoardDAO {
 		}
 		return success;
 	}
+
+	public ArrayList<GGDto> noticeList() {
+		
+		String sql = "SELECT p_no,p_title,p_id,p_tm,p_view FROM post ORDER BY idx DESC";
+		ArrayList<GGDto> noticeList = null;
+		GGDto dto = null;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			noticeList = new ArrayList<GGDto>();
+			while(rs.next()) {
+				dto = new GGDto();
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setP_title(rs.getString("p_title"));
+				dto.setP_id(rs.getString("p_id"));
+				dto.setP_tm(rs.getDate("p_tm"));
+				dto.setP_view(rs.getInt("p_view"));
+				noticeList.add(dto);
+				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return noticeList;
+	}
 	
 	// 메서드 통합으로 인하여 주석처리
 	/*

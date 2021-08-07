@@ -820,6 +820,16 @@ public class BoardService {
 		return dao.postDel(p_no);
 	}
 
+	public ArrayList<GGDto> noticeList() {
+		
+		BoardDAO dao = new BoardDAO();
+		ArrayList<GGDto> noticeList = dao.noticeList();
+		System.out.println("공지사항 글 갯수 : "+noticeList.size());
+		dao.resClose();
+		
+		return noticeList;
+	}
+
 	/*
 	 * 메서드 통합으로 주석 처리
 	 * public String auctionDelete() { String delMsg = null; int p_no =
