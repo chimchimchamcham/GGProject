@@ -116,7 +116,7 @@ public class AlarmDAO {
 	public boolean readAlarm(int a_no) throws SQLException {
 		boolean success = false;
 		int checker = 0;
-		String sql = "UPDATE alarm SET a_checktm=SYSDATE where a_no=?";
+		String sql = "UPDATE alarm SET a_checktm=SYSDATE, a_readyn='Y' where a_no=?";
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, a_no);
 		checker = ps.executeUpdate();
