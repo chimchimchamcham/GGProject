@@ -179,23 +179,23 @@ public class BoardController extends HttpServlet {
 			
 			service.flow_list(userid,flowORflowing);
 			
-			case "/flowadddelect":
-				System.out.println("팔로워 버튼 처리 요청");
-				req.setCharacterEncoding("utf-8");
-				userid = (String) req.getSession().getAttribute("loginId");
-				String btntext = req.getParameter("btntext");
-				String nick = req.getParameter("nick");
-				
-				/*
-				 * System.out.println("userid:"+userid);
-				 * System.out.println("flow_addordelect:"+flow_addordelect);
-				 * System.out.println("nick:"+nick);
-				 */
-				
-				
-				// service.flow_button(userid,btntext,nick);
+		case "/flowadddelect":
+            System.out.println("팔로워 버튼 처리 요청");
+            req.setCharacterEncoding("utf-8");
+            userid = (String) req.getSession().getAttribute("loginId");
+            String btntext = req.getParameter("btntext");
+            String nick = req.getParameter("nick");
+            
+            /*
+             * System.out.println("userid:"+userid);
+             * System.out.println("flow_addordelect:"+flow_addordelect);
+             * System.out.println("nick:"+nick);
+             */
+            
+            
+            service.flow_button(userid,btntext,nick);
 
-				break;
+            break;
 			
 		case "/requestlist":
 			System.out.println("거래요청리스트 요청");

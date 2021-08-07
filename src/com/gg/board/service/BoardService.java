@@ -328,22 +328,30 @@ public class BoardService {
 		dao.resClose();
 	}
 
-	// 팔로워 버튼 +,- 여부
-	public void flow_button(String userid, String flow_addordelect, String reseveid, String sendid) throws IOException {
-		System.out.println("flow_addordelect:" + flow_addordelect);
-		if (flow_addordelect != null) {
-			BoardDAO dao = new BoardDAO();
-			try {
-				dao.flowbut(userid, flow_addordelect, reseveid, sendid);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		} else {
-			System.out.println("null임");
-		}
-
-	}
-
+	//팔로워 버튼 +,- 여부 
+    public void flow_button(String userid,String btntext, String nick) throws IOException {
+       
+         System.out.println("userid_service:"+userid);
+         System.out.println("btntext:"+btntext);
+         System.out.println("nick_service:"+nick);
+        
+       if (btntext != null) {
+          BoardDAO dao = new BoardDAO();
+          int success; 
+          try {
+             success = dao.flowbut(userid, btntext, nick);
+             System.out.println("success:"+success);
+          } catch (SQLException e) {
+             e.printStackTrace();
+          }finally {
+             dao.resClose();
+          }
+       }else {
+          System.out.println("null임");
+       }
+       
+    }
+	
 //구매요청리스트
 	public void req_list(String userid, int reqindex) throws IOException {
 
@@ -713,7 +721,13 @@ public class BoardService {
 
 	public ArrayList<GGDto> commList() {
 		BoardDAO dao = new BoardDAO();
-		int currPage = Integer.parseInt(req.getParameter("currPage"));//지금 페이지 번호를 받는 것.
+		int currPageNum = Integer.parseInt(req.getParameter("currPageNum")); //페이지의 넘버를 받는것.
+		if(currPageNum<=0) {
+			currPageNum = 1;
+		}
+		int currPageStart = (currPageNum-1)*5+1;
+		int currPageEnd = currPageNum*5;
+		int currPage = Integer.parseInt(req.getParameter("currPage")); //지금 페이지 번호를 받는 것.
 		int pagePerCnt = 14; 
 		int end = currPage*pagePerCnt; 
 		int start = end - pagePerCnt +1;
@@ -721,6 +735,9 @@ public class BoardService {
 		// 카테고리 목록으로 검색한 dto값들을 ArrayList(commList)에 담아줌. 
 		ArrayList<GGDto> commList = dao.commList(categorys);	
 		int totalPage = (int)Math.ceil((double)commList.size()/(double)pagePerCnt); //전체 페이지 넘버를 반환. -나누는 값들을 double으로 명시해야 올림한 정확한 값이 나옴
+		if(currPageEnd>totalPage) {
+			currPageEnd=totalPage;
+		}
 		if(commList.size() <= end) {
 			end = commList.size(); // 14개보다 적은 크기의 배열이면 끝까지만 잘라서 보여주기 위하여	
 		}
@@ -730,7 +747,12 @@ public class BoardService {
 		ArrayList<GGDto> arrayList = new ArrayList<GGDto>();
 		arrayList.addAll(list);
 		arrayList.get(0).setTotalPage(totalPage); //0번째 dto에 totalPage를 넣어줌.
-		arrayList.get(0).setCurrPage(currPage); // 0번째 dto에 currPage를 넣어줌.
+		if(currPage<currPageEnd) {
+			currPage=currPageEnd;
+		}
+		arrayList.get(0).setCurrPage(currPage);
+		arrayList.get(0).setCurrPageEnd(currPageEnd); // 0번째 dto에 currPage를 넣어줌.
+		arrayList.get(0).setCurrPageStart(currPageStart);
 		return arrayList;
 	}
 

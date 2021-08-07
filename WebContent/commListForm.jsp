@@ -53,10 +53,12 @@
 	cursor: pointer;
 }
 .currRadio{
-	display:none;
+	
 }
 .currRadio:checked+label{
 	color:blue;
+}
+.currLabel{
 	cursor: pointer;
 }
 </style>
@@ -102,34 +104,33 @@
 </body>
 <script type="text/javascript">
 	var lists = [];
+	var currPageNum = 1;
+	$("input.category:checked").each(function(idx, value) { //jQuery로 for문 돌면서 check 된값 배열에 담는다
+		lists.push($(this).val());
+	});
+	$.ajax({
+		type : "POST",
+		data : {
+			'categorys' : lists,
+			"currPage" : 1,
+			'currPageNum':currPageNum
+		},
+		url : "commList",
+		dataType : 'JSON',
+		success : function(data) {
+			drawList(data.list);
+			lists = [];
+			console.log("처음 접속시 작동하는 ajax");
+		},
+		error : function(e) {
+			console.log(e);
+		}
+	});
 
-	startList();
-	$("input.category").on("change",changeList());
-	$("input.currRadio").on("change",changeList());
-	
-	function startList() {
-		$("input.category:checked").each(function(idx, value) { //jQuery로 for문 돌면서 check 된값 배열에 담는다
-			lists.push($(this).val());
-		});
-		$.ajax({
-			type : "POST",
-			data : {
-				'categorys' : lists,
-				"currPage" : "1"
-			},
-			url : "commList",
-			dataType : 'JSON',
-			success : function(data) {
-				drawList(data.list);
-				lists = [];
-				console.log("처음 접속시 작동하는 ajax");
-			},
-			error : function(e) {
-				console.log(e);
-			}
-		});
-	}
-	
+	$(document).on("change","input.category",function(){changeList();});
+	/*가끔씩 .change가 안먹을 때가 있어서 아래와 같은 방식으로 처리하면 적용됨.*/
+	$(document).on("change","input.currRadio",function(){changeList();});
+
 	function changeList() {
 		$("input.category:checked").each(function(idx, value) { //jQuery로 for문 돌면서 check 된값 배열에 담는다
 			lists.push($(this).val());
@@ -139,7 +140,8 @@
 			type : "POST",
 			data : {
 				'categorys' : lists,
-				'currPage' : $("input[name=currPage]:checked").val()
+				'currPage' : $("input:radio[name=currPage]:checked").val(),
+				'currPageNum':currPageNum
 			},
 			url : "commList",
 			dataType : 'JSON',
@@ -177,13 +179,13 @@
 		$("tbody#listBody").append(content);
 		// 페이지 번호 뽑아주기.
 		content = "";
-		for (let i = 1; i <= list[0].totalPage; i++) {
-			if(list[0].currPage === i){
-				content +="<input type='radio' name='currPage' class='currRadio' id='currPage"+i+"' value='"+i+"' checked/>";
-				content +="<label class='currLabel' for='currPage"+i+"''>"+i+"</label>";
+		for (let i = list[0].currPageStart; i <= list[0].currPageEnd; i++) {
+			if(list[0].currPage == i){
+				content +="<input type='radio' name='currPage' class='currRadio' id='currPage"+i+"' value="+i+" checked='checked'/>";
+				content +="<label class='currLabel' for='currPage"+i+"'>"+i+"</label>&nbsp;";
 			}else{
-				content +="<input type='radio' name='currPage' class='currRadio' id='currPage"+i+"' value='"+i+"'/>";
-				content +="<label class='currLabel' for='currPage"+i+"''>"+i+"</label>";
+				content +="<input type='radio' name='currPage' class='currRadio' id='currPage"+i+"' value="+i+" />";
+				content +="<label class='currLabel' for='currPage"+i+"'>"+i+"</label>&nbsp;";
 			}
 		}
 		$("div#pageNum").empty();
