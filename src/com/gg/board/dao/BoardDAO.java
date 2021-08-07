@@ -24,7 +24,6 @@ public class BoardDAO {
 			Context ctx = new InitialContext();
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle");
 			conn = ds.getConnection();
-			conn.setAutoCommit(false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -450,49 +449,49 @@ public class BoardDAO {
 			if (userid.equals(reseveid)) {
 				dto.setthisuserFlowingYN("<button class='hellow'>+팔로잉</button>");// N
 			} else if (userid.equals(sendid)) {
-				dto.setthisuserFlowingYN("<button class='hellow'>-팔로잉</button>");// Y
+				dto.setthisuserFlowingYN("<button class='unhellow'>-팔로잉</button>");// Y
 			}
 			flowlist.add(dto);
 		}
 		System.out.println("flowlist:" + flowlist);
 		return flowlist;
 	}
-
-	// delect or update
-	public ArrayList<GGDto> flowbut(String userid, String flow_addordelect, String reseveid, String sendid)
-			throws SQLException {
-		String sql = "";
-
-		if (flow_addordelect == "+팔로우") {// 나를 팔로잉 한사람 팔로워 추가
-			sql = "DELETE FROM follow where  f_receiveid = ? and f_sendid = ?";
-			// f_receiveid == 유저아이디
-			// f_sendid == 팔로잉한 아이디
-			// u.u_id == 팔로잉 받는 아이디
-
-			ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
-			System.out.println("flowlist:" + flowlist);
-			ps = conn.prepareStatement(sql);
-			System.out.println("daouserID:" + userid);
-			ps.setString(1, userid);
-			ps.setString(2, sendid);
-			rs = ps.executeQuery();
-			System.out.println("rs:" + rs);
-
-		} else if (flow_addordelect == "-팔로우") {// 내가 팔로잉 한사람 팔로워 취소
-			sql = "insert into follow VALUES(?,?,sysdate)";
-
-			ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
-			System.out.println("flowlist:" + flowlist);
-			ps = conn.prepareStatement(sql);
-			System.out.println("daouserID:" + userid);
-			ps.setString(1, reseveid);
-			ps.setString(2, userid);
-			rs = ps.executeQuery();
-			System.out.println("rs:" + rs);
-		}
-		resClose();
-		return null;
-	}
+			//delect or update
+	public int flowbut(String userid, String btntext, String nick) throws SQLException {
+				String sql = "";
+				int success = 0;
+				System.out.println("useriddao:" + userid);
+				System.out.println("btntext:" + btntext);
+				
+				System.out.println("ninkdao:" + nick);
+				String wordplus = "+팔로잉";
+				String wordminus = "-팔로잉";
+				
+				if (btntext.equals(wordplus)){//나를 팔로잉 한사람 팔로워 추가
+					sql = "insert into follow VALUES (?,(select u_id from userinfo where userinfo.u_nname = ?),sysdate)";
+					
+					System.out.println("useriddao:" + userid);
+					System.out.println("ninkdao:" + nick);
+					
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, userid);
+					ps.setString(2, nick);
+					success = ps.executeUpdate();
+					
+				}else if (btntext.equals(wordminus)) {//내가 팔로잉 한사람 팔로워 취소
+					sql = "DELETE FROM follow WHERE f_receiveid = ? and f_sendid = (select u_id from userinfo where userinfo.u_nname = ?)";
+					
+					System.out.println("ninkdao:" + nick);
+					System.out.println("useriddao:" + userid);
+					
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, userid);
+					ps.setString(2, nick);
+					success = ps.executeUpdate();
+				
+				}
+				return success;
+			}
 
 	// 구매요청
 	public ArrayList<GGDto> reqlist(String userid, int reqindex) throws SQLException {
@@ -1101,35 +1100,39 @@ public class BoardDAO {
 
 	}
 
-	public ArrayList<GGDto> commList(String code) {
-		ArrayList<GGDto> list = new ArrayList<GGDto>();
+	public ArrayList<GGDto> commList(String[] categorys) {
+
 		String sql = "SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code "
 				+ "INNER JOIN userinfo u on p.p_id = u.u_id " + "LEFT OUTER JOIN love l ON p.p_no = l.p_no "
 				+ "LEFT OUTER JOIN img i ON p.p_no = i.p_no "
-				+ "WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_cate IN (";
-		// 추가된 문자열을 추가함.
+				+ "WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_cate = ?";
+		ArrayList<GGDto> list = new ArrayList<GGDto>();
 		GGDto dto = null;
-		sql += code;
+
 		try {
 			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				dto = new GGDto();
-				dto.setC_name(rs.getString("c_name"));
-				dto.setP_title(rs.getString("p_title"));
-				dto.setU_id(rs.getString("p_id"));
-				dto.setU_nname(rs.getString("u_nname"));
-				dto.setP_tm(rs.getDate("p_tm"));
-				dto.setP_view(rs.getInt("p_view"));
-				dto.setP_likeCount(rs.getInt("p_likecount"));
-				dto.setP_no(rs.getInt("p_no"));
-				list.add(dto);
+			for (String a : categorys) {
+				ps.setString(1, a);
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					dto = new GGDto();
+					dto.setC_name(rs.getString("c_name"));
+					dto.setP_title(rs.getString("p_title"));
+					dto.setU_id(rs.getString("p_id"));
+					dto.setU_nname(rs.getString("u_nname"));
+					dto.setP_tm(rs.getDate("p_tm"));
+					dto.setP_view(rs.getInt("p_view"));
+					dto.setP_likeCount(rs.getInt("p_likecount"));
+					dto.setP_no(rs.getInt("p_no"));
+					list.add(dto);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			resClose();
 		}
+		System.out.println(list.size());
 		return list;
 
 	}
@@ -1163,7 +1166,7 @@ public class BoardDAO {
 		}
 		return success;
 	}
-
+	
 	// 메서드 통합으로 인하여 주석처리
 	/*
 	 * public String auctionDelete(int p_no) throws SQLException {
@@ -1184,5 +1187,4 @@ public class BoardDAO {
 	 * 
 	 * }
 	 */
-
 }

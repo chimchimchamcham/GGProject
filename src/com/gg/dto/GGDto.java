@@ -212,7 +212,8 @@ public class GGDto {
 	private int flow_count;//자신,타인이 팔로잉 한사람들의 수
 	private String thisuserFlowingYN;
 	
-	
+	// 페이징 처리시 전체 페이지수
+	private int totalPage;
 
 
 	public String getthisuserFlowingYN() {
@@ -1014,4 +1015,13 @@ public class GGDto {
 	public void setPc_no(int pc_no) {
 		this.pc_no = pc_no;
 	}
+
+	public int getTotalPage() {
+		return totalPage;
+	}
+
+	public void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+	}
+	
 }
