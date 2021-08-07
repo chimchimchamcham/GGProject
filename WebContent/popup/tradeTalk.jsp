@@ -30,7 +30,7 @@ margin-top:20px;
 .content {
 	/* background-color: yellow; */
 	/* 	text-align: center; */
-	display: inline-block;
+	/* display: inline-block; */
 	/* background-color: yellow; */
 	width: 460px;
 	cursor: pointer;
@@ -86,7 +86,8 @@ a{
 			<button id="saleBtn">판매</button>
 			<button id="auctionBtn">경매</button>
 		</div>
-		<div class="tableWrap">
+		<d
+		iv class="tableWrap">
 		<!-- <table class="content">
 				<tr>
 					<td rowspan="2"><a href="#"><img src="../test/default-profile.png" width="60" id="profile" ></a></td>
@@ -105,6 +106,7 @@ a{
 					<td style="border-bottom:1px solid black; padding-top:10px;" colspan="3"></td>
 				</tr>
 		</table> -->
+		
 		</div>
 	</div>
 </body>
@@ -145,8 +147,11 @@ a{
 				var dealId = (id == item.t_saler)? item.t_buyer : item.t_saler;
 				var dealNname = (id == item.t_saler)? item.t_buyer_nname : item.t_saler_nname;
 				console.log("dealId/dealNname : "+dealId+"/"+dealNname);
+				console.log("idx : ",idx);
 				
-				content +="<table class='content' id='"+item.t_no+"'>";
+				content +="<div id='"+item.t_no+"' >";
+				content +=	"<input type='hidden' id='t_no' value='"+item.t_no+"'>";
+				content +="<table class='content'>";
 				content +=	"<tr>";
 				content +=		"<td rowspan='2'><a href='#'><img src='../test/default-profile.png' width='60' id='profile' ></a></td>";
 				content +=		"<th style='width:240px;  padding:0 20px; text-align: left;'><a href='#'>"+dealNname+"님과 거래중</a></th>";
@@ -162,9 +167,10 @@ a{
 				content +=		"<td style='width:110px; text-align: right;'><a href='#'>"+item.ht_name+"</a></td>";
 				content +=	"</tr>";
 				content +=	"<tr>";
-				content +=		"<td style='border-bottom:1px solid black; padding-top:10px;' colspan='3v></td>";
+				content +=		"<td style='border-bottom:1px solid black; padding-top:10px;' colspan='3'></td>";
 				content +=	"</tr>";
 				content +="</table>";
+				content +="</div>";
 			});
 		}
 		
@@ -174,6 +180,18 @@ a{
 	};
 	
 	//각 해당 테이블을 클릭 했을 때 해당 거래번호에 해당하는 거래페이지 팝업을 뿌려주기 
+ 	$("div").on("click",function(){
+		console.log($(this).children("#t_no").val());
+		alert("clicked");
+	});
+	/* $("table").click(function(){
+		console.log($(this).find("#t_no").val());
+		alert("clicked");
+	}); */
 	
+	/* function clickEvent(){
+		console.log($(this).children("#t_no").val());
+		alert("clicked");
+	} */
 </script>
 </html>
