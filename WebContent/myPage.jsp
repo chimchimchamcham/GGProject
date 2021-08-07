@@ -793,12 +793,17 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				//수락버튼을 누르면
 				$(document).on("click","button.ok",function(){
 					alert('ok');
-					$rqno=$('button.ok').val();
-					$a = $('a.a').text();
+					$rqno=$('button.ok');
+		  	 	 	
+					$index= $rqno.index(this);
+					$rqnob = $("button.ok:eq(" + $index + ")");
+					
+					 var rqnoval=$rqnob.val();
+					
 					$.ajax({
 						type:'get',
 						url:'./applyreqlist',
-						data:{rqno:$rqno,a:$a},
+						data:{rqno:rqnoval},
 						dataType:'JSON',
 						success:function(data){
 							console.log(data);

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.gg.board.dao.BoardDAO;
@@ -378,33 +379,13 @@ public class BoardService {
 
 	}
 
-	public void req_list_apply(String userid, int rqno, String a) throws IOException {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-
+	public String req_list_apply(int rqno) throws IOException, SQLException {		
 		BoardDAO dao = new BoardDAO();
-		ArrayList<GGDto> reqlist = null;
-		RequestDispatcher dis = null;
-		int success = 0;
-		try {
-			success = dao.reqlistapply(userid, rqno, a);
-			System.out.println("successudate:" + success);
-			reqlist = dao.reqlist_goto_url(userid, rqno, a);
-
-			dis = req.getRequestDispatcher("page"); //변경사항
-			//dis.forward(req, resp); 변경요망
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			dao.resClose();
-		}
-		System.out.println("auc_map:" + map);
-
-		resp.setContentType("text/html; charset=UTF-8");
-		resp.getWriter().println(new Gson().toJson(map));
-		map.clear();
+		String page = dao.reqlistapply(rqno);
+		System.out.println("update page : "+page);
 		dao.resClose();
-
+		
+		return page;
 	}
 
 //좋아요리스트

@@ -1,6 +1,7 @@
 package com.gg.board.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,15 +34,25 @@ public class BoardController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		dual(req, resp);
+		try {
+			dual(req, resp);
+		} catch (ServletException | IOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		dual(req, resp);
+		try {
+			dual(req, resp);
+		} catch (ServletException | IOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	private void dual(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	private void dual(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
 		String uri = req.getRequestURI();
 		String ctx = req.getContextPath();
 		String addr = uri.substring(ctx.length());
@@ -208,16 +219,18 @@ public class BoardController extends HttpServlet {
 			break;
 			
 			case "/applyreqlist"://수락 버튼눌렀을시 
-				System.out.println("거래수락 요청");
+				System.out.println("거래수락or거절 요청");
 				userid = (String) req.getSession().getAttribute("loginId");
 				int rqno = Integer.parseInt(req.getParameter("rqno"));
-				String a = req.getParameter("a");
-				System.out.println(userid+'/'+rqno+'/'+a);
 				
-				service.req_list_apply(userid,rqno,a);
-
+				page = service.req_list_apply(rqno);
+				System.out.println("page:"+page);
+				page = "buyRequestProcess?rq_no="+rqno;
+				
+				dis = req.getRequestDispatcher(page);
+				dis.forward(req, resp);
 			break;
-
+			
 		case "/lovelist":
 			System.out.println("좋아요리스트 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
