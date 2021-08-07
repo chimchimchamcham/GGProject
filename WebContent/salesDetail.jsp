@@ -18,7 +18,7 @@
 
 #main {
 	/* background-color: gray; */
-	width: 1200px;
+	width: 1140px;
 	height: auto;
 	position: absolute;
 	top: 150px;
@@ -345,6 +345,12 @@ section {
 .commentChange:hover {
 	font-weight: bold;
 }
+
+li {
+	list-style-image: url("./img/re_Comment.png");
+ 	
+}
+
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -584,26 +590,21 @@ section {
 </body>
 <script>
 	//좋아요 등록
-	$("#threeButton > button:nth-of-type(1)")
-			.click(
-					function() {
-						$
-								.ajax({
-									type : 'get',
-									url : 'lovePlus2',
-									data : {
-										'p_no' : "${dto.p_no}"
-									},
-									dataType : 'JSON',
-									success : function(data) {
-										console.log(data);
-										if (data.success) {
-											var love = $(
-													"#description>p:nth-of-type(6)>span:nth-of-type(1)")
-													.text();
-											$(
-													"#description>p:nth-of-type(6)>span:nth-of-type(1)")
-													.text(++love);
+	$("#threeButton > button:nth-of-type(1)").click(
+	function() {
+			$.ajax({
+				type : 'get',
+				url : 'lovePlus2',
+				data : {
+					'p_no' : "${dto.p_no}"
+				},
+				dataType : 'JSON',
+				success : function(data) {
+						console.log(data);
+						if (data.success) {
+				var love = $(
+						"#description>p:nth-of-type(6)>span:nth-of-type(1)").text();
+							$("#description>p:nth-of-type(6)>span:nth-of-type(1)").text(++love);
 											alert('좋아요 등록 성공.');
 										} else {
 											alert('좋아요 등록 실패.');
@@ -735,7 +736,7 @@ section {
 					comment += "<div class='commentChange' ><input type='text' value='"+item.pc_no+"' id='del_"+item.pc_no+"' hidden='hidden'/><label for='del_"+item.pc_no+"' id='comm_del'>삭제하기 </label></div>";
 					}
 					//대댓글 영역
-					comment += "<div class='re_comment'><img src='./img/CommentArrow.png' style='float:right; width:30px; height: 30px; margin-top: 70px;' class='re' id='"+item.pc_no+"'></div>";
+					comment += "<div class='re_comment' id='"+item.pc_no+"'><img src='./img/CommentArrow.png' style='float:right; width:30px; height: 30px; margin-top: 70px;' class='re' id='"+item.pc_no+"'></div>";
 					comment += "</div>";
 					comment += "</div>";
 					comment += "</td></tr>";
@@ -762,19 +763,63 @@ section {
 			success : function(data){ 
 				console.log("대댓글 리스트 보여주기.");
 				console.log(data.list);
+				reCommentDrawList(data.list,checker);	
+				
 			},
 			error : function(e) {
 				console.log(e);
 			}
-			
-			
-		
-		
-		
 		});
-	
-	
 	});
+	var re_open = true;
+	function reCommentDrawList(list,checker){
+		console.log("리스트 내용  :",list);
+		var comment ="";
+		
+		if(list != null){
+			list.forEach(function(item,idx){
+				
+				comment +="<div id='recomments' style='float: right; width:1190px; height: 150px; margin-top:15px;'>";
+				comment += "<ul>";
+				comment += "<li>";
+				comment += "<span><a href='./myPage?id="+item.pc_id+"' style='text-decoration:none; color: black; font-weight:bold;'>"+item.u_nname+"</a></span>";
+				comment += "<div id='re_comment'>"+item.pc_content+"</div>";
+				comment += "</li>";
+				comment += "</ul>";
+
+				comment += "</div>";
+			});
+			comment += "<div class='plus_reComm'>";
+			comment += "<textarea class='plus_reText' style='resize:none;'></textarea>";
+			
+		}
+
+		if(re_open){
+			$("div#recomments").remove();
+			$("div.one-text#"+checker).append(comment);
+			re_open = false;
+		}else {
+			$("div#recomments").remove();
+			re_open = true;
+		}
+		
+		
+	};
+	/* <div class="board_t_b">
+	<textarea class="board_text" style="resize: none;"></textarea>
+	<div id="board_text_controll">(0 / 300)</div>
+	<button class="enter">enter</button>
+</div> */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/* 대댓글 추가하기 */
 	function plus_reComm(){
