@@ -20,7 +20,6 @@
 	z-index: -1;
 	margin: 0px auto;
 	padding: 30px;
-	border: 0.7px solid #eaeaea;
 }
 
 #noticeDetailtable {
