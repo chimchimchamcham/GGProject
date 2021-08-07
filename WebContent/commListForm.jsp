@@ -46,8 +46,17 @@
 	cursor: pointer;
 	border: 3px solid black;
 }
-input[name="currPage"]{
+.commLagel+label{
+	color:black;
+	background-color:white
+	border:3px solid white;
+	cursor: pointer;
+}
+.currRadio{
 	display:none;
+}
+.currRadio:checked+label{
+	color:blue;
 }
 </style>
 <body>
@@ -86,8 +95,6 @@ input[name="currPage"]{
 				<tbody id="listBody"></tbody>
 			</table>
 			<div id="pageNum">
-				<input type="checkbox" name="currPage" id = "currPage" style="display:none" value="1" checked />
-				<label class="commLagel" for="currPage">1</label>
 			</div>
 		</div>
 	</div>
@@ -119,7 +126,10 @@ input[name="currPage"]{
 			}
 		});
 	}
-	$("input.category, input[name=currPage]").change(function() {
+	$(".category").change(changeList());
+	$(".currRadio").change(changeList());
+	
+	function changeList() {
 		$("input.category:checked").each(function(idx, value) { //jQuery로 for문 돌면서 check 된값 배열에 담는다
 			lists.push($(this).val());
 		});
@@ -128,7 +138,7 @@ input[name="currPage"]{
 			type : "POST",
 			data : {
 				'categorys' : lists,
-				'currPage' : $(input[name=currPage]).val()
+				'currPage' : $("input[name=currPage]:checked").val()
 			},
 			url : "commList",
 			dataType : 'JSON',
@@ -141,21 +151,8 @@ input[name="currPage"]{
 				console.log(e);
 			}
 		});
-		if ($(this).is(":checked")) {
-			$(this).next("label").css({
-				"color" : "white",
-				"background-color" : "black",
-				"border" : "3px solid black"
-			});
-		} else {
-			$(this).next("label").css({
-				"color" : "black",
-				"background-color" : "white",
-				"border" : "3px solid white"
-			});
-		}
-	});
-
+	}
+	
 	function drawList(list) {
 		console.log("드로우 리스트");
 		console.log(list);
@@ -179,9 +176,14 @@ input[name="currPage"]{
 		$("tbody#listBody").append(content);
 		// 페이지 번호 뽑아주기.
 		content = "";
-		for (let i = 2; i <= list[0].totalPage; i++) {
-			content +="<input type='checkbox' name='currPage' id = 'currPage' value='"+i+"'/>";
-			content +="<label class='commLagel' for='currPage'>"+i+"</label>"
+		for (let i = 1; i <= list[0].totalPage; i++) {
+			if(list[0].currPage === i){
+				content +="<input type='radio' name='currPage' class='currRadio' id='currPage"+i+"' value='"+i+"' checked/>";
+				content +="<label class='currLabel' for='currPage"+i+"''>"+i+"</label>";
+			}else{
+				content +="<input type='radio' name='currPage' class='currRadio' id='currPage"+i+"' value='"+i+"'/>";
+				content +="<label class='currLabel' for='currPage"+i+"''>"+i+"</label>";
+			}
 		}
 		$("div#pageNum").empty();
 		$("div#pageNum").append(content);

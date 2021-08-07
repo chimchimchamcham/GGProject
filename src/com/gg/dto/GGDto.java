@@ -214,7 +214,7 @@ public class GGDto {
 	
 	// 페이징 처리시 전체 페이지수
 	private int totalPage;
-
+	private int currPage;
 
 	public String getthisuserFlowingYN() {
 		return thisuserFlowingYN;
@@ -1023,5 +1023,14 @@ public class GGDto {
 	public void setTotalPage(int totalPage) {
 		this.totalPage = totalPage;
 	}
+
+	public int getCurrPage() {
+		return currPage;
+	}
+
+	public void setCurrPage(int currPage) {
+		this.currPage = currPage;
+	}
+	
 	
 }
