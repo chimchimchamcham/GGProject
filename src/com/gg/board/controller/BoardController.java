@@ -19,11 +19,11 @@ import com.gg.board.service.UploadService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
-
-@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
-	"/maidelist", "/writeForm", "/writeSale", "/writeTrade","/postDel",
-		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" 
-		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate","/flowlist","/requestlist","/lovelist","/delAuction","/flowadddelect"})
+@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist",
+		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/postDel", "/writeCommunity", "/auctionDetail",
+		"/commDetail", "/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist", "/commList",
+		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist",
+		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail" })
 
 public class BoardController extends HttpServlet {
 
@@ -176,42 +176,41 @@ public class BoardController extends HttpServlet {
 			System.out.println("팔로잉리스트 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
 			int flowORflowing = Integer.parseInt(req.getParameter("index1"));
-			
-			service.flow_list(userid,flowORflowing);
-			
-			case "/flowadddelect":
-				System.out.println("팔로워 버튼 처리 요청");
-				req.setCharacterEncoding("utf-8");
-				userid = (String) req.getSession().getAttribute("loginId");
-				String btntext = req.getParameter("btntext");
-				String nick = req.getParameter("nick");
-				
-				/*
-				 * System.out.println("userid:"+userid);
-				 * System.out.println("flow_addordelect:"+flow_addordelect);
-				 * System.out.println("nick:"+nick);
-				 */
-				
-				
-				service.flow_button(userid,btntext,nick);
 
-				break;
-			
+			service.flow_list(userid, flowORflowing);
+
+		case "/flowadddelect":
+			System.out.println("팔로워 버튼 처리 요청");
+			req.setCharacterEncoding("utf-8");
+			userid = (String) req.getSession().getAttribute("loginId");
+			String btntext = req.getParameter("btntext");
+			String nick = req.getParameter("nick");
+
+			/*
+			 * System.out.println("userid:"+userid);
+			 * System.out.println("flow_addordelect:"+flow_addordelect);
+			 * System.out.println("nick:"+nick);
+			 */
+
+			service.flow_button(userid, btntext, nick);
+
+			break;
+
 		case "/requestlist":
 			System.out.println("거래요청리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
 			int reqindex = Integer.parseInt(req.getParameter("index1"));
-			
-			service.req_list(userid,reqindex);
+
+			service.req_list(userid, reqindex);
 
 			break;
-			
+
 		case "/lovelist":
 			System.out.println("좋아요리스트 리스트 요청");
-			userid = (String)req.getSession().getAttribute("loginId");
+			userid = (String) req.getSession().getAttribute("loginId");
 			int index1 = Integer.parseInt(req.getParameter("index1"));
 			int index2 = Integer.parseInt(req.getParameter("index1"));
-			service.love_list(userid,index1,index2);
+			service.love_list(userid, index1, index2);
 
 			break;
 		/* ====== 글쓰기 ====== */
@@ -329,11 +328,10 @@ public class BoardController extends HttpServlet {
 
 			break;
 
-			
-			/* ====== 경매 글수정 ====== */
+		/* ====== 경매 글수정 ====== */
 		case "/auctionUpdateForm":
 			System.out.println("경매 수정 폼 요청");
-			
+
 			// 카테고리
 			map = service.category();
 			System.out.println("[Controller ] category success : " + map);
@@ -348,7 +346,7 @@ public class BoardController extends HttpServlet {
 			dis.forward(req, resp);
 
 			break;
-			
+
 		case "/auctionUpdate":
 			System.out.println("경매 글 수정 요청");
 			p_no = Integer.parseInt(req.getParameter("p_no"));
@@ -363,7 +361,6 @@ public class BoardController extends HttpServlet {
 
 			break;
 
-			
 		/* ========================= */
 		case "/details":
 
@@ -490,10 +487,18 @@ public class BoardController extends HttpServlet {
 		case "/commDetail":
 			System.out.println("커뮤니티 상세보기 요청");
 			dto = service.commDetail();
+
 			req.setAttribute("dto", dto);
 			dis = req.getRequestDispatcher("commDetailForm.jsp");
 			dis.forward(req, resp);
+			break;
 
+		case "/noticeDetail":
+			System.out.println("공지사항 상세보기 요청");
+			dto = service.noticeDetail();
+			req.setAttribute("dto", dto);
+			dis = req.getRequestDispatcher("noticeDetail.jsp");
+			dis.forward(req, resp);
 			break;
 
 		case "/commList":
@@ -510,7 +515,7 @@ public class BoardController extends HttpServlet {
 			success = false;
 			msg = null;
 			success = service.postDel();
-			if(success) {
+			if (success) {
 				msg = "삭제에 성공했습니다.";
 			}
 			req.setAttribute("msg", msg);
@@ -518,16 +523,16 @@ public class BoardController extends HttpServlet {
 			dis.forward(req, resp);
 			break;
 
-			
-		//메서드 통합으로 인하여 주석처리	
-		/*case "/delAuction":
-
-			System.out.println("경매글 삭제 요청");
-			p_no = Integer.parseInt(req.getParameter("p_no"));
-			req.setAttribute("delMsg", service.auctionDelete());
-			dis = req.getRequestDispatcher("/auctionDetail?p_no="+p_no);
-			dis.forward(req, resp);
-			break;*/
+		// 메서드 통합으로 인하여 주석처리
+		/*
+		 * case "/delAuction":
+		 * 
+		 * System.out.println("경매글 삭제 요청"); p_no =
+		 * Integer.parseInt(req.getParameter("p_no")); req.setAttribute("delMsg",
+		 * service.auctionDelete()); dis =
+		 * req.getRequestDispatcher("/auctionDetail?p_no="+p_no); dis.forward(req,
+		 * resp); break;
+		 */
 		}
 
 	}
