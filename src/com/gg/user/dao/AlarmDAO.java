@@ -84,7 +84,7 @@ public class AlarmDAO {
 			list.add(dto);
 		}
 		
-		
+		if(dto !=null) {
 		 System.out.println("알람번호 : "+dto.getA_no());
 		 System.out.println("알람받은 아이디 : "+dto.getU_id());
 		 System.out.println("알람코드 : "+dto.getA_code());
@@ -94,7 +94,7 @@ public class AlarmDAO {
 		 System.out.println("알람 삭제 여부 : "+dto.getA_delYN());
 		 System.out.println("알람 중요 여부 : "+dto.getA_impoYN());
 		 System.out.println("알람 경로 : "+dto.getA_path());
-		
+		}
 		
 		return list;
 	}
