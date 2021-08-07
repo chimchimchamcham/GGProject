@@ -16,7 +16,7 @@ import com.gg.trade.service.TradeService;
 import com.google.gson.Gson;
 
 @WebServlet({"/buyRequest","/buyRequestCancel","/bid","/buyNow", "/buyRequestProcess",
-	"/tradeDetail","/sendPoint","/pointApproval","/pointDeny","/productShipping","/productReceive","/cancelTrade"})
+	"/tradeDetail","/sendPoint","/pointApproval","/pointDeny","/productShipping","/productReceive","/cancelTrade","/tradeList"})
 public class TradeController extends HttpServlet {
 	
 	

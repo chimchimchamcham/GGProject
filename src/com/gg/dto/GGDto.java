@@ -148,6 +148,10 @@ public class GGDto {
 	// 관리자 접근 가능여부 .... 안넣었음
 	private String t_saler_newName;//판매자 프로필사진 경로
 	private String t_buyer_newName;//구매자 프로필사진 경로
+	private String t_saler_nname;//판매자 닉네임
+	private String t_buyer_nname;//구매자 닉네임
+
+	
 
 	// 거래 히스토리
 	private int ht_point; // 포인트값
@@ -1075,5 +1079,21 @@ public class GGDto {
 
 	public void setHt_date(Date ht_date) {
 		this.ht_date = ht_date;
+	}
+	
+	public String getT_saler_nname() {
+		return t_saler_nname;
+	}
+
+	public void setT_saler_nname(String t_saler_nname) {
+		this.t_saler_nname = t_saler_nname;
+	}
+
+	public String getT_buyer_nname() {
+		return t_buyer_nname;
+	}
+
+	public void setT_buyer_nname(String t_buyer_nname) {
+		this.t_buyer_nname = t_buyer_nname;
 	}
 }

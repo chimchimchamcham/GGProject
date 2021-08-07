@@ -87,7 +87,7 @@ a{
 			<button id="auctionBtn">경매</button>
 		</div>
 		<div class="tableWrap">
-		<table class="content">
+		<!-- <table class="content">
 				<tr>
 					<td rowspan="2"><a href="#"><img src="../test/default-profile.png" width="60" id="profile" ></a></td>
 					<th style="width:240px;  padding:0 20px; text-align: left;"><a href="#">ㅇㅇㅇ님과 거래중</a></th>
@@ -104,15 +104,76 @@ a{
 				<tr>
 					<td style="border-bottom:1px solid black; padding-top:10px;" colspan="3"></td>
 				</tr>
-		</table>
+		</table> -->
 		</div>
 	</div>
 </body>
 <script>
-	listCall();
-	function listCall(){
-		
+/* ================거래페이지 목록 관련 ================= */
+	//화면이 켜지면 목록 뿌려주기 무조건 실행
+	tradeListCall();
+	
+	//자바단에 접속하여 목록을 가져오기
+	function tradeListCall() {
+		console.log("거래페이지 리스트 요청 ");
+		var param = {};
+		param.id = "${sessionScope.loginId}";
+		$.ajax({
+			type : "POST",
+			url : "../tradeList",
+			data : param,
+			dataType : "JSON",
+			success : function(data) {
+				console.log("받아온 데이터 확인 : ", data.list);
+				drawTradeList(data.list);
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
 	}
+	
+	//가져온 데이터를 뿌려주기
+	function drawTradeList(list) {
+		console.log("리스트 정보 확인 : ", list);
+		var content = "";
+		var id = "${sessionScope.loginId}";
+		if(list != ""){
+			list.forEach(function(item, idx) {
+				/* 클릭했을 때  부모창에 해당 프로필이 보여주는 기능*/
+				/* 클릭했을 때 해당 거래페이지로 이동하는 기능 */
+				var dealId = (id == item.t_saler)? item.t_buyer : item.t_saler;
+				var dealNname = (id == item.t_saler)? item.t_buyer_nname : item.t_saler_nname;
+				console.log("dealId/dealNname : "+dealId+"/"+dealNname);
+				
+				content +="<table class='content' id='"+item.t_no+"'>";
+				content +=	"<tr>";
+				content +=		"<td rowspan='2'><a href='#'><img src='../test/default-profile.png' width='60' id='profile' ></a></td>";
+				content +=		"<th style='width:240px;  padding:0 20px; text-align: left;'><a href='#'>"+dealNname+"님과 거래중</a></th>";
+				content +=		"<td style='width:110px; text-align: right;'><a href='#'><small>"+item.ht_date+"</small></a></td>";
+				content +=	"</tr>";
+				content +=	"<tr>";
+				content +=		"<td>";
+				content +=			"<p>"+item.p_title+"</p>"
+				content +=			"<p style='overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width:240px; padding:0 20px; text-align: left;'>";	
+				content +=			"<a href='#'>"+item.tc_content+"</a>";	
+				content +=			"</p>";
+				content +=		"</td>";
+				content +=		"<td style='width:110px; text-align: right;'><a href='#'>"+item.ht_name+"</a></td>";
+				content +=	"</tr>";
+				content +=	"<tr>";
+				content +=		"<td style='border-bottom:1px solid black; padding-top:10px;' colspan='3v></td>";
+				content +=	"</tr>";
+				content +="</table>";
+			});
+		}
+		
+		//일단 랩을 다 비우고 나서 그리기
+		$(".tableWrap").empty();
+		$(".tableWrap").append(content);
+	};
+	
+	//각 해당 테이블을 클릭 했을 때 해당 거래번호에 해당하는 거래페이지 팝업을 뿌려주기 
 	
 </script>
 </html>
