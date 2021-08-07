@@ -218,6 +218,8 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		String sql3 = "UPDATE AUCTION SET AU_CODE = 'Au002', AU_SUCTM = SYSDATE WHERE P_NO = ?";
 		//경매히스토리에 이력을 저장
 		String sql4 = "INSERT INTO his_auction(p_no,ha_bidpr,ha_bidusr,ha_bidtm) VALUES(?,?,?,SYSDATE)";
+		AlarmDAO Aldao = new AlarmDAO();
+		BoardDAO Bdao = new BoardDAO();
 		int success = 0;
 		int au_instantpr = 0;
 		try {
@@ -265,6 +267,13 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		System.out.println("p_id : "+p_id);
 		//글번호, 판매자, 구매자를 인자값으로 넣어서, 거래페이지 생성과, 거래히스토리에 "0원" "생성" 추가
 		int t_no = insertTrade(p_no, p_id, u_id);
+		//글번호로 제목을 가져오는 기능
+		String p_title = Bdao.getTitle(p_no);
+		//알람보내기
+		Aldao.insertAlarm(u_id, "A004", "["+p_title+"..]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
+		Aldao.insertAlarm(p_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 작성자
+		Aldao.resClose();
+		Bdao.resClose();
 		
 		return success>0?true:false;
 	}
