@@ -795,6 +795,15 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 					alert('ok');
 					$rqno=$('button.ok').val();
 					$a = $('a.a').text();
+
+	    	 		$aindex = $a.index(this);
+	  	 	 		
+	    	 		
+	    	 		$index_button_f = $("button.unhellow:eq(" + $index2 + ")");
+		  	 	 	
+	    	 		var	btntext2 = $index_button_f.text();
+					
+					
 					$.ajax({
 						type:'get',
 						url:'./applyreqlist',

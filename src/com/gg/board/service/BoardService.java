@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.gg.board.dao.BoardDAO;
@@ -375,23 +376,21 @@ public class BoardService {
 		dao.resClose();
 
 	}
-			public void req_list_apply(String userid, int rqno, String a) throws IOException {
+			public void req_list_apply(String userid, int rqno, String a) throws IOException, ServletException {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 
 				BoardDAO dao = new BoardDAO();
-				ArrayList<GGDto> reqlist = null;
+				String url = null;
 				RequestDispatcher dis = null;
 				int success=0;
 				try {
 					success = dao.reqlistapply(userid,rqno,a);
-					System.out.println("successudate:"+success);				
-					reqlist = dao.reqlist_goto_url(userid,rqno,a);
+					System.out.println("successudate:"+success);
 					
+					url = dao.reqlist_goto_url(userid,rqno,a);
+
 					
-					
-					
-					
-					dis = req.getRequestDispatcher(page);
+					dis = req.getRequestDispatcher(url);
 					dis.forward(req, resp);
 					
 				} catch (SQLException e) {
