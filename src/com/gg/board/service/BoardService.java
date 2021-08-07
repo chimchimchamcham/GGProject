@@ -379,31 +379,13 @@ public class BoardService {
 
 	}
 
-	public void req_list_apply(String userid, int rqno, String a) throws IOException {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-
+	public String req_list_apply(int rqno) throws IOException, SQLException {		
 		BoardDAO dao = new BoardDAO();
-		String reqlist = null;
-		int success = 0;
-		try {
-			success = dao.reqlistapply(userid, rqno, a);
-			System.out.println("successudate:" + success);
-			reqlist = dao.reqlist_goto_url(userid, rqno, a);
-			resp.sendRedirect(reqlist);
-			
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			dao.resClose();
-		}
-		System.out.println("auc_map:" + map);
-
-		resp.setContentType("text/html; charset=UTF-8");
-		resp.getWriter().println(new Gson().toJson(map));
-		map.clear();
+		String page = dao.reqlistapply(rqno);
+		System.out.println("update page : "+page);
 		dao.resClose();
-
+		
+		return page;
 	}
 
 //좋아요리스트

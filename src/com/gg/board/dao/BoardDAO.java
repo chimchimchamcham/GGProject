@@ -538,7 +538,7 @@ public class BoardDAO {
 			if (userid.equals(sid)) {
 				System.out.println("수신");
 				dto.setSered("수신");
-				dto.setButtonORtext("<div><button class='ok' value ="+dto.getRq_no()+">수락</button><button>거절</button></div>");
+				dto.setButtonORtext("<div><button class='ok' value ="+dto.getRq_no()+">수락</button class='no' value ="+dto.getRq_no()+"><button>거절</button></div>");
 			} else if (userid.equals(rid)) {
 				System.out.println("발신");
 				dto.setSered("발신");
@@ -553,50 +553,19 @@ public class BoardDAO {
 	}
 
 	
-	public int reqlistapply(String userid, int rqno, String a)throws SQLException {
+	public String reqlistapply(int rqno)throws SQLException {
 		
-		
-		//System.out.println(userid);
-		//System.out.println(rqno);
-			String sql = "UPDATE request SET rq_yn = 'Y' WHERE RQ_NO = ? AND rq_id = ?";
+			String sql = "UPDATE request SET rq_yn = 'Y' WHERE RQ_NO = ?";
 			int success = 0;
 			try {
-				 ps = conn.prepareStatement(sql);
-				 ps.setInt(1, rqno);
-				 ps.setString(2, a);
-				 success=ps.executeUpdate();
-				 System.out.println("success:"+success);
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, rqno);
+				success = ps.executeUpdate();
+				System.out.println("업데이트 성공 : "+success);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		 return success;
-
-	}
-	
-	public String reqlist_goto_url(String userid, int rqno, String a) throws SQLException {
-		
-		String sql = "select r.rq_no,p.p_no,r.rq_id,r.rq_yn from request r,post p where  r.RQ_NO = ? AND r.rq_id = ? and p.p_no = r.p_no";//and rq_yn = 'Y'
-			
-		System.out.println("id:"+userid);
-		System.out.println("rqno:"+rqno);
-		System.out.println("a:"+a);
-
-		ps = conn.prepareStatement(sql);
-
-		System.out.println("daouserID:" + userid);
-		 ps.setInt(1, rqno);
-		 ps.setString(2, a);
-		rs = ps.executeQuery();
-		GGDto dto = new GGDto();
-		if (rs.next()) {
-	
-			dto.setRq_no(rs.getInt("rq_no"));
-
-		}
-		
-		String url = "./buyRequestProcess?rq_no="+dto.getRq_no();
-		
-		return null;
+		 return page;
 
 	}
 	// 좋아요
