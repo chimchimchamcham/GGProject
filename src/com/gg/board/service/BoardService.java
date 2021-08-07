@@ -329,30 +329,30 @@ public class BoardService {
 		dao.resClose();
 	}
 
-	//팔로워 버튼 +,- 여부 
-    public void flow_button(String userid,String btntext, String nick) throws IOException {
-       
-         System.out.println("userid_service:"+userid);
-         System.out.println("btntext:"+btntext);
-         System.out.println("nick_service:"+nick);
-        
-       if (btntext != null) {
-          BoardDAO dao = new BoardDAO();
-          int success; 
-          try {
-             success = dao.flowbut(userid, btntext, nick);
-             System.out.println("success:"+success);
-          } catch (SQLException e) {
-             e.printStackTrace();
-          }finally {
-             dao.resClose();
-          }
-       }else {
-          System.out.println("null임");
-       }
-       
-    }
-	
+	// 팔로워 버튼 +,- 여부
+	public void flow_button(String userid, String btntext, String nick) throws IOException {
+
+		System.out.println("userid_service:" + userid);
+		System.out.println("btntext:" + btntext);
+		System.out.println("nick_service:" + nick);
+
+		if (btntext != null) {
+			BoardDAO dao = new BoardDAO();
+			int success;
+			try {
+				success = dao.flowbut(userid, btntext, nick);
+				System.out.println("success:" + success);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				dao.resClose();
+			}
+		} else {
+			System.out.println("null임");
+		}
+
+	}
+
 //구매요청리스트
 	public void req_list(String userid, int reqindex) throws IOException {
 
@@ -377,38 +377,36 @@ public class BoardService {
 		dao.resClose();
 
 	}
-			public void req_list_apply(String userid, int rqno, String a) throws IOException {
-				HashMap<String, Object> map = new HashMap<String, Object>();
 
-				BoardDAO dao = new BoardDAO();
-				ArrayList<GGDto> reqlist = null;
-				RequestDispatcher dis = null;
-				int success=0;
-				try {
-					success = dao.reqlistapply(userid,rqno,a);
-					System.out.println("successudate:"+success);				
-					reqlist = dao.reqlist_goto_url(userid,rqno,a);
-					
-					
-					
-					
-					
-					dis = req.getRequestDispatcher(page);
-					dis.forward(req, resp);
-					
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally {
-					dao.resClose();
-				}
-				System.out.println("auc_map:" + map);
+	public void req_list_apply(String userid, int rqno, String a) throws IOException {
+		HashMap<String, Object> map = new HashMap<String, Object>();
 
-				resp.setContentType("text/html; charset=UTF-8");
-				resp.getWriter().println(new Gson().toJson(map));
-				map.clear();
-				dao.resClose();
-				
-			}
+		BoardDAO dao = new BoardDAO();
+		ArrayList<GGDto> reqlist = null;
+		RequestDispatcher dis = null;
+		int success = 0;
+		try {
+			success = dao.reqlistapply(userid, rqno, a);
+			System.out.println("successudate:" + success);
+			reqlist = dao.reqlist_goto_url(userid, rqno, a);
+
+			dis = req.getRequestDispatcher("page"); //변경사항
+			//dis.forward(req, resp); 변경요망
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			dao.resClose();
+		}
+		System.out.println("auc_map:" + map);
+
+		resp.setContentType("text/html; charset=UTF-8");
+		resp.getWriter().println(new Gson().toJson(map));
+		map.clear();
+		dao.resClose();
+
+	}
+
 //좋아요리스트
 	public void love_list(String userid, int index1, int index2) throws IOException {
 
@@ -446,7 +444,7 @@ public class BoardService {
 
 	public int writeCommu() {
 		int p_no = -123;
-		
+
 		String p_id = (String) req.getSession().getAttribute("loginId");
 		String p_title = req.getParameter("title");
 		String p_content = req.getParameter("content");
@@ -454,27 +452,29 @@ public class BoardService {
 		String p_code = req.getParameter("select");
 
 		// 공지사항
-		String adminYN =  (String) req.getSession().getAttribute("adminYN");
-		
+		String adminYN = (String) req.getSession().getAttribute("adminYN");
+
 		BoardDAO dao = new BoardDAO();
 		GGDto dto = new GGDto();
-		
-		//공지사항
+
+		// 공지사항
 		if (adminYN.equals("Y")) {
 			System.out.println("아이디 : " + p_id);
-			System.out.println("공지사항 글쓰기 제목 : " + p_title + " / 내용 : " + p_content + " / 관리자여부 :" + adminYN+" / 코드분류 :" + p_code);
+			System.out.println("공지사항 글쓰기 제목 : " + p_title + " / 내용 : " + p_content + " / 관리자여부 :" + adminYN
+					+ " / 코드분류 :" + p_code);
 
 			dto.setP_id(p_id);
 			dto.setP_title(p_title);
 			dto.setP_content(p_content);
 			dto.setU_adminYN(adminYN);
 			dto.setP_code(p_code);
-		
+
 		} else { // 커뮤니티
-			System.out.println("커뮤니티글쓰기 제목 : " + p_title + " 내용 : " + p_content + " 카테고리 :" + p_cate+" 코드분류 :" + p_code);
+			System.out.println(
+					"커뮤니티글쓰기 제목 : " + p_title + " 내용 : " + p_content + " 카테고리 :" + p_cate + " 코드분류 :" + p_code);
 			System.out.println("아이디 : " + p_id);
 			System.out.println("p_code : " + p_code);
-			
+
 			dto.setP_id(p_id);
 			dto.setP_title(p_title);
 			dto.setP_content(p_content);
@@ -706,7 +706,7 @@ public class BoardService {
 
 	public GGDto commDetail() {
 		String p_no = req.getParameter("p_no");
-		System.out.println("상세보기 p_no : "+p_no);
+		System.out.println("상세보기 p_no : " + p_no);
 		BoardDAO dao = new BoardDAO();
 		GGDto dto = null;
 		try {
@@ -726,10 +726,10 @@ public class BoardService {
 		}
 		return dto;
 	}
-	
+
 	public GGDto noticeDetail() {
 		String p_no = req.getParameter("p_no");
-		System.out.println("공지사항 상세보기 p_no : "+p_no);
+		System.out.println("공지사항 상세보기 p_no : " + p_no);
 		BoardDAO dao = new BoardDAO();
 		GGDto dto = null;
 		try {
@@ -774,43 +774,45 @@ public class BoardService {
 	}
 
 	public ArrayList<GGDto> commList() {
-		int pagePerCnt = 14; 
+		int pagePerCnt = 14;
 		BoardDAO dao = new BoardDAO();
 		ArrayList<GGDto> arrayList = new ArrayList<GGDto>();
-		String[] categorys = req.getParameterValues("categorys[]");//ajax에서 배열 형태로 보낼때 받는 방법
-		ArrayList<GGDto> commList = dao.commList(categorys);	
-		int totalPage = (int)Math.ceil((double)commList.size()/(double)pagePerCnt); //전체 페이지 넘버를 반환. -나누는 값들을 double으로 명시해야 올림한 정확한 값이 나옴
-		int currPageNum = Integer.parseInt(req.getParameter("currPageNum")); //페이지의 넘버를 받는것.
-		if(currPageNum*5>totalPage) { // 페이지 넘버가 범위를 벗어날 경우 잡아주는 코드
-			currPageNum=(int) Math.ceil((double)totalPage/(double)5);
-		}else if(currPageNum<0) {
-			currPageNum=1;
+		String[] categorys = req.getParameterValues("categorys[]");// ajax에서 배열 형태로 보낼때 받는 방법
+		ArrayList<GGDto> commList = dao.commList(categorys);
+		int totalPage = (int) Math.ceil((double) commList.size() / (double) pagePerCnt); // 전체 페이지 넘버를 반환. -나누는 값들을
+																							// double으로 명시해야 올림한 정확한 값이
+																							// 나옴
+		int currPageNum = Integer.parseInt(req.getParameter("currPageNum")); // 페이지의 넘버를 받는것.
+		if (currPageNum * 5 > totalPage) { // 페이지 넘버가 범위를 벗어날 경우 잡아주는 코드
+			currPageNum = (int) Math.ceil((double) totalPage / (double) 5);
+		} else if (currPageNum < 0) {
+			currPageNum = 1;
 		}
-		int currPageEnd = currPageNum*5;
-		if(currPageEnd>totalPage) {
-			currPageEnd=totalPage; // 배열의 범위를 벗어나면 애러가 발생하므로 배열의 범위까지 정해주는 작업
+		int currPageEnd = currPageNum * 5;
+		if (currPageEnd > totalPage) {
+			currPageEnd = totalPage; // 배열의 범위를 벗어나면 애러가 발생하므로 배열의 범위까지 정해주는 작업
 		}
-		int currPageStart = (currPageNum-1)*5+1;
+		int currPageStart = (currPageNum - 1) * 5 + 1;
 		int currPage = Integer.parseInt(req.getParameter("currPage"));
-		if(currPage>currPageEnd || currPageStart>currPage) { // 불러온 현제 페이지의 위치가 범위를 벗어날 경우 강제로 처음과 끝에 지정해주는 역활
+		if (currPage > currPageEnd || currPageStart > currPage) { // 불러온 현제 페이지의 위치가 범위를 벗어날 경우 강제로 처음과 끝에 지정해주는 역활
 			currPage = currPageStart;
 		}
-		// 카테고리 목록으로 검색한 dto값들을 ArrayList(commList)에 담아줌. 
-		int end = currPage*pagePerCnt; 
-		int start = end - pagePerCnt +1;
-		if(commList.size() <= end) {
-			end = commList.size(); // 14개보다 적은 크기의 배열이면 끝까지만 잘라서 보여주기 위하여	
+		// 카테고리 목록으로 검색한 dto값들을 ArrayList(commList)에 담아줌.
+		int end = currPage * pagePerCnt;
+		int start = end - pagePerCnt + 1;
+		if (commList.size() <= end) {
+			end = commList.size(); // 14개보다 적은 크기의 배열이면 끝까지만 잘라서 보여주기 위하여
 		}
 		// 전체 ArrayList에서 특정 페이지의 목록들을 잘라내는 과정 (ArrayList에서 잘라줌) - 이때 List로 반환됨.
-		List<GGDto> list = commList.subList(start-1, end);	// 14개의 리스트를 자르기 위하여 사용.
+		List<GGDto> list = commList.subList(start - 1, end); // 14개의 리스트를 자르기 위하여 사용.
 		// List를 ArrayList로 변환.
 		arrayList.addAll(list);
-		arrayList.get(0).setTotalPage(totalPage); //0번째 dto에 totalPage를 넣어줌.
-		if(currPage>currPageEnd) {
-			currPageEnd=currPage;
+		arrayList.get(0).setTotalPage(totalPage); // 0번째 dto에 totalPage를 넣어줌.
+		if (currPage > currPageEnd) {
+			currPageEnd = currPage;
 		}
 		arrayList.get(0).setCurrPage(currPage);
-		System.out.println("currPage : "+currPage);
+		System.out.println("currPage : " + currPage);
 		arrayList.get(0).setCurrPageEnd(currPageEnd); // 0번째 dto에 currPage를 넣어줌.
 		arrayList.get(0).setCurrPageStart(currPageStart);
 		return arrayList;
@@ -877,17 +879,15 @@ public class BoardService {
 		return dao.postDel(p_no);
 	}
 
-
 	public ArrayList<GGDto> noticeList() {
-		
+
 		BoardDAO dao = new BoardDAO();
 		ArrayList<GGDto> noticeList = dao.noticeList();
-		System.out.println("공지사항 글 갯수 : "+noticeList.size());
+		System.out.println("공지사항 글 갯수 : " + noticeList.size());
 		dao.resClose();
-		
+
 		return noticeList;
 	}
-
 
 	// 메서드 통합으로 인하여 주석처리
 	/*

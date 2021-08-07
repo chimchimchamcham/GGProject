@@ -834,14 +834,6 @@ public void setTc_tm(Date tc_tm) {
 	this.tc_tm = tc_tm;
 }
 
-<<<<<<< HEAD
-   public void setP_blindYN(String p_blindYN) {
-      this.p_blindYN = p_blindYN;
-   }
-   public String getP_code() {
-      return p_code;
-   }
-=======
 public String getTc_id() {
 	return tc_id;
 }
@@ -849,7 +841,6 @@ public String getTc_id() {
 public void setTc_id(String tc_id) {
 	this.tc_id = tc_id;
 }
->>>>>>> 6fc5486d5cd9c274d9f0127123268f4b50f30225
 
 public String getRv_id() {
 	return rv_id;
@@ -1019,11 +1010,6 @@ public void setPc_no(int pc_no) {
 	this.pc_no = pc_no;
 }
 
-<<<<<<< HEAD
-   public void setCurrPageStart(int currPageStart) {
-      this.currPageStart = currPageStart;
-   }
-=======
 public String getPc_content() {
 	return pc_content;
 }
@@ -1127,5 +1113,4 @@ public int getCurrPageStart() {
 public void setCurrPageStart(int currPageStart) {
 	this.currPageStart = currPageStart;
 }
->>>>>>> 6fc5486d5cd9c274d9f0127123268f4b50f30225
 }

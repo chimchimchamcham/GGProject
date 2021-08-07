@@ -606,7 +606,7 @@ public class BoardDAO {
 		String url = "./buyRequestProcess?rq_no=";//${dto.rq_no}+"&"+"rq_YN=Y&p_no="+"${dto.p_no}"+"&rq_id="+${dto.rq_id}+";
 		
 		
-		return url;
+		return null;
 
 	}
 	// 좋아요
