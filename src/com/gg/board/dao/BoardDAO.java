@@ -721,7 +721,7 @@ public class BoardDAO {
 
 		// 공지사항
 		if (dto.getU_adminYN().equals("Y")) {
-			String sql = "INSERT INTO post VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
+			String sql = "INSERT INTO post(p_no,p_id,p_title,p_content,p_TM,p_view,p_likecount,p_blindYN,p_code) VALUES(p_no_seq.NEXTVAL,?,?,?,SYSDATE,0,0,?,?)";
 
 			ps = conn.prepareStatement(sql, new String[] { "p_no" });
 			ps.setString(1, dto.getP_id());

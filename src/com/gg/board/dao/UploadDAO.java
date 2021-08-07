@@ -76,7 +76,6 @@ public class UploadDAO {
 	         ps.setString(2, dto.getI_newName());
 	         success = ps.executeUpdate();
 	      } catch (SQLException e) {
-	         // TODO Auto-generated catch block
 	         e.printStackTrace();
 	      }finally {
 	         resClose();
