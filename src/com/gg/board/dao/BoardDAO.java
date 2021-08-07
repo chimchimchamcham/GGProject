@@ -1226,10 +1226,9 @@ public class BoardDAO {
 		return success;
 	}
 
-<<<<<<< HEAD
 	public ArrayList<GGDto> noticeList() {
 		
-		String sql = "SELECT p_no,p_title,p_id,p_tm,p_view FROM post ORDER BY idx DESC";
+		String sql = "SELECT p_no,p_title,p_id,p_tm,p_view FROM post WHERE p_code='P003' ORDER BY p_no DESC";
 		ArrayList<GGDto> noticeList = null;
 		GGDto dto = null;
 		
@@ -1245,18 +1244,13 @@ public class BoardDAO {
 				dto.setP_tm(rs.getDate("p_tm"));
 				dto.setP_view(rs.getInt("p_view"));
 				noticeList.add(dto);
-				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return noticeList;
 	}
-=======
-
->>>>>>> 4a0e78c3df1d2ad60b95db63b05f374b7dface2f
 	
 	// 메서드 통합으로 인하여 주석처리
 	/*
