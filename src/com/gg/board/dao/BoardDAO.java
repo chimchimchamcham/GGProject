@@ -538,7 +538,7 @@ public class BoardDAO {
 			if (userid.equals(sid)) {
 				System.out.println("수신");
 				dto.setSered("수신");
-				dto.setButtonORtext("<div><button class='ok' value ="+dto.getRq_no()+">수락</button class='no' value ="+dto.getRq_no()+"><button>거절</button></div>");
+				dto.setButtonORtext("<div><button type='submit' class='ok' value ="+dto.getRq_no()+">수락</button type='submit' class='no' value ="+dto.getRq_no()+"><button>거절</button></div>");
 			} else if (userid.equals(rid)) {
 				System.out.println("발신");
 				dto.setSered("발신");
@@ -1260,4 +1260,48 @@ public class BoardDAO {
 		return p_title;
 		   
 	   }
+
+	public void updatereqlist(int rqno) {
+		System.out.println("DAO loveCountMinus");
+		String sql = "UPDATE request SET rq_yn = 'Y' WHERE RQ_NO = ?";
+		int success = 0;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, rqno);
+			success = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("update_succes:"+success);
+		resClose();
+	}
+
+	public GGDto urllist(String rqno) {
+		String sql ="select r.rq_no,p.p_no,r.rq_id,r.rq_yn from request r,post p where  r.RQ_NO = ? and p.p_no = r.p_no and r.rq_yn";
+	      GGDto dto = null;
+	      
+	      try {
+	         ps = conn.prepareStatement(sql);
+	         ps.setString(1, rqno);
+	         rs = ps.executeQuery();
+	         
+	         if(rs.next()) {
+	            dto = new GGDto();
+	            dto.setRq_no(rs.getInt("rq_no"));
+	            dto.setP_no(rs.getInt("p_no"));
+	            dto.setRq_id(rs.getString("rq_id"));
+	            dto.setRq_YN(rs.getString("rq_yn"));
+	         }
+	         
+	         System.out.println("rq_no:"+dto.getRq_no());
+	         System.out.println("p_no:"+dto.getP_no());
+	         System.out.println("rq_id:"+dto.getRq_id());
+	         System.out.println("rq_yn:"+dto.getRq_YN());
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }
+
+	      return dto;
+	}
 }

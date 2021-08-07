@@ -774,6 +774,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			reqlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
+				//content += "<form action='./applyreqlist' method='post'>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
 				content += "	<div>"+item.sered+"</div>";
 				content += "	<div><a href = salesDetail?p_no="+item.p_no+">"+item.p_title+"</a></div>";
@@ -784,34 +785,37 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				content += "</div>";
 				content += "<div class='mai-time'>";
 				content += "	<div>"+item.buttonORtext+"</div>";
-				content += "</div></div>";
+				content += "</div>";
+				//content += "</form>";
+				content += "</div>";
 			});
 			$("#want .item-box").empty();
 			$("#want .item-box").append(content);
 			
 		}//구매요청 리스트 end
 				//수락버튼을 누르면
-				$(document).on("click","button.ok",function(){
-					alert('ok');
+				 $(document).on("click","button.ok",function(){
+					 
 					$rqno=$('button.ok');
-		  	 	 	
 					$index= $rqno.index(this);
 					$rqnob = $("button.ok:eq(" + $index + ")");
 					
 					 var rqnoval=$rqnob.val();
 					
 					$.ajax({
-						type:'get',
+						type:'post',
 						url:'./applyreqlist',
 						data:{rqno:rqnoval},
 						dataType:'JSON',
 						success:function(data){
+							if (data!=null) {
 							console.log(data);
+							}
 						},
 						error:function(e){
 							console.log(e);
 						}
-					}); 
+					});  
 					
 					//수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
 					//거절 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=N&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
