@@ -119,7 +119,8 @@ h2 {
 	var a_no = ''; //알람 번호 가져오기
 	var a_readYN = ''; //읽음 여부 가져오기
 	var a_path=''; //경로 가져오기
-	var insert_success = '';
+	
+	var insert_success = ''; //읽은 시간과 읽음여부 집어넣은 결과 확인용
 	
 	/*전체 알람 보이기*/
 	$("#allAL").click(function() {
@@ -164,12 +165,15 @@ h2 {
 				
 			});
 			console.log("ajax 처리 결과",insert_success);
+			
 			if(insert_success){
 				$(this).addClass("read"); //클릭했을 경우 읽음 표시로
 			}
 		}
 		opener.parent.location=a_path;
 	});
+	
+	/*알람 삭제*/
 	
 	
 </script>
