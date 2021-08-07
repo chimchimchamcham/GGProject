@@ -52,8 +52,8 @@ public class AlarmDAO {
 		GGDto dto = null;
 		String insert =null;
 		ArrayList<GGDto>list = null;
-		String sql = "SELECT a_no,u_id,a_code,a_sendtm,a_checktm,a_content,a_readyn,a_delyn,a_impoyn,a_path from ALARM where u_id=? order by a_readyn asc";
-		String sql2 = "SELECT a_no,u_id,a_code,a_sendtm,a_checktm,a_content,a_readyn,a_delyn,a_impoyn,a_path from ALARM where u_id=? and a_impoYN='Y' order by a_readyn asc";
+		String sql = "SELECT a_no,u_id,a_code,a_sendtm,a_checktm,a_content,a_readyn,a_delyn,a_impoyn,a_path from ALARM where u_id=? and a_readyn='N' order by a_readyn asc";
+		String sql2 = "SELECT a_no,u_id,a_code,a_sendtm,a_checktm,a_content,a_readyn,a_delyn,a_impoyn,a_path from ALARM where u_id=? and a_impoYN='Y' and a_readyn='N' order by a_readyn asc";
 		
 		System.out.println("넘어온 a_impoyn : "+a_impoyn);
 		
@@ -84,15 +84,17 @@ public class AlarmDAO {
 			list.add(dto);
 		}
 		
-		System.out.println("알람번호 : "+dto.getA_no());
-		System.out.println("알람받은 아이디 : "+dto.getU_id());
-		System.out.println("알람코드 : "+dto.getA_code());
-		System.out.println("알람보낸 시간 : "+dto.getA_sendTm());
-		System.out.println("알람읽은 시간 : "+dto.getA_checkTm());
-		System.out.println("알람 읽음 여부 :"+dto.getA_readYN());
-		System.out.println("알람 삭제 여부 : "+dto.getA_delYN());
-		System.out.println("알람 중요 여부 : "+dto.getA_impoYN());
-		System.out.println("알람 경로 : "+dto.getA_path());
+		/*
+		 * System.out.println("알람번호 : "+dto.getA_no());
+		 * System.out.println("알람받은 아이디 : "+dto.getU_id());
+		 * System.out.println("알람코드 : "+dto.getA_code());
+		 * System.out.println("알람보낸 시간 : "+dto.getA_sendTm());
+		 * System.out.println("알람읽은 시간 : "+dto.getA_checkTm());
+		 * System.out.println("알람 읽음 여부 :"+dto.getA_readYN());
+		 * System.out.println("알람 삭제 여부 : "+dto.getA_delYN());
+		 * System.out.println("알람 중요 여부 : "+dto.getA_impoYN());
+		 * System.out.println("알람 경로 : "+dto.getA_path());
+		 */
 		
 		return list;
 	}

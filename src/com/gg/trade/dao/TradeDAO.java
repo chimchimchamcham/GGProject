@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 
 import com.gg.board.dao.BoardDAO;
 import com.gg.dto.GGDto;
+import com.gg.user.dao.AlarmDAO;
 import com.gg.user.dao.PointDAO;
 
 public class TradeDAO {
@@ -340,19 +341,24 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			
 			boolean insertRs = false; 
 			PointDAO dao = new PointDAO();
-			
+			AlarmDAO Aldao = new AlarmDAO();
 			///입찰금반환 메서드 실행
-			String sql = "select distinct ha_bidusr from his_auction where ha_bidusr <> (select au_successer from auction where p_no=?) and p_no=?";
-		
+			String sql = "select distinct ha_bidusr,(select p_title from post where p_no=?) as p_title from his_auction where ha_bidusr <> (select au_successer from auction where p_no=?) and p_no=?";
+			
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
 			ps.setInt(2, p_no);
+			ps.setInt(3, p_no);
 			
 			rs = ps.executeQuery();
 			System.out.println("=========입찰금 반환 목록==========");
 			while(rs.next()) {
 				String bid_id = rs.getString("ha_bidusr");
+				String p_title = rs.getString("p_title");
 				System.out.println("bid_id:"+bid_id);
+				System.out.println("p_title:"+p_title);
+				//경매종료 알람보내기
+
 				insertRs = dao.insertPoint(bid_id, instantpr, "SYSTEM", "PNT007", p_no);
 				
 				if(insertRs) {
