@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist", 
 	"/maidelist", "/writeForm", "/writeSale", "/writeTrade","/postDel",
 		"/writeCommunity", "/auctionDetail", "/commDetail", "/commUpdateForm","/commUpdate","/communitylist","/auctionmainlist" 
-		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate","/flowlist","/requestlist","/lovelist","/delAuction","/flowadddelect"})
+		,"/commList","/salesUpdateForm","/salesUpdate","/details","/auctionUpdateForm","/auctionUpdate","/flowlist","/requestlist","/lovelist","/delAuction","/flowadddelect","/applyreqlist"})
 
 public class BoardController extends HttpServlet {
 
@@ -205,7 +205,16 @@ public class BoardController extends HttpServlet {
 			service.req_list(userid,reqindex);
 
 			break;
-			
+			case "/applyreqlist"://수락 버튼눌렀을시 
+				System.out.println("거래수락 요청");
+				userid = (String) req.getSession().getAttribute("loginId");
+				int rqno = Integer.parseInt(req.getParameter("rqno"));
+				String a = req.getParameter("a");
+				System.out.println(userid+'/'+rqno+'/'+a);
+				
+				service.req_list_apply(userid,rqno,a);
+
+			break;
 		case "/lovelist":
 			System.out.println("좋아요리스트 리스트 요청");
 			userid = (String)req.getSession().getAttribute("loginId");
