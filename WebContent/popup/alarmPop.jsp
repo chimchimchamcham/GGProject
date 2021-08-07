@@ -84,8 +84,9 @@ h2 {
 			<h2>알람이 존재하지 않습니다.</h2>
 		</c:if>
 		<c:forEach items="${list}" var="dto">
-			<div class="tableWrap">
-				<table class="content">
+		
+			<div class="tableWrap" >
+				<table class="content <c:if test="${dto.a_checktm ne null || dto.a_checktm ne ''}">read</c:if><c:if test="${dto.a_checktm eq null || dto.a_checktm eq ''}"></c:if>">
 					<tr>
 						<td>${dto.a_content}</td>
 					</tr>
@@ -98,6 +99,7 @@ h2 {
 
 				</table>
 			</div>
+			
 		</c:forEach>
 	</div>
 </body>
@@ -116,5 +118,11 @@ h2 {
 		console.log("중요 알람 보이기");
 		location.href="./alarmlist?u_id="+loginId+"&a_impoyn=Y";
 	});
+	
+	
+	/*클릭시 읽음 처리*/
+	$("#content").click(function(){
+		console.log("알림클릭");
+	})
 </script>
 </html>
