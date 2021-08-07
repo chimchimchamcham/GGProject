@@ -377,7 +377,6 @@ public class BoardDAO {
 			dto.setPnt_tm(rs.getDate("pnt_tm"));
 			dto.setI_newName(rs.getString("I_newName"));
 			dto.setC_name(rs.getString("c_name"));
-			;
 			dto.setPnt_otherId(rs.getString("pnt_otherid"));
 			maidelist.add(dto);
 		}
@@ -447,9 +446,9 @@ public class BoardDAO {
 
 	         // 유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
 	         if (userid.equals(reseveid)) {
-	            dto.setthisuserFlowingYN("<button class='hellow'>+팔로잉</button>");// N
+	            dto.setThisuserFlowingYN("<button class='hellow'>+팔로잉</button>");// N
 	         } else if (userid.equals(sendid)) {
-	            dto.setthisuserFlowingYN("<button class='unhellow'>-팔로잉</button>");// Y
+	            dto.setThisuserFlowingYN("<button class='unhellow'>-팔로잉</button>");// Y
 	         }
 	         flowlist.add(dto);
 	      }
@@ -604,7 +603,7 @@ public class BoardDAO {
 		
 		
 		//수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
-		String url = "./buyRequestProcess?rq_no="+${dto.rq_no}+"&"+"rq_YN=Y&p_no="+"${dto.p_no}"+"&rq_id="+${dto.rq_id}+";
+		String url = "./buyRequestProcess?rq_no=";//${dto.rq_no}+"&"+"rq_YN=Y&p_no="+"${dto.p_no}"+"&rq_id="+${dto.rq_id}+";
 		
 		
 		return url;

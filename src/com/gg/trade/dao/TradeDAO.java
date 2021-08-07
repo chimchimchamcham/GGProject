@@ -717,7 +717,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		//거래페이지 목록을 보여주는 기능
 		public ArrayList<GGDto> tradeList (String id){
 			System.out.println("[TRADEDAO]/TRADELIST START");
-			String sql = "SELECT T.T_NO, T.P_NO, T.T_SALER, T.T_BUYER, (SELECT U_NEWNAME FROM USERINFO WHERE U_ID = T_SALER) T_SALER_NEWNAME, (SELECT U_NEWNAME FROM USERINFO WHERE U_ID = T_BUYER) T_BUYER_NEWNAME, H.HT_DATE, H.HT_POINT, H.HT_CODE, (SELECT C_NAME FROM CODES WHERE C_CODE = H.HT_CODE) HT_NAME, TC.TC_CONTENT, TC.TC_TM, TC.TC_ID FROM TRADE T, HIS_TRADE H,(SELECT T_NO, MAX(HT_DATE) HT_DATE FROM HIS_TRADE GROUP BY T_NO) HM, TRADE_COMMENT TC, (SELECT T_NO, MAX(TC_TM) TC_TM FROM TRADE_COMMENT GROUP BY T_NO) TCM WHERE T.T_NO = H.T_NO AND H.T_NO = HM.T_NO AND HM.T_NO = TC.T_NO AND TC.T_NO = TCM.T_NO AND TC.TC_TM = TCM.TC_TM AND H.HT_DATE = HM.HT_DATE AND (T_SALER = ? OR T_BUYER = ?) ORDER BY H.HT_DATE DESC";
+			String sql = "SELECT T.T_NO, T.P_NO, T.T_SALER, T.T_BUYER, (SELECT U_NNAME FROM USERINFO WHERE U_ID = T_SALER) T_SALER_NNAME, (SELECT U_NNAME FROM USERINFO WHERE U_ID = T_BUYER) T_BUYER_NNAME, (SELECT U_NEWNAME FROM USERINFO WHERE U_ID = T_SALER) T_SALER_NEWNAME, (SELECT U_NEWNAME FROM USERINFO WHERE U_ID = T_BUYER) T_BUYER_NEWNAME, (SELECT P_TITLE FROM POST WHERE P_NO = T.P_NO) P_TITLE, H.HT_DATE, H.HT_POINT, H.HT_CODE, (SELECT C_NAME FROM CODES WHERE C_CODE = H.HT_CODE) HT_NAME, TC.TC_CONTENT, TC.TC_TM, TC.TC_ID FROM TRADE T, HIS_TRADE H,(SELECT T_NO, MAX(HT_DATE) HT_DATE FROM HIS_TRADE GROUP BY T_NO) HM, TRADE_COMMENT TC, (SELECT T_NO, MAX(TC_TM) TC_TM FROM TRADE_COMMENT GROUP BY T_NO) TCM WHERE T.T_NO = H.T_NO AND H.T_NO = HM.T_NO AND HM.T_NO = TC.T_NO AND TC.T_NO = TCM.T_NO AND TC.TC_TM = TCM.TC_TM AND H.HT_DATE = HM.HT_DATE AND (T_SALER = ? OR T_BUYER = ?) ORDER BY H.HT_DATE DESC";
 			ArrayList<GGDto> list = new ArrayList<GGDto>();
 			try {
 				ps = conn.prepareStatement(sql);
@@ -730,8 +730,11 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 					dto.setP_no(rs.getInt("p_no"));
 					dto.setT_saler(rs.getString("t_saler"));
 					dto.setT_buyer(rs.getString("t_buyer"));
+					dto.setT_buyer_nname(rs.getString("t_buyer_nname"));
+					dto.setT_saler_nname(rs.getString("t_saler_nname"));
 					dto.setT_saler_newName(rs.getString("t_saler_newname"));
 					dto.setT_buyer_newName(rs.getString("t_buyer_newname"));
+					dto.setP_title(rs.getString("p_title"));
 					dto.setHt_date(rs.getDate("ht_date"));
 					dto.setHt_point(rs.getInt("ht_point"));
 					dto.setHt_code(rs.getString("ht_code"));
