@@ -767,14 +767,23 @@ section {
 				console.log(e);
 			}
 			
-			
-		
-		
 		
 		});
 	
 	
 	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/* 대댓글 추가하기 */
 	function plus_reComm(){
