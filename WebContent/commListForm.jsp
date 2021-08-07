@@ -181,7 +181,7 @@
 		content = "";
 		for (let i = list[0].currPageStart; i <= list[0].currPageEnd; i++) {
 			if(list[0].currPage == i){
-				content +="<input type='radio' name='currPage' class='currRadio' id='currPage"+i+"' value="+i+" checked='checked'/>";
+				content +="<input type='radio' name='currPage' class='currRadio' id='currPage"+i+"' value="+i+" checked/>";
 				content +="<label class='currLabel' for='currPage"+i+"'>"+i+"</label>&nbsp;";
 			}else{
 				content +="<input type='radio' name='currPage' class='currRadio' id='currPage"+i+"' value="+i+" />";
