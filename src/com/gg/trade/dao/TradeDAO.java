@@ -253,7 +253,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		String p_id = selectPostP_id(p_no);
 		System.out.println("p_id : "+p_id);
 		//글번호, 판매자, 구매자를 인자값으로 넣어서, 거래페이지 생성과, 거래히스토리에 "0원" "생성" 추가
-		insertTrade(p_no, p_id, u_id);
+		int t_no = insertTrade(p_no, p_id, u_id);
 		
 		return success>0?true:false;
 	}
@@ -301,7 +301,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				//해당 글번호로 판매자를 알아오기
 				String p_id = selectPostP_id(p_no);
 				//글번호, 판매자, 구매자를 인자값으로 넣어서, 거래페이지 생성과, 거래히스토리에 "0원" "생성" 추가
-				insertTrade(p_no, p_id, ha_bidusr);
+				int t_no = insertTrade(p_no, p_id, ha_bidusr);
 			}
 			
 			return dto;
@@ -391,12 +391,12 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		}
 		//====================구매 요청 수락, 거절=====================
 		//구매요청을 수락하면 거래페이지 생성, 거절하면 끝
-		public boolean buyRequestProcess(int rq_no, String rq_YN, int p_no, String t_saler, String t_buyer) {
+		public int buyRequestProcess(int rq_no, String rq_YN, int p_no, String t_saler, String t_buyer) {
 			System.out.println("[TRADEDAO]/BUYREQUESTPROCESS START");
 			String sql = "UPDATE REQUEST SET RQ_YN = ? WHERE RQ_NO = ?; ";
 			int success = 0;
 			boolean insertNsaleNscodeSuccess = false;
-			boolean insertTradeSuccess = false;
+			int t_no = 0;
 			try {
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, rq_YN);
@@ -412,8 +412,8 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 						System.out.println("[TRADEDAO]/BUYREQUESTPROCESS INSETNSALENSCODESUCCESS : "+insertNsaleNscodeSuccess);
 						if(insertNsaleNscodeSuccess) {
 							//구매요청자의 id는 href, 판매자의 id는 session를 받아서 거래페이지 생성
-							insertTradeSuccess = insertTrade(p_no, t_saler, t_buyer);
-							System.out.println("[TRADEDAO]/BUYREQUESTPROCESS INSETTTADESUCCESS : "+insertTradeSuccess);
+							t_no = insertTrade(p_no, t_saler, t_buyer);
+							System.out.println("[TRADEDAO]/BUYREQUESTPROCESS T_NO : "+t_no);
 						}
 					}
 				}
@@ -423,7 +423,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			}
 			System.out.println("[TRADEDAO]/BUYREQUESTPROCESS END");
 			
-			return insertTradeSuccess;
+			return t_no;
 		}
 		
 		//판매글 상태를 변경하는 기능
@@ -447,10 +447,11 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		
 		//====================거래 페이지=======================
 		//거래페이지 생성, 구매요청 수락 또는 경매완료시 실행
-		public boolean insertTrade(int p_no, String t_saler, String t_buyer) {
+		public int insertTrade(int p_no, String t_saler, String t_buyer) {
 			System.out.println("[TRADEDAO]/INSERTTRADE START");
 			String sql = "INSERT INTO TRADE (T_NO, P_NO, T_SALER, T_BUYER, T_CANCLEID, T_ADMACC) VALUES(T_NO_SEQ.NEXTVAL, ?, ?, ?, NULL, 'N')";
 			int success = 0;
+			int t_no = 0;
 			boolean insertHisTradeSuccess = false;
 			try {
 				ps = conn.prepareStatement(sql);
@@ -461,7 +462,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				System.out.println("[TRADEDAO]/INSERTTRADE SUCCESS : "+success);
 				if(success>0) {
 					//거래히스토리에 0원, 생성 추가
-					int t_no = selectTradeT_no(p_no,t_saler,t_buyer);
+					t_no = selectTradeT_no(p_no,t_saler,t_buyer);
 					insertHisTradeSuccess = insertHisTrade(t_no, 0, "HT001");
 					System.out.println("[TRADEDAO]/INSERTTRADE T_NO : "+t_no);
 					System.out.println("[TRADEDAO]/INSERTTRADE insertHisTradeSuccess : "+insertHisTradeSuccess);
@@ -472,7 +473,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			}
 			System.out.println("[TRADEDAO]/INSERTTRADE END");
 			
-			return insertHisTradeSuccess;
+			return t_no;
 		}
 		
 		//거래페이지번호를 조회하는 기능 (필요값 : 글번호, 구매자, 판매자)
