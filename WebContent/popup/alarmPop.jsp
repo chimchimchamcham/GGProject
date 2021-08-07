@@ -72,6 +72,11 @@ h2 {
 .read {
 	opacity: 0.3;
 }
+
+/*알람번호, 읽음 여부 숨기기*/
+.a_no, .a_readYN{
+	display:none;
+}
 </style>
 <body>
 	<h2>알람</h2>
@@ -84,10 +89,15 @@ h2 {
 			<h2>알람이 존재하지 않습니다.</h2>
 		</c:if>
 		<c:forEach items="${list}" var="dto">
-			<div class="tableWrap" >
+		
+			<div class="tableWrap <c:if test="${dto.a_readYN eq 'Y'}">read</c:if> ">
 				<table class="content">
 					<tr>
-						<td><span id="a_no">${dto.a_no }</span>${dto.a_content}</td>
+						<td>
+							<span class="a_no">${dto.a_no }</span>
+							<span class="a_readYN">${dto.a_readYN}</span>
+							${dto.a_content}
+						</td>
 					</tr>
 					<tr>
 						<td><small>${dto.a_sendTm }</small></td>
@@ -104,7 +114,8 @@ h2 {
 </body>
 <script>
 	var loginId = "${sessionScope.loginId}";
-	
+	var a_no = ''; //알람 번호 가져오기
+	var a_readYN = ''; //읽음 여부 가져오기
 	
 	/*전체 알람 보이기*/
 	$("#allAL").click(function() {
@@ -121,11 +132,30 @@ h2 {
 	
 	
 	/*클릭시 읽음 처리*/
+	//알람 읽은 시간, 읽음 여부 집어넣고 성공했음을 보내주면 클래스 추가 시키기
+	//해당 링크로 부모 페이지 이동시키기
 	$(".tableWrap").click(function(){
 		console.log("알림클릭");
-		$(this).addClass("read");
-		
-		
+		$(this).addClass("read"); //클릭했을 경우 읽음 표시로
+		a_no=$(this).find('.a_no').text(); 	//자손에 있는 값 가져오기
+		a_readYN = $(this).find('.a_readYN').text();
+		console.log("알람번호 : ",a_no);
+		console.log("알람 읽음 여부 : "+a_readYN);
+		if(a_readYN == "N"){
+		$.ajax({
+			type:'GET',
+			url:'readAlarm',
+			data:{"a_no":a_no},
+			dataType:'JSON',
+			success:function(data){
+				console.log(data.success);
+			},
+			error:function(e){
+				console.log(e);
+			}
+			
+		});
+		}
 	})
 	
 	
