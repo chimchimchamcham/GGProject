@@ -757,17 +757,22 @@ li {
 		$(".board").empty();
 		$(".board").append(comment);
 	};
-
+	var re_comm = {};
+	var checker ="";
 	/* 대댓글 보여주며 쓰는 공간 만들어주기. */
 	$(document).on("click","img.re",function(){
-		var checker = $(this).attr("id");
-		console.log(checker);
-		var re_comm = {};
+		checker = $(this).attr("id");
+		console.log(checker,"의 대댓글 보기");
+		
 		re_comm.pc_parentno = checker;
 		re_comm.p_no = "${dto.p_no}";
 		var comment ="";
 		
+		wantReshow();
 		
+	});
+	
+	function wantReshow(){
 		$.ajax({
 			type: "POST",
 			data: re_comm,
@@ -783,7 +788,8 @@ li {
 				console.log(e);
 			}
 		});
-	});
+	}
+	
 	//대댓글 보여주기
 	var re_open = true;
 	function reCommentDrawList(list,checker){
@@ -800,7 +806,6 @@ li {
 				comment += "<div id='re_comment'>"+item.pc_content+"</div>";
 				comment += "</li>";
 				comment += "</ul>";
-
 				comment += "</div>";
 			});
 			
@@ -809,7 +814,8 @@ li {
 		//대댓글 달 수 있는 곳.
 		comment += "<div class='plus_reComm'>";
 		comment += "<textarea class='plus_reText' style='resize:none;'placeholder='대댓글을 작성해 주세요' maxlength='300'></textarea>";
-		comment += "<button class='re_enter'>입력</button>";
+		
+		comment += "<button class='re_enter' id='"+checker+"'>입력</button>";
 		
 		comment += "</div>";
 		
@@ -830,9 +836,38 @@ li {
 		
 	};
 	
+	$(document).on("click",".re_enter",function(){
+		
+		var plus_reComm = {};
+		plus_reComm.pc_parentno = $(this).attr("id");
+		console.log("부모댓글 : ", plus_reComm.pc_parentno);
+		plus_reComm.pc_content = $(".plus_reText").val();
+		console.log("대댓글 작성 내용 : ", plus_reComm);
+		plus_reComm.p_no = ${dto.p_no};
+		plus_reComm.pc_id = "${sessionScope.loginId}";
+		console.log("대댓글달기 글 번호 : ",  plus_reComm.p_no);
+		$.ajax({
+			type: "GET",
+			url : "re_comment",
+			data : plus_reComm,
+			dataType: "JSON",
+			success : function(data){
+				console.log("성공");
+				wantReshow();
+				reCommentDrawList(data.list,plus_reComm.pc_parentno);
+			},
+			error : function(e){
+				console.log(e);	
+			}
+		});
+		
+
+	});
+			
 
 	/* 대댓글 추가하기 */
 	function plus_reComm(){
+		
 		$.ajax({
 			type: "GET",
 			url : "re_comment",
@@ -840,6 +875,7 @@ li {
 			dataType: "JSON",
 			success : function(data){
 				console.log("성공");
+				
 			},
 			error : function(e){
 				console.log(e);	
