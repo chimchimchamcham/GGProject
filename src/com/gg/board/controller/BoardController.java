@@ -539,7 +539,17 @@ public class BoardController extends HttpServlet {
 		//공지사항 목록
 		case "/noticeList":
 			System.out.println("공지사항 리스트 요청");
+			
+			String paging = req.getParameter("page");
+			
+			if(paging == null) {
+				paging = "1";
+			}
+			
+			/* HashMap<String, Object> map = service. */
+			
 			req.setAttribute("noticeList", service.noticeList());
+			req.setAttribute("noticeListSize", service.noticeList().size());
 			dis = req.getRequestDispatcher("noticeList.jsp");
 			dis.forward(req, resp);
 

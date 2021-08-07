@@ -1227,7 +1227,7 @@ public class BoardDAO {
 	
 	   public ArrayList<GGDto> noticeList() {
 		      
-		      String sql = "SELECT p_no,p_title,p_id,p_tm,p_view FROM post WHERE p_code='P003' ORDER BY p_no DESC";
+		      String sql = "select p_no, p_title, p_id, p_tm, p_view, (select u_nname from userinfo where u_id = p_id) as u_nname from post where p_code='P003' ORDER BY p_no DESC";
 		      ArrayList<GGDto> noticeList = null;
 		      GGDto dto = null;
 		      
@@ -1242,6 +1242,7 @@ public class BoardDAO {
 		            dto.setP_id(rs.getString("p_id"));
 		            dto.setP_tm(rs.getDate("p_tm"));
 		            dto.setP_view(rs.getInt("p_view"));
+		            dto.setU_nname(rs.getString("u_nname"));
 		            noticeList.add(dto);
 		         }
 		      } catch (SQLException e) {
