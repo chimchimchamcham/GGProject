@@ -538,7 +538,7 @@ section {
 								<p>상점정보</p>
 								<div>
 									<div>
-										<a href="#"><img src="./img/profile.PNG" width="100"
+										<a href="myPage?id=${dto.p_id }"><img src="./img/profile.PNG" width="100"
 											height="100"></a>
 									</div>
 									<div>
@@ -558,7 +558,7 @@ section {
 
 								</div>
 								<p>
-									<a href="#">판매자의 다른 상품 더보기 > </a>
+									<a href="myPage?id=${dto.p_id }">판매자의 다른 상품 더보기 > </a>
 								</p>
 
 							</div>
