@@ -90,17 +90,19 @@ h2 {
 		</table>
 		
 		<div class="pageArea">
-		currPage : ${currPage} / totalPage : ${totalPage}
-		<c:forEach var="i" begin="1" end="${totalPage}" step="1">
+		currPage : ${noticeList[0].currPage} / totalPage : ${noticeList[0].totalPage}
+		<span onclick=function(){currPageNum-=1;}><a href="noticeList?currPageNum=currPageNum">이전</a></span>
+		<c:forEach var="i" begin="1" end="${noticeList[0].totalPage}" step="1">
 		<span class="page">
-			<c:if test="${i ne currPage}"><a href="./?page=${i}">${i}</a></c:if>
-			<c:if test="${i eq currPage}"><b>${i}</b></c:if>
-			</span>
+			<c:if test="${i ne noticeList[0].currPage}"><a href="noticeList?paging=${i}">${i}</a></c:if>
+			<c:if test="${i eq noticeList[0].currPage}"><b>${i}</b></c:if>
+		</span>	
 		</c:forEach>
+		<span onclick=function(){currPageNum+=1;}><a href="noticeList?currPageNum=currPageNum">다음</a></span>
 	</div>
 	</div>
 </body>
 <script type="text/javascript">
-	
+	var currPageNum=1;
 </script>
 </html>

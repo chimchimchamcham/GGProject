@@ -1284,6 +1284,10 @@ public class BoardDAO {
 		         }
 		         
 		         int total = noticeCount();
+		         noticeList.get(0).setTotalPost(total);
+		         noticeList.get(0).setCurrPage(paging);
+		         int pages = (int) Math.ceil((double)total/(double)pagePerCnt);
+		         noticeList.get(0).setTotalPage(pages);
 		      } catch (SQLException e) {
 		         e.printStackTrace();
 		      }
@@ -1293,7 +1297,7 @@ public class BoardDAO {
 	   
 	   	private int noticeCount() throws SQLException {
 			
-			String sql = "SELECT COUNT(p_no) FROM post where p_code='P003";
+			String sql = "SELECT COUNT(p_no) FROM post where p_code='P003'";
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			
@@ -1301,6 +1305,7 @@ public class BoardDAO {
 			
 			if (rs.next()) {
 				total = rs.getInt(1); //받아온 컬럼이 어차피 한개니까 1을 넣어도된다.
+				System.out.println("total : "+total);
 			}
 			
 			

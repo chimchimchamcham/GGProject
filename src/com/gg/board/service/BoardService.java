@@ -883,7 +883,6 @@ public class BoardService {
 
 		BoardDAO dao = new BoardDAO();
 		ArrayList<GGDto> noticeList = dao.noticeList(paging);
-		System.out.println("공지사항 글 갯수 : " + noticeList.size());
 		dao.resClose();
 
 		return noticeList;
