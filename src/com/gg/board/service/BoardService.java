@@ -327,29 +327,23 @@ public class BoardService {
 		map.clear();
 		dao.resClose();
 	}
-							//팔로워 버튼 +,- 여부 
-							public void flow_button(String userid,String btntext, String nick) throws IOException {
-								
-								  System.out.println("userid_service:"+userid);
-								  System.out.println("btntext:"+btntext);
-								  System.out.println("nick_service:"+nick);
-								 
-								if (btntext != null) {
-									BoardDAO dao = new BoardDAO();
-									int success; 
-									try {
-										success = dao.flowbut(userid, btntext, nick);
-										System.out.println("success:"+success);
-									} catch (SQLException e) {
-										e.printStackTrace();
-									}finally {
-										dao.resClose();
-									}
-								}else {
-									System.out.println("null임");
-								}
-								
-							}
+
+	// 팔로워 버튼 +,- 여부
+	public void flow_button(String userid, String flow_addordelect, String reseveid, String sendid) throws IOException {
+		System.out.println("flow_addordelect:" + flow_addordelect);
+		if (flow_addordelect != null) {
+			BoardDAO dao = new BoardDAO();
+			try {
+				dao.flowbut(userid, flow_addordelect, reseveid, sendid);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("null임");
+		}
+
+	}
+
 //구매요청리스트
 	public void req_list(String userid, int reqindex) throws IOException {
 
@@ -727,12 +721,9 @@ public class BoardService {
 		// 카테고리 목록으로 검색한 dto값들을 ArrayList(commList)에 담아줌. 
 		ArrayList<GGDto> commList = dao.commList(categorys);	
 		int totalPage = (int)Math.ceil((double)commList.size()/(double)pagePerCnt); //전체 페이지 넘버를 반환. -나누는 값들을 double으로 명시해야 올림한 정확한 값이 나옴
-		System.out.println("배열 사이즈"+commList.size());
 		if(commList.size() <= end) {
-			end = commList.size(); // 14개보다 적은 크기의 배열이면 끝까지만 잘라서 보여주기 위하여
-			
+			end = commList.size(); // 14개보다 적은 크기의 배열이면 끝까지만 잘라서 보여주기 위하여	
 		}
-		System.out.println("end : "+end);
 		// 전체 ArrayList에서 특정 페이지의 목록들을 잘라내는 과정 (ArrayList에서 잘라줌) - 이때 List로 반환됨.
 		List<GGDto> list = commList.subList(start-1, end);	// 14개의 리스트를 자르기 위하여 사용.
 		// List를 ArrayList로 변환.

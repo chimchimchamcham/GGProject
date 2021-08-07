@@ -193,7 +193,7 @@ public class BoardController extends HttpServlet {
 				 */
 				
 				
-				service.flow_button(userid,btntext,nick);
+				// service.flow_button(userid,btntext,nick);
 
 				break;
 			
