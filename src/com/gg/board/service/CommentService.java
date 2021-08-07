@@ -176,4 +176,19 @@ public class CommentService {
 		return success;
 	}
 
+
+
+	public HashMap<String, Object> auctionCommentList(int page) {
+		System.out.println("받아온 페이지 정보 : " +  page);
+		
+		int start = 0;
+		int end = 0 ;
+		
+		
+		
+		
+		
+		return null;
+	}
+
 }

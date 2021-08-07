@@ -163,6 +163,12 @@ public class CommentController extends HttpServlet {
 			int page = Integer.parseInt(req.getParameter("page"));
 			System.out.println("시작 페이지page :" + page);
 			
+			map = service.auctionCommentList(page);
+			
+			req.setAttribute("list", map.get("list"));
+			req.setAttribute("currPage", map.get("currPage"));
+			req.setAttribute("totalPage", map.get("totalPage"));
+			
 			dis = req.getRequestDispatcher("auctionCommentList.jsp");
 			dis.forward(req, resp);
 			
