@@ -18,7 +18,7 @@ import com.gg.trade.controller.PostCommentController;
 import com.gg.trade.service.PostCommentService;
 import com.google.gson.Gson;
 
-@WebServlet({"/commentlist","/pushComment","/commentListCall","/comm_del","/comm_update","/re_comment","/showReComment"})
+@WebServlet({"/commentlist","/pushComment","/commentListCall","/comm_del","/comm_update","/re_comment","/showReComment","/auctionCommentList"})
 public class CommentController extends HttpServlet {
 
 	
@@ -34,7 +34,7 @@ public class CommentController extends HttpServlet {
 		dual(req,resp);
 	}
 
-	private void dual(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	private void dual(HttpServletRequest req, HttpServletResponse resp) throws ServletException,IOException {
 		String uri = req.getRequestURI();
 		String ctx = req.getContextPath();
 		String addr = uri.substring(ctx.length());
@@ -156,6 +156,15 @@ public class CommentController extends HttpServlet {
 			map = new HashMap<String, Object>();
 			map.put("list", list);
 			resp.getWriter().println(new Gson().toJson(map));
+			
+			break;
+		case "/auctionCommentList":
+			System.out.println("옥션 댓글 리스트 보여주기.");
+			int page = Integer.parseInt(req.getParameter("page"));
+			System.out.println("시작 페이지page :" + page);
+			
+			dis = req.getRequestDispatcher("auctionCommentList.jsp");
+			dis.forward(req, resp);
 			
 			break;
 		}

@@ -98,16 +98,30 @@
     /* <c:if test="${isLiked eq true}">$("#threeButton>button:nth-last-of-type(5)").hide();</c:if>
     <c:if test="${isLiked eq false}">$("#threeButton>button:nth-last-of-type(4)").hide();</c:if> */
 
-    //상세정보 버튼 클릭시 창이 표시
+    //댓글 버튼 클릭시 창이 표시
     $("#twoButton>button:nth-of-type(2)").click(function(){
         $("#twoButton>button:nth-of-type(2)").css({"background-color":"gray","color":"white"});
         $("#twoButton>button:nth-of-type(1)").css({"background-color":"white","color":"black"});
         page =1; // 댓글을 눌렀을 때, 페이징 처리 1로 초기화가 된다.
-        $("#second").show();
         $("#first").hide();
+        $("#second").show();
+        $.ajax({
+        	url:"auctionCommentList",
+        	data: {"page": page},
+        	success: function(data){
+        		console.log("옥션리스트 진입");
+        		$("#second").html(data);
+        	},
+        	error: function(e){
+        		console.log("진입 실패");
+        	}
+        	
+        
+        });
+        
     });
 
-    //댓글 버튼 클릭시 창이 표시
+    //상세보기 버튼 클릭시 창이 표시
     $("#twoButton>button:nth-of-type(1)").click(function(){
         $("#twoButton>button:nth-of-type(1)").css({"background-color":"gray","color":"white"});
         $("#twoButton>button:nth-of-type(2)").css({"background-color":"white","color":"black"});
