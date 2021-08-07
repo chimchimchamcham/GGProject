@@ -155,7 +155,9 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 							
 							//입찰자 변경알람 보내기
 							String title = Bdao.getTitle(p_no);
+							System.out.println("게시글 제목 : "+title);
 							title = Aldao.cutTitle(title);
+							System.out.println("자른 게시글 제목 : "+title);
 							Aldao.insertAlarm(bidUsr, "A010", "["+title+"..]입찰자가 변경되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
 							Aldao.resClose();
 							Bdao.resClose();
