@@ -87,6 +87,12 @@ public class AlarmDAO {
 		System.out.println("알람번호 : "+dto.getA_no());
 		System.out.println("알람받은 아이디 : "+dto.getU_id());
 		System.out.println("알람코드 : "+dto.getA_code());
+		System.out.println("알람보낸 시간 : "+dto.getA_sendTm());
+		System.out.println("알람읽은 시간 : "+dto.getA_checkTm());
+		System.out.println("알람 읽음 여부 :"+dto.getA_readYN());
+		System.out.println("알람 삭제 여부 : "+dto.getA_delYN());
+		System.out.println("알람 중요 여부 : "+dto.getA_impoYN());
+		System.out.println("알람 경로 : "+dto.getA_path());
 		
 		return list;
 	}
@@ -102,7 +108,7 @@ public class AlarmDAO {
 		int success = ps.executeUpdate();
 		if(success>0) {
 			System.out.println("-----알람이 전송 되었습니다.-----");
-			System.out.println(a_content);
+			System.out.println("알람내용 : "+a_content);
 			System.out.println("------------------------------");
 		}
 	}
@@ -110,7 +116,7 @@ public class AlarmDAO {
 	public boolean readAlarm(int a_no) throws SQLException {
 		boolean success = false;
 		int checker = 0;
-		String sql = "UPDATE alarm SET a_checktm=SYSDATE where a_no=?";
+		String sql = "UPDATE alarm SET a_checktm=SYSDATE, a_readyn='Y' where a_no=?";
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, a_no);
 		checker = ps.executeUpdate();
