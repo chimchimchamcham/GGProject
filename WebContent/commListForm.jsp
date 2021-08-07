@@ -41,6 +41,19 @@
 }
 
 .category+label{
+	color: black;
+	background-color: white;
+	cursor: pointer;
+	border: 3px solid white;
+}
+.category:checked+label{
+	color:white;
+	background-color:black;
+	border:3px solid black;
+	cursor: pointer;
+}
+.currRadio{
+	display:none;
    color: black;
    background-color: white;
    cursor: pointer;
@@ -63,6 +76,15 @@
 }
 #before, #after{
    cursor:pointer;
+}
+.currRadio:checked+label{
+	color:blue;
+}
+.currLabel{
+	cursor: pointer;
+}
+#before, #after{
+	cursor:pointer;
 }
 </style>
 <body>

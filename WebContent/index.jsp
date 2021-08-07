@@ -13,7 +13,7 @@
 }
 #main {
 	background-color: gray;
-	width:1200px;
+	width:1140px;
 	height:auto;
 	position: relative;
 	top:150px;

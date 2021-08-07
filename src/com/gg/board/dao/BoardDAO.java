@@ -377,7 +377,6 @@ public class BoardDAO {
 			dto.setPnt_tm(rs.getDate("pnt_tm"));
 			dto.setI_newName(rs.getString("I_newName"));
 			dto.setC_name(rs.getString("c_name"));
-			;
 			dto.setPnt_otherId(rs.getString("pnt_otherid"));
 			maidelist.add(dto);
 		}
@@ -413,49 +412,50 @@ public class BoardDAO {
 	}
 
 	public ArrayList<GGDto> flowlist(String userid, int flowORflowing) throws SQLException {
-		String sql = "";
-		if (flowORflowing == 0) {// 나를 팔로우 한
-			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) AND f.f_receiveid = ? and f.f_sendid = u.u_id";
-		} else if (flowORflowing == 1) {// 내가 팔로잉한
-			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) and f.f_sendid = ? and f.f_receiveid = u.u_id";
-		}
+	      String sql = "";
+	      if (flowORflowing == 0) {// 나를 팔로우 한
+	         sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) AND f.f_receiveid = ? and f.f_sendid = u.u_id";
+	      } else if (flowORflowing == 1) {// 내가 팔로잉한
+	         sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) and f.f_sendid = ? and f.f_receiveid = u.u_id";
+	      }
 
-		ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
+	      ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
 
-		System.out.println("flowlist:" + flowlist);
+	      System.out.println("flowlist:" + flowlist);
 
-		ps = conn.prepareStatement(sql);
+	      ps = conn.prepareStatement(sql);
 
-		System.out.println("daouserID:" + userid);
+	      System.out.println("daouserID:" + userid);
 
-		ps.setString(1, userid);
-		rs = ps.executeQuery();
-		System.out.println("rs:" + rs);
+	      ps.setString(1, userid);
+	      rs = ps.executeQuery();
+	      System.out.println("rs:" + rs);
 
-		while (rs.next()) {
-			GGDto dto = new GGDto();
-			dto.setU_id(rs.getString("U_id"));
-			dto.setF_receiveid(rs.getString("f_receiveid"));
-			dto.setF_sendid(rs.getString("f_sendid"));
-			dto.setU_newName(rs.getString("u_newname"));
-			dto.setU_nname(rs.getString("u_nname"));
-			dto.setFlow_count(rs.getInt("COUNT"));
+	      while (rs.next()) {
+	         GGDto dto = new GGDto();
+	         dto.setU_id(rs.getString("U_id"));
+	         dto.setF_receiveid(rs.getString("f_receiveid"));
+	         dto.setF_sendid(rs.getString("f_sendid"));
+	         dto.setU_newName(rs.getString("u_newname"));
+	         dto.setU_nname(rs.getString("u_nname"));
+	         dto.setFlow_count(rs.getInt("COUNT"));
 
-			String u_id = dto.getU_id();
-			String reseveid = dto.getF_receiveid();
-			String sendid = dto.getF_sendid();
+	         String u_id = dto.getU_id();
+	         String reseveid = dto.getF_receiveid();
+	         String sendid = dto.getF_sendid();
 
-			// 유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
-			if (userid.equals(reseveid)) {
-				dto.setthisuserFlowingYN("<button class='hellow'>+팔로잉</button>");// N
-			} else if (userid.equals(sendid)) {
-				dto.setthisuserFlowingYN("<button class='unhellow'>-팔로잉</button>");// Y
-			}
-			flowlist.add(dto);
-		}
-		System.out.println("flowlist:" + flowlist);
-		return flowlist;
-	}
+	         // 유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
+	         if (userid.equals(reseveid)) {
+	            dto.setThisuserFlowingYN("<button class='hellow'>+팔로잉</button>");// N
+	         } else if (userid.equals(sendid)) {
+	            dto.setThisuserFlowingYN("<button class='unhellow'>-팔로잉</button>");// Y
+	         }
+	         flowlist.add(dto);
+	      }
+	      System.out.println("flowlist:" + flowlist);
+	      return flowlist;
+	   }
+	
 			//delect or update
 	public int flowbut(String userid, String btntext, String nick) throws SQLException {
 				String sql = "";
@@ -603,10 +603,10 @@ public class BoardDAO {
 		
 		
 		//수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
-		String url = "./buyRequestProcess?rq_no="+${dto.rq_no}+"&"+"rq_YN=Y&p_no="+"${dto.p_no}"+"&rq_id="+${dto.rq_id}+";
+		String url = "./buyRequestProcess?rq_no=";//${dto.rq_no}+"&"+"rq_YN=Y&p_no="+"${dto.p_no}"+"&rq_id="+${dto.rq_id}+";
 		
 		
-		return url;
+		return null;
 
 	}
 	// 좋아요
