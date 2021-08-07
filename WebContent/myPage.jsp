@@ -488,7 +488,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				//console.log("communitylist:",data.communitylist);
 				//console.log("communitylist:",data.flowlist);
 				//console.log("communitylist:",data.);
-				console.log("flowlist:",data.flowlist);
+				//console.log("flowlist:",data.flowlist);
 				if(data != null){
 					console.log("index",$index);
 					console.log(url);
@@ -780,7 +780,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				content += "</div>";
 				content += "<div>"+item.rq_tm+"</div>"
 				content += "<div class='c_zoon'>";
-				content += "	<div><a href='myPage?id="+item.rq_id+"'>"+item.rq_id+"</a></div>";	
+				content += "	<div><a class='a' href='myPage?id="+item.rq_id+"'>"+item.rq_id+"</a></div>";	
 				content += "</div>";
 				content += "<div class='mai-time'>";
 				content += "	<div>"+item.buttonORtext+"</div>";
@@ -790,8 +790,29 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			$("#want .item-box").append(content);
 			
 		}//구매요청 리스트 end
-		
-		
+				//수락버튼을 누르면
+				$(document).on("click","button.ok",function(){
+					alert('ok');
+					$rqno=$('button.ok').val();
+					$a = $('a.a').text();
+					$.ajax({
+						type:'get',
+						url:'./applyreqlist',
+						data:{rqno:$rqno,a:$a},
+						dataType:'JSON',
+						success:function(data){
+							console.log(data);
+						},
+						error:function(e){
+							console.log(e);
+						}
+					}); 
+					
+					//수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
+					//거절 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=N&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
+					
+					
+				});
 		//데이터 가져와서 뿌려주는 좋아요 리스트
 		function love_list(lovelist){
 			

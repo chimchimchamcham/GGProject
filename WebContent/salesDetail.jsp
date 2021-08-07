@@ -228,11 +228,22 @@ section {
 	border-collapse: collapse;
 }
 
-.board_text , .update_text {
+.board_text , .update_text  {
 	border: 1px solid #D8D8D8;
 	width: 1190px;
 	height: 5vh;
 	float: left;
+}
+.plus_reText {
+	border: 1px solid #D8D8D8;
+	width: 1140px;
+	height: 5vh;
+	float: left;
+}
+.re_enter{
+	width: 43px;
+	height: 5vh;
+	float:right;
 }
 
 .enter {
@@ -660,7 +671,9 @@ li {
 
 		if ("${sessionScope.loginId}" == '') {
 			alert("로그인 해주세요!");
-		} else {
+		}else if($(".board_text").val==''){
+			alert("댓글을 입력해 주세요!");
+		}else {
 			comment.id = "${sessionScope.loginId}";
 			comment.p_no = "${dto.p_no}";
 			comment.pc_content = $(".board_text").val();
@@ -771,6 +784,7 @@ li {
 			}
 		});
 	});
+	//대댓글 보여주기
 	var re_open = true;
 	function reCommentDrawList(list,checker){
 		console.log("리스트 내용  :",list);
@@ -789,38 +803,34 @@ li {
 
 				comment += "</div>";
 			});
-			comment += "<div class='plus_reComm'>";
-			comment += "<textarea class='plus_reText' style='resize:none;'></textarea>";
 			
 		}
-
+	
+		//대댓글 달 수 있는 곳.
+		comment += "<div class='plus_reComm'>";
+		comment += "<textarea class='plus_reText' style='resize:none;'placeholder='대댓글을 작성해 주세요' maxlength='300'></textarea>";
+		comment += "<button class='re_enter'>입력</button>";
+		
+		comment += "</div>";
+		
 		if(re_open){
+			
+			$(".updater").remove();
 			$("div#recomments").remove();
+			$("div.plus_reComm").remove();
 			$("div.one-text#"+checker).append(comment);
 			re_open = false;
 		}else {
+			$(".updater").remove();
 			$("div#recomments").remove();
+			$("div.plus_reComm").remove();
 			re_open = true;
 		}
 		
 		
 	};
-	/* <div class="board_t_b">
-	<textarea class="board_text" style="resize: none;"></textarea>
-	<div id="board_text_controll">(0 / 300)</div>
-	<button class="enter">enter</button>
-</div> */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/* 대댓글 추가하기 */
 	function plus_reComm(){
 		$.ajax({
@@ -856,10 +866,15 @@ li {
 		update_comment += "<div class='update_button'><button class='update_enter' style='float:right'>수정</button></div>";
 		update_comment += "</div>";
 		if(check){
+			$("div#recomments").remove();
+			$("div.plus_reComm").remove();
 			$(".updater").remove();
 			$(".one-text#"+update_comm).append(update_comment);
 			check = false;
 		}else {
+			
+			$("div#recomments").remove();
+			$("div.plus_reComm").remove();
 			$(".updater").remove();
 			check = true;
 		}
