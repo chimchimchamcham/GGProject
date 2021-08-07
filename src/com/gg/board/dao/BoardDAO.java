@@ -551,37 +551,64 @@ public class BoardDAO {
 		return reqlist;
 	}
 
-	   public ArrayList<GGDto> reqlistapply(String userid, int rqno, String a)throws SQLException {
-		      
-		      
-		      //System.out.println(userid);
-		      //System.out.println(rqno);
-		         String sql = "UPDATE request SET rq_yn = 'y' WHERE RQ_NO = ? AND rq_id = ?";
-		         
-		         
-		         
-		       /* 
-		       * ArrayList<GGDto> reqlist = new ArrayList<GGDto>();
-		       * 
-		       * System.out.println("daouserID:" + userid);
-		       * 
-		       * String sql = "";
-		       * 
-		       * 
-		       * 
-		       * System.out.println("rs:" + rs); GGDto dto = new GGDto(); while (rs.next()) {
-		       * dto.setU_id(rs.getString("u_id")); dto.setS_saler(rs.getString("S_saler"));
-		       * 
-		       * dto.setP_no(rs.getInt("P_no")); dto.setP_title(rs.getString("p_title"));
-		       * dto.setRq_id(rs.getString("rq_id")); dto.setRq_tm(rs.getDate("rq_tm"));
-		       * 
-		       * sid = dto.getS_saler(); rid = dto.getRq_id();
-		       * 
-		       * reqlist.add(dto); }*/
-		       return null;
+	
+	public int reqlistapply(String userid, int rqno, String a)throws SQLException {
+		
+		
+		//System.out.println(userid);
+		//System.out.println(rqno);
+			String sql = "UPDATE request SET rq_yn = 'y' WHERE RQ_NO = ? AND rq_id = ?";
+			int success = 0;
+			try {
+				 ps = conn.prepareStatement(sql);
+				 ps.setInt(1, rqno);
+				 ps.setString(2, a);
+				 success=ps.executeUpdate();
+				 System.out.println("success:"+success);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		 /*
+		  * 수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
+		  * 
+		  * 
+		  * */
+		 
+		 
+		 return success;
 
-		   }
-	   
+	}
+	
+	public ArrayList<GGDto> reqlist_goto_url(String userid, int rqno, String a) throws SQLException {
+		
+		String sql = "select r.rq_no,p.p_no,r.rq_id,r.rq_yn from request r,post p where  r.RQ_NO = ? AND r.rq_id = ? and p.p_no = r.p_no and rq_yn = 'Y'";
+			String url_rqno;
+			String url_rqid;
+			String url_pno;
+		ps = conn.prepareStatement(sql);
+
+		System.out.println("daouserID:" + userid);
+		 ps.setInt(1, rqno);
+		 ps.setString(2, a);
+		rs = ps.executeQuery();
+		
+		if (rs.next()) {
+			GGDto dto = new GGDto();
+			dto.setRq_no(rs.getInt("rq_no"));
+			dto.setP_no(rs.getInt("p_no"));
+			dto.setRq_id(rs.getString("rq_id"));
+			
+			
+		}
+		
+		
+		//수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
+		String url = "./buyRequestProcess?rq_no="+${dto.rq_no}+"&"+"rq_YN=Y&p_no="+"${dto.p_no}"+"&rq_id="+${dto.rq_id}+";
+		
+		
+		return url;
+
+	}
 	// 좋아요
 	public ArrayList<GGDto> lovelist(String userid, int index1, int index2) throws SQLException {
 		String sql = "";
@@ -1224,6 +1251,7 @@ public class BoardDAO {
 		}
 		return success;
 	}
+
 	
 	   public ArrayList<GGDto> noticeList() {
 		      
