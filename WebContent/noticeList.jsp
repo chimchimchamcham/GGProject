@@ -22,38 +22,35 @@
 	padding: 30px;
 }
 
-#noticeDetailtable {
+#noticeTable {
 	width: 1100px;
 	margin: 0px auto;
-	text-align: left;
+	border-top: 1px solid gray;
 }
 
-#noticeDetailtable td, th {
+#noticeTable th {
 	/* border: 1px solid black; */
-	
-}
-
-#infoTable {
-	width: 260px;
-	margin-left: 20px;
-}
-
-#infoTable td, th {
-	/* border: 1px solid black; */
-	
-}
-
-.content {
-	width: 1100px;
-	margin: 0px auto;
-}
-
-.content p {
 	padding: 10px 0;
+}
+
+#noticeTable td {
+	/* border: 1px solid black; */
+	padding: 8px 0;
+	text-align: center;
+}
+
+#noticeTable td a{
+	text-decoration: none;
+	color:#000;
+}
+
+#noticeTable td a:hover{
+	text-decoration: underline;
 }
 
 h2 {
 	text-align: center;
+	padding-bottom: 30px;
 }
 </style>
 </head>
@@ -61,10 +58,49 @@ h2 {
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
 		<h2>공지사항</h2>
+		<p style="margin-left:20px;">총 ${noticeListSize}개의 게시글</p>
+		<table id="noticeTable">
+			<tr>
+				<th>글번호</th>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>작성일</th>
+				<th>조회수</th>
+			</tr>
+			<c:if test="${noticeList eq null || noticeList eq ''}">
+				<tr>
+					<td>공지사항 글이 없습니다.</td>
+				</tr>
+			</c:if>
+			<tr>
+				<td colspan="5" style="padding:0; border-bottom:1px solid gray"></td>
+			</tr>
+			<c:forEach items="${noticeList}" var="noticeList">
+				<tr>
+					<td>${noticeList.p_no}</td>
+					<td style="text-align: left;"><a href="noticeDetail?${noticeList.p_no}">${noticeList.p_title}</a></td>
+					<td>${noticeList.u_nname}</td>
+					<td>${noticeList.p_tm}</td>
+					<td>${noticeList.p_view}</td>
+				</tr>
+				<tr>
+				<td colspan="5" style="padding:0; border-bottom:0.7px solid #e8e8e8"></td>
+			</tr>
+			</c:forEach>
+		</table>
 		
+		<div class="pageArea">
+		currPage : ${currPage} / totalPage : ${totalPage}
+		<c:forEach var="i" begin="1" end="${totalPage}" step="1">
+		<span class="page">
+			<c:if test="${i ne currPage}"><a href="./?page=${i}">${i}</a></c:if>
+			<c:if test="${i eq currPage}"><b>${i}</b></c:if>
+			</span>
+		</c:forEach>
+	</div>
 	</div>
 </body>
 <script type="text/javascript">
-
+	
 </script>
 </html>

@@ -3,7 +3,6 @@ package com.gg.dto;
 import java.sql.Date;
 
 public class GGDto {
-
    // 회원정보
    private String u_id; // 아이디
    private String u_nname; // 닉네임
