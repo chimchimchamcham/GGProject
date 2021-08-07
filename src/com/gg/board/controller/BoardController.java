@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist",
 		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail","/applyreqlist","/noticeList"})
 
+
 public class BoardController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -514,14 +515,14 @@ public class BoardController extends HttpServlet {
 			break;
 
 		case "/commList":
-			resp.setCharacterEncoding("UTF-8");
-			ArrayList<GGDto> list = service.commList();
-			HashMap<String, ArrayList<GGDto>> list_map = new HashMap<String, ArrayList<GGDto>>();
-			list_map.put("list", list);
-			resp.setContentType("text/html; charset=UTF-8");
-			resp.getWriter().println(new Gson().toJson(list_map));
-			break;
-
+	         resp.setCharacterEncoding("UTF-8");
+	         ArrayList<GGDto> list = service.commList();
+	         HashMap<String, ArrayList<GGDto>> list_map = new HashMap<String, ArrayList<GGDto>>();
+	         list_map.put("list", list);
+	         resp.setContentType("text/html; charset=UTF-8");
+	         resp.getWriter().println(new Gson().toJson(list_map));
+	         break;
+			
 		case "/postDel":
 			System.out.println("게시글 삭제 요청");
 			success = false;
