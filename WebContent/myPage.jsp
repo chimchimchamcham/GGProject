@@ -236,12 +236,14 @@ function chargePopup() { window.open("./popup/chargePopup.jsp", "chargePop", "wi
 //포인트내역 팝업
 function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "width=900, height=600, left=450, top=180"); }
 
-
-	var allurl = ${allurl};
+var allurl = ${allurl};
+	$(document).ready(function(){
 	
+		
 		if(allurl==null){
 			allurl = './soldlist';
 		}
+		 
 
 /*
 var allurl = ${allurl}
@@ -275,8 +277,7 @@ $.ajax({
 		console.log("data",data);
 		if(data != null){
 			if(data.soldlist != null){//판매
-				soled_list(data.soldlist);
-				  
+				soled_list(data.soldlist); 
 			}else if (data.auctionlist != null) {//경매
 				auction_list(data.auctionlist);
 			   
@@ -515,7 +516,7 @@ $.ajax({
 	
 	
 		
-	
+	});
 
 
 	function listCall($index,url){
