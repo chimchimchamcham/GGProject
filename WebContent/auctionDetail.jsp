@@ -89,7 +89,7 @@
 		margin : 5px;
 		border : 1px solid lightskyblue;
 	}
-	.enter {
+.enter, #update_enter {
 	width: 55px;
 	height: 5vh;
 	border : 0.5px solid gray;
@@ -133,11 +133,17 @@ a {
 a:hover {
 	color: pink;
 }
-.comm_del {
+.comm_del, .update_comment {
 	cursor: pointer;
 }
-.comm_del:hover {
+.comm_del:hover, .update_comment:hover {
 	color: pink;
+}
+.update_text {
+	border: 1px solid #D8D8D8;
+	width: 1140px;
+	height: 5vh;
+	float: left;
 }
 
 </style>
@@ -462,30 +468,28 @@ a:hover {
 					+ N_receiveId, "notifyPopup",
 					"width=400, height=400, left=700, top=400");
 	});
+	
+	var check = true;
 	/* 수정 버튼 */
-	$(document).on('click','comm_update', function(){
-		var update_comm = $(this).attr("for");
-		console.log(update_comm);
-		update_comm = update_comm.substring(7); // update_ 부분을 잘라 idx만 가져오기input[id='update_"+ "']")
+	$(document).on('click','.update_comment', function(){
+		var update_comm = $(this).attr("id");
+		var update_no ={};
 		update_no.pc_no = update_comm;
 		console.log("변환 후 ", update_comm);
-
+		
 		var update_comment ="";
-		update_comment += "<div class='updater'><textarea class='update_text' maxlength='300' placeholder='300자 제한입니다.' style='resize: none;'></textarea>";
-		update_comment += "<input type='text' value='"+update_comm + "' hidden='hidden'>";
-		update_comment += "<div class='update_button'><button class='update_enter' style='float:right'>수정</button></div>";
-		update_comment += "</div>";
+		
+		update_comment += "<tr id='update_form'>";
+		update_comment += "<td colspan=3><textarea id='"+update_comm +"' class='update_text' style='resize: none;' placeholder='수정할 댓글을 입력해 주세요'></textarea></td>";
+		update_comment += "<td><button id='update_enter'>엔터</button></td>";
+		update_comment += "</tr>"; 
+		
+		
 		if(check){
-			$("div#recomments").remove();
-			$("div.plus_reComm").remove();
-			$(".updater").remove();
-			$(".one-text#"+update_comm).append(update_comment);
+			$("tr#"+update_comm).after(update_comment);
 			check = false;
 		}else {
-			
-			$("div#recomments").remove();
-			$("div.plus_reComm").remove();
-			$(".updater").remove();
+			$("tr#update_form").empty();
 			check = true;
 		}
 		console.log(check);	
