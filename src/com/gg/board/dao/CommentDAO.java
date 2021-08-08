@@ -211,18 +211,53 @@ public class CommentDAO {
 		String sql = "SELECT rnum,p_no,u.u_nname,pc.pc_id,pc.pc_content, u.u_newname, pc.pc_tm, pc.pc_no, pc.pc_parentno " + 
 				"FROM (SELECT ROW_NUMBER() OVER(ORDER BY pc_no ASC) AS rnum,pc_no,p_no, pc_content, pc_tm, pc_parentno, pc_blindyn,pc_id " + 
 				"FROM post_comment PC lEFT OUTER JOIN userinfo u ON (u.u_id = PC.pc_id) WHERE p_no= 305 AND pc_parentno=0 AND pc_blindyn ='N') pc LEFT OUTER JOIN userinfo u ON (u.u_id = pc.pc_id) " + 
-				"WHERE p_no= ? AND pc_parentno=0 AND pc_blindyn ='N' ORDER BY pc_no ASC;";
+				"WHERE p_no= ? AND pc_parentno=0 AND pc_blindyn ='N' AND rnum BETWEEN ? AND ? "+
+				"ORDER BY pc_no ASC";
 		end = page*pagePerCnt;
 		start = (end - pagePerCnt) +1;
+		System.out.println("시작 : " + start + " 끝 " + end);
 		
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, p_no);
+		ps.setInt(2, start);
+		ps.setInt(3, end);
+		rs = ps.executeQuery();
+		while(rs.next()) {
+			dto = new GGDto();
+			dto.setP_no(rs.getInt("p_no"));
+			dto.setU_nname(rs.getString("u_nname"));
+			dto.setPc_id(rs.getString("pc_id"));
+			dto.setPc_content(rs.getString("pc_content"));
+			dto.setU_newName(rs.getString("u_newname"));
+			dto.setPc_tm(rs.getDate("pc_tm"));
+			dto.setPc_no(rs.getInt("pc_no"));
+			dto.setPc_parentno(rs.getInt("pc_parentno"));
+			list.add(dto);
+		}
+		int total = totalCount(p_no,0); // 총 게시글 수 계산하는 메소드 2번 째 매개변수는 부모 댓글 0인 순수 댓글만 불러온다는 의미
+		int pages = total/pagePerCnt ==0 ? total/pagePerCnt : total/pagePerCnt +1;
+		map.put("list", list);
+		map.put("totalPage", pages);
+		map.put("currPage", page);
+
+		return map;
+	}
+
+	// 댓글 페이지 총 수를 구하는 메소드.
+	private int totalCount(int pc_no, int pc_parentno) throws SQLException {
+		
+		String sql = "SELECT COUNT(pc_no) FROM post_comment WHERE p_no = ? AND pc_parentno= ? AND pc_blindyn ='N'";
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, pc_no);
+		ps.setInt(2, pc_parentno);
+		rs = ps.executeQuery();
+		int total = 0;
+		if(rs.next()) {
+			total = rs.getInt(1);
+		}
 		
 		
-		
-		
-		
-		return null;
+		return total;
 	}
 
 }

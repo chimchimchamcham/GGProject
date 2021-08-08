@@ -104,7 +104,6 @@
         $("#twoButton>button:nth-of-type(1)").css({"background-color":"white","color":"black"});
         page =1; // 댓글을 눌렀을 때, 페이징 처리 1로 초기화가 된다.
         $("#first").hide();
-        $("#second").show();
         $.ajax({
         	url:"auctionCommentList",
         	data: {"page": page,
@@ -117,10 +116,9 @@
         	error: function(e){
         		console.log("진입 실패");
         	}
-        	
-        
+
         });
-        
+        $("#second").show();
     });
 
     //상세보기 버튼 클릭시 창이 표시
@@ -341,13 +339,19 @@
                     	</div>          
                     </div>
                     <div id="second">
-                    
-                    
-                    <div class="board_t_b">
-						<textarea class="board_text" style="resize: none;"></textarea>
-						<div id="board_text_controll">(0 / 300)</div>
-						<button class="enter">enter</button>
-					</div>
+      				<%-- <table>
+						<c:if test="${list eq null || list eq '' }">
+							<tr>
+								<td>해당 데이터가 존재하지 않습니다.</td>
+							</tr>
+						</c:if>
+						<c:forEach items="${list}" var="comments">
+							<tr>
+								<td>${comments.p_no }</td>
+							</tr>
+	
+						</c:forEach>
+					</table> --%>
                     </div>
                 </article>
             </div>
@@ -424,15 +428,7 @@
 	}*/
 	
 	
-	/*글자수 제한*/
-	$(".board_text, .update_text").on('keyup', function() {
-		$('#board_text_controll').html("(" + $(this).val().length + " / 300)");
-		console.log(page);
-		if ($(this).val().length > 300) {
-			$(this).val($(this).val().substring(0, 300));
-			$('#board_text_controll, update_text_controll').html("(300 / 300)");
-		}
-	});
+	
 	
 </script>
 </html>
