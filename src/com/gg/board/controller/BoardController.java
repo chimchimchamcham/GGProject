@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist",
 		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/postDel", "/writeCommunity", "/auctionDetail",
-		"/commDetail", "/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist", "/commList",
+		"/commDetail", "/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist","/soldmainlist", "/commList",
 		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist","/mainsold","/mainauction",
 		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail","/applyreqlist","/noticeList"})
 
@@ -140,6 +140,20 @@ public class BoardController extends HttpServlet {
 
 			break;
 
+		case "/soldmainlist":
+			System.out.println("경매 매인 리스트 요청");
+
+			// String userid1 = (String) req.getSession().getAttribute("loginId");
+
+			String soldmainlistwhatadd = req.getParameter("index_button_sold");
+
+			System.out.println("soldmainlisthowaline:" + soldmainlistwhatadd);
+
+			service.mainsold_list(soldmainlistwhatadd);
+
+			break;
+			
+			
 		case "/auctionlist":
 			System.out.println("경매 리스트 요청");
 

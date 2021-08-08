@@ -403,7 +403,7 @@ public class UserDAO {
 	
 	
 	public ArrayList<GGDto> notifyList() {
-		
+
 		String sql = "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n1_code, n1.n1_name,hn.hn_tm, hn.hn_code, hn.hn_adminid " + 
 				"FROM notify n LEFT OUTER JOIN his_notify hn " + 
 				"ON n.n_no = hn.n_no " + 
