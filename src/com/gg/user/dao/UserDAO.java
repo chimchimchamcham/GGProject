@@ -408,7 +408,7 @@ public class UserDAO {
 				"FROM notify n LEFT OUTER JOIN his_notify hn " + 
 				"ON n.n_no = hn.n_no " + 
 				"INNER JOIN n1_code n1 " + 
-				"ON n.n1_code = n1.n1_code";
+				"ON n.n1_code = n1.n1_code ORDER BY n_no DESC";
 		ArrayList<GGDto> notifyList = new ArrayList<GGDto>();
 		GGDto dto = null;
 
@@ -418,13 +418,13 @@ public class UserDAO {
 			while (rs.next()) {
 				dto = new GGDto();
 				dto.setN_no(rs.getInt("n_no"));
-				dto.setN_receivedId(rs.getString("n_receiveId"));
+				dto.setN_receiveId(rs.getString("n_receiveId"));
 				dto.setN_sendId(rs.getString("n_sendId"));
 				dto.setN1_code(rs.getString("n1_code"));
 				dto.setN1_name(rs.getString("n1_name"));
 				dto.setHn_tm(rs.getDate("hn_tm"));
 				dto.setHn_code(rs.getString("hn_code"));
-				dto.setHn_adminid(rs.getString("hn_adminid"));
+				dto.setHn_adminid(rs.getString("hn_adminId"));
 				notifyList.add(dto);
 			}
 		} catch (SQLException e) {

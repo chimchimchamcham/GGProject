@@ -43,7 +43,7 @@ public class GGDto {
 
    // 신고
    private int n_no;// 신고번호
-   private String n_receivedId; // 신고 받은 아이디
+   private String n_receiveId; // 신고 받은 아이디
    private String n_sendId; // 신고한 아이디
    private String n_content; // 신고내용
    private String n1_code; // 대분류코드
@@ -442,12 +442,12 @@ public void setN_no(int n_no) {
 	this.n_no = n_no;
 }
 
-public String getN_receivedId() {
-	return n_receivedId;
+public String getN_receiveId() {
+	return n_receiveId;
 }
 
-public void setN_receivedId(String n_receivedId) {
-	this.n_receivedId = n_receivedId;
+public void setN_receiveId(String n_receiveId) {
+	this.n_receiveId = n_receiveId;
 }
 
 public String getN_sendId() {

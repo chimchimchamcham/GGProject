@@ -147,7 +147,7 @@ h3 {
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
 		<h2>관리페이지</h2>
-		<p style="margin-left: 20px;">관리자1님</p>
+		<p style="margin-left: 20px;">${sessionScope.loginId}님의 관리페이지</p>
 		<div id="manageButton">
 			<button class="userBtn">회원목록</button>
 			<button class="notifyBtn">신고</button>
@@ -324,6 +324,7 @@ h3 {
 	<!-- main end -->
 </body>
 <script type="text/javascript">
+
 	//초기 화면 설정
 	$(".userBtn").css({
 		"background-color" : "#D8D8D8"
