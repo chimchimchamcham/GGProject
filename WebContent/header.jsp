@@ -251,7 +251,7 @@ body {
 /*드롭다운 하위 메뉴*/
 #sub {
     display: none;
-   margin: 16px 0 0 -13px;
+   margin: 16px 0 0 10px;
    list-style: none;
    position: absolute;
    z-index: 100;
@@ -263,8 +263,8 @@ body {
 }
 
 .header_nav ul#dropdown li ul li a {
-   width: 120px;
-   height: 30px;
+   width: 150px;
+   height: 35px;
    padding: 10px 20px 0px 10px;
    background-color: #F2F2F2;
    font-size: 0.9em;
