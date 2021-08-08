@@ -200,12 +200,26 @@ public class CommentDAO {
 		return check;
 	}
 
-	public HashMap<String, Object> auctionCommentList(int page, int p_no) {
-		HashMap<String,Object> map = null;
-		String sql = "SELECT u.u_nname,pc.pc_id,pc.pc_content, u.u_newname, pc.pc_tm, pc.pc_no FROM post_comment pc " + 
-				"LEFT OUTER JOIN userinfo u ON (u.u_id = pc.pc_id) " + 
-				"WHERE pc.p_no= ? AND pc.pc_parentno=0 AND pc.pc_blindyn ='N' " + 
-				"ORDER BY pc_no ASC";
+	public HashMap<String, Object> auctionCommentList(int page, int p_no) throws Exception {
+		System.out.println("DAO page : " + page);
+		int start = 0;
+		int end = 0;
+		int pagePerCnt = 10;
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		ArrayList<GGDto> list = new ArrayList<GGDto>();
+		GGDto dto = null;
+		String sql = "SELECT rnum,p_no,u.u_nname,pc.pc_id,pc.pc_content, u.u_newname, pc.pc_tm, pc.pc_no, pc.pc_parentno " + 
+				"FROM (SELECT ROW_NUMBER() OVER(ORDER BY pc_no ASC) AS rnum,pc_no,p_no, pc_content, pc_tm, pc_parentno, pc_blindyn,pc_id " + 
+				"FROM post_comment PC lEFT OUTER JOIN userinfo u ON (u.u_id = PC.pc_id) WHERE p_no= 305 AND pc_parentno=0 AND pc_blindyn ='N') pc LEFT OUTER JOIN userinfo u ON (u.u_id = pc.pc_id) " + 
+				"WHERE p_no= ? AND pc_parentno=0 AND pc_blindyn ='N' ORDER BY pc_no ASC;";
+		end = page*pagePerCnt;
+		start = (end - pagePerCnt) +1;
+		
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, p_no);
+		
+		
+		
 		
 		
 		return null;
