@@ -57,6 +57,9 @@ public class TradeDAO {
 			ps.setInt(1, p_no);
 			ps.setString(2, u_id);
 			success = ps.executeUpdate();
+			if(success>0) {
+				pushBuyRequestAlarm(p_no, u_id);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -800,5 +803,27 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			}
 			System.out.println("[TRADEDAO]/TRADELIST LIST_SIZE : "+list.size());
 			return list;
+		}
+		
+		//구매요청 알람보내기
+		public void pushBuyRequestAlarm(int p_no, String u_id) {
+			AlarmDAO Adao = new AlarmDAO();
+			BoardDAO Bdao = new BoardDAO();
+			PointDAO Pdao = new PointDAO();
+			
+			try {
+				String p_title = Bdao.getTitle(p_no);//글 제목
+				p_title = Adao.cutTitle(p_title);//글 제목 자르기
+				String u_nname = Pdao.getNname(u_id);//구매요청아이디 닉네임
+				String p_id = selectPostP_id(p_no);//글 작성자 아이디
+				Adao.insertAlarm(p_id, "A002", "["+p_title+"]"+u_nname+"님이 구매요청하였습니다.", "Y", "./salesDetail?p_no="+p_no);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				Adao.resClose();
+				Bdao.resClose();
+				Pdao.resClose();
+			}
 		}
 }

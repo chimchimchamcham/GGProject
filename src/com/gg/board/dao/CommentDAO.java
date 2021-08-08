@@ -262,6 +262,7 @@ public class CommentDAO {
 		
 	}
 	
+	//부모댓글 아이디 가져오는 쿼리
 	public String getParentCommentId(int pc_parentno) {
 		
 		String pc_parentId = null;
@@ -279,7 +280,6 @@ public class CommentDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		
 		return pc_parentId;
 		
