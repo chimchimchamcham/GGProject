@@ -286,6 +286,92 @@ $.ajax({
 			}else if (data.lovelist != null) {//거래 요청
 				love_list(data.lovelist);
 			    
+
+		
+		$.ajax({
+			type:'post',
+			url:allurl,
+			data:{  index1 : 0,
+					index2 : 0 },
+			dataType:'JSON',
+			success:function(data){
+				console.log("data",data);
+				if(data != null){
+					if(data.soldlist != null){//판매
+						soled_list(data.soldlist);
+						    $("#sale").show();
+						    $("#trade").hide();
+						    $("#sell").hide();
+						    $("#commu").hide();
+						    $("#follow").hide();
+						    $("#want").hide();
+						    $("#like").hide();
+						    $("#alarm").hide();
+					}else if (data.auctionlist != null) {//경매
+						auction_list(data.auctionlist);
+					    $("#sale").hide();
+					    $("#trade").show();
+					    $("#sell").hide();
+					    $("#commu").hide();
+					    $("#follow").hide();
+					    $("#want").hide();
+					    $("#like").hide();
+					    $("#alarm").hide();
+					}else if (data.maidelist != null) {//구매
+						maide_list(data.maidelist);
+					    $("#sale").hide();
+					    $("#trade").hide();
+					    $("#sell").show();
+					    $("#commu").hide();
+					    $("#follow").hide();
+					    $("#want").hide();
+					    $("#like").hide();
+					    $("#alarm").hide();
+					}else if (data.communitylist != null) {//커뮤니티
+						community_list(data.communitylist);
+					    $("#sale").hide();
+					    $("#trade").hide();
+					    $("#sell").hide();
+					    $("#commu").show();
+					    $("#follow").hide();
+					    $("#want").hide();
+					    $("#like").hide();
+					    $("#alarm").hide();
+					}else if (data.flowlist != null) {//팔로우 팔로잉
+						flow_list(data.flowlist);
+					    $("#sale").hide();
+					    $("#trade").hide();
+					    $("#sell").hide();
+					    $("#commu").hide();
+					    $("#follow").show();
+					    $("#want").hide();
+					    $("#like").hide();
+					    $("#alarm").hide();
+					}else if (data.reqlist != null) {//거래 요청
+						request_list(data.reqlist);
+					    $("#sale").hide();
+					    $("#trade").hide();
+					    $("#sell").hide();
+					    $("#commu").hide();
+					    $("#follow").hide();
+					    $("#want").show();
+					    $("#like").hide();
+					    $("#alarm").hide();
+					}else if (data.lovelist != null) {//거래 요청
+						love_list(data.lovelist);
+					    $("#sale").hide();
+					    $("#trade").hide();
+					    $("#sell").hide();
+					    $("#commu").hide();
+					    $("#follow").hide();
+					    $("#want").hide();
+					    $("#like").show();
+					    $("#alarm").hide();
+					}
+				}
+			},
+			error:function(e){
+				console.log(e);
 			}
 		}
 	},
@@ -507,10 +593,6 @@ $.ajax({
 		    $("#alarm").show();
 		    
 		});
-	
-	
-		
-	});
 	
 
 

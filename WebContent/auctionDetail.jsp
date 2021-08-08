@@ -90,10 +90,51 @@
 		border : 1px solid lightskyblue;
 	}
 	.enter {
-	width: 50px;
+	width: 55px;
 	height: 5vh;
+	border : 0.5px solid gray;
 	margin-bottom: 10px;
 }
+.pageArea{
+	margin : 0 auto;
+	text-align : center;
+}
+#comments_img {
+	width: 90px;
+	height: 90px;
+	border-radius: 50px;
+	float: right;
+	overflow: hidden;
+	margin: 0px auto;
+	border: 0.5px solid lightgray;
+}
+#comments_table {
+	width: 1190px;
+}
+#comments_table td#profile{
+	text-align: center;
+	border-bottom: 0.5px solid lightgray;
+	width: 92px;
+	height : 117px;
+}
+td#content {
+	width: 900px;
+	border-bottom : 0.5px solid lightgray;
+}
+td {
+	margin: 0px;
+	padding: 0px;
+}
+a {
+	text-decoration: none;
+	color : black;
+	font-weight: bold;
+}
+a:hover {
+	color: pink;
+}
+
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -415,6 +456,17 @@
 			alert(delMsg);
 		}
 	}
+	/*댓글 눌러 신고 하기 */
+	$(document).on('click','.reporter', function() {
+			var test = $(this).attr('id');
+			console.log(test)
+			var N_receiveId = test;
+			console.log("신고할 아이디", N_receiveId);
+			window.open("./popup/notifyPopup.jsp?N_receiveId="
+					+ N_receiveId, "notifyPopup",
+					"width=400, height=400, left=700, top=400");
+	});
+	
 	
 	//경매글 블라인드 체크 여부 확인
 	//판매자일경우 보이고 그 외의 사람들은 튕기기
