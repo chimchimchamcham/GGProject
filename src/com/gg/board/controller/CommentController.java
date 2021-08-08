@@ -162,8 +162,9 @@ public class CommentController extends HttpServlet {
 			System.out.println("옥션 댓글 리스트 보여주기.");
 			int page = Integer.parseInt(req.getParameter("page"));
 			System.out.println("시작 페이지page :" + page);
-			
-			map = service.auctionCommentList(page);
+			p_no = Integer.parseInt(req.getParameter("p_no"));
+			System.out.println("옥션 댓글 p_no :"+ p_no);
+			map = service.auctionCommentList(page,p_no);
 			
 			req.setAttribute("list", map.get("list"));
 			req.setAttribute("currPage", map.get("currPage"));

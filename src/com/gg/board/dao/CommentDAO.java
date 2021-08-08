@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -197,6 +198,17 @@ public class CommentDAO {
 		
 		
 		return check;
+	}
+
+	public HashMap<String, Object> auctionCommentList(int page, int p_no) {
+		HashMap<String,Object> map = null;
+		String sql = "SELECT u.u_nname,pc.pc_id,pc.pc_content, u.u_newname, pc.pc_tm, pc.pc_no FROM post_comment pc " + 
+				"LEFT OUTER JOIN userinfo u ON (u.u_id = pc.pc_id) " + 
+				"WHERE pc.p_no= ? AND pc.pc_parentno=0 AND pc.pc_blindyn ='N' " + 
+				"ORDER BY pc_no ASC";
+		
+		
+		return null;
 	}
 
 }

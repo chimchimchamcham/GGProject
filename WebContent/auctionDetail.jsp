@@ -107,7 +107,9 @@
         $("#second").show();
         $.ajax({
         	url:"auctionCommentList",
-        	data: {"page": page},
+        	data: {"page": page,
+        			"p_no" : "${dto.p_no}"	
+        	},
         	success: function(data){
         		console.log("옥션리스트 진입");
         		$("#second").html(data);
