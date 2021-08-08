@@ -71,6 +71,18 @@ public class BoardService {
 		return isLiked;
 	}
 
+	// 팔로우를 눌렀는지 확인
+	public boolean isFollowed() {
+		int p_no = Integer.parseInt(req.getParameter("p_no"));
+		String u_id = (String) req.getSession().getAttribute("loginId");
+		System.out.println("service isFollowed");
+		boolean isFollowed = false;
+		BoardDAO dao = new BoardDAO();
+		isFollowed = dao.isFollowed(u_id, p_no);
+		System.out.println("[DAO] isFollowed : " + isFollowed);
+		dao.resClose();
+		return isFollowed;
+	}
 	// 찜 테이블에 정보 추가 + 게시글에 좋아요 수 추가
 	public boolean lovePlus() {
 		int p_no = Integer.parseInt(req.getParameter("p_no"));

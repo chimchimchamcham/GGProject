@@ -135,6 +135,28 @@ public class BoardDAO {
 		return isLiked;
 	}
 
+	public boolean isFollowed(String u_id, int p_no) {
+		System.out.println("DAO isLiked");
+		String sql = "SELECT FROM FOLLOW WHERE F_RECEIVEID = (SELECT P_ID FROM POST P_ID";
+		System.out.println("u_id : " + u_id);
+		System.out.println("p_no : " + p_no);
+
+		boolean isFollowed = false;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, u_id);
+			ps.setInt(2, p_no);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				isFollowed = true;
+			}
+			System.out.println("[DAO] isLiked : " + isLiked);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return isFollowed;
+	}
+	
 	public boolean lovePlus(String u_id, int p_no) {
 		System.out.println("DAO lovePlus");
 		String sql = "INSERT INTO LOVE VALUES(?,?,SYSDATE)";

@@ -150,7 +150,7 @@ a{
 				console.log("dealId/dealNname : "+dealId+"/"+dealNname);
 				console.log("idx : ",idx);
 				
-				content +="<div class='tradeList' id='"+item.t_no+"' onclick='clickEvent("+item.t_no+");' >";
+				content +="<div class='tradeList' id='"+item.t_no+"' onclick='moveTrade("+item.t_no+");' >";
 				content +=	"<input type='hidden' id='t_no' value='"+item.t_no+"'>";
 				content +="<table class='content'>";
 				content +=	"<tr>";
@@ -180,30 +180,10 @@ a{
 		$(".tableWrap").append(content);
 	};
 	
-	//각 해당 테이블을 클릭 했을 때 해당 거래번호에 해당하는 거래페이지 팝업을 뿌려주기 
- 	/* $(".tradeList").on("click",function(event){
-		console.log($(event.target).parent("tradeList").children("#t_no").val());
-		console.log($(event.target));
-		alert("clicked");
-	}); */
-	/* $("table").click(function(){
-		console.log($(this).find("#t_no").val());
-		alert("clicked");
-	}); */
-	
 	//클릭시 해당 거래페이지로 이동
-	 function clickEvent(t_no){
-		console.log("t_no"+t_no);
+	 function moveTrade(t_no){
+		console.log("t_no : "+t_no);
 		window.open("../tradeDetail?t_no="+t_no, "tradeDetail", "width=900, height=650, left=700, top=400");
 	}
-	
-	
-	 function moveTrade(){
-			console.log($(this).find("#t_no").val());
-			console.log($(this));
-			console.log($(this)[0]);
-			
-			alert("clicked");
-		}
 </script>
 </html>
