@@ -9,8 +9,6 @@
 </head>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
-	<h2>옥션 리스트입니다.</h2>
-	
 	<table>
 	<c:forEach items="${list}" var="comments">
 		<tr>
@@ -21,23 +19,20 @@
 	</table>
 	<div class="board_t_b">
 		<textarea class="board_text" style="resize: none;"></textarea>
-		<div id="board_text_controll">(0 / 300)</div>
 		<button class="enter">enter</button>
+		<div id="board_text_controll">(0 / 300)</div>
+		
+	</div>
+	<!-- 페이지를 몇부터 몇까지 보여줄건지 (이전/다음) -->
+	<div class="pageArea">
+		<a href="./?page=${currPage-1 }"><</a>
+		<c:forEach var="i" begin="1" end="${totalPage }" step="1">
+			<span class="page">
+			<c:if test="${i ne currPage }"><a href="./?page=${i }">${i}</a></c:if>
+			<c:if test="${i eq currPage }"><b>${i}</b></c:if>
+			</span>
+		</c:forEach>
+		<a href="./?page=${currPage +1 }">></a>
 	</div>
 </body>
-<script>
-
-
-
-
-/*글자수 제한*/
-$(".board_text,").on('keyup', function() {
-	$('#board_text_controll').html("(" + $(this).val().length + " / 300)");
-	console.log(page);
-	if ($(this).val().length > 300) {
-		$(this).val($(this).val().substring(0, 300));
-		$('#board_text_controll, update_text_controll').html("(300 / 300)");
-	}
-});
-</script>
 </html>

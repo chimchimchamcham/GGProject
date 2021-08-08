@@ -77,11 +77,23 @@
     /* 댓글달기 영역 */
 	.board_text  {
 	border: 1px solid #D8D8D8;
-	width: 1190px;
+	width: 1140px;
 	height: 5vh;
 	float: left;
 	}
-    
+    div.pageArea{
+		margin: 10px;
+	}
+	span.page {
+		padding: 2px 10px;
+		margin : 5px;
+		border : 1px solid lightskyblue;
+	}
+	.enter {
+	width: 50px;
+	height: 5vh;
+	margin-bottom: 10px;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -339,19 +351,7 @@
                     	</div>          
                     </div>
                     <div id="second">
-      				<%-- <table>
-						<c:if test="${list eq null || list eq '' }">
-							<tr>
-								<td>해당 데이터가 존재하지 않습니다.</td>
-							</tr>
-						</c:if>
-						<c:forEach items="${list}" var="comments">
-							<tr>
-								<td>${comments.p_no }</td>
-							</tr>
-	
-						</c:forEach>
-					</table> --%>
+      				
                     </div>
                 </article>
             </div>
@@ -426,7 +426,14 @@
 			history.go(-1);
 		}
 	}*/
-	
+	/*글자수 제한*/
+	$(document).on('keyup',".board_text", function() {
+		$('#board_text_controll').html("(" + $(this).val().length + " / 300)");
+		if ($(this).val().length > 300) {
+			$(this).val($(this).val().substring(0, 300));
+			$('#board_text_controll').html("(300 / 300)");
+		}
+	});	
 	
 	
 	

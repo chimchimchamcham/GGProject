@@ -298,7 +298,7 @@ public class CommentDAO {
 		GGDto dto = null;
 		String sql = "SELECT rnum,p_no,u.u_nname,pc.pc_id,pc.pc_content, u.u_newname, pc.pc_tm, pc.pc_no, pc.pc_parentno " + 
 				"FROM (SELECT ROW_NUMBER() OVER(ORDER BY pc_no ASC) AS rnum,pc_no,p_no, pc_content, pc_tm, pc_parentno, pc_blindyn,pc_id " + 
-				"FROM post_comment PC lEFT OUTER JOIN userinfo u ON (u.u_id = PC.pc_id) WHERE p_no= 305 AND pc_parentno=0 AND pc_blindyn ='N') pc LEFT OUTER JOIN userinfo u ON (u.u_id = pc.pc_id) " + 
+				"FROM post_comment PC lEFT OUTER JOIN userinfo u ON (u.u_id = PC.pc_id) WHERE p_no= ? AND pc_parentno=0 AND pc_blindyn ='N') pc LEFT OUTER JOIN userinfo u ON (u.u_id = pc.pc_id) " + 
 				"WHERE p_no= ? AND pc_parentno=0 AND pc_blindyn ='N' AND rnum BETWEEN ? AND ? "+
 				"ORDER BY pc_no ASC";
 		end = page*pagePerCnt;
@@ -307,8 +307,9 @@ public class CommentDAO {
 		
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, p_no);
-		ps.setInt(2, start);
-		ps.setInt(3, end);
+		ps.setInt(2, p_no);
+		ps.setInt(3, start);
+		ps.setInt(4, end);
 		rs = ps.executeQuery();
 		while(rs.next()) {
 			dto = new GGDto();
