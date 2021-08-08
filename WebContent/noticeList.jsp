@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 상세보기</title>
+<title>공지사항</title>
 <style type="text/css">
 #mainHeader {
 	z-index: 1000;
