@@ -51,6 +51,11 @@ public class GGDto {
    private String n2_code; // 중분류코드
    private String Pntcode;// 분류코드
    
+   //신고 히스토리
+   private Date hn_tm; //신고 시간
+   private String hn_code; //신고 처리 상태
+   private String hn_adminid; //신고 담당자
+
    
    public String getPntcode() {
       return Pntcode;
@@ -483,6 +488,30 @@ public String getN2_code() {
 
 public void setN2_code(String n2_code) {
 	this.n2_code = n2_code;
+}
+
+public Date getHn_tm() {
+	return hn_tm;
+}
+
+public void setHn_tm(Date hn_tm) {
+	this.hn_tm = hn_tm;
+}
+
+public String getHn_code() {
+	return hn_code;
+}
+
+public void setHn_code(String hn_code) {
+	this.hn_code = hn_code;
+}
+
+public String getHn_adminid() {
+	return hn_adminid;
+}
+
+public void setHn_adminid(String hn_adminid) {
+	this.hn_adminid = hn_adminid;
 }
 
 public Date getB_startTm() {
