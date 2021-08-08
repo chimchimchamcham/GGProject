@@ -86,9 +86,9 @@ a{
 			<button id="saleBtn">판매</button>
 			<button id="auctionBtn">경매</button>
 		</div>
-		<d
-		iv class="tableWrap">
-		<!-- <table class="content">
+		<div class="tableWrap">
+			<div>
+			<table class="content">
 				<tr>
 					<td rowspan="2"><a href="#"><img src="../test/default-profile.png" width="60" id="profile" ></a></td>
 					<th style="width:240px;  padding:0 20px; text-align: left;"><a href="#">ㅇㅇㅇ님과 거래중</a></th>
@@ -105,8 +105,7 @@ a{
 				<tr>
 					<td style="border-bottom:1px solid black; padding-top:10px;" colspan="3"></td>
 				</tr>
-		</table> -->
-		
+			</table>
 		</div>
 	</div>
 </body>
@@ -149,7 +148,7 @@ a{
 				console.log("dealId/dealNname : "+dealId+"/"+dealNname);
 				console.log("idx : ",idx);
 				
-				content +="<div id='"+item.t_no+"' >";
+				content +="<div class='tradeList' id='"+item.t_no+"' onclick='clickEvent();' >";
 				content +=	"<input type='hidden' id='t_no' value='"+item.t_no+"'>";
 				content +="<table class='content'>";
 				content +=	"<tr>";
@@ -180,18 +179,20 @@ a{
 	};
 	
 	//각 해당 테이블을 클릭 했을 때 해당 거래번호에 해당하는 거래페이지 팝업을 뿌려주기 
- 	$("div").on("click",function(){
-		console.log($(this).children("#t_no").val());
+ 	/* $(".tradeList").on("click",function(event){
+		console.log($(event.target).parent("tradeList").children("#t_no").val());
+		console.log($(event.target));
 		alert("clicked");
-	});
+	}); */
 	/* $("table").click(function(){
 		console.log($(this).find("#t_no").val());
 		alert("clicked");
 	}); */
 	
-	/* function clickEvent(){
-		console.log($(this).children("#t_no").val());
+	 function clickEvent(){
+		console.log($(this).find("#t_no").val());
+		console.log($(this));
 		alert("clicked");
-	} */
+	}
 </script>
 </html>
