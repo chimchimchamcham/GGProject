@@ -90,10 +90,51 @@
 		border : 1px solid lightskyblue;
 	}
 	.enter {
-	width: 50px;
+	width: 55px;
 	height: 5vh;
+	border : 0.5px solid gray;
 	margin-bottom: 10px;
 }
+.pageArea{
+	margin : 0 auto;
+	text-align : center;
+}
+#comments_img {
+	width: 90px;
+	height: 90px;
+	border-radius: 50px;
+	float: right;
+	overflow: hidden;
+	margin: 0px auto;
+	border: 0.5px solid lightgray;
+}
+#comments_table {
+	width: 1190px;
+}
+#comments_table td#profile{
+	text-align: center;
+	border-bottom: 0.5px solid lightgray;
+	width: 92px;
+	height : 117px;
+}
+td#content {
+	width: 900px;
+	border : 1px solid black;
+}
+td {
+	margin: 0px;
+	padding: 0px;
+}
+a {
+	text-decoration: none;
+	color : black;
+	font-weight: bold;
+}
+a:hover {
+	color: pink;
+}
+
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
