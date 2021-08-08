@@ -392,7 +392,34 @@ public class BoardService {
 		dao.resClose();
 
 	}
+	
+public void updatereqlist(String rqno) throws IOException {
+		
+		BoardDAO dao = new BoardDAO();
+		GGDto dto = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean success = false;
+		try {
+			dto = dao.urllist(rqno);
+			success = true;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+			System.out.println("가져올 글의 번호 : "+dto.getP_no());
+			System.out.println("가져올 요청의 번호 : "+dto.getRq_no());
+			System.out.println("가져올 요청한 사람의 id : "+dto.getRq_id());
+			System.out.println("가져올 요청한 y/n여부 : "+dto.getRq_YN());
+			
+			map.put("info", dto);
+			map.put("success", success);
+			
+			
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().print(new Gson().toJson(map));
 
+		}
+	}
 
 //좋아요리스트
 	public void love_list(String userid, int index1, int index2) throws IOException {

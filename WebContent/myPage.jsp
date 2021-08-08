@@ -239,7 +239,12 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 		if(allurl==null){
 			allurl = './soldlist';
 		}
-		
+	/*
+	이제 마이리스트에 들어갈때 무슨 리스트 보여줄건지 설정하려면 allurl를 뿌려주어야합니다
+	
+	'./soldlist':판매리스트
+	
+	*/
 		
 		$.ajax({
 			type:'post',
