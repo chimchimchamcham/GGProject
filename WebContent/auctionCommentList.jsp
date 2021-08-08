@@ -13,11 +13,20 @@
 	<c:forEach items="${list}" var="comments">
 		<tr>
 			<c:if test="${comments.u_newName eq 'default-profile.png' }">
-				<td><a href="./myPage?id=${comments.pc_id }"><img src="./img/default-profile.png" id='comments_img'><br/>${comments.u_nname } </a></td>
+				<td id='profile'><a href="./myPage?id=${comments.pc_id }"><img src="./img/default-profile.png" id='comments_img'><br/>${comments.u_nname } </a></td>
 			</c:if>
 			<c:if test="${comments.u_newName ne 'default-profile.png' }">
-				<td><a href="./myPage?id=${comments.pc_id }"><img src="/photo/${comments.u_newName }" id='comments_img'><br/>${comments.u_nname } </a></td>
+				<td id='profile'><a href="./myPage?id=${comments.pc_id }"><img src="/photo/${comments.u_newName }" id='comments_img'><br/>${comments.u_nname } </a></td>
 			</c:if>
+			<td id="content" >
+				<p>${comments.pc_content }</p>
+			</td>
+			<td>
+				<div style='margin-top: 1px'>${comments.pc_tm }<img src="./img/notify-icon.png" width="20px" height="20px" style="float:right"/></div>
+				<div id='nullPoint'>&nbsp;&nbsp;</div>
+			 	<div >수정하기      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      삭제하기</div>
+				<div style=" text-align:center"><img src="./img/CommentArrow.png" width="20px" height="20px"/></div>
+			</td>
 		</tr>
 	
 	</c:forEach>

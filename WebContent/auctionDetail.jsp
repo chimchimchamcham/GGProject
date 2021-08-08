@@ -108,16 +108,33 @@
 	margin: 0px auto;
 	border: 0.5px solid lightgray;
 }
-#comments_table, td{
+#comments_table {
+	width: 1190px;
+}
+#comments_table td#profile{
 	text-align: center;
 	border-bottom: 0.5px solid lightgray;
 	width: 92px;
 	height : 117px;
 }
-#comments_table td#content {
-	width: 1000px;
+td#content {
+	width: 900px;
 	border : 1px solid black;
 }
+td {
+	margin: 0px;
+	padding: 0px;
+}
+a {
+	text-decoration: none;
+	color : black;
+	font-weight: bold;
+}
+a:hover {
+	color: pink;
+}
+
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
