@@ -89,7 +89,7 @@
 		margin : 5px;
 		border : 1px solid lightskyblue;
 	}
-	.enter {
+.enter, #update_enter {
 	width: 55px;
 	height: 5vh;
 	border : 0.5px solid gray;
@@ -133,12 +133,25 @@ a {
 a:hover {
 	color: pink;
 }
-
+.comm_del, .update_comment {
+	cursor: pointer;
+}
+.comm_del:hover, .update_comment:hover {
+	color: pink;
+}
+.update_text {
+	border: 1px solid #D8D8D8;
+	width: 1140px;
+	height: 5vh;
+	float: left;
+}
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
  var page = 0;
+ var id = "${sessionScope.loginId}";
+ console.log("테스트용 옥션 디테일 아이디 : ", id);
  $(document).ready(function(){
 	//수정 삭제버튼 숨기기
 	$("#description>div:nth-of-type(1)").hide();
@@ -157,20 +170,7 @@ a:hover {
         $("#twoButton>button:nth-of-type(1)").css({"background-color":"white","color":"black"});
         page =1; // 댓글을 눌렀을 때, 페이징 처리 1로 초기화가 된다.
         $("#first").hide();
-        $.ajax({
-        	url:"auctionCommentList",
-        	data: {"page": page,
-        			"p_no" : "${dto.p_no}"	
-        	},
-        	success: function(data){
-        		console.log("옥션리스트 진입");
-        		$("#second").html(data);
-        	},
-        	error: function(e){
-        		console.log("진입 실패");
-        	}
-
-        });
+        showCommentList();
         $("#second").show();
     });
 
@@ -456,6 +456,8 @@ a:hover {
 			alert(delMsg);
 		}
 	}
+	
+	 /*========================== 댓글 영역  ===================================== */
 	/*댓글 눌러 신고 하기 */
 	$(document).on('click','.reporter', function() {
 			var test = $(this).attr('id');
@@ -467,7 +469,55 @@ a:hover {
 					"width=400, height=400, left=700, top=400");
 	});
 	
-	
+	var check = true;
+	/* 수정 버튼 */
+	$(document).on('click','.update_comment', function(){
+		var update_comm = $(this).attr("id");
+		var update_no ={};
+		update_no.pc_no = update_comm;
+		console.log("변환 후 ", update_comm);
+		
+		var update_comment ="";
+		
+		update_comment += "<tr id='update_form'>";
+		update_comment += "<td colspan=3><textarea id='"+update_comm +"' class='update_text' style='resize: none;' placeholder='수정할 댓글을 입력해 주세요'></textarea></td>";
+		update_comment += "<td><button id='update_enter'>엔터</button></td>";
+		update_comment += "</tr>"; 
+		
+		
+		if(check){
+			$("tr#"+update_comm).after(update_comment);
+			check = false;
+		}else {
+			$("tr#update_form").empty();
+			check = true;
+		}
+		console.log(check);	
+		
+	}); 
+	 
+	/* 삭제 버튼 */
+	$(document).on('click','.comm_del', function(){
+		var del_comm = $(this).attr("id");
+		console.log(del_comm);
+		var param = {};
+		param.pc_no = del_comm;
+		console.log("변환 후 ", del_comm);
+		
+		$.ajax({
+			type: "POST",
+			url : "comm_del",
+			data: param,
+			dataType : "JSON",
+			success : function(data){
+				alert("삭제 성공 여부"+data.success);
+				showCommentList();
+			},
+			error : function(e){
+				console.log("에러");		
+			}
+		});
+	});
 	//경매글 블라인드 체크 여부 확인
 	//판매자일경우 보이고 그 외의 사람들은 튕기기
 	/*var p_blindYN = "${dto.p_blindYN}";
@@ -487,7 +537,23 @@ a:hover {
 		}
 	});	
 	
-	
+	function showCommentList(){
+		
+		$.ajax({
+        	url:"auctionCommentList",
+        	data: {"page": page,
+        			"p_no" : "${dto.p_no}"	
+        	},
+        	success: function(data){
+        		console.log("옥션리스트 진입");
+        		$("#second").html(data);
+        	},
+        	error: function(e){
+        		console.log("진입 실패");
+        	}
+
+        });
+	}
 	
 </script>
 </html>

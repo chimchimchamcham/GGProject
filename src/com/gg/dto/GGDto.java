@@ -47,6 +47,7 @@ public class GGDto {
    private String n_sendId; // 신고한 아이디
    private String n_content; // 신고내용
    private String n1_code; // 대분류코드
+   private String n1_name;//대분류코드 한글이름
    private String n2_code; // 중분류코드
    private String Pntcode;// 분류코드
    
@@ -466,6 +467,14 @@ public String getN1_code() {
 
 public void setN1_code(String n1_code) {
 	this.n1_code = n1_code;
+}
+
+public String getN1_name() {
+	return n1_name;
+}
+
+public void setN1_name(String n1_name) {
+	this.n1_name = n1_name;
 }
 
 public String getN2_code() {
