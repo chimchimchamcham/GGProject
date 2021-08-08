@@ -234,18 +234,37 @@ function chargePopup() { window.open("./popup/chargePopup.jsp", "chargePop", "wi
 //포인트내역 팝업
 function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "width=900, height=600, left=450, top=180"); }
 
-	
+	var allurl = null;
 	$(document).ready(function() {
+		if(allurl==null){
+			allurl = './soldlist';
+		}
+		
+		
 		$.ajax({
 			type:'post',
-			url:'./soldlist',
+			url:allurl,
 			data:{  index1 : 0,
 					index2 : 0 },
 			dataType:'JSON',
 			success:function(data){
 				console.log("data",data);
-				if(data.soldlist != null){
-					soled_list(data.soldlist);
+				if(data != null){
+					if(data.soldlist != null){//판매
+						soled_list(data.soldlist);
+					}else if (data.auctionlist != null) {//경매
+						auction_list(data.auctionlist);
+					}else if (data.maidelist != null) {//구매
+						maide_list(data.maidelist);
+					}else if (data.communitylist != null) {//커뮤니티
+						community_list(data.communitylist);
+					}else if (data.flowlist != null) {//팔로우 팔로잉
+						flow_list(data.flowlist);
+					}else if (data.reqlist != null) {//거래 요청
+						request_list(data.reqlist);
+					}else if (data.lovelist != null) {//거래 요청
+						love_list(data.lovelist);
+					}
 				}
 			},
 			error:function(e){
