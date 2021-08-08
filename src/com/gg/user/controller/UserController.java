@@ -16,8 +16,10 @@ import com.gg.user.service.UserService;
 import com.google.gson.Gson;
 import sun.misc.Contended;
 
+
 @WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage", "/userUpdate",
-		"/userUpdateForm", "/chkpw", "/changePw", "/chkinfo", "/manageList" })
+		"/userUpdateForm", "/chkpw", "/changePw", "/chkinfo", "/manageList" ,"/search"})
+
 public class UserController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -185,6 +187,11 @@ public class UserController extends HttpServlet {
 			dis = req.getRequestDispatcher("managePage.jsp");
 			dis.forward(req, resp);
 
+			break;
+			
+		case "/search":
+			System.out.println("검색결과 요청");
+			service.search();
 			break;
 		}
 
