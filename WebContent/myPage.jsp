@@ -774,6 +774,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			reqlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
+				//content += "<form action='./applyreqlist' method='post'>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
 				content += "	<div>"+item.sered+"</div>";
 				content += "	<div><a href = salesDetail?p_no="+item.p_no+">"+item.p_title+"</a></div>";
@@ -784,34 +785,42 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				content += "</div>";
 				content += "<div class='mai-time'>";
 				content += "	<div>"+item.buttonORtext+"</div>";
-				content += "</div></div>";
+				content += "</div>";
+				//content += "</form>";
+				content += "</div>";
 			});
 			$("#want .item-box").empty();
 			$("#want .item-box").append(content);
 			
 		}//구매요청 리스트 end
 				//수락버튼을 누르면
-				$(document).on("click","button.ok",function(){
-					alert('ok');
+				 $(document).on("click","button.ok",function(){
+					 
 					$rqno=$('button.ok');
-		  	 	 	
 					$index= $rqno.index(this);
 					$rqnob = $("button.ok:eq(" + $index + ")");
 					
 					 var rqnoval=$rqnob.val();
 					
 					$.ajax({
-						type:'get',
+						type:'post',
 						url:'./applyreqlist',
 						data:{rqno:rqnoval},
 						dataType:'JSON',
 						success:function(data){
+							if (data!=null) {
 							console.log(data);
+							console.log('data1:'+data.info.p_no);
+							console.log('data1:'+data.info.rq_id);
+							console.log('data1:'+data.info.rq_no);
+							console.log('data1:'+data.info.Rq_YN);
+							document.location.href="./buyRequestProcess?rq_no="+data.info.rq_no+"&rq_YN=Y&p_no="+data.info.p_no+"&rq_id="+data.info.rq_id;
+							}
 						},
 						error:function(e){
 							console.log(e);
 						}
-					}); 
+					});  
 					
 					//수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
 					//거절 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=N&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
@@ -930,11 +939,9 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
       <button>신고목록</button>
    </div>
 
-   
-
    <div id="sale"  class="categori" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
    <div id="trade"  class="categori" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
-   <div id="sell"  class="categori" style="background-color:yellow; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
+   <div id="sell"  class="categori" style="background-color:yellow; padding:20px;"><jsp:include page="./mypage_list/maide.jsp"></jsp:include></div>
    <div id="commu"  class="categori" style="background-color:green; padding:20px;"><jsp:include page="./mypage_list/community.jsp"></jsp:include></div>
    <div id="follow"  class="categori" style="background-color:blue; padding:20px;"><jsp:include page="./mypage_list/flows.jsp"></jsp:include></div>
    <div id="want"  class="categori" style="background-color:pink; padding:20px;"><jsp:include page="./mypage_list/request.jsp"></jsp:include></div>
@@ -995,22 +1002,14 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 	 <div id="twoButton">
       <button>판매목록	</button>
       <button>경매목록</button> 
-      <button>구매목록</button>
       <button>커뮤니티</button> 
       <button>팔로우</button>
-      <button>구매요청</button> 
-      <button>좋아요</button> 
-      <button>신고목록</button>
    </div>
 
-   <div id="sale" class="categori" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
-   <div id="trade" class="categori" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
-   <div id="sell" class="categori" style="background-color:yellow; padding:20px;"><jsp:include page="./mypage_list/maide.jsp"></jsp:include></div>
-   <div id="commu" class="categori" style="background-color:green; padding:20px;">커뮤니티목록입니다.</div>
-   <div id="follow" class="categori" style="background-color:blue; padding:20px;">팔로우목록입니다.</div>
-   <div id="want" class="categori" style="background-color:pink; padding:20px;">구매요청목록입니다.</div>
-   <div id="like" class="categori" style="background-color:purple; padding:20px;">좋아요목록입니다.</div>
-   <div id="alarm" class="categori" style="background-color:lime; padding:20px;">신고목록입니다.</div>
+     <div id="sale"  class="categori" style="background-color:red; padding:20px;"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
+   <div id="trade"  class="categori" style="background-color:orange; padding:20px;"><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
+   <div id="commu"  class="categori" style="background-color:green; padding:20px;"><jsp:include page="./mypage_list/community.jsp"></jsp:include></div>
+   <div id="follow"  class="categori" style="background-color:blue; padding:20px;"><jsp:include page="./mypage_list/flows.jsp"></jsp:include></div>
 </c:if>
    
 	</div> <!-- div main end -->
