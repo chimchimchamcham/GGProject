@@ -99,6 +99,7 @@ public class UserController extends HttpServlet {
 			System.out.println("마이페이지 요청");
 
 			req.setAttribute("myPageInfo", service.myPage());
+			req.setAttribute("allurl", "'./soldlist'");
 			dis = req.getRequestDispatcher("myPage.jsp");
 			dis.forward(req, resp);
 			break;
