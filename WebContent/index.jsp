@@ -39,10 +39,17 @@ z-index: 2;
 	<a href = "commDetail?P_no=64">커뮤니티 글 상세보기</a>
 </div><!-- div main end -->
     <div class="content">
+    <c:if test="${mainlist eq 0}">
+		<jsp:include page="sale_main_list.jsp"></jsp:include>
+	</c:if>
+    <c:if test="${mainlist eq 1}">
 		<jsp:include page="auction_main_list.jsp"></jsp:include>
+	</c:if>
 	</div>
 </body>
 <script>
+
+
 	function notifyPop() { window.open("popup/notifyPopup.jsp?N_receiveId=123", "notify", "width=500, height=700, left=600, top=200"); }
 	var msg = "${msg}";
 	if(msg != ""){
