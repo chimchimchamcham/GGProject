@@ -225,6 +225,8 @@ a:visited {
 	color : black;
 }
 </style>
+
+
 <script>
 var loginId = "${sessionScope.loginId}";
 
@@ -235,17 +237,11 @@ function chargePopup() { window.open("./popup/chargePopup.jsp", "chargePop", "wi
 function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "width=900, height=600, left=450, top=180"); }
 
 
-	var allurl = null;
-	$(document).ready(function() {
+	var allurl = ${allurl};
+	
 		if(allurl==null){
 			allurl = './soldlist';
 		}
-	/*
-	이제 마이리스트에 들어갈때 무슨 리스트 보여줄건지 설정하려면 allurl를 뿌려주어야합니다
-	
-	'./soldlist':판매리스트
-	
-	*/
 
 /*
 var allurl = ${allurl}
@@ -267,7 +263,7 @@ req.setAttribute("allurl", "'./soldlist'");
 ./flowlist : 팔로우리스트
 ./requestlist : 구매요청리스트
 ./lovelist : 구매요청리스트
-
+*/
 
 $.ajax({
 	type:'post',
@@ -298,9 +294,11 @@ $.ajax({
 			  
 			}else if (data.lovelist != null) {//거래 요청
 				love_list(data.lovelist);
-			    
+			}
+			}
+		}
+});
 
-*/
 		
 		$("#twoButton>button").click(function(){
 			$button = $("#twoButton>button");
@@ -329,7 +327,7 @@ $.ajax({
 
 			listCall($index,url);
 
-			})
+			});
 		
 		
 		/*알림*/
@@ -517,7 +515,6 @@ $.ajax({
 	
 	
 		
-	});
 	
 
 
@@ -664,10 +661,7 @@ $.ajax({
 			$(".button-layout_sold").hide();
 			$(".alien_list_sold").hide();
 			$(".button-layout_auction").hide();
-			
-			
-			
-			
+
 			communitylist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
@@ -717,9 +711,7 @@ $.ajax({
 			var aaa=  $(".count").text();
 			
 			}//팔로워 팔로잉 리스트 end
-				
-			
-			
+
 			$(document).on("click","button.hellow,button.unhellow",function(){//버튼을 누르면 함수 실행,동적으로 실행
 
 			if ($('div.item-one-flow button').hasClass("hellow")) {
@@ -760,9 +752,8 @@ $.ajax({
 					error:function(e){
 						console.log(e);
 					}
-				}); 
-	  	 	 		
-				}else if($('div.item-one-flow button').hasClass('unhellow')){
+				}); 	
+			}else if($('div.item-one-flow button').hasClass('unhellow')){
 					alert('팔로잉,언팔로잉 하였습니다')
 	  		 		$button2 = $("button.unhellow");
 	    	 		$index2 = $button2.index(this);
@@ -802,14 +793,9 @@ $.ajax({
 					}); 
 				}
 
-			})
+			});
 			
-					
-									
-									
-									
-					
-		
+
 		//데이터 가져와서 뿌려주는 구매요청 리스트
 		function request_list(reqlist){
 			
@@ -843,8 +829,7 @@ $.ajax({
 			
 		}//구매요청 리스트 end
 				
-		
-		
+
 		//수락버튼을 누르면
 				 $(document).on("click","div.buttonarea button",function(){
 		
@@ -861,11 +846,7 @@ $.ajax({
 					 console.log('.buttonarea button:'+$index);
 					 console.log('rqnoval:'+rqnoval);
 					 console.log('rqnotext:'+rqnotext);
-					 
-					 
 
-					 
-					 
 					 $.ajax({
 						type:'post',
 						url:'./applyreqlist',
@@ -878,27 +859,19 @@ $.ajax({
 							console.log('data1:'+data.info.rq_id);
 							console.log('data1:'+data.info.rq_no);
 							console.log('data1:'+data.info.Rq_YN);
-							 
-							
-							
-							
 							var param = {};
 							if(rqnotext=='수락'){
 								param.Rq_YN = 'Y';
 							}else if(rqnotext=='거절'){
 								param.Rq_YN = 'N';
 							}
-							
 							 param.p_no = data.info.p_no;
 							 param.rq_id = data.info.rq_id;
 							 param.rq_no = data.info.rq_no;
-
 							console.log('param1:'+param.p_no);
 							console.log('param2:'+param.rq_id);
 							console.log('param3:'+param.rq_no);
 							console.log('param4:'+param.Rq_YN);
-							 
-							 
 							  $.ajax({
 								 type:'post',
 									url:'./buyRequestProcess',
@@ -910,8 +883,7 @@ $.ajax({
 												alert("거래페이지가 생성 되었습니다");		
 											}
 										}
-										
-										
+
 									},
 									error:function(e){
 										console.log(e);
@@ -923,25 +895,14 @@ $.ajax({
 							console.log(e);
 						}
 					});   
-					
-					//수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
-					//수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
-					//거절 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=N&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
-					
-					
 				});
-		
-		
-		
-		
-		
-		
+
 		//데이터 가져와서 뿌려주는 좋아요 리스트
 		function love_list(lovelist){
 			
 			console.log("lovelist:", lovelist);
 			var content="";
-			
+
 			$(".button-layout_sold").hide();
 			$(".alien_list_sold").hide();
 			$(".button-layout_auction").hide();
@@ -954,8 +915,6 @@ $.ajax({
 				 	var	price = item.ns_pr;
 				 	var a = "salesDetail";
 				}
-				
-				
 				console.log("idx:",idx,item);
 				content += "<div class='item-one'>";
 				content += "<div class='dretion-zoon style='margin: 3%'>";
@@ -971,13 +930,10 @@ $.ajax({
 				content += "	<div>"+item.p_tm+"</div>";
 				content += "</div></div>";
 			});	
-
 			$("#like .item-box").empty();
 			$("#like .item-box").append(content);
-			
 		}//좋아요 리스트 end
-		
-</script>
+		</script>
 <body>
 <div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
