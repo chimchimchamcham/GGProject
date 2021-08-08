@@ -1152,6 +1152,39 @@ public class BoardDAO {
 
 	}
 
+	
+	public ArrayList<GGDto> sold_main_list(String soldmainlistwhatadd) throws SQLException {
+		String sql = "";
+
+		sql="SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME, S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME, N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME, I.I_NEWNAME, LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR FROM POST P, SALE S, N_SALE N, IMG I,codes c WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO  and p.p_code = 'P002' and c.c_code = s.s_code and c.c_name = ?";
+
+		ArrayList<GGDto> soldmainlist = new ArrayList<GGDto>();
+
+		System.out.println("DAOsoldmainlist:" + soldmainlistwhatadd);
+
+		ps = conn.prepareStatement(sql);
+
+		ps.setString(1, soldmainlistwhatadd);
+
+		rs = ps.executeQuery();
+		System.out.println("rs:" + rs);
+
+		while (rs.next()) {
+			GGDto dto = new GGDto();
+			dto.setP_no(rs.getInt("P_no"));
+			dto.setP_title(rs.getString("P_title"));
+			dto.setP_tm(rs.getDate("p_tm"));
+			dto.setP_likeCount(rs.getInt("p_likecount"));
+			dto.setNs_pr(rs.getInt("NS_pr"));
+			dto.setI_newName(rs.getString("I_newName"));
+			soldmainlist.add(dto);
+		}
+		System.out.println("soldmainlist:" + soldmainlist);
+		return soldmainlist;
+
+	}
+	
+	
 	public ArrayList<GGDto> commList(String[] categorys) {
 
 		String sql = "SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code "
@@ -1359,4 +1392,6 @@ public class BoardDAO {
 
 	      return dto;
 	}
+
+
 }

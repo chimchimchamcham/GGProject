@@ -13,10 +13,11 @@
             margin: 0;
             padding: 0;
         }
-        .auc-con{
+        .sold-con{
             display: flex;
             align-items: center;
             justify-content: center;
+            margin-top:15%;
         }
         table{
             border: 1px solid black;
@@ -37,7 +38,7 @@
             text-decoration:underline black;
             cursor: pointer;
         }
-        .main_auc{
+        .main_sold{
             width: 900px;
             height: 700px;
             margin-left:100px ;
@@ -102,7 +103,7 @@
 </head>
 <body>
     
-<div class="auc-con">
+<div class="sold-con">
 <table class="categor">
     <tr><th>카테고리</th></tr>
     <tr><td>뷰티잡화</td></tr>
@@ -115,12 +116,9 @@
     <tr><td>생활가전</td></tr>
     <tr><td>도서기타</td></tr>
 </table>
-    <div class="main_auc">
-        <h2 class= "bbb">경매</h2>
+    <div class="main_sold">
+        <h2 class= "bbb">판매</h2>
         <div class="itembox">
-            <div class="alinebutton">
-                <button class="checked" style="margin-right: 1px;">신규등록순</button><button>마감임박순</button>
-            </div>
             <div class="items">
 
             </div>
@@ -132,26 +130,17 @@
 </body>
 <script>
 
-let $index_button_auction = '뷰티잡화';
-let $index2 = 0;
-
-
-
-
-
-
 $(document).ready(function() {
 	
 	$.ajax({
 		type:'post',
-		url:'./auctionmainlist',
-		data:{  index_button_auction : '뷰티잡화',
-				index2 : 0 },
+		url:'./soldmainlist',
+		data:{  index_button_sold : '뷰티잡화'},
 		dataType:'JSON',
 		success:function(data){
 			console.log("data",data);
 			if(data != null){
-				auction_list(data.auctionmainlist);
+				sold_list(data.soldmainlist);
 			}
 		},
 		error:function(e){
@@ -165,44 +154,29 @@ $(".categor tr td").click(function(){//카테고리
 	    $button1 = $(".categor tr td");
 	    $index1 = $button1.index(this);
 	    
-	    $index_button_auction = $(".categor tr td:eq(" + $index1 + ")").text();
+	    $index_button_sold = $(".categor tr td:eq(" + $index1 + ")").text();
 	    
 	
-		console.log("$index_button_auction:"+$index_button_auction);
-		console.log("$alien_list:"+$index2);
+		console.log("$index_button_sold:"+$index_button_sold);
 		
-		auction_listCall($index_button_auction,$index2);
+		sold_listCall($index_button_sold);
 		//alert('hellow');
 		
     })
     
-    $(".alinebutton button").click(function(){//정렬
-	    
-	    $button2 = $(".alinebutton button");
-	    $index2 = $button2.index(this);
-	    
-	    console.log("$index_button_auction:"+$index_button_auction);
-		console.log("$alien_list_sold:"+$index2);
-		
-		auction_listCall($index_button_auction,$index2);
-		//alert('hellow');
-
-		
-    })
     
-    function auction_listCall($index_button_auction,index2){
+    function sold_listCall($index_button_sold){
 		
 		
 		$.ajax({
 			type:'post',
-			url:'./auctionmainlist',
-			data:{	index_button_auction : $index_button_auction,
-					index2 : $index2},
+			url:'./soldmainlist',
+			data:{	index_button_sold : $index_button_sold},
 			dataType:'JSON',
 			success:function(data){
 				console.log("data:"+data);
 				if(data != null){
-					auction_list(data.auctionmainlist);
+					sold_list(data.soldmainlist);
 				}
 			},
 			error:function(e){
@@ -215,36 +189,28 @@ $(".categor tr td").click(function(){//카테고리
 	
 		
 		//데이터 가져와서 뿌려주는 경매 리스트
-		function auction_list(auctionmainlist){	
-			console.log("auc=="+auctionmainlist)
+		function sold_list(soldmainlist){	
+			console.log("sold=="+soldmainlist)
 			var content="";
 			
-			auctionmainlist.forEach(function(item,idx){
+			soldmainlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
-				content+= "<div class='item-one' onclick="+"window.location.href='auctionDetail?p_no=" + item.p_no  +"\'" +">"
+				content+= "<div class='item-one' onclick="+"window.location.href='salesDetail?p_no=" + item.p_no  +"\'" +">"
 				content+= 	"<div class='img-zoon'>";
 				content+=		"<img src="+item.i_newName+">";	
 				content+=	"</div>";
 				content+=	"<div class='index'>"+item.p_title+"</div>";
-				content+=	"<div class='bestcost'>현재 최고 입찰가:"+item.hm+"p</div>";
-				content+=	"<div class='nowbuycost'>즉시구매가:"+item.au_instantPr+"p</div>";
+				content+=	"<div class='bestcost'>가격:"+item.ns_pr+"p</div>";
+				content+=	"<div class='nowbuycost'>좋아요:"+item.p_likeCount+"p</div>";
 				content+=	"<div class='endtime-count'>";
-				content+=		"<div class='endtime'>종료시간:"+item.au_endTm+"</div>";
-				content+=		"<div class='count'>입찰자:"+item.au_count+"명</div>";
+				content+=		"<div class='endtime'>종료시간:"+item.p_tm+"</div>";
 				content+=	"</div>";
 				content+= "</div>";
 			    });	
 			
-			$('.main_auc div.items').empty();
-			$('.main_auc div.items').append(content);
-		}// 경매 리스트 end	
-	
-		 
-				
-		////////////////////////////////////////////////////////////
-		$(".alinebutton button").click(function(){
-		    $(".alinebutton button").toggleClass("checked");
-		});
+			$('.main_sold div.items').empty();
+			$('.main_sold div.items').append(content);
+		}// 경매 리스트 end
 
 </script>
 </html>
