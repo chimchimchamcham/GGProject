@@ -71,7 +71,7 @@ public class BoardController extends HttpServlet {
 
 			// 팔로우를 했는지 안했는지 확인
 			boolean isFollowed = false;
-			isFollowed = service.isFollowed();
+			//isFollowed = service.isFollowed();
 			
 			// 판매자의 판매목록 3개를 가져오기
 			String p_id = dto.getP_id();
@@ -82,7 +82,7 @@ public class BoardController extends HttpServlet {
 			req.setAttribute("dto", dto);
 			req.setAttribute("isLiked", isLiked);
 			req.setAttribute("isBuyRequested", isBuyRequested);
-			req.setAttribute("isFollowed", isFollowed);
+			//req.setAttribute("isFollowed", isFollowed);
 			req.setAttribute("sale3List", sale3List);
 
 			dis = req.getRequestDispatcher("salesDetail.jsp");
