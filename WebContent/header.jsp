@@ -383,11 +383,7 @@ body {
           <button id="writeBtn" onclick="location.href='writeForm'">글쓰기</button>  
              	<a href="logout"  class="logoutA">로그아웃</a>
              <c:if test="${adminYN eq 'Y'}">
-<<<<<<< HEAD
             	 <a href="manageList">관리페이지</a>
-=======
-            	 <a href="#">관리페이지</a>
->>>>>>> e832384a5840e629972d457990dc83d10e6f8bd2
              </c:if>
               <c:if test="${adminYN eq 'N'}"> 
               <a href="#"  class="myPageA">마이페이지</a>

@@ -71,24 +71,24 @@ public class UserDAO {
 	}
 
 	public boolean nNameOverlay(String nname) {
-	      boolean success = false;
+		boolean success = false;
 
-	      sql = "SELECT u_nname FROM userInfo WHERE u_nname = ?";
-	      try {
-	         ps = conn.prepareStatement(sql);
-	         ps.setString(1, nname);
-	         rs = ps.executeQuery();
+		sql = "SELECT u_nname FROM userInfo WHERE u_nname = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, nname);
+			rs = ps.executeQuery();
 
-	         success = rs.next();
-	      } catch (SQLException e) {
+			success = rs.next();
+		} catch (SQLException e) {
 
-	         e.printStackTrace();
-	      } finally {
-	         System.out.println("중복 여부 : " + success);
-	         // resClose()는 service에서 실행한다.
-	      }
-	      return success;
-	   }
+			e.printStackTrace();
+		} finally {
+			System.out.println("중복 여부 : " + success);
+			// resClose()는 service에서 실행한다.
+		}
+		return success;
+	}
 
 	public boolean join(GGDto dto) throws Exception {
 
@@ -197,40 +197,31 @@ public class UserDAO {
 			System.out.println("전화번호 : " + dto.getU_phone());
 			System.out.println("이메일 : " + dto.getU_email());
 
-			int myPoint =0;
+			int myPoint = 0;
 			int plusPoint = 0; // 수입
 			int minusPoint = 0; // 지출
 			// 지출 코드
-			sql = "SELECT SUM(pnt_point) FROM point WHERE pnt_id= ?" + 
-					"    AND ( pnt_code != 'PNT001'" + 
-					"    AND pnt_code != 'PNT004'" + 
-					"    AND pnt_code !='PNT005'" + 
-					"    AND pnt_code != 'PNT007'" + 
-					"    AND pnt_code != 'PNT008'" + 
-					"    AND pnt_code != 'PNT010')";
+			sql = "SELECT SUM(pnt_point) FROM point WHERE pnt_id= ?" + "    AND ( pnt_code != 'PNT001'"
+					+ "    AND pnt_code != 'PNT004'" + "    AND pnt_code !='PNT005'" + "    AND pnt_code != 'PNT007'"
+					+ "    AND pnt_code != 'PNT008'" + "    AND pnt_code != 'PNT010')";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, id);
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				minusPoint = rs.getInt(1);
-			}else {
-				minusPoint =0;
+			} else {
+				minusPoint = 0;
 			}
 			// 수입 코드
-			sql = "SELECT SUM(pnt_point) FROM point" + 
-					"    WHERE pnt_id=?" + 
-					"    AND ( pnt_code = 'PNT001'" + 
-					"    OR pnt_code = 'PNT004'" + 
-					"    OR pnt_code = 'PNT005'" + 
-					"    OR pnt_code = 'PNT007'" + 
-					"    OR pnt_code = 'PNT008'" + 
-					"    OR pnt_code = 'PNT010')";
+			sql = "SELECT SUM(pnt_point) FROM point" + "    WHERE pnt_id=?" + "    AND ( pnt_code = 'PNT001'"
+					+ "    OR pnt_code = 'PNT004'" + "    OR pnt_code = 'PNT005'" + "    OR pnt_code = 'PNT007'"
+					+ "    OR pnt_code = 'PNT008'" + "    OR pnt_code = 'PNT010')";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, id);
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				plusPoint = rs.getInt(1);
-			}else {
+			} else {
 				plusPoint = 0;
 			}
 			myPoint = plusPoint - minusPoint;
@@ -309,21 +300,21 @@ public class UserDAO {
 	}
 
 	/* 프로필 사진 수정 */
-public void updateFileName(String delFileName, GGDto dto) {
-	String sql = "UPDATE userinfo SET u_newName=? WHERE u_id=?";
-	
-	try {
-		//dto에는 변경할 사진의 파일명, db에는 기존 사진의 파일명이 있다.
-		ps = conn.prepareStatement(sql);
-		ps.setString(1, dto.getU_newName());
-		ps.setString(2, dto.getU_id());
-		
-		int success = ps.executeUpdate();
-		System.out.println("사진 변경 성공 : "+success);
-	} catch (SQLException e) {
-		e.printStackTrace();
+	public void updateFileName(String delFileName, GGDto dto) {
+		String sql = "UPDATE userinfo SET u_newName=? WHERE u_id=?";
+
+		try {
+			// dto에는 변경할 사진의 파일명, db에는 기존 사진의 파일명이 있다.
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, dto.getU_newName());
+			ps.setString(2, dto.getU_id());
+
+			int success = ps.executeUpdate();
+			System.out.println("사진 변경 성공 : " + success);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
-}
 
 	public int changePw(String id, String pw) {
 		String sql = "UPDATE UserInfo SET u_pw= ? WHERE u_id=?";
@@ -342,63 +333,62 @@ public void updateFileName(String delFileName, GGDto dto) {
 		return success;
 	}
 
+	/*
+	 * public ArrayList<GGDto> notifyList() {
+	 * 
+	 * String sql =
+	 * "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n1_code, hn.hn_tm, hn.hn_adminid, hn.hn_code"
+	 * + "FROM notify n LEFT OUTER JOIN his_notify hn" + "ON n.n_no = hn.n_no";
+	 * ArrayList<GGDto> userList = new ArrayList<GGDto>(); GGDto dto = null;
+	 * 
+	 * try { ps = conn.prepareStatement(sql); rs = ps.executeQuery(); while
+	 * (rs.next()) { dto = new GGDto(); dto.setN_no(rs.getInt("n_no"));
+	 * dto.setN_receivedId(rs.getString("n_receivedId"));
+	 * dto.setN_sendId(rs.getString("n_sendId")); } } catch (SQLException e) {
+	 * e.printStackTrace(); } finally { resClose(); }
+	 * 
+	 * return userList; }
+	 */
+
+	
 	public ArrayList<GGDto> userList() {
-		
-		String sql = "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n1_code, hn.hn_tm, hn.hn_adminid, hn.hn_code" + 
-				"FROM notify n LEFT OUTER JOIN his_notify hn" + 
-				"ON n.n_no = hn.n_no";
+		String sql = "SELECT u_id,u_nname,u_name,u_email,u_phone,u_joinTm FROM userinfo";
 		ArrayList<GGDto> userList = new ArrayList<GGDto>();
 		GGDto dto = null;
-		
+
 		try {
-			ps=conn.prepareStatement(sql);
+			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				dto = new GGDto();
-				dto.setN_no(rs.getInt("n_no"));
-				dto.setN_receivedId(rs.getString("n_receivedId"));
-				dto.setN_sendId(rs.getString("n_sendId"));
-				
-				
-				
+				dto.setU_id(rs.getString("u_id"));
+				dto.setU_nname(rs.getString("u_nname"));
+				dto.setU_name(rs.getString("u_name"));
+				dto.setU_email(rs.getString("u_email"));
+				dto.setU_phone(rs.getString("u_phone"));
+				dto.setU_joinTm(rs.getDate("u_joinTm"));
+				userList.add(dto);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			resClose();
 		}
 
 		return userList;
 	}
 
-	/*
-	 * public ArrayList<GGDto> notifyList() { String sql =
-	 * "SELECT n_no,n_receiveid,n_sendid,n1_code,n_n_adminid FROM notify";
-	 * ArrayList<GGDto> userList = new ArrayList<GGDto>(); GGDto dto = null;
-	 * 
-	 * try { ps=conn.prepareStatement(sql); rs = ps.executeQuery(); while(rs.next())
-	 * { dto = new GGDto(); dto.setU_id(rs.getString("u_id"));
-	 * dto.setU_nname(rs.getString("u_nname"));
-	 * dto.setU_name(rs.getString("u_name"));
-	 * dto.setU_email(rs.getString("u_email"));
-	 * dto.setU_phone(rs.getString("u_phone"));
-	 * dto.setU_joinTm(rs.getDate("u_joinTm")); userList.add(dto); } } catch
-	 * (SQLException e) { e.printStackTrace(); }finally { resClose(); }
-	 * 
-	 * return userList; }
-	 */
-
 	public HashMap<String, ArrayList<GGDto>> category() {
-		
-		/*==신고상태 카테고리==*/
+
+		/* ==신고상태 카테고리== */
 		String sql = "select * from codes where c_code like 'HN%'";
 		HashMap<String, ArrayList<GGDto>> categoryMap = new HashMap<String, ArrayList<GGDto>>();
 		ArrayList<GGDto> list1 = new ArrayList<GGDto>();
 		ArrayList<GGDto> list2 = new ArrayList<GGDto>();
 		try {
-			ps=conn.prepareStatement(sql);
+			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				GGDto dto = new GGDto();
 				dto.setC_code(rs.getString("c_code"));
 				dto.setC_name(rs.getString("c_name"));
@@ -408,13 +398,13 @@ public void updateFileName(String delFileName, GGDto dto) {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		/*==신고 대분류 카테고리==*/
+
+		/* ==신고 대분류 카테고리== */
 		sql = "select * from n1_code";
 		try {
-			ps=conn.prepareStatement(sql);
+			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				GGDto dto = new GGDto();
 				dto.setN1_code(rs.getString("n1_code"));
 				dto.setN1_name(rs.getString("n1_name"));
@@ -424,9 +414,8 @@ public void updateFileName(String delFileName, GGDto dto) {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return categoryMap;
 	}
-
 
 }
