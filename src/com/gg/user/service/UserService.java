@@ -304,6 +304,13 @@ public class UserService {
 		return dao.notifyList();
 	}
 
+
+public void search() {
+	
+	
+}
+
+
 	public HashMap<String, ArrayList<GGDto>> category() {
 		UserDAO dao = new UserDAO();
 		HashMap<String, ArrayList<GGDto>> categoryMap = dao.category();
@@ -311,5 +318,6 @@ public class UserService {
 
 		return categoryMap;
 	}
+
 
 }
