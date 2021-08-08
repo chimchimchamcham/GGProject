@@ -17,6 +17,7 @@ import com.gg.board.dao.BoardDAO;
 import com.gg.dto.GGDto;
 import com.gg.trade.dao.TradeDAO;
 import com.gg.user.dao.AlarmDAO;
+import com.gg.user.dao.PointDAO;
 import com.google.gson.Gson;
 
 public class BoardService {
@@ -624,9 +625,11 @@ public class BoardService {
 						String p_title = dao.getTitle(p_no);
 						int t_no = dto2.getT_no();
 						//알람보내기
-						Aldao.insertAlarm(successer, "A004", "["+p_title+"..]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
-						Aldao.insertAlarm(p_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./auctionD?t_no="+t_no);//경매글 작성자
-						Aldao.insertAlarm(p_id, "A004", "["+p_title+"]"+successer+"님이 낙찰자로 선정되었습니다.", "Y",  "./tradeDetail?t_no="+t_no);//경매글 작성자
+						PointDAO Pdao = new PointDAO();
+						String successer_nname = Pdao.getNname(successer);
+						Aldao.insertAlarm(successer, "A004", "["+p_title+"]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
+						Aldao.insertAlarm(p_id, "A011", "["+p_title+"]경매가 종료 되었습니다.", "Y", "./auctionDetail?p_no="+p_no);//경매글 작성자
+						Aldao.insertAlarm(p_id, "A004", "["+p_title+"]"+successer_nname+"님이 낙찰자로 선정되었습니다.", "Y",  "./tradeDetail?t_no="+t_no);//경매글 작성자
 						
 						// dto 내용 변경 dto.setAu_code(dto2.getAu_code());
 						dto.setAu_sucTm(dto2.getAu_sucTm());

@@ -161,7 +161,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 							System.out.println("게시글 제목 : "+title);
 							title = Aldao.cutTitle(title);
 							System.out.println("자른 게시글 제목 : "+title);
-							Aldao.insertAlarm(bidUsr, "A010", "["+title+"..]입찰자가 변경되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
+							Aldao.insertAlarm(bidUsr, "A010", "["+title+"]입찰자가 변경되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
 							Aldao.resClose();
 							Bdao.resClose();
 						}
@@ -272,11 +272,16 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		int t_no = insertTrade(p_no, p_id, u_id);
 		//글번호로 제목을 가져오는 기능
 		String p_title = Bdao.getTitle(p_no);
+		p_title = Aldao.cutTitle(p_title);
 		//알람보내기
-		Aldao.insertAlarm(u_id, "A004", "["+p_title+"..]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
-		Aldao.insertAlarm(p_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 작성자
+		PointDAO Pdao = new PointDAO();
+		String u_nname = Pdao.getNname(u_id);
+		Aldao.insertAlarm(u_id, "A004", "["+p_title+"]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
+		Aldao.insertAlarm(p_id, "A011", "["+p_title+"]경매가 종료 되었습니다.", "Y", "./auctionDetail?p_no="+p_no);//경매글 작성자
+		Aldao.insertAlarm(p_id, "A004", "["+p_title+"]"+u_nname+"님이 낙찰자로 선정되었습니다.", "Y",  "./tradeDetail?t_no="+t_no);//경매글 작성자
 		Aldao.resClose();
 		Bdao.resClose();
+		Pdao.resClose();
 		
 		return success>0?true:false;
 	}
@@ -326,11 +331,6 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				//글번호, 판매자, 구매자를 인자값으로 넣어서, 거래페이지 생성과, 거래히스토리에 "0원" "생성" 추가
 				int t_no = insertTrade(p_no, p_id, ha_bidusr);
 				
-				//알람보내기
-				Aldao.insertAlarm(successer, "A004", "["+p_title+"..]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
-				Aldao.insertAlarm(p_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 작성자
-				Aldao.resClose();
-				Bdao.resClose();
 			}
 			
 			return dto;
@@ -398,7 +398,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				p_title = Aldao.cutTitle(p_title);
 				
 				//경매종료 알람보내기
-				Aldao.insertAlarm(bid_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
+				Aldao.insertAlarm(bid_id, "A011", "["+p_title+"]경매가 종료 되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
 				insertRs = dao.insertPoint(bid_id, instantpr, "SYSTEM", "PNT007", p_no);
 				
 				if(insertRs) {
@@ -438,6 +438,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 						if(insertNsaleNscodeSuccess) {
 							//구매요청자의 id는 href, 판매자의 id는 session를 받아서 거래페이지 생성
 							t_no = insertTrade(p_no, t_saler, t_buyer);
+							
 							System.out.println("[TRADEDAO]/BUYREQUESTPROCESS T_NO : "+t_no);
 						}
 					}
@@ -821,5 +822,11 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				Bdao.resClose();
 				Pdao.resClose();
 			}
+		}
+		
+		public void pushAcceptBuyRequest() {
+			AlarmDAO Adao = new AlarmDAO();
+			BoardDAO Bdao = new BoardDAO();
+			PointDAO Pdao = new PointDAO();
 		}
 }
