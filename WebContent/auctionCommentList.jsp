@@ -21,11 +21,12 @@
 			<td id="content" >
 				<p>${comments.pc_content }</p>
 			</td>
-			<td>
-				<div style='margin-top: 1px'>${comments.pc_tm }<img src="./img/notify-icon.png" width="20px" height="20px" style="float:right"/></div>
+			<td style="border-bottom: 0.5px solid lightgray;">
+				<div style='margin-top: 1px'>${comments.pc_tm }<img src="./img/notify-icon.png" width="20px" height="20px" style="float:right" id="${comments.pc_id }" class="reporter"/></div>
 				<div id='nullPoint'>&nbsp;&nbsp;</div>
-			 	<div >수정하기      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      삭제하기</div>
-				<div style=" text-align:center"><img src="./img/CommentArrow.png" width="20px" height="20px"/></div>
+			 	<div style="text-align: center; font-weight: bold">수정하기      &nbsp;&nbsp;&nbsp;      삭제하기</div>
+			 	<div id='nullPoint'>&nbsp;&nbsp;</div>
+				<div><img src="./img/CommentArrow.png" width="20px" height="20px"/></div>
 			</td>
 		</tr>
 	
