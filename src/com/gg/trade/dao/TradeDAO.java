@@ -438,10 +438,13 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 						if(insertNsaleNscodeSuccess) {
 							//구매요청자의 id는 href, 판매자의 id는 session를 받아서 거래페이지 생성
 							t_no = insertTrade(p_no, t_saler, t_buyer);
-							
 							System.out.println("[TRADEDAO]/BUYREQUESTPROCESS T_NO : "+t_no);
+							//구매요청 수락 알람
+							pushRequestResult(p_no, t_no, t_saler, t_buyer, rq_YN);
 						}
 					}
+					//구매요청 거절 알람
+					pushRequestResult(p_no, -199, t_saler, t_buyer, rq_YN);
 				}
 				
 			} catch (SQLException e) {
@@ -824,9 +827,33 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			}
 		}
 		
-		public void pushAcceptBuyRequest() {
+		//구매요청 수락, 거절 알람
+		public void pushRequestResult(int p_no,int t_no,String t_saler,String t_buyer,String rq_YN) {
 			AlarmDAO Adao = new AlarmDAO();
 			BoardDAO Bdao = new BoardDAO();
 			PointDAO Pdao = new PointDAO();
+			try {
+				String p_title = Bdao.getTitle(p_no);//제목가져오기
+				p_title = Adao.cutTitle(p_title);//자르기
+				String b_nname = Pdao.getNname(t_buyer);//닉네임가져오기
+				String path = null;
+				if(rq_YN.equals("Y")) {//수락알람 -> 거래페이지로 이동
+					path="./tradeDetail?t_no="+t_no;
+					Adao.insertAlarm(t_buyer, "A008", "["+p_title+"]구매요청이 수락되었습니다.", "Y", path);
+					Adao.insertAlarm(t_saler, "A008", "["+p_title+"]"+b_nname+"의 구매요청이 수락되었습니다.", "Y", path);
+				}else {//거절알람 -> 해당 판매 페이지로 이동
+					path="./salesDetail?p_no="+p_no;
+					Adao.insertAlarm(t_buyer, "A009", "["+p_title+"]구매요청이 거절되었습니다.", "Y", path);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				Adao.resClose();
+				Bdao.resClose();
+				Pdao.resClose();
+			}
+			
+
 		}
 }
