@@ -135,7 +135,7 @@ public class AlarmDAO {
 		String title = null;
 		
 		if(p_title.length()>8) {
-			title = p_title.substring(0, 6);
+			title = p_title.substring(0, 6)+"..";
 		}else {
 			title = p_title;
 		}

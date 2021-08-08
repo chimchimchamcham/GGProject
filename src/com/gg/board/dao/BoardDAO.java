@@ -444,6 +444,7 @@ public class BoardDAO {
 	         String reseveid = dto.getF_receiveid();
 	         String sendid = dto.getF_sendid();
 
+
 	         // 유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
 	         if (userid.equals(reseveid)) {
 	            dto.setThisuserFlowingYN("<button class='hellow'>+팔로잉</button>");// N
