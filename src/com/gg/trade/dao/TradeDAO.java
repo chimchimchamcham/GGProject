@@ -415,7 +415,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		//구매요청을 수락하면 거래페이지 생성, 거절하면 끝
 		public int buyRequestProcess(int rq_no, String rq_YN, int p_no, String t_saler, String t_buyer) {
 			System.out.println("[TRADEDAO]/BUYREQUESTPROCESS START");
-			String sql = "UPDATE REQUEST SET RQ_YN = ? WHERE RQ_NO = ?; ";
+			String sql = "UPDATE REQUEST SET RQ_YN = ? WHERE RQ_NO = ?";
 			int success = 0;
 			boolean insertNsaleNscodeSuccess = false;
 			int t_no = 0;

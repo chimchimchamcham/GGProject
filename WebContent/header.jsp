@@ -398,7 +398,11 @@ body {
       <nav class="header_nav">
          <div id="navWrap">
             <ul id="dropdown">
+<<<<<<< HEAD
                <li><a href="#" id="saleA">판매</a>
+=======
+               <li><a href="#" class="sale">판매</a>
+>>>>>>> 43e9fba1d7f8139ecc672cf5363a89a1ce7e939a
                   <ul id="sub">
                      <li><a href="#">패션의류</a></li>
                      <li><a href="#">뷰티잡화</a></li>
@@ -413,7 +417,11 @@ body {
                      <li><a href="#">기타</a></li>
                   </ul></li>
    
+<<<<<<< HEAD
                <li><a href="#" id="auctionA">경매</a>
+=======
+               <li><a href="#" class="action">경매</a>
+>>>>>>> 43e9fba1d7f8139ecc672cf5363a89a1ce7e939a
                   <ul id="sub">
                      <li><a href="#">패션의류</a></li>
                      <li><a href="#">뷰티잡화</a></li>
