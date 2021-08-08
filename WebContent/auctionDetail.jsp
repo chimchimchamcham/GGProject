@@ -495,7 +495,46 @@ a:hover {
 		console.log(check);	
 		
 	}); 
-	 
+	
+	/* 수정하기 엔터  버튼 누르기.*/
+	$(document).on("click","#update_enter",function(){
+		console.log("수정 버튼 클릭");
+		var update_text = $(".update_text").val();
+		
+		if(update_text != ''){
+			var update_no =$("textarea").attr("id");
+			console.log("수정할 댓글 번호 : ", update_no);	
+			comm_update(update_no,update_text);
+			
+		}else {
+			alert("수정할 댓글을 입력하세요!");
+		}
+		
+		
+		
+	});
+	/* 수정 기능 */
+	function comm_update(pc_no,context){
+		var update_no = {};
+		update_no.pc_no = pc_no;
+		
+		update_no.context = context;
+		
+		$.ajax({
+			type: "POST",
+			url : "comm_update",
+			data: update_no,
+			dataType : "JSON",
+			success : function(data){
+				console.log("성공");
+				showCommentList();
+				check=true;
+			},
+			error : function(e){
+				console.log("에러");		
+			}
+		});
+	}
 	/* 삭제 버튼 */
 	$(document).on('click','.comm_del', function(){
 		var del_comm = $(this).attr("id");
@@ -536,7 +575,7 @@ a:hover {
 			$('#board_text_controll').html("(300 / 300)");
 		}
 	});	
-	
+	/* 댓글 창 보여주기 */
 	function showCommentList(){
 		
 		$.ajax({
