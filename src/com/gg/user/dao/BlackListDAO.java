@@ -29,7 +29,7 @@ public class BlackListDAO {
 		System.out.println(dto.getN_sendId());
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, dto.getN_receivedId());
+			ps.setString(1, dto.getN_receiveId());
 			ps.setString(2, dto.getN_sendId());
 			ps.setString(3, dto.getN_content());
 			ps.setString(4, dto.getN1_code());
