@@ -234,6 +234,7 @@ function chargePopup() { window.open("./popup/chargePopup.jsp", "chargePop", "wi
 //포인트내역 팝업
 function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "width=900, height=600, left=450, top=180"); }
 
+
 	var allurl = null;
 	$(document).ready(function() {
 		if(allurl==null){
@@ -245,37 +246,61 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 	'./soldlist':판매리스트
 	
 	*/
-		
-		$.ajax({
-			type:'post',
-			url:allurl,
-			data:{  index1 : 0,
-					index2 : 0 },
-			dataType:'JSON',
-			success:function(data){
-				console.log("data",data);
-				if(data != null){
-					if(data.soldlist != null){//판매
-						soled_list(data.soldlist);
-					}else if (data.auctionlist != null) {//경매
-						auction_list(data.auctionlist);
-					}else if (data.maidelist != null) {//구매
-						maide_list(data.maidelist);
-					}else if (data.communitylist != null) {//커뮤니티
-						community_list(data.communitylist);
-					}else if (data.flowlist != null) {//팔로우 팔로잉
-						flow_list(data.flowlist);
-					}else if (data.reqlist != null) {//거래 요청
-						request_list(data.reqlist);
-					}else if (data.lovelist != null) {//거래 요청
-						love_list(data.lovelist);
-					}
-				}
-			},
-			error:function(e){
-				console.log(e);
-			}
-		});
+
+/*
+var allurl = ${allurl}
+
+
+이제 마이리스트에 들어갈때 무슨 리스트 보여줄건지 설정하려면 allurl 안에 문자열을 뿌려주어야합니다
+
+req.setAttribute("allurl", "'./soldlist'");
+
+등으로요
+
+
+
+뿌려줘야하는 목록
+./soldlist : 판매리스트
+./auctionlist : 경매리스트
+./maidelist : 구매리스트
+./communitylist : 커뮤니티리스트
+./flowlist : 팔로우리스트
+./requestlist : 구매요청리스트
+./lovelist : 구매요청리스트
+
+
+$.ajax({
+	type:'post',
+	url:allurl,
+	data:{  index1 : 0,
+			index2 : 0 },
+	dataType:'JSON',
+	success:function(data){
+		console.log("data",data);
+		if(data != null){
+			if(data.soldlist != null){//판매
+				soled_list(data.soldlist);
+				  
+			}else if (data.auctionlist != null) {//경매
+				auction_list(data.auctionlist);
+			   
+			}else if (data.maidelist != null) {//구매
+				maide_list(data.maidelist);
+			   
+			}else if (data.communitylist != null) {//커뮤니티
+				community_list(data.communitylist);
+			   
+			}else if (data.flowlist != null) {//팔로우 팔로잉
+				flow_list(data.flowlist);
+			   
+			}else if (data.reqlist != null) {//거래 요청
+				request_list(data.reqlist);
+			  
+			}else if (data.lovelist != null) {//거래 요청
+				love_list(data.lovelist);
+			    
+
+*/
 		
 		$("#twoButton>button").click(function(){
 			$button = $("#twoButton>button");
