@@ -176,4 +176,27 @@ public class CommentService {
 		return success;
 	}
 
+
+
+	public HashMap<String, Object> auctionCommentList(int page, int p_no) {
+		System.out.println("받아온 페이지 정보 : " +  page);
+		System.out.println("받아 온 옥션 글 번호 :" + p_no);
+		CommentDAO dao = new CommentDAO();
+		HashMap<String, Object> map=null;
+		try {
+			map = dao.auctionCommentList(page,p_no);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
+		
+		
+		
+		
+		return map;
+	}
+
 }
