@@ -190,14 +190,9 @@ a{
 		console.log($(this).children("#t_no").val());
 		alert("clicked");
 	});
-	/* $("table").click(function(){
-		console.log($(this).find("#t_no").val());
-		alert("clicked");
-	}); */
 	
-	/* function clickEvent(){
-		console.log($(this).children("#t_no").val());
-		alert("clicked");
-	} */
+	//판매버튼을 클릭 했을 때 판매에 관련된 목록만 가져오기
+	
+	
 </script>
 </html>

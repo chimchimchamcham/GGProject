@@ -137,15 +137,15 @@ public class BoardDAO {
 
 	public boolean isFollowed(String u_id, int p_no) {
 		System.out.println("DAO isLiked");
-		String sql = "SELECT FROM FOLLOW WHERE F_RECEIVEID = (SELECT P_ID FROM POST P_ID";
+		String sql = "SELECT * FROM FOLLOW WHERE F_RECEIVEID = (SELECT P_ID FROM POST WHERE P_NO = ?) AND F_SENDID = ?";
 		System.out.println("u_id : " + u_id);
 		System.out.println("p_no : " + p_no);
 
 		boolean isFollowed = false;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, u_id);
-			ps.setInt(2, p_no);
+			ps.setInt(1, p_no);
+			ps.setString(2, u_id);
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				isFollowed = true;

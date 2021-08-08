@@ -495,6 +495,11 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 					insertHisTradeSuccess = insertHisTrade(t_no, 0, "HT001");
 					System.out.println("[TRADEDAO]/INSERTTRADE T_NO : "+t_no);
 					System.out.println("[TRADEDAO]/INSERTTRADE insertHisTradeSuccess : "+insertHisTradeSuccess);
+					
+					//거래댓글에 '거래를 시작하세요' 매세지를 추가 (조인시 행이 사라지는 것을 방지하기 위함)
+					boolean insertTradeCommentSuccess = insertTradeComment(t_no, "거래를 시작하세요", "SYSTEM");
+					System.out.println("[TRADEDAO]/INSERTTRADE INSERTTRADECOMMENTSUCCESS : "+insertTradeCommentSuccess);
+					
 				}
 				
 			} catch (SQLException e) {
@@ -805,6 +810,22 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			return list;
 		}
 		
+		//거래페이지 댓글 추가 기능
+		public boolean insertTradeComment(int t_no, String tc_content, String tc_id) {
+			String sql = "INSERT INTO TRADE_COMMENT (TC_NO, T_NO, TC_CONTENT, TC_TM, TC_ID) VALUES(TC_NO_SEQ.NEXTVAL, ?, ?, SYSDATE, ?)";
+			int success = 0;
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, t_no);
+				ps.setString(2, tc_content);
+				ps.setString(3, tc_id);
+				success = ps.executeUpdate();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return success>0?true:false;
+		}
+		
 		//구매요청 알람보내기
 		public void pushBuyRequestAlarm(int p_no, String u_id) {
 			AlarmDAO Adao = new AlarmDAO();
@@ -853,7 +874,6 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				Bdao.resClose();
 				Pdao.resClose();
 			}
-			
-
 		}
+		
 }
