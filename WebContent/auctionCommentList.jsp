@@ -9,20 +9,19 @@
 </head>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
-	<table>
+	<table id='comments_table'>
 	<c:forEach items="${list}" var="comments">
 		<tr>
-			<td>${comments.p_no }</td>
+			<c:if test="${comments.u_newName eq 'default-profile.png' }">
+				<td><a href="./myPage?id=${comments.pc_id }"><img src="./img/default-profile.png" id='comments_img'><br/>${comments.u_nname } </a></td>
+			</c:if>
+			<c:if test="${comments.u_newName ne 'default-profile.png' }">
+				<td><a href="./myPage?id=${comments.pc_id }"><img src="/photo/${comments.u_newName }" id='comments_img'><br/>${comments.u_nname } </a></td>
+			</c:if>
 		</tr>
 	
 	</c:forEach>
 	</table>
-	<div class="board_t_b">
-		<textarea class="board_text" style="resize: none;"></textarea>
-		<button class="enter">enter</button>
-		<div id="board_text_controll">(0 / 300)</div>
-		
-	</div>
 	<!-- 페이지를 몇부터 몇까지 보여줄건지 (이전/다음) -->
 	<div class="pageArea">
 		<a href="./?page=${currPage-1 }"><</a>
@@ -34,5 +33,12 @@
 		</c:forEach>
 		<a href="./?page=${currPage +1 }">></a>
 	</div>
+	<div class="board_t_b">
+		<textarea class="board_text" style="resize: none;"></textarea>
+		<button class="enter">enter</button>
+		<div id="board_text_controll">(0 / 300)</div>
+		
+	</div>
+	
 </body>
 </html>

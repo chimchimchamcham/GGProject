@@ -90,9 +90,33 @@
 		border : 1px solid lightskyblue;
 	}
 	.enter {
-	width: 50px;
+	width: 55px;
 	height: 5vh;
+	border : 0.5px solid gray;
 	margin-bottom: 10px;
+}
+.pageArea{
+	margin : 0 auto;
+	text-align : center;
+}
+#comments_img {
+	width: 90px;
+	height: 90px;
+	border-radius: 50px;
+	float: right;
+	overflow: hidden;
+	margin: 0px auto;
+	border: 0.5px solid lightgray;
+}
+#comments_table, td{
+	text-align: center;
+	border-bottom: 0.5px solid lightgray;
+	width: 92px;
+	height : 117px;
+}
+#comments_table td#content {
+	width: 1000px;
+	border : 1px solid black;
 }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
