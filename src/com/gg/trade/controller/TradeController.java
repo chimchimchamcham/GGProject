@@ -54,8 +54,9 @@ public class TradeController extends HttpServlet {
 			success = service.buyRequest();
 			System.out.println("Controller buyRequest success : " + success);
 			p_no = Integer.parseInt(req.getParameter("p_no"));
-			dis = req.getRequestDispatcher("/salesDetail?p_no=" + p_no);
-			dis.forward(req, resp);
+			/*dis = req.getRequestDispatcher("/salesDetail?p_no=" + p_no);
+			dis.forward(req, resp);*/
+			resp.sendRedirect("./salesDetail?p_no="+ p_no);
 			break;
 
 		case "/buyRequestCancel":
@@ -63,8 +64,9 @@ public class TradeController extends HttpServlet {
 			success = service.buyRequestCancel();
 			System.out.println("Controller buyRequest success : " + success);
 			p_no = Integer.parseInt(req.getParameter("p_no"));
-			dis = req.getRequestDispatcher("/salesDetail?p_no=" + p_no);
-			dis.forward(req, resp);
+			/*dis = req.getRequestDispatcher("/salesDetail?p_no=" + p_no);
+			dis.forward(req, resp);*/
+			resp.sendRedirect("./salesDetail?p_no="+ p_no);
 			break;
 
 		case "/bid":

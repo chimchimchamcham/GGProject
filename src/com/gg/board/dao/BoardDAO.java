@@ -150,7 +150,7 @@ public class BoardDAO {
 			if (rs.next()) {
 				isFollowed = true;
 			}
-			System.out.println("[DAO] isLiked : " + isLiked);
+			System.out.println("[DAO] isFollowed : " + isFollowed);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
