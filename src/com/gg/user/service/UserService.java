@@ -22,7 +22,6 @@ public class UserService {
 			this.req = req;
 			this.resp = resp;
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -304,12 +303,9 @@ public class UserService {
 		return dao.notifyList();
 	}
 
+	public void search() {
 
-public void search() {
-	
-	
-}
-
+	}
 
 	public HashMap<String, ArrayList<GGDto>> category() {
 		UserDAO dao = new UserDAO();
@@ -319,5 +315,15 @@ public void search() {
 		return categoryMap;
 	}
 
+	/*
+	 * public ArrayList<GGDto> n_firstCatSel() {
+	 * 
+	 * String n_firstCatSel = req.getParameter("n_firstCatSel");
+	 * System.out.println("선택 대분류명 : " + n_firstCatSel);
+	 * 
+	 * UserDAO dao = new UserDAO();
+	 * 
+	 * return list; }
+	 */
 
 }

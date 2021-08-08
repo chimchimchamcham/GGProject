@@ -385,17 +385,22 @@ h3 {
 		$("#notifyInfo, #blackInfo, #userInfo").hide();
 	});
 	
-	var param = {};
 	
 	/*==신고목록==*/
 	//대분류명 select
-	$("#firstCat").on('change', function(){
-		for ( var i in ${n_stateCat}) {
-			if($(".n1_name").text() == )
-		}
-		
-		
+ 	$("#firstCat").on('change', function(){
+ 		$.ajax({
+			type : 'POST',
+			url : 'n_firstCatSel',
+			data : {n_firstCatSel : '$("#firstCat option:selected").val()'},
+			dataType : 'JSON',
+			success : function(data) {
+				
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		});
 	});
-	
 </script>
 </html>
