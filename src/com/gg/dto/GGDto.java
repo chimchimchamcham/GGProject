@@ -43,7 +43,7 @@ public class GGDto {
 
    // 신고
    private int n_no;// 신고번호
-   private String n_receivedId; // 신고 받은 아이디
+   private String n_receiveId; // 신고 받은 아이디
    private String n_sendId; // 신고한 아이디
    private String n_content; // 신고내용
    private String n1_code; // 대분류코드
@@ -51,6 +51,11 @@ public class GGDto {
    private String n2_code; // 중분류코드
    private String Pntcode;// 분류코드
    
+   //신고 히스토리
+   private Date hn_tm; //신고 시간
+   private String hn_code; //신고 처리 상태
+   private String hn_adminid; //신고 담당자
+
    
    public String getPntcode() {
       return Pntcode;
@@ -437,12 +442,12 @@ public void setN_no(int n_no) {
 	this.n_no = n_no;
 }
 
-public String getN_receivedId() {
-	return n_receivedId;
+public String getN_receiveId() {
+	return n_receiveId;
 }
 
-public void setN_receivedId(String n_receivedId) {
-	this.n_receivedId = n_receivedId;
+public void setN_receiveId(String n_receiveId) {
+	this.n_receiveId = n_receiveId;
 }
 
 public String getN_sendId() {
@@ -483,6 +488,30 @@ public String getN2_code() {
 
 public void setN2_code(String n2_code) {
 	this.n2_code = n2_code;
+}
+
+public Date getHn_tm() {
+	return hn_tm;
+}
+
+public void setHn_tm(Date hn_tm) {
+	this.hn_tm = hn_tm;
+}
+
+public String getHn_code() {
+	return hn_code;
+}
+
+public void setHn_code(String hn_code) {
+	this.hn_code = hn_code;
+}
+
+public String getHn_adminid() {
+	return hn_adminid;
+}
+
+public void setHn_adminid(String hn_adminid) {
+	this.hn_adminid = hn_adminid;
 }
 
 public Date getB_startTm() {

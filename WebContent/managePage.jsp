@@ -147,7 +147,7 @@ h3 {
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
 		<h2>관리페이지</h2>
-		<p style="margin-left: 20px;">관리자1님</p>
+		<p style="margin-left: 20px;">${sessionScope.loginId}님의 관리페이지</p>
 		<div id="manageButton">
 			<button class="userBtn">회원목록</button>
 			<button class="notifyBtn">신고</button>
@@ -213,9 +213,14 @@ h3 {
 						</div>
 					</td>
 					<td style="text-align: right;"><select>
-							<option value="게시글">게시글</option>
-					</select> <select>
-							<option value="처리중">처리중</option>
+					<c:forEach items="${n1_code }" var="n1_codeCat">
+							<option value="${n1_codeCat.n1_code}">${n1_codeCat.n1_name}</option>
+					</c:forEach>
+					</select>
+					<select>
+					<c:forEach items="${n_stateCat }" var="n_stateCategory">
+							<option value="${n_stateCategory.c_code }">${n_stateCategory.c_name }</option>
+					</c:forEach>
 					</select></td>
 				</tr>
 			</table>
@@ -235,13 +240,13 @@ h3 {
 					</tr>
 					<c:forEach items="${notifyList}" var="notifyList">
 					<tr class="hoverTr">
-						<td>1</td>
-						<td>1234</td>
-						<td>emily1770</td>
-						<td>게시글</td>
-						<td>2021-08-08</td>
-						<td>처리중</td>
-						<td>관리자1</td>
+						<td>${notifyList.n_no}</td>
+						<td>${notifyList.n_receiveId}</td>
+						<td>${notifyList.n_sendId}</td>
+						<td>${notifyList.n1_name}</td>
+						<td>${notifyList.hn_tm}</td>
+						<td>${notifyList.hn_code}</td>
+						<td>${notifyList.hn_adminid}</td>
 					</tr>
 					<tr>
 						<td colspan="7"
@@ -319,6 +324,7 @@ h3 {
 	<!-- main end -->
 </body>
 <script type="text/javascript">
+
 	//초기 화면 설정
 	$(".userBtn").css({
 		"background-color" : "#D8D8D8"
