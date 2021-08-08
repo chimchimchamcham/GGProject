@@ -145,6 +145,9 @@ a:hover {
 	height: 5vh;
 	float: left;
 }
+.re_Arrow {
+	cursor: pointer;
+}
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -458,6 +461,20 @@ a:hover {
 	}
 	
 	 /*========================== 댓글 영역  ===================================== */
+	 /* 대댓글 불러오기 */
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	/*댓글 눌러 신고 하기 */
 	$(document).on('click','.reporter', function() {
 			var test = $(this).attr('id');
@@ -480,7 +497,7 @@ a:hover {
 		var update_comment ="";
 		
 		update_comment += "<tr id='update_form'>";
-		update_comment += "<td colspan=3><textarea id='"+update_comm +"' class='update_text' style='resize: none;' placeholder='수정할 댓글을 입력해 주세요'></textarea></td>";
+		update_comment += "<td colspan=3><textarea id='"+update_comm +"' class='update_text' style='resize: none;' placeholder='수정할 댓글을 입력해 주세요' maxlength=300></textarea></td>";
 		update_comment += "<td><button id='update_enter'>엔터</button></td>";
 		update_comment += "</tr>"; 
 		
