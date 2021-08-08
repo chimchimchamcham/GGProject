@@ -163,9 +163,9 @@ public class UserController extends HttpServlet {
 			req.setAttribute("userList", userList);
 			
 			//신고목록
-			ArrayList<GGDto> userList = service.userList();
-			System.out.println("userList size : "+userList.size());
-			req.setAttribute("userList", userList);
+			ArrayList<GGDto> notifyList = service.notifyList();
+			System.out.println("notifyList size : "+notifyList.size());
+			req.setAttribute("notifyList", notifyList);
 
 			
 			dis = req.getRequestDispatcher("managePage.jsp");

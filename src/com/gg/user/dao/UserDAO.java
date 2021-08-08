@@ -343,7 +343,33 @@ public void updateFileName(String delFileName, GGDto dto) {
 
 	public ArrayList<GGDto> userList() {
 		
-		String sql = "SELECT u_id, u_nname, u_name, u_email, u_phone,u_jointm FROM userinfo";
+		String sql = "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n1_code, hn.hn_tm, hn.hn_adminid, hn.hn_code" + 
+				"FROM notify n LEFT OUTER JOIN his_notify hn" + 
+				"ON n.n_no = hn.n_no";
+		ArrayList<GGDto> userList = new ArrayList<GGDto>();
+		GGDto dto = null;
+		
+		try {
+			ps=conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				dto = new GGDto();
+				dto.setN_no(rs.getInt("n_no"));
+				dto.setN_receivedId(rs.getString("n_receivedId"));
+				dto.setN_sendId(rs.getString("n_sendId"));
+				dto.setN1_code(n1_code);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+
+		return userList;
+	}
+
+	public ArrayList<GGDto> notifyList() {
+		String sql = "SELECT n_no,n_receiveid,n_sendid,n1_code,n_n_adminid FROM notify";
 		ArrayList<GGDto> userList = new ArrayList<GGDto>();
 		GGDto dto = null;
 		

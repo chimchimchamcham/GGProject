@@ -300,10 +300,15 @@ public int changePw() {
 	return dao.changePw(id,pw);
 }
 
+//관리페이지 목록
 public ArrayList<GGDto> userList() {
 	UserDAO dao = new UserDAO();
-	
 	return dao.userList();
+}
+
+public ArrayList<GGDto> notifyList() {
+	UserDAO dao = new UserDAO();
+	return dao.notifyList();
 }
 
 
