@@ -64,14 +64,18 @@ public class BoardController extends HttpServlet {
 			// 좋아요를 눌렀는지 확인
 			boolean isLiked = false;
 			isLiked = service.isLiked();
-
+			System.out.println("isLiked : " + isLiked);
+			
 			// 구매요청을 눌렀는지 확인
 			boolean isBuyRequested = false;
 			isBuyRequested = service.isBuyRequested();
-
+			System.out.println("isBuyRequested : " + isBuyRequested);
+			
 			// 팔로우를 했는지 안했는지 확인
 			boolean isFollowed = false;
-			//isFollowed = service.isFollowed();
+			isFollowed = service.isFollowed();
+			System.out.println("isFollowed : " + isFollowed);
+			
 			
 			// 판매자의 판매목록 3개를 가져오기
 			String p_id = dto.getP_id();
@@ -82,7 +86,7 @@ public class BoardController extends HttpServlet {
 			req.setAttribute("dto", dto);
 			req.setAttribute("isLiked", isLiked);
 			req.setAttribute("isBuyRequested", isBuyRequested);
-			//req.setAttribute("isFollowed", isFollowed);
+			req.setAttribute("isFollowed", isFollowed);
 			req.setAttribute("sale3List", sale3List);
 
 			dis = req.getRequestDispatcher("salesDetail.jsp");
