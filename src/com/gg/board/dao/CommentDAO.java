@@ -12,6 +12,9 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.gg.dto.GGDto;
+import com.gg.trade.dao.TradeDAO;
+import com.gg.user.dao.AlarmDAO;
+import com.gg.user.dao.PointDAO;
 
 public class CommentDAO {
 	public Connection conn = null;
@@ -75,18 +78,24 @@ public class CommentDAO {
 
 	public GGDto pushComment(GGDto dto) throws Exception {
 		
+		
 		String sql = "INSERT INTO post_comment VALUES(pc_no_seq.NEXTVAL,?,?,SYSDATE,?,'N',?)";
 		
 		//pc_no,p_no,pc_content,pc_tm,pc_parentno,pc_blindYN,pc_id;
+		
+		String pc_id = dto.getPc_id();
+		int p_no = dto.getP_no();
+		
 		ps = conn.prepareStatement(sql);
-		ps.setInt(1, dto.getP_no());
+		ps.setInt(1, p_no);
 		ps.setString(2, dto.getPc_content());
 		ps.setInt(3, dto.getPc_parentno());
-		ps.setString(4, dto.getPc_id());
+		ps.setString(4, pc_id);
 		
 		int success = ps.executeUpdate();
 		if(success>0) {
 			System.out.println("댓글 등록 성공.");
+			pushCommentAlarm(p_no, pc_id,true,-100);//댓글등록알람보내기
 		}
 		
 		return dto;
@@ -196,9 +205,88 @@ public class CommentDAO {
 		ps.setString(4, pc_id);
 		check = ps.executeUpdate();
 		
+		//대댓글등록알람보내기
+		if(check > 0) {
+			pushCommentAlarm(p_no, pc_id, false,pc_parentno);
+		}
+		
 		
 		return check;
 	}
+	
+	//댓글 등록과 등시에 댓글 등록 알람을 게시글 작성자에게 보냄
+	//commentYN=true일경우 댓글알람 
+	//commentYN=false일경우 대댓글알람
+	public void pushCommentAlarm(int p_no,String pc_id,boolean commentYN,int pc_parentno) {
+		
+		TradeDAO Tdao = new TradeDAO();
+		AlarmDAO Adao = new AlarmDAO();
+		PointDAO Pdao = new PointDAO();
+		BoardDAO Bdao = new BoardDAO();
+		
+		try {
+			String p_id = Tdao.selectPostP_id(p_no);//댓글이 작성된 게시글 작성자
+			String pc_nname = Pdao.getNname(pc_id);//댓글작성자 닉네임 
+			String p_title = Bdao.getTitle(p_no);//댓글이 작성된 게시글 제목
+			p_title = Adao.cutTitle(p_title);//제목 자르기
+			String p_code = Tdao.selectPostP_code(p_no);
+			System.out.println("게시글 ");
+			String path = null;
+			String pc_parentId = null;
+			//댓글이 달린 글이 경매글인지 판매글인지 구분
+			if(p_code.equals("P001")) {//경매글
+				path="./auctionDetail?p_no="+p_no;
+			}else if(p_code.equals("P002")) {//판매글
+				path="./salesDetail?p_no="+p_no;
+			}else if(p_code.equals("P004")) {//커뮤니티글
+				path="./commDetail>p_no="+p_no;
+			}
+			System.out.println("알람경로 : "+path);
+			//댓글인지 대댓글인지에 따라 알람 구분
+			if(commentYN) {//댓글알람
+				Adao.insertAlarm(p_id, "A001", "["+p_title+"]"+pc_nname+"이 댓글을 달았습니다.", "N", path);
+			}else {//대댓글알람
+				pc_parentId = getParentCommentId(pc_parentno);
+				Adao.insertAlarm(pc_parentId, "A001", "["+p_title+"]"+pc_nname+"이 대댓글을 달았습니다.", "N", path);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			Tdao.resClose();
+			Adao.resClose();
+			Pdao.resClose();
+			Bdao.resClose();
+		}
+		
+		
+	}
+	
+	public String getParentCommentId(int pc_parentno) {
+		
+		String pc_parentId = null;
+		
+		String sql = "select pc_id from post_comment where pc_no=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, pc_parentno);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				pc_parentId = rs.getString("pc_id");
+				System.out.println("부모 댓글 아이디 : "+pc_parentId);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return pc_parentId;
+		
+	}
+	
+	
 
 	public HashMap<String, Object> auctionCommentList(int page, int p_no) throws Exception {
 		System.out.println("DAO page : " + page);
