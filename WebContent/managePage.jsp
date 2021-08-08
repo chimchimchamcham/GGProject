@@ -212,7 +212,8 @@ h3 {
 								src="img/search-icon.png" alt="search-icon">
 						</div>
 					</td>
-					<td style="text-align: right; width:160px;"><small>대분류명  </small><select>
+					<td style="text-align: right; width:160px;"><small>대분류명  </small>
+					<select id="firstCat">
 					<option value="all">전체</option>
 					<c:forEach items="${n1_code }" var="n1_codeCat">
 							<option value="${n1_codeCat.n1_code}">${n1_codeCat.n1_name}</option>
@@ -383,5 +384,13 @@ h3 {
 		$("#myInfo").show();
 		$("#notifyInfo, #blackInfo, #userInfo").hide();
 	});
+	
+	
+	/*==신고목록==*/
+	//대분류명 select
+	$("#firstCat").onchange(function(){
+		
+	})
+	
 </script>
 </html>
