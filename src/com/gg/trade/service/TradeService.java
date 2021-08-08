@@ -397,10 +397,11 @@ public void buyNow(){
 	public void tradeList() throws IOException{
 		System.out.println("[TRADESERVICE]/TRADELIST START");
 		String id = (String) req.getSession().getAttribute("loginId");
+		String p_code = req.getParameter("p_code");
 		TradeDAO dao = new TradeDAO();
 		HashMap<String, Object> map = new HashMap<>();
 		boolean success = false;
-		ArrayList<GGDto> list = dao.tradeList(id);
+		ArrayList<GGDto> list = dao.tradeList(id, p_code);
 		if(list != null) {
 			success = true;
 			map.put("list", list);
