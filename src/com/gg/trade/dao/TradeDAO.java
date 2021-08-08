@@ -161,7 +161,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 							System.out.println("게시글 제목 : "+title);
 							title = Aldao.cutTitle(title);
 							System.out.println("자른 게시글 제목 : "+title);
-							Aldao.insertAlarm(bidUsr, "A010", "["+title+"..]입찰자가 변경되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
+							Aldao.insertAlarm(bidUsr, "A010", "["+title+"]입찰자가 변경되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
 							Aldao.resClose();
 							Bdao.resClose();
 						}
@@ -272,11 +272,16 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		int t_no = insertTrade(p_no, p_id, u_id);
 		//글번호로 제목을 가져오는 기능
 		String p_title = Bdao.getTitle(p_no);
+		p_title = Aldao.cutTitle(p_title);
 		//알람보내기
-		Aldao.insertAlarm(u_id, "A004", "["+p_title+"..]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
-		Aldao.insertAlarm(p_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 작성자
+		PointDAO Pdao = new PointDAO();
+		String u_nname = Pdao.getNname(u_id);
+		Aldao.insertAlarm(u_id, "A004", "["+p_title+"]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
+		Aldao.insertAlarm(p_id, "A011", "["+p_title+"]경매가 종료 되었습니다.", "Y", "./auctionDetail?p_no="+p_no);//경매글 작성자
+		Aldao.insertAlarm(p_id, "A004", "["+p_title+"]"+u_nname+"님이 낙찰자로 선정되었습니다.", "Y",  "./tradeDetail?t_no="+t_no);//경매글 작성자
 		Aldao.resClose();
 		Bdao.resClose();
+		Pdao.resClose();
 		
 		return success>0?true:false;
 	}
@@ -326,11 +331,6 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				//글번호, 판매자, 구매자를 인자값으로 넣어서, 거래페이지 생성과, 거래히스토리에 "0원" "생성" 추가
 				int t_no = insertTrade(p_no, p_id, ha_bidusr);
 				
-				//알람보내기
-				Aldao.insertAlarm(successer, "A004", "["+p_title+"..]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
-				Aldao.insertAlarm(p_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 작성자
-				Aldao.resClose();
-				Bdao.resClose();
 			}
 			
 			return dto;
@@ -398,7 +398,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				p_title = Aldao.cutTitle(p_title);
 				
 				//경매종료 알람보내기
-				Aldao.insertAlarm(bid_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
+				Aldao.insertAlarm(bid_id, "A011", "["+p_title+"]경매가 종료 되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
 				insertRs = dao.insertPoint(bid_id, instantpr, "SYSTEM", "PNT007", p_no);
 				
 				if(insertRs) {
@@ -439,8 +439,12 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 							//구매요청자의 id는 href, 판매자의 id는 session를 받아서 거래페이지 생성
 							t_no = insertTrade(p_no, t_saler, t_buyer);
 							System.out.println("[TRADEDAO]/BUYREQUESTPROCESS T_NO : "+t_no);
+							//구매요청 수락 알람
+							pushRequestResult(p_no, t_no, t_saler, t_buyer, rq_YN);
 						}
 					}
+					//구매요청 거절 알람
+					pushRequestResult(p_no, -199, t_saler, t_buyer, rq_YN);
 				}
 				
 			} catch (SQLException e) {
@@ -821,5 +825,35 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				Bdao.resClose();
 				Pdao.resClose();
 			}
+		}
+		
+		//구매요청 수락, 거절 알람
+		public void pushRequestResult(int p_no,int t_no,String t_saler,String t_buyer,String rq_YN) {
+			AlarmDAO Adao = new AlarmDAO();
+			BoardDAO Bdao = new BoardDAO();
+			PointDAO Pdao = new PointDAO();
+			try {
+				String p_title = Bdao.getTitle(p_no);//제목가져오기
+				p_title = Adao.cutTitle(p_title);//자르기
+				String b_nname = Pdao.getNname(t_buyer);//닉네임가져오기
+				String path = null;
+				if(rq_YN.equals("Y")) {//수락알람 -> 거래페이지로 이동
+					path="./tradeDetail?t_no="+t_no;
+					Adao.insertAlarm(t_buyer, "A008", "["+p_title+"]구매요청이 수락되었습니다.", "Y", path);
+					Adao.insertAlarm(t_saler, "A008", "["+p_title+"]"+b_nname+"의 구매요청이 수락되었습니다.", "Y", path);
+				}else {//거절알람 -> 해당 판매 페이지로 이동
+					path="./salesDetail?p_no="+p_no;
+					Adao.insertAlarm(t_buyer, "A009", "["+p_title+"]구매요청이 거절되었습니다.", "Y", path);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				Adao.resClose();
+				Bdao.resClose();
+				Pdao.resClose();
+			}
+			
+
 		}
 }
