@@ -38,7 +38,9 @@ z-index: 2;
 	<a href = "commUpdateForm?P_no=65">커뮤니티 글 수정</a>
 	<a href = "commDetail?P_no=64">커뮤니티 글 상세보기</a>
 </div><!-- div main end -->
-	<jsp:include page="auction_main_list.jsp"></jsp:include>
+    <div class="content">
+		<jsp:include page="auction_main_list.jsp"></jsp:include>
+	</div>
 </body>
 <script>
 	function notifyPop() { window.open("popup/notifyPopup.jsp?N_receiveId=123", "notify", "width=500, height=700, left=600, top=200"); }

@@ -251,7 +251,7 @@ body {
 /*드롭다운 하위 메뉴*/
 #sub {
     display: none;
-   margin: 16px 0 0 -13px;
+   margin: 16px 0 0 10px;
    list-style: none;
    position: absolute;
    z-index: 100;
@@ -263,8 +263,8 @@ body {
 }
 
 .header_nav ul#dropdown li ul li a {
-   width: 120px;
-   height: 30px;
+   width: 150px;
+   height: 35px;
    padding: 10px 20px 0px 10px;
    background-color: #F2F2F2;
    font-size: 0.9em;
@@ -398,7 +398,7 @@ body {
       <nav class="header_nav">
          <div id="navWrap">
             <ul id="dropdown">
-               <li><a href="#">판매</a>
+               <li><a href="#" class="sale">판매</a>
                   <ul id="sub">
                      <li><a href="#">패션의류</a></li>
                      <li><a href="#">뷰티잡화</a></li>
@@ -413,7 +413,7 @@ body {
                      <li><a href="#">기타</a></li>
                   </ul></li>
    
-               <li><a href="#">경매</a>
+               <li><a href="#" class="action">경매</a>
                   <ul id="sub">
                      <li><a href="#">패션의류</a></li>
                      <li><a href="#">뷰티잡화</a></li>

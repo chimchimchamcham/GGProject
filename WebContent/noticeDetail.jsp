@@ -62,11 +62,10 @@ h2 {
 		<h2>공지사항</h2>
 		<table id="noticeDetailtable">
 			<tr>
-			
-				<td id="updatebutton" style="text-align: right" colspan="3">
+				<td style="text-align: right" colspan="3">
 				<input type=button value="목록" onclick="location.href='./noticeList'">
-				<input type=button value="수정" onclick="location.href='./commUpdateForm?p_no=${dto.p_no}'">
-				<input type=button value="삭제" onclick="location.href='./postDel?p_no=${dto.p_no}'"></td>
+				<input type=button value="수정"  id="updatebutton" onclick="location.href='./commUpdateForm?p_no=${dto.p_no}'" >
+				<input type=button value="삭제"  id="updatebutton" onclick="location.href='./postDel?p_no=${dto.p_no}'"></td>
 			</tr>
 			<tr>
 				<th colspan="3"><h3>${dto.p_title}</h3></th>

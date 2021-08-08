@@ -446,9 +446,9 @@ public class BoardDAO {
 
 	         // 유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
 	         if (userid.equals(reseveid)) {
-	            dto.setthisuserFlowingYN("<button class='hellow'>+팔로잉</button>");// N
+	            dto.setThisuserFlowingYN("<button class='hellow'>+팔로잉</button>");// N
 	         } else if (userid.equals(sendid)) {
-	            dto.setthisuserFlowingYN("<button class='unhellow'>-팔로잉</button>");// Y
+	            dto.setThisuserFlowingYN("<button class='unhellow'>-팔로잉</button>");// Y
 	         }
 	         flowlist.add(dto);
 	      }
@@ -538,7 +538,7 @@ public class BoardDAO {
 			if (userid.equals(sid)) {
 				System.out.println("수신");
 				dto.setSered("수신");
-				dto.setButtonORtext("<div><button type='submit' class='ok' value ="+dto.getRq_no()+">수락</button type='submit' class='no' value ="+dto.getRq_no()+"><button>거절</button></div>");
+				dto.setButtonORtext("<div><button class='ok' value ="+dto.getRq_no()+">수락</button><button>거절</button></div>");
 			} else if (userid.equals(rid)) {
 				System.out.println("발신");
 				dto.setSered("발신");
