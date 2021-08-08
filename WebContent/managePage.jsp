@@ -22,30 +22,68 @@
 	padding: 30px;
 }
 
-#userInfoBox {
-	width: 1100px;
+#manageButton {
+	width: 1140px;
+	text-align: center;
+	margin: 10px;
+}
+
+#manageButton button {
+	display: inline-block;
+	width: 280px;
+	height: 50px;
+	float: left;
+	background-color: #fff;
+	border: 1px solid #D8D8D8;
+	border-collapse: collapse;
+}
+
+#manageButton button:hover {
+	background-color: #D8D8D8;
+}
+
+#userInfo {
+	width: 1140px;
+	height: auto;
+	border: 0.7px solid #eaeaea;
+	margin:0px auto;
+	
+}
+
+#userContent{
+	clear: both;
+	padding-top: 10px;
+}
+
+#userContent table{
+	width: 1050px;
 	margin: 0px auto;
 	border-top: 1px solid gray;
 }
 
-#userInfoBox th {
+#userContent table th {
 	/* border: 1px solid black; */
 	padding: 10px 0;
 }
 
-#userInfoBox td {
+#userContent table td {
 	/* border: 1px solid black; */
 	padding: 8px 0;
 	text-align: center;
 }
 
-#userInfoBox td a{
+#userContent table td a {
 	text-decoration: none;
-	color:#000;
+	color: #000;
 }
 
-#userInfoBox td a:hover{
+#userContent table td a:hover {
 	text-decoration: underline;
+}
+
+.hoverTr:hover{
+	background-color: #D8D8D8;
+	cursor: pointer;
 }
 
 h2 {
@@ -53,6 +91,34 @@ h2 {
 	padding-bottom: 30px;
 }
 
+h3 {
+	text-align: center;
+	padding:100px 0 30px 0 ;
+}
+
+ /*검색창*/
+ #searchBox{
+	width: 1050px;
+	margin: 0px auto;
+ }
+ 
+#searchBox img {
+	width: 20px;
+	cursor: pointer;
+	transition: 0.5s;
+	float:left;
+	padding-left: 5px;
+}
+
+#searchBox input {
+	display: block;
+	width: 280px;
+	height: 25px;
+	outline: none;
+	border: 1px solid gray;
+	border-radius: 3px;
+	float:left;
+}
 
 </style>
 </head>
@@ -60,55 +126,53 @@ h2 {
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
 		<h2>관리페이지</h2>
-		<p style="margin-left:20px;">관리자1 님</p>
-		<button>회원목록</button>
-		<button>신고</button>
-		<button>블랙리스트</button>
-		<button>마이페이지</button>
-		
-		<div class="userInfo">
-		<table id="userInfoBox">
-			<tr>
-				<th>글번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>작성일</th>
-				<th>조회수</th>
-			</tr>
+		<p style="margin-left: 20px;">관리자1님</p>
+		<div id="manageButton">
+			<button>회원목록</button>
+			<button>신고</button>
+			<button>블랙리스트</button>
+			<button>마이페이지</button>
+		</div>
 
-			<tr>
-				<td colspan="5" style="padding:0; border-bottom:1px solid gray"></td>
-			</tr>
-			<c:forEach items="${noticeList}" var="noticeList">
+		<div class="userInfo">
+		<h3>회원목록</h3>
+		
+		<div id="searchBox">
+			<input type="text" name="search" placeholder="검색">
+			<img src="img/search-icon.png" alt="search-icon">
+		</div>
+		<div id="userContent">
+			<table>
 				<tr>
-					<td>${noticeList.p_no}</td>
-					<td style="text-align: left;"><a href="noticeDetail?p_no=${noticeList.p_no}">${noticeList.p_title}</a></td>
-					<td>${noticeList.u_nname}</td>
-					<td>${noticeList.p_tm}</td>
-					<td>${noticeList.p_view}</td>
+					<th>아이디</th>
+					<th>닉네임</th>
+					<th>이름</th>
+					<th>이메일</th>
+					<th>전화번호</th>
+					<th>가입날짜</th>
 				</tr>
 				<tr>
-				<td colspan="5" style="padding:0; border-bottom:0.7px solid #e8e8e8"></td>
-			</tr>
-			</c:forEach>
-		</table>
+					<td colspan="6" style="padding: 0; border-bottom: 1px solid gray"></td>
+				</tr>
+					<tr class="hoverTr">
+						<td>1234</td>
+						<td>애플</td>
+						<td>정슬기</td>
+						<td>1234@email.com</td>
+						<td>010-****-8206</td>
+						<td>2021-08-08</td>
+					</tr>
+					<tr>
+						<td colspan="6" style="padding: 0; border-bottom: 0.7px solid #e8e8e8"></td>
+					</tr>
+			</table>
+			</div>
 		</div>
-		
-		
-		<div class="pageArea">
-		currPage : ${noticeList[0].currPage} / totalPage : ${noticeList[0].totalPage}
-		<span onclick="before();">이전</span>
-		<c:forEach var="i" begin="1" end="${noticeList[0].totalPage}" step="1">
-		<span class="page">
-			<c:if test="${i ne noticeList[0].currPage}"><a href="noticeList?paging=${i}">${i}</a></c:if>
-			<c:if test="${i eq noticeList[0].currPage}"><b>${i}</b></c:if>
-		</span>	
-		</c:forEach>
-		<span onclick="after();">다음</span>
-	</div>
-	</div>
+
+
+	</div> <!-- main end -->
 </body>
 <script type="text/javascript">
-
+	
 </script>
 </html>
