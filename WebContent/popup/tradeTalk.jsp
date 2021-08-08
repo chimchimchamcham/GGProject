@@ -39,6 +39,7 @@ margin-top:20px;
 
 .tableWrap{
 	text-align:center;
+	overflow-y:scroll;
 }
 .content:hover{
 background-color: #f7f7f7;
@@ -78,6 +79,7 @@ a{
 	opacity: 0.3;
 }
 
+
 </style>
 <body>
 	<h2>거래톡</h2>
@@ -88,7 +90,7 @@ a{
 		</div>
 		<div class="tableWrap">
 			<div>
-			<table class="content">
+			<!-- <table class="content">
 				<tr>
 					<td rowspan="2"><a href="#"><img src="../test/default-profile.png" width="60" id="profile" ></a></td>
 					<th style="width:240px;  padding:0 20px; text-align: left;"><a href="#">ㅇㅇㅇ님과 거래중</a></th>
@@ -105,7 +107,7 @@ a{
 				<tr>
 					<td style="border-bottom:1px solid black; padding-top:10px;" colspan="3"></td>
 				</tr>
-			</table>
+			</table> -->
 		</div>
 	</div>
 </body>
@@ -148,7 +150,7 @@ a{
 				console.log("dealId/dealNname : "+dealId+"/"+dealNname);
 				console.log("idx : ",idx);
 				
-				content +="<div class='tradeList' id='"+item.t_no+"' onclick='clickEvent();' >";
+				content +="<div class='tradeList' id='"+item.t_no+"' onclick='clickEvent("+item.t_no+");' >";
 				content +=	"<input type='hidden' id='t_no' value='"+item.t_no+"'>";
 				content +="<table class='content'>";
 				content +=	"<tr>";
@@ -189,10 +191,19 @@ a{
 		alert("clicked");
 	}); */
 	
-	 function clickEvent(){
-		console.log($(this).find("#t_no").val());
-		console.log($(this));
-		alert("clicked");
+	//클릭시 해당 거래페이지로 이동
+	 function clickEvent(t_no){
+		console.log("t_no"+t_no);
+		window.open("../tradeDetail?t_no="+t_no, "tradeDetail", "width=900, height=650, left=700, top=400");
 	}
+	
+	
+	 function moveTrade(){
+			console.log($(this).find("#t_no").val());
+			console.log($(this));
+			console.log($(this)[0]);
+			
+			alert("clicked");
+		}
 </script>
 </html>
