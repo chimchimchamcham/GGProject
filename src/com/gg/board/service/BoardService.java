@@ -861,14 +861,14 @@ public class BoardService {
 		return noticeList;
 	}
 
-	public void updatereqlist(String rqno) throws IOException {
+	public void updatereqlist(String rqnoval) throws IOException {
 		
 		BoardDAO dao = new BoardDAO();
 		GGDto dto = null;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		boolean success = false;
 		try {
-			dto = dao.urllist(rqno);
+			dto = dao.urllist(rqnoval);
 			success = true;
 		}catch (Exception e) {
 			e.printStackTrace();

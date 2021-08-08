@@ -209,10 +209,12 @@ public class BoardController extends HttpServlet {
 			
 		case "/applyreqlist":
 			System.out.println("거래수락 or 거절 요청");
-			String rqno = req.getParameter("rqno");
+			String rqnoval = req.getParameter("rqno_val");
+			String rqnotext = req.getParameter("rqno_text");
 			
-			System.out.println(rqno);
-			service.updatereqlist(rqno);
+			System.out.println("rqnoval:"+rqnoval);
+			System.out.println("rqnotext:"+rqnotext);
+			service.updatereqlist(rqnoval);
 			break;
 			
 		case "/lovelist":
