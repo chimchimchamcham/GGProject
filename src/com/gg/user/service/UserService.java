@@ -299,4 +299,25 @@ public int changePw() {
 	UserDAO dao = new UserDAO();
 	return dao.changePw(id,pw);
 }
+
+//관리페이지 목록
+public ArrayList<GGDto> userList() {
+	UserDAO dao = new UserDAO();
+	return dao.userList();
+}
+
+/*
+ * public ArrayList<GGDto> notifyList() { UserDAO dao = new UserDAO(); return
+ * dao.notifyList(); }
+ */
+
+public HashMap<String, ArrayList<GGDto>> category() {
+	UserDAO dao = new UserDAO();
+	HashMap<String, ArrayList<GGDto>> categoryMap = dao.category();
+	dao.resClose();
+	
+	return categoryMap;
+}
+
+
 }
