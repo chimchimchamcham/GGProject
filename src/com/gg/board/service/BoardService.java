@@ -808,6 +808,29 @@ public void updatereqlist(String rqno) throws IOException {
 		dao.resClose();
 
 	}
+	
+	public void mainsold_list(String soldmainlistwhatadd) throws IOException {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		BoardDAO dao = new BoardDAO();
+		ArrayList<GGDto> soldmainlist = null;
+
+		try {
+			soldmainlist = dao.sold_main_list(soldmainlistwhatadd);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			dao.resClose();
+			map.put("soldmainlist", soldmainlist);
+		}
+		System.out.println("sold_main_map:" + map);
+
+		resp.setContentType("text/html; charset=UTF-8");
+		resp.getWriter().println(new Gson().toJson(map));
+		map.clear();
+		dao.resClose();
+		
+	}
 
 	public ArrayList<GGDto> commList() {
 		int pagePerCnt = 14;
@@ -923,6 +946,8 @@ public void updatereqlist(String rqno) throws IOException {
 
 		return noticeList;
 	}
+
+
 
 	// 메서드 통합으로 인하여 주석처리
 	/*
