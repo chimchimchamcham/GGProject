@@ -130,7 +130,7 @@ public void buyNow(){
 	}finally {
 		dao.resClose();
 	}
-	
+	dao.resClose();
 
 	
 }

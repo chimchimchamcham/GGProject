@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항 상세보기</title>
+<title>공지사항</title>
 <style type="text/css">
 #mainHeader {
 	z-index: 1000;
@@ -78,7 +78,7 @@ h2 {
 			<c:forEach items="${noticeList}" var="noticeList">
 				<tr>
 					<td>${noticeList.p_no}</td>
-					<td style="text-align: left;"><a href="noticeDetail?${noticeList.p_no}">${noticeList.p_title}</a></td>
+					<td style="text-align: left;"><a href="noticeDetail?p_no=${noticeList.p_no}">${noticeList.p_title}</a></td>
 					<td>${noticeList.u_nname}</td>
 					<td>${noticeList.p_tm}</td>
 					<td>${noticeList.p_view}</td>
@@ -90,17 +90,30 @@ h2 {
 		</table>
 		
 		<div class="pageArea">
-		currPage : ${currPage} / totalPage : ${totalPage}
-		<c:forEach var="i" begin="1" end="${totalPage}" step="1">
+		currPage : ${noticeList[0].currPage} / totalPage : ${noticeList[0].totalPage}
+		<span onclick="before();">이전</span>
+		<c:forEach var="i" begin="1" end="${noticeList[0].totalPage}" step="1">
 		<span class="page">
-			<c:if test="${i ne currPage}"><a href="./?page=${i}">${i}</a></c:if>
-			<c:if test="${i eq currPage}"><b>${i}</b></c:if>
-			</span>
+			<c:if test="${i ne noticeList[0].currPage}"><a href="noticeList?paging=${i}">${i}</a></c:if>
+			<c:if test="${i eq noticeList[0].currPage}"><b>${i}</b></c:if>
+		</span>	
 		</c:forEach>
+		<span onclick="after();">다음</span>
 	</div>
 	</div>
 </body>
 <script type="text/javascript">
-	
+var currPageNum;
+if(${noticeList[0].currPageNum} == null){
+	currPageNum = 1;
+}
+function before(currPageNum){
+	currPageNum -=1;
+	location.href="noticeList?currPageNum"+currPageNum;
+}
+function after(currPageNum){
+	currPageNum +=1;
+	location.href="noticeList?currPageNum"+currPageNum;
+}
 </script>
 </html>

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.gg.board.dao.BoardDAO;
@@ -378,34 +379,6 @@ public class BoardService {
 
 	}
 
-	public void req_list_apply(String userid, int rqno, String a) throws IOException {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-
-		BoardDAO dao = new BoardDAO();
-		ArrayList<GGDto> reqlist = null;
-		RequestDispatcher dis = null;
-		int success = 0;
-		try {
-			success = dao.reqlistapply(userid, rqno, a);
-			System.out.println("successudate:" + success);
-			reqlist = dao.reqlist_goto_url(userid, rqno, a);
-
-			dis = req.getRequestDispatcher("page"); //변경사항
-			//dis.forward(req, resp); 변경요망
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			dao.resClose();
-		}
-		System.out.println("auc_map:" + map);
-
-		resp.setContentType("text/html; charset=UTF-8");
-		resp.getWriter().println(new Gson().toJson(map));
-		map.clear();
-		dao.resClose();
-
-	}
 
 //좋아요리스트
 	public void love_list(String userid, int index1, int index2) throws IOException {
@@ -879,15 +852,45 @@ public class BoardService {
 		return dao.postDel(p_no);
 	}
 
-	public ArrayList<GGDto> noticeList() {
+	public ArrayList<GGDto> noticeList(int paging) {
 
 		BoardDAO dao = new BoardDAO();
-		ArrayList<GGDto> noticeList = dao.noticeList();
-		System.out.println("공지사항 글 갯수 : " + noticeList.size());
+		ArrayList<GGDto> noticeList = dao.noticeList(paging);
 		dao.resClose();
 
 		return noticeList;
 	}
+
+	public void updatereqlist(String rqno) throws IOException {
+		
+		BoardDAO dao = new BoardDAO();
+		GGDto dto = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean success = false;
+		try {
+			dto = dao.urllist(rqno);
+			success = true;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+			System.out.println("가져올 글의 번호 : "+dto.getP_no());
+			System.out.println("가져올 요청의 번호 : "+dto.getRq_no());
+			System.out.println("가져올 요청한 사람의 id : "+dto.getRq_id());
+			System.out.println("가져올 요청한 y/n여부 : "+dto.getRq_YN());
+			
+			map.put("info", dto);
+			map.put("success", success);
+			
+			
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().print(new Gson().toJson(map));
+
+		}
+	}
+	
+
+}
 
 	// 메서드 통합으로 인하여 주석처리
 	/*
@@ -905,4 +908,4 @@ public class BoardService {
 	 * return delMsg; }
 	 */
 
-}
+

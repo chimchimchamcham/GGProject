@@ -505,16 +505,16 @@ public class BoardDAO {
 		System.out.println("daouserID:" + userid);
 
 		if (reqindex == 0) {// 전체
-			sql = "select u.u_id,s.S_saler,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and (  s.s_saler = ? or r.rq_id = ? ) and r.rq_yn is null";
+			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and (  s.s_saler = ? or r.rq_id = ? ) and r.rq_yn is null";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 			ps.setString(2, userid);
 		} else if (reqindex == 1) {// 수신만
-			sql = "select u.u_id,s.S_saler,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and  s.s_saler = ? and r.rq_yn is null";
+			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and  s.s_saler = ? and r.rq_yn is null";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 		} else if (reqindex == 2) {// 발신만
-			sql = "select u.u_id,s.S_saler,p.P_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and r.rq_id = ? and r.rq_yn is null";
+			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and r.rq_id = ? and r.rq_yn is null";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 		}
@@ -527,6 +527,7 @@ public class BoardDAO {
 			dto.setS_saler(rs.getString("S_saler"));
 
 			dto.setP_no(rs.getInt("P_no"));
+			dto.setRq_no(rs.getInt("rq_no"));
 			dto.setP_title(rs.getString("p_title"));
 			dto.setRq_id(rs.getString("rq_id"));
 			dto.setRq_tm(rs.getDate("rq_tm"));
@@ -537,7 +538,7 @@ public class BoardDAO {
 			if (userid.equals(sid)) {
 				System.out.println("수신");
 				dto.setSered("수신");
-				dto.setButtonORtext("<div><button>수락</button><button>거절</button></div>");
+				dto.setButtonORtext("<div><button class='ok' value ="+dto.getRq_no()+">수락</button><button>거절</button></div>");
 			} else if (userid.equals(rid)) {
 				System.out.println("발신");
 				dto.setSered("발신");
@@ -552,63 +553,7 @@ public class BoardDAO {
 	}
 
 	
-	public int reqlistapply(String userid, int rqno, String a)throws SQLException {
-		
-		
-		//System.out.println(userid);
-		//System.out.println(rqno);
-			String sql = "UPDATE request SET rq_yn = 'y' WHERE RQ_NO = ? AND rq_id = ?";
-			int success = 0;
-			try {
-				 ps = conn.prepareStatement(sql);
-				 ps.setInt(1, rqno);
-				 ps.setString(2, a);
-				 success=ps.executeUpdate();
-				 System.out.println("success:"+success);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		 /*
-		  * 수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
-		  * 
-		  * 
-		  * */
-		 
-		 
-		 return success;
-
-	}
 	
-	public ArrayList<GGDto> reqlist_goto_url(String userid, int rqno, String a) throws SQLException {
-		
-		String sql = "select r.rq_no,p.p_no,r.rq_id,r.rq_yn from request r,post p where  r.RQ_NO = ? AND r.rq_id = ? and p.p_no = r.p_no and rq_yn = 'Y'";
-			String url_rqno;
-			String url_rqid;
-			String url_pno;
-		ps = conn.prepareStatement(sql);
-
-		System.out.println("daouserID:" + userid);
-		 ps.setInt(1, rqno);
-		 ps.setString(2, a);
-		rs = ps.executeQuery();
-		
-		if (rs.next()) {
-			GGDto dto = new GGDto();
-			dto.setRq_no(rs.getInt("rq_no"));
-			dto.setP_no(rs.getInt("p_no"));
-			dto.setRq_id(rs.getString("rq_id"));
-			
-			
-		}
-		
-		
-		//수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
-		String url = "./buyRequestProcess?rq_no=";//${dto.rq_no}+"&"+"rq_YN=Y&p_no="+"${dto.p_no}"+"&rq_id="+${dto.rq_id}+";
-		
-		
-		return null;
-
-	}
 	// 좋아요
 	public ArrayList<GGDto> lovelist(String userid, int index1, int index2) throws SQLException {
 		String sql = "";
@@ -1253,14 +1198,23 @@ public class BoardDAO {
 	}
 
 	
-	   public ArrayList<GGDto> noticeList() {
+	   public ArrayList<GGDto> noticeList(int paging) {
 		      
-		      String sql = "select p_no, p_title, p_id, p_tm, p_view, (select u_nname from userinfo where u_id = p_id) as u_nname from post where p_code='P003' ORDER BY p_no DESC";
+		      String sql = "SELECT rnum ,p_no, p_title, p_id, p_tm, p_view, (select u_nname from userinfo where u_id = p_id) as u_nname FROM " + 
+		      		"(SELECT ROW_NUMBER() OVER(ORDER BY p_no DESC) AS rnum,p_no, p_title, p_id, p_tm, p_view FROM post) WHERE rnum BETWEEN ? AND ?";
+
 		      ArrayList<GGDto> noticeList = null;
 		      GGDto dto = null;
 		      
+		      int pagePerCnt = 15;
+		      
+		      int end = paging*pagePerCnt;
+		      int start = (end-pagePerCnt)+1;
+		      
 		      try {
 		         ps = conn.prepareStatement(sql);
+		         ps.setInt(1, start);
+		         ps.setInt(2, end);
 		         rs = ps.executeQuery();
 		         noticeList = new ArrayList<GGDto>();
 		         while(rs.next()) {
@@ -1273,12 +1227,35 @@ public class BoardDAO {
 		            dto.setU_nname(rs.getString("u_nname"));
 		            noticeList.add(dto);
 		         }
+		         
+		         int total = noticeCount();
+		         noticeList.get(0).setTotalPost(total);
+		         noticeList.get(0).setCurrPage(paging);
+		         int pages = (int) Math.ceil((double)total/(double)pagePerCnt);
+		         noticeList.get(0).setTotalPage(pages);
 		      } catch (SQLException e) {
 		         e.printStackTrace();
 		      }
 
 		      return noticeList;
 		   }
+	   
+	   	private int noticeCount() throws SQLException {
+			
+			String sql = "SELECT COUNT(p_no) FROM post where p_code='P003'";
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			int total = 0;
+			
+			if (rs.next()) {
+				total = rs.getInt(1); //받아온 컬럼이 어차피 한개니까 1을 넣어도된다.
+				System.out.println("total : "+total);
+			}
+			
+			
+			return total;
+	   	}
 	// 메서드 통합으로 인하여 주석처리
 	/*
 	 * public String auctionDelete(int p_no) throws SQLException {
@@ -1315,4 +1292,49 @@ public class BoardDAO {
 		return p_title;
 		   
 	   }
+
+	public void updatereqlist(int rqno) {
+		System.out.println("DAO loveCountMinus");
+		String sql = "UPDATE request SET rq_yn = 'Y' WHERE RQ_NO = ?";
+		int success = 0;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, rqno);
+			success = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("update_succes:"+success);
+		resClose();
+	}
+
+	public GGDto urllist(String rqno) {
+		String sql ="select r.rq_no,p.p_no,r.rq_id,r.rq_yn from request r,post p where  r.RQ_NO = ? and p.p_no = r.p_no ";
+	      GGDto dto = null;
+	      
+	      try {
+	         ps = conn.prepareStatement(sql);
+	         ps.setString(1, rqno);
+	         rs = ps.executeQuery();
+	         
+	         if(rs.next()) {
+	            dto = new GGDto();
+	            dto.setRq_no(rs.getInt("rq_no"));
+	            dto.setP_no(rs.getInt("p_no"));
+	            dto.setRq_id(rs.getString("rq_id"));
+	            dto.setRq_YN(rs.getString("rq_yn"));
+	         }
+	         
+	         System.out.println("rq_no:"+dto.getRq_no());
+	         System.out.println("p_no:"+dto.getP_no());
+	         System.out.println("rq_id:"+dto.getRq_id());
+	         System.out.println("rq_yn:"+dto.getRq_YN());
+	         
+	         
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }
+
+	      return dto;
+	}
 }

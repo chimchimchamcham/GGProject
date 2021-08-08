@@ -13,9 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.gg.board.dao.UploadDAO;
 import com.gg.board.service.BoardService;
-import com.gg.board.service.UploadService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
@@ -33,12 +31,14 @@ public class BoardController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		dual(req, resp);
+			dual(req, resp);
+
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		dual(req, resp);
+			dual(req, resp);
+
 	}
 
 	private void dual(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -207,17 +207,14 @@ public class BoardController extends HttpServlet {
 
 			break;
 			
-			case "/applyreqlist"://수락 버튼눌렀을시 
-				System.out.println("거래수락 요청");
-				userid = (String) req.getSession().getAttribute("loginId");
-				int rqno = Integer.parseInt(req.getParameter("rqno"));
-				String a = req.getParameter("a");
-				System.out.println(userid+'/'+rqno+'/'+a);
-				
-				service.req_list_apply(userid,rqno,a);
-
+		case "/applyreqlist":
+			System.out.println("거래수락 or 거절 요청");
+			String rqno = req.getParameter("rqno");
+			
+			System.out.println(rqno);
+			service.updatereqlist(rqno);
 			break;
-
+			
 		case "/lovelist":
 			System.out.println("좋아요리스트 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
@@ -541,16 +538,19 @@ public class BoardController extends HttpServlet {
 		case "/noticeList":
 			System.out.println("공지사항 리스트 요청");
 			
-			String paging = req.getParameter("page");
-			
+			/* int paging = 0; */
+			String currPageNum = req.getParameter("currPageNum");
+			System.out.println("currPageNum : "+currPageNum);
+			String paging = req.getParameter("paging");
 			if(paging == null) {
 				paging = "1";
 			}
+			System.out.println("paging : "+paging);
 			
 			/* HashMap<String, Object> map = service. */
 			
-			req.setAttribute("noticeList", service.noticeList());
-			req.setAttribute("noticeListSize", service.noticeList().size());
+			req.setAttribute("noticeList", service.noticeList(Integer.parseInt(paging)));
+			req.setAttribute("noticeListSize", service.noticeList(Integer.parseInt(paging)).get(0).getTotalPost());
 			dis = req.getRequestDispatcher("noticeList.jsp");
 			dis.forward(req, resp);
 
@@ -567,9 +567,6 @@ public class BoardController extends HttpServlet {
 		 * resp); break;
 		 */
 		}
-		
-		
-	
 
 	}
 
