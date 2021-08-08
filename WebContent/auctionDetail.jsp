@@ -119,7 +119,7 @@
 }
 td#content {
 	width: 900px;
-	border : 1px solid black;
+	border-bottom : 0.5px solid lightgray;
 }
 td {
 	margin: 0px;
@@ -456,6 +456,17 @@ a:hover {
 			alert(delMsg);
 		}
 	}
+	/*댓글 눌러 신고 하기 */
+	$(document).on('click','.reporter', function() {
+			var test = $(this).attr('id');
+			console.log(test)
+			var N_receiveId = test;
+			console.log("신고할 아이디", N_receiveId);
+			window.open("./popup/notifyPopup.jsp?N_receiveId="
+					+ N_receiveId, "notifyPopup",
+					"width=400, height=400, left=700, top=400");
+	});
+	
 	
 	//경매글 블라인드 체크 여부 확인
 	//판매자일경우 보이고 그 외의 사람들은 튕기기
