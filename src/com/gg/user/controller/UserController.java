@@ -162,6 +162,12 @@ public class UserController extends HttpServlet {
 			System.out.println("userList size : "+userList.size());
 			req.setAttribute("userList", userList);
 			
+			//신고목록
+			ArrayList<GGDto> userList = service.userList();
+			System.out.println("userList size : "+userList.size());
+			req.setAttribute("userList", userList);
+
+			
 			dis = req.getRequestDispatcher("managePage.jsp");
 			dis.forward(req, resp);
 			
