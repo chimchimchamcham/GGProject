@@ -882,8 +882,6 @@ li {
 			}
 		});
 	};
-	
-	
 
 	
 	var check = true;
