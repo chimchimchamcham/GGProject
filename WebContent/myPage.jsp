@@ -876,6 +876,7 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 					});   
 					
 					//수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
+					//수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
 					//거절 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=N&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
 					
 					
