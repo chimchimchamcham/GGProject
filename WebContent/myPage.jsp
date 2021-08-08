@@ -809,12 +809,39 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 						dataType:'JSON',
 						success:function(data){
 							if (data!=null) {
-							console.log(data);
+							/* console.log(data);
 							console.log('data1:'+data.info.p_no);
 							console.log('data1:'+data.info.rq_id);
 							console.log('data1:'+data.info.rq_no);
 							console.log('data1:'+data.info.Rq_YN);
-							document.location.href="./buyRequestProcess?rq_no="+data.info.rq_no+"&rq_YN=Y&p_no="+data.info.p_no+"&rq_id="+data.info.rq_id;
+							 *//* document.location.href= */
+							 
+							 var param = {};
+							 
+							 param.p_no = data.info.p_no;
+							 param.rq_id = data.info.rq_id;
+							 param.rq_no = data.info.rq_no;
+							 param.Rq_YN = info.Rq_YN;
+							 
+							 
+							 $.ajax({
+								 type:'post',
+									url:'./buyRequestProcess',
+									data:param,
+									dataType:'JSON',
+									success:function(data){
+										if(data.success){
+											if (data.request) {
+												alert("거래페이지가 생성 되었습니다");		
+											}
+										}
+										
+										
+									},
+									error:function(e){
+										console.log(e);
+									}
+							 });
 							}
 						},
 						error:function(e){
@@ -827,6 +854,12 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 					
 					
 				});
+		
+		
+		
+		
+		
+		
 		//데이터 가져와서 뿌려주는 좋아요 리스트
 		function love_list(lovelist){
 			
