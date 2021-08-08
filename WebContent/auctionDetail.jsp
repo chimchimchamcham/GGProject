@@ -96,6 +96,9 @@
 	text-align: center;
 	margin-bottom: 10px;
 }
+.enter:hover, #update_enter:hover, .re_enter:hover {
+	background-color: gray;
+}
 .pageArea{
 	margin : 0 auto;
 	text-align : center;
@@ -141,7 +144,7 @@ a:hover {
 .comm_del:hover, .update_comment:hover {
 	color: pink;
 }
-.update_text {
+.update_text, .re_text {
 	border: 1px solid #D8D8D8;
 	width: 1140px;
 	height: 5vh;
@@ -472,6 +475,7 @@ a:hover {
 	 	re_show(pc_parentno);
 	 
 	 });
+	 var re_drawChecker = true;
 	/* 대댓글 리스트 불러오기 */
 	 function re_show(pc_parentno){
 		 	
@@ -486,6 +490,7 @@ a:hover {
 				success : function(data){ 
 					console.log("대댓글 리스트 보여주기.");
 					console.log(data.list);
+					re_drawChecker =true;
 					re_draw(data.list,pc_parentno);	
 					
 				},
@@ -494,7 +499,7 @@ a:hover {
 				}
 			});
 		};
-	var re_drawChecker = true;
+	
 	 /* 대댓글 리스트 그리기 */
 	 function re_draw(list,pc_parentno) {
 		 console.log("대댓글 리스트 : ", list);
@@ -521,8 +526,8 @@ a:hover {
 		 }
 		 
 		 re_comment += "<tr id='re_comment'>";
-		 re_comment += "<td colspan=3><textarea id='"+pc_parentno+"' class='update_text' style='resize: none;' placeholder='대댓글을 입력해 주세요' maxlength=300></textarea></td>";
-		 re_comment += "<td><button class='re_enter'>엔터</button></td>";
+		 re_comment += "<td colspan=3><textarea id='"+pc_parentno+"' class='re_text' style='resize: none;' placeholder='대댓글을 입력해 주세요' maxlength=300></textarea></td>";
+		 re_comment += "<td><button class='re_enter' id='"+pc_parentno+"'>엔터</button></td>";
 		 re_comment += "</tr>"; 
 		 
 		 if(re_drawChecker){
@@ -541,7 +546,40 @@ a:hover {
 		 
 	 };
 	
-
+	//대댓글 등록 버튼을 눌렀을 경우.
+	 $(document).on("click",".re_enter", function(){
+		console.log("대댓글 등록 ");
+		var p_no = "${dto.p_no}";
+		var pc_parentno = $(this).attr("id");
+		console.log("부모 댓글 번호 :", pc_parentno);
+		var pc_content = $("#"+pc_parentno+".re_text").val();
+		console.log("대댓글 내용  :", pc_content );
+		if(pc_content == ''){
+			alert("대댓글을 입력해주세요!");
+		}else {
+			
+		var plus_reComm = {};
+		plus_reComm.p_no = p_no;
+		plus_reComm.pc_parentno = pc_parentno;
+		plus_reComm.pc_content = pc_content;
+		plus_reComm.pc_id = "${sessionScope.loginId}";
+		
+			$.ajax({
+				type: "GET",
+				url : "re_comment",
+				data : plus_reComm,
+				dataType: "JSON",
+				success : function(data){
+					console.log("성공");
+					re_show(pc_parentno);
+				},
+				error : function(e){
+					console.log(e);	
+				}
+			});
+		}
+		
+	 });
 	 
 	 
 	 
