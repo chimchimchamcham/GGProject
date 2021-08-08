@@ -319,5 +319,10 @@ public HashMap<String, ArrayList<GGDto>> category() {
 	return categoryMap;
 }
 
+public void search() {
+	
+	
+}
+
 
 }
