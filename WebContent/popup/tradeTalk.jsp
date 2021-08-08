@@ -83,11 +83,11 @@ a{
 	<h2>거래톡</h2>
 	<div id="tradeWrap">
 		<div id="buttonTwo">
+			<button id="saleBtn">전체</button>
 			<button id="saleBtn">판매</button>
 			<button id="auctionBtn">경매</button>
 		</div>
-		<d
-		iv class="tableWrap">
+		<div class="tableWrap">
 		<!-- <table class="content">
 				<tr>
 					<td rowspan="2"><a href="#"><img src="../test/default-profile.png" width="60" id="profile" ></a></td>
@@ -113,13 +113,14 @@ a{
 <script>
 /* ================거래페이지 목록 관련 ================= */
 	//화면이 켜지면 목록 뿌려주기 무조건 실행
-	tradeListCall();
+	tradeListCall('P000');
 	
-	//자바단에 접속하여 목록을 가져오기
-	function tradeListCall() {
+	//자바단에 접속하여 전체 목록을 가져오기
+	function tradeListCall(p_code) {
 		console.log("거래페이지 리스트 요청 ");
 		var param = {};
 		param.id = "${sessionScope.loginId}";
+		param.p_code = p_code;
 		$.ajax({
 			type : "POST",
 			url : "../tradeList",
@@ -134,6 +135,21 @@ a{
 			}
 		});
 	}
+		
+	//판매버튼을 클릭 했을 때 판매에 관련된 목록만 가져오기
+	$(document).on("click","#buttonTwo button",function(){
+		var p_name = $(this).text();
+		if(p_name == '경매'){
+			//경매 목록 가져오기
+			tradeListCall('P001');
+		}else if(p_name == '판매'){
+			//구매 목록 가져오기
+			tradeListCall('P002');
+		}else if(p_name == '전체'){
+			//전체 목록 가져오기
+			tradeListCall('P000');
+		}
+	});
 	
 	//가져온 데이터를 뿌려주기
 	function drawTradeList(list) {
@@ -185,14 +201,6 @@ a{
 		console.log("t_no : "+t_no);
 		window.open("../tradeDetail?t_no="+t_no, "tradeDetail", "width=900, height=650, left=700, top=400");
 	}
-	//각 해당 테이블을 클릭 했을 때 해당 거래번호에 해당하는 거래페이지 팝업을 뿌려주기 
- 	$("div").on("click",function(){
-		console.log($(this).children("#t_no").val());
-		alert("clicked");
-	});
-	
-	//판매버튼을 클릭 했을 때 판매에 관련된 목록만 가져오기
-	
-	
+
 </script>
 </html>
