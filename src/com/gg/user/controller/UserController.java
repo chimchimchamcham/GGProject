@@ -16,7 +16,10 @@ import com.gg.user.service.UserService;
 import com.google.gson.Gson;
 import sun.misc.Contended;
 
-@WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage","/userUpdate","/userUpdateForm","/chkpw","/changePw","/chkinfo","/manageList","/search"})
+
+@WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage", "/userUpdate",
+		"/userUpdateForm", "/chkpw", "/changePw", "/chkinfo", "/manageList" ,"/search"})
+
 public class UserController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -92,7 +95,7 @@ public class UserController extends HttpServlet {
 		case "/idsearch":
 			System.out.println("아이디 찾기 요청");
 			service.idsearch();
-			
+
 			break;
 
 		case "/myPage":
@@ -103,35 +106,35 @@ public class UserController extends HttpServlet {
 			dis = req.getRequestDispatcher("myPage.jsp");
 			dis.forward(req, resp);
 			break;
-			
+
 		case "/userUpdateForm":
 			System.out.println("회원정보 수정 폼 요청");
 			req.setAttribute("userUpdate", service.userUpdateForm());
 			dis = req.getRequestDispatcher("userUpdate.jsp");
 			dis.forward(req, resp);
 			break;
-			
+
 		case "/userUpdate":
 			System.out.println("수정 요청");
 
 			resp.setContentType("text/html; charset=UTF-8");
-			req.setCharacterEncoding("UTF-8"); 
-			String id = (String)req.getSession().getAttribute("loginId");
+			req.setCharacterEncoding("UTF-8");
+			String id = (String) req.getSession().getAttribute("loginId");
 			int result = service.userUpdate(id);
-			System.out.println("수정 성공 여부 : "+result);
-			
-			msg="회원정보 수정에 실패 했습니다. 다시 시도해 주세요";
-			page= "userUpdateForm?id=" + id; //실패하면 수정폼 그대로
-			if (result >0) {
-				msg="회원정보 수정에 성공 했습니다.";
-				page= "myPage?id=" + id; //성공하면 마이페이지로
+			System.out.println("수정 성공 여부 : " + result);
+
+			msg = "회원정보 수정에 실패 했습니다. 다시 시도해 주세요";
+			page = "userUpdateForm?id=" + id; // 실패하면 수정폼 그대로
+			if (result > 0) {
+				msg = "회원정보 수정에 성공 했습니다.";
+				page = "myPage?id=" + id; // 성공하면 마이페이지로
 			}
-	
+
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);
 
-			break;		
+			break;
 
 		case "/chkpw":
 			HashMap<String, Object> map = new HashMap<String, Object>();
@@ -140,56 +143,50 @@ public class UserController extends HttpServlet {
 			resp.getWriter().println(obj);
 			System.out.println(map.get("pw"));
 			break;
-		
+
 		case "/changePw":
 			System.out.println("비밀번호 변경요청");
-			if(service.changePw()>0) {
+			if (service.changePw() > 0) {
 				System.out.println("비밀번호 성공");
 				resp.sendRedirect("login.jsp");
-			}else {
+			} else {
 				resp.sendRedirect("insearch.jsp");
 			}
 			break;
-			
-			
+
 		case "/manageList":
 			System.out.println("관리페이지 목록 요청");
-			
+
 			resp.setContentType("text/html; charset=UTF-8");
 			req.setCharacterEncoding("UTF-8");
 
-			//회원목록
+			// 회원목록
 			ArrayList<GGDto> userList = service.userList();
-			System.out.println("userList size : "+userList.size());
+			System.out.println("userList size : " + userList.size());
 			req.setAttribute("userList", userList);
-			
-			/*==신고목록==*/
-			//접수중,처리중,처리완료 카테고리
+
+			/* ==신고목록== */
+			// 접수중,처리중,처리완료 카테고리
 			HashMap<String, ArrayList<GGDto>> categoryMap = service.category();
 			System.out.println("카테고리 성공 : " + categoryMap);
 			ArrayList<GGDto> n_stateCat = categoryMap.get("n_stateCat");
 			System.out.println("n_stateCat list size : " + n_stateCat.size());
 			req.setAttribute("n_stateCat", n_stateCat);
-			//게시글,댓글,사용자 카테고리
+			
+			// 게시글,댓글,사용자 카테고리
 			ArrayList<GGDto> n1_code = categoryMap.get("n1_code");
 			System.out.println("n1_code list size : " + n1_code.size());
 			req.setAttribute("n1_code", n1_code);
-			
-			/*
-			 * ArrayList<GGDto> notifyList = service.notifyList();
-			 * System.out.println("notifyList size : "+notifyList.size());
-			 * req.setAttribute("notifyList", notifyList);
-			 */
-			
-			
-			
-			
-			
-			
-			/*====경로지정====*/
+
+			//신고 목록
+			ArrayList<GGDto> notifyList = service.notifyList();
+			System.out.println("notifyList size : " + notifyList.size());
+			req.setAttribute("notifyList", notifyList);
+
+			/* ====경로지정==== */
 			dis = req.getRequestDispatcher("managePage.jsp");
 			dis.forward(req, resp);
-			
+
 			break;
 			
 		case "/search":
@@ -197,10 +194,7 @@ public class UserController extends HttpServlet {
 			service.search();
 			break;
 		}
-		
-	
 
 	}
-
 
 }
