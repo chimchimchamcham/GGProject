@@ -385,12 +385,15 @@ h3 {
 		$("#notifyInfo, #blackInfo, #userInfo").hide();
 	});
 	
+	var param = {};
 	
 	/*==신고목록==*/
 	//대분류명 select
-	$("#firstCat").onchange(function(){
+	$("#firstCat").on('change', function(){
+		$("#hoverTr").val()
 		
-	})
+		
+	});
 	
 </script>
 </html>
