@@ -65,6 +65,8 @@ h2 {
 		<button>신고</button>
 		<button>블랙리스트</button>
 		<button>마이페이지</button>
+		
+		<div class="userInfo">
 		<table id="userInfoBox">
 			<tr>
 				<th>글번호</th>
@@ -90,6 +92,8 @@ h2 {
 			</tr>
 			</c:forEach>
 		</table>
+		</div>
+		
 		
 		<div class="pageArea">
 		currPage : ${noticeList[0].currPage} / totalPage : ${noticeList[0].totalPage}
