@@ -238,9 +238,8 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 	/*
 	이제 마이리스트에 들어갈때 무슨 리스트 보여줄건지 설정하려면 allurl 안에 문자열을 뿌려주어야합니다
 	
-	req.setAttribute("allurl", service.updateForm());
-	dis = req.getRequestDispatcher("updateForm.jsp");
-	dis.forward(req, resp);
+	req.setAttribute("allurl", "'./soldlist'");
+	
 	등으로요
 	
 	
