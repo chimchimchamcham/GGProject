@@ -77,11 +77,23 @@
     /* 댓글달기 영역 */
 	.board_text  {
 	border: 1px solid #D8D8D8;
-	width: 1190px;
+	width: 1140px;
 	height: 5vh;
 	float: left;
 	}
-    
+    div.pageArea{
+		margin: 10px;
+	}
+	span.page {
+		padding: 2px 10px;
+		margin : 5px;
+		border : 1px solid lightskyblue;
+	}
+	.enter {
+	width: 50px;
+	height: 5vh;
+	margin-bottom: 10px;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -104,10 +116,11 @@
         $("#twoButton>button:nth-of-type(1)").css({"background-color":"white","color":"black"});
         page =1; // 댓글을 눌렀을 때, 페이징 처리 1로 초기화가 된다.
         $("#first").hide();
-        $("#second").show();
         $.ajax({
         	url:"auctionCommentList",
-        	data: {"page": page},
+        	data: {"page": page,
+        			"p_no" : "${dto.p_no}"	
+        	},
         	success: function(data){
         		console.log("옥션리스트 진입");
         		$("#second").html(data);
@@ -115,10 +128,9 @@
         	error: function(e){
         		console.log("진입 실패");
         	}
-        	
-        
+
         });
-        
+        $("#second").show();
     });
 
     //상세보기 버튼 클릭시 창이 표시
@@ -339,13 +351,7 @@
                     	</div>          
                     </div>
                     <div id="second">
-                    
-                    
-                    <div class="board_t_b">
-						<textarea class="board_text" style="resize: none;"></textarea>
-						<div id="board_text_controll">(0 / 300)</div>
-						<button class="enter">enter</button>
-					</div>
+      				
                     </div>
                 </article>
             </div>
@@ -420,17 +426,16 @@
 			history.go(-1);
 		}
 	}*/
-	
-	
 	/*글자수 제한*/
-	$(".board_text, .update_text").on('keyup', function() {
+	$(document).on('keyup',".board_text", function() {
 		$('#board_text_controll').html("(" + $(this).val().length + " / 300)");
-		console.log(page);
 		if ($(this).val().length > 300) {
 			$(this).val($(this).val().substring(0, 300));
-			$('#board_text_controll, update_text_controll').html("(300 / 300)");
+			$('#board_text_controll').html("(300 / 300)");
 		}
-	});
+	});	
+	
+	
 	
 </script>
 </html>
