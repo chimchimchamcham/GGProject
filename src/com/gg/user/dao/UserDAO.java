@@ -344,15 +344,29 @@ public void updateFileName(String delFileName, GGDto dto) {
 	public ArrayList<GGDto> userList() {
 		
 		String sql = "SELECT u_id, u_nname, u_name, u_email, u_phone,u_jointm FROM userinfo";
+		ArrayList<GGDto> userList = new ArrayList<GGDto>();
+		GGDto dto = null;
+		
 		try {
 			ps=conn.prepareStatement(sql);
-			ps.setString(parameterIndex, x);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				dto = new GGDto();
+				dto.setU_id(rs.getString("u_id"));
+				dto.setU_nname(rs.getString("u_nname"));
+				dto.setU_name(rs.getString("u_name"));
+				dto.setU_email(rs.getString("u_email"));
+				dto.setU_phone(rs.getString("u_phone"));
+				dto.setU_joinTm(rs.getDate("u_joinTm"));
+				userList.add(dto);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			resClose();
 		}
-		
-		
-		return null;
+
+		return userList;
 	}
 
 

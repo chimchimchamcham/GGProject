@@ -16,7 +16,7 @@ import com.gg.user.service.UserService;
 import com.google.gson.Gson;
 import sun.misc.Contended;
 
-@WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage","/userUpdate","/userUpdateForm","/chkpw","/changePw","/chkinfo"})
+@WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage","/userUpdate","/userUpdateForm","/chkpw","/changePw","/chkinfo","/manageList"})
 public class UserController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -159,9 +159,8 @@ public class UserController extends HttpServlet {
 
 			//회원목록
 			ArrayList<GGDto> userList = service.userList();
-			System.out.println("userList size : "+userList.size());			
+			System.out.println("userList size : "+userList.size());
 			req.setAttribute("userList", userList);
-			
 			
 			dis = req.getRequestDispatcher("managePage.jsp");
 			dis.forward(req, resp);

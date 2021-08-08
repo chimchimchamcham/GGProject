@@ -302,6 +302,7 @@ public int changePw() {
 
 public ArrayList<GGDto> userList() {
 	UserDAO dao = new UserDAO();
+	
 	return dao.userList();
 }
 

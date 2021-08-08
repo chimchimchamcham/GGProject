@@ -181,18 +181,20 @@ h3 {
 					<tr>
 						<td colspan="6" style="padding: 0; border-bottom: 1px solid gray"></td>
 					</tr>
+					<c:forEach items="${userList}" var="userList">
 					<tr class="hoverTr">
-						<td>1234</td>
-						<td>애플</td>
-						<td>정슬기</td>
-						<td>1234@email.com</td>
-						<td>010-****-8206</td>
-						<td>2021-08-08</td>
+						<td>${userList.u_id}</td>
+						<td>${userList.u_nname}</td>
+						<td>${userList.u_name}</td>
+						<td>${userList.u_email}</td>
+						<td>${userList.u_phone}</td>
+						<td>${userList.u_joinTm}</td>
 					</tr>
 					<tr>
 						<td colspan="6"
 							style="padding: 0; border-bottom: 0.7px solid #e8e8e8"></td>
 					</tr>
+					</c:forEach>
 				</table>
 			</div>
 		</div>
@@ -231,6 +233,7 @@ h3 {
 					<tr>
 						<td colspan="7" style="padding: 0; border-bottom: 1px solid gray"></td>
 					</tr>
+					<c:forEach items="${notifyList}" var="notifyList">
 					<tr class="hoverTr">
 						<td>1</td>
 						<td>1234</td>
@@ -244,6 +247,7 @@ h3 {
 						<td colspan="7"
 							style="padding: 0; border-bottom: 0.7px solid #e8e8e8"></td>
 					</tr>
+					</c:forEach>
 				</table>
 			</div>
 		</div>
