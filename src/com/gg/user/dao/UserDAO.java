@@ -341,5 +341,19 @@ public void updateFileName(String delFileName, GGDto dto) {
 		return success;
 	}
 
+	public ArrayList<GGDto> userList() {
+		
+		String sql = "SELECT u_id, u_nname, u_name, u_email, u_phone,u_jointm FROM userinfo";
+		try {
+			ps=conn.prepareStatement(sql);
+			ps.setString(parameterIndex, x);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return null;
+	}
+
 
 }

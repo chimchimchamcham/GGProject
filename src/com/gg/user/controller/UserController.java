@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gg.dto.GGDto;
 import com.gg.user.service.UserService;
 import com.google.gson.Gson;
 import sun.misc.Contended;
@@ -149,6 +150,23 @@ public class UserController extends HttpServlet {
 			}
 			break;
 			
+			
+		case "/manageList":
+			System.out.println("관리페이지 목록 요청");
+			
+			resp.setContentType("text/html; charset=UTF-8");
+			req.setCharacterEncoding("UTF-8");
+
+			//회원목록
+			ArrayList<GGDto> userList = service.userList();
+			System.out.println("userList size : "+userList.size());			
+			req.setAttribute("userList", userList);
+			
+			
+			dis = req.getRequestDispatcher("managePage.jsp");
+			dis.forward(req, resp);
+			
+			break;
 		}
 		
 	

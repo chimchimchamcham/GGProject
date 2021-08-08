@@ -299,4 +299,11 @@ public int changePw() {
 	UserDAO dao = new UserDAO();
 	return dao.changePw(id,pw);
 }
+
+public ArrayList<GGDto> userList() {
+	UserDAO dao = new UserDAO();
+	return dao.userList();
+}
+
+
 }

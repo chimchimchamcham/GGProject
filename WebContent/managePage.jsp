@@ -42,6 +42,7 @@
 
 #manageButton button:hover {
 	background-color: #F2F2F2;
+	cursor: pointer;
 }
 
 #userInfo, #notifyInfo, #blackInfo {
@@ -256,8 +257,8 @@ h3 {
 				<tr>
 					<td>
 						<div id="searchBox">
-							<input type="text" name="search" placeholder="검색"> <img
-								src="img/search-icon.png" alt="search-icon">
+							<input type="text" name="search" placeholder="검색">
+							<img src="img/search-icon.png" alt="search-icon">
 						</div>
 					</td>
 					<td style="text-align: right;"><select>
