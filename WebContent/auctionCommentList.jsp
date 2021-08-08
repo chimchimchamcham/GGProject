@@ -8,6 +8,10 @@
 <title>Insert title here</title>
 </head>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+var id = "${sessionScope.loginId}";
+console.log("여기서 나오는 id: ", id);
+</script>
 <body>
 	<table id='comments_table'>
 	<c:forEach items="${list}" var="comments">
@@ -24,7 +28,9 @@
 			<td style="border-bottom: 0.5px solid lightgray;">
 				<div style='margin-top: 1px'>${comments.pc_tm }<img src="./img/notify-icon.png" width="20px" height="20px" style="float:right" id="${comments.pc_id }" class="reporter"/></div>
 				<div id='nullPoint'>&nbsp;&nbsp;</div>
-			 	<div style="text-align: center; font-weight: bold">수정하기      &nbsp;&nbsp;&nbsp;      삭제하기</div>
+				<c:if test="${comments.pc_id eq id }">
+			 	<div style="text-align: center; font-weight: bold"><p class="update_comment" style="display: inline">수정하기</p>      &nbsp;&nbsp;&nbsp;      <p class="comm_del" id="${comments.pc_no }" style="display: inline">삭제하기</p></div>
+			 	</c:if>
 			 	<div id='nullPoint'>&nbsp;&nbsp;</div>
 				<div><img src="./img/CommentArrow.png" width="20px" height="20px"/></div>
 			</td>
