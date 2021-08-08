@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -357,7 +358,9 @@ public void updateFileName(String delFileName, GGDto dto) {
 				dto.setN_no(rs.getInt("n_no"));
 				dto.setN_receivedId(rs.getString("n_receivedId"));
 				dto.setN_sendId(rs.getString("n_sendId"));
-				dto.setN1_code(n1_code);
+				
+				
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -368,31 +371,61 @@ public void updateFileName(String delFileName, GGDto dto) {
 		return userList;
 	}
 
-	public ArrayList<GGDto> notifyList() {
-		String sql = "SELECT n_no,n_receiveid,n_sendid,n1_code,n_n_adminid FROM notify";
-		ArrayList<GGDto> userList = new ArrayList<GGDto>();
-		GGDto dto = null;
+	/*
+	 * public ArrayList<GGDto> notifyList() { String sql =
+	 * "SELECT n_no,n_receiveid,n_sendid,n1_code,n_n_adminid FROM notify";
+	 * ArrayList<GGDto> userList = new ArrayList<GGDto>(); GGDto dto = null;
+	 * 
+	 * try { ps=conn.prepareStatement(sql); rs = ps.executeQuery(); while(rs.next())
+	 * { dto = new GGDto(); dto.setU_id(rs.getString("u_id"));
+	 * dto.setU_nname(rs.getString("u_nname"));
+	 * dto.setU_name(rs.getString("u_name"));
+	 * dto.setU_email(rs.getString("u_email"));
+	 * dto.setU_phone(rs.getString("u_phone"));
+	 * dto.setU_joinTm(rs.getDate("u_joinTm")); userList.add(dto); } } catch
+	 * (SQLException e) { e.printStackTrace(); }finally { resClose(); }
+	 * 
+	 * return userList; }
+	 */
+
+	public HashMap<String, ArrayList<GGDto>> category() {
 		
+		/*==신고상태 카테고리==*/
+		String sql = "select * from codes where c_code like 'HN%'";
+		HashMap<String, ArrayList<GGDto>> categoryMap = new HashMap<String, ArrayList<GGDto>>();
+		ArrayList<GGDto> list1 = new ArrayList<GGDto>();
+		ArrayList<GGDto> list2 = new ArrayList<GGDto>();
 		try {
 			ps=conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while(rs.next()) {
-				dto = new GGDto();
-				dto.setU_id(rs.getString("u_id"));
-				dto.setU_nname(rs.getString("u_nname"));
-				dto.setU_name(rs.getString("u_name"));
-				dto.setU_email(rs.getString("u_email"));
-				dto.setU_phone(rs.getString("u_phone"));
-				dto.setU_joinTm(rs.getDate("u_joinTm"));
-				userList.add(dto);
+				GGDto dto = new GGDto();
+				dto.setC_code(rs.getString("c_code"));
+				dto.setC_name(rs.getString("c_name"));
+				list1.add(dto);
 			}
+			categoryMap.put("n_stateCat", list1);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			resClose();
 		}
-
-		return userList;
+		
+		/*==신고 대분류 카테고리==*/
+		sql = "select * from n1_code";
+		try {
+			ps=conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				GGDto dto = new GGDto();
+				dto.setN1_code(rs.getString("n1_code"));
+				dto.setN1_name(rs.getString("n1_name"));
+				list2.add(dto);
+			}
+			categoryMap.put("n1_code", list2);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return categoryMap;
 	}
 
 

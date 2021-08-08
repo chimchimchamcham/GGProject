@@ -163,12 +163,30 @@ public class UserController extends HttpServlet {
 			System.out.println("userList size : "+userList.size());
 			req.setAttribute("userList", userList);
 			
-			//신고목록
-			ArrayList<GGDto> notifyList = service.notifyList();
-			System.out.println("notifyList size : "+notifyList.size());
-			req.setAttribute("notifyList", notifyList);
-
+			/*==신고목록==*/
+			//접수중,처리중,처리완료 카테고리
+			HashMap<String, ArrayList<GGDto>> categoryMap = service.category();
+			System.out.println("카테고리 성공 : " + categoryMap);
+			ArrayList<GGDto> n_stateCat = categoryMap.get("n_stateCat");
+			System.out.println("n_stateCat list size : " + n_stateCat.size());
+			req.setAttribute("n_stateCat", n_stateCat);
+			//게시글,댓글,사용자 카테고리
+			ArrayList<GGDto> n1_code = categoryMap.get("n1_code");
+			System.out.println("n1_code list size : " + n1_code.size());
+			req.setAttribute("n1_code", n1_code);
 			
+			/*
+			 * ArrayList<GGDto> notifyList = service.notifyList();
+			 * System.out.println("notifyList size : "+notifyList.size());
+			 * req.setAttribute("notifyList", notifyList);
+			 */
+			
+			
+			
+			
+			
+			
+			/*====경로지정====*/
 			dis = req.getRequestDispatcher("managePage.jsp");
 			dis.forward(req, resp);
 			

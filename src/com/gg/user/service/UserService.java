@@ -306,9 +306,17 @@ public ArrayList<GGDto> userList() {
 	return dao.userList();
 }
 
-public ArrayList<GGDto> notifyList() {
+/*
+ * public ArrayList<GGDto> notifyList() { UserDAO dao = new UserDAO(); return
+ * dao.notifyList(); }
+ */
+
+public HashMap<String, ArrayList<GGDto>> category() {
 	UserDAO dao = new UserDAO();
-	return dao.notifyList();
+	HashMap<String, ArrayList<GGDto>> categoryMap = dao.category();
+	dao.resClose();
+	
+	return categoryMap;
 }
 
 
