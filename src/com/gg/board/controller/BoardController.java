@@ -219,7 +219,7 @@ public class BoardController extends HttpServlet {
 			
 			System.out.println("rqnoval:"+rqnoval);
 			System.out.println("rqnotext:"+rqnotext);
-			service.updatereqlist(rqnoval);
+			//service.updatereqlist(rqnoval);
 			break;
 			
 		case "/lovelist":
