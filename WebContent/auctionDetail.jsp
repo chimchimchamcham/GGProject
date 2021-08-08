@@ -89,10 +89,11 @@
 		margin : 5px;
 		border : 1px solid lightskyblue;
 	}
-.enter, #update_enter {
+.enter, #update_enter, .re_enter {
 	width: 55px;
 	height: 5vh;
 	border : 0.5px solid gray;
+	text-align: center;
 	margin-bottom: 10px;
 }
 .pageArea{
@@ -107,6 +108,7 @@
 	overflow: hidden;
 	margin: 0px auto;
 	border: 0.5px solid lightgray;
+
 }
 #comments_table {
 	width: 1190px;
@@ -145,10 +147,9 @@ a:hover {
 	height: 5vh;
 	float: left;
 }
-.re_Arrow {
+.re_Arrow, .reporter {
 	cursor: pointer;
 }
-
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -503,20 +504,38 @@ a:hover {
 			list.forEach(function(item,idx){
 				
 			 	re_comment += "<tr id='redrawForm'>";
-			 	re_comment += 	"<td><img src='./img/re_Comment.png' /><br/>"+list.u_nname +" </td>";
+			 	re_comment += 	"<td style='border-bottom:0.5px solid lightgray;'><img src='./img/re_Comment.png' />"+item.u_nname +" </td>";
+			 	re_comment +=  	"<td id='content'>" + item.pc_content + "</td>";
+			 	re_comment += 	"<td id='right' style='border-bottom: 0.5px solid lightgray'>";
+			 	if(id == item.pc_id){
+			 		re_comment += 		"<img src='./img/trashbox.png' width='35px' height='35px' style='float:left' id='"+item.pc_no+"' class='comm_del'>";
+			 	}
+			 	else{
+			 		re_comment += "<img src='./img/notify-icon.png' width='17px' height='17px' style='float:right' class='reporter' id='"+item.pc_id+"'>";
+			 	}
+			 	re_comment += 	"<p style='float:right; margin-right:8px'>"+item.pc_tm+"</p>";
+			 	re_comment +=	"</td>";
 		 		re_comment += "</tr>";
-			})	 
-			
-		
-		 
+			});	 
+
 		 }
 		 
+		 re_comment += "<tr id='re_comment'>";
+		 re_comment += "<td colspan=3><textarea id='"+pc_parentno+"' class='update_text' style='resize: none;' placeholder='대댓글을 입력해 주세요' maxlength=300></textarea></td>";
+		 re_comment += "<td><button class='re_enter'>엔터</button></td>";
+		 re_comment += "</tr>"; 
+		 
 		 if(re_drawChecker){
-			 $("tr#redrawForm").empty();
+			 $("tr#update_form").remove();
+			 $("tr#re_comment").remove();
+			 $("tr#redrawForm").remove();
 			 $("tr#"+pc_parentno).after(re_comment);
 			 re_drawChecker = false;
 		 }else {
-			 $("tr#redrawForm").empty();
+			 
+			 $("tr#update_form").remove();
+			 $("tr#re_comment").remove();
+			 $("tr#redrawForm").remove();
 			 re_drawChecker = true;
 		 }
 		 
@@ -555,9 +574,13 @@ a:hover {
 		
 		if(check){
 			$("tr#"+update_comm).after(update_comment);
+			 $("tr#redrawForm").remove();
+			 $("tr#re_comment").remove();
 			check = false;
 		}else {
-			$("tr#update_form").empty();
+			$("tr#update_form").remove();
+			$("tr#re_comment").remove();
+			$("tr#redrawForm").remove();
 			check = true;
 		}
 		console.log(check);	
@@ -576,10 +599,7 @@ a:hover {
 			
 		}else {
 			alert("수정할 댓글을 입력하세요!");
-		}
-		
-		
-		
+		}	
 	});
 	/* 수정 기능 */
 	function comm_update(pc_no,context){
@@ -602,7 +622,7 @@ a:hover {
 				console.log("에러");		
 			}
 		});
-	}
+	};
 	/* 삭제 버튼 */
 	$(document).on('click','.comm_del', function(){
 		var del_comm = $(this).attr("id");
