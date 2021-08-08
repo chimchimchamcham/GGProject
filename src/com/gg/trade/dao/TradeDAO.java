@@ -273,9 +273,8 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		//글번호로 제목을 가져오는 기능
 		String p_title = Bdao.getTitle(p_no);
 		//알람보내기
-		Aldao.insertAlarm(u_id, "A004", "["+p_title+"]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
-		Aldao.insertAlarm(p_id, "A011", "["+p_title+"]경매가 종료 되었습니다.", "Y", "./auctionDetail?t_no="+p_no);//경매글 작성자
-		Aldao.insertAlarm(p_id, "A004", "["+p_title+"]"+u_id+"님이 낙찰자로 선정되었습니다.", "Y",  "./tradeDetail?t_no="+t_no);
+		Aldao.insertAlarm(u_id, "A004", "["+p_title+"..]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
+		Aldao.insertAlarm(p_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 작성자
 		Aldao.resClose();
 		Bdao.resClose();
 		
@@ -287,6 +286,8 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			
 			GGDto dto = new GGDto();
 			int instantpr = 0;
+			AlarmDAO Aldao = new AlarmDAO();
+			BoardDAO Bdao = new BoardDAO();
 			//낙찰시간,경매상태,낙찰자 변경
 			String sql = "update auction set au_suctm = SYSDATE, au_code= 'Au002' ,au_successer = (select u_id from userinfo where u_nname= ?) where p_no=? ";
 			ps = conn.prepareStatement(sql);
@@ -313,16 +314,23 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 					
 				}
 				
+				String successer = dto.getAu_successer();
+				
 				//입찰금 반환 메서드 실행
 				returnStartPr(p_no, instantpr);
 				
 				//해당 글번호로 판매자, 제목을 알아오기
 				String p_id = selectPostP_id(p_no);
-				dto.setP_id(p_id);
-				
+				String p_title = Bdao.getTitle(p_no);
+				p_title = Aldao.cutTitle(p_title);
 				//글번호, 판매자, 구매자를 인자값으로 넣어서, 거래페이지 생성과, 거래히스토리에 "0원" "생성" 추가
 				int t_no = insertTrade(p_no, p_id, ha_bidusr);
-				dto.setT_no(t_no);
+				
+				//알람보내기
+				Aldao.insertAlarm(successer, "A004", "["+p_title+"..]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
+				Aldao.insertAlarm(p_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 작성자
+				Aldao.resClose();
+				Bdao.resClose();
 			}
 			
 			return dto;
@@ -408,22 +416,19 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		}
 		//====================구매 요청 수락, 거절=====================
 		//구매요청을 수락하면 거래페이지 생성, 거절하면 끝
-		public HashMap<String, Object> buyRequestProcess(int rq_no, String rq_YN, int p_no, String t_saler, String t_buyer) {
+		public int buyRequestProcess(int rq_no, String rq_YN, int p_no, String t_saler, String t_buyer) {
 			System.out.println("[TRADEDAO]/BUYREQUESTPROCESS START");
 			String sql = "UPDATE REQUEST SET RQ_YN = ? WHERE RQ_NO = ?";
-			int intSuccess = 0;
+			int success = 0;
 			boolean insertNsaleNscodeSuccess = false;
 			int t_no = 0;
-			boolean success = false;
-			boolean request = false;
-			HashMap<String, Object> map = new HashMap<>();
 			try {
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, rq_YN);
 				ps.setInt(2, rq_no);
-				intSuccess = ps.executeUpdate();
+				success = ps.executeUpdate();
 				System.out.println("[TRADEDAO]/BUYREQUESTPROCESS SUCCESS : "+success);
-				if(intSuccess>0) {
+				if(success>0) {
 					//수락했을 경우
 					System.out.println("[TRADEDAO]/BUYREQUESTPROCESS RQ_YN : "+rq_YN);
 					if(rq_YN.toUpperCase().equals("Y")) {
@@ -433,26 +438,17 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 						if(insertNsaleNscodeSuccess) {
 							//구매요청자의 id는 href, 판매자의 id는 session를 받아서 거래페이지 생성
 							t_no = insertTrade(p_no, t_saler, t_buyer);
-							System.out.println("[TRADEDAO]/BUYREQUESTPROCESS T_NO : "+t_no);						
-							
-							//수락이 완료 되었음을 의미
-							request = true;
+							System.out.println("[TRADEDAO]/BUYREQUESTPROCESS T_NO : "+t_no);
 						}
 					}
-					//DB접속 성공 여부
-					success = true;
 				}
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			
-			//접속 성공 여부와, 수락여부를 맵에 담아서 jsp에 보냄
-			map.put("success", success);
-			map.put("request", request);
-			
 			System.out.println("[TRADEDAO]/BUYREQUESTPROCESS END");
-			return map;
+			
+			return t_no;
 		}
 		
 		//판매글 상태를 변경하는 기능

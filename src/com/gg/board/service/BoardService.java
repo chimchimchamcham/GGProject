@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.gg.board.dao.BoardDAO;
 import com.gg.dto.GGDto;
 import com.gg.trade.dao.TradeDAO;
-import com.gg.user.dao.AlarmDAO;
 import com.google.gson.Gson;
 
 public class BoardService {
@@ -572,8 +571,6 @@ public class BoardService {
 		System.out.println("경매글 상세보기 글번호 : " + p_no);
 		BoardDAO dao = new BoardDAO();
 		TradeDAO t_dao = new TradeDAO();
-		AlarmDAO Aldao = new AlarmDAO();
-
 		GGDto dto = null;
 		GGDto dto2 = null;
 		try {
@@ -618,15 +615,7 @@ public class BoardService {
 
 						// 경매종료상태 메서드 실행
 						dto2 = t_dao.endAuction(p_no, au_code, ha_bidusr);
-						String successer = dto2.getAu_successer();//경매 낙찰자 가져오기
-						String p_id = dto2.getP_id();
-						String p_title = dao.getTitle(p_no);
-						int t_no = dto2.getT_no();
-						//알람보내기
-						Aldao.insertAlarm(successer, "A004", "["+p_title+"..]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
-						Aldao.insertAlarm(p_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./auctionD?t_no="+t_no);//경매글 작성자
-						Aldao.insertAlarm(p_id, "A004", "["+p_title+"]"+successer+"님이 낙찰자로 선정되었습니다.", "Y",  "./tradeDetail?t_no="+t_no);//경매글 작성자
-						
+
 						// dto 내용 변경 dto.setAu_code(dto2.getAu_code());
 						dto.setAu_sucTm(dto2.getAu_sucTm());
 						dto.setAu_code(dto2.getAu_code());
@@ -647,8 +636,6 @@ public class BoardService {
 			e.printStackTrace();
 		} finally {
 			dao.resClose();
-			t_dao.resClose();
-			Aldao.resClose();
 		}
 		return dto;
 	}
@@ -886,6 +873,37 @@ public class BoardService {
 		return noticeList;
 	}
 
+	public void updatereqlist(String rqnoval) throws IOException {
+		
+		BoardDAO dao = new BoardDAO();
+		GGDto dto = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean success = false;
+		try {
+			dto = dao.urllist(rqnoval);
+			success = true;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+			System.out.println("가져올 글의 번호 : "+dto.getP_no());
+			System.out.println("가져올 요청의 번호 : "+dto.getRq_no());
+			System.out.println("가져올 요청한 사람의 id : "+dto.getRq_id());
+			System.out.println("가져올 요청한 y/n여부 : "+dto.getRq_YN());
+			
+			map.put("info", dto);
+			map.put("success", success);
+			
+			
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().print(new Gson().toJson(map));
+
+		}
+	}
+	
+
+}
+
 	// 메서드 통합으로 인하여 주석처리
 	/*
 	 * public String auctionDelete() { String delMsg = null; int p_no =
@@ -902,4 +920,4 @@ public class BoardService {
 	 * return delMsg; }
 	 */
 
-}
+

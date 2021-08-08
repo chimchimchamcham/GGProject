@@ -383,7 +383,7 @@ body {
           <button id="writeBtn" onclick="location.href='writeForm'">글쓰기</button>  
              	<a href="logout"  class="logoutA">로그아웃</a>
              <c:if test="${adminYN eq 'Y'}">
-            	 <a href="managePage.jsp">관리페이지</a>
+            	 <a href="#">관리페이지</a>
              </c:if>
               <c:if test="${adminYN eq 'N'}"> 
               <a href="#"  class="myPageA">마이페이지</a>
@@ -412,6 +412,7 @@ body {
                      <li><a href="#">도서기타</a></li>
                      <li><a href="#">기타</a></li>
                   </ul></li>
+   
                <li><a href="#" class="action">경매</a>
                   <ul id="sub">
                      <li><a href="#">패션의류</a></li>
@@ -426,8 +427,8 @@ body {
                      <li><a href="#">도서기타</a></li>
                      <li><a href="#">기타</a></li>
                   </ul></li>
-               <li><a href="commListForm.jsp" id="commA">커뮤니티</a></li>
-               <li><a href="noticeList" id="noticeA">공지사항</a></li>
+               <li><a href="commListForm.jsp">커뮤니티</a></li>
+               <li><a href="noticeList">공지사항</a></li>
             </ul>
          </div>
       </nav>
