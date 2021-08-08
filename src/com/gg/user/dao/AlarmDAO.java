@@ -53,7 +53,7 @@ public class AlarmDAO {
 		String insert =null;
 		ArrayList<GGDto>list = null;
 		String sql = "SELECT a_no,u_id,a_code,a_sendtm,a_checktm,a_content,a_readyn,a_delyn,a_impoyn,a_path from ALARM where u_id=? and a_readyn='N' order by a_readyn asc";
-		String sql2 = "SELECT a_no,u_id,a_code,a_sendtm,a_checktm,a_content,a_readyn,a_delyn,a_impoyn,a_path from ALARM where u_id=? and a_impoYN='Y' order by a_readyn asc";
+		String sql2 = "SELECT a_no,u_id,a_code,a_sendtm,a_checktm,a_content,a_readyn,a_delyn,a_impoyn,a_path from ALARM where u_id=? and a_impoYN='Y' and a_readyn='N' order by a_readyn asc";
 		
 		System.out.println("넘어온 a_impoyn : "+a_impoyn);
 		
@@ -135,7 +135,7 @@ public class AlarmDAO {
 		String title = null;
 		
 		if(p_title.length()>8) {
-			title = p_title.substring(0, 6)+"..";
+			title = p_title.substring(0, 6);
 		}else {
 			title = p_title;
 		}

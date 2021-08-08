@@ -224,11 +224,6 @@ a:hover {
 a:visited {
 	color : black;
 }
-
-/*상단바*/
-.tradeA{
-	color: #F2F2F2;
-}
 </style>
 <script>
 var loginId = "${sessionScope.loginId}";
@@ -798,8 +793,13 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			$("#want .item-box").append(content);
 			
 		}//구매요청 리스트 end
-				//수락버튼을 누르면
+				
+		
+		
+		//수락버튼을 누르면
 				 $(document).on("click","button.ok",function(){
+		
+					 
 					 
 					$rqno=$('button.ok');
 					$index= $rqno.index(this);
