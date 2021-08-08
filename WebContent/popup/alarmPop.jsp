@@ -75,7 +75,7 @@ h2 {
 }
 
 /*알람번호, 읽음 여부 숨기기*/
-.a_no, .a_readYN, .a_path{
+.a_no, .a_readYN, .a_path, .a_code{
 	display:none;
 }
 
@@ -126,7 +126,9 @@ h2 {
 	var a_no = ''; //알람 번호 가져오기
 	var a_readYN = ''; //읽음 여부 가져오기
 	var a_path=''; //경로 가져오기
-	var a_code='';
+	var a_code='';//알람 코드 가져오기
+	
+	var $this = '';
 	
 	var insert_success = ''; //읽은 시간과 읽음여부 집어넣은 결과 확인용
 	
@@ -149,19 +151,24 @@ h2 {
 	//해당 링크로 부모 페이지 이동시키기
 	$(".tableWrap").click(function(){
 		console.log("알림클릭");
-		$(this).addClass("read"); //클릭했을 경우 읽음 표시로
+		$this = $(this);
+		//$(this).addClass("read"); //클릭했을 경우 읽음 표시로
 		
-		a_no=$(this).find('.a_no').text(); 	//자손에 있는 값 가져오기
-		a_readYN = $(this).find('.a_readYN').text();
-		a_path = $(this).find('.a_path').text();
-		ㅁ_
+		a_no=$this.find('.a_no').text(); 	//자손에 있는 값 가져오기
+		a_readYN = $this.find('.a_readYN').text();
+		a_path = $this.find('.a_path').text();
+		a_code = $this.find('.a_code').text();
 		console.log("알람번호 : ",a_no);
 		console.log("알람 읽음 여부 : ",a_readYN);
 		console.log("알람 경로 : ",a_path);
+		console.log("알람 코드 : ",a_code);
 		
 		//읽음여부 상관없이 클릭시 해당 페이지로 부모페이지 이동
-		opener.parent.location=a_path;
-		
+		if(a_code == "A004"){//경매낙찰알람의 경우 팝업 띄워짐
+			window.open(a_path, "tradePopup", "width=900, height=650, left=100, top=100"); 
+		}else{
+			opener.parent.location=a_path;
+		}
 		//읽음여부 확인하고 변경
 		if(a_readYN == "N"){
 			$.ajax({
