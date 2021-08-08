@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지사항</title>
+<title>관리페이지</title>
 <style type="text/css">
 #mainHeader {
 	z-index: 1000;
@@ -22,29 +22,29 @@
 	padding: 30px;
 }
 
-#noticeTable {
+#userInfoBox {
 	width: 1100px;
 	margin: 0px auto;
 	border-top: 1px solid gray;
 }
 
-#noticeTable th {
+#userInfoBox th {
 	/* border: 1px solid black; */
 	padding: 10px 0;
 }
 
-#noticeTable td {
+#userInfoBox td {
 	/* border: 1px solid black; */
 	padding: 8px 0;
 	text-align: center;
 }
 
-#noticeTable td a{
+#userInfoBox td a{
 	text-decoration: none;
 	color:#000;
 }
 
-#noticeTable td a:hover{
+#userInfoBox td a:hover{
 	text-decoration: underline;
 }
 
@@ -59,9 +59,13 @@ h2 {
 <body>
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
-		<h2>공지사항</h2>
-		<p style="margin-left:20px;">총 ${noticeListSize}개의 게시글</p>
-		<table id="noticeTable">
+		<h2>관리페이지</h2>
+		<p style="margin-left:20px;">관리자1 님</p>
+		<button>회원목록</button>
+		<button>신고</button>
+		<button>블랙리스트</button>
+		<button>마이페이지</button>
+		<table id="userInfoBox">
 			<tr>
 				<th>글번호</th>
 				<th>제목</th>
@@ -69,11 +73,7 @@ h2 {
 				<th>작성일</th>
 				<th>조회수</th>
 			</tr>
-			<c:if test="${noticeList eq null || noticeList eq ''}">
-				<tr>
-					<td>공지사항 글이 없습니다.</td>
-				</tr>
-			</c:if>
+
 			<tr>
 				<td colspan="5" style="padding:0; border-bottom:1px solid gray"></td>
 			</tr>
@@ -105,17 +105,6 @@ h2 {
 	</div>
 </body>
 <script type="text/javascript">
-var currPageNum;
-if(${noticeList[0].currPageNum} == null){
-	currPageNum = 1;
-}
-function before(currPageNum){
-	currPageNum -=1;
-	location.href="noticeList?currPageNum"+currPageNum;
-}
-function after(currPageNum){
-	currPageNum +=1;
-	location.href="noticeList?currPageNum"+currPageNum;
-}
+
 </script>
 </html>

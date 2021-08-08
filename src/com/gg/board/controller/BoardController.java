@@ -212,7 +212,7 @@ public class BoardController extends HttpServlet {
 			String rqno = req.getParameter("rqno");
 			
 			System.out.println(rqno);
-			service.updatereqlist(rqno);
+			
 			break;
 			
 		case "/lovelist":

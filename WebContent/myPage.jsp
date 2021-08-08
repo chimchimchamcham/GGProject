@@ -224,6 +224,11 @@ a:hover {
 a:visited {
 	color : black;
 }
+
+/*상단바*/
+.tradeA{
+	color: #F2F2F2;
+}
 </style>
 <script>
 var loginId = "${sessionScope.loginId}";
