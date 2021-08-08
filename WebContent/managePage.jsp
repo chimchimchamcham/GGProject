@@ -138,7 +138,7 @@ h3 {
 }
 
 #headerBar td {
-	/* border:1px solid black; */
+/* 	border:1px solid black; */
 	
 }
 </style>
@@ -212,12 +212,16 @@ h3 {
 								src="img/search-icon.png" alt="search-icon">
 						</div>
 					</td>
-					<td style="text-align: right;"><select>
+					<td style="text-align: right; width:160px;"><small>대분류명  </small><select>
+					<option value="all">전체</option>
 					<c:forEach items="${n1_code }" var="n1_codeCat">
 							<option value="${n1_codeCat.n1_code}">${n1_codeCat.n1_name}</option>
 					</c:forEach>
 					</select>
-					<select>
+					</td>
+					<td style="text-align: right;  width:160px;">
+					<small>처리상태  </small><select>
+					<option value="all">전체</option>
 					<c:forEach items="${n_stateCat }" var="n_stateCategory">
 							<option value="${n_stateCategory.c_code }">${n_stateCategory.c_name }</option>
 					</c:forEach>
@@ -270,7 +274,7 @@ h3 {
 							<img src="img/search-icon.png" alt="search-icon">
 						</div>
 					</td>
-					<td style="text-align: right;"><select>
+					<td style="text-align: right; width:160px;"><small>분류명  </small><select>
 							<option value="댓글금지">댓글금지</option>
 					</select></td>
 				</tr>
@@ -279,7 +283,7 @@ h3 {
 				<table>
 					<tr>
 						<th>아이디</th>
-						<th>분류</th>
+						<th>분류명</th>
 						<th>등록 날짜</th>
 						<th>등록 종료 날짜</th>
 						<th>담당자</th>
