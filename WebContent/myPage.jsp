@@ -224,11 +224,6 @@ a:hover {
 a:visited {
 	color : black;
 }
-
-/*상단바*/
-.tradeA{
-	color: #F2F2F2;
-}
 </style>
 <script>
 var loginId = "${sessionScope.loginId}";
@@ -798,38 +793,64 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 			$("#want .item-box").append(content);
 			
 		}//구매요청 리스트 end
-				//수락버튼을 누르면
-				 $(document).on("click","button.ok",function(){
-					 
-					$rqno=$('button.ok');
+				
+		
+		
+		//수락버튼을 누르면
+				 $(document).on("click","div.buttonarea button",function(){
+		
+					$par = $('.buttonarea button').parents('.buttonarea').index(); 
+					console.log('parent:'+$par);
+					 	 
+					$rqno=$('.buttonarea button');
 					$index= $rqno.index(this);
-					$rqnob = $("button.ok:eq(" + $index + ")");
+					$rqnob = $(".buttonarea button:eq(" + $index + ")");
 					
 					 var rqnoval=$rqnob.val();
-					
-					$.ajax({
+					 var rqnotext=$rqnob.text();
+					 
+					 console.log('.buttonarea button:'+$index);
+					 console.log('rqnoval:'+rqnoval);
+					 console.log('rqnotext:'+rqnotext);
+					 
+					 
+
+					 
+					 
+					 $.ajax({
 						type:'post',
 						url:'./applyreqlist',
-						data:{rqno:rqnoval},
+						data:{rqno_val:rqnoval,
+							rqno_text:rqnotext},
 						dataType:'JSON',
 						success:function(data){
 							if (data!=null) {
-							/* console.log(data);
 							console.log('data1:'+data.info.p_no);
 							console.log('data1:'+data.info.rq_id);
 							console.log('data1:'+data.info.rq_no);
 							console.log('data1:'+data.info.Rq_YN);
-							 *//* document.location.href= */
 							 
-							 var param = {};
-							 
+							
+							
+							
+							var param = {};
+							if(rqnotext=='수락'){
+								param.Rq_YN = 'Y';
+							}else if(rqnotext=='거절'){
+								param.Rq_YN = 'N';
+							}
+							
 							 param.p_no = data.info.p_no;
 							 param.rq_id = data.info.rq_id;
 							 param.rq_no = data.info.rq_no;
-							 param.Rq_YN = info.Rq_YN;
+
+							console.log('param1:'+param.p_no);
+							console.log('param2:'+param.rq_id);
+							console.log('param3:'+param.rq_no);
+							console.log('param4:'+param.Rq_YN);
 							 
 							 
-							 $.ajax({
+							  $.ajax({
 								 type:'post',
 									url:'./buyRequestProcess',
 									data:param,
@@ -846,14 +867,15 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 									error:function(e){
 										console.log(e);
 									}
-							 });
+							 }); 
 							}
 						},
 						error:function(e){
 							console.log(e);
 						}
-					});  
+					});   
 					
+					//수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
 					//수락 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=Y&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
 					//거절 href = "./buyRequestProcess?rq_no=${dto.rq_no}&rq_YN=N&p_no=${dto.p_no}&rq_id=${dto.rq_id}"
 					

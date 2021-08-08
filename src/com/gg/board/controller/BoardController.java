@@ -69,6 +69,10 @@ public class BoardController extends HttpServlet {
 			boolean isBuyRequested = false;
 			isBuyRequested = service.isBuyRequested();
 
+			// 팔로우를 했는지 안했는지 확인
+			boolean isFollowed = false;
+			isFollowed = service.isFollowed();
+			
 			// 판매자의 판매목록 3개를 가져오기
 			String p_id = dto.getP_id();
 			System.out.println("p_id : " + p_id);
@@ -78,6 +82,7 @@ public class BoardController extends HttpServlet {
 			req.setAttribute("dto", dto);
 			req.setAttribute("isLiked", isLiked);
 			req.setAttribute("isBuyRequested", isBuyRequested);
+			req.setAttribute("isFollowed", isFollowed);
 			req.setAttribute("sale3List", sale3List);
 
 			dis = req.getRequestDispatcher("salesDetail.jsp");
@@ -209,10 +214,12 @@ public class BoardController extends HttpServlet {
 			
 		case "/applyreqlist":
 			System.out.println("거래수락 or 거절 요청");
-			String rqno = req.getParameter("rqno");
+			String rqnoval = req.getParameter("rqno_val");
+			String rqnotext = req.getParameter("rqno_text");
 			
-			System.out.println(rqno);
-			
+			System.out.println("rqnoval:"+rqnoval);
+			System.out.println("rqnotext:"+rqnotext);
+			service.updatereqlist(rqnoval);
 			break;
 			
 		case "/lovelist":

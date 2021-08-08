@@ -137,8 +137,7 @@ public void buyNow(){
 
 	//====================구매 요청 수락, 거절=====================
 	//구매요청을 수락하면 거래페이지 생성, 거절하면 끝
-	//화면 변경이 되지 않기 위해 ajax로 처리하기로 결정
-	public void buyRequestProcess() throws IOException {
+	public int buyRequestProcess() {
 		System.out.println("[TRADESERVICE]/BUYREQUESTPROCESS START");
 		int rq_no = Integer.parseInt(req.getParameter("rq_no"));
 		String rq_YN = req.getParameter("rq_YN");
@@ -149,21 +148,12 @@ public void buyNow(){
 		int t_no = 0;
 		TradeDAO dao = new TradeDAO();
 		
-		HashMap<String, Object> map = dao.buyRequestProcess(rq_no, rq_YN, p_no, t_saler, t_buyer);
+		t_no = dao.buyRequestProcess(rq_no, rq_YN, p_no, t_saler, t_buyer);
 		System.out.println("[TRADESERVICE]/BUYREQUESTPROCESS T_NO : "+t_no);
 		
 		dao.resClose();
-		
-		//success 는 dao의 모든 처리가 완료 되었는지 확인
-		map.put("success", map.get("success"));
-		System.out.println("[TRADESERVICE]/BUYREQUESTPROCESS SUCCESS : "+map.get("success"));
-		//request 는 true일 경우 수락하여 거래페이지 생성 상태, false는 거절을 누름
-		map.put("request", map.get("request"));
-		System.out.println("[TRADESERVICE]/BUYREQUESTPROCESS END : "+map.get("request"));
-		
-		resp.setCharacterEncoding("UTF-8");
-		resp.setContentType("text/html; charset=UTF-8");
-		resp.getWriter().print(new Gson().toJson(map));
+		System.out.println("[TRADESERVICE]/BUYREQUESTPROCESS END");
+		return t_no;
 	}
 	//====================거래 페이지============================
 	//구매자가 송금

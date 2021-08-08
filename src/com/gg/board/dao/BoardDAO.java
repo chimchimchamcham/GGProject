@@ -135,6 +135,28 @@ public class BoardDAO {
 		return isLiked;
 	}
 
+	public boolean isFollowed(String u_id, int p_no) {
+		System.out.println("DAO isLiked");
+		String sql = "SELECT FROM FOLLOW WHERE F_RECEIVEID = (SELECT P_ID FROM POST P_ID";
+		System.out.println("u_id : " + u_id);
+		System.out.println("p_no : " + p_no);
+
+		boolean isFollowed = false;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, u_id);
+			ps.setInt(2, p_no);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				isFollowed = true;
+			}
+			System.out.println("[DAO] isFollowed : " + isFollowed);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return isFollowed;
+	}
+	
 	public boolean lovePlus(String u_id, int p_no) {
 		System.out.println("DAO lovePlus");
 		String sql = "INSERT INTO LOVE VALUES(?,?,SYSDATE)";
@@ -444,7 +466,6 @@ public class BoardDAO {
 	         String reseveid = dto.getF_receiveid();
 	         String sendid = dto.getF_sendid();
 
-
 	         // 유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
 	         if (userid.equals(reseveid)) {
 	            dto.setThisuserFlowingYN("<button class='hellow'>+팔로잉</button>");// N
@@ -539,7 +560,7 @@ public class BoardDAO {
 			if (userid.equals(sid)) {
 				System.out.println("수신");
 				dto.setSered("수신");
-				dto.setButtonORtext("<div><button class='ok' value ="+dto.getRq_no()+">수락</button><button>거절</button></div>");
+				dto.setButtonORtext("<div class='buttonarea' ><button value ="+dto.getRq_no()+">수락</button><button value ="+dto.getRq_no()+">거절</button></div>");
 			} else if (userid.equals(rid)) {
 				System.out.println("발신");
 				dto.setSered("발신");
