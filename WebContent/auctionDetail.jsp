@@ -462,22 +462,67 @@ a:hover {
 	
 	 /*========================== 댓글 영역  ===================================== */
 	 /* 대댓글 불러오기 */
-	 
+	 var re_call = true;
 	 $(document).on("click",".re_Arrow", function() {
 		console.log("대댓글 보기 버튼 클릭");
+		var pc_parentno = $(this).attr("id");
+		console.log("보여줄 대댓글 부모 번호 :", pc_parentno);
 	 
-	 
+	 	re_show(pc_parentno);
 	 
 	 });
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
+	/* 대댓글 리스트 불러오기 */
+	 function re_show(pc_parentno){
+		 	
+	 	var re_comm = {};
+	 	re_comm.pc_parentno = pc_parentno;
+	 	re_comm.p_no = "${dto.p_no}";
+			$.ajax({
+				type: "POST",
+				data: re_comm,
+				dataType: "JSON",
+				url: "showReComment",
+				success : function(data){ 
+					console.log("대댓글 리스트 보여주기.");
+					console.log(data.list);
+					re_draw(data.list,pc_parentno);	
+					
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			});
+		};
+	var re_drawChecker = true;
+	 /* 대댓글 리스트 그리기 */
+	 function re_draw(list,pc_parentno) {
+		 console.log("대댓글 리스트 : ", list);
+		 
+		 var re_comment = "";
+		 if(list != null){
+			list.forEach(function(item,idx){
+				
+			 	re_comment += "<tr id='redrawForm'>";
+			 	re_comment += 	"<td><img src='./img/re_Comment.png' /><br/>"+list.u_nname +" </td>";
+		 		re_comment += "</tr>";
+			})	 
+			
+		
+		 
+		 }
+		 
+		 if(re_drawChecker){
+			 $("tr#redrawForm").empty();
+			 $("tr#"+pc_parentno).after(re_comment);
+			 re_drawChecker = false;
+		 }else {
+			 $("tr#redrawForm").empty();
+			 re_drawChecker = true;
+		 }
+		 
+	 };
+	
+
 	 
 	 
 	 
