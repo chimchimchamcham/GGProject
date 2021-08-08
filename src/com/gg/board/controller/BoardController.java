@@ -21,7 +21,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist",
 		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/postDel", "/writeCommunity", "/auctionDetail",
 		"/commDetail", "/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist", "/commList",
-		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist",
+		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist","/mainsold","/mainauction",
 		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail","/applyreqlist","/noticeList"})
 
 
@@ -511,6 +511,20 @@ public class BoardController extends HttpServlet {
 
 			req.setAttribute("dto", dto);
 			dis = req.getRequestDispatcher("commDetailForm.jsp");
+			dis.forward(req, resp);
+			break;
+			
+		case "/mainsold":
+
+			req.setAttribute("mainlist", 0);
+			dis = req.getRequestDispatcher("index.jsp");
+			dis.forward(req, resp);
+			break;
+			
+		case "/mainauction":
+
+			req.setAttribute("mainlist", 1);
+			dis = req.getRequestDispatcher("index.jsp");
 			dis.forward(req, resp);
 			break;
 
