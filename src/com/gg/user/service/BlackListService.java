@@ -16,7 +16,7 @@ public class BlackListService {
 	public boolean notifyUser() {
 		GGDto dto = new GGDto();
 		
-		dto.setN_receivedId(req.getParameter("N_receiveId"));
+		dto.setN_receiveId(req.getParameter("N_receiveId"));
 		dto.setN_sendId((String)req.getSession().getAttribute("loginId"));
 		dto.setN_content(req.getParameter("N_content"));
 		dto.setN1_code(req.getParameter("N1_code"));
