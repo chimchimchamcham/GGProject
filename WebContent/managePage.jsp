@@ -248,7 +248,7 @@ h3 {
 						<td>${notifyList.n_no}</td>
 						<td>${notifyList.n_receiveId}</td>
 						<td>${notifyList.n_sendId}</td>
-						<td>${notifyList.n1_name}</td>
+						<td class="n1_name">${notifyList.n1_name}</td>
 						<td>${notifyList.hn_tm}</td>
 						<td>${notifyList.hn_code}</td>
 						<td>${notifyList.hn_adminid}</td>
@@ -390,7 +390,9 @@ h3 {
 	/*==신고목록==*/
 	//대분류명 select
 	$("#firstCat").on('change', function(){
-		$("#hoverTr").val()
+		for ( var i in ${n_stateCat}) {
+			if($(".n1_name").text() == )
+		}
 		
 		
 	});
