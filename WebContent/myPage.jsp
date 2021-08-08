@@ -234,27 +234,15 @@ function chargePopup() { window.open("./popup/chargePopup.jsp", "chargePop", "wi
 //포인트내역 팝업
 function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "width=900, height=600, left=450, top=180"); }
 
-	var allurl = ${allurl}
+	var allurl = null;
+	$(document).ready(function() {
+		if(allurl==null){
+			allurl = './soldlist';
+		}
 	/*
-	이제 마이리스트에 들어갈때 무슨 리스트 보여줄건지 설정하려면 allurl 안에 문자열을 뿌려주어야합니다
+	이제 마이리스트에 들어갈때 무슨 리스트 보여줄건지 설정하려면 allurl를 뿌려주어야합니다
 	
-	req.setAttribute("allurl", service.updateForm());
-	dis = req.getRequestDispatcher("updateForm.jsp");
-	dis.forward(req, resp);
-	등으로요
-	
-	
-	
-	뿌려줘야하는 목록
-	./soldlist : 판매리스트
-	./auctionlist : 경매리스트
-	./maidelist : 구매리스트
-	./communitylist : 커뮤니티리스트
-	./flowlist : 팔로우리스트
-	./requestlist : 구매요청리스트
-	./lovelist : 구매요청리스트
-	
-	
+	'./soldlist':판매리스트
 	
 	*/
 		
@@ -269,74 +257,18 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 				if(data != null){
 					if(data.soldlist != null){//판매
 						soled_list(data.soldlist);
-						    $("#sale").show();
-						    $("#trade").hide();
-						    $("#sell").hide();
-						    $("#commu").hide();
-						    $("#follow").hide();
-						    $("#want").hide();
-						    $("#like").hide();
-						    $("#alarm").hide();
 					}else if (data.auctionlist != null) {//경매
 						auction_list(data.auctionlist);
-					    $("#sale").hide();
-					    $("#trade").show();
-					    $("#sell").hide();
-					    $("#commu").hide();
-					    $("#follow").hide();
-					    $("#want").hide();
-					    $("#like").hide();
-					    $("#alarm").hide();
 					}else if (data.maidelist != null) {//구매
 						maide_list(data.maidelist);
-					    $("#sale").hide();
-					    $("#trade").hide();
-					    $("#sell").show();
-					    $("#commu").hide();
-					    $("#follow").hide();
-					    $("#want").hide();
-					    $("#like").hide();
-					    $("#alarm").hide();
 					}else if (data.communitylist != null) {//커뮤니티
 						community_list(data.communitylist);
-					    $("#sale").hide();
-					    $("#trade").hide();
-					    $("#sell").hide();
-					    $("#commu").show();
-					    $("#follow").hide();
-					    $("#want").hide();
-					    $("#like").hide();
-					    $("#alarm").hide();
 					}else if (data.flowlist != null) {//팔로우 팔로잉
 						flow_list(data.flowlist);
-					    $("#sale").hide();
-					    $("#trade").hide();
-					    $("#sell").hide();
-					    $("#commu").hide();
-					    $("#follow").show();
-					    $("#want").hide();
-					    $("#like").hide();
-					    $("#alarm").hide();
 					}else if (data.reqlist != null) {//거래 요청
 						request_list(data.reqlist);
-					    $("#sale").hide();
-					    $("#trade").hide();
-					    $("#sell").hide();
-					    $("#commu").hide();
-					    $("#follow").hide();
-					    $("#want").show();
-					    $("#like").hide();
-					    $("#alarm").hide();
 					}else if (data.lovelist != null) {//거래 요청
 						love_list(data.lovelist);
-					    $("#sale").hide();
-					    $("#trade").hide();
-					    $("#sell").hide();
-					    $("#commu").hide();
-					    $("#follow").hide();
-					    $("#want").hide();
-					    $("#like").show();
-					    $("#alarm").hide();
 					}
 				}
 			},
@@ -557,6 +489,10 @@ function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "
 		    $("#alarm").show();
 		    
 		});
+	
+	
+		
+	});
 	
 
 
