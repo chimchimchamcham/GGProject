@@ -397,7 +397,6 @@ li {
 				
 				//이전에 이용자가 판매자를 팔로우한 적이 있는지 확인
 				//팔로우를 했을 경우
-				console.log("${isFollowed}");
 				<c:if test="${isFollowed eq true}">
 					$("#follow").css({"color" : "white", "background-color" : "gray"});
 					$("#follow").text("-팔로우");
@@ -407,23 +406,63 @@ li {
 				//팔로우 클릭시 버튼 변경
 				//false는 팔로우를 안했다는 뜻 기존값 그대로
 				$("#follow").click(function() {
-					//팔로우를 안했다면
+					//팔로우를 안한 상태에서 팔로우 하기
 					if (!isFollowed) {
-						//클릭함으로 인해 팔로우하게 됨
-						//팔로우 해제를 할 수 있는 모양으로 바뀜
-						$("#follow").css({"color" : "white", "background-color" : "gray"});
-						$("#follow").text("-팔로우");
-						//팔로우 한 상태가 됨
-						isFollowed = true;
-						console.log("팔로우 함");
-					//팔로우를 하지 않았다면	
+						
+						var param = {};
+						param.btntext = "+팔로우";
+						param.nick = "${dto.u_nname }";
+						
+						$.ajax({
+							type: "POST",
+							data: param,
+							dataType: "JSON",
+							url: "flowadddelect",
+							success : function(data){ 
+								if(data.success){
+									//클릭함으로 인해 팔로우하게 됨
+									//팔로우 해제를 할 수 있는 모양으로 바뀜
+									$("#follow").css({"color" : "white", "background-color" : "gray"});
+									$("#follow").text("-팔로우");
+									//팔로우 한 상태가 됨
+									isFollowed = true;
+									alert("팔로우 성공");			
+								}else{
+									alert("팔로우 실패");
+								}
+							},
+							error : function(e) {
+								console.log(e);
+							}
+						});
+					//팔로우한 상태에서 팔로우 해제	
 					} else {
-						//클릭함으로 인해 팔로우 해제됨
-						//다시 팔로우를 할 수 있는 모양으로 바뀜
-						$("#follow").css({"color" : "black", "background-color" : "#E6E6E6"});
-						$("#follow").text("+팔로우");
-						isFollowed = false;
-						console.log("팔로우 해제함");
+						
+						var param = {};
+						param.btntext = "-팔로우";
+						param.nick = "${dto.u_nname }";
+						
+						$.ajax({
+							type: "POST",
+							data: param,
+							dataType: "JSON",
+							url: "flowadddelect",
+							success : function(data){ 
+								if(data.success){
+									//클릭함으로 인해 팔로우 해제됨
+									//다시 팔로우를 할 수 있는 모양으로 바뀜
+									$("#follow").css({"color" : "black", "background-color" : "#E6E6E6"});
+									$("#follow").text("+팔로우");
+									isFollowed = false;
+									alert("팔로우 해제 성공");
+								}else{
+									alert("팔로우 해제 실패");
+								}
+							},
+							error : function(e) {
+								console.log(e);
+							}
+						});
 					}
 				});
 				

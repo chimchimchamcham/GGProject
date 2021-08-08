@@ -17,7 +17,6 @@ import com.gg.board.dao.BoardDAO;
 import com.gg.dto.GGDto;
 import com.gg.trade.dao.TradeDAO;
 import com.gg.user.dao.AlarmDAO;
-import com.gg.user.dao.PointDAO;
 import com.google.gson.Gson;
 
 public class BoardService {
@@ -354,19 +353,29 @@ public class BoardService {
 
 		if (btntext != null) {
 			BoardDAO dao = new BoardDAO();
-			int success;
+			int intSuccess;
+			boolean success = false;
 			try {
-				success = dao.flowbut(userid, btntext, nick);
-				System.out.println("success:" + success);
+				intSuccess = dao.flowbut(userid, btntext, nick);
+				System.out.println("intSuccess:" + intSuccess);
+				success = true;
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
 				dao.resClose();
+				
+				HashMap<String, Object> map = new HashMap<>();
+				map.put("success", success);
+				
+				resp.setCharacterEncoding("UTF-8");
+				resp.setContentType("text/html; charset=UTF-8");		
+				resp.getWriter().println(new Gson().toJson(map));
 			}
 		} else {
 			System.out.println("null임");
 		}
-
+		
+		
 	}
 
 //구매요청리스트
@@ -652,11 +661,9 @@ public void updatereqlist(String rqno) throws IOException {
 						String p_title = dao.getTitle(p_no);
 						int t_no = dto2.getT_no();
 						//알람보내기
-						PointDAO Pdao = new PointDAO();
-						String successer_nname = Pdao.getNname(successer);
-						Aldao.insertAlarm(successer, "A004", "["+p_title+"]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
-						Aldao.insertAlarm(p_id, "A011", "["+p_title+"]경매가 종료 되었습니다.", "Y", "./auctionDetail?p_no="+p_no);//경매글 작성자
-						Aldao.insertAlarm(p_id, "A004", "["+p_title+"]"+successer_nname+"님이 낙찰자로 선정되었습니다.", "Y",  "./tradeDetail?t_no="+t_no);//경매글 작성자
+						Aldao.insertAlarm(successer, "A004", "["+p_title+"..]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
+						Aldao.insertAlarm(p_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./auctionD?t_no="+t_no);//경매글 작성자
+						Aldao.insertAlarm(p_id, "A004", "["+p_title+"]"+successer+"님이 낙찰자로 선정되었습니다.", "Y",  "./tradeDetail?t_no="+t_no);//경매글 작성자
 						
 						// dto 내용 변경 dto.setAu_code(dto2.getAu_code());
 						dto.setAu_sucTm(dto2.getAu_sucTm());
