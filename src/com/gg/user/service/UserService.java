@@ -185,8 +185,13 @@ public class UserService {
 		System.out.println("서비스 진입 : " + id);
 		UserDAO dao = new UserDAO();
 		GGDto dto = new GGDto();
+
 		if (id != null) { // 로그인 했을 때
-			if (id.equals(oppId) || oppId == null || adminYN.equals("Y")) { // 내글에서 내프로필 갈때 / 마이페이지 / 관리자가 볼 때
+			if (adminYN.equals("Y")) { // 관리자 회원프로필 조회 여부
+				dto = dao.myPage(oppId);
+				dto.setMyYN(true);
+				System.out.println("관리자 회원 정보 조회 : " + dto.isMyYN());
+			} else if (id.equals(oppId) || oppId == null) { // 내글에서 내프로필 갈때 / 마이페이지
 				dto = dao.myPage(id);
 				dto.setMyYN(true);
 				System.out.println("마이 프로필 여부 : " + dto.isMyYN());
@@ -200,6 +205,7 @@ public class UserService {
 			dto.setMyYN(false);
 			System.out.println(dto.isMyYN());
 		}
+
 		dao.resClose();
 		return dto;
 	}
@@ -305,20 +311,20 @@ public class UserService {
 		return dao.notifyList();
 	}
 
-	public HashMap<String,ArrayList<GGDto>> search() {
+	public HashMap<String, ArrayList<GGDto>> search() {
 		String search = req.getParameter("insert");
 		UserDAO dao = new UserDAO();
-		HashMap<String,ArrayList<GGDto>> map = new HashMap<String, ArrayList<GGDto>>();
+		HashMap<String, ArrayList<GGDto>> map = new HashMap<String, ArrayList<GGDto>>();
 		try {
 			map = dao.search(search);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			dao.resClose();
 		}
 		return map;
-		
+
 	}
 
 	public HashMap<String, ArrayList<GGDto>> category() {
@@ -336,9 +342,9 @@ public class UserService {
 
 		UserDAO dao = new UserDAO();
 		ArrayList<GGDto> firstSelList = new ArrayList<GGDto>();
-		if(n_stateCatSel.equals("all")) { //전체일때
+		if (n_stateCatSel.equals("all")) { // 전체일때
 			firstSelList = dao.notifyList();
-		}else {
+		} else {
 			firstSelList = dao.n_stateCatSel(n_stateCatSel);
 		}
 
