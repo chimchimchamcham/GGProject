@@ -1,6 +1,5 @@
 package com.gg.user.controller;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.gg.dto.GGDto;
 import com.gg.user.service.UserService;
 import com.google.gson.Gson;
-
+import sun.misc.Contended;
 
 
 @WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage", "/userUpdate",
@@ -213,8 +212,16 @@ public class UserController extends HttpServlet {
 		case "/search":
 			System.out.println("검색결과 요청");
 			HashMap<String,ArrayList<GGDto>> searchmap = new HashMap<String, ArrayList<GGDto>>();
+			ArrayList<GGDto> f_ui = null;
+			ArrayList<GGDto> f_pc = null;
+			ArrayList<GGDto> f_pt = null;
 			searchmap = service.search();
-			req.setAttribute("resultList", searchmap);
+			f_ui = searchmap.get("f_ui");
+			f_pc = searchmap.get("f_pc");
+			f_pt = searchmap.get("f_pt");
+			req.setAttribute("f_ui", f_ui);
+			req.setAttribute("f_pc", f_pc);
+			req.setAttribute("f_pt", f_pt);
 			dis=req.getRequestDispatcher("search.jsp");
 			dis.forward(req, resp);
 			break;
