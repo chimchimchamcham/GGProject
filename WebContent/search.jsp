@@ -90,7 +90,7 @@ h2 {
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
 		<br />
-		<h2>"${param.insert}"검색결과 총 4개</h2>
+		<h2>"${param.insert}"검색결과 총 ${list_size}개</h2>
 		<p style="margin-left: 20px;"></p>
 		<div id="searchButton">
 			<button class="search_all">전체</button>
@@ -106,7 +106,9 @@ h2 {
 			<hr>
 			</p>
 			<div id="userContent">
-			<c:if test="${f_ui eq null || f_ui eq ''}"><h3>사용자가 존재하지 않습니다.</h3></c:if>
+			<c:if test="${f_ui eq null || f_ui eq ''}">
+				<h3>사용자가 존재하지 않습니다.</h3>
+			</c:if>
 			<c:forEach items="${f_ui }" var ="dto">
 				<table class="hoverTr" onclick="location.href='#'" style="padding: 0 100px; width: 1140px; height: 100px">
 					<tr>
