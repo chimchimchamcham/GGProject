@@ -295,6 +295,10 @@ a:visited {
 		window.open("./popup/notifyPopup.jsp?N_receiveId=${myPageInfo.u_id}",
 				"notifyPopup", "width=900, height=600, left=450, top=180");
 	}
+	function sendMsgPop() {
+		window.open("./popup/sendMsgPop.jsp?N_receiveId=${myPageInfo.u_id}",
+				"chargePop", "width=500, height=500, left=850, top=150");
+	}
 
 	var allurl =
 <%=allurl%>
@@ -1437,7 +1441,7 @@ a:visited {
 					</tr>
 					<tr id="f_mBtn">
 						<td><button>+팔로우</button>
-							<button>쪽지</button></td>
+							<button onclick="sendMsgPop()">쪽지</button></td>
 					</tr>
 					<tr>
 						<td colspan="2"><a href="#" onclick="notifyPopup()">신고하기</a></td>
