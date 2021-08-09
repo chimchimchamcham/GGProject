@@ -196,7 +196,7 @@ public class GGDto {
    private int currPageStart;
    private int totalPost;
    private int currPageNum;
-
+   
 
 public String getU_id() {
 	return u_id;

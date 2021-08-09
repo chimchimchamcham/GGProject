@@ -456,6 +456,30 @@ public void updatereqlist(String rqno) throws IOException {
 
 	}
 
+	public void alarm_list(String userid) throws IOException {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		BoardDAO dao = new BoardDAO();
+		ArrayList<GGDto> alarmlist = null;
+
+		try {
+			alarmlist = dao.alarmlist(userid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			map.put("alarmlist", alarmlist);
+			dao.resClose();
+		}
+		System.out.println("auc_map:" + map);
+
+		resp.setContentType("text/html; charset=UTF-8");
+		resp.getWriter().println(new Gson().toJson(map));
+		map.clear();
+		dao.resClose();
+		
+	}
+	
+	
 ///////////////////////////////////////////////////////////////////////////////
 	public HashMap<String, ArrayList<GGDto>> category() {
 		BoardDAO dao = new BoardDAO();
@@ -946,6 +970,8 @@ public void updatereqlist(String rqno) throws IOException {
 
 		return noticeList;
 	}
+
+
 
 
 
