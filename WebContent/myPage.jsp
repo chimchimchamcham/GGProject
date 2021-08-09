@@ -271,10 +271,16 @@ a:visited {
 
 </style>
 
+<<<<<<< HEAD
 <%
 	String allurl = (String) session.getAttribute("allurl");
+=======
+<% 
+	String allurl = (String)session.getAttribute("allurl");
+	//
+>>>>>>> 92ec7ecb5cf053dd1c1bd39d80de15c638c589c3
 %>
-
+/
 <script>
 	var loginId = "${sessionScope.loginId}";
 
