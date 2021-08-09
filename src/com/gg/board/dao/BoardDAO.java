@@ -12,6 +12,8 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.gg.dto.GGDto;
+import com.gg.user.dao.AlarmDAO;
+import com.gg.user.dao.PointDAO;
 
 public class BoardDAO {
 
@@ -495,7 +497,7 @@ public class BoardDAO {
 		
 		if (btntext.equals(wordplus)) {// 나를 팔로잉 한사람 팔로워 추가
 			System.out.println("+팔로잉 실행");
-			sql = "insert into follow VALUES ((select u_id from userinfo where u_nname = ?),?,sysdate);";
+			sql = "insert into follow VALUES ((select u_id from userinfo where u_nname = ?),?,sysdate)";
 
 			System.out.println("useriddao:" + userid);
 			System.out.println("ninkdao:" + nick);
@@ -504,6 +506,16 @@ public class BoardDAO {
 			ps.setString(1, nick);
 			ps.setString(2, userid);
 			success = ps.executeUpdate();
+			//팔로우 알람 보내기
+			if(success>0) {
+				String u_id = nickToId(nick);
+				AlarmDAO Adao = new AlarmDAO();
+				PointDAO Pdao = new PointDAO();
+				String u_nname = Pdao.getNname(userid);
+				Adao.insertAlarm(u_id, "A003",u_nname+"님이 팔로우하였습니다." , "N", "./myPage?"+userid);
+				Adao.resClose();
+				Pdao.resClose();
+			}
 
 		} else if (btntext.equals(wordminus)) {// 내가 팔로잉 한사람 팔로워 취소
 			System.out.println("-팔로잉 실행");
@@ -516,7 +528,7 @@ public class BoardDAO {
 			ps.setString(1, userid);
 			ps.setString(2, nick);
 			success = ps.executeUpdate();
-
+		
 		}
 		System.out.println("flowbut end");
 		return success;
@@ -1429,6 +1441,26 @@ public class BoardDAO {
 		}
 
 		return dto;
+	}
+	
+	public String nickToId(String u_nname) {
+		String u_id = null;
+		String sql = "select u_id from userinfo where u_nname = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, u_nname);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				u_id = rs.getString("u_id");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return u_id;
+		
 	}
 
 }
