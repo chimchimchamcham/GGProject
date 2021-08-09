@@ -215,11 +215,12 @@ h2 {
 		$("#post_content_result").show();
 	});
 	
-	var resultList =${resultList};
+	var resultList =new HashMap();
 	var f_ui =[];
 	var f_pc = [];
 	var f_pt = [];
 	f_ui = resultList.f_ui;
+	f_pc = result
 	console.loe(f_ui.size);
 	
 </script>
