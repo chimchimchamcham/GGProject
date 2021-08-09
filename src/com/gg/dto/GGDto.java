@@ -161,6 +161,8 @@ public class GGDto {
    
    private int p_registCnt;//해당 작성자가 등록한 게시물의 총 갯수
    
+   private String p_path;//해당 게시글의 상세경로
+   
    // 사진
    private String i_newName;
    
@@ -1179,5 +1181,13 @@ public int getP_registCnt() {
 
 public void setP_registCnt(int p_registCnt) {
 	this.p_registCnt = p_registCnt;
+}
+
+public String getP_path() {
+	return p_path;
+}
+
+public void setP_path(String p_path) {
+	this.p_path = p_path;
 }
 }
