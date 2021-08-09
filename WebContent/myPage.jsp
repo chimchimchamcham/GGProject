@@ -237,6 +237,8 @@ function chargePopup() { window.open("./popup/chargePopup.jsp", "chargePop", "wi
 function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "width=900, height=600, left=450, top=180"); }
 
 var allurl = ${allurl};
+	
+	
 	$(document).ready(function(){
 	
 		
@@ -251,7 +253,7 @@ var allurl = ${allurl}
 
 이제 마이리스트에 들어갈때 무슨 리스트 보여줄건지 설정하려면 allurl 안에 문자열을 뿌려주어야합니다
 
-req.setAttribute("allurl", "'./soldlist'");
+예) req.setAttribute("allurl", "'./soldlist'");
 
 등으로요
 
@@ -278,23 +280,130 @@ $.ajax({
 		if(data != null){
 			if(data.soldlist != null){//판매
 				soled_list(data.soldlist); 
+			    $("#twoButton>button:nth-of-type(1)").css({"background-color":"gray","color":"white"});
+			    $("#twoButton>button:nth-of-type(2)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(3)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(4)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(5)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(6)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(7)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(8)").css({"background-color":"white","color":"black"});
+				$("#sale").show();
+				$("#trade").hide();
+				$("#sell").hide();
+				$("#commu").hide();
+				$("#follow").hide();
+				$("#want").hide();
+				$("#like").hide();
+				$("#alarm").hide();
 			}else if (data.auctionlist != null) {//경매
 				auction_list(data.auctionlist);
-			   
+			    $("#twoButton>button:nth-of-type(2)").css({"background-color":"gray","color":"white"});
+			    $("#twoButton>button:nth-of-type(1)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(3)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(4)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(5)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(6)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(7)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(8)").css({"background-color":"white","color":"black"});
+				$("#sale").hide();
+				$("#trade").show();
+				$("#sell").hide();
+				$("#commu").hide();
+				$("#follow").hide();
+				$("#want").hide();
+				$("#like").hide();
+				$("#alarm").hide();
 			}else if (data.maidelist != null) {//구매
 				maide_list(data.maidelist);
-			   
+			    $("#twoButton>button:nth-of-type(3)").css({"background-color":"gray","color":"white"});
+			    $("#twoButton>button:nth-of-type(2)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(1)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(4)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(5)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(6)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(7)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(8)").css({"background-color":"white","color":"black"});
+				$("#sale").hide();
+				$("#trade").hide();
+				$("#sell").show();
+				$("#commu").hide();
+				$("#follow").hide();
+				$("#want").hide();
+				$("#like").hide();
+				$("#alarm").hide();
 			}else if (data.communitylist != null) {//커뮤니티
 				community_list(data.communitylist);
-			   
+			    $("#twoButton>button:nth-of-type(4)").css({"background-color":"gray","color":"white"});
+			    $("#twoButton>button:nth-of-type(2)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(1)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(3)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(5)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(6)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(7)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(8)").css({"background-color":"white","color":"black"});
+				$("#sale").hide();
+				$("#trade").hide();
+				$("#sell").hide();
+				$("#commu").show();
+				$("#follow").hide();
+				$("#want").hide();
+				$("#like").hide();
+				$("#alarm").hide();
 			}else if (data.flowlist != null) {//팔로우 팔로잉
 				flow_list(data.flowlist);
-			   
+			    $("#twoButton>button:nth-of-type(5)").css({"background-color":"gray","color":"white"});
+			    $("#twoButton>button:nth-of-type(1)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(2)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(3)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(4)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(6)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(7)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(8)").css({"background-color":"white","color":"black"});
+				$("#sale").hide();
+				$("#trade").hide();
+				$("#sell").hide();
+				$("#commu").hide();
+				$("#follow").show();
+				$("#want").hide();
+				$("#like").hide();
+				$("#alarm").hide();
 			}else if (data.reqlist != null) {//거래 요청
 				request_list(data.reqlist);
-			  
+			    $("#twoButton>button:nth-of-type(6)").css({"background-color":"gray","color":"white"});
+			    $("#twoButton>button:nth-of-type(1)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(2)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(3)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(4)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(5)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(7)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(8)").css({"background-color":"white","color":"black"});
+				$("#sale").hide();
+				$("#trade").hide();
+				$("#sell").hide();
+				$("#commu").hide();
+				$("#follow").hide();
+				$("#want").show();
+				$("#like").hide();
+				$("#alarm").hide();
 			}else if (data.lovelist != null) {//거래 요청
 				love_list(data.lovelist);
+			    $("#twoButton>button:nth-of-type(7)").css({"background-color":"gray","color":"white"});
+			    $("#twoButton>button:nth-of-type(1)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(2)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(3)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(4)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(5)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(6)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(8)").css({"background-color":"white","color":"black"});
+				$("#sale").hide();
+				$("#trade").hide();
+				$("#sell").hide();
+				$("#commu").hide();
+				$("#follow").hide();
+				$("#want").hide();
+				$("#like").show();
+				$("#alarm").hide();
 			}
 			}
 		}
@@ -337,15 +446,6 @@ $.ajax({
 			alert(msg);
 		}
 		
-		//초기상태 판매목록만 보여짐
-		$("#sale").show();
-		$("#trade").hide();
-		$("#sell").hide();
-		$("#commu").hide();
-		$("#follow").hide();
-		$("#want").hide();
-		$("#like").hide();
-		$("#alarm").hide();
 
 		//초기 버튼이눌린 상태
 		$("#twoButton>button:nth-of-type(1)").css({"background-color":"gray","color":"white"});

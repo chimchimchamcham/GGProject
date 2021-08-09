@@ -35,7 +35,7 @@
 			 		<div id='nullPoint'>&nbsp;&nbsp;</div>
 			 	</c:if>
 			 	<div id='nullPoint'>&nbsp;&nbsp;</div>
-				<div><img src="./img/CommentArrow.png" width="20px" height="20px"/></div>
+				<div><img src="./img/CommentArrow.png" width="20px" height="20px" id="${comments.pc_no }" class="re_Arrow"/></div>
 			</td>
 		</tr>
 	

@@ -543,11 +543,10 @@ public class BoardDAO {
 
 		rs = ps.executeQuery();
 		System.out.println("rs:" + rs);
-		GGDto dto = new GGDto();
 		while (rs.next()) {
+			GGDto dto = new GGDto();
 			dto.setU_id(rs.getString("u_id"));
 			dto.setS_saler(rs.getString("S_saler"));
-
 			dto.setP_no(rs.getInt("P_no"));
 			dto.setRq_no(rs.getInt("rq_no"));
 			dto.setP_title(rs.getString("p_title"));
@@ -560,7 +559,7 @@ public class BoardDAO {
 			if (userid.equals(sid)) {
 				System.out.println("수신");
 				dto.setSered("수신");
-				dto.setButtonORtext("<div class='buttonarea' ><button value ="+dto.getRq_no()+">수락</button><button value ="+dto.getRq_no()+">거절</button></div>");
+				dto.setButtonORtext("<div class='buttonarea'><button value ="+dto.getRq_no()+">수락</button><button value ="+dto.getRq_no()+">거절</button></div>");
 			} else if (userid.equals(rid)) {
 				System.out.println("발신");
 				dto.setSered("발신");
