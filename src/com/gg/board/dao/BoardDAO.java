@@ -634,6 +634,34 @@ public class BoardDAO {
 		return lovelist;
 	}
 
+	public ArrayList<GGDto> alarmlist(String userid) throws SQLException {
+		
+		String sql = "select n.N_sendId,n1.N1_name,n.N_content,hn.HN_adminId,hn.HN_tm,c.C_name from notify n,his_notify hn,n1_code n1,codes c where n.n_no = hn.n_no and n1.n1_code = n.n1_code and c.c_code = hn.hn_code and n.n_receiveid = ?";
+		
+		ArrayList<GGDto> alarmlist = new ArrayList<GGDto>();
+		System.out.println("alarmlist:" + alarmlist);
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, userid);
+		rs = ps.executeQuery();
+		System.out.println("rs:" + rs);
+
+		while (rs.next()) {
+			GGDto dto = new GGDto();
+			dto.setN_sendId(rs.getString("N_sendId"));
+			dto.setN1_name(rs.getString("N1_name"));
+			dto.setN_content(rs.getString("N_content"));
+			dto.setHn_adminid(rs.getString("HN_adminId"));
+			dto.setHn_tm(rs.getDate("HN_tm"));
+			dto.setC_name(rs.getString("C_name"));
+			alarmlist.add(dto);
+		}
+
+		System.out.println("alarmlist:" + alarmlist);
+		return alarmlist;
+	}
+
+	
+	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public HashMap<String, ArrayList<GGDto>> category() {
 		String sql = "select * from codes where c_code like 'S%'";
@@ -1391,6 +1419,7 @@ public class BoardDAO {
 
 	      return dto;
 	}
+
 
 
 }
