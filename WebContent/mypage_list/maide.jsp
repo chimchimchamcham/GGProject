@@ -58,9 +58,8 @@
         }
 
 
-    .content-zoon{
-        width: 1000px;
-        border: 1px solid black;
+    .content-zoon_maide{
+	overflow-y:scroll; 
 
        
     }   
@@ -142,7 +141,7 @@
 </head>
 <body>
     <div class="contents">
-        <div class="content-zoon_auction">
+        <div class="content-zoon_maide">
             <div class="item-box">
                 
             </div>

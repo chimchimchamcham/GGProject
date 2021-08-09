@@ -193,7 +193,7 @@ a:visited {
 				content += " id='insert_point_color'";}
 			else{content += " id ='extract_point_color'";}
 			content += ">" + pnt_code+"</h3></td>";
-			content += "<td><h3>" + item.pnt_point + "</h3></td>";
+			content += "<td><h3>" + numberWithCommas(item.pnt_point) + "</h3></td>";
 			content += "<td><h3 id='parentChange'>";
 			if(item.i_newName != null){content +="<input type='text' hidden='hidden' value='"+item.p_no +"'><img src='/photo/"+item.i_newName +"' style='width:100px; height:100px'/>";}
 			content += "</h3></td>";
@@ -204,5 +204,13 @@ a:visited {
 		$("tbody").append(content);
 		
 	}
+	/* 단위마다 콤마 찍기 */
+	function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+
+
 </script>
 </html>
