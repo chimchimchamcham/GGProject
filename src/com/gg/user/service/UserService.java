@@ -306,6 +306,7 @@ public class UserService {
 
 	public HashMap<String,ArrayList<GGDto>> search() {
 		String search = req.getParameter("insert");
+		System.out.println("검색요청한 값:"+search);
 		UserDAO dao = new UserDAO();
 		HashMap<String,ArrayList<GGDto>> map = new HashMap<String, ArrayList<GGDto>>();
 		try {

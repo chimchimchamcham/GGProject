@@ -42,6 +42,7 @@ public class UserController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html charset=UTF-8"); // 한글 설정
 		UserService service = new UserService(req, resp);
+		
 		RequestDispatcher dis;
 
 		switch (addr) {

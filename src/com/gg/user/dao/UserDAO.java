@@ -445,13 +445,12 @@ public class UserDAO {
 		ArrayList<GGDto> list2 = null;
 		GGDto dto = null;
 		
-		String sql = "select  u_id,u_nname,u_intro,(select count(*) from post where p_id=u_id) as count_p from userinfo where u_nname like '%?%' ";
-		String sql1 ="select p_no,p_code,p_content,p_tm from post where p_content like '%?%'";
-		String sql2 ="select p_no,p_code,p_content,p_tm from post where p_title like '%?%'"; 
+		String sql = "select  u_id, u_nname, u_intro, (select count(*) from post where p_id=u_id) as count_p, u_newname from userinfo where u_nname like '%"+search+"%' ";
+		String sql1 ="select p.p_no, p.p_code, p.p_content, p.p_tm, (select i.i_newname from img i  where i.p_no = p.p_no) i_newname from post p where p.p_content like '%"+search+"%'";
+		String sql2 ="select p.p_no, p.p_code, p.p_content, p.p_tm, (select i.i_newname from img i  where i.p_no = p.p_no) i_newname from post p where p.p_title like '%"+search+"%'"; 
 		
 		//회원정보 테이블에서 조회
 		ps = conn.prepareStatement(sql);
-		ps.setString(1, search);
 		rs = ps.executeQuery();
 		list = new ArrayList<GGDto>();
 		while(rs.next()) {
@@ -467,7 +466,6 @@ public class UserDAO {
 		
 		//게시글 내용에서 조회
 		ps = conn.prepareStatement(sql1);
-		ps.setString(1, search);
 		rs = ps.executeQuery();
 		list1 = new ArrayList<GGDto>();
 		while(rs.next()) {
@@ -476,6 +474,7 @@ public class UserDAO {
 			dto.setP_code(rs.getString("p_code"));
 			dto.setP_content(rs.getString("p_content"));
 			dto.setP_tm(rs.getDate("p_tm"));
+			dto.setI_newName(rs.getString("i_newname"));
 			list1.add(dto);
 		}
 		System.out.println("[검색]게시글 내용 포함여부 검색 결과 : "+list1.size());
@@ -483,7 +482,6 @@ public class UserDAO {
 		
 		//게시글 제목 조회
 		ps = conn.prepareStatement(sql2);
-		ps.setString(1, search);
 		rs = ps.executeQuery();
 		list2 = new ArrayList<GGDto>();
 		while(rs.next()) {
@@ -492,6 +490,7 @@ public class UserDAO {
 			dto.setP_code(rs.getString("p_code"));
 			dto.setP_content(rs.getString("p_content"));
 			dto.setP_tm(rs.getDate("p_tm"));
+			dto.setI_newName(rs.getString("i_newname"));
 			list2.add(dto);
 		}
 		System.out.println("[검색]게시글 제목 포함여부 검색 결과 : "+list2.size());

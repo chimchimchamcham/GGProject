@@ -90,7 +90,7 @@ h2 {
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
 		<br />
-		<h2>"사과"검색결과 총 4개</h2>
+		<h2>"${param.insert}"검색결과 총 4개</h2>
 		<p style="margin-left: 20px;"></p>
 		<div id="searchButton">
 			<button class="search_all">전체</button>
@@ -98,25 +98,129 @@ h2 {
 			<button class="post_title">제목</button>
 			<button class="post_content">내용</button>
 		</div>
-		<div id="user">
-				<table class="hoverTr" onclick="location.href='#'">
+		<div id="user_result">
+			<p style="margin-top: 16px; color: #999999; font-size: 1.2rem">
+				<b>사용자 검색결과</b>
+			</p>
+			<p>
+			<hr>
+			</p>
+			<div id="userContent">
+				<table class="hoverTr" onclick="location.href='#'" style="padding: 0 100px; width: 1140px; height: 100px">
 					<tr>
-						<td rowspan="3"><img src="../test/default-profile.png" width="60"></td>
-						<th><p style="width:310px;  padding:0 20px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">안녕하세요? 이거 살려고하는데요^^하하하하하하하하</p></a></th>
-						<td rowspan="2"><button class="delBtn">삭제</button></td>
-				</tr>
-				<tr>
-					<td><p  style="width:310px; padding:0 20px; text-align: left;"><a href="#">보낸자</a> | 2021.08.06 13:45</p>
-					</td>	
-				</tr>
+						<td rowspan="3">
+							<p style="text-align: center; padding: 0 50px">
+								<img src="./test/default-profile.png" width="100">
+							</p>
+						</td>
+						<th><p style="width: 500px; padding: 0 20px; text-align: left; /* overflow: hidden;  */ /* text-overflow: ellipsis; white-space: nowrap; */ font-size: 1.5rem">유저1</p></th>
+					</tr>
 					<tr>
-				<td style="border-bottom:1px solid black; padding-top:10px;" colspan="3"></td>
-			</tr>
+						<td><p style="width: 500px; padding: 0 20px; text-align: left;">팔로워 30명 &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;총 게시글 100개</p></td>
+					</tr>
+					<tr>
+						<td><p style="width: 500px; padding: 0 20px; text-align: left;">안녕하세요 유저1입니다.</p></td>
+					</tr>
 				</table>
-			
+				<p><hr style="width: 1140px"></p>
 
+			</div>
+		</div>
+		<div id="post_title_result">
+			<p style="margin-top: 16px; color: #999999; font-size: 1.2rem">
+				<b>제목 검색결과</b>
+			</p>
+			<p><hr></p>
+			<div id="post_titleContent">
+				<table class="hoverTr" onclick="location.href='#'" style="padding: 0 100px; width: 1140px; height: 100px">
+					<tr>
+						<td rowspan="3">
+							<p style="text-align: center; padding: 0 50px">
+								<img src="./test/default-profile.png" width="100">
+							</p>
+						</td>
+						<th><p style="width: 500px; padding: 0 20px; text-align: left; /* overflow: hidden;  */ /* text-overflow: ellipsis; white-space: nowrap; */ font-size: 1.5rem">유저1</p></th>
+					</tr>
+					<tr>
+						<td><p style="width: 500px; padding: 0 20px; text-align: left;">팔로워 30명 &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;총 게시글 100개</p></td>
+					</tr>
+					<tr>
+						<td><p style="width: 500px; padding: 0 20px; text-align: left;">안녕하세요 유저1입니다.</p></td>
+					</tr>
+				</table>
+				<p><hr style="width: 1140px"></p>
+			</div>
+		</div>
+		<div id="post_content_result">
+			<p style="margin-top: 16px; color: #999999; font-size: 1.2rem">
+				<b>내용 검색결과</b>
+			</p>
+			<p>
+			<hr>
+			</p>
+			<div id="post_contentC">
+				<table class="hoverTr" onclick="location.href='#'" style="padding: 0 100px; width: 1140px; height: 100px">
+					<tr>
+						<td rowspan="3">
+							<p style="text-align: center; padding: 0 50px">
+								<img src="./test/default-profile.png" width="100">
+							</p>
+						</td>
+						<th><p style="width: 500px; padding: 0 20px; text-align: left; /* overflow: hidden;  */ /* text-overflow: ellipsis; white-space: nowrap; */ font-size: 1.5rem">유저1</p></th>
+					</tr>
+					<tr>
+						<td><p style="width: 500px; padding: 0 20px; text-align: left;">팔로워 30명 &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;총 게시글 100개</p></td>
+					</tr>
+					<tr>
+						<td><p style="width: 500px; padding: 0 20px; text-align: left;">안녕하세요 유저1입니다.</p></td>
+					</tr>
+				</table>
+					<p><hr style="width: 1140px"></p>	
+			</div>
 		</div>
 	</div>
 	<!-- div main end -->
 </body>
+<script>
+	//초기설정 
+	$("#user_result").show();
+	$("#post_title_result").show();
+	$("#post_content_result").show();
+
+	$(".search_all").click(function() {
+		console.log("전체");
+		$("#user_result").show();
+		$("#post_title_result").show();
+		$("#post_content_result").show();
+	});
+
+	$(".user").click(function() {
+		console.log("사용자");
+		$("#user_result").show();
+		$("#post_title_result").hide();
+		$("#post_content_result").hide();
+	});
+
+	$(".post_title").click(function() {
+		console.log("제목");
+		$("#user_result").hide();
+		$("#post_title_result").show();
+		$("#post_content_result").hide();
+	});
+
+	$(".post_content").click(function() {
+		console.log("내용");
+		$("#user_result").hide();
+		$("#post_title_result").hide();
+		$("#post_content_result").show();
+	});
+	
+	var resultList =${resultList};
+	var f_ui =[];
+	var f_pc = [];
+	var f_pt = [];
+	f_ui = resultList.f_ui;
+	console.loe(f_ui.size);
+	
+</script>
 </html>
