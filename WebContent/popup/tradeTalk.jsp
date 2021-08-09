@@ -133,6 +133,7 @@ a{
 		tradeListCall(p_code, pageNum);
 	});
 
+	//숫자를 클릭하면 
 /* ================거래페이지 목록 관련 ================= */
 	//화면이 켜지면 목록 뿌려주기 무조건 실행
 	tradeListCall('P000',1);
@@ -150,8 +151,12 @@ a{
 			data : param,
 			dataType : "JSON",
 			success : function(data) {
-				console.log("받아온 데이터 확인 : ", data.list);
+				console.log("받아온 list 확인 : ", data.list);
+				console.log("받아온 currentPage 확인 : ", data.currentPage);
+				console.log("받아온 totalPage 확인 : ", data.totalPage);
+				
 				drawTradeList(data.list);
+				drawPageNumList(data.currentPage, data.totalPage);
 			},
 			error : function(e) {
 				console.log(e);
