@@ -10,7 +10,7 @@
 <style>
 *{margin:0;padding:0;border-width:0;list-style-type:none;}
 body{width:100%;background-color:gray;}
-#wrap{width:900px;height:650px;background-color:white;position:relative;}
+#wrap{width:900px;height:650px;background-color:#F2F2F2;position:relative;}
 
 #twoButton{position:absolute; left:10px;top:15px; width:200px; /* background-color:orange; */ height:45px}
 #twoButton>input{ width:65px; height:30px; border-radius:5px/5px;font-size:0.8rem; float:left;margin:5px}
@@ -49,11 +49,23 @@ body{width:100%;background-color:gray;}
 #write_content{position:relative; top:20px; left:10px;}
 #sendReply{position:relative; top:25px;left:130px; width:60px;height:35px;border-radius:5px/5px;font-size:0.7rem;background-color:#0048FF; color:white}
 
+/* 구경톡 UI */
+#comment{position:absolute; background-color:#A9E2F3;top:350px; width:900px; height:300px}
+#comment_cnt{height:20px;padding-left:20px;background-color:gray;}
+#viewWrap{height:280px;width:600px;float:left;overflow-y:scroll;}
+#commentReload{margin-left:20px;}
+#commentReload:hover{cursor:pointer;}
 
-#comment{position:absolute; top:350px;  background-color:red; width:900px; height:300px}
-#comment_cnt{position:relative; left:30px; height:20px;}
-#comment_cnt>#refresh_btn{background-color:white; top:3px;position:relative;}
-#commentBox{background-color:yellow; width:900px; height:277px;position:relative; top:3px}
+.tradeUser{font-weight:700;font-size:1.1rem;background-color:yellow;}
+.commentBox{width:300px;margin:10px;background-color:white;border-radius:5px/5px;padding:5px;}
+.floatLeft{float:left;}
+.floatRight{float:right;}
+
+#writeWrap{height:280px;width:300px;float:left;position:relative;}
+#tradeNname{position:absolute;top:20px;left:40px;font-weight:700;font-size:1.5rem;}
+#writeComment{padding:5px;resize:none;border-radius:5px/5px;position:absolute;display:block;top:60px;left:30px;}
+#commentSubmit{position:absolute;top:230px;left:150px;border-radius:5px/5px;display:block;height:30px;width:100px;background-color:#BDBDBD;color:black;font-weight:700;font-size:1.5rem;}
+#commentSubmit:hover{cursor:pointer;}
 </style>
 
 <script>
@@ -200,9 +212,32 @@ body{width:100%;background-color:gray;}
 	</div>
 	
 	<div id="comment">
-		<div id="comment_cnt">댓글&nbsp;<span><b>6</b></span>&nbsp;<button type="button" id="refresh_btn"><img src="../img/refresh_btn.png" width="15px" height="15px"/></button></div>
-		<div id="commentBox">
-			<textarea>댓글창 예시</textarea>
+		<div id="comment_cnt"><span>구경톡 </span><span>10</span><button id="commentReload">톡읽어오기</button></div>
+		<div id="tradeCommentWrap">
+			<div id="viewWrap">
+				<div class="commentBox floatLeft">
+					<p  class="tradeUser" ><span>유저2</span><span>(구매자)</span></p>
+					<p>안녕하세요? 혹시 네고 가능할까요? 5000원 네고 해주시면 감사하겠습니다.</p>
+				</div>
+				<div class="commentBox floatRight">
+					<p class="tradeUser"><span>유저1</span><span>(나)</span></p>
+					<p>안녕하세요? 3천원 까지는 가능합니다</p>
+				</div>
+				<div class="commentBox floatLeft">
+					<p class="tradeUser"><span>유저2</span><span>(구매자)</span></p>
+					<p>그럼 3천원 네고 해주세요 ㅋㅋ</p>
+				</div>
+				<div class="commentBox floatRight">
+					<p class="tradeUser"><span>유저1</span><span>(나)</span></p>
+					<p>넹, 포인트 보내주세용~</p>
+				</div>
+			</div>
+			
+			<div id="writeWrap">
+				<span id="tradeNname">유저1</span>
+				<textarea id="writeComment" cols="30" rows="10">안녕하세요.</textarea>
+				<button id="commentSubmit">등록</button>
+			</div>	
 		</div>
 		
 	</div>
