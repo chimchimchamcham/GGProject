@@ -389,8 +389,26 @@ $.ajax({
 				$("#want").show();
 				$("#like").hide();
 				$("#alarm").hide();
-			}else if (data.lovelist != null) {//거래 요청
+			}else if (data.lovelist != null) {//좋아요 요청
 				love_list(data.lovelist);
+			    $("#twoButton>button:nth-of-type(7)").css({"background-color":"gray","color":"white"});
+			    $("#twoButton>button:nth-of-type(1)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(2)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(3)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(4)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(5)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(6)").css({"background-color":"white","color":"black"});
+			    $("#twoButton>button:nth-of-type(8)").css({"background-color":"white","color":"black"});
+				$("#sale").hide();
+				$("#trade").hide();
+				$("#sell").hide();
+				$("#commu").hide();
+				$("#follow").hide();
+				$("#want").hide();
+				$("#like").show();
+				$("#alarm").hide();
+			}else if (data.alarmlist != null) {//신고 요청
+				alarm_list(data.alarmlist);
 			    $("#twoButton>button:nth-of-type(7)").css({"background-color":"gray","color":"white"});
 			    $("#twoButton>button:nth-of-type(1)").css({"background-color":"white","color":"black"});
 			    $("#twoButton>button:nth-of-type(2)").css({"background-color":"white","color":"black"});
@@ -435,6 +453,8 @@ $.ajax({
 				url ='./requestlist';
 			}else if($index == 6){
 				url ='./lovelist';
+			}else if($index == 7){
+				url ='./alarmlist';
 			}
 			console.log("url:"+url);
 
@@ -639,6 +659,7 @@ $.ajax({
 				//console.log("communitylist:",data.flowlist);
 				//console.log("communitylist:",data.);
 				//console.log("flowlist:",data.flowlist);
+				//console.log("flowlist:",data.alarmlist);
 				if(data != null){
 					console.log("index",$index);
 					console.log(url);
@@ -654,8 +675,10 @@ $.ajax({
 						flow_list(data.flowlist);
 					}else if ($index == 5) {//거래 요청
 						request_list(data.reqlist);
-					}else if ($index == 6) {//거래 요청
+					}else if ($index == 6) {//좋아요 요청
 						love_list(data.lovelist);
+					}else if ($index == 7) {//신고 요청
+						//alarm_list(data.alarmlist);
 					}
 				}
 			},
@@ -1037,6 +1060,41 @@ $.ajax({
 			$("#like .item-box").empty();
 			$("#like .item-box").append(content);
 		}//좋아요 리스트 end
+		
+		
+	/* 	//데이터 가져와서 뿌려주는 신고 리스트
+		function alarm_list(alarmlist){
+			
+			console.log("alarmlist:", alarmlist);
+			var content="";
+
+			$(".button-layout_sold").hide();
+			$(".alien_list_sold").hide();
+			$(".button-layout_auction").hide();
+			
+			alarmlist.forEach(function(item,idx){
+				console.log("idx:",idx,item);
+				content += "<div class='item-one'>";
+				content += "<div class='dretion-zoon style='margin: 3%'>";
+				content += "	<div><a href = "+a+"?p_no="+item.p_no+">"+item.p_title+"</a></div>";
+				content += "</div>";
+				content += "<div class='img-zoon'><img src=/photo"+item.i_newName+" class='itemimg' style='margin:3%'></div>";
+				content += "<div class='c_zoon'>";
+				content += "	<div>"+price+"</div>";	
+				content += "</div>";
+				content += "<div>"+"♥:"+item.p_likeCount+"</div>";
+				content += "	<div>"+item.c_name+"</div>";
+				content += "<div class='mai-time'>";
+				content += "	<div>"+item.p_tm+"</div>";
+				content += "</div></div>";
+			});	
+			$("#alarm .item-box").empty();
+			$("#alarm .item-box").append(content);
+		}//신고 리스트 end */
+		
+		
+		
+		
 		</script>
 <body>
 <div id="mainHeader"><jsp:include page="header.jsp" /></div>
@@ -1115,7 +1173,7 @@ $.ajax({
    <div id="follow"  class="categori" style="background-color:blue; padding:20px;"><jsp:include page="./mypage_list/flows.jsp"></jsp:include></div>
    <div id="want"  class="categori" style="background-color:pink; padding:20px;"><jsp:include page="./mypage_list/request.jsp"></jsp:include></div>
    <div id="like"  class="categori" style="background-color:purple; padding:20px;"><jsp:include page="./mypage_list/loving.jsp"></jsp:include></div>
-   <div id="alarm"  class="categori" style="background-color:lime; padding:20px;">신고목록입니다.</div>
+   <div id="alarm"  class="categori" style="background-color:lime; padding:20px;"><jsp:include page="./mypage_list/alarm.jsp"></jsp:include></div>
 </c:if>
 
 
