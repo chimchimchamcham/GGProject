@@ -599,6 +599,7 @@ public class BoardController extends HttpServlet {
 			
 			/* HashMap<String, Object> map = service. */
 			ArrayList<GGDto> lists =  service.noticeList(Integer.parseInt(paging),Integer.parseInt(currPageNum));
+			System.out.println(lists.size());
 			req.setAttribute("noticeList", lists);
 			dis = req.getRequestDispatcher("noticeList.jsp");
 			dis.forward(req, resp);

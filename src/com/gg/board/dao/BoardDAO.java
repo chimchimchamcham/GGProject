@@ -1277,7 +1277,7 @@ public class BoardDAO {
 	public ArrayList<GGDto> noticeList(int paging, int currPageNum) {
 
 		String sql = "SELECT rnum,p_no, p_title, p_id, p_tm, p_view, p_code, (select u_nname from userinfo where u_id = p_id) as u_nname FROM "
-				+ "(SELECT ROW_NUMBER() OVER(ORDER BY p_no DESC) AS rnum,p_no, p_title, p_id, p_tm, p_view, p_code FROM post WHERE p_code='P003') WHERE rnum BETWEEN ? AND ? ";
+				+ "(SELECT ROW_NUMBER() OVER(ORDER BY p_no DESC) AS rnum,p_no, p_title, p_id, p_tm, p_view, p_code FROM post WHERE p_code='P003' AND P_BLINDYN='N') WHERE rnum BETWEEN ? AND ? ";
 
 		ArrayList<GGDto> noticeList = null;
 		GGDto dto = null;
