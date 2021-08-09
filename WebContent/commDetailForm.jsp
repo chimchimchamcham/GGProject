@@ -27,7 +27,7 @@
 	#commTitle{
 	margin:50px;
 	}
-	#commDetailtable{
+	#commDetailtable, #comments_table, .pageArea, .board_t_b{
 	margin:0px auto;
 	border:1px solid black;
 	text-align:center;
@@ -53,6 +53,29 @@
 	resize:none;
 	padding:10px;
 	}
+	
+	/* 댓글 영역 */
+	/* .board_text  {
+	margin:0px auto;
+	border:1px solid black;
+	text-align:center;
+	width:70%;
+	padding:20px;
+	} */
+
+.enter, #update_enter, .re_enter {
+	width: 55px;
+	height: 5vh;
+	border : 0.5px solid gray;
+	text-align: center;
+	margin-bottom: 10px;
+}
+.enter:hover, #update_enter:hover, .re_enter:hover {
+	background-color: gray;
+}
+
+
+
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -103,16 +126,42 @@
     			<td colspan ="6" id = "p_content"><textarea id="commTextarea" readonly>${dto.p_content }</textarea></td>
     		</tr>
     	</table>
+    	<div id='comm_comment'>
+    	
+    	</div>
     </div>
     </div>
 </body>
 <script>
+	/* 로그인 체크 */
 	console.log("${loginId}");
 	console.log("${dto.u_id}");
 	console.log("${dto.i_newName }");
 	if("${loginId}"!=="${dto.u_id}"){
 		$("#updatebutton").css("visibility","hidden");
 	}
+	/*=====  댓글 영역   =====*/
+	var page = 1;
+	
+	showCommentList();
+	console.log(page);
+	console.log("${dto.p_no}");
+	function showCommentList(){
+		
+		$.ajax({
+        	url:"auctionCommentList",
+        	data: {"page": page,
+        			"p_no" : "${dto.p_no}"	
+        	},
+        	success: function(data){
+        		console.log("옥션리스트 진입");
+        		$("#comm_comment").html(data);
+        	},
+        	error: function(e){
+        		console.log("진입 실패");
+        	}
 
+        });
+	}
 </script>
 </html>
