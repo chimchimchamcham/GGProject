@@ -601,8 +601,6 @@ public class BoardController extends HttpServlet {
 			
 			/* HashMap<String, Object> map = service. */
 			ArrayList<GGDto> lists =  service.noticeList(Integer.parseInt(paging),Integer.parseInt(currPageNum));
-			System.out.println("lists.size:"+lists.size());
-			
 			BoardDAO dao = new BoardDAO();
 			int total = 0;
 			try {

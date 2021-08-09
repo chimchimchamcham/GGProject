@@ -47,7 +47,7 @@
 				<td><input type="text" name="N_receiveId" value=${param.N_receiveId }></td>
 			</tr>
 			<tr>
-				<td><input type="hidden" name="N1_code" value="comment" checked></td>
+				<td><input type="hidden" name="N1_code" value="post" checked></td>
 			</tr>
 			<tr>
 				<td><input type="radio" name="N2_code" value="post_01" checked/>허위상품,과대상품거래</td>
@@ -87,7 +87,7 @@
 				<td><input type="text" name="N_receiveId" value=${param.N_receiveId }></td>
 			</tr>
 			<tr>
-				<td><input type="hidden" name="N1_code" value="user" checked></td>
+				<td><input type="hidden" name="N1_code" value="comment" checked></td>
 			</tr>
 			<tr>
 				<td><input type="radio" name="N2_code" value="comment_01" checked/>욕설,비방성 댓글</td>
@@ -127,7 +127,7 @@
 				<td><input type="text" name="N_receiveId" value=${param.N_receiveId }></td>
 			</tr>
 			<tr>
-				<td><input type="hidden" name="N1_code" value="post" checked></td>
+				<td><input type="hidden" name="N1_code" value="user" checked></td>
 			</tr>
 			<tr>
 				<td><input type="radio" name="N2_code" value="user_01" checked/>거래와 상관 없는 쪽지와 댓글을 보내는 경우</td>
