@@ -79,49 +79,71 @@ a{
 	opacity: 0.3;
 }
 
+#prev, #next{
+	cursor:pointer;
+} 
+#pageNumWrap{
+	font-size:1.3rem;
+	text-align:center;
+}
+#pageNumList span{
+	margin:3px;
+	cursor:pointer;
+}
+.selectPageNum{
+	color:blue;
+	font-weight:600;
+	cursor:default;
+}
 </style>
 <body>
 	<h2>거래톡</h2>
 	<div id="tradeWrap">
 		<div id="buttonTwo">
-			<button id="saleBtn">전체</button>
-			<button id="saleBtn">판매</button>
-			<button id="auctionBtn">경매</button>
+			<button id="wholeBtn" value="P000">전체</button>
+			<button id="auctionBtn" value="P001">경매</button>
+			<button id="saleBtn" value="P002">판매</button>
 		</div>
 		<div class="tableWrap">
-		<!-- <table class="content">
-				<tr>
-					<td rowspan="2"><a href="#"><img src="../test/default-profile.png" width="60" id="profile" ></a></td>
-					<th style="width:240px;  padding:0 20px; text-align: left;"><a href="#">ㅇㅇㅇ님과 거래중</a></th>
-					<td style="width:110px; text-align: right;"><a href="#"><small>2021.08.06 15:56</small></a></td>
-				</tr>
-				<tr>
-					<td>
-						<p style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width:240px; padding:0 20px; text-align: left;">
-							<a href="#">안녕하세요~~!!@#^^^호ㅓㅎ외ㅓㅗ이ㅏㅓ노리아ㅓ로이ㅏ러ㄹ하어ㅣ헝라ㅣ허;하넝ㄹ</a>
-						</p>
-					</td>
-					<td style="width:110px; text-align: right;"><a href="#">배송중</a></td>
-				</tr>
-				<tr>
-					<td style="border-bottom:1px solid black; padding-top:10px;" colspan="3"></td>
-				</tr>
-		</table> -->
-		
+			<!-- 여기에 거래페이지 목록이 들어간다 -->
+		</div>
+		<div id="pageNumWrap">
+			<!-- 여기에 페이징이 들어간다 -->
+			<span id="prev">prev </span>
+			<span id="pageNumList">	
+				<span class="selectPageNum">1</span>
+				<span>2</span>
+			</span>	
+			<span id="next"> next</span>	
 		</div>
 	</div>
 </body>
 <script>
+/* ================페이징 처리 관련==================== */
+	var p_code = $("#wholeBtn").val();
+	var pageNum = 1;
+	var totalPage = 2;
+	
+	//숫자를 클릭하면 반응
+	$(document).on("click","#pageNumList span",function(){
+		$("#pageNumList span").removeClass("selectPageNum");
+		$(this).addClass("selectPageNum");
+		pageNum = $(this).text();
+		console.log(pageNum);
+		tradeListCall(p_code, pageNum);
+	});
+
 /* ================거래페이지 목록 관련 ================= */
 	//화면이 켜지면 목록 뿌려주기 무조건 실행
-	tradeListCall('P000');
+	tradeListCall('P000',1);
 	
 	//자바단에 접속하여 전체 목록을 가져오기
-	function tradeListCall(p_code) {
+	function tradeListCall(p_code, pageNum) {
 		console.log("거래페이지 리스트 요청 ");
 		var param = {};
 		param.id = "${sessionScope.loginId}";
 		param.p_code = p_code;
+		param.pageNum = pageNum
 		$.ajax({
 			type : "POST",
 			url : "../tradeList",
@@ -142,13 +164,13 @@ a{
 		var p_name = $(this).text();
 		if(p_name == '경매'){
 			//경매 목록 가져오기
-			tradeListCall('P001');
+			tradeListCall('P001',1);
 		}else if(p_name == '판매'){
 			//구매 목록 가져오기
-			tradeListCall('P002');
+			tradeListCall('P002',1);
 		}else if(p_name == '전체'){
 			//전체 목록 가져오기
-			tradeListCall('P000');
+			tradeListCall('P000',1);
 		}
 	});
 	
