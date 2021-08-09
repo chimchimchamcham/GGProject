@@ -588,7 +588,7 @@ public class BoardController extends HttpServlet {
 			String currPageNum = req.getParameter("currPageNum");
 			System.out.println("처음 currPageNum : "+currPageNum);
 			String paging = req.getParameter("paging");
-			if(currPageNum == null || currPageNum =="0") {
+			if(currPageNum == null || currPageNum.equals("0")) {
 				currPageNum = "1";
 			}
 			if(paging == null) {
