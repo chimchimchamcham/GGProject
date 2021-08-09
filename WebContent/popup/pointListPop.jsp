@@ -193,7 +193,7 @@ a:visited {
 				content += " id='insert_point_color'";}
 			else{content += " id ='extract_point_color'";}
 			content += ">" + pnt_code+"</h3></td>";
-			content += "<td><h3>" + item.pnt_point + "</h3></td>";
+			content += "<td><h3>" + comma(item.pnt_point) + "</h3></td>";
 			content += "<td><h3 id='parentChange'>";
 			if(item.i_newName != null){content +="<input type='text' hidden='hidden' value='"+item.p_no +"'><img src='/photo/"+item.i_newName +"' style='width:100px; height:100px'/>";}
 			content += "</h3></td>";
@@ -204,5 +204,24 @@ a:visited {
 		$("tbody").append(content);
 		
 	}
+	/* 단위마다 콤마 찍기 */
+	function comma(num){
+	    var len, point, str; 
+	       
+	    num = num + ""; 
+	    point = num.length % 3 ;
+	    len = num.length; 
+	   
+	    str = num.substring(0, point); 
+	    while (point < len) { 
+	        if (str != "") str += ","; 
+	        str += num.substring(point, point + 3); 
+	        point += 3; 
+	    } 
+	     
+	    return str;
+	 
+	}
+
 </script>
 </html>
