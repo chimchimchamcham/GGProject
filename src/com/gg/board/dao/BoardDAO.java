@@ -634,12 +634,12 @@ public class BoardDAO {
 		return lovelist;
 	}
 
-	public ArrayList<GGDto> alarmlist(String userid) throws SQLException {
+	public ArrayList<GGDto> reportlist(String userid) throws SQLException {
 		
 		String sql = "select n.N_sendId,n1.N1_name,n.N_content,hn.HN_adminId,hn.HN_tm,c.C_name from notify n,his_notify hn,n1_code n1,codes c where n.n_no = hn.n_no and n1.n1_code = n.n1_code and c.c_code = hn.hn_code and n.n_receiveid = ?";
 		
-		ArrayList<GGDto> alarmlist = new ArrayList<GGDto>();
-		System.out.println("alarmlist:" + alarmlist);
+		ArrayList<GGDto> reportlist = new ArrayList<GGDto>();
+		System.out.println("reportlist:" + reportlist);
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, userid);
 		rs = ps.executeQuery();
@@ -653,11 +653,11 @@ public class BoardDAO {
 			dto.setHn_adminid(rs.getString("HN_adminId"));
 			dto.setHn_tm(rs.getDate("HN_tm"));
 			dto.setC_name(rs.getString("C_name"));
-			alarmlist.add(dto);
+			reportlist.add(dto);
 		}
 
-		System.out.println("alarmlist:" + alarmlist);
-		return alarmlist;
+		System.out.println("reportlist:" + reportlist);
+		return reportlist;
 	}
 
 	

@@ -456,18 +456,18 @@ public void updatereqlist(String rqno) throws IOException {
 
 	}
 
-	public void alarm_list(String userid) throws IOException {
+	public void report_list(String userid) throws IOException {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
 		BoardDAO dao = new BoardDAO();
-		ArrayList<GGDto> alarmlist = null;
+		ArrayList<GGDto> reportlist = null;
 
 		try {
-			alarmlist = dao.alarmlist(userid);
+			reportlist = dao.reportlist(userid);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			map.put("alarmlist", alarmlist);
+			map.put("reportlist", reportlist);
 			dao.resClose();
 		}
 		System.out.println("auc_map:" + map);
