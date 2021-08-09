@@ -238,6 +238,8 @@ var loginId = "${sessionScope.loginId}";
 function chargePopup() { window.open("./popup/chargePopup.jsp", "chargePop", "width=600, height=500, left=600, top=200"); }
 //포인트내역 팝업
 function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "width=900, height=600, left=450, top=180"); }
+//신고 팝업
+function notifyPopup() { window.open("./popup/notifyPopup.jsp", "notifyPopup", "width=900, height=600, left=450, top=180"); }
 
 var allurl = <%= allurl %>
 	
@@ -1096,6 +1098,9 @@ $.ajax({
 	
 <!-- true일때 실행되는 마이페이지 -->
 	<c:if test ="${myPageInfo.myYN eq 'true'}">
+		<c:if test ="${sessionScope.adminYN eq 'Y'}">
+			<h2 style="margin-top:30px;">${myPageInfo.u_nname}님의 프로필</h2>
+		</c:if>
 	<h2 style="margin-top:30px;">마이페이지</h2>
 	<!-- 마이페이지 상단 -->
 	<div id="div1">
@@ -1167,7 +1172,7 @@ $.ajax({
    <div id="follow"  class="categori" style="background-color:blue; padding:20px;"><jsp:include page="./mypage_list/flows.jsp"></jsp:include></div>
    <div id="want"  class="categori" style="background-color:pink; padding:20px;"><jsp:include page="./mypage_list/request.jsp"></jsp:include></div>
    <div id="like"  class="categori" style="background-color:purple; padding:20px;"><jsp:include page="./mypage_list/loving.jsp"></jsp:include></div>
-   <div id="alarm"  class="categori" style="background-color:lime; padding:20px;"><jsp:include page="./mypage_list/alarm.jsp"></jsp:include></div>
+   <div id="alarm"  class="categori" style="background-color:lime; padding:20px;"></div>
 </c:if>
 
 
@@ -1211,7 +1216,7 @@ $.ajax({
 				 <td><button>+팔로우</button><button>쪽지</button></td>
 			</tr>
 			<tr >
-				<td colspan="2"><a href = "#">신고하기</a></td>
+				<td colspan="2"><a href = "#" onclick="notifyPopup()">신고하기</a></td>
 			</tr>
 		</table>
 		<div id="intro">
