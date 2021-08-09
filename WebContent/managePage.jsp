@@ -83,7 +83,7 @@
 	text-decoration: underline;
 }
 
-.userTr:hover, #notifyFilter:hover{
+.userTr:hover, .notifyFilter:hover{
 	background-color: #D8D8D8;
 	cursor: pointer;
 }
@@ -236,7 +236,7 @@ h3 {
 						<td colspan="7" style="padding: 0; border-bottom: 1px solid gray"></td>
 					</tr>
 					<c:forEach items="${notifyList}" var="notifyList">
-					<tr id="notifyFilter">
+					<tr class="notifyFilter">
 						<td>${notifyList.n_no}</td>
 						<td>${notifyList.n_receiveId}</td>
 						<td>${notifyList.n_sendId}</td>
@@ -245,7 +245,7 @@ h3 {
 						<td>${notifyList.c_name}</td>
 						<td>${notifyList.hn_adminid}</td>
 					</tr>
-					<tr id="line">
+					<tr class="notifyLine">
 						<td colspan="7"
 							style="padding: 0; border-bottom: 0.7px solid #e8e8e8"></td>
 					</tr>
@@ -380,13 +380,19 @@ h3 {
 	
 	/*회원 프로필 이동*/
     $(".userTr").on("click", function(){
-/*     	var u_id = "";
-    	var u_id = $(this).children('.u_id').text(); */
     	var u_id = $(this).attr("id");
     	console.log(u_id);
     	console.log("회원프로필 이동 요청");
         location.href="./myPage?id="+u_id;
-        });
+     });
+	
+	
+	/*신고 상세보기*/
+    $(".notifyFilter").on("click", function(){
+    	console.log("신고 상세보기 팝업");
+    	window.open("./popup/notifyDetailPop.jsp", "notifyDetailPop", "width=900, height=600, left=450, top=180");
+     });
+	
 	
 	var param = {};
 	/*==신고목록==*/
