@@ -58,7 +58,7 @@ h2 {
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
 		<h2>공지사항</h2>
-		<p style="margin-left:20px;">총 ${noticeListSize}개의 게시글</p>
+		<p style="margin-left:20px;">총 ${noticeListSize} 개의 게시글</p>
 		<table id="noticeTable">
 			<tr>
 				<th>글번호</th>
