@@ -1252,16 +1252,17 @@ public class BoardDAO {
 	}
 
 	
-	   public ArrayList<GGDto> noticeList(int paging) {
+	   public ArrayList<GGDto> noticeList(int paging, int currPageNum) {
 		      
 		      String sql = "SELECT rnum ,p_no, p_title, p_id, p_tm, p_view, (select u_nname from userinfo where u_id = p_id) as u_nname FROM " + 
 		      		"(SELECT ROW_NUMBER() OVER(ORDER BY p_no DESC) AS rnum,p_no, p_title, p_id, p_tm, p_view FROM post) WHERE rnum BETWEEN ? AND ?";
 
 		      ArrayList<GGDto> noticeList = null;
 		      GGDto dto = null;
-		      
-		      int pagePerCnt = 15;
-		      
+		      int pageNumCnt = 5; //보여주는 개시글 목록의 수
+		      int currPageStart = (currPageNum-1)*5+1;
+		      int currPageEnd = currPageNum*5;
+		      int pagePerCnt = 15; // 한페이지에 들어가는 개시글의 수
 		      int end = paging*pagePerCnt;
 		      int start = (end-pagePerCnt)+1;
 		      
@@ -1286,7 +1287,15 @@ public class BoardDAO {
 		         noticeList.get(0).setTotalPost(total);
 		         noticeList.get(0).setCurrPage(paging);
 		         int pages = (int) Math.ceil((double)total/(double)pagePerCnt);
+		         if(pages<currPageEnd) {
+		        	 currPageNum = (int)Math.ceil((double)pages/(double)pageNumCnt);
+		        	 currPageStart = (currPageNum-1)*5+1;
+		        	 currPageEnd = pages;
+		         }
 		         noticeList.get(0).setTotalPage(pages);
+		         noticeList.get(0).setCurrPageNum(currPageNum);
+		         noticeList.get(0).setCurrPageStart(currPageStart);
+		         noticeList.get(0).setCurrPageStart(currPageStart);
 		      } catch (SQLException e) {
 		         e.printStackTrace();
 		      }

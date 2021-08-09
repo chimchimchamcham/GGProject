@@ -91,29 +91,19 @@ h2 {
 		
 		<div class="pageArea">
 		currPage : ${noticeList[0].currPage} / totalPage : ${noticeList[0].totalPage}
-		<span onclick="before();">이전</span>
-		<c:forEach var="i" begin="1" end="${noticeList[0].totalPage}" step="1">
+		<a href="noticeList?currPageNum=${noticeList[0].currPageNum-1 }">이전</a>
+		<c:forEach var="i" begin="${noticeList[0].currPageStart }" end="${noticeList[0].currPageEnd }" step="1">
 		<span class="page">
-			<c:if test="${i ne noticeList[0].currPage}"><a href="noticeList?paging=${i}">${i}</a></c:if>
+			<c:if test="${i ne noticeList[0].currPage}"><a href="noticeList?paging=${i}&currPageNum=${noticeList[0].currPageNum }">${i}</a></c:if>
 			<c:if test="${i eq noticeList[0].currPage}"><b>${i}</b></c:if>
 		</span>	
 		</c:forEach>
-		<span onclick="after();">다음</span>
+		<a href="noticeList?currPageNum=${noticeList[0].currPageNum+1 }">다음</a>
 	</div>
 	</div>
 </body>
 <script type="text/javascript">
-var currPageNum;
-if(${noticeList[0].currPageNum} == null){
-	currPageNum = 1;
-}
-function before(currPageNum){
-	currPageNum -=1;
-	location.href="noticeList?currPageNum"+currPageNum;
-}
-function after(currPageNum){
-	currPageNum +=1;
-	location.href="noticeList?currPageNum"+currPageNum;
-}
+console.log(${noticeList[0].currPageNum});
+console.log(${noticeList[0].currPageStart});
 </script>
 </html>
