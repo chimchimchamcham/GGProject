@@ -21,7 +21,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist",
 		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/postDel", "/writeCommunity", "/auctionDetail",
 		"/commDetail", "/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist","/soldmainlist", "/commList",
-		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist","/mainsold","/mainauction","./alarmlist",
+		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist","/mainsold","/mainauction",
 		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail","/applyreqlist","/noticeList"})
 
 
@@ -247,14 +247,7 @@ public class BoardController extends HttpServlet {
 			int index2 = Integer.parseInt(req.getParameter("index2"));
 			service.love_list(userid, index1, index2);
 
-			break;
-		case "/alarmlist":
-			System.out.println("좋아요리스트 리스트 요청");
-			userid = (String) req.getSession().getAttribute("loginId");
-			
-			service.alarm_list(userid);
-
-			break;
+			break; 
 		/* ====== 글쓰기 ====== */
 
 		case "/writeForm":
