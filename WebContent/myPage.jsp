@@ -1085,13 +1085,13 @@ a:visited {
 			$index2 = $button2.index(this);
 
 			$index_button_f = $("button.unhellow:eq(" + $index2 + ")");
-
+			console.log(index_button_f.text());
 			var btntext2 = $index_button_f.text();
 
 			$user_id = $('div.flowerusername');
 			$index_user_id = $("div.flowerusername:eq(" + $index2 + ")");
 			$index_user_text = $index_user_id.text();
-
+			
 			var nick2 = $index_user_text;
 
 			console.log($index2);
