@@ -165,6 +165,9 @@ a:hover {
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+//팔로우를 했는지 안했는지 판별하는 변수, false일 경우, 팔로우 하지 않았음을 의미
+var isFollowed = false;
+
  var page = 0;
  var id = "${sessionScope.loginId}";
  console.log("테스트용 옥션 디테일 아이디 : ", id);
@@ -180,6 +183,77 @@ a:hover {
     /* <c:if test="${isLiked eq true}">$("#threeButton>button:nth-last-of-type(5)").hide();</c:if>
     <c:if test="${isLiked eq false}">$("#threeButton>button:nth-last-of-type(4)").hide();</c:if> */
 
+	//이전에 이용자가 판매자를 팔로우한 적이 있는지 확인
+	//팔로우를 했을 경우
+	<c:if test="${isFollowed eq true}">
+		$("#follow").css({"color" : "white", "background-color" : "gray"});
+		$("#follow").text("-팔로우");
+		isFollowed = true; //팔로우를 했다는 뜻
+	</c:if>
+
+	//팔로우 클릭시 버튼 변경
+	//false는 팔로우를 안했다는 뜻 기존값 그대로
+	$("#follow").click(function() {
+		//팔로우를 안한 상태에서 팔로우 하기
+		if (!isFollowed) {
+			
+			var param = {};
+			param.btntext = "+팔로우";
+			param.nick = "${dto.u_nname }";
+			
+			$.ajax({
+				type: "POST",
+				data: param,
+				dataType: "JSON",
+				url: "flowadddelect",
+				success : function(data){ 
+					if(data.success){
+						//클릭함으로 인해 팔로우하게 됨
+						//팔로우 해제를 할 수 있는 모양으로 바뀜
+						$("#follow").css({"color" : "white", "background-color" : "gray"});
+						$("#follow").text("-팔로우");
+						//팔로우 한 상태가 됨
+						isFollowed = true;
+						alert("팔로우 성공");			
+					}else{
+						alert("팔로우 실패");
+					}
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			});
+		//팔로우한 상태에서 팔로우 해제	
+		} else {
+			
+			var param = {};
+			param.btntext = "-팔로우";
+			param.nick = "${dto.u_nname }";
+			
+			$.ajax({
+				type: "POST",
+				data: param,
+				dataType: "JSON",
+				url: "flowadddelect",
+				success : function(data){ 
+					if(data.success){
+						//클릭함으로 인해 팔로우 해제됨
+						//다시 팔로우를 할 수 있는 모양으로 바뀜
+						$("#follow").css({"color" : "black", "background-color" : "#E6E6E6"});
+						$("#follow").text("+팔로우");
+						isFollowed = false;
+						alert("팔로우 해제 성공");
+					}else{
+						alert("팔로우 해제 실패");
+					}
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			});
+		}
+	});
+    
     //댓글 버튼 클릭시 창이 표시
     $("#twoButton>button:nth-of-type(2)").click(function(){
         $("#twoButton>button:nth-of-type(2)").css({"background-color":"gray","color":"white"});
@@ -256,7 +330,7 @@ a:hover {
     });
   	
     //팔로우 클릭시 버튼 변경
-    var isFollow = false;
+    /* var isFollow = false;
     $("#follow").click(function(){
     	if(!isFollow){
     		$("#follow").css({"color":"white","background-color":"gray"});
@@ -265,7 +339,7 @@ a:hover {
     		$("#follow").css({"color":"black","background-color":"#E6E6E6"});
     		isFollow = false;
     	}
-    });
+    }); */
     
     //dto.ns_name 가 거래중 또는 판매완료일 경우 버튼 색상변경과 비활성화 시키기
     if($("#description>h1>sup").text()=="거래중" || $("#description>h1>sup").text()=="경매종료"){
@@ -395,7 +469,7 @@ a:hover {
 	                    			<p id="reviewAvg">별점 4.5</p>
 	                    		</div>
                     		</div>
-                    		<button id="follow">팔로우</button>
+                    		<button id="follow">+팔로우</button>
                     		<div>
                     				<%-- <c:forEach items="${sale3List }" var="dto">
                     					<div>
