@@ -262,7 +262,7 @@ body {
 /*드롭다운 하위 메뉴*/
 #sub {
     display: none;
-   margin: 16px 0 0 10px;
+   margin: 16px 0 0 -30px;
    list-style: none;
    position: absolute;
    z-index: 100;
@@ -285,7 +285,6 @@ body {
 
 .header_nav ul#dropdown li ul li a:hover {
    background-color: #ffffff;
-   background-color: rgba(255, 255, 255, 0.9);
 }
 
 .header_nav ul#dropdown:after {

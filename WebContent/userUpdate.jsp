@@ -10,6 +10,25 @@
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <style>
+#mainHeader {
+	z-index: 1000;
+}
+
+#main {
+	/* background-color: gray; */
+	width: 1140px;
+	height: auto;
+	position: absolute;
+	top: 150px;
+	z-index: -1;
+	margin: 0px auto;
+	padding: 30px;
+}
+
+#phone1, #phone2, #phone3{
+	width : 45px;
+}
+
 h2 {
 	text-align: center;
 }
@@ -20,6 +39,7 @@ table {
 
 th {
 	text-align: left;
+	border:1px solid black;
 }
 
 button {
@@ -28,6 +48,7 @@ button {
 
 td {
 	padding: 5px;
+	border:1px solid black;
 }
 
 #phone {
@@ -62,7 +83,9 @@ td {
 }
 </style>
 <body>
-	<h2>${userUpdate.u_nname}님의회원정보 수정</h2>
+	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
+	<div id="main">
+	<h2>회원정보 수정</h2>
 	<form action="userUpdate" method="POST" enctype="multipart/form-data"
 		id="userUpdate">
 		<table>
@@ -71,7 +94,7 @@ td {
 			</tr>
 			<tr>
 				<td colspan="2"><input type="text" name="nname"
-					value="${userUpdate.u_nname}" id="nname" />
+					value="${userUpdate.u_nname}" id="nname" placeholder="닉네임" />
 					<input type='button' id="nname_overlay" value='중복확인' /></td>
 			</tr>
 			<tr>
@@ -82,22 +105,22 @@ td {
 			</tr>
 			<tr>
 				<td colspan="2"><input type="password" name="pw"
-					value="${userUpdate.u_pw}" /></td>
+					value="${userUpdate.u_pw}" placeholder="비밀번호"/></td>
 			</tr>
 			<tr>
 				<th>비밀 번호 확인</th>
 			</tr>
 			<tr>
 				<td colspan="2"><input type="password" name="re_pw"
-					value="${userUpdate.u_pw}" /></td>
+					value="${userUpdate.u_pw}" placeholder="비밀번호 확인" /></td>
 			</tr>
 			<tr>
 				<th>이름</th>
-				<td><input type="text" name="name" value="${userUpdate.u_name}" /></td>
+				<td><input type="text" name="name" value="${userUpdate.u_name}" placeholder="이름" /></td>
 			</tr>
 			<tr>
 				<th>자기소개 수정</th>
-				<td><textarea name="intro" id="intro" style="resize: none; width:550px; height:250px;">${userUpdate.u_intro}</textarea></td>
+				<td><textarea name="intro" id="intro" style="resize: none; width:500px; height:150px;" placeholder="자기소개를 입력해 주세요">${userUpdate.u_intro}</textarea></td>
 				<td><div id="intro_cnt">(0 / 1000)</div></td>
 			</tr>
 			<tr>
@@ -131,7 +154,7 @@ td {
 				<th>이메일</th>
 			</tr>
 			<tr>
-				<td><input type="text" name="email" value="">&nbsp;@ <select
+				<td><input type="text" name="email" value="" placeholder="이메일">&nbsp;@ <select
 					name="mail">
 						<option value='naver.com'>naver.com</option>
 						<option value='daum.net'>daum.net</option>
@@ -142,8 +165,8 @@ td {
 				<th>주소</th>
 			</tr>
 			<tr>
-				<td><input type='text' name='addr' value="${userUpdate.u_addr}"
-					required /> <input type='text' name='detailAddr'
+				<td><input type='text' name='addr' value="${userUpdate.u_addr}" placeholder="주소"  
+					required /> <input type='text' name='detailAddr' placeholder="(상세주소)"
 					value="${userUpdate.u_detailAddr}" required /></td>
 			</tr>
 			<tr>
@@ -153,6 +176,7 @@ td {
 			</tr>
 		</table>
 	</form>
+	</div>
 </body>
 <script>
 
