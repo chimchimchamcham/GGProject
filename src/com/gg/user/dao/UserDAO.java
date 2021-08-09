@@ -12,6 +12,7 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import com.gg.dto.GGDto;
+import com.gg.trade.dao.TradeDAO;
 
 public class UserDAO {
 
@@ -491,6 +492,7 @@ public class UserDAO {
 		ArrayList<GGDto> list1 = null;
 		ArrayList<GGDto> list2 = null;
 		GGDto dto = null;
+		TradeDAO Tdao = null;
 		
 		String sql = "select  u_id, u_nname, u_intro, (select count(*) from post where p_id=u_id) as count_p, u_newname, (select count(*) from follow where f_receiveid = u_id) as f_cnt from userinfo where u_nname like '%"+search+"%' ";
 		String sql1 ="select p.p_no, p.p_title, p.p_code, p.p_content, p.p_likecount, p.p_view, p.p_tm, (select i.i_newname from img i  where i.p_no = p.p_no) i_newname from post p where p.p_content like '%"+search+"%'";
@@ -519,16 +521,19 @@ public class UserDAO {
 		list1 = new ArrayList<GGDto>();
 		while(rs.next()) {
 			dto = new GGDto();
-			String p_path = rs.getString("p_code");
+			String p_code = rs.getString("p_code");
+			int p_no = rs.getInt("p_no");
 			
-			dto.setP_no(rs.getInt("p_no"));
+			String p_path = getPath(p_code, p_no);
+			
+			dto.setP_no(p_no);
 			dto.setP_title(rs.getString("p_title"));
-			dto.setP_code(rs.getString("p_code"));
 			dto.setP_content(rs.getString("p_content"));
 			dto.setP_likeCount(rs.getInt("p_likecount"));
 			dto.setP_view(rs.getInt("p_view"));
 			dto.setP_tm(rs.getDate("p_tm"));
 			dto.setI_newName(rs.getString("i_newname"));
+			dto.setP_path(p_path);
 			list1.add(dto);
 		}
 		System.out.println("[검색]게시글 내용 포함여부 검색 결과 : "+list1.size());
@@ -540,14 +545,19 @@ public class UserDAO {
 		list2 = new ArrayList<GGDto>();
 		while(rs.next()) {
 			dto = new GGDto();
-			dto.setP_no(rs.getInt("p_no"));
+			String p_code = rs.getString("p_code");
+			int p_no = rs.getInt("p_no");
+			
+			String p_path = getPath(p_code, p_no);
+			
+			dto.setP_no(p_no);
 			dto.setP_title(rs.getString("p_title"));
-			dto.setP_code(rs.getString("p_code"));
 			dto.setP_content(rs.getString("p_content"));
 			dto.setP_likeCount(rs.getInt("p_likecount"));
 			dto.setP_view(rs.getInt("p_view"));
 			dto.setP_tm(rs.getDate("p_tm"));
 			dto.setI_newName(rs.getString("i_newname"));
+			dto.setP_path(p_path);
 			list2.add(dto);
 		}
 		System.out.println("[검색]게시글 제목 포함여부 검색 결과 : "+list2.size());
@@ -555,6 +565,22 @@ public class UserDAO {
 		
 		return map;
 		
+		
+	}
+	
+	public String getPath(String p_code,int p_no) {
+		String p_path = null;
+		if(p_code.equals("P001")) {
+			p_path="./auctionDetail?p_no="+p_no;
+		}else if(p_code.equals("P002")) {
+			p_path = "./salesDetail?p_no="+p_no;
+		}else if(p_code.equals("P003")) {
+			p_path = "./commDetail?p_no="+p_no;
+		}else {
+			p_path = "./noticeDetail?p_no="+p_no;
+		}
+		
+		return p_path;
 		
 	}
 
