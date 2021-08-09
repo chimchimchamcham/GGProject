@@ -1101,7 +1101,9 @@ $.ajax({
 		<c:if test ="${sessionScope.adminYN eq 'Y'}">
 			<h2 style="margin-top:30px;">${myPageInfo.u_nname}님의 프로필</h2>
 		</c:if>
+		<c:if test ="${sessionScope.adminYN eq 'N'}">
 	<h2 style="margin-top:30px;">마이페이지</h2>
+	</c:if>
 	<!-- 마이페이지 상단 -->
 	<div id="div1">
 		<table id="userInfoBox">
@@ -1136,16 +1138,20 @@ $.ajax({
 				<th>전화번호</th>
 				<td>${myPageInfo.u_phone }</td>
 			</tr>
+			<c:if test ="${sessionScope.adminYN eq 'N'}">
 			<tr>
 				<td colspan="2" style="padding-top:20px;"><button onclick="location.href='./userUpdateForm?id=${loginId}'">회원정보 수정</button></td>
 			</tr>
+			</c:if>
 		</table>
 
 		<table id="pointBox">
 			<tr>
 				<th>현재 포인트</th>
 				<td><a href="#" onclick="pointListPop();">${myPageInfo.pnt_point }P</a></td>	
+				<c:if test ="${sessionScope.adminYN eq 'N'}">
 				<td><input type="button" value="충전" onclick="chargePopup();" id="chargeBtn"/></td>
+				</c:if>
 			</tr>
 		</table>
 		<div id="intro" style="margin-top: 20px;">
