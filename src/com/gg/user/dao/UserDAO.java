@@ -333,7 +333,6 @@ public class UserDAO {
 		return success;
 	}
 
-
 	public ArrayList<GGDto> userList() {
 		String sql = "SELECT u_id,u_nname,u_name,u_email,u_phone,u_joinTm FROM userinfo";
 		ArrayList<GGDto> userList = new ArrayList<GGDto>();
@@ -400,15 +399,12 @@ public class UserDAO {
 
 		return categoryMap;
 	}
-	
-	
+
 	public ArrayList<GGDto> notifyList() {
 
-		String sql = "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n1_code, n1.n1_name,hn.hn_tm, hn.hn_code, hn.hn_adminid " + 
-				"FROM notify n LEFT OUTER JOIN his_notify hn " + 
-				"ON n.n_no = hn.n_no " + 
-				"INNER JOIN n1_code n1 " + 
-				"ON n.n1_code = n1.n1_code ORDER BY n_no DESC";
+		String sql = "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n1_code, n1.n1_name,hn.hn_tm, hn.hn_code, hn.hn_adminid "
+				+ "FROM notify n LEFT OUTER JOIN his_notify hn " + "ON n.n_no = hn.n_no " + "INNER JOIN n1_code n1 "
+				+ "ON n.n1_code = n1.n1_code ORDER BY n_no DESC";
 		ArrayList<GGDto> notifyList = new ArrayList<GGDto>();
 		GGDto dto = null;
 
@@ -432,7 +428,42 @@ public class UserDAO {
 		} finally {
 			resClose();
 		}
+		System.out.println(notifyList);
+		return notifyList;
+	}
 
+	public ArrayList<GGDto> n_firstCatSel(String n_firstCatSel) {
+
+			String sql = "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n1_code, n1.n1_name,hn.hn_tm, hn.hn_code, hn.hn_adminid " + 
+					"FROM notify n LEFT OUTER JOIN his_notify hn ON n.n_no = hn.n_no " + 
+					"INNER JOIN n1_code n1 ON n.n1_code = n1.n1_code " + 
+					"WHERE n.n1_code= 'post' ORDER BY n_no DESC";
+			ArrayList<GGDto> notifyList = new ArrayList<GGDto>();
+			GGDto dto = null;
+
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, n_firstCatSel);
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					dto = new GGDto();
+					dto.setN_no(rs.getInt("n_no"));
+					dto.setN_receiveId(rs.getString("n_receiveId"));
+					dto.setN_sendId(rs.getString("n_sendId"));
+					dto.setN1_code(rs.getString("n1_code"));
+					dto.setN1_name(rs.getString("n1_name"));
+					dto.setHn_tm(rs.getDate("hn_tm"));
+					dto.setHn_code(rs.getString("hn_code"));
+					dto.setHn_adminid(rs.getString("hn_adminId"));
+					notifyList.add(dto);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				resClose();
+			}
+
+			System.out.println(n_firstCatSel+notifyList);
 		return notifyList;
 	}
 

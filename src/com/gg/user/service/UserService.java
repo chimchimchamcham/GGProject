@@ -315,15 +315,20 @@ public class UserService {
 		return categoryMap;
 	}
 
-	/*
-	 * public ArrayList<GGDto> n_firstCatSel() {
-	 * 
-	 * String n_firstCatSel = req.getParameter("n_firstCatSel");
-	 * System.out.println("선택 대분류명 : " + n_firstCatSel);
-	 * 
-	 * UserDAO dao = new UserDAO();
-	 * 
-	 * return list; }
-	 */
+	public ArrayList<GGDto> n_firstCatSel() {
+
+		String n_firstCatSel = req.getParameter("n_firstCatSel");
+		System.out.println("선택 대분류명 : " + n_firstCatSel);
+
+		UserDAO dao = new UserDAO();
+		ArrayList<GGDto> firstSelList = new ArrayList<GGDto>();
+		if(n_firstCatSel.equals("all")) { //전체일때
+			firstSelList = dao.notifyList();
+		}else {
+			firstSelList = dao.n_firstCatSel(n_firstCatSel);
+		}
+
+		return firstSelList;
+	}
 
 }

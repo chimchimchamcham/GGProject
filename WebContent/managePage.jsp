@@ -385,14 +385,15 @@ h3 {
 		$("#notifyInfo, #blackInfo, #userInfo").hide();
 	});
 	
-	
+	var param = {};
 	/*==신고목록==*/
 	//대분류명 select
  	$("#firstCat").on('change', function(){
+ 		param.n_firstCatSel = $("#firstCat option:selected").val();
  		$.ajax({
 			type : 'POST',
 			url : 'n_firstCatSel',
-			data : {n_firstCatSel : '$("#firstCat option:selected").val()'},
+			data : param,
 			dataType : 'JSON',
 			success : function(data) {
 				

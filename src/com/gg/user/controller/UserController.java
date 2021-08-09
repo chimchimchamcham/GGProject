@@ -16,9 +16,8 @@ import com.gg.user.service.UserService;
 import com.google.gson.Gson;
 import sun.misc.Contended;
 
-
 @WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage", "/userUpdate",
-		"/userUpdateForm", "/chkpw", "/changePw", "/chkinfo", "/manageList" ,"/search", "/n_firstCatSel"})
+		"/userUpdateForm", "/chkpw", "/changePw", "/chkinfo", "/manageList", "/search", "/n_firstCatSel" })
 
 public class UserController extends HttpServlet {
 
@@ -172,13 +171,13 @@ public class UserController extends HttpServlet {
 			ArrayList<GGDto> n_stateCat = categoryMap.get("n_stateCat");
 			System.out.println("n_stateCat list size : " + n_stateCat.size());
 			req.setAttribute("n_stateCat", n_stateCat);
-			
+
 			// 게시글,댓글,사용자 카테고리
 			ArrayList<GGDto> n1_code = categoryMap.get("n1_code");
 			System.out.println("n1_code list size : " + n1_code.size());
 			req.setAttribute("n1_code", n1_code);
 
-			//신고 목록
+			// 신고 목록
 			ArrayList<GGDto> notifyList = service.notifyList();
 			System.out.println("notifyList size : " + notifyList.size());
 			req.setAttribute("notifyList", notifyList);
@@ -188,32 +187,22 @@ public class UserController extends HttpServlet {
 			dis.forward(req, resp);
 
 			break;
-			
-			
-		/*
-		 * case "/n_firstCatSel": System.out.println("신고 대분류 필터 요청"); ArrayList<GGDto>
-		 * n_firstCatSel = service.n_firstCatSel(); HashMap<String, Object> firstSelMap
-		 * = new HashMap<String, Object>();
-		 * 
-		 * firstSelMap.put("n_firstCatSel", n_firstCatSel); resp.getWriter().println(new
-		 * Gson().toJson(firstSelMap));
-		 * 
-		 * break;
-		 */
-			
-			
-			
-			
-			
-			
-			
-			
+
+		case "/n_firstCatSel":
+			System.out.println("신고 대분류 필터 요청");
+			ArrayList<GGDto> n_firstCatSel = service.n_firstCatSel();
+			HashMap<String, Object> firstSelMap = new HashMap<String, Object>();
+
+			firstSelMap.put("n_firstCatSel", n_firstCatSel);
+			resp.getWriter().println(new Gson().toJson(firstSelMap));
+
+			break;
+
 		case "/search":
 			System.out.println("검색결과 요청");
 			/* service.search(); */
 			break;
-			
-			
+
 		}
 
 	}
