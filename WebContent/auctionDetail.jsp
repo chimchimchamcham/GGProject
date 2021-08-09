@@ -89,11 +89,15 @@
 		margin : 5px;
 		border : 1px solid lightskyblue;
 	}
-.enter, #update_enter {
+.enter, #update_enter, .re_enter {
 	width: 55px;
 	height: 5vh;
 	border : 0.5px solid gray;
+	text-align: center;
 	margin-bottom: 10px;
+}
+.enter:hover, #update_enter:hover, .re_enter:hover {
+	background-color: gray;
 }
 .pageArea{
 	margin : 0 auto;
@@ -107,6 +111,7 @@
 	overflow: hidden;
 	margin: 0px auto;
 	border: 0.5px solid lightgray;
+
 }
 #comments_table {
 	width: 1190px;
@@ -139,13 +144,15 @@ a:hover {
 .comm_del:hover, .update_comment:hover {
 	color: pink;
 }
-.update_text {
+.update_text, .re_text {
 	border: 1px solid #D8D8D8;
 	width: 1140px;
 	height: 5vh;
 	float: left;
 }
-
+.re_Arrow, .reporter {
+	cursor: pointer;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -458,6 +465,124 @@ a:hover {
 	}
 	
 	 /*========================== 댓글 영역  ===================================== */
+	 /* 대댓글 불러오기 */
+	 var re_call = true;
+	 $(document).on("click",".re_Arrow", function() {
+		console.log("대댓글 보기 버튼 클릭");
+		var pc_parentno = $(this).attr("id");
+		console.log("보여줄 대댓글 부모 번호 :", pc_parentno);
+	 
+	 	re_show(pc_parentno);
+	 
+	 });
+	 var re_drawChecker = true;
+	/* 대댓글 리스트 불러오기 */
+	 function re_show(pc_parentno){
+		 	
+	 	var re_comm = {};
+	 	re_comm.pc_parentno = pc_parentno;
+	 	re_comm.p_no = "${dto.p_no}";
+			$.ajax({
+				type: "POST",
+				data: re_comm,
+				dataType: "JSON",
+				url: "showReComment",
+				success : function(data){ 
+					console.log("대댓글 리스트 보여주기.");
+					console.log(data.list);
+					re_drawChecker =true;
+					re_draw(data.list,pc_parentno);	
+					
+				},
+				error : function(e) {
+					console.log(e);
+				}
+			});
+		};
+	
+	 /* 대댓글 리스트 그리기 */
+	 function re_draw(list,pc_parentno) {
+		 console.log("대댓글 리스트 : ", list);
+		 
+		 var re_comment = "";
+		 if(list != null){
+			list.forEach(function(item,idx){
+				
+			 	re_comment += "<tr id='redrawForm'>";
+			 	re_comment += 	"<td style='border-bottom:0.5px solid lightgray;'><img src='./img/re_Comment.png' />"+item.u_nname +" </td>";
+			 	re_comment +=  	"<td id='content'>" + item.pc_content + "</td>";
+			 	re_comment += 	"<td id='right' style='border-bottom: 0.5px solid lightgray'>";
+			 	if(id == item.pc_id){
+			 		re_comment += 		"<img src='./img/trashbox.png' width='35px' height='35px' style='float:left' id='"+item.pc_no+"' class='comm_del'>";
+			 	}
+			 	else{
+			 		re_comment += "<img src='./img/notify-icon.png' width='17px' height='17px' style='float:right' class='reporter' id='"+item.pc_id+"'>";
+			 	}
+			 	re_comment += 	"<p style='float:right; margin-right:8px'>"+item.pc_tm+"</p>";
+			 	re_comment +=	"</td>";
+		 		re_comment += "</tr>";
+			});	 
+
+		 }
+		 
+		 re_comment += "<tr id='re_comment'>";
+		 re_comment += "<td colspan=3><textarea id='"+pc_parentno+"' class='re_text' style='resize: none;' placeholder='대댓글을 입력해 주세요' maxlength=300></textarea></td>";
+		 re_comment += "<td><button class='re_enter' id='"+pc_parentno+"'>엔터</button></td>";
+		 re_comment += "</tr>"; 
+		 
+		 if(re_drawChecker){
+			 $("tr#update_form").remove();
+			 $("tr#re_comment").remove();
+			 $("tr#redrawForm").remove();
+			 $("tr#"+pc_parentno).after(re_comment);
+			 re_drawChecker = false;
+		 }else {
+			 
+			 $("tr#update_form").remove();
+			 $("tr#re_comment").remove();
+			 $("tr#redrawForm").remove();
+			 re_drawChecker = true;
+		 }
+		 
+	 };
+	
+	//대댓글 등록 버튼을 눌렀을 경우.
+	 $(document).on("click",".re_enter", function(){
+		console.log("대댓글 등록 ");
+		var p_no = "${dto.p_no}";
+		var pc_parentno = $(this).attr("id");
+		console.log("부모 댓글 번호 :", pc_parentno);
+		var pc_content = $("#"+pc_parentno+".re_text").val();
+		console.log("대댓글 내용  :", pc_content );
+		if(pc_content == ''){
+			alert("대댓글을 입력해주세요!");
+		}else {
+			
+		var plus_reComm = {};
+		plus_reComm.p_no = p_no;
+		plus_reComm.pc_parentno = pc_parentno;
+		plus_reComm.pc_content = pc_content;
+		plus_reComm.pc_id = "${sessionScope.loginId}";
+		
+			$.ajax({
+				type: "GET",
+				url : "re_comment",
+				data : plus_reComm,
+				dataType: "JSON",
+				success : function(data){
+					console.log("성공");
+					re_show(pc_parentno);
+				},
+				error : function(e){
+					console.log(e);	
+				}
+			});
+		}
+		
+	 });
+	 
+	 
+	 
 	/*댓글 눌러 신고 하기 */
 	$(document).on('click','.reporter', function() {
 			var test = $(this).attr('id');
@@ -480,16 +605,20 @@ a:hover {
 		var update_comment ="";
 		
 		update_comment += "<tr id='update_form'>";
-		update_comment += "<td colspan=3><textarea id='"+update_comm +"' class='update_text' style='resize: none;' placeholder='수정할 댓글을 입력해 주세요'></textarea></td>";
+		update_comment += "<td colspan=3><textarea id='"+update_comm +"' class='update_text' style='resize: none;' placeholder='수정할 댓글을 입력해 주세요' maxlength=300></textarea></td>";
 		update_comment += "<td><button id='update_enter'>엔터</button></td>";
 		update_comment += "</tr>"; 
 		
 		
 		if(check){
 			$("tr#"+update_comm).after(update_comment);
+			 $("tr#redrawForm").remove();
+			 $("tr#re_comment").remove();
 			check = false;
 		}else {
-			$("tr#update_form").empty();
+			$("tr#update_form").remove();
+			$("tr#re_comment").remove();
+			$("tr#redrawForm").remove();
 			check = true;
 		}
 		console.log(check);	
@@ -508,10 +637,7 @@ a:hover {
 			
 		}else {
 			alert("수정할 댓글을 입력하세요!");
-		}
-		
-		
-		
+		}	
 	});
 	/* 수정 기능 */
 	function comm_update(pc_no,context){
@@ -534,7 +660,7 @@ a:hover {
 				console.log("에러");		
 			}
 		});
-	}
+	};
 	/* 삭제 버튼 */
 	$(document).on('click','.comm_del', function(){
 		var del_comm = $(this).attr("id");

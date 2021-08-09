@@ -2,6 +2,7 @@ package com.gg.user.service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
@@ -303,8 +304,20 @@ public class UserService {
 		return dao.notifyList();
 	}
 
-	public void search() {
-
+	public HashMap<String,ArrayList<GGDto>> search() {
+		String search = req.getParameter("insert");
+		UserDAO dao = new UserDAO();
+		HashMap<String,ArrayList<GGDto>> map = new HashMap<String, ArrayList<GGDto>>();
+		try {
+			map = dao.search(search);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		return map;
+		
 	}
 
 	public HashMap<String, ArrayList<GGDto>> category() {

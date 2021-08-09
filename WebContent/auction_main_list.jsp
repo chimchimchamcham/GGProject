@@ -86,6 +86,7 @@
             flex-direction: column;
             justify-content: space-between;
             cursor: pointer;
+            margin:5px;
         }
         .img-zoon,.index{
             margin: 5%;

@@ -57,13 +57,7 @@ public class GGDto {
    private String hn_adminid; //신고 담당자
 
    
-   public String getPntcode() {
-      return Pntcode;
-   }
-
-   public void setPntcode(String pntcode) {
-      Pntcode = pntcode;
-   }
+  
 
    // 블랙리스트
    private Date b_startTm; // 블랙리스트 등록날짜
@@ -164,7 +158,9 @@ public class GGDto {
    private String p_code; // 분류코드 (경매,판매,공지사항,커뮤니티)
    
    private String p_name; //!! 추가 필요
-
+   
+   private int p_registCnt;//해당 작성자가 등록한 게시물의 총 갯수
+   
    // 사진
    private String i_newName;
    
@@ -1168,5 +1164,20 @@ public int getTotalPost() {
 
 public void setTotalPost(int totalPost) {
 	this.totalPost = totalPost;
+}
+public String getPntcode() {
+    return Pntcode;
+ }
+
+ public void setPntcode(String pntcode) {
+    Pntcode = pntcode;
+ }
+
+public int getP_registCnt() {
+	return p_registCnt;
+}
+
+public void setP_registCnt(int p_registCnt) {
+	this.p_registCnt = p_registCnt;
 }
 }
