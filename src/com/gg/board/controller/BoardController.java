@@ -1,6 +1,7 @@
 package com.gg.board.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gg.board.dao.BoardDAO;
 import com.gg.board.service.BoardService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
@@ -599,8 +601,26 @@ public class BoardController extends HttpServlet {
 			
 			/* HashMap<String, Object> map = service. */
 			ArrayList<GGDto> lists =  service.noticeList(Integer.parseInt(paging),Integer.parseInt(currPageNum));
+<<<<<<< HEAD
 			System.out.println(lists.size());
+=======
+			System.out.println("lists.size:"+lists.size());
+			
+			BoardDAO dao = new BoardDAO();
+			int total = 0;
+			try {
+				total = dao.noticeCount();
+				System.out.println("게시글 총 갯수:"+total);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				dao.resClose();
+			}
+			
+>>>>>>> e1e11da8988ede602e7c4273565f4ccccd199f8e
 			req.setAttribute("noticeList", lists);
+			req.setAttribute("noticeListSize",total);
 			dis = req.getRequestDispatcher("noticeList.jsp");
 			dis.forward(req, resp);
 

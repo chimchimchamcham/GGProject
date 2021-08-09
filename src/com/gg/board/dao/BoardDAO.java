@@ -1328,7 +1328,7 @@ public class BoardDAO {
 		return noticeList;
 	}
 
-	private int noticeCount() throws SQLException {
+	public int noticeCount() throws SQLException {
 
 		String sql = "SELECT COUNT(p_no) FROM post where p_code='P003'";
 		ps = conn.prepareStatement(sql);

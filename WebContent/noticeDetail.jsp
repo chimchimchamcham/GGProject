@@ -64,8 +64,8 @@ h2 {
 			<tr>
 				<td style="text-align: right" colspan="3">
 				<input type=button value="목록" onclick="location.href='./noticeList'">
-				<input type=button value="수정"  id="updatebutton" onclick="location.href='./commUpdateForm?p_no=${dto.p_no}'" >
-				<input type=button value="삭제"  id="updatebutton" onclick="location.href='./postDel?p_no=${dto.p_no}'"></td>
+				<input type=button value="수정"  class="updatebutton" onclick="location.href='./commUpdateForm?p_no=${dto.p_no}'" >
+				<input type=button value="삭제"  class="updatebutton" onclick="location.href='./postDel?p_no=${dto.p_no}'"></td>
 			</tr>
 			<tr>
 				<th colspan="3"><h3>${dto.p_title}</h3></th>
@@ -93,8 +93,8 @@ h2 {
 </body>
 <script type="text/javascript">
 	var loginId = "${sessionScope.loginId}";
-	if (loginId !== "${dto.u_id}" || loginId == null) {
-		$("#updatebutton").css("visibility", "hidden");
+	if (loginId != "${dto.u_id}" || loginId == null) {
+		$(".updatebutton").css("visibility", "hidden");
 	}
 </script>
 </html>
