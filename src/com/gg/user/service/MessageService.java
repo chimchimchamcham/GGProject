@@ -10,4 +10,8 @@ public class MessageService {
 		this.req = req;
 	}
 
+	public void sendmsg() {
+		
+	}
+	
 }
