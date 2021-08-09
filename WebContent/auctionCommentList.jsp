@@ -10,7 +10,6 @@
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 <c:set var="id"  value="${sessionScope.loginId}" /> // 삭제와 수정을 하기 위함.
-
 </script>
 <body>
 	<table id='comments_table'>
@@ -43,14 +42,18 @@
 	</table>
 	<!-- 페이지를 몇부터 몇까지 보여줄건지 (이전/다음) -->
 	<div class="pageArea">
-		<a href="./?page=${currPage-1 }"><</a>
+		<c:if test="${currPage gt 1}">
+		<span style='font-weight:bold' id='before'>[이전]</span>
+		</c:if>
 		<c:forEach var="i" begin="1" end="${totalPage }" step="1">
 			<span class="page">
-			<c:if test="${i ne currPage }"><a href="./?page=${i }">${i}</a></c:if>
-			<c:if test="${i eq currPage }"><b>${i}</b></c:if>
+			<c:if test="${i ne currPage }"><span class='comment_nav' id="${i }">${i}</span></c:if>
+			<c:if test="${i eq currPage }"><span id="${i }" style="font-weight:bold">${i}</span></c:if>
 			</span>
 		</c:forEach>
-		<a href="./?page=${currPage +1 }">></a>
+		<c:if test="${currPage lt totalPage }">
+		<span style='font-weight:bold' id='after'>[다음]</span>
+		</c:if>
 	</div>
 	<div class="board_t_b">
 		<textarea class="board_text" style="resize: none;"></textarea>

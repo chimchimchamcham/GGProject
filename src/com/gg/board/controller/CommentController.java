@@ -165,11 +165,12 @@ public class CommentController extends HttpServlet {
 			p_no = Integer.parseInt(req.getParameter("p_no"));
 			System.out.println("옥션 댓글 p_no :"+ p_no);
 			map = service.auctionCommentList(page,p_no);
-			
+			map.put("re_pno", p_no);
 			req.setAttribute("list", map.get("list"));
+			req.setAttribute("re_pno", map.get("re_pno"));
 			req.setAttribute("currPage", map.get("currPage"));
 			req.setAttribute("totalPage", map.get("totalPage"));
-			
+			System.out.println("currPage : " + map.get("currPage"));
 			dis = req.getRequestDispatcher("auctionCommentList.jsp");
 			dis.forward(req, resp);
 			
