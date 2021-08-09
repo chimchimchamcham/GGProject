@@ -255,7 +255,7 @@ a:visited {
 	margin-right :31px;
 	border-bottom: 1px solid #d6d6d6;
 	border-top: 1px solid #d6d6d6;
-	color:red;
+	color:#d6d6d6;
 	border-left: 0px;
 	border-right: 0px;
 }
@@ -271,16 +271,10 @@ a:visited {
 
 </style>
 
-<<<<<<< HEAD
 <%
 	String allurl = (String) session.getAttribute("allurl");
-=======
-<% 
-	String allurl = (String)session.getAttribute("allurl");
-	//
->>>>>>> 92ec7ecb5cf053dd1c1bd39d80de15c638c589c3
 %>
-/
+
 <script>
 	var loginId = "${sessionScope.loginId}";
 
