@@ -114,8 +114,8 @@
 		search = $("input[name=search]").val();
 		console.log("검색 내용 : ",search);
 		
-		location.href="./search.jsp";
-		//location.href="./search?insert="+search;
+		//location.href="./search.jsp";
+		location.href="./search?insert="+search;
 		
 	})
       
