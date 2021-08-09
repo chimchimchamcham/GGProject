@@ -226,6 +226,9 @@ a:visited {
 }
 </style>
 
+<% 
+	String allurl = (String)session.getAttribute("allurl");
+%>
 
 <script>
 var loginId = "${sessionScope.loginId}";
@@ -236,13 +239,13 @@ function chargePopup() { window.open("./popup/chargePopup.jsp", "chargePop", "wi
 //포인트내역 팝업
 function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "width=900, height=600, left=450, top=180"); }
 
-var allurl = ${allurl};
+var allurl = <%= allurl %>
 	
 	
 	$(document).ready(function(){
 	
 		
-		if(allurl==null){
+		if(allurl == undefined){
 			allurl = './soldlist';
 		}
 		 
