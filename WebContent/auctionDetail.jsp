@@ -153,6 +153,15 @@ a:hover {
 .re_Arrow, .reporter {
 	cursor: pointer;
 }
+#before, #after {
+	cursor: pointer
+}
+#before:hover, #after:hover {
+	color: pink;
+}
+.comment_nav {
+	cursor : pointer;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -701,6 +710,42 @@ a:hover {
 			$('#board_text_controll').html("(300 / 300)");
 		}
 	});	
+	/* 이전 다음 버튼 */
+	$(document).on("click", "#before",function(){
+		console.log("page :", page);
+			console.log("이전");
+			if(page >1){
+				page = page-1;
+				showCommentList();
+			}else {
+				alert("마지막 페이지입니다!");
+			}
+	});
+	/* 다음 버튼 */
+	$(document).on("click","#after", function(){
+		console.log("page : ", page);
+		console.log("다음");
+		console.log("바뀌기 전 페이지 : " , page);
+		page = Number(page) + 1;
+		console.log("바뀐 페이지 : " , page);
+		showCommentList();
+	
+	});
+	
+		
+	/* 페이지 번호로 이동할 경우 */
+	$(document).on("click",".comment_nav", function(){
+		
+		page = $(this).attr("id");
+		console.log("페이지 누름 page :",page);
+		showCommentList();
+		
+	});
+	
+	
+	
+	
+	
 	/* 댓글 창 보여주기 */
 	function showCommentList(){
 		

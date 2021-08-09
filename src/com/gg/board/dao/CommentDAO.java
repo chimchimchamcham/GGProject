@@ -327,6 +327,7 @@ public class CommentDAO {
 		int pages = total/pagePerCnt ==0 ? total/pagePerCnt : total/pagePerCnt +1;
 		map.put("list", list);
 		map.put("totalPage", pages);
+		System.out.println("여기가 문제인가? :"+ page);
 		map.put("currPage", page);
 
 		return map;
