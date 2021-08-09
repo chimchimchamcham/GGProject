@@ -239,7 +239,7 @@ function chargePopup() { window.open("./popup/chargePopup.jsp", "chargePop", "wi
 //포인트내역 팝업
 function pointListPop() { window.open("./popup/pointListPop.jsp", "pointList", "width=900, height=600, left=450, top=180"); }
 //신고 팝업
-function notifyPopup() { window.open("./popup/notifyPopup.jsp", "notifyPopup", "width=900, height=600, left=450, top=180"); }
+function notifyPopup() { window.open("./popup/notifyPopup.jsp?N_receiveId=${myPageInfo.u_id}", "notifyPopup", "width=900, height=600, left=450, top=180"); }
 
 var allurl = <%= allurl %>
 	
