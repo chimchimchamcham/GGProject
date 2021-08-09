@@ -519,6 +519,8 @@ public class UserDAO {
 		list1 = new ArrayList<GGDto>();
 		while(rs.next()) {
 			dto = new GGDto();
+			String p_path = rs.getString("p_code");
+			
 			dto.setP_no(rs.getInt("p_no"));
 			dto.setP_title(rs.getString("p_title"));
 			dto.setP_code(rs.getString("p_code"));

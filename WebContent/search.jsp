@@ -110,7 +110,7 @@ h2 {
 				<h3>사용자가 존재하지 않습니다.</h3>
 			</c:if>
 			<c:forEach items="${f_ui }" var ="dto">
-				<table class="hoverTr" onclick="location.href='#'" style="padding: 0 100px; width: 1140px; height: 100px">
+				<table class="hoverTr" onclick="location.href='myPage?id=${dto.u_id}'" style="padding: 0 100px; width: 1140px; height: 100px">
 					<tr>
 						<td rowspan="3">
 							<p style="text-align: center; padding: 0 50px">
@@ -139,7 +139,11 @@ h2 {
 			<div id="post_titleContent">
 			<c:if test="${f_pc eq null || f_pc eq ''}"><h3>해당 제목을 가진 게시글이 존재하지 않습니다.</h3></c:if>
 			<c:forEach items="${f_pc }" var ="dto">
-				<table class="hoverTr" onclick="location.href='#'" style="padding: 0 100px; width: 1140px; height: 100px">
+			<p style="display:hidden"><c:if test="${dto.p_code eq 'P001' }">./auctionDetail?p_no=${dto.p_no }</c:if></p>
+			<p style="display:hidden"><c:if test="${dto.p_code eq 'P002' }">./salesDetail?p_no=${dto.p_no }</c:if></p>
+			<p style="display:hidden"><c:if test="${dto.p_code eq 'P003' }">./noticeDetail?p_no=${dto.p_no }</c:if></p>
+			<p style="display:hidden"><c:if test="${dto.p_code eq 'P004' }">./commDetail?p_no=${dto.p_no }</c:if></p>
+				<table class="hoverTr" onclick="location.href=''" style="padding: 0 100px; width: 1140px; height: 100px">
 					<tr>
 						<td rowspan="3">
 							<p style="text-align: center; padding: 0 50px">
