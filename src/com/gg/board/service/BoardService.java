@@ -962,10 +962,10 @@ public void updatereqlist(String rqno) throws IOException {
 		return dao.postDel(p_no);
 	}
 
-	public ArrayList<GGDto> noticeList(int paging) {
+	public ArrayList<GGDto> noticeList(int paging, int currPageNum) {
 
 		BoardDAO dao = new BoardDAO();
-		ArrayList<GGDto> noticeList = dao.noticeList(paging);
+		ArrayList<GGDto> noticeList = dao.noticeList(paging,currPageNum);
 		dao.resClose();
 
 		return noticeList;

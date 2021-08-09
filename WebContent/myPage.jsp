@@ -1173,7 +1173,7 @@ $.ajax({
    <div id="follow"  class="categori" style="background-color:blue; padding:20px;"><jsp:include page="./mypage_list/flows.jsp"></jsp:include></div>
    <div id="want"  class="categori" style="background-color:pink; padding:20px;"><jsp:include page="./mypage_list/request.jsp"></jsp:include></div>
    <div id="like"  class="categori" style="background-color:purple; padding:20px;"><jsp:include page="./mypage_list/loving.jsp"></jsp:include></div>
-   <div id="alarm"  class="categori" style="background-color:lime; padding:20px;"><jsp:include page="./mypage_list/alarm.jsp"></jsp:include></div>
+   <div id="alarm"  class="categori" style="background-color:lime; padding:20px;"></div>
 </c:if>
 
 
