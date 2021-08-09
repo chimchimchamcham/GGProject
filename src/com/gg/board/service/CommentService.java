@@ -192,10 +192,7 @@ public class CommentService {
 			dao.resClose();
 		}
 		
-		
-		
-		
-		
+
 		return map;
 	}
 
