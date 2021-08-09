@@ -105,5 +105,6 @@ h2 {
 <script type="text/javascript">
 console.log(${noticeList[0].currPageNum});
 console.log(${noticeList[0].currPageStart});
+console.log(${noticeList[0].currPageEnd});
 </script>
 </html>
