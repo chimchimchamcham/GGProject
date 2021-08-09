@@ -83,7 +83,7 @@
 	text-decoration: underline;
 }
 
-.hoverTr:hover{
+.userTr:hover, #notifyFilter:hover{
 	background-color: #D8D8D8;
 	cursor: pointer;
 }
@@ -182,8 +182,8 @@ h3 {
 						<td colspan="6" style="padding: 0; border-bottom: 1px solid gray"></td>
 					</tr>
 					<c:forEach items="${userList}" var="userList">
-					<tr id="userTr">
-						<td>${userList.u_id}</td>
+					<tr class="userTr" id="${userList.u_id }">
+						<td class="u_id">${userList.u_id}</td>
 						<td>${userList.u_nname}</td>
 						<td>${userList.u_name}</td>
 						<td>${userList.u_email}</td>
@@ -377,14 +377,15 @@ h3 {
 		$("#notifyInfo, #blackInfo, #userInfo").hide();
 	});
 	
-	/*회원 프로필*/
-    $(".myPageA").click(function(){
-        if(loginId == ""){
-           alert("로그인이 필요한 서비스 입니다.");
-           location.href="login.jsp";
-        }else{
-           location.href="myPage";
-        }   
+	
+	/*회원 프로필 이동*/
+    $(".userTr").on("click", function(){
+/*     	var u_id = "";
+    	var u_id = $(this).children('.u_id').text(); */
+    	var u_id = $(this).attr("id");
+    	console.log(u_id);
+    	console.log("회원프로필 이동 요청");
+        location.href="./myPage?id="+u_id;
         });
 	
 	var param = {};
