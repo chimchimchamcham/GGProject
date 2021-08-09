@@ -1,5 +1,6 @@
-<%@ page import="com.gg.dto.GGDto" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.gg.dto.GGDto"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -7,161 +8,194 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-    
-	#mainHeader{
+#mainHeader {
 	z-index: 1000;
-	}
-	#main {
-	/* background-color: gray; */
-	width:1200px;
-	height:auto;
-	position: absolute;
-	top:150px;
-	z-index: -1;
-	margin:0px auto;
-	padding:30px;
-	}
-	#cate{
-	margin:50px;
-	}
-	#commTitle{
-	margin:50px;
-	}
-	#commDetailtable, #comments_table, .pageArea, .board_t_b{
-	margin:0px auto;
-	border:1px solid black;
-	text-align:center;
-	width:80%;
-	padding:20px;
-	}
-	.box {
-    width: 30px;
-    height: 30px; 
-    border-radius: 50%;
-    overflow: hidden;
-    margin:0px auto;
-	}
-	.profile {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-	}
-	#commTextarea{
-	width:95%;
-	height:300px;
-	margin-top:20px;
-	resize:none;
-	padding:10px;
-	}
-	
-	/* 댓글 영역 */
-	/* .board_text  {
-	margin:0px auto;
-	border:1px solid black;
-	text-align:center;
-	width:70%;
-	padding:20px;
-	} */
-
-.enter, #update_enter, .re_enter {
-	width: 55px;
-	height: 5vh;
-	border : 0.5px solid gray;
-	text-align: center;
-	margin-bottom: 10px;
 }
+
+#main {
+	/* background-color: gray; */
+	width: 1200px;
+	height: auto;
+	position: absolute;
+	top: 150px;
+	z-index: -1;
+	margin: 0px auto;
+	padding: 30px;
+}
+
+#cate {
+	margin: 50px;
+}
+
+#commTitle {
+	margin: 50px;
+}
+
+#commDetailtable {
+	margin: 0px auto;
+	border: 1px solid black;
+	text-align: center;
+	width: 80%;
+	padding: 20px;
+}
+
+.box {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	overflow: hidden;
+	margin: 0px auto;
+}
+
+.profile {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+#commTextarea {
+	width: 95%;
+	height: 300px;
+	margin-top: 20px;
+	resize: none;
+	padding: 10px;
+}
+
+/* 댓글 영역 */
+#comm_comment {
+	margin: 0px auto;
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: center;
+	width: 80%;
+	text-align: center;
+}
+
+.board_text {
+	margin: 0px auto;
+	border: 1px solid black;
+	border-collapse: collapse;
+	text-align: center;
+	float: left;
+	width: 90%;
+	padding: 20px;
+}
+
+.enter {
+	width: 53px;
+	height: 71px;
+	float: left;
+	border: 0.5px solid gray;
+	text-align: center;
+	border-collapse: collapse;
+}
+
 .enter:hover, #update_enter:hover, .re_enter:hover {
 	background-color: gray;
 }
-
-
-
+#board_text_controll {
+	display :inline;
+	white-space : nowrap;
+	
+}
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-
-</script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	<div id="mainHeader"><jsp:include page="header.jsp" /></div>
 	<div id="main">
-    <div id="wrap">
-    	<table id = "commDetailtable">
-    		<tr>
-    			<th colspan ="6"><h1>커뮤니티</h1></th>
-    		</tr>
-    		<tr>
-    			<td colspan ="6" id = "p_title"><h2>${dto.p_title }</h2></td>
-    		</tr>
-    		<tr>
-    			<td colspan ="5" id = "c_name" style="text-align:left"><h5>#  ${dto.c_name }</h5></td>
-    			<td id="updatebutton" style="text-align:left">
-    				<input type = button value="삭제" onclick="location.href='./postDel?p_no=${dto.p_no}'">
-    				<input type = button value="수정" onclick="location.href='./commUpdateForm?p_no=${dto.p_no}'">
-    			</td>
-    		</tr>
-    		<tr>
-    			<td>
-    				<c:if test="${dto.u_newName  ne ''}">
-						<div class="box" ><a href="myPage?id=${dto.u_id}">
-	    				<img class="profile" src="./img/default-profile.png">
-						</a></div>
-					</c:if>
-				</td>
-    			<td>글 번호 : ${dto.p_no }</td>
-				<td>작성자 : ${dto.u_nname }</td>
-    			<td>작성 일시 : ${dto.p_tm }</td>
-    			<td>조회수 : ${dto.p_view }</td>
-    			<td></td>
-			</tr>
-	    	<tr>
-	    		<td colspan = "6"><hr></hr></td>
-	    	</tr>
-    		<c:if test = "${dto.i_newName ne null}">
-    			<tr>
-    				<td colspan ="6" id = "i_newName" style="text-align:left"><img src = "/photo/${dto.i_newName }" width=300px/></td>
-    			</tr>
-    		</c:if>
-    		<tr>
-    			<td colspan ="6" id = "p_content"><textarea id="commTextarea" readonly>${dto.p_content }</textarea></td>
-    		</tr>
-    	</table>
-    	<div id='comm_comment'>
-    	
-    	</div>
-    </div>
-    </div>
+		<div id="wrap">
+			<table id="commDetailtable">
+				<tr>
+					<th colspan="6"><h1>커뮤니티</h1></th>
+				</tr>
+				<tr>
+					<td colspan="6" id="p_title"><h2>${dto.p_title }</h2></td>
+				</tr>
+				<tr>
+					<td colspan="5" id="c_name" style="text-align: left"><h5>#
+							${dto.c_name }</h5></td>
+					<td id="updatebutton" style="text-align: left"><input
+						type=button value="삭제"
+						onclick="location.href='./postDel?p_no=${dto.p_no}'"> <input
+						type=button value="수정"
+						onclick="location.href='./commUpdateForm?p_no=${dto.p_no}'">
+					</td>
+				</tr>
+				<tr>
+					<td><c:if test="${dto.u_newName  ne ''}">
+							<div class="box">
+								<a href="myPage?id=${dto.u_id}"> <img class="profile"
+									src="./img/default-profile.png">
+								</a>
+							</div>
+						</c:if></td>
+					<td>글 번호 : ${dto.p_no }</td>
+					<td>작성자 : ${dto.u_nname }</td>
+					<td>작성 일시 : ${dto.p_tm }</td>
+					<td>조회수 : ${dto.p_view }</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="6"><hr></hr></td>
+				</tr>
+				<c:if test="${dto.i_newName ne null}">
+					<tr>
+						<td colspan="6" id="i_newName" style="text-align: left"><img
+							src="/photo/${dto.i_newName }" width=300px /></td>
+					</tr>
+				</c:if>
+				<tr>
+					<td colspan="6" id="p_content"><textarea id="commTextarea"
+							readonly>${dto.p_content }</textarea></td>
+				</tr>
+			</table>
+
+		</div>
+		<div id='comm_comment'></div>
+	</div>
 </body>
 <script>
 	/* 로그인 체크 */
 	console.log("${loginId}");
 	console.log("${dto.u_id}");
 	console.log("${dto.i_newName }");
-	if("${loginId}"!=="${dto.u_id}"){
-		$("#updatebutton").css("visibility","hidden");
+	if ("${loginId}" !== "${dto.u_id}") {
+		$("#updatebutton").css("visibility", "hidden");
 	}
 	/*=====  댓글 영역   =====*/
 	var page = 1;
-	
+
 	showCommentList();
 	console.log(page);
 	console.log("${dto.p_no}");
-	function showCommentList(){
-		
-		$.ajax({
-        	url:"auctionCommentList",
-        	data: {"page": page,
-        			"p_no" : "${dto.p_no}"	
-        	},
-        	success: function(data){
-        		console.log("옥션리스트 진입");
-        		$("#comm_comment").html(data);
-        	},
-        	error: function(e){
-        		console.log("진입 실패");
-        	}
+	function showCommentList() {
 
-        });
-	}
+		$.ajax({
+			url : "auctionCommentList",
+			data : {
+				"page" : page,
+				"p_no" : "${dto.p_no}"
+			},
+			success : function(data) {
+				console.log("옥션리스트 진입");
+				$("#comm_comment").html(data);
+			},
+			error : function(e) {
+				console.log("진입 실패");
+			}
+
+		});
+	};
+
+	/*글자수 제한*/
+	$(document).on('keyup', ".board_text", function() {
+		$('#board_text_controll').html("(" + $(this).val().length + " / 300)");
+		if ($(this).val().length > 300) {
+			$(this).val($(this).val().substring(0, 300));
+			$('#board_text_controll').html("(300 / 300)");
+		}
+	});
 </script>
 </html>
