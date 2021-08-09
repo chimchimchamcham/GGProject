@@ -272,6 +272,7 @@ var allurl = ${allurl}
 ./flowlist : 팔로우리스트
 ./requestlist : 구매요청리스트
 ./lovelist : 구매요청리스트
+./report_list:신고리스트
 */
 
 $.ajax({
@@ -456,7 +457,7 @@ $.ajax({
 			}else if($index == 6){
 				url ='./lovelist';
 			}else if($index == 7){
-				url ='./alarmlist';
+				url ='./report_list';
 			}
 			console.log("url:"+url);
 
@@ -680,7 +681,7 @@ $.ajax({
 					}else if ($index == 6) {//좋아요 요청
 						love_list(data.lovelist);
 					}else if ($index == 7) {//신고 요청
-						//alarm_list(data.alarmlist);
+						report_list(data.reportlist);
 					}
 				}
 			},
@@ -1064,35 +1065,28 @@ $.ajax({
 		}//좋아요 리스트 end
 		
 		
-	/* 	//데이터 가져와서 뿌려주는 신고 리스트
-		function alarm_list(alarmlist){
+ 		//데이터 가져와서 뿌려주는 신고 리스트
+		function report_list(reportlist){
 			
-			console.log("alarmlist:", alarmlist);
+			console.log("reportlist:", reportlist);
 			var content="";
 
 			$(".button-layout_sold").hide();
 			$(".alien_list_sold").hide();
 			$(".button-layout_auction").hide();
 			
-			alarmlist.forEach(function(item,idx){
-				console.log("idx:",idx,item);
-				content += "<div class='item-one'>";
-				content += "<div class='dretion-zoon style='margin: 3%'>";
-				content += "	<div><a href = "+a+"?p_no="+item.p_no+">"+item.p_title+"</a></div>";
-				content += "</div>";
-				content += "<div class='img-zoon'><img src=/photo"+item.i_newName+" class='itemimg' style='margin:3%'></div>";
-				content += "<div class='c_zoon'>";
-				content += "	<div>"+price+"</div>";	
-				content += "</div>";
-				content += "<div>"+"♥:"+item.p_likeCount+"</div>";
-				content += "	<div>"+item.c_name+"</div>";
-				content += "<div class='mai-time'>";
-				content += "	<div>"+item.p_tm+"</div>";
-				content += "</div></div>";
+			reportlist.forEach(function(item,idx){
+			console.log('idx:',idx,item);
+				content +=	"<td>"+item.n_sendId+"</td>";
+				content +=	"<td>"+item.n1_name+"신고</td>";
+				content +=	"<td class='n1_name'>"+item.n_content+"</td>";
+				content +=	"<td>"+item.hn_adminid+"</td>";
+				content +=	"<td>"+item.hn_tm+"</td>";
+				content +=	"<td>"+item.c_name+"</td>";
 			});	
-			$("#alarm .item-box").empty();
-			$("#alarm .item-box").append(content);
-		}//신고 리스트 end */
+			$("#alarm .content-zoon_report").empty();
+			$("#alarm .content-zoon_report").append(content);
+		}//신고 리스트 end 
 		
 		
 		
@@ -1184,7 +1178,7 @@ $.ajax({
    <div id="follow"  class="categori" style="background-color:blue; padding:20px;"><jsp:include page="./mypage_list/flows.jsp"></jsp:include></div>
    <div id="want"  class="categori" style="background-color:pink; padding:20px;"><jsp:include page="./mypage_list/request.jsp"></jsp:include></div>
    <div id="like"  class="categori" style="background-color:purple; padding:20px;"><jsp:include page="./mypage_list/loving.jsp"></jsp:include></div>
-   <div id="alarm"  class="categori" style="background-color:lime; padding:20px;"></div>
+   <div id="alarm"  class="categori" style="background-color:lime; padding:20px;"><jsp:include page="./mypage_list/report.jsp"></jsp:include></div>
 </c:if>
 
 
@@ -1222,7 +1216,7 @@ $.ajax({
 				<th colspan="2">${myPageInfo.u_nname}</th>
 			</tr>
 			<tr>
-				<td colspan="2" class="addrBg">${myPageInfo.u_addr }&nbsp;${myPageInfo.u_detailAddr }</td>
+				<td colspan="2" class="addrBg">${myPageInfo.u_addr}&nbsp;${myPageInfo.u_detailAddr}</td>
 			</tr>
 			<tr id="f_mBtn">
 				 <td><button>+팔로우</button><button>쪽지</button></td>

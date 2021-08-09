@@ -492,13 +492,12 @@ public class UserDAO {
 		ArrayList<GGDto> list2 = null;
 		GGDto dto = null;
 		
-		String sql = "select  u_id,u_nname,u_intro,(select count(*) from post where p_id=u_id) as count_p from userinfo where u_nname like '%?%' ";
-		String sql1 ="select p_no,p_code,p_content,p_tm from post where p_content like '%?%'";
-		String sql2 ="select p_no,p_code,p_content,p_tm from post where p_title like '%?%'"; 
+		String sql = "select  u_id, u_nname, u_intro, (select count(*) from post where p_id=u_id) as count_p, u_newname, (select count(*) from follow where f_receiveid = u_id) as f_cnt from userinfo where u_nname like '%"+search+"%' ";
+		String sql1 ="select p.p_no, p.p_title, p.p_code, p.p_content, p.p_likecount, p.p_view, p.p_tm, (select i.i_newname from img i  where i.p_no = p.p_no) i_newname from post p where p.p_content like '%"+search+"%'";
+		String sql2 ="select p.p_no, p.p_title, p.p_code, p.p_content, p.p_likecount, p.p_view , p.p_tm, (select i.i_newname from img i  where i.p_no = p.p_no) i_newname from post p where p.p_title like '%"+search+"%'"; 
 		
 		//회원정보 테이블에서 조회
 		ps = conn.prepareStatement(sql);
-		ps.setString(1, search);
 		rs = ps.executeQuery();
 		list = new ArrayList<GGDto>();
 		while(rs.next()) {
@@ -507,6 +506,8 @@ public class UserDAO {
 			dto.setU_nname(rs.getString("u_nname"));
 			dto.setU_intro(rs.getString("u_intro"));
 			dto.setP_registCnt(rs.getInt("count_p"));//등록한 게시물의 총 갯수
+			dto.setU_newName(rs.getString("u_newname"));
+			dto.setFlow_count(rs.getInt("f_cnt"));
 			list.add(dto);
 		}
 		System.out.println("[검색]사용자 포함여부 검색 결과 : "+list.size());
@@ -514,15 +515,18 @@ public class UserDAO {
 		
 		//게시글 내용에서 조회
 		ps = conn.prepareStatement(sql1);
-		ps.setString(1, search);
 		rs = ps.executeQuery();
 		list1 = new ArrayList<GGDto>();
 		while(rs.next()) {
 			dto = new GGDto();
 			dto.setP_no(rs.getInt("p_no"));
+			dto.setP_title(rs.getString("p_title"));
 			dto.setP_code(rs.getString("p_code"));
 			dto.setP_content(rs.getString("p_content"));
+			dto.setP_likeCount(rs.getInt("p_likecount"));
+			dto.setP_view(rs.getInt("p_view"));
 			dto.setP_tm(rs.getDate("p_tm"));
+			dto.setI_newName(rs.getString("i_newname"));
 			list1.add(dto);
 		}
 		System.out.println("[검색]게시글 내용 포함여부 검색 결과 : "+list1.size());
@@ -530,15 +534,18 @@ public class UserDAO {
 		
 		//게시글 제목 조회
 		ps = conn.prepareStatement(sql2);
-		ps.setString(1, search);
 		rs = ps.executeQuery();
 		list2 = new ArrayList<GGDto>();
 		while(rs.next()) {
 			dto = new GGDto();
 			dto.setP_no(rs.getInt("p_no"));
+			dto.setP_title(rs.getString("p_title"));
 			dto.setP_code(rs.getString("p_code"));
 			dto.setP_content(rs.getString("p_content"));
+			dto.setP_likeCount(rs.getInt("p_likecount"));
+			dto.setP_view(rs.getInt("p_view"));
 			dto.setP_tm(rs.getDate("p_tm"));
+			dto.setI_newName(rs.getString("i_newname"));
 			list2.add(dto);
 		}
 		System.out.println("[검색]게시글 제목 포함여부 검색 결과 : "+list2.size());
