@@ -1036,7 +1036,7 @@ a:visited {
 	$(document).on("click", "button.hellow,button.unhellow", function() {//버튼을 누르면 함수 실행,동적으로 실행
 
 		if ($('div.item-one-flow button').hasClass("hellow")) {
-			alert('팔로잉,언팔로잉 하였습니다')
+			alert('+팔로우 하였습니다')
 			$button1 = $("button.hellow");
 			$index1 = $button1.index(this);
 			$index_button_f = $("button.hellow:eq(" + $index1 + ")");
@@ -1049,9 +1049,9 @@ a:visited {
 
 			var nick1 = $index_user_text;
 
-			console.log($index1);
-			console.log(btntext1);
-			console.log(nick1);
+			console.log("index1:"+$index1);
+			console.log("btntext1:"+btntext1);
+			console.log("nick1:"+nick1);
 
 			$.ajax({
 				type : 'post',
@@ -1062,13 +1062,13 @@ a:visited {
 				},
 				dataType : 'JSON',
 				success : function(data) {
-					if ($index_button_f.text() == "+팔로잉") {
+					if ($index_button_f.text() == "+팔로우") {
 						console.log("-팔로잉");
-						$index_button_f.text("-팔로잉");
+						$index_button_f.text("-팔로우");
 
-					} else if ($index_button_f.text() == "-팔로잉") {
-						console.log("+팔로잉");
-						$index_button_f.text("+팔로잉");
+					} else if ($index_button_f.text() == "-팔로우") {
+						console.log("+팔로우");
+						$index_button_f.text("+팔로우");
 					}
 				},
 				error : function(e) {
@@ -1076,23 +1076,23 @@ a:visited {
 				}
 			});
 		} else if ($('div.item-one-flow button').hasClass('unhellow')) {
-			alert('팔로잉,언팔로잉 하였습니다')
+			alert('-팔로우 하였습니다');
+
 			$button2 = $("button.unhellow");
 			$index2 = $button2.index(this);
-
 			$index_button_f = $("button.unhellow:eq(" + $index2 + ")");
-			console.log(index_button_f.text());
+
 			var btntext2 = $index_button_f.text();
 
 			$user_id = $('div.flowerusername');
 			$index_user_id = $("div.flowerusername:eq(" + $index2 + ")");
 			$index_user_text = $index_user_id.text();
-			
+
 			var nick2 = $index_user_text;
 
-			console.log($index2);
-			console.log(btntext2);
-			console.log(nick2);
+			console.log("index2:"+$index2);
+			console.log("btntext2:"+btntext2);
+			console.log("nick2:"+nick2);
 			$.ajax({
 				type : 'post',
 				url : './flowadddelect',
@@ -1102,13 +1102,14 @@ a:visited {
 				},
 				dataType : 'JSON',
 				success : function(data) {
-					if ($index_button_f.text() == "-팔로잉") {
-						console.log("+팔로잉");
-						$index_button_f.text("+팔로잉");
-					} else if ($index_button_f.text() == "+팔로잉") {
-						console.log("-팔로잉");
-						$index_button_f.text("-팔로잉");
-					}
+					if ($index_button_f.text() == "+팔로우") {
+						console.log("-팔로우");
+						$index_button_f.text("-팔로우");
+						
+					}else if ($index_button_f.text() == "-팔로우") {
+						console.log("+팔로우");
+						$index_button_f.text("+팔로우");
+					}  
 				},
 				error : function(e) {
 					console.log(e);

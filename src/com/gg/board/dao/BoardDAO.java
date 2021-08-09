@@ -468,9 +468,9 @@ public class BoardDAO {
 
 			// 유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
 			if (userid.equals(reseveid)) {
-				dto.setThisuserFlowingYN("<button class='hellow'>+팔로잉</button>");// N
+				dto.setThisuserFlowingYN("<button class='hellow'>+팔로우</button>");// N
 			} else if (userid.equals(sendid)) {
-				dto.setThisuserFlowingYN("<button class='unhellow'>-팔로잉</button>");// Y
+				dto.setThisuserFlowingYN("<button class='unhellow'>-팔로우</button>");// Y
 			}
 			flowlist.add(dto);
 		}
@@ -495,19 +495,19 @@ public class BoardDAO {
 		
 		if (btntext.equals(wordplus)) {// 나를 팔로잉 한사람 팔로워 추가
 			System.out.println("+팔로잉 실행");
-			sql = "insert into follow VALUES (?,(select u_id from userinfo where u_nname = ?),sysdate)";
+			sql = "insert into follow VALUES ((select u_id from userinfo where u_nname = ?),?,sysdate);";
 
 			System.out.println("useriddao:" + userid);
 			System.out.println("ninkdao:" + nick);
 
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, userid);
-			ps.setString(2, nick);
+			ps.setString(1, nick);
+			ps.setString(2, userid);
 			success = ps.executeUpdate();
 
 		} else if (btntext.equals(wordminus)) {// 내가 팔로잉 한사람 팔로워 취소
 			System.out.println("-팔로잉 실행");
-			sql = "DELETE FROM follow WHERE f_receiveid = ? and f_sendid = (select u_id from userinfo where u_nname = ?)";
+			sql = "DELETE FROM follow WHERE f_sendid = ?  and f_receiveid = (select u_id from userinfo where u_nname = ?)";
 
 			System.out.println("ninkdao:" + nick);
 			System.out.println("useriddao:" + userid);
