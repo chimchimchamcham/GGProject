@@ -106,24 +106,27 @@ h2 {
 			<hr>
 			</p>
 			<div id="userContent">
+			<c:if test="${f_ui eq null || f_ui eq ''}"><h3>사용자가 존재하지 않습니다.</h3></c:if>
+			<c:forEach items="${f_ui }" var ="dto">
 				<table class="hoverTr" onclick="location.href='#'" style="padding: 0 100px; width: 1140px; height: 100px">
 					<tr>
 						<td rowspan="3">
 							<p style="text-align: center; padding: 0 50px">
-								<img src="./test/default-profile.png" width="100">
+								<img src="/photo/${dto.u_newName }" width="100">
 							</p>
 						</td>
-						<th><p style="width: 500px; padding: 0 20px; text-align: left; /* overflow: hidden;  */ /* text-overflow: ellipsis; white-space: nowrap; */ font-size: 1.5rem">유저1</p></th>
+						<th><p style="width: 500px; padding: 0 20px; text-align: left; /* overflow: hidden;  */ /* text-overflow: ellipsis; white-space: nowrap; */ font-size: 1.5rem">${dto.u_id }</p></th>
 					</tr>
 					<tr>
-						<td><p style="width: 500px; padding: 0 20px; text-align: left;">팔로워 30명 &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;총 게시글 100개</p></td>
+						<td><p style="width: 500px; padding: 0 20px; text-align: left;">팔로워 ${dto.flow_count}명 &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;총 게시글 ${dto.p_registCnt}개</p></td>
 					</tr>
 					<tr>
-						<td><p style="width: 500px; padding: 0 20px; text-align: left;">안녕하세요 유저1입니다.</p></td>
+						<td><p style="width: 500px; padding: 0 20px; text-align: left;">${dto.p_content }</p></td>
 					</tr>
 				</table>
+				
 				<p><hr style="width: 1140px"></p>
-
+			</c:forEach>
 			</div>
 		</div>
 		<div id="post_title_result">
@@ -132,23 +135,26 @@ h2 {
 			</p>
 			<p><hr></p>
 			<div id="post_titleContent">
+			<c:if test="${f_pc eq null || f_pc eq ''}"><h3>해당 제목을 가진 게시글이 존재하지 않습니다.</h3></c:if>
+			<c:forEach items="${f_pc }" var ="dto">
 				<table class="hoverTr" onclick="location.href='#'" style="padding: 0 100px; width: 1140px; height: 100px">
 					<tr>
 						<td rowspan="3">
 							<p style="text-align: center; padding: 0 50px">
-								<img src="./test/default-profile.png" width="100">
+								<img src="/photo/${dto.i_newName }" width="100">
 							</p>
 						</td>
-						<th><p style="width: 500px; padding: 0 20px; text-align: left; /* overflow: hidden;  */ /* text-overflow: ellipsis; white-space: nowrap; */ font-size: 1.5rem">유저1</p></th>
+						<th><p style="width: 500px; padding: 0 20px; text-align: left; /* overflow: hidden;  */ /* text-overflow: ellipsis; white-space: nowrap; */ font-size: 1.5rem">${dto.p_title }</p></th>
 					</tr>
 					<tr>
-						<td><p style="width: 500px; padding: 0 20px; text-align: left;">팔로워 30명 &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;총 게시글 100개</p></td>
+						<td><p style="width: 500px; padding: 0 20px; text-align: left;">좋아요 ${dto.p_likeCount}명 &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;조회수 ${dto.p_view }</p></td>
 					</tr>
 					<tr>
-						<td><p style="width: 500px; padding: 0 20px; text-align: left;">안녕하세요 유저1입니다.</p></td>
+						<td><p style="width: 500px; padding: 0 20px; text-align: left;">${dto.p_content }</p></td>
 					</tr>
 				</table>
 				<p><hr style="width: 1140px"></p>
+				</c:forEach>
 			</div>
 		</div>
 		<div id="post_content_result">
@@ -159,23 +165,26 @@ h2 {
 			<hr>
 			</p>
 			<div id="post_contentC">
+			<c:if test="${f_pt eq null || f_pt eq ''}"><h3>해당 내용을 가진 게시글이 존재하지 않습니다.</h3></c:if>
+			<c:forEach items="${f_pt }" var ="dto">
 				<table class="hoverTr" onclick="location.href='#'" style="padding: 0 100px; width: 1140px; height: 100px">
 					<tr>
 						<td rowspan="3">
 							<p style="text-align: center; padding: 0 50px">
-								<img src="./test/default-profile.png" width="100">
+								<img src="/photo/${dto.i_newName }" width="100">
 							</p>
 						</td>
-						<th><p style="width: 500px; padding: 0 20px; text-align: left; /* overflow: hidden;  */ /* text-overflow: ellipsis; white-space: nowrap; */ font-size: 1.5rem">유저1</p></th>
+						<th><p style="width: 500px; padding: 0 20px; text-align: left; /* overflow: hidden;  */ /* text-overflow: ellipsis; white-space: nowrap; */ font-size: 1.5rem">${dto.p_title }</p></th>
 					</tr>
 					<tr>
-						<td><p style="width: 500px; padding: 0 20px; text-align: left;">팔로워 30명 &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;총 게시글 100개</p></td>
+						<td><p style="width: 500px; padding: 0 20px; text-align: left;">좋아요 ${dto.p_likeCount}명 &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;조회수 ${dto.p_view }</p></td>
 					</tr>
 					<tr>
-						<td><p style="width: 500px; padding: 0 20px; text-align: left;">안녕하세요 유저1입니다.</p></td>
+						<td><p style="width: 500px; padding: 0 20px; text-align: left;">${dto.p_content }</p></td>
 					</tr>
 				</table>
 					<p><hr style="width: 1140px"></p>	
+				</c:forEach>
 			</div>
 		</div>
 	</div>
@@ -214,16 +223,7 @@ h2 {
 		$("#post_title_result").hide();
 		$("#post_content_result").show();
 	});
-	
 
-	
-	var f_ui = ${f_pt};
-	var f_pc = ${f_pc};
-	var f_pt = ${f_pt};
-	
-	console.log(f_ui.length);
-	console.log(f_pc.length);
-	console.log(f_pt.length);
 	
 	
 </script>
