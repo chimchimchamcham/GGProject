@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gg.user.service.MessageService;
 
-@WebServlet({"/sendmsg"})
+@WebServlet({"/sendMsg"})
 public class MessageController extends HttpServlet {
 
 	
@@ -37,6 +37,10 @@ public class MessageController extends HttpServlet {
 		switch (addr) {
 		case "/sendmsg":
 			service.sendmsg();
+			break;
+			
+		case "/":
+			
 			break;
 		}
 	}
