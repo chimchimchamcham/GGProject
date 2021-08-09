@@ -774,9 +774,9 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		}
 		
 		//거래페이지 목록을 보여주는 기능
-		public ArrayList<GGDto> tradeList (String id, String p_code){
+		public HashMap<String, Object> tradeList (String id, String p_code, int pageNum){
 			System.out.println("[TRADEDAO]/TRADELIST START");
-			String sql = "SELECT T.T_NO, T.P_NO, T.T_SALER, T.T_BUYER, (SELECT U_NNAME FROM USERINFO WHERE U_ID = T_SALER) T_SALER_NNAME, (SELECT U_NNAME FROM USERINFO WHERE U_ID = T_BUYER) T_BUYER_NNAME, (SELECT U_NEWNAME FROM USERINFO WHERE U_ID = T_SALER) T_SALER_NEWNAME, (SELECT U_NEWNAME FROM USERINFO WHERE U_ID = T_BUYER) T_BUYER_NEWNAME, P.P_TITLE, P.P_CODE, H.HT_DATE, H.HT_POINT, H.HT_CODE, (SELECT C_NAME FROM CODES WHERE C_CODE = H.HT_CODE) HT_NAME, TC.TC_CONTENT, TC.TC_TM, TC.TC_ID FROM TRADE T, HIS_TRADE H,(SELECT T_NO, MAX(HT_DATE) HT_DATE FROM HIS_TRADE GROUP BY T_NO) HM, TRADE_COMMENT TC, (SELECT T_NO, MAX(TC_TM) TC_TM FROM TRADE_COMMENT GROUP BY T_NO) TCM, POST P WHERE T.T_NO = H.T_NO AND H.T_NO = HM.T_NO AND HM.T_NO = TC.T_NO AND TC.T_NO = TCM.T_NO AND TC.TC_TM = TCM.TC_TM AND H.HT_DATE = HM.HT_DATE AND (T_SALER = ? OR T_BUYER = ?) AND T.P_NO = P.P_NO";
+			String sql = "SELECT T.RNUM, T.T_NO, T.P_NO, T.T_SALER, T.T_BUYER, (SELECT U_NNAME FROM USERINFO WHERE U_ID = T_SALER) T_SALER_NNAME, (SELECT U_NNAME FROM USERINFO WHERE U_ID = T_BUYER) T_BUYER_NNAME, (SELECT U_NEWNAME FROM USERINFO WHERE U_ID = T_SALER) T_SALER_NEWNAME, (SELECT U_NEWNAME FROM USERINFO WHERE U_ID = T_BUYER) T_BUYER_NEWNAME, P.P_TITLE, P.P_CODE, H.HT_DATE, H.HT_POINT, H.HT_CODE, (SELECT C_NAME FROM CODES WHERE C_CODE = H.HT_CODE) HT_NAME, TC.TC_CONTENT, TC.TC_TM, TC.TC_ID FROM (SELECT ROW_NUMBER() OVER(ORDER BY T_NO ASC) RNUM, T_NO, P_NO, T_SALER, T_BUYER, T_CANCLEID, T_ADMACC FROM TRADE ) T, HIS_TRADE H,(SELECT T_NO, MAX(HT_DATE) HT_DATE FROM HIS_TRADE GROUP BY T_NO) HM, TRADE_COMMENT TC, (SELECT T_NO, MAX(TC_TM) TC_TM FROM TRADE_COMMENT GROUP BY T_NO) TCM, POST P WHERE T.T_NO = H.T_NO AND H.T_NO = HM.T_NO AND HM.T_NO = TC.T_NO AND TC.T_NO = TCM.T_NO AND TC.TC_TM = TCM.TC_TM AND H.HT_DATE = HM.HT_DATE AND (T_SALER = ? OR T_BUYER = ?) AND T.P_NO = P.P_NO";
 			if(p_code.equals("P000")) {
 				System.out.println("[TRADEDAO]/TRADELIST 거래페이지 전체 목록 ");
 			}else if(p_code.equals("P001")) {
@@ -786,13 +786,36 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 				sql += " AND P_CODE = 'P002'";
 				System.out.println("[TRADEDAO]/TRADELIST 거래페이지 판매 목록 ");
 			}
-			sql += " ORDER BY H.HT_DATE DESC";
+			sql += " AND T.RNUM BETWEEN ? AND ? ORDER BY H.HT_DATE DESC";
 			
+			HashMap<String, Object> map = new HashMap<>();
 			ArrayList<GGDto> list = new ArrayList<GGDto>();
+			
+			int currentPage = pageNum; //클릭한 페이지 넘버
+			int pagePerCnt = 5; //한 페이지당 보여줄 목록 수
+			int end = pageNum*pagePerCnt; //거래페이지 종료
+			int start =end-pagePerCnt+1;  //거래페이지 시작
+			int totalNum = selectTradeCount(id, p_code); //총 거래페이지 수
+			int totalPage = 0; //총 페이지 수
+			if(totalNum<=pagePerCnt) {
+				totalPage = 1;
+			}else if(totalNum>pagePerCnt && totalNum%pagePerCnt == 0) {
+				totalPage = totalNum/pagePerCnt;
+			}else if(totalNum>pagePerCnt && totalNum%pagePerCnt != 0) {
+				totalPage = totalNum/pagePerCnt + 1;
+			}
+			System.out.println("[TRADEDAO]/TRADELIST CURRENTPAGE : "+currentPage);
+			System.out.println("[TRADEDAO]/TRADELIST END : "+end);
+			System.out.println("[TRADEDAO]/TRADELIST START : "+start);
+			System.out.println("[TRADEDAO]/TRADELIST TOTALNUM : "+totalNum);
+			System.out.println("[TRADEDAO]/TRADELIST TOTALPAGE : "+totalPage);
+			
 			try {
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, id);
 				ps.setString(2, id);
+				ps.setInt(3,start);
+				ps.setInt(4, end);
 				rs = ps.executeQuery();
 				while(rs.next()) {
 					GGDto dto = new GGDto();
@@ -817,8 +840,47 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
+			
+			map.put("list", list);
+			map.put("currentPage", currentPage);
+			map.put("totalPage", totalPage);
+			
 			System.out.println("[TRADEDAO]/TRADELIST LIST_SIZE : "+list.size());
-			return list;
+			System.out.println("[TRADEDAO]/TRADELIST END");
+			
+			return map;
+		}
+		
+		//거래페이지 목록수를 가져오는 기능
+		public int selectTradeCount(String id,String p_code) {
+			System.out.println("[TRADEDAO]/SELECTTRADECOUNT START");
+			String sql = "SELECT COUNT(*) COUNT FROM TRADE T, POST P WHERE T.P_NO = P.P_NO AND (T.T_SALER = ? OR T.T_BUYER = ? )";
+			if(p_code.equals("P000")) {
+				System.out.println("[TRADEDAO]/SELECTTRADECOUNT 거래페이지 전체 목록 ");
+			}else if(p_code.equals("P001")) {
+				sql += " AND P_CODE = 'P001'";
+				System.out.println("[TRADEDAO]/SELECTTRADECOUNT 거래페이지 경매 목록 ");
+			}else if(p_code.equals("P002")) {
+				sql += " AND P_CODE = 'P002'";
+				System.out.println("[TRADEDAO]/SELECTTRADECOUNT 거래페이지 판매 목록 ");
+			}
+			
+			int count = 0;
+			
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, id);
+				ps.setString(2, id);
+				rs = ps.executeQuery();
+				
+				if(rs.next()) {
+					count = rs.getInt("COUNT");
+				}	
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			System.out.println("[TRADEDAO]/SELECTTRADECOUNT END");
+			return count;
 		}
 		
 		//거래페이지 댓글 추가 기능
