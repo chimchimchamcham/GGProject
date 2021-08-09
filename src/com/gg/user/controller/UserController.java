@@ -208,8 +208,11 @@ public class UserController extends HttpServlet {
 			ArrayList<GGDto> f_pt = null;
 			searchmap = service.search();
 			f_ui = searchmap.get("f_ui");
+			System.out.println("f_ui : "+f_ui.size());
 			f_pc = searchmap.get("f_pc");
+			System.out.println("f_ui : "+f_pc.size());
 			f_pt = searchmap.get("f_pt");
+			System.out.println("f_ui : "+f_pt.size());
 			req.setAttribute("f_ui", f_ui);
 			req.setAttribute("f_pc", f_pc);
 			req.setAttribute("f_pt", f_pt);

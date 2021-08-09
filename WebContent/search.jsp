@@ -217,7 +217,9 @@ h2 {
 	
 
 	
-	
+	var f_ui = ${f_pt};
+	var f_pc = ${f_pc};
+	var f_pt = ${f_pt};
 	
 	console.log(f_ui.length);
 	console.log(f_pc.length);
