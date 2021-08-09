@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -105,42 +105,17 @@
 					<tr>
 						<td colspan="6" style="padding: 0; border-bottom: 1px solid gray"></td>
 					</tr>
-					<c:forEach items="${alarmlist}" var="alarmlist">
-					<tr class="hoverTr">
-						<td>${alarmlist.N_sendId}</td>
-						<td>${alarmlist.N1_name}</td>
-						<td class="n1_name">${alarmlist.N_content}</td>
-						<td>${alarmlist.HN_adminId}</td>
-						<td>${alarmlist.HN_tm}</td>
-						<td>${alarmlist.C_name}</td>
+
+					<tr class="content-zoon_report">
+
 					</tr>
-					<tr>
-						<td colspan="6"
-							style="padding: 0; border-bottom: 0.7px solid #e8e8e8"></td>
-					</tr>
-					</c:forEach>
 				</table>
 			</div>
 		</div>
 
 </body>
-<script type="text/javascript">
-/*==신고목록==*/
-//대분류명 select
-	$("#firstCat").on('change', function(){
-		$.ajax({
-		type : 'POST',
-		url : 'n_firstCatSel',
-		data : {n_firstCatSel : '$("#firstCat option:selected").val()'},
-		dataType : 'JSON',
-		success : function(data) {
-			
-		},
-		error : function(e) {
-			console.log(e);
-		}
-	});
-});
-</script>
+
+
+
 
 </html>

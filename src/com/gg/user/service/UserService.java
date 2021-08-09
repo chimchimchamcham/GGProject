@@ -180,12 +180,13 @@ public class UserService {
 
 	public GGDto myPage() {
 		String id = (String) req.getSession().getAttribute("loginId");
+		String adminYN = (String) req.getSession().getAttribute("adminYN");
 		String oppId = req.getParameter("id");
 		System.out.println("서비스 진입 : " + id);
 		UserDAO dao = new UserDAO();
 		GGDto dto = new GGDto();
 		if (id != null) { // 로그인 했을 때
-			if (id.equals(oppId) || oppId == null) { // 내글에서 내프로필 갈때 / 마이페이지
+			if (id.equals(oppId) || oppId == null || adminYN.equals("Y")) { // 내글에서 내프로필 갈때 / 마이페이지 / 관리자가 볼 때
 				dto = dao.myPage(id);
 				dto.setMyYN(true);
 				System.out.println("마이 프로필 여부 : " + dto.isMyYN());
@@ -329,15 +330,20 @@ public class UserService {
 		return categoryMap;
 	}
 
-	/*
-	 * public ArrayList<GGDto> n_firstCatSel() {
-	 * 
-	 * String n_firstCatSel = req.getParameter("n_firstCatSel");
-	 * System.out.println("선택 대분류명 : " + n_firstCatSel);
-	 * 
-	 * UserDAO dao = new UserDAO();
-	 * 
-	 * return list; }
-	 */
+	public ArrayList<GGDto> n_stateCatSel() {
+
+		String n_stateCatSel = req.getParameter("n_stateCatSel");
+		System.out.println("선택한 신고 상태 : " + n_stateCatSel);
+
+		UserDAO dao = new UserDAO();
+		ArrayList<GGDto> firstSelList = new ArrayList<GGDto>();
+		if(n_stateCatSel.equals("all")) { //전체일때
+			firstSelList = dao.notifyList();
+		}else {
+			firstSelList = dao.n_stateCatSel(n_stateCatSel);
+		}
+
+		return firstSelList;
+	}
 
 }

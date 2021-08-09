@@ -21,7 +21,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist",
 		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/postDel", "/writeCommunity", "/auctionDetail",
 		"/commDetail", "/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist","/soldmainlist", "/commList",
-		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist","/mainsold","/mainauction",
+		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist","/mainsold","/mainauction","/report_list",
 		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail","/applyreqlist","/noticeList"})
 
 
@@ -248,11 +248,11 @@ public class BoardController extends HttpServlet {
 			service.love_list(userid, index1, index2);
 
 			break;
-		case "/alarmlist":
+		case "/report_list":
 			System.out.println("좋아요리스트 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
 			
-			service.alarm_list(userid);
+			service.report_list(userid);
 
 			break;
 		/* ====== 글쓰기 ====== */
@@ -586,17 +586,20 @@ public class BoardController extends HttpServlet {
 			
 			/* int paging = 0; */
 			String currPageNum = req.getParameter("currPageNum");
-			System.out.println("currPageNum : "+currPageNum);
+			System.out.println("처음 currPageNum : "+currPageNum);
 			String paging = req.getParameter("paging");
+			if(currPageNum == null || currPageNum =="0") {
+				currPageNum = "1";
+			}
 			if(paging == null) {
 				paging = "1";
 			}
+			System.out.println("currPageNum : "+currPageNum);
 			System.out.println("paging : "+paging);
 			
 			/* HashMap<String, Object> map = service. */
-			
-			req.setAttribute("noticeList", service.noticeList(Integer.parseInt(paging)));
-			req.setAttribute("noticeListSize", service.noticeList(Integer.parseInt(paging)).get(0).getTotalPost());
+			ArrayList<GGDto> lists =  service.noticeList(Integer.parseInt(paging),Integer.parseInt(currPageNum));
+			req.setAttribute("noticeList", lists);
 			dis = req.getRequestDispatcher("noticeList.jsp");
 			dis.forward(req, resp);
 

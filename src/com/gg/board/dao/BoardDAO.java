@@ -156,7 +156,7 @@ public class BoardDAO {
 		}
 		return isFollowed;
 	}
-	
+
 	public boolean lovePlus(String u_id, int p_no) {
 		System.out.println("DAO lovePlus");
 		String sql = "INSERT INTO LOVE VALUES(?,?,SYSDATE)";
@@ -434,86 +434,86 @@ public class BoardDAO {
 	}
 
 	public ArrayList<GGDto> flowlist(String userid, int flowORflowing) throws SQLException {
-	      String sql = "";
-	      if (flowORflowing == 0) {// 나를 팔로우 한
-	         sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) AND f.f_receiveid = ? and f.f_sendid = u.u_id";
-	      } else if (flowORflowing == 1) {// 내가 팔로잉한
-	         sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) and f.f_sendid = ? and f.f_receiveid = u.u_id";
-	      }
+		String sql = "";
+		if (flowORflowing == 0) {// 나를 팔로우 한
+			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) AND f.f_receiveid = ? and f.f_sendid = u.u_id";
+		} else if (flowORflowing == 1) {// 내가 팔로잉한
+			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) and f.f_sendid = ? and f.f_receiveid = u.u_id";
+		}
 
-	      ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
+		ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
 
-	      System.out.println("flowlist:" + flowlist);
+		System.out.println("flowlist:" + flowlist);
 
-	      ps = conn.prepareStatement(sql);
+		ps = conn.prepareStatement(sql);
 
-	      System.out.println("daouserID:" + userid);
+		System.out.println("daouserID:" + userid);
 
-	      ps.setString(1, userid);
-	      rs = ps.executeQuery();
-	      System.out.println("rs:" + rs);
+		ps.setString(1, userid);
+		rs = ps.executeQuery();
+		System.out.println("rs:" + rs);
 
-	      while (rs.next()) {
-	         GGDto dto = new GGDto();
-	         dto.setU_id(rs.getString("U_id"));
-	         dto.setF_receiveid(rs.getString("f_receiveid"));
-	         dto.setF_sendid(rs.getString("f_sendid"));
-	         dto.setU_newName(rs.getString("u_newname"));
-	         dto.setU_nname(rs.getString("u_nname"));
-	         dto.setFlow_count(rs.getInt("COUNT"));
+		while (rs.next()) {
+			GGDto dto = new GGDto();
+			dto.setU_id(rs.getString("U_id"));
+			dto.setF_receiveid(rs.getString("f_receiveid"));
+			dto.setF_sendid(rs.getString("f_sendid"));
+			dto.setU_newName(rs.getString("u_newname"));
+			dto.setU_nname(rs.getString("u_nname"));
+			dto.setFlow_count(rs.getInt("COUNT"));
 
-	         String u_id = dto.getU_id();
-	         String reseveid = dto.getF_receiveid();
-	         String sendid = dto.getF_sendid();
+			String u_id = dto.getU_id();
+			String reseveid = dto.getF_receiveid();
+			String sendid = dto.getF_sendid();
 
-	         // 유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
-	         if (userid.equals(reseveid)) {
-	            dto.setThisuserFlowingYN("<button class='hellow'>+팔로잉</button>");// N
-	         } else if (userid.equals(sendid)) {
-	            dto.setThisuserFlowingYN("<button class='unhellow'>-팔로잉</button>");// Y
-	         }
-	         flowlist.add(dto);
-	      }
-	      System.out.println("flowlist:" + flowlist);
-	      return flowlist;
-	   }
-	
-			//delect or update
-	public int flowbut(String userid, String btntext, String nick) throws SQLException {
-				String sql = "";
-				int success = 0;
-				System.out.println("useriddao:" + userid);
-				System.out.println("btntext:" + btntext);
-				
-				System.out.println("ninkdao:" + nick);
-				String wordplus = "+팔로잉";
-				String wordminus = "-팔로잉";
-				
-				if (btntext.equals(wordplus)){//나를 팔로잉 한사람 팔로워 추가
-					sql = "insert into follow VALUES (?,(select u_id from userinfo where userinfo.u_nname = ?),sysdate)";
-					
-					System.out.println("useriddao:" + userid);
-					System.out.println("ninkdao:" + nick);
-					
-					ps = conn.prepareStatement(sql);
-					ps.setString(1, userid);
-					ps.setString(2, nick);
-					success = ps.executeUpdate();
-					
-				}else if (btntext.equals(wordminus)) {//내가 팔로잉 한사람 팔로워 취소
-					sql = "DELETE FROM follow WHERE f_receiveid = ? and f_sendid = (select u_id from userinfo where userinfo.u_nname = ?)";
-					
-					System.out.println("ninkdao:" + nick);
-					System.out.println("useriddao:" + userid);
-					
-					ps = conn.prepareStatement(sql);
-					ps.setString(1, userid);
-					ps.setString(2, nick);
-					success = ps.executeUpdate();
-				
-				}
-				return success;
+			// 유저가 만약 어떤유저에게 팔로잉을 했을때의 여부
+			if (userid.equals(reseveid)) {
+				dto.setThisuserFlowingYN("<button class='hellow'>+팔로잉</button>");// N
+			} else if (userid.equals(sendid)) {
+				dto.setThisuserFlowingYN("<button class='unhellow'>-팔로잉</button>");// Y
 			}
+			flowlist.add(dto);
+		}
+		System.out.println("flowlist:" + flowlist);
+		return flowlist;
+	}
+
+	// delect or update
+	public int flowbut(String userid, String btntext, String nick) throws SQLException {
+		String sql = "";
+		int success = 0;
+		System.out.println("useriddao:" + userid);
+		System.out.println("btntext:" + btntext);
+
+		System.out.println("ninkdao:" + nick);
+		String wordplus = "+팔로잉";
+		String wordminus = "-팔로잉";
+
+		if (btntext.equals(wordplus)) {// 나를 팔로잉 한사람 팔로워 추가
+			sql = "insert into follow VALUES (?,(select u_id from userinfo where userinfo.u_nname = ?),sysdate)";
+
+			System.out.println("useriddao:" + userid);
+			System.out.println("ninkdao:" + nick);
+
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, userid);
+			ps.setString(2, nick);
+			success = ps.executeUpdate();
+
+		} else if (btntext.equals(wordminus)) {// 내가 팔로잉 한사람 팔로워 취소
+			sql = "DELETE FROM follow WHERE f_receiveid = ? and f_sendid = (select u_id from userinfo where userinfo.u_nname = ?)";
+
+			System.out.println("ninkdao:" + nick);
+			System.out.println("useriddao:" + userid);
+
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, userid);
+			ps.setString(2, nick);
+			success = ps.executeUpdate();
+
+		}
+		return success;
+	}
 
 	// 구매요청
 	public ArrayList<GGDto> reqlist(String userid, int reqindex) throws SQLException {
@@ -559,7 +559,8 @@ public class BoardDAO {
 			if (userid.equals(sid)) {
 				System.out.println("수신");
 				dto.setSered("수신");
-				dto.setButtonORtext("<div class='buttonarea'><button value ="+dto.getRq_no()+">수락</button><button value ="+dto.getRq_no()+">거절</button></div>");
+				dto.setButtonORtext("<div class='buttonarea'><button value =" + dto.getRq_no()
+						+ ">수락</button><button value =" + dto.getRq_no() + ">거절</button></div>");
 			} else if (userid.equals(rid)) {
 				System.out.println("발신");
 				dto.setSered("발신");
@@ -573,8 +574,6 @@ public class BoardDAO {
 		return reqlist;
 	}
 
-	
-	
 	// 좋아요
 	public ArrayList<GGDto> lovelist(String userid, int index1, int index2) throws SQLException {
 		String sql = "";
@@ -634,12 +633,12 @@ public class BoardDAO {
 		return lovelist;
 	}
 
-	public ArrayList<GGDto> alarmlist(String userid) throws SQLException {
+	public ArrayList<GGDto> reportlist(String userid) throws SQLException {
 		
 		String sql = "select n.N_sendId,n1.N1_name,n.N_content,hn.HN_adminId,hn.HN_tm,c.C_name from notify n,his_notify hn,n1_code n1,codes c where n.n_no = hn.n_no and n1.n1_code = n.n1_code and c.c_code = hn.hn_code and n.n_receiveid = ?";
 		
-		ArrayList<GGDto> alarmlist = new ArrayList<GGDto>();
-		System.out.println("alarmlist:" + alarmlist);
+		ArrayList<GGDto> reportlist = new ArrayList<GGDto>();
+		System.out.println("reportlist:" + reportlist);
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, userid);
 		rs = ps.executeQuery();
@@ -653,15 +652,13 @@ public class BoardDAO {
 			dto.setHn_adminid(rs.getString("HN_adminId"));
 			dto.setHn_tm(rs.getDate("HN_tm"));
 			dto.setC_name(rs.getString("C_name"));
-			alarmlist.add(dto);
+			reportlist.add(dto);
 		}
 
-		System.out.println("alarmlist:" + alarmlist);
-		return alarmlist;
+		System.out.println("reportlist:" + reportlist);
+		return reportlist;
 	}
 
-	
-	
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public HashMap<String, ArrayList<GGDto>> category() {
 		String sql = "select * from codes where c_code like 'S%'";
@@ -970,13 +967,13 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("dto:"+dto);
+		System.out.println("dto:" + dto);
 		return dto;
 	}
-	
+
 	public GGDto noticeDetail(String p_no) {
-		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname,u_id FROM UserInfo u " + 
-				"INNER JOIN Post p ON u.u_id = p.p_id LEFT OUTER JOIN Img i ON p.p_no = i.p_no WHERE p.p_code = 'P003' AND p.p_blindyn = 'N' AND p.p_no=?";
+		String sql = "SELECT u.u_nname,u.u_newName,p.p_no,p_title,p.p_content,p.p_tm,p.p_view,i.i_newname,u_id FROM UserInfo u "
+				+ "INNER JOIN Post p ON u.u_id = p.p_id LEFT OUTER JOIN Img i ON p.p_no = i.p_no WHERE p.p_code = 'P003' AND p.p_blindyn = 'N' AND p.p_no=?";
 
 		GGDto dto = new GGDto();
 		try {
@@ -997,7 +994,7 @@ public class BoardDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println("공지사항 dto:"+dto);
+		System.out.println("공지사항 dto:" + dto);
 		return dto;
 	}
 
@@ -1179,11 +1176,10 @@ public class BoardDAO {
 
 	}
 
-	
 	public ArrayList<GGDto> sold_main_list(String soldmainlistwhatadd) throws SQLException {
 		String sql = "";
 
-		sql="SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME, S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME, N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME, I.I_NEWNAME, LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR FROM POST P, SALE S, N_SALE N, IMG I,codes c WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO  and p.p_code = 'P002' and c.c_code = s.s_code and c.c_name = ?";
+		sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME, S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME, N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME, I.I_NEWNAME, LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR FROM POST P, SALE S, N_SALE N, IMG I,codes c WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO  and p.p_code = 'P002' and c.c_code = s.s_code and c.c_name = ?";
 
 		ArrayList<GGDto> soldmainlist = new ArrayList<GGDto>();
 
@@ -1210,8 +1206,7 @@ public class BoardDAO {
 		return soldmainlist;
 
 	}
-	
-	
+
 	public ArrayList<GGDto> commList(String[] categorys) {
 
 		String sql = "SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code "
@@ -1279,65 +1274,75 @@ public class BoardDAO {
 		return success;
 	}
 
-	
-	   public ArrayList<GGDto> noticeList(int paging) {
-		      
-		      String sql = "SELECT rnum ,p_no, p_title, p_id, p_tm, p_view, (select u_nname from userinfo where u_id = p_id) as u_nname FROM " + 
-		      		"(SELECT ROW_NUMBER() OVER(ORDER BY p_no DESC) AS rnum,p_no, p_title, p_id, p_tm, p_view FROM post) WHERE rnum BETWEEN ? AND ?";
+	public ArrayList<GGDto> noticeList(int paging, int currPageNum) {
 
-		      ArrayList<GGDto> noticeList = null;
-		      GGDto dto = null;
-		      
-		      int pagePerCnt = 15;
-		      
-		      int end = paging*pagePerCnt;
-		      int start = (end-pagePerCnt)+1;
-		      
-		      try {
-		         ps = conn.prepareStatement(sql);
-		         ps.setInt(1, start);
-		         ps.setInt(2, end);
-		         rs = ps.executeQuery();
-		         noticeList = new ArrayList<GGDto>();
-		         while(rs.next()) {
-		            dto = new GGDto();
-		            dto.setP_no(rs.getInt("p_no"));
-		            dto.setP_title(rs.getString("p_title"));
-		            dto.setP_id(rs.getString("p_id"));
-		            dto.setP_tm(rs.getDate("p_tm"));
-		            dto.setP_view(rs.getInt("p_view"));
-		            dto.setU_nname(rs.getString("u_nname"));
-		            noticeList.add(dto);
-		         }
-		         
-		         int total = noticeCount();
-		         noticeList.get(0).setTotalPost(total);
-		         noticeList.get(0).setCurrPage(paging);
-		         int pages = (int) Math.ceil((double)total/(double)pagePerCnt);
-		         noticeList.get(0).setTotalPage(pages);
-		      } catch (SQLException e) {
-		         e.printStackTrace();
-		      }
+		String sql = "SELECT rnum ,p_no, p_title, p_id, p_tm, p_view, (select u_nname from userinfo where u_id = p_id) as u_nname FROM "
+				+ "(SELECT ROW_NUMBER() OVER(ORDER BY p_no DESC) AS rnum,p_no, p_title, p_id, p_tm, p_view FROM post) WHERE rnum BETWEEN ? AND ?";
 
-		      return noticeList;
-		   }
-	   
-	   	private int noticeCount() throws SQLException {
-			
-			String sql = "SELECT COUNT(p_no) FROM post where p_code='P003'";
+		ArrayList<GGDto> noticeList = null;
+		GGDto dto = null;
+		int pageNumCnt = 5; // 보여주는 개시글 목록의 수
+		int currPageStart = (currPageNum - 1) * 5 + 1;
+		if (currPageStart > paging) {
+			paging = currPageStart;
+		}
+		int currPageEnd = currPageNum * pageNumCnt;
+		int pagePerCnt = 15; // 한페이지에 들어가는 개시글의 수
+		int end = paging * pagePerCnt;
+		int start = (end - pagePerCnt) + 1;
+
+		try {
 			ps = conn.prepareStatement(sql);
+			ps.setInt(1, start);
+			ps.setInt(2, end);
 			rs = ps.executeQuery();
-			
-			int total = 0;
-			
-			if (rs.next()) {
-				total = rs.getInt(1); //받아온 컬럼이 어차피 한개니까 1을 넣어도된다.
-				System.out.println("total : "+total);
+			noticeList = new ArrayList<GGDto>();
+			while (rs.next()) {
+				dto = new GGDto();
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setP_title(rs.getString("p_title"));
+				dto.setP_id(rs.getString("p_id"));
+				dto.setP_tm(rs.getDate("p_tm"));
+				dto.setP_view(rs.getInt("p_view"));
+				dto.setU_nname(rs.getString("u_nname"));
+				noticeList.add(dto);
 			}
-			
-			
-			return total;
-	   	}
+
+			int total = noticeCount();
+			noticeList.get(0).setTotalPost(total);
+			noticeList.get(0).setCurrPage(paging);
+			int pages = (int) Math.ceil((double) total / (double) pagePerCnt);
+			if (pages < currPageEnd) {
+				currPageNum = (int) Math.ceil((double) pages / (double) pageNumCnt);
+				currPageStart = (currPageNum - 1) * 5 + 1;
+				currPageEnd = pages;
+			}
+			noticeList.get(0).setTotalPage(pages);
+			noticeList.get(0).setCurrPageNum(currPageNum);
+			noticeList.get(0).setCurrPageStart(currPageStart);
+			noticeList.get(0).setCurrPageEnd(currPageEnd);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return noticeList;
+	}
+
+	private int noticeCount() throws SQLException {
+
+		String sql = "SELECT COUNT(p_no) FROM post where p_code='P003'";
+		ps = conn.prepareStatement(sql);
+		rs = ps.executeQuery();
+
+		int total = 0;
+
+		if (rs.next()) {
+			total = rs.getInt(1); // 받아온 컬럼이 어차피 한개니까 1을 넣어도된다.
+			System.out.println("total : " + total);
+		}
+
+		return total;
+	}
 	// 메서드 통합으로 인하여 주석처리
 	/*
 	 * public String auctionDelete(int p_no) throws SQLException {
@@ -1358,22 +1363,22 @@ public class BoardDAO {
 	 * 
 	 * }
 	 */
-	   
-	 public String getTitle(int p_no) throws SQLException {
+
+	public String getTitle(int p_no) throws SQLException {
 		String p_title = null;
 		String sql = "select p_title from post where p_no=?";
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, p_no);
-		
+
 		rs = ps.executeQuery();
-		
-		if(rs.next()) {
+
+		if (rs.next()) {
 			p_title = rs.getString("p_title");
 		}
-		
+
 		return p_title;
-		   
-	   }
+
+	}
 
 	public void updatereqlist(int rqno) {
 		System.out.println("DAO loveCountMinus");
@@ -1386,40 +1391,37 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("update_succes:"+success);
+		System.out.println("update_succes:" + success);
 		resClose();
 	}
 
 	public GGDto urllist(String rqno) {
-		String sql ="select r.rq_no,p.p_no,r.rq_id,r.rq_yn from request r,post p where  r.RQ_NO = ? and p.p_no = r.p_no ";
-	      GGDto dto = null;
-	      
-	      try {
-	         ps = conn.prepareStatement(sql);
-	         ps.setString(1, rqno);
-	         rs = ps.executeQuery();
-	         
-	         if(rs.next()) {
-	            dto = new GGDto();
-	            dto.setRq_no(rs.getInt("rq_no"));
-	            dto.setP_no(rs.getInt("p_no"));
-	            dto.setRq_id(rs.getString("rq_id"));
-	            dto.setRq_YN(rs.getString("rq_yn"));
-	         }
-	         
-	         System.out.println("rq_no:"+dto.getRq_no());
-	         System.out.println("p_no:"+dto.getP_no());
-	         System.out.println("rq_id:"+dto.getRq_id());
-	         System.out.println("rq_yn:"+dto.getRq_YN());
-	         
-	         
-	      } catch (SQLException e) {
-	         e.printStackTrace();
-	      }
+		String sql = "select r.rq_no,p.p_no,r.rq_id,r.rq_yn from request r,post p where  r.RQ_NO = ? and p.p_no = r.p_no ";
+		GGDto dto = null;
 
-	      return dto;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, rqno);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				dto = new GGDto();
+				dto.setRq_no(rs.getInt("rq_no"));
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setRq_id(rs.getString("rq_id"));
+				dto.setRq_YN(rs.getString("rq_yn"));
+			}
+
+			System.out.println("rq_no:" + dto.getRq_no());
+			System.out.println("p_no:" + dto.getP_no());
+			System.out.println("rq_id:" + dto.getRq_id());
+			System.out.println("rq_yn:" + dto.getRq_YN());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return dto;
 	}
-
-
 
 }
