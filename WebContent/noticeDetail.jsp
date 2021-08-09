@@ -93,7 +93,7 @@ h2 {
 </body>
 <script type="text/javascript">
 	var loginId = "${sessionScope.loginId}";
-	if (loginId !== "${dto.u_id}" || loginId == null) {
+	if (loginId != "${dto.u_id}" || loginId == null) {
 		$("#updatebutton").css("visibility", "hidden");
 	}
 </script>
