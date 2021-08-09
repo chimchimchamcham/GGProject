@@ -24,21 +24,20 @@ public class BlackListDAO {
 	}
 
 	public boolean notifyUser(GGDto dto) {
-		String sql = "INSERT INTO notify VALUES(n_no_seq.NEXTVAL,?,?,?,?,?)";
+		String sql = "INSERT INTO notify VALUES(n_no_seq.NEXTVAL,?,?,?,?,?,SYSDATE)";
 		boolean success = false;
 		System.out.println(dto.getN_sendId());
 		try {
-			ps = conn.prepareStatement(sql, new String[] { "n_no" });
+			ps = conn.prepareStatement(sql, new String[] { "N_no" });
 			ps.setString(1, dto.getN_receiveId());
 			ps.setString(2, dto.getN_sendId());
 			ps.setString(3, dto.getN_content());
 			ps.setString(4, dto.getN1_code());
 			ps.setString(5, dto.getN2_code());
-			ps.executeUpdate();
-			rs = ps.getGeneratedKeys();
 			if(ps.executeUpdate()>0) {
+				rs = ps.getGeneratedKeys();
 				if (rs.next()) {
-					sql = "INSERT INTO his_notify(n_no,HN_tm,HN_code) VALUES(?,SYSDATE,'HN_001')";
+					sql = "INSERT INTO his_notify(N_no,HN_tm,HN_code) VALUES(?,SYSDATE,'HN_001')";
 					ps = conn.prepareStatement(sql);
 					int pk = rs.getInt(1);
 					ps.setInt(1, pk);
