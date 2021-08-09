@@ -398,13 +398,12 @@ public void buyNow(){
 		System.out.println("[TRADESERVICE]/TRADELIST START");
 		String id = (String) req.getSession().getAttribute("loginId");
 		String p_code = req.getParameter("p_code");
+		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
 		TradeDAO dao = new TradeDAO();
-		HashMap<String, Object> map = new HashMap<>();
 		boolean success = false;
-		ArrayList<GGDto> list = dao.tradeList(id, p_code);
-		if(list != null) {
+		HashMap<String, Object> map = dao.tradeList(id, p_code, pageNum);
+		if(map != null) {
 			success = true;
-			map.put("list", list);
 		}
 		
 		dao.resClose();
