@@ -39,6 +39,7 @@ margin-top:20px;
 
 .tableWrap{
 	text-align:center;
+	overflow-y:scroll;
 }
 .content:hover{
 background-color: #f7f7f7;
