@@ -48,7 +48,7 @@ button {
 
 td {
 	padding: 5px;
-	border:1px solid black;
+/* 	border:1px solid black; */
 }
 
 #phone {
