@@ -436,4 +436,31 @@ public class UserDAO {
 		return notifyList;
 	}
 
+	
+	public HashMap<String,ArrayList<GGDto>> search(String search) throws SQLException {
+		HashMap<String,ArrayList<GGDto>> map = new HashMap<String, ArrayList<GGDto>>();
+		GGDto dto = null;
+		//회원정보 테이블에서 조회
+		String sql = "select  u_id,u_nname,u_intro,(select count(*) from post where p_id=u_id) as count_p from userinfo where u_nname like '%?%' ";
+		String sql1 ="select p_no,p_code,p_content,p_tm from post where p_content like '%?%'";//게시글 내용에서 조회
+		String sql2 ="select p_no,p_code,p_content,p_tm from post where p_title like '%?%'"; //게시글 제목 조회
+		
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, search);
+		rs = ps.executeQuery();
+		while(rs.next()) {
+			dto = new GGDto();
+			dto.setU_id(rs.getString("u_id"));
+			dto.setU_nname(rs.getString("u_nname"));
+			dto.setU_intro(rs.getString("u_intro"));
+		}
+		
+		
+		
+		
+		return map;
+		
+		
+	}
+
 }

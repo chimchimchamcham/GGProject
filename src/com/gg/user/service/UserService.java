@@ -303,8 +303,13 @@ public class UserService {
 		return dao.notifyList();
 	}
 
-	public void search() {
-
+	public HashMap<String,ArrayList<GGDto>> search() {
+		String search = req.getParameter("insert");
+		UserDAO dao = new UserDAO();
+		HashMap<String,ArrayList<GGDto>> map = new HashMap<String, ArrayList<GGDto>>();
+		map = dao.search(search);
+		return map;
+		
 	}
 
 	public HashMap<String, ArrayList<GGDto>> category() {

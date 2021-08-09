@@ -57,13 +57,7 @@ public class GGDto {
    private String hn_adminid; //신고 담당자
 
    
-   public String getPntcode() {
-      return Pntcode;
-   }
-
-   public void setPntcode(String pntcode) {
-      Pntcode = pntcode;
-   }
+  
 
    // 블랙리스트
    private Date b_startTm; // 블랙리스트 등록날짜
@@ -1169,4 +1163,11 @@ public int getTotalPost() {
 public void setTotalPost(int totalPost) {
 	this.totalPost = totalPost;
 }
+public String getPntcode() {
+    return Pntcode;
+ }
+
+ public void setPntcode(String pntcode) {
+    Pntcode = pntcode;
+ }
 }

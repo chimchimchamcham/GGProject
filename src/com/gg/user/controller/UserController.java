@@ -210,7 +210,11 @@ public class UserController extends HttpServlet {
 			
 		case "/search":
 			System.out.println("검색결과 요청");
-			/* service.search(); */
+			HashMap<String,ArrayList<GGDto>> searchmap = new HashMap<String, ArrayList<GGDto>>();
+			searchmap = service.search();
+			req.setAttribute("resultList", searchmap);
+			dis=req.getRequestDispatcher("search.jsp");
+			dis.forward(req, resp);
 			break;
 			
 			
