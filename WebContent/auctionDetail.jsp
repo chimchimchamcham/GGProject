@@ -741,11 +741,7 @@ a:hover {
 		showCommentList();
 		
 	});
-	
-	
-	
-	
-	
+
 	/* 댓글 창 보여주기 */
 	function showCommentList(){
 		
