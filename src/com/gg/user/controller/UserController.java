@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 import sun.misc.Contended;
 
 @WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage", "/userUpdate",
-		"/userUpdateForm", "/chkpw", "/changePw", "/chkinfo", "/manageList", "/search", "/n_firstCatSel" })
+		"/userUpdateForm", "/chkpw", "/changePw", "/chkinfo", "/manageList", "/search", "/n_stateCatSel" })
 
 public class UserController extends HttpServlet {
 
@@ -188,14 +188,15 @@ public class UserController extends HttpServlet {
 
 			break;
 
-		case "/n_firstCatSel":
-			System.out.println("신고 대분류 필터 요청");
-			ArrayList<GGDto> n_firstCatSel = service.n_firstCatSel();
-			HashMap<String, Object> firstSelMap = new HashMap<String, Object>();
+		case "/n_stateCatSel":
+			System.out.println("신고 상태 필터 요청");
+			ArrayList<GGDto> n_stateCatSel = service.n_stateCatSel();
+			HashMap<String, Object>n_stateSelMap = new HashMap<String, Object>();
 
-			firstSelMap.put("n_firstCatSel", n_firstCatSel);
-			resp.getWriter().println(new Gson().toJson(firstSelMap));
-
+			n_stateSelMap.put("n_stateCatSel", n_stateCatSel);
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().println(new Gson().toJson(n_stateSelMap));
+			
 			break;
 
 		case "/search":

@@ -83,7 +83,7 @@
 	text-decoration: underline;
 }
 
-.hoverTr:hover {
+.hoverTr:hover{
 	background-color: #D8D8D8;
 	cursor: pointer;
 }
@@ -182,7 +182,7 @@ h3 {
 						<td colspan="6" style="padding: 0; border-bottom: 1px solid gray"></td>
 					</tr>
 					<c:forEach items="${userList}" var="userList">
-					<tr class="hoverTr">
+					<tr id="userTr">
 						<td>${userList.u_id}</td>
 						<td>${userList.u_nname}</td>
 						<td>${userList.u_name}</td>
@@ -212,16 +212,8 @@ h3 {
 								src="img/search-icon.png" alt="search-icon">
 						</div>
 					</td>
-					<td style="text-align: right; width:160px;"><small>대분류명  </small>
-					<select id="firstCat">
-					<option value="all">전체</option>
-					<c:forEach items="${n1_code }" var="n1_codeCat">
-							<option value="${n1_codeCat.n1_code}">${n1_codeCat.n1_name}</option>
-					</c:forEach>
-					</select>
-					</td>
 					<td style="text-align: right;  width:160px;">
-					<small>처리상태  </small><select>
+					<small>처리상태  </small><select  id="n_stateCat">
 					<option value="all">전체</option>
 					<c:forEach items="${n_stateCat }" var="n_stateCategory">
 							<option value="${n_stateCategory.c_code }">${n_stateCategory.c_name }</option>
@@ -230,7 +222,7 @@ h3 {
 				</tr>
 			</table>
 			<div id="Content">
-				<table>
+				<table >
 					<tr>
 						<th>신고번호</th>
 						<th>신고받은 아이디</th>
@@ -240,20 +232,20 @@ h3 {
 						<th>처리상태</th>
 						<th>담당자</th>
 					</tr>
-					<tr>
+					<tr class="beforeTr">
 						<td colspan="7" style="padding: 0; border-bottom: 1px solid gray"></td>
 					</tr>
 					<c:forEach items="${notifyList}" var="notifyList">
-					<tr class="hoverTr">
+					<tr id="notifyFilter">
 						<td>${notifyList.n_no}</td>
 						<td>${notifyList.n_receiveId}</td>
 						<td>${notifyList.n_sendId}</td>
-						<td class="n1_name">${notifyList.n1_name}</td>
+						<td>${notifyList.n1_name}</td>
 						<td>${notifyList.hn_tm}</td>
-						<td>${notifyList.hn_code}</td>
+						<td>${notifyList.c_name}</td>
 						<td>${notifyList.hn_adminid}</td>
 					</tr>
-					<tr>
+					<tr id="line">
 						<td colspan="7"
 							style="padding: 0; border-bottom: 0.7px solid #e8e8e8"></td>
 					</tr>
@@ -385,23 +377,76 @@ h3 {
 		$("#notifyInfo, #blackInfo, #userInfo").hide();
 	});
 	
+	/*회원 프로필*/
+    $(".myPageA").click(function(){
+        if(loginId == ""){
+           alert("로그인이 필요한 서비스 입니다.");
+           location.href="login.jsp";
+        }else{
+           location.href="myPage";
+        }   
+        });
+	
 	var param = {};
 	/*==신고목록==*/
 	//대분류명 select
- 	$("#firstCat").on('change', function(){
- 		param.n_firstCatSel = $("#firstCat option:selected").val();
+ 	$("select#n_stateCat").on("change", function(){
+ 		 console.log("필터 요청");
+ 		param.n_stateCatSel = $("select#n_stateCat option:selected").val();
+ 		
  		$.ajax({
 			type : 'POST',
-			url : 'n_firstCatSel',
+			url : 'n_stateCatSel',
 			data : param,
 			dataType : 'JSON',
 			success : function(data) {
-				
+				console.log("필터 list가져오기 성공");			
+				re_draw(data.n_stateCatSel);
 			},
 			error : function(e) {
 				console.log(e);
 			}
 		});
 	});
+	
+ 
+ 	
+	function re_draw(n_stateCatSel){
+		 console.log("필터 리스트 : ", n_stateCatSel);
+		var re_comment = "";
+		 if(n_stateCatSel != null){
+			
+			 
+			 n_stateCatSel.forEach(function(item,idx){
+				 console.log("아이템 :", item , "idx : ", idx);
+				 re_comment += "<tr id='notifyFilter'>";
+				 re_comment +=		"<td>"+item.n_no+"</td>";
+				 re_comment +=		"<td>"+item.n_receiveId+"</td>";
+				 re_comment +=		"<td>"+item.n_sendId+"</td>";
+				 re_comment +=		"<td>"+item.n1_name+"</td>";
+				 re_comment +=		"<td>"+item.hn_tm+"</td>";
+				 re_comment +=		"<td>"+item.c_name+"</td>";
+				 re_comment +=		"<td>"+item.hn_adminid+"</td>";
+				 re_comment +=	"</tr>";
+				 re_comment +=	"<tr id='line'>";
+				 re_comment +=		"<td colspan=7 style='padding: 0; border-bottom: 0.7px solid #e8e8e8'></td>";
+				 re_comment +=	"</tr>";
+			 });
+			 
+			 delTr();
+			 
+			 $(".beforeTr").after(re_comment);
+			 
+			 
+		 }else{
+			 re_comment += "<h2>해당하는 내용이 없습니다.</h2>";
+		 }
+
+	}
+	function delTr() {
+		$("table tr#notifyFilter").remove();
+		 $("table tr#line").remove();
+		
+	}
 </script>
 </html>

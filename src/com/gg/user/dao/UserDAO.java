@@ -402,9 +402,11 @@ public class UserDAO {
 
 	public ArrayList<GGDto> notifyList() {
 
-		String sql = "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n1_code, n1.n1_name,hn.hn_tm, hn.hn_code, hn.hn_adminid "
-				+ "FROM notify n LEFT OUTER JOIN his_notify hn " + "ON n.n_no = hn.n_no " + "INNER JOIN n1_code n1 "
-				+ "ON n.n1_code = n1.n1_code ORDER BY n_no DESC";
+		String sql = "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n1_code, n1.n1_name,hn.hn_tm, hn.hn_code, hn.hn_adminid, c.c_name " + 
+				"FROM notify n LEFT OUTER JOIN his_notify hn ON (n.n_no = hn.n_no) " + 
+				"INNER JOIN n1_code n1 ON (n.n1_code = n1.n1_code) " + 
+				"LEFT OUTER JOIN codes c ON (hn.hn_code = c.c_code) "+
+				"ORDER BY n.n_no DESC";
 		ArrayList<GGDto> notifyList = new ArrayList<GGDto>();
 		GGDto dto = null;
 
@@ -420,7 +422,13 @@ public class UserDAO {
 				dto.setN1_name(rs.getString("n1_name"));
 				dto.setHn_tm(rs.getDate("hn_tm"));
 				dto.setHn_code(rs.getString("hn_code"));
-				dto.setHn_adminid(rs.getString("hn_adminId"));
+				if(rs.getString("hn_adminId") == null){
+					dto.setHn_adminid("-");
+				}else {
+					dto.setHn_adminid(rs.getString("hn_adminId"));
+				}
+				dto.setC_name(rs.getString("c_name"));
+				System.out.println(dto.getHn_adminid());
 				notifyList.add(dto);
 			}
 		} catch (SQLException e) {
@@ -432,18 +440,19 @@ public class UserDAO {
 		return notifyList;
 	}
 
-	public ArrayList<GGDto> n_firstCatSel(String n_firstCatSel) {
+	public ArrayList<GGDto> n_stateCatSel(String n_stateCatSel) {
 
-			String sql = "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n1_code, n1.n1_name,hn.hn_tm, hn.hn_code, hn.hn_adminid " + 
+			String sql = "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n1_code, n1.n1_name,hn.hn_tm, hn.hn_code, hn.hn_adminid, c.c_name " + 
 					"FROM notify n LEFT OUTER JOIN his_notify hn ON n.n_no = hn.n_no " + 
 					"INNER JOIN n1_code n1 ON n.n1_code = n1.n1_code " + 
-					"WHERE n.n1_code= 'post' ORDER BY n_no DESC";
+					"LEFT OUTER JOIN codes c ON (hn.hn_code = c.c_code)"+
+					"WHERE hn.hn_code=? ORDER BY n_no DESC";
 			ArrayList<GGDto> notifyList = new ArrayList<GGDto>();
 			GGDto dto = null;
 
 			try {
 				ps = conn.prepareStatement(sql);
-				ps.setString(1, n_firstCatSel);
+				ps.setString(1, n_stateCatSel);
 				rs = ps.executeQuery();
 				while (rs.next()) {
 					dto = new GGDto();
@@ -454,7 +463,14 @@ public class UserDAO {
 					dto.setN1_name(rs.getString("n1_name"));
 					dto.setHn_tm(rs.getDate("hn_tm"));
 					dto.setHn_code(rs.getString("hn_code"));
-					dto.setHn_adminid(rs.getString("hn_adminId"));
+					if(rs.getString("hn_adminId") == null){
+						dto.setHn_adminid("-");
+					}else {
+						dto.setHn_adminid(rs.getString("hn_adminId"));
+					}
+					dto.setC_name(rs.getString("c_name"));
+					
+					System.out.println(dto.getHn_adminid());
 					notifyList.add(dto);
 				}
 			} catch (SQLException e) {
@@ -463,7 +479,7 @@ public class UserDAO {
 				resClose();
 			}
 
-			System.out.println(n_firstCatSel+notifyList);
+			System.out.println(n_stateCatSel+notifyList);
 		return notifyList;
 	}
 
