@@ -204,7 +204,7 @@ $(".categor tr td").click(function(){//카테고리
 				content+=	"<div class='bestcost'>가격:"+item.ns_pr+"p</div>";
 				content+=	"<div class='nowbuycost'>좋아요:"+item.p_likeCount+"p</div>";
 				content+=	"<div class='endtime-count'>";
-				content+=		"<div class='endtime'>종료시간:"+item.p_tm+"</div>";
+				content+=		"<div class='endtime'>생성시간:"+item.p_tm+"</div>";
 				content+=	"</div>";
 				content+= "</div>";
 			    });	
