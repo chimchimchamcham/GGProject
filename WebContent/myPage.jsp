@@ -235,14 +235,12 @@ a:visited {
 #myBottom {
 	width:1140px;
 	height:auto;
-	border: 1px solid black;
 
 }
 
 /*탭메뉴*/
 #twoButton {
 	width:1140px;
-	border: 1px solid red;
 	margin: 0px auto;
 	padding : 10px 0;
 
@@ -466,8 +464,8 @@ a:visited {
 
 		//초기 버튼이눌린 상태
 		$("#twoButton>button:nth-of-type(1)").css({
-			"background-color" : "gray",
-			"color" : "white"
+			"background-color" : "#e5e5e5",
+			"color" : "#6d6d6d"
 		});
 
 		//판매상새목록 include
@@ -476,7 +474,7 @@ a:visited {
 		$("#twoButton>button:nth-of-type(2)").click(function() {
 			$("#twoButton>button:nth-of-type(2)").css({
 				"background-color" : "#e5e5e5",
-				"color" : "white"
+				"color" : "#6d6d6d"
 			});
 			$("#twoButton>button:nth-of-type(1)").css({
 				"background-color" : "white",
@@ -519,7 +517,7 @@ a:visited {
 		$("#twoButton>button:nth-of-type(1)").click(function() {
 			$("#twoButton>button:nth-of-type(1)").css({
 				"background-color" : "#e5e5e5",
-				"color" : "white"
+				"color" : "#6d6d6d"
 			});
 			$("#twoButton>button:nth-of-type(2)").css({
 				"background-color" : "white",
@@ -563,7 +561,7 @@ a:visited {
 		$("#twoButton>button:nth-of-type(3)").click(function() {
 			$("#twoButton>button:nth-of-type(3)").css({
 				"background-color" : "#e5e5e5",
-				"color" : "white"
+				"color" : "#6d6d6d"
 			});
 			$("#twoButton>button:nth-of-type(2)").css({
 				"background-color" : "white",
@@ -606,7 +604,7 @@ a:visited {
 		$("#twoButton>button:nth-of-type(4)").click(function() {
 			$("#twoButton>button:nth-of-type(4)").css({
 				"background-color" : "#e5e5e5",
-				"color" : "white"
+				"color" : "#6d6d6d"
 			});
 			$("#twoButton>button:nth-of-type(2)").css({
 				"background-color" : "white",
@@ -649,7 +647,7 @@ a:visited {
 		$("#twoButton>button:nth-of-type(5)").click(function() {
 			$("#twoButton>button:nth-of-type(5)").css({
 				"background-color" : "#e5e5e5",
-				"color" : "white"
+				"color" : "#6d6d6d"
 			});
 			$("#twoButton>button:nth-of-type(1)").css({
 				"background-color" : "white",
@@ -692,7 +690,7 @@ a:visited {
 		$("#twoButton>button:nth-of-type(6)").click(function() {
 			$("#twoButton>button:nth-of-type(6)").css({
 				"background-color" : "#e5e5e5",
-				"color" : "white"
+				"color" : "#6d6d6d"
 			});
 			$("#twoButton>button:nth-of-type(1)").css({
 				"background-color" : "white",
@@ -735,7 +733,7 @@ a:visited {
 		$("#twoButton>button:nth-of-type(7)").click(function() {
 			$("#twoButton>button:nth-of-type(7)").css({
 				"background-color" : "#e5e5e5",
-				"color" : "white"
+				"color" : "#6d6d6d"
 			});
 			$("#twoButton>button:nth-of-type(1)").css({
 				"background-color" : "white",
@@ -778,7 +776,7 @@ a:visited {
 		$("#twoButton>button:nth-of-type(8)").click(function() {
 			$("#twoButton>button:nth-of-type(8)").css({
 				"background-color" : "#e5e5e5",
-				"color" : "#757575"
+				"color" : "#6d6d6d"
 			});
 			$("#twoButton>button:nth-of-type(1)").css({
 				"background-color" : "white",
@@ -1376,29 +1374,29 @@ a:visited {
 				</div>
 
 				<div id="sale" class="categori"
-					style="background-color: red; padding: 20px;">
+					>
 					<jsp:include page="./mypage_list/sold.jsp"></jsp:include>
 				</div>
 				<div id="trade" class="categori"
-					style="background-color: orange; padding: 20px;"><jsp:include
+					><jsp:include
 						page="./mypage_list/auction.jsp"></jsp:include></div>
 				<div id="sell" class="categori"
-					style="background-color: yellow; padding: 20px;"><jsp:include
+					><jsp:include
 						page="./mypage_list/maide.jsp"></jsp:include></div>
 				<div id="commu" class="categori"
-					style="background-color: green; padding: 20px;"><jsp:include
+					><jsp:include
 						page="./mypage_list/community.jsp"></jsp:include></div>
 				<div id="follow" class="categori"
-					style="background-color: blue; padding: 20px;"><jsp:include
+					><jsp:include
 						page="./mypage_list/flows.jsp"></jsp:include></div>
 				<div id="want" class="categori"
-					style="background-color: pink; padding: 20px;"><jsp:include
+					><jsp:include
 						page="./mypage_list/request.jsp"></jsp:include></div>
 				<div id="like" class="categori"
-					style="background-color: purple; padding: 20px;"><jsp:include
+					><jsp:include
 						page="./mypage_list/loving.jsp"></jsp:include></div>
 				<div id="alarm" class="categori"
-					style="background-color: lime; padding: 20px;"><jsp:include
+					><jsp:include
 						page="./mypage_list/report.jsp"></jsp:include></div>
 			</div>
 		</c:if>

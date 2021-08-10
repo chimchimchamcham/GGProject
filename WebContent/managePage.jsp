@@ -83,7 +83,7 @@
 	text-decoration: underline;
 }
 
-.userTr:hover, #notifyFilter:hover{
+.userTr:hover, .notifyFilter:hover{
 	background-color: #D8D8D8;
 	cursor: pointer;
 }
@@ -236,7 +236,7 @@ h3 {
 						<td colspan="7" style="padding: 0; border-bottom: 1px solid gray"></td>
 					</tr>
 					<c:forEach items="${notifyList}" var="notifyList">
-					<tr id="notifyFilter">
+					<tr class="notifyFilter" id="${notifyList.n_no}">
 						<td>${notifyList.n_no}</td>
 						<td>${notifyList.n_receiveId}</td>
 						<td>${notifyList.n_sendId}</td>
@@ -245,7 +245,7 @@ h3 {
 						<td>${notifyList.c_name}</td>
 						<td>${notifyList.hn_adminid}</td>
 					</tr>
-					<tr id="line">
+					<tr class="notifyLine">
 						<td colspan="7"
 							style="padding: 0; border-bottom: 0.7px solid #e8e8e8"></td>
 					</tr>
@@ -380,13 +380,25 @@ h3 {
 	
 	/*회원 프로필 이동*/
     $(".userTr").on("click", function(){
-/*     	var u_id = "";
-    	var u_id = $(this).children('.u_id').text(); */
     	var u_id = $(this).attr("id");
     	console.log(u_id);
     	console.log("회원프로필 이동 요청");
         location.href="./myPage?id="+u_id;
-        });
+     });
+	
+	var param={};
+	
+	
+	/*신고 상세보기*/
+    $(".notifyFilter").on("click", function(){
+    	console.log("신고 상세보기 팝업");
+    	
+    	 var n_no = $(this).attr("id");
+    	 window.open("notifyDetail?n_no="+n_no , "notifyDetailPop", "width=900, height=600, left=450, top=180");
+    	
+    	
+     });
+	
 	
 	var param = {};
 	/*==신고목록==*/
@@ -420,7 +432,7 @@ h3 {
 			 
 			 n_stateCatSel.forEach(function(item,idx){
 				 console.log("아이템 :", item , "idx : ", idx);
-				 re_comment += "<tr id='notifyFilter'>";
+				 re_comment += "<tr class='notifyFilter'>";
 				 re_comment +=		"<td>"+item.n_no+"</td>";
 				 re_comment +=		"<td>"+item.n_receiveId+"</td>";
 				 re_comment +=		"<td>"+item.n_sendId+"</td>";
@@ -429,7 +441,7 @@ h3 {
 				 re_comment +=		"<td>"+item.c_name+"</td>";
 				 re_comment +=		"<td>"+item.hn_adminid+"</td>";
 				 re_comment +=	"</tr>";
-				 re_comment +=	"<tr id='line'>";
+				 re_comment +=	"<tr class='notifyLine'>";
 				 re_comment +=		"<td colspan=7 style='padding: 0; border-bottom: 0.7px solid #e8e8e8'></td>";
 				 re_comment +=	"</tr>";
 			 });
@@ -445,8 +457,8 @@ h3 {
 
 	}
 	function delTr() {
-		$("table tr#notifyFilter").remove();
-		 $("table tr#line").remove();
+		$("table tr.notifyFilter").remove();
+		 $("table tr.notifyLine").remove();
 		
 	}
 </script>
