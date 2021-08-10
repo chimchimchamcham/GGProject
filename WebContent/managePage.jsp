@@ -83,7 +83,7 @@
 	text-decoration: underline;
 }
 
-.userTr:hover, .notifyFilter:hover{
+.userTr:hover, .notifyFilter:hover, .blackListTr:hover{
 	background-color: #D8D8D8;
 	cursor: pointer;
 }
@@ -267,13 +267,13 @@ h3 {
 							<img src="img/search-icon.png" alt="search-icon">
 						</div>
 					</td>
+
 				</tr>
 			</table>
 			<div id="Content">
 				<table>
 					<tr>
 						<th>아이디</th>
-						<th>분류명</th>
 						<th>등록 날짜</th>
 						<th>등록 종료 날짜</th>
 						<th>담당자</th>
@@ -281,17 +281,18 @@ h3 {
 					<tr>
 						<td colspan="5" style="padding: 0; border-bottom: 1px solid gray"></td>
 					</tr>
-					<tr class="hoverTr">
-						<td>1234</td>
-						<td>댓글금지</td>
-						<td>2021-08-06</td>
-						<td>2021-08-09</td>
-						<td>관리자1</td>
+					<c:forEach items="${blackList}" var="blackList">
+					<tr class="blackListTr" id="${blackList.b_no }">
+						<td>${blackList.b_id }</td>
+						<td>${blackList.b_startTm }</td>
+						<td>${blackList.b_endTm }</td>
+						<td>${blackList.b_adminId }</td>
 					</tr>
 					<tr>
 						<td colspan="5"
 							style="padding: 0; border-bottom: 0.7px solid #e8e8e8"></td>
 					</tr>
+					</c:forEach>
 				</table>
 			</div>
 		</div>
@@ -397,10 +398,20 @@ h3 {
 	/*신고 상세보기*/
     $(document).on("click",".notifyFilter", function(){
     	console.log("신고 상세보기 팝업");
-    	 n_no = $(this).attr("id");
+    	 var n_no = $(this).attr("id");
     	 console.log(n_no);
     	  newWindow("MyWindow");
     	 window.open("notifyDetail?n_no="+n_no , newName, "width=900, height=600, left=450, top=180");
+     });
+	
+	
+	/*블랙리스트 상세보기*/
+    $(document).on("click",".blackListTr", function(){
+    	console.log("신고 상세보기 팝업");
+    	 b_no = $(this).attr("id");
+    	 console.log(b_no);
+    	  newWindow("MyWindow");
+    	 window.open("blackLstDet?b_no="+b_no , newName, "width=900, height=600, left=450, top=180");
      });
 	
 	

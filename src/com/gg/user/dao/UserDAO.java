@@ -652,4 +652,30 @@ public class UserDAO {
 
 		return sucHn_code;
 	}
+
+	public ArrayList<GGDto> blackList() {
+		String sql = "SELECT b_id, b_starttm, b_endtm, b_adminid, b_no FROM blackList";
+		ArrayList<GGDto> blackList = new ArrayList<GGDto>();
+		GGDto dto = null;
+
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				dto = new GGDto();
+				dto.setB_id(rs.getString("b_id"));
+				dto.setB_startTm(rs.getDate("b_starttm"));
+				dto.setB_endTm(rs.getDate("b_endtm"));
+				dto.setB_adminId(rs.getString("b_adminid"));
+				dto.setB_no(rs.getInt("b_no"));
+				blackList.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+
+		return blackList;
+	}
 }

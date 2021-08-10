@@ -384,8 +384,8 @@ public class UserService {
 	}
 
 	public ArrayList<GGDto> blackList() {
-		
-		return null;
+		UserDAO dao = new UserDAO();
+		return dao.blackList();
 	}
 
 }
