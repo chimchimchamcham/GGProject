@@ -1,5 +1,7 @@
 package com.gg.user.service;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import com.gg.dto.GGDto;
 import com.gg.user.dao.MessageDAO;
@@ -26,6 +28,13 @@ public class MessageService {
 		dao.resClose();
 		return success;
 		
+	}
+
+	public ArrayList<GGDto> msgList() {
+		String u_id = (String) req.getSession().getAttribute("loginId");
+		String rORs = req.getParameter("rORs");
+		ArrayList<GGDto> list = dao.msgList(u_id, rORs);
+		return list;
 	}
 	
 }
