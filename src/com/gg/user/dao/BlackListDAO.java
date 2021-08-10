@@ -72,7 +72,7 @@ public class BlackListDAO {
 		boolean success= false;
 		int checker = 0;
 		ArrayList<Object> list = new ArrayList<Object>();
-		String sql = "INSERT INTO blacklist(b_id,b_starttm,b_endtm,b_adminid,b_content,b_code) VALUES(?,SYSDATE,?,?,?,?)";
+		String sql = "INSERT INTO blacklist(b_id,b_starttm,b_endtm,b_adminid,b_content,b_code,b_no) VALUES(?,SYSDATE,?,?,?,?,b_no_seq.nextval)";
 		
 		String b_id = dto.getB_id();
 		String b_code = dto.getB_code();
@@ -89,7 +89,7 @@ public class BlackListDAO {
 		
 		checker = ps.executeUpdate();
 		if(checker>0) {
-			msg = "블랙리스트 등록 실패하였습니다.";
+			msg = "블랙리스트 등록 성공하였습니다.";
 			success = true;
 		}
 		
@@ -100,4 +100,53 @@ public class BlackListDAO {
 		
 		
 	}
+	
+	//로그인 창에서 블랙리스트에 들어가 있는 아이디 인지 확인
+	public GGDto checkBLstYN(String u_id) {
+		GGDto dto = new GGDto();
+		String sql = "SELECT b_id, b_endtm,b_content,b_code from blacklist where b_id = ? order by b_endtm desc";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, u_id);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				dto.setB_content(rs.getString("b_content"));
+				dto.setB_code(rs.getString("b_code"));
+				dto.setB_endTm(rs.getDate("b_endtm"));
+				
+				PointDAO Pdao = new PointDAO();
+				String u_nname = Pdao.getNname(u_id);
+				dto.setU_nname(u_nname);
+				
+				Pdao.resClose();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+		
+	}
+	public GGDto blackLstDetail(int b_no) throws SQLException {
+		GGDto dto = new GGDto();
+		String sql = "SELECT b_id,TO_CHAR(b_starttm, 'YYYY-MM-DD HH24:MI:SS') as b_starthr, TO_CHAR(b_endtm, 'YYYY-MM-DD HH24:MI:SS')as b_endhr,b_adminid,b_content,b_code,b_no from blacklist where b_no=?";
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, b_no);
+		rs = ps.executeQuery();
+		
+		if(rs.next()) {
+			dto.setB_id(rs.getString("b_id"));
+			dto.setB_starthr(rs.getString("b_starttm"));
+			dto.setB_endhr(rs.getString("b_endtm"));
+			dto.setB_adminId(rs.getString("b_adminId"));
+			dto.setB_content(rs.getString("b_content"));
+			dto.setB_no(rs.getInt("b_no"));
+		}
+		
+		
+		
+		return dto;
+		
+	}
+	
 }

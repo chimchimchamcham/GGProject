@@ -508,9 +508,9 @@ public class BoardDAO {
 	public ArrayList<GGDto> flowlist(String userid, int flowORflowing) throws SQLException {
 		String sql = "";
 		if (flowORflowing == 0) {// 나를 팔로우 한
-			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) AND f.f_receiveid = ? and f.f_sendid = u.u_id";
+			sql = "SELECT distinct f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) AND f.f_receiveid = ? and f.f_sendid = u.u_id";
 		} else if (flowORflowing == 1) {// 내가 팔로잉한
-			sql = "SELECT f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) and f.f_sendid = ? and f.f_receiveid = u.u_id";
+			sql = "SELECT distinct f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) and f.f_sendid = ? and f.f_receiveid = u.u_id";
 		}
 
 		ArrayList<GGDto> flowlist = new ArrayList<GGDto>();
@@ -724,7 +724,7 @@ public class BoardDAO {
 
 	public ArrayList<GGDto> reportlist(String userid) throws SQLException {
 
-		String sql = "select n.N_sendId,n1.N1_name,n.N_content,hn.HN_adminId,hn.HN_tm,c.C_name from notify n,his_notify hn,n1_code n1,codes c where n.n_no = hn.n_no and n1.n1_code = n.n1_code and c.c_code = hn.hn_code and n.n_receiveid = ?";
+		String sql = "select n.N_sendId,n.n_receiveid,n1.N1_name,n.N_content,hn.HN_adminId,hn.HN_tm,c.C_name from notify n,his_notify hn,n1_code n1,codes c,userinfo u where n.n_no = hn.n_no and n1.n1_code = n.n1_code and c.c_code = hn.hn_code and n.n_sendid = u.u_id and n.n_sendid = ?";
 
 		ArrayList<GGDto> reportlist = new ArrayList<GGDto>();
 		System.out.println("reportlist:" + reportlist);
@@ -735,7 +735,7 @@ public class BoardDAO {
 
 		while (rs.next()) {
 			GGDto dto = new GGDto();
-			dto.setN_sendId(rs.getString("N_sendId"));
+			dto.setN_receiveId(rs.getString("n_receiveid"));
 			dto.setN1_name(rs.getString("N1_name"));
 			dto.setN_content(rs.getString("N_content"));
 			dto.setHn_adminid(rs.getString("HN_adminId"));

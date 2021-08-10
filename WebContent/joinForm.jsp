@@ -261,6 +261,7 @@ td {
 						} else {
 							$("#id_check").empty();
 							$("#id_check").html("사용가능한 아이디입니다!");
+							$("input[name='id']").attr("readonly",true);
 							idoverChk = true;
 						}
 					}
@@ -296,6 +297,7 @@ td {
 							$("input[name='nname']").val("");
 						} else {
 							$("#nname_check").html("사용가능한 닉네임입니다!");
+							$("input[name='nname']").attr("readonly",true);
 							nnameoverChk = true;
 						}
 					}
