@@ -136,13 +136,13 @@ tr, th, td {
 							<td>새 비밀번호</td>
 						</tr>
 						<tr>
-							<td><input type="text" id="pwchk1" name="newPw" /></td>
+							<td><input type="password" id="pwchk1" name="newPw" /></td>
 						</tr>
 						<tr>
 							<td>새 비밀번호 확인</td>
 						</tr>
 						<tr>
-							<td><input type="text" id="pwchk2" />&nbsp;<span id="alert"
+							<td><input type="password" id="pwchk2" />&nbsp;<span id="alert"
 								style="color: red">*공란이거나, 비밀번호가 일치하지 않습니다.</span></td>
 						</tr>
 						<tr style="display: none">
