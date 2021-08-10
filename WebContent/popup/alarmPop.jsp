@@ -126,6 +126,7 @@ h2 {
 	var a_no = ''; //알람 번호 가져오기
 	var a_readYN = ''; //읽음 여부 가져오기
 	var a_path=''; //경로 가져오기
+	var a_code = '';
 	
 	var insert_success = ''; //읽은 시간과 읽음여부 집어넣은 결과 확인용
 	
@@ -149,7 +150,7 @@ h2 {
 	$(".tableWrap").click(function(){
 		console.log("알림클릭");
 		$(this).addClass("read"); //클릭했을 경우 읽음 표시로
-		a_code = $(this)find('.a_code').text();
+		a_code = $(this).find('.a_code').text();
 		a_no=$(this).find('.a_no').text(); 	//자손에 있는 값 가져오기
 		a_readYN = $(this).find('.a_readYN').text();
 		a_path = $(this).find('.a_path').text();
@@ -159,11 +160,12 @@ h2 {
 		console.log("알람 코드:",a_code);
 		
 		//읽음여부 상관없이 클릭시 해당 페이지로 부모페이지 이동
-		if(a_code == "A004" && a_code == "A008"){
+		if(a_code == 'A004' || a_code == "A008"){
 			window.open(a_path, "거래페이지", "width=900px, height=650px");
 		}else{
 			opener.parent.location=a_path;
-		}
+		} 
+		/* opener.parent.location=a_path; */
 		//읽음여부 확인하고 변경
 		if(a_readYN == "N"){
 			$.ajax({

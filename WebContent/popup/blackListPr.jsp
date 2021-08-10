@@ -57,7 +57,7 @@ button{
 <div id="wrap">
 <div id="header"><h2>블랙리스트 등록</h2></div>
 <div id="content">
-<form action="" method="post" id="blackLstFrm">
+<form action="./blackLstPr" method="post" id="blackLstFrm">
 <table id="blackLstT">
 <tr><th >아이디</th><td><input type="text" name="blackLstId" style="width:300px;  text-align:center; font-size:18px" required></td></tr>
 <tr>
