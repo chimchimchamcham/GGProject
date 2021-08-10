@@ -134,7 +134,7 @@ console.log("오늘 날짜 : ",currDate);
 					시작가격&nbsp;<input type="text" name="startPrice" value=""
 						placeholder="시작가격 입력(숫자입력)" />&nbsp;Point
 				</p>
-				<p>
+				<p> 
 					즉결가격&nbsp;<input type="text" name="promptPrice" value=""
 						placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
 				</p>
@@ -478,9 +478,24 @@ console.log("오늘 날짜 : ",currDate);
            }
        });
 	
-	
-	
-
+    $("input[name='price']").keyup(function(e){
+		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
+			var inputVal = $(this).val();
+			$(this).val(inputVal.replace(/[^0-9]/gi, ''));
+		}
+	});
+    $("input[name='startPrice']").keyup(function(e){
+		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
+			var inputVal = $(this).val();
+			$(this).val(inputVal.replace(/[^0-9]/gi, ''));
+		}
+	});
+    $("input[name='promptPrice']").keyup(function(e){
+		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
+			var inputVal = $(this).val();
+			$(this).val(inputVal.replace(/[^0-9]/gi, ''));
+		}
+	});
 
 </script>
 </html>
