@@ -298,20 +298,41 @@ h3 {
 		</div>
 
 
-		<!-- ===========마이페이지============= -->
+		<!-- ===========작성 글 목록============= -->
 		<div id="myInfo">
-			<h3>마이페이지</h3>
+			<h3>작성 글 목록</h3>
 			<div id="Content">
-				<table>
-						<tr>
-							<th rowspan="2">프사</th>
-							<th>관리자1</th>
-						</tr>
-						<tr>
-							<td>admin1</td>
-						</tr>
-				</table>
+				<table id="noticeTable">
+			<tr>
+				<th>글번호</th>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>작성일</th>
+				<th>조회수</th>
+			</tr>
+			<tr>
+				<td colspan="5" style="padding:0; border-bottom:1px solid gray"></td>
+			</tr>
+			<c:if test="${noticeList eq null || noticeList eq ''}">
+				<tr>
+					<td colspan="5" style="padding:100px ">작성한 글이 없습니다.</td>
+				</tr>
+			</c:if>
+			<c:forEach items="${noticeList}" var="noticeList">
+				<tr>
+					<td>${noticeList.p_no}</td>
+					<td style="text-align: left;"><a href="noticeDetail?p_no=${noticeList.p_no}">${noticeList.p_title}</a></td>
+					<td>${noticeList.u_nname}</td>
+					<td>${noticeList.p_tm}</td>
+					<td>${noticeList.p_view}</td>
+				</tr>
+				<tr>
+				<td colspan="5" style="padding:0; border-bottom:0.7px solid #e8e8e8"></td>
+			</tr>
+			</c:forEach>
+		</table>
 			</div>
+			
 		</div>
 
 
