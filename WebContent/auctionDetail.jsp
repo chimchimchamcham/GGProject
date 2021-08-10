@@ -772,8 +772,7 @@ var isFollowed = false;
 	if("${dto.p_blindYN}"=="Y"){
 			alert("삭제된 경매글 입니다.");
 			history.go(-1);
-		}
-	}
+	};
 	/*글자수 제한*/
 	$(document).on('keyup',".board_text", function() {
 		$('#board_text_controll').html("(" + $(this).val().length + " / 300)");
