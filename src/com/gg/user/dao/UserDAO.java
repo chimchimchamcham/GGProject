@@ -405,11 +405,13 @@ public class UserDAO {
 
 	public ArrayList<GGDto> notifyList() {
 
-		String sql = "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n1_code, n1.n1_name, TO_CHAR(n.n_tm, 'YYYY-MM-DD HH24:MI:SS')as n_tm,  TO_CHAR(hn.hn_tm, 'YYYY-MM-DD HH24:MI:SS')as hn_tm, hn.hn_code, hn.hn_adminid, c.c_name " + 
-				"				FROM notify n LEFT OUTER JOIN his_notify hn ON (n.n_no = hn.n_no) " + 
-				"				INNER JOIN n1_code n1 ON (n.n1_code = n1.n1_code) " + 
-				"				LEFT OUTER JOIN codes c ON (hn.hn_code = c.c_code) " + 
-				"				ORDER BY n.n_no DESC";
+		String sql = "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n_content, n.n1_code, n.n2_code, TO_CHAR(n.n_tm, 'YYYY-MM-DD HH24:MI:SS')as n_tm, " + 
+				"       TO_CHAR(hn.hn_tm, 'YYYY-MM-DD HH24:MI:SS')as hn_tm, hn.hn_code, hn.hn_adminid, " + 
+				"       (SELECT N1_NAME FROM N1_CODE N1 WHERE N1.N1_CODE = N.N1_CODE) AS N1_NAME, " + 
+				"       (SELECT N2_NAME FROM N2_CODE N2 WHERE N2.N2_CODE = N.N2_CODE) AS N2_NAME, " + 
+				"       (SELECT C_NAME FROM CODES WHERE C_CODE = HN_CODE) AS C_NAME " + 
+				"FROM   NOTIFY N, HIS_NOTIFY HN, (SELECT N_NO, MAX(HN_TM) HN_TM FROM HIS_NOTIFY GROUP BY N_NO) HNM " + 
+				"WHERE N.N_NO = HN.N_NO AND HN.N_NO = HNM.N_NO AND HN.HN_TM = HNM.HN_TM";
 		ArrayList<GGDto> notifyList = new ArrayList<GGDto>();
 		GGDto dto = null;
 
@@ -591,10 +593,13 @@ public class UserDAO {
 	
 	public GGDto notifyDetail(String n_no) {
 
-		String sql = "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n_content, n.n1_code, n.n2_code, TO_CHAR(n.n_tm, 'YYYY-MM-DD HH24:MI:SS')as n_tm, n1.n1_name, TO_CHAR(hn.hn_tm, 'YYYY-MM-DD HH24:MI:SS')as hn_tm, hn.hn_code, hn.hn_adminid, n2.n2_name " + 
-				"FROM notify n LEFT OUTER JOIN his_notify hn ON (n.n_no = hn.n_no) " + 
-				"INNER JOIN n1_code n1 ON (n.n1_code = n1.n1_code) " + 
-				"INNER JOIN n2_code n2 ON (n.n2_code = n2.n2_code) WHERE n.n_no=?";
+		String sql = "SELECT n.n_no, n.n_receiveid, n.n_sendid, n.n_content, n.n1_code, n.n2_code, TO_CHAR(n.n_tm, 'YYYY-MM-DD HH24:MI:SS')as n_tm, " + 
+				"       TO_CHAR(hn.hn_tm, 'YYYY-MM-DD HH24:MI:SS')as hn_tm, hn.hn_code, hn.hn_adminid, " + 
+				"       (SELECT N1_NAME FROM N1_CODE WHERE N1_CODE = N.N1_CODE) N1_NAME, " + 
+				"       (SELECT N2_NAME FROM N2_CODE WHERE N2_CODE = N.N2_CODE) N2_NAME, " + 
+				"       (SELECT C_NAME FROM CODES WHERE C_CODE = HN_CODE) HN_NAME " + 
+				"FROM   NOTIFY N, HIS_NOTIFY HN, (SELECT N_NO, MAX(HN_TM) HN_TM FROM HIS_NOTIFY GROUP BY N_NO) HNM " + 
+				"WHERE N.N_NO = HN.N_NO AND HN.N_NO = HNM.N_NO AND HN.HN_TM = HNM.HN_TM AND N.N_NO=?";
 		GGDto dto = new GGDto();
 		
 		try {
