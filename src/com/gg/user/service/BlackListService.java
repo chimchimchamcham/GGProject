@@ -1,6 +1,7 @@
 package com.gg.user.service;
 
 import java.sql.Date;
+import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,6 +29,8 @@ public class BlackListService {
 	}
 
 	public void blackLstPr() {
+		GGDto dto = new GGDto();
+		
 		String b_Id = req.getParameter("b_Id");
 		String b_code = req.getParameter("b_code");
 		Date b_endtm = Date.valueOf(req.getParameter("b_endtm"));
@@ -35,6 +38,22 @@ public class BlackListService {
 		String b_content = req.getParameter("b_content");
 		
 		System.out.println(b_Id+" / "+b_code+" / "+" / "+b_endtm+" / "+b_adminId+" / "+b_content);
+		
+		dto.setB_id(b_Id);
+		dto.setB_code(b_code);
+		dto.setB_endTm(b_endtm);
+		dto.setB_adminId(b_adminId);
+		dto.setB_content(b_content);
+		
+		try {
+			dao.blackLstPr(dto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		
 		
 	}
 	

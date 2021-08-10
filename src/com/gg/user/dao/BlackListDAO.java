@@ -1,6 +1,7 @@
 package com.gg.user.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -62,5 +63,28 @@ public class BlackListDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void blackLstPr(GGDto dto) throws SQLException {
+		String sql = "INSERT INTO blacklist(b_id,b_starttm,b_endtm,b_adminid,b_content,b_code) VALUES(?,SYSDATE,?,?,?,?)";
+		
+		String b_id = dto.getB_id();
+		String b_code = dto.getB_code();
+		Date b_endtm = dto.getB_endTm();
+		String b_adminId = dto.getB_adminId();
+		String b_content = dto.getB_content();
+		
+		ps = conn.prepareStatement(sql);
+		ps.setString(1,b_id);
+		ps.setDate(2, b_endtm);
+		ps.setString(3, b_adminId);
+		ps.setString(4, b_content);
+		ps.setString(5, b_code);
+		
+		int success = ps.executeUpdate();
+		
+		System.out.println("블랙리스트 등록 갯수 : "+success);
+		
+		
 	}
 }
