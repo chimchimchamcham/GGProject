@@ -92,13 +92,14 @@ $(document).ready(function(){
 	var userId = "${sessionScope.loginId}";
 	document.getElementById('b_adminId').value=userId;
 	
-	var currDate = new Date().toISOString().substring(0,10);
-	console.log("오늘 날짜 : ",currDate);
+	 //현재 날짜+1
+    var setting = new Date();
+    setting.setDate(setting.getDate()+1);
+    console.log("내일",setting);
 	
 	// 블랙리스트 등록날짜 오늘날짜로 초기 설정
-	document.getElementById('b_endtm').value = currDate;
-    document.getElementById('b_endtm').min = currDate;
-    
+	document.getElementById('b_endtm').value = setting.toISOString().substring(0,10);
+    document.getElementById('b_endtm').min = setting.toISOString().substring(0,10);
 	
     //버튼 클릭시 항목이 구성되지 않으면 튕기는 기능
 	$("button").click(function(){

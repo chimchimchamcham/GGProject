@@ -127,9 +127,24 @@ public class BlackListDAO {
 		return dto;
 		
 	}
-	public GGDto blackLstDetail(int b_no) {
+	public GGDto blackLstDetail(int b_no) throws SQLException {
 		GGDto dto = new GGDto();
-		String sql = "SELECT b_id,TO_CHAR(b_starttm, 'YYYY-MM-DD HH24:MI:SS') as b_starttm, TO_CHAR(b_endtm, 'YYYY-MM-DD HH24:MI:SS')as b_endtm,";
+		String sql = "SELECT b_id,TO_CHAR(b_starttm, 'YYYY-MM-DD HH24:MI:SS') as b_starthr, TO_CHAR(b_endtm, 'YYYY-MM-DD HH24:MI:SS')as b_endhr,b_adminid,b_content,b_code,b_no from blacklist where b_no=?";
+		ps = conn.prepareStatement(sql);
+		ps.setInt(1, b_no);
+		rs = ps.executeQuery();
+		
+		if(rs.next()) {
+			dto.setB_id(rs.getString("b_id"));
+			dto.setB_starthr(rs.getString("b_starttm"));
+			dto.setB_endhr(rs.getString("b_endtm"));
+			dto.setB_adminId(rs.getString("b_adminId"));
+			dto.setB_content(rs.getString("b_content"));
+			dto.setB_no(rs.getInt("b_no"));
+		}
+		
+		
+		
 		return dto;
 		
 	}
