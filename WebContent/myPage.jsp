@@ -1363,13 +1363,13 @@ a:visited {
 			<!-- === 마이페이지 하단=== -->
 			<div id="myBottom">
 				<div id="twoButton">
-					<button onclick="">판매목록</button>
-					<button onclick="">경매목록</button>
-					<button onclick="">구매목록</button>
-					<button onclick="">커뮤니티</button>
-					<button onclick="">팔로우</button>
-					<button onclick="">구매요청</button>
-					<button onclick="">좋아요</button>
+					<button>판매목록</button>
+					<button>경매목록</button>
+					<button>구매목록</button>
+					<button>커뮤니티</button>
+					<button>팔로우</button>
+					<button>구매요청</button>
+					<button>좋아요</button>
 					<button style="margin:0px;">신고목록</button>
 				</div>
 
