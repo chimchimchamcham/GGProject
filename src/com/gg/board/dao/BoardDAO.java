@@ -1472,33 +1472,6 @@ public class BoardDAO {
 
 	}
 
-	public GGDto notifyDetail(String n_no) {
-
-		String sql = "SELECT * FROM notify";
-		GGDto dto = new GGDto();
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, n_no);
-			rs = ps.executeQuery();
-
-			if (rs.next()) {
-				dto.setU_id(rs.getString("u_id"));
-				dto.setU_pw(rs.getString("u_pw"));
-				dto.setU_nname(rs.getString("u_nname"));
-				dto.setU_name(rs.getString("u_name"));
-				dto.setU_intro(rs.getString("u_intro"));
-				dto.setU_addr(rs.getString("u_addr"));
-				dto.setU_detailAddr(rs.getString("u_detailAddr"));
-				dto.setU_newName(rs.getString("u_newName"));
-				dto.setU_phone(rs.getString("u_phone"));
-				dto.setU_email(rs.getString("u_email"));
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return null;
-	}
+	
 
 }

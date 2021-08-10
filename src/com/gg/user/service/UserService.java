@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.gg.board.dao.BoardDAO;
 import com.gg.dto.GGDto;
 import com.gg.user.dao.UserDAO;
 import com.google.gson.Gson;
@@ -350,6 +352,18 @@ public class UserService {
 		}
 
 		return firstSelList;
+	}
+
+	public GGDto notifyDetail() {
+
+		String n_no = req.getParameter("n_no");
+		System.out.println("신고 상세보기 n_no : " + n_no);
+
+		UserDAO dao = new UserDAO();
+		GGDto dto = dao.notifyDetail(n_no);
+		dao.resClose();
+
+		return dto;
 	}
 
 }

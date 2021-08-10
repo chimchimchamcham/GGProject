@@ -971,28 +971,6 @@ public class BoardService {
 		return noticeList;
 	}
 
-	public GGDto notifyDetail() {
-
-		String n_no = req.getParameter("n_no");
-		System.out.println("신고 상세보기 n_no : " + n_no);
-
-		BoardDAO dao = new BoardDAO();
-		GGDto dto = dao.notifyDetail(n_no);
-
-		try {
-			dao.conn.setAutoCommit(false);
-			if (dto == null) {
-				dao.conn.rollback();
-			} else {
-				dao.conn.commit();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			dao.resClose();
-		}
-		return dto;
-	}
 
 	// 메서드 통합으로 인하여 주석처리
 	/*

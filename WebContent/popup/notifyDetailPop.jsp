@@ -59,32 +59,32 @@ h2 {
 				<td>1</td>
 			</tr>
 			<tr>
-				<td>신고한 아이디</td>
-				<td>apple</td>
+				<td>신고받은 아이디</td>
+				<td><b>${notifyDet.n_receiveId}</b></td>
 			</tr>
 			<tr>
-				<td>신고받은 아이디</td>
-				<td>1234</td>
+				<td>신고한 아이디</td>
+				<td>${notifyDet.n_sendId}</td>
 			</tr>
 			<tr>
 				<td>날짜</td>
-				<td>2021-08-10</td>
+				<td>${notifyDet.n_tm}</td>
 			</tr>
 			<tr>
 				<td>신고분류</td>
-				<td>사용자 &gt; 사기 사용자예요</td>
+				<td>${notifyDet.n1_name} &gt; ${notifyDet.n2_name}</td>
 			</tr>
 			<tr>
 				<td>관리자 아이디</td>
-				<td>admin001</td>
+				<td>${notifyDet.hn_adminid}</td>
 			</tr>
 			<tr>
 				<td>처리상태</td>
-				<td><select><option value="hn_001">접수중</option></select></td>
+				<td><select><option value="hn_001">${notifyDet.n_receiveId}</option></select></td>
 			</tr>
 			<tr>
 				<td>신고내용</td>
-				<td>신고합니다</td>
+				<td>${notifyDet.n_content}</td>
 			</tr>
 	</table>
 	<div id="button"><button>저장</button><button>블랙리스트 처리</button></div>

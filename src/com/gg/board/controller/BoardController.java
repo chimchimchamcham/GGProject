@@ -619,14 +619,6 @@ public class BoardController extends HttpServlet {
 
 			break;
 			
-		case "/notifyDetail":
-			System.out.println("신고 상세보기 요청");
-
-			req.setAttribute("notifyDet", service.notifyDetail());
-			dis = req.getRequestDispatcher("./popup/notifyDetailPop.jsp");
-			dis.forward(req, resp);
-			break;
-
 		// 메서드 통합으로 인하여 주석처리
 		/*
 		 * case "/delAuction":
