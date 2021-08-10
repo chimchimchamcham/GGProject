@@ -16,7 +16,7 @@ import com.gg.trade.service.TradeService;
 import com.google.gson.Gson;
 
 @WebServlet({"/buyRequest","/buyRequestCancel","/bid","/buyNow", "/buyRequestProcess",
-	"/tradeDetail","/sendPoint","/pointApproval","/pointDeny","/productShipping","/productReceive","/cancelTrade","/tradeList"})
+	"/tradeDetail","/sendPoint","/pointApproval","/pointDeny","/productShipping","/productReceive","/cancelTrade","/tradeList","/tradeCommentList","/insertTradeComment"})
 public class TradeController extends HttpServlet {
 	
 	
@@ -98,12 +98,12 @@ public class TradeController extends HttpServlet {
 			System.out.println("[TRADECONTROLLER]/TRADEDETAIL userid : "+userid);
 			//접속한 id가 구매자일 경우 구매자 거래페이지로 이동
 			if(userid.equals(bdto.getT_buyer())) {
-				page = "/popup/buyerTradePopup.jsp";
+				page = "./popup/buyerTradePopup.jsp";
 				dis = req.getRequestDispatcher(page);
 				dis.forward(req, resp);
 			//접속한 id가 판매자일 경우 판매자 거래페이지로 이동
 			}else if(userid.equals(bdto.getT_saler())){
-				page = "/popup/sellerTradePopup.jsp";
+				page = "./popup/sellerTradePopup.jsp";
 				dis = req.getRequestDispatcher(page);
 				dis.forward(req, resp);
 			//다른 id가 접속 했을 경우
@@ -176,6 +176,25 @@ public class TradeController extends HttpServlet {
 			service.tradeList();
 			System.out.println("[TRADECONTROLLER]/TRADELIST END");
 			break;
+			
+		//거래페이지 댓글		
+		case "/tradeCommentList":
+			System.out.println("거래 댓글 리스트 보여주기.");
+			t_no = Integer.parseInt(req.getParameter("t_no"));
+			System.out.println("거래 댓글 t_no :"+ t_no);
+			HashMap<String, Object> map = service.tradeCommentList(t_no);
+			req.setAttribute("list", map.get("list"));
+			dis = req.getRequestDispatcher("tradeCommentList.jsp");
+			dis.forward(req, resp);
+			
+			break;
+			
+		//거래페이지 댓글 추가
+		case "/insertTradeComment":
+			System.out.println("댓글 등록 요청");
+			service.insertTradeComment();
+			break;
+			
 		}
 		
 	}

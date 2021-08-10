@@ -156,7 +156,7 @@ a{
 				console.log("받아온 totalPage 확인 : ", data.totalPage);
 				
 				drawTradeList(data.list);
-				drawPageNumList(data.currentPage, data.totalPage);
+				//drawPageNumList(data.currentPage, data.totalPage);
 			},
 			error : function(e) {
 				console.log(e);
@@ -193,7 +193,7 @@ a{
 				console.log("dealId/dealNname : "+dealId+"/"+dealNname);
 				console.log("idx : ",idx);
 				
-				content +="<div class='tradeList' id='"+item.t_no+"' onclick='moveTrade("+item.t_no+");' >";
+				content +="<div class='tradeList' id='"+item.t_no+"'  >";
 				content +="<div id='"+item.t_no+"' >";
 				content +=	"<input type='hidden' id='t_no' value='"+item.t_no+"'>";
 				content +="<table class='content'>";
@@ -204,9 +204,9 @@ a{
 				content +=	"</tr>";
 				content +=	"<tr>";
 				content +=		"<td>";
-				content +=			"<p>"+item.p_title+"</p>"
+				content +=			"<p onclick='moveTrade("+item.t_no+");'>"+item.p_title+"</p>"
 				content +=			"<p style='overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width:240px; padding:0 20px; text-align: left;'>";	
-				content +=			"<a href='#'>"+item.tc_content+"</a>";	
+				content +=			"<a href='#' onclick='moveTrade("+item.t_no+");'>"+item.tc_content+"</a>";	
 				content +=			"</p>";
 				content +=		"</td>";
 				content +=		"<td style='width:110px; text-align: right;'><a href='#'>"+item.ht_name+"</a></td>";

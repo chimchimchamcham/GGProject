@@ -9,6 +9,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gg.board.dao.CommentDAO;
 import com.gg.dto.GGDto;
 import com.gg.trade.dao.TradeDAO;
 import com.gg.user.dao.PointDAO;
@@ -415,5 +416,41 @@ public void buyNow(){
 		
 		System.out.println("[TRADESERVICE]/TRADELIST END");
 
+	}
+	
+	//거래 댓글 목록 보기
+	public HashMap<String, Object> tradeCommentList(int t_no){
+		System.out.println("받아 온 거래 글 번호 :" + t_no);
+		TradeDAO dao = new TradeDAO();
+		HashMap<String, Object> map = null;
+		try {
+			map = dao.tradeCommentList(t_no);
+			
+			//로그인 한 사람의 닉네임 가져오기
+			String id = (String)req.getSession().getAttribute("loginId");
+			String u_nname = dao.selectUserinfoU_nname(id);
+			map.put("loginNname", u_nname);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		return map;
+	}
+	
+	//거래댓글 추가
+	public void insertTradeComment() {
+		int t_no = Integer.parseInt(req.getParameter("t_no"));
+		String id = (String) req.getSession().getAttribute("loginId");
+		String tc_content = req.getParameter("tc_content");
+		
+		TradeDAO dao = new TradeDAO();
+		boolean success = dao.insertTradeComment(t_no, tc_content, id);
+		
+		if(success) {
+			System.out.println("댓글 추가 성공");
+		}
+		dao.resClose();
+		
 	}
 }
