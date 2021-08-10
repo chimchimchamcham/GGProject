@@ -314,6 +314,8 @@ public class UserDAO {
 			System.out.println("사진 변경 성공 : " + success);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			resClose();
 		}
 	}
 

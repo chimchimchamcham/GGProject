@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gg.user.service.BlackListService;
 
-@WebServlet({"/notify"})
+@WebServlet({"/notify","/blackLstPr"})
 public class BlackListController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -46,6 +46,9 @@ public class BlackListController extends HttpServlet {
 				dis.forward(req, resp);
 			}
 			break;
+			
+		case "/blackLstPr":
+			System.out.println("블랙리스트 등록 요청 ");
 		}
 	}
 }
