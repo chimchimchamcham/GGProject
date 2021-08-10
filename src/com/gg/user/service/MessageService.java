@@ -23,7 +23,7 @@ public class MessageService {
 		
 		dao = new MessageDAO();
 		success = dao.sendMsg(dto);
-		
+		dao.resClose();
 		return success;
 		
 	}
