@@ -33,7 +33,7 @@
       
       /*쪽지 팝업*/
        $(".messageA").click(function(){
-          window.open("./msgList", "chargePop", "width=500, height=500, left=850, top=150");
+          window.open("msgList", "chargePop", "width=500, height=500, left=850, top=150");
       });
 
       /*알람 팝업*/

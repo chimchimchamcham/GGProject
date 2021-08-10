@@ -63,6 +63,7 @@ public class MessageDAO {
 	}
 
 	public ArrayList<GGDto> msgList(String u_id, String rORs) {
+		System.out.println("rORs : "+rORs);
 		GGDto dto = null;
 		String sql = "";
 		ArrayList<GGDto> list = new ArrayList<GGDto>();
@@ -73,7 +74,7 @@ public class MessageDAO {
 				    "WHERE m.m_sendid =? AND m.m_senddelyn = 'N' "+
 				    "UNION SELECT m.m_content, m.m_readtm, m.m_receivedelyn, m.m_receiveid, m.m_senddelyn, m.m_sendid, m.m_sendtm, u.u_newName, u.u_nname, u.u_id"+
 				    "FROM message m INNER JOIN userinfo u ON (m.m_sendid = u.u_id)" +
-				    "WHERE m.m_receiveid =? AND m.m_receivedelyn = 'N' ORDER BY m_sendtm DESC, m_receivedelyn DESC";
+				    "WHERE m.m_receiveid =? AND m.m_receivedelyn = 'N' ORDER BY m_sendtm DESC";
 			try {
 				conn.prepareStatement(sql);
 				ps.setString(1, u_id);
@@ -99,7 +100,7 @@ public class MessageDAO {
 		}else if(rORs == "s") {
 			sql = "SELECT m.m_content, m.m_readtm, m.m_receivedelyn, m.m_receiveid, m.m_senddelyn, m.m_sendid, m.m_sendtm, u.u_newName, u.u_nname, u.u_id"+
 				    "FROM message m INNER JOIN userinfo u ON (m.m_receiveid = u.u_id) "+
-				    "WHERE m.m_sendid =? AND m.m_senddelyn = 'N' ORDER BY m_sendtm DESC, m_receivedelyn DESC";
+				    "WHERE m.m_sendid =? AND m.m_senddelyn = 'N' ORDER BY m_sendtm DESC";
 			try {
 				conn.prepareStatement(sql);
 				ps.setString(1, u_id);
@@ -124,7 +125,7 @@ public class MessageDAO {
 		}else if(rORs == "r") {
 			sql = "SELECT m.m_content, m.m_readtm, m.m_receivedelyn, m.m_receiveid, m.m_senddelyn, m.m_sendid, m.m_sendtm, u.u_newName, u.u_nname, u.u_id"+
 				    "FROM message m INNER JOIN userinfo u ON (m.m_sendid = u.u_id)" +
-				    "WHERE m.m_receiveid =? AND m.m_receivedelyn = 'N' ORDER BY m_sendtm DESC, m_receivedelyn DESC";
+				    "WHERE m.m_receiveid =? AND m.m_receivedelyn = 'N' ORDER BY m_sendtm DESC";
 			try {
 				conn.prepareStatement(sql);
 				ps.setString(1, u_id);
