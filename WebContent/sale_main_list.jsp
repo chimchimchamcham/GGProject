@@ -87,7 +87,7 @@
             flex-direction: column;
             justify-content: space-between;
             cursor: pointer;
-            margin:5px;
+            margin:0px auto;
         }
         .img-zoon,.index{
             margin: 5%;
@@ -103,13 +103,6 @@
 	.wrapBox{
 		width:250px;
 		height:350px;
-		text-align:center;
-	}
-	.wrapBox:hover{
-		width:250px;
-		height:350px;
-		text-align:center;
-		background-color:#eaeaea;
 	}
 	.imgBox{
 		width:230px;
