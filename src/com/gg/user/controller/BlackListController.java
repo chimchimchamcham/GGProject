@@ -58,6 +58,8 @@ public class BlackListController extends HttpServlet {
 			req.setAttribute("success", success);
 			dis = req.getRequestDispatcher("./popup/blackListPr.jsp");
 			dis.forward(req, resp);
+			
+			break;
 		}
 	}
 }

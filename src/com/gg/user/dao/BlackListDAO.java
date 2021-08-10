@@ -100,4 +100,30 @@ public class BlackListDAO {
 		
 		
 	}
+	
+	public GGDto checkBLstYN(String u_id) {
+		GGDto dto = new GGDto();
+		String sql = "SELECT b_id, b_endtm,b_content,b_code from blacklist where b_id = ? order by b_endtm desc";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, u_id);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				dto.setB_content(rs.getString("b_content"));
+				dto.setB_code(rs.getString("b_code"));
+				dto.setB_endTm(rs.getDate("b_endtm"));
+				
+				PointDAO Pdao = new PointDAO();
+				String u_nname = Pdao.getNname(u_id);
+				dto.setU_nname(u_nname);
+				
+				Pdao.resClose();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+		
+	}
 }
