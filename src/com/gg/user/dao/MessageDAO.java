@@ -43,5 +43,21 @@ public class MessageDAO {
 		
 		return success;
 	}
+	public void resClose() {
+		try {
+			if (rs != null && !rs.isClosed()) {
+				rs.close();
+			}
+			if (conn != null && !conn.isClosed()) {
+				conn.close();
+			}
+			if (ps != null && !ps.isClosed()) {
+				ps.close();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

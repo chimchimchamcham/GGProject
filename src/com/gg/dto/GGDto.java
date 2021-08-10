@@ -66,6 +66,8 @@ public class GGDto {
    private Date b_endTm; // 블랙리스트 등록날짜
    private String b_adminId; // 관리자ID
    private String b_content; // 등록사유
+   private String b_id;//블랙리스트 등록ID
+   private String b_code;//블랙리스트 코드
 
    // 판매관련
    private String s_DeliveryYN; // 택배여부
@@ -1217,5 +1219,21 @@ public String getTc_nname() {
 
 public void setTc_nname(String tc_nname) {
 	this.tc_nname = tc_nname;
+}
+
+public String getB_id() {
+	return b_id;
+}
+
+public void setB_id(String b_id) {
+	this.b_id = b_id;
+}
+
+public String getB_code() {
+	return b_code;
+}
+
+public void setB_code(String b_code) {
+	this.b_code = b_code;
 }
 }
