@@ -20,12 +20,13 @@ margin-top: 30vh;
         margin: 5vh;
     }
 
-    div.itemboxs{
+    div.itemboxs,.itemboxs_sold,.itemboxs_auc{
         display: flex;
         align-items: center;
         flex-wrap: nowrap;
         padding: 5px;
     }
+
     .itembox{
         display: flex;
         flex-direction: column;
@@ -49,27 +50,9 @@ margin-top: 30vh;
     
         <div class="contant"><!--인기판매글-->
         <div class="word"><h2>판매인기글</h2></div>
-        <div class="itemboxs">
-            <div class="itembox">
-                <h1>1</h1>
-                <img src="test.jpg" alt="">
-                <div>판매값:10000000</div>
-                <div><img src="" style="width: 40px;height: 40px;"><div>dbwlgh</div></div>
-                <div><div>♥:50</div><div>조회수</div><div>tm:2015</div></div>
-            </div>
-    
-            <div class="itembox">
-                <h1>2</h1>
-                <img src="test.jpg" alt="">
-                <div>판매값:10000000</div>
-            </div>
-    
-            <div class="itembox">
-                <h1>3</h1>
-                <img src="test.jpg" alt="">
-                <div>판매값:10000000</div>
-            </div>
-        </div>
+	        <div class="itemboxs_sold">
+	            
+	        </div>
         </div><!--인기판매글end-->
     
     
@@ -81,26 +64,8 @@ margin-top: 30vh;
         <div class="word">
             <h2>인기 경매글</h2>
         </div>
-        <div class="itemboxs">
-            <div class="itembox">
-                <h1>1</h1>
-                <img src="test.jpg" alt="">
-                <div>현제입찰가:10000000</div>
-                <div><div>시작가:</div><div>즉결값:</div></div>
-                <div><div>♥:50</div><div>tm:2015</div></div>
-            </div>
-                
-            <div class="itembox">
-                <h1>2</h1>
-                <img src="test.jpg" alt="">
-                <div>판매값:10000000</div>
-            </div>
-    
-            <div class="itembox">
-                <h1>3</h1>
-                <img src="test.jpg" alt="">
-                <div>판매값:10000000</div>
-            </div>
+        <div class="itemboxs_auc">
+            
         </div>
         </div><!--인기경매글end-->
     
@@ -146,6 +111,8 @@ $(document).ready(function() {
 				console.log("data",data.mainpage_sold_list);
 				console.log("data",data.mainpage_auc_list);
 				console.log("data",data.mainpage_communiti_list);
+				soled_list(data.mainpage_sold_list);
+				auc_list(data.mainpage_auc_list);
 			},
 			error:function(e){
 				console.log(e);
@@ -155,12 +122,68 @@ $(document).ready(function() {
 	
 })
 
+function soled_list(mainpage_sold_list) {
+		console.log("mainpage_sold_list:", mainpage_sold_list);
+		var content = "";
+		
+		mainpage_sold_list.forEach(function(item, idx) {
+					console.log("idx:", idx, item);
+					content += "<div class='itembox'>";
+					content +=  "<h1>1</h1>";
+					content +=  "<img src='test.jpg' alt=''>";
+					content +="<div>판매값:10000000</div>";
+					content +="<div><img src='' style='width: 40px;height: 40px;'><div>dbwlgh</div></div>";
+					content +="<div><div>♥:50</div><div>조회수</div><div>tm:2015</div></div>";
+					content +="</div>";
+				});
+
+		$(".itemboxs_sold").empty();
+		$(".itemboxs_sold").append(content);
 
 
+}
 
 
+function auc_list(mainpage_auc_list) {
+	console.log("mainpage_auc_list:", mainpage_auc_list);
+	var content = "";
+	
+	mainpage_auc_list.forEach(function(item, idx) {
+				console.log("idx:", idx, item);
+				content += "<div class='itembox'>";
+				content +=  "<h1>1</h1>";
+				content +=  "<img src='test.jpg' alt=''>";
+				content +="<div>판매값:10000000</div>";
+				content +="<div><img src='' style='width: 40px;height: 40px;'><div>dbwlgh</div></div>";
+				content +="<div><div>♥:50</div><div>조회수</div><div>tm:2015</div></div>";
+				content +="</div>";
+			});
+
+	$(".itemboxs_auc").empty();
+	$(".itemboxs_auc").append(content);
+}
 
 
+function soled_list(mainpage_sold_list) {
+	console.log("mainpage_sold_list:", mainpage_sold_list);
+	var content = "";
+	
+	mainpage_sold_list.forEach(function(item, idx) {
+				console.log("idx:", idx, item);
+				content += "<div class='itembox'>";
+				content +=  "<h1>1</h1>";
+				content +=  "<img src='test.jpg' alt=''>";
+				content +="<div>판매값:10000000</div>";
+				content +="<div><img src='' style='width: 40px;height: 40px;'><div>dbwlgh</div></div>";
+				content +="<div><div>♥:50</div><div>조회수</div><div>tm:2015</div></div>";
+				content +="</div>";
+			});
+
+	$(".itemboxs_sold").empty();
+	$(".itemboxs_sold").append(content);
+
+
+}
 
 </script>
 

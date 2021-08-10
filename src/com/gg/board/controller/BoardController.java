@@ -256,7 +256,7 @@ public class BoardController extends HttpServlet {
 
 			break;
 		case "/report_list":
-			System.out.println("좋아요리스트 리스트 요청");
+			System.out.println("신고리스트 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
 			
 			service.report_list(userid);
