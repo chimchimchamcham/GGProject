@@ -265,9 +265,6 @@ a:visited {
 	color: #b7b7b7;
 	font-weight:bold;
 }
-
-
-
 </style>
 
 <%
@@ -1459,23 +1456,19 @@ a:visited {
 
 			<div id="twoButton">
 				<button>판매목록</button>
-				<button>경매목록</button>
-				<button>커뮤니티</button>
-				<button>팔로우</button>
+					<button>경매목록</button>
+					<button style="display:none">구매목록</button>
+					<button>커뮤니티</button>
+					<button>팔로우</button>
+					<button  style="display:none">구매요청</button>
+					<button  style="display:none">좋아요</button>
+					<button style="margin:0px; display:none;" >신고목록</button>
 			</div>
 
-			<div id="sale" class="categori"
-				style="background-color: red; padding: 20px;"><jsp:include
-					page="./mypage_list/sold.jsp"></jsp:include></div>
-			<div id="trade" class="categori"
-				style="background-color: orange; padding: 20px;"><jsp:include
-					page="./mypage_list/auction.jsp"></jsp:include></div>
-			<div id="commu" class="categori"
-				style="background-color: green; padding: 20px;"><jsp:include
-					page="./mypage_list/community.jsp"></jsp:include></div>
-			<div id="follow" class="categori"
-				style="background-color: blue; padding: 20px;"><jsp:include
-					page="./mypage_list/flows.jsp"></jsp:include></div>
+			<div id="sale" class="categori"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
+			<div id="trade" class="categori" ><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
+			<div id="commu" class="categori" ><jsp:include page="./mypage_list/community.jsp"></jsp:include></div>
+			<div id="follow" class="categori" ><jsp:include page="./mypage_list/flows.jsp"></jsp:include></div>
 		</c:if>
 
 	</div>
