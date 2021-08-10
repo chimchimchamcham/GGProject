@@ -83,7 +83,7 @@
 	text-decoration: underline;
 }
 
-.userTr:hover, .notifyFilter:hover{
+.userTr:hover, .notifyFilter:hover, .blackListTr:hover{
 	background-color: #D8D8D8;
 	cursor: pointer;
 }
