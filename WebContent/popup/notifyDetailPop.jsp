@@ -69,7 +69,7 @@ a:hover{
 			</tr>
 			<tr>
 				<td>신고받은 아이디</td>
-				<td><a href="#" class="receiverProfile"><b>${notifyDet.n_receiveId}</b></a></td>
+				<td><a href="#" class="receiverProfile" style="color:red"><b>${notifyDet.n_receiveId}</b></a></td>
 			</tr>
 			<tr>
 				<td>신고한 아이디</td>
@@ -85,7 +85,7 @@ a:hover{
 			</tr>
 			<tr>
 				<td>관리자 아이디</td>
-				<td>${notifyDet.hn_adminid}</td>
+				<td  class="adminTd">${notifyDet.hn_adminid}</td>
 			</tr>
 			<tr>
 				<td>처리상태</td>
@@ -138,6 +138,20 @@ var param={};
          dataType : 'JSON',
          success : function(data) {
         	 console.log("신고 히스토리 등록 성공");
+        	 
+        	 var hn_admin = "${sessionScope.loginId}";
+        	 console.log("세션 아이디 : ",hn_admin);
+        	 console.log("성공한 처리상태 : ",data.sucHn_code);
+        	 
+        	 if(data.sucHn_code != null){
+	        	 $(".adminTd").empty();
+	        	 $(".adminTd").text(hn_admin);
+	        	 
+	        	 $("select[name=n_stateCat]").val(data.sucHn_code).prop("selected", true);
+        		alert("신고 처리상태가 저장되었습니다.");
+        	 }else{
+        		 alert("신고 처리상태 저장에 실패하였습니다! 다시 시도해 주세요");
+        	 }
          },
          error : function(e) {
             console.log(e);

@@ -35,7 +35,7 @@ public class BoardService {
 		}
 	}
 
-	public void main_list() throws IOException {
+	public void main_list() throws IOException     {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
