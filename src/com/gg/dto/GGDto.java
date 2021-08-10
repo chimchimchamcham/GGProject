@@ -71,6 +71,9 @@ public class GGDto {
    private String b_content; // 등록사유
    private String b_id;//블랙리스트 등록ID
    private String b_code;//블랙리스트 코드
+   private String b_endhr;
+   private String b_starthr;
+   private int b_no;
 
    // 판매관련
    private String s_DeliveryYN; // 택배여부
@@ -1262,5 +1265,29 @@ public String getM_sendDelYN() {
 
 public void setM_sendDelYN(String m_sendDelYN) {
 	this.m_sendDelYN = m_sendDelYN;
+}
+
+public String getB_endhr() {
+	return b_endhr;
+}
+
+public void setB_endhr(String b_endhr) {
+	this.b_endhr = b_endhr;
+}
+
+public String getB_starthr() {
+	return b_starthr;
+}
+
+public void setB_starthr(String b_starthr) {
+	this.b_starthr = b_starthr;
+}
+
+public int getB_no() {
+	return b_no;
+}
+
+public void setB_no(int b_no) {
+	this.b_no = b_no;
 }
 }

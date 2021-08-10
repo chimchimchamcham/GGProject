@@ -107,15 +107,17 @@
 <div class="sold-con">
 <table class="categor">
     <tr><th>카테고리</th></tr>
+    <tr><td>패션의류</td></tr>
     <tr><td>뷰티잡화</td></tr>
     <tr><td>유아용품</td></tr>
     <tr><td>가구생활</td></tr>
-    <tr><td>취미컬랙션</td></tr>
-    <tr><td>컴퓨터</td></tr>
+    <tr><td>취미/스타굿즈</td></tr>
+    <tr><td>전자기기</td></tr>
     <tr><td>스포트레져</td></tr>
-    <tr><td>자동차공구</td></tr>
+    <tr><td>자동차</td></tr>
     <tr><td>생활가전</td></tr>
     <tr><td>도서기타</td></tr>
+    <tr><td>기타</td></tr>
 </table>
     <div class="main_sold">
         <h2 class= "bbb">판매</h2>
@@ -197,8 +199,8 @@ $(".categor tr td").click(function(){//카테고리
 			soldmainlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content+= "<div class='item-one' onclick="+"window.location.href='salesDetail?p_no=" + item.p_no  +"\'" +">"
-				content+= 	"<div class='img-zoon'>";
-				content+=		"<img src="+item.i_newName+">";	
+				content+= 	"<div width='250' style='text-align:center' class='img-zoon'>";
+				content+=		"<img width='230' src=/photo/"+item.i_newName+">";	
 				content+=	"</div>";
 				content+=	"<div class='index'>"+item.p_title+"</div>";
 				content+=	"<div class='bestcost'>가격:"+item.ns_pr+"p</div>";

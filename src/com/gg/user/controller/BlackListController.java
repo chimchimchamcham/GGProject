@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gg.dto.GGDto;
 import com.gg.user.service.BlackListService;
 
-@WebServlet({"/notify","/blackLstPr"})
+@WebServlet({"/notify","/blackLstPr","/blackLstDet"})
 public class BlackListController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -58,6 +59,17 @@ public class BlackListController extends HttpServlet {
 			req.setAttribute("success", success);
 			dis = req.getRequestDispatcher("./popup/blackListPr.jsp");
 			dis.forward(req, resp);
+			
+			break;
+			
+		case "/blackLstDet":
+			System.out.println("블랙리스트 상세보기 요청");
+			GGDto dto = new GGDto();
+			dto = service.blackLstDetail();
+			req.setAttribute("dto", dto);
+			dis = req.getRequestDispatcher("./popup/blackLstDetail.jsp");
+			dis.forward(req,resp);
+			break;
 		}
 	}
 }
