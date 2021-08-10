@@ -19,7 +19,7 @@ import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
 
-@WebServlet({ "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist",
+@WebServlet({ "/mainpage","/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist",
 		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/postDel", "/writeCommunity", "/auctionDetail",
 		"/commDetail", "/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist","/soldmainlist", "/commList",
 		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist","/mainsold","/mainauction","/report_list",
@@ -57,7 +57,13 @@ public class BoardController extends HttpServlet {
 		int p_no;
 		String userid;
 		switch (addr) {
-
+		
+		case "/mainpage":
+			System.out.println("hellow_word");
+			service.main_list();
+			
+			break;
+			
 		case "/salesDetail":
 			System.out.println("판매글 상세보기");
 			GGDto dto = service.salesDetail();

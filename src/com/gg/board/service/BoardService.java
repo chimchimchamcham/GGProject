@@ -35,6 +35,35 @@ public class BoardService {
 		}
 	}
 
+	public void main_list() throws IOException {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		BoardDAO dao = new BoardDAO();
+		ArrayList<GGDto> mainpage_sold_list = null;
+		ArrayList<GGDto> mainpage_auc_list = null;
+		ArrayList<GGDto> mainpage_communiti_list = null;
+
+		try {
+			mainpage_sold_list = dao.mainpage_list_sold();
+			mainpage_auc_list = dao.mainpage_list_auction();
+			mainpage_communiti_list = dao.mainpage_list_communiti();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			dao.resClose();
+			map.put("mainlist", mainpage_sold_list);
+			map.put("mainlist", mainpage_auc_list);
+			map.put("mainlist", mainpage_communiti_list);
+		}
+		System.out.println(map);
+		resp.setContentType("text/html; charset=UTF-8");
+		resp.getWriter().println(new Gson().toJson(map));
+		map.clear();
+		dao.resClose();
+		
+	}
+	
 	public GGDto salesDetail() {
 		int p_no = Integer.parseInt(req.getParameter("p_no"));
 		System.out.println("p_no : " + p_no);
@@ -970,6 +999,8 @@ public class BoardService {
 
 		return noticeList;
 	}
+
+
 
 
 	// 메서드 통합으로 인하여 주석처리

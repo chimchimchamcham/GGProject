@@ -7,6 +7,10 @@
 <meta charset="UTF-8">
 <title>메인페이지</title>
 <style type="text/css">
+body{
+display: flex;
+flex-direction: column;
+}
 #mainHeader{
 	position: relative;
 	z-index: 1
@@ -18,6 +22,7 @@
 	position: relative;
 	top:150px;
 	z-index: 0;
+	display: none;
 }
 #main a{
 z-index: 2;
@@ -39,6 +44,9 @@ z-index: 2;
 	<a href = "commDetail?P_no=64">커뮤니티 글 상세보기</a>
 </div><!-- div main end -->
     <div class="content">
+    <c:if test="${mainlist eq null}">
+    	<jsp:include page="mainpage.jsp"></jsp:include>
+    </c:if>
     <c:if test="${mainlist eq 0}">
 		<jsp:include page="sale_main_list.jsp"></jsp:include>
 	</c:if>

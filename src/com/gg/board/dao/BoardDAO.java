@@ -47,6 +47,39 @@ public class BoardDAO {
 		}
 	}
 
+	public ArrayList<GGDto> mainpage_list_sold() {
+		
+		String sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE,P.P_TM, P.P_VIEW, P.P_LIKECOUNT, I.I_NEWNAME ,u.U_newName FROM POST P, SALE S, N_SALE N, IMG I ,userinfo u WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = u.u_id and p.p_code = 'P002' order BY p.p_likecount DESC";
+		
+		
+		
+		return null;
+	}
+	
+	public ArrayList<GGDto> mainpage_list_auction() {
+		
+		String sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE,P.P_TM, P.P_VIEW, P.P_LIKECOUNT, I.I_NEWNAME ,u.U_newName FROM POST P, SALE S, N_SALE N, IMG I ,userinfo u WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = u.u_id and p.p_code = 'P002' order BY p.p_likecount DESC";
+		
+		
+
+		
+		
+		
+		return null;
+	}
+	
+	
+	public ArrayList<GGDto> mainpage_list_communiti() {
+		
+		String sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE,P.P_TM, P.P_VIEW, P.P_LIKECOUNT, I.I_NEWNAME ,u.U_newName FROM POST P, SALE S, N_SALE N, IMG I ,userinfo u WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = u.u_id and p.p_code = 'P002' order BY p.p_likecount DESC";
+
+
+		
+		
+		
+		return null;
+	}
+	
 	public GGDto salesDetail(int p_no) {
 		System.out.println("DAO salesDetail 호출");
 		GGDto dto = null;
@@ -1471,7 +1504,5 @@ public class BoardDAO {
 		return u_id;
 
 	}
-
-	
 
 }
