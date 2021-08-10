@@ -30,7 +30,7 @@ button {
 td {
 	padding: 5px;
 }
-#phone {
+.phone {
 	width: 50px;
 	text-align: center;
 }
@@ -99,9 +99,9 @@ td {
 				<th>핸드폰 번호</th>
 			</tr>
 			<tr>
-				<td colspan="2"><input type='text' name='phone1' maxlength='3' id='phone'/>&nbsp;-
-				<input type='text' name='phone2'id='phone' maxlength='4'/>&nbsp;-
-				<input type='text' name='phone3'id='phone' maxlength='4'/>
+				<td colspan="2"><input type='text' name='phone1' maxlength='3' class='phone'/>&nbsp;-
+				<input type='text' name='phone2' class='phone' maxlength='4'/>&nbsp;-
+				<input type='text' name='phone3' class='phone' maxlength='4'/>
 				</td>
 			</tr>
 			<tr>
@@ -131,14 +131,15 @@ td {
 	</fieldset>
 </body>
 <script>
-	var overChk = true;
+	var idoverChk = false;
+	var nnameoverChk = false;
 	$("input[name='id']").keyup(function(e) {
 		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
 			var inputVal = $(this).val();
 			$(this).val(inputVal.replace(/[^a-zA-Z0-9]/gi, ''));
 		}
 	});
-	$("#phone").keyup(function(e){
+	$(".phone").keyup(function(e){
 		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
 			var inputVal = $(this).val();
 			$(this).val(inputVal.replace(/[^0-9]/gi, ''));
@@ -155,13 +156,12 @@ td {
 		var $phone1 = $("input[name='phone1']");// 전화번호1
 		var $phone2 = $("input[name='phone2']");// 전화번호2
 		var $phone3 = $("input[name='phone3']");// 전화번호3
-		var $gender = $("input[name='gender']:checked");//성별
 		var $email = $("input[name='email']");//이메일아이디
 		var $mail = $('select'); // 이메일주소
 		var $addr = $("input[name='addr']"); //주소
 		var $detailAddr = $("input[name='detailAddr']"); // 상세주소
 		//중복 체크
-		if (overChk) {
+		if (idoverChk ==true & nnameoverChk == true) {
 			console.log("회원가입 체크");
 			if ($id.val() == "") {
 				alert("아이디를 입력해 주세요!");
@@ -235,7 +235,7 @@ td {
 			}
 
 		} else {
-			alert("아이디 중복 체크를 해 주세요!");
+			alert("아이디 , 닉네임 중복 체크를 해 주세요!");
 		}
 	}
 
@@ -261,7 +261,7 @@ td {
 						} else {
 							$("#id_check").empty();
 							$("#id_check").html("사용가능한 아이디입니다!");
-							overChk = true;
+							idoverChk = true;
 						}
 					}
 				},
@@ -296,7 +296,7 @@ td {
 							$("input[name='nname']").val("");
 						} else {
 							$("#nname_check").html("사용가능한 닉네임입니다!");
-							overChk = true;
+							nnameoverChk = true;
 						}
 					}
 				},
