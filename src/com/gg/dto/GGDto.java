@@ -71,6 +71,7 @@ public class GGDto {
    private String b_content; // 등록사유
    private String b_id;//블랙리스트 등록ID
    private String b_code;//블랙리스트 코드
+   private int b_no;//블랙리스트 번호
 
    // 판매관련
    private String s_DeliveryYN; // 택배여부
@@ -1238,6 +1239,14 @@ public String getB_code() {
 
 public void setB_code(String b_code) {
 	this.b_code = b_code;
+}
+
+public int getB_no() {
+	return b_no;
+}
+
+public void setB_no(int b_no) {
+	this.b_no = b_no;
 }
 
 public Date getM_readTm() {
