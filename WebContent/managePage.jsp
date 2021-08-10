@@ -241,7 +241,7 @@ h3 {
 						<td>${notifyList.n_receiveId}</td>
 						<td>${notifyList.n_sendId}</td>
 						<td>${notifyList.n1_name}</td>
-						<td>${notifyList.hn_tm}</td>
+						<td>${notifyList.n_tm}</td>
 						<td>${notifyList.c_name}</td>
 						<td>${notifyList.hn_adminid}</td>
 					</tr>
@@ -388,15 +388,23 @@ h3 {
 	
 	var param={};
 	
+	var newName, n=0;
+	 function newWindow(value)
+	    {
+	       n = n + 1;
+	       newName = value + n;     
+	    }
+
+	 
 	
 	/*신고 상세보기*/
-    $(".notifyFilter").on("click", function(){
+    $(document).on("click",".notifyFilter", function(){
     	console.log("신고 상세보기 팝업");
-    	
-    	 var n_no = $(this).attr("id");
-    	 window.open("notifyDetail?n_no="+n_no , "notifyDetailPop", "width=900, height=600, left=450, top=180");
-    	
-    	
+     	var n_no = "";
+    	 n_no = $(this).attr("id");
+    	 console.log(n_no);
+    	  newWindow("MyWindow");
+    	 window.open("notifyDetail?n_no="+n_no , newName, "width=900, height=600, left=450, top=180");
      });
 	
 	
@@ -432,7 +440,7 @@ h3 {
 			 
 			 n_stateCatSel.forEach(function(item,idx){
 				 console.log("아이템 :", item , "idx : ", idx);
-				 re_comment += "<tr class='notifyFilter'>";
+				 re_comment += "<tr class='notifyFilter' id='"+item.n_no+"'>";
 				 re_comment +=		"<td>"+item.n_no+"</td>";
 				 re_comment +=		"<td>"+item.n_receiveId+"</td>";
 				 re_comment +=		"<td>"+item.n_sendId+"</td>";
