@@ -95,7 +95,7 @@
 			<div id="Content">
 				<table>
 					<tr>
-						<th>신고한아이디</th>
+						<th>당신이 신고한 아이디</th>
 						<th>신고 대분류</th>
 						<th>신고 내용</th>
 						<th>담당자</th>
@@ -106,9 +106,7 @@
 						<td colspan="6" style="padding: 0; border-bottom: 1px solid gray"></td>
 					</tr>
 
-					<tr class="content-zoon_report">
 
-					</tr>
 				</table>
 			</div>
 		</div>
