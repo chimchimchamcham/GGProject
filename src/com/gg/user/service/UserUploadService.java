@@ -6,7 +6,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 
 import com.gg.dto.GGDto;
-import com.gg.user.dao.UserDAO;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
