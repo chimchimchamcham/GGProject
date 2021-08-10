@@ -111,7 +111,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("업 성공 여부 : " +  success);
+		System.out.println("업 성공 여부 : " + success);
 		return success;
 	}
 
@@ -492,9 +492,9 @@ public class BoardDAO {
 		String wordplus = "+팔로우";
 		String wordminus = "-팔로우";
 
-		System.out.println("btntext.equals(wordplus) : "+btntext.equals(wordplus));
-		System.out.println("btntext.equals(wordminus) : "+btntext.equals(wordminus));
-		
+		System.out.println("btntext.equals(wordplus) : " + btntext.equals(wordplus));
+		System.out.println("btntext.equals(wordminus) : " + btntext.equals(wordminus));
+
 		if (btntext.equals(wordplus)) {// 나를 팔로잉 한사람 팔로워 추가
 			System.out.println("+팔로잉 실행");
 			sql = "insert into follow VALUES ((select u_id from userinfo where u_nname = ?),?,sysdate)";
@@ -506,13 +506,13 @@ public class BoardDAO {
 			ps.setString(1, nick);
 			ps.setString(2, userid);
 			success = ps.executeUpdate();
-			//팔로우 알람 보내기
-			if(success>0) {
+			// 팔로우 알람 보내기
+			if (success > 0) {
 				String u_id = nickToId(nick);
 				AlarmDAO Adao = new AlarmDAO();
 				PointDAO Pdao = new PointDAO();
 				String u_nname = Pdao.getNname(userid);
-				Adao.insertAlarm(u_id, "A003",u_nname+"님이 팔로우하였습니다." , "N", "./myPage?"+userid);
+				Adao.insertAlarm(u_id, "A003", u_nname + "님이 팔로우하였습니다.", "N", "./myPage?" + userid);
 				Adao.resClose();
 				Pdao.resClose();
 			}
@@ -528,7 +528,7 @@ public class BoardDAO {
 			ps.setString(1, userid);
 			ps.setString(2, nick);
 			success = ps.executeUpdate();
-		
+
 		}
 		System.out.println("flowbut end");
 		return success;
@@ -653,9 +653,9 @@ public class BoardDAO {
 	}
 
 	public ArrayList<GGDto> reportlist(String userid) throws SQLException {
-		
+
 		String sql = "select n.N_sendId,n1.N1_name,n.N_content,hn.HN_adminId,hn.HN_tm,c.C_name from notify n,his_notify hn,n1_code n1,codes c where n.n_no = hn.n_no and n1.n1_code = n.n1_code and c.c_code = hn.hn_code and n.n_receiveid = ?";
-		
+
 		ArrayList<GGDto> reportlist = new ArrayList<GGDto>();
 		System.out.println("reportlist:" + reportlist);
 		ps = conn.prepareStatement(sql);
@@ -1000,7 +1000,7 @@ public class BoardDAO {
 			ps.setString(1, p_no);
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				
+
 				dto.setU_nname(rs.getString("u_nname"));
 				System.out.println("공지사항 u_nname : " + dto.getU_nname());
 				dto.setU_newName(rs.getString("u_newName"));
@@ -1452,7 +1452,7 @@ public class BoardDAO {
 
 		return dto;
 	}
-	
+
 	public String nickToId(String u_nname) {
 		String u_id = null;
 		String sql = "select u_id from userinfo where u_nname = ?";
@@ -1460,28 +1460,27 @@ public class BoardDAO {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, u_nname);
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				u_id = rs.getString("u_id");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
 		return u_id;
-		
+
 	}
 
 	public GGDto notifyDetail(String n_no) {
-		
+
 		String sql = "SELECT * FROM notify";
 		GGDto dto = new GGDto();
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, n_no);
 			rs = ps.executeQuery();
-			
+
 			if (rs.next()) {
 				dto.setU_id(rs.getString("u_id"));
 				dto.setU_pw(rs.getString("u_pw"));
@@ -1494,11 +1493,11 @@ public class BoardDAO {
 				dto.setU_phone(rs.getString("u_phone"));
 				dto.setU_email(rs.getString("u_email"));
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 

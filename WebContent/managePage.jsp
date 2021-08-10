@@ -236,9 +236,8 @@ h3 {
 						<td colspan="7" style="padding: 0; border-bottom: 1px solid gray"></td>
 					</tr>
 					<c:forEach items="${notifyList}" var="notifyList">
-					<form method="POST" action="notifyDetail">
-					<tr class="notifyFilter">
-						<td name="n_no">${notifyList.n_no}</td>
+					<tr class="notifyFilter" id="${notifyList.n_no}">
+						<td>${notifyList.n_no}</td>
 						<td>${notifyList.n_receiveId}</td>
 						<td>${notifyList.n_sendId}</td>
 						<td>${notifyList.n1_name}</td>
@@ -250,7 +249,6 @@ h3 {
 						<td colspan="7"
 							style="padding: 0; border-bottom: 0.7px solid #e8e8e8"></td>
 					</tr>
-					</form>
 					</c:forEach>
 				</table>
 			</div>
@@ -388,11 +386,17 @@ h3 {
         location.href="./myPage?id="+u_id;
      });
 	
+	var param={};
+	
 	
 	/*신고 상세보기*/
     $(".notifyFilter").on("click", function(){
     	console.log("신고 상세보기 팝업");
-    	window.open("./popup/notifyDetailPop.jsp", "notifyDetailPop", "width=900, height=600, left=450, top=180");
+    	
+    	 var n_no = $(this).attr("id");
+    	 window.open("notifyDetail?n_no="+n_no , "notifyDetailPop", "width=900, height=600, left=450, top=180");
+    	
+    	
      });
 	
 	
