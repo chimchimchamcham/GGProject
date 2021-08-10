@@ -176,7 +176,6 @@ public class BoardController extends HttpServlet {
 			}
 			
 			int auctionlistwhatadd = Integer.parseInt(req.getParameter("index1"));
-			int auctionlisthowaline = Integer.parseInt(req.getParameter("index2"));
 
 			System.out.println("listwhatadd:" + auctionlistwhatadd);
 			service.auc_list(userid1, auctionlistwhatadd);

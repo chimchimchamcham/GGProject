@@ -208,7 +208,7 @@ border:  1px solid rgb(176 176 176);
 		
 		$.ajax({
 			type:'post',
-			url:'./auction_list',
+			url:'./auctionlist',
 			data:{	index1 : $index1},
 			dataType:'JSON',
 			success:function(data){

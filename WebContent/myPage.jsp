@@ -1151,7 +1151,7 @@ a:visited {
 
 	}//구매요청 리스트 end
 
-	//수락버튼을 누르면
+	//수락,거절버튼을 누르면
 	$(document).on("click", "div.buttonarea button", function() {
 
 		$par = $('.buttonarea button').parents('.buttonarea').index();
@@ -1168,6 +1168,7 @@ a:visited {
 		console.log('rqnoval:' + rqnoval);
 		console.log('rqnotext:' + rqnotext);
 
+		
 		$.ajax({
 			type : 'post',
 			url : './applyreqlist',

@@ -141,7 +141,9 @@ public void buyNow(){
 	public int buyRequestProcess() {
 		System.out.println("[TRADESERVICE]/BUYREQUESTPROCESS START");
 		int rq_no = Integer.parseInt(req.getParameter("rq_no"));
-		String rq_YN = req.getParameter("rq_YN");
+		//System.out.println(rq_no);
+		String rq_YN = req.getParameter("Rq_YN");
+		//System.out.println(rq_YN);
 		int p_no = Integer.parseInt(req.getParameter("p_no"));
 		String t_saler = (String) req.getSession().getAttribute("loginId");
 		String t_buyer = req.getParameter("rq_id");
