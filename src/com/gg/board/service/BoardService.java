@@ -52,9 +52,9 @@ public class BoardService {
 			e.printStackTrace();
 		} finally {
 			dao.resClose();
-			map.put("mainlist", mainpage_sold_list);
-			map.put("mainlist", mainpage_auc_list);
-			map.put("mainlist", mainpage_communiti_list);
+			map.put("mainpage_sold_list", mainpage_sold_list);
+			map.put("mainpage_auc_list", mainpage_auc_list);
+			map.put("mainpage_communiti_list", mainpage_communiti_list);
 		}
 		System.out.println(map);
 		resp.setContentType("text/html; charset=UTF-8");
