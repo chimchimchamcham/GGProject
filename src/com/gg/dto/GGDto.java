@@ -139,8 +139,11 @@ public class GGDto {
    private String tc_content; // 거래 댓글 내용
 	private Date tc_tm; //댓글 작성 날짜
 	private String tc_id; //댓글 작성자
+	private String tc_nname; //댓글 작성자의 닉네임
    
-   // 후기
+
+
+// 후기
    private String rv_id; // 후기 작성자ID
    private int rv_score; // 후기 평점
    private String rv_content; // 후기 내용
@@ -1189,5 +1192,12 @@ public String getP_path() {
 
 public void setP_path(String p_path) {
 	this.p_path = p_path;
+}
+public String getTc_nname() {
+	return tc_nname;
+}
+
+public void setTc_nname(String tc_nname) {
+	this.tc_nname = tc_nname;
 }
 }
