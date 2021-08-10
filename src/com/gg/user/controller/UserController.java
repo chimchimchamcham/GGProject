@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 import sun.misc.Contended;
 
 @WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage", "/userUpdate",
-		"/userUpdateForm", "/chkpw", "/changePw", "/chkinfo", "/manageList", "/search", "/n_stateCatSel" })
+		"/userUpdateForm", "/chkpw", "/changePw", "/chkinfo", "/manageList", "/search", "/n_stateCatSel" ,"/notifyDetail"})
 
 public class UserController extends HttpServlet {
 
@@ -229,6 +229,11 @@ public class UserController extends HttpServlet {
 
 		case "/notifyDetail":
 			System.out.println("신고 상세보기 요청");
+			categoryMap = service.category();
+			System.out.println("신고상태 카테고리 성공 : " + categoryMap);
+			n_stateCat = categoryMap.get("n_stateCat");
+			System.out.println("n_stateCat list size : " + n_stateCat.size());
+			req.setAttribute("n_stateCat", n_stateCat);
 
 			req.setAttribute("notifyDet", service.notifyDetail());
 			dis = req.getRequestDispatcher("./popup/notifyDetailPop.jsp");
