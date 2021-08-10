@@ -388,8 +388,14 @@ h3 {
 	
 	var param={};
 	
-	
-	
+	var newName, n=0;
+	 function newWindow(value)
+	    {
+	       n = n + 1;
+	       newName = value + n;     
+	    }
+
+	 
 	
 	/*신고 상세보기*/
     $(document).on("click",".notifyFilter", function(){
@@ -397,8 +403,8 @@ h3 {
      	var n_no = "";
     	 n_no = $(this).attr("id");
     	 console.log(n_no);
-    	 window.open("notifyDetail?n_no="+n_no , "notifyDetailPop", "width=900, height=600, left=450, top=180");
-    	
+    	  newWindow("MyWindow");
+    	 window.open("notifyDetail?n_no="+n_no , newName, "width=900, height=600, left=450, top=180");
      });
 	
 	
