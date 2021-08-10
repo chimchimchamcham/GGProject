@@ -584,4 +584,40 @@ public class UserDAO {
 		
 	}
 
+	
+	public GGDto notifyDetail(String n_no) {
+
+		String sql = "SELECT n.n_receiveid, n.n_sendid, n.n_content, n.n1_code, n.n2_code, n.n_tm, "+
+				"n1.n1_name,hn.hn_tm, hn.hn_code, hn.hn_adminid, n2.n2_name " + 
+				"FROM notify n LEFT OUTER JOIN his_notify hn ON (n.n_no = hn.n_no) " + 
+				"INNER JOIN n1_code n1 ON (n.n1_code = n1.n1_code) " + 
+				"INNER JOIN n2_code n2 ON (n.n2_code = n2.n2_code)";
+		GGDto dto = new GGDto();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, n_no);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				dto.setN_receiveId(rs.getString("n_receiveId"));
+				dto.setN_sendId(rs.getString("n_sendId"));
+				dto.setN_content(rs.getString("n_content"));
+				dto.setN1_code(rs.getString("n1_code"));
+				dto.setN2_code(rs.getString("n2_code"));
+				dto.setN_tm(rs.getDate("n_tm"));
+				dto.setN1_name(rs.getString("n1_name"));
+				dto.setHn_tm(rs.getDate("hn_tm"));
+				dto.setHn_code(rs.getString("hn_code"));
+				dto.setHn_adminid(rs.getString("hn_adminid"));
+				dto.setN2_name(rs.getString("n2_name"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+
+		return dto;
+	}
 }

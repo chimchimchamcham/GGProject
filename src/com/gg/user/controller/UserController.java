@@ -227,6 +227,15 @@ public class UserController extends HttpServlet {
 			dis.forward(req, resp);
 			break;
 
+		case "/notifyDetail":
+			System.out.println("신고 상세보기 요청");
+
+			req.setAttribute("notifyDet", service.notifyDetail());
+			dis = req.getRequestDispatcher("./popup/notifyDetailPop.jsp");
+			dis.forward(req, resp);
+			break;
+			
+			
 		}
 
 	}
