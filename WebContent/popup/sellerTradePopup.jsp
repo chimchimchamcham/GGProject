@@ -200,7 +200,6 @@ body{width:100%;background-color:gray;}
 			<button type="button" id="sendRF">송금거절</button>
 			<button type="button" id="replyBtn">거래후기</button>
 		</div>
-		<div></div>
 	</div>
 	
 	<div id="reply">
@@ -336,6 +335,13 @@ $("#commentReload").on("click",function(){
 	showCommentList();
 });
 
+/* 엔터키를 눌렀을 때 등록버튼을 클릭하게 하기*/
+$("#writeComment").keypress(function(event){
+   if(event.which == 13){
+      $("#commentSubmit").click();
+   }
+});
+
 /* 등록버튼을 누르면 댓글이 추가된다.*/
 $("#commentSubmit").on("click",function(){
 	var param = {};
@@ -353,10 +359,12 @@ $("#commentSubmit").on("click",function(){
 		success : function(data){
 			console.log("댓글 추가 완료");
 			showCommentList();
+			$("#writeComment").val("");
 		},
 		error : function(e){
 			console.log("에러");		
 			showCommentList();
+			$("#writeComment").val("");
 		}
 	});
 });
