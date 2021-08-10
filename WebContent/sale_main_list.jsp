@@ -90,6 +90,9 @@
             text-align:left;
             margin:15px;
         }
+        .item-one:hover{
+        	background-color:#DDD9D9;
+        }
         .img-zoon,.index{
             margin: 5%;
         }
@@ -100,11 +103,12 @@
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
+                    margin-bottom:10px;
                 }
 	.wrapBox{
 		width:250px;
 		height:270px;
-		margin:auto;
+		text-align:center;
 	}
 	.imgBox{
 		margin-top:10px;
