@@ -49,7 +49,7 @@ public class BoardDAO {
 
 	public ArrayList<GGDto> mainpage_list_sold() {
 		
-		String sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE,P.P_TM, P.P_VIEW, P.P_LIKECOUNT, I.I_NEWNAME ,u.U_newName FROM POST P, SALE S, N_SALE N, IMG I ,userinfo u WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = u.u_id and p.p_code = 'P002' order BY p.p_likecount DESC";
+		String sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE,P.P_TM, P.P_VIEW, P.P_LIKECOUNT, I.I_NEWNAME ,u.U_newName FROM POST P, SALE S, N_SALE N, IMG I ,userinfo u WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = u.u_id and p.p_code = 'P002'  order BY p.p_likecount DESC;";
 		
 		
 		
@@ -58,7 +58,7 @@ public class BoardDAO {
 	
 	public ArrayList<GGDto> mainpage_list_auction() {
 		
-		String sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE,P.P_TM, P.P_VIEW, P.P_LIKECOUNT, I.I_NEWNAME ,u.U_newName FROM POST P, SALE S, N_SALE N, IMG I ,userinfo u WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = u.u_id and p.p_code = 'P002' order BY p.p_likecount DESC";
+		String sql = "SELECT P.P_NO,P.P_TITLE, H.HA_BIDUSR ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM, p.p_likecount  FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM, userinfo u WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND  p.p_code ='P001' and P.P_ID = u.u_id ORDER by p.p_likecount";
 		
 		
 
@@ -71,7 +71,7 @@ public class BoardDAO {
 	
 	public ArrayList<GGDto> mainpage_list_communiti() {
 		
-		String sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE,P.P_TM, P.P_VIEW, P.P_LIKECOUNT, I.I_NEWNAME ,u.U_newName FROM POST P, SALE S, N_SALE N, IMG I ,userinfo u WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = u.u_id and p.p_code = 'P002' order BY p.p_likecount DESC";
+		String sql = "SELECT p.p_no,pc.p_catename,p.p_title,p.p_tm,p.P_view,p.p_likecount FROM post p,Post_codes pc,Codes c,userinfo u where pc.p_cate = p.p_cate and p.p_code = c.c_code and p.p_id = u.u_id order BY p.p_likecount DESC";
 
 
 		
