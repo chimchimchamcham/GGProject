@@ -565,7 +565,7 @@ li {
 								하트<span>${dto.p_likeCount }</span>&nbsp;&nbsp;&nbsp;&nbsp;조회수<span>${dto.p_view }</span>
 							</p>
 							<div>
-								<a href="#">신고하기</a>
+								<a href="#" class="reporter">신고하기</a>
 							</div>
 							<div>
 								<a href="./salesUpdateForm?p_no=${dto.p_no}">수정 /</a>&nbsp;<a
