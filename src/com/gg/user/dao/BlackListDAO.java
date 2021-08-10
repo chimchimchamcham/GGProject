@@ -72,7 +72,7 @@ public class BlackListDAO {
 		boolean success= false;
 		int checker = 0;
 		ArrayList<Object> list = new ArrayList<Object>();
-		String sql = "INSERT INTO blacklist(b_id,b_starttm,b_endtm,b_adminid,b_content,b_code) VALUES(?,SYSDATE,?,?,?,?)";
+		String sql = "INSERT INTO blacklist(b_id,b_starttm,b_endtm,b_adminid,b_content,b_code,b_no) VALUES(?,SYSDATE,?,?,?,?,b_no_seq.nextval)";
 		
 		String b_id = dto.getB_id();
 		String b_code = dto.getB_code();
@@ -89,7 +89,7 @@ public class BlackListDAO {
 		
 		checker = ps.executeUpdate();
 		if(checker>0) {
-			msg = "블랙리스트 등록 실패하였습니다.";
+			msg = "블랙리스트 등록 성공하였습니다.";
 			success = true;
 		}
 		
@@ -101,6 +101,7 @@ public class BlackListDAO {
 		
 	}
 	
+	//로그인 창에서 블랙리스트에 들어가 있는 아이디 인지 확인
 	public GGDto checkBLstYN(String u_id) {
 		GGDto dto = new GGDto();
 		String sql = "SELECT b_id, b_endtm,b_content,b_code from blacklist where b_id = ? order by b_endtm desc";
@@ -126,4 +127,11 @@ public class BlackListDAO {
 		return dto;
 		
 	}
+	public GGDto blackLstDetail(int b_no) {
+		GGDto dto = new GGDto();
+		String sql = "SELECT b_id,TO_CHAR(b_starttm, 'YYYY-MM-DD HH24:MI:SS') as b_starttm, TO_CHAR(b_endtm, 'YYYY-MM-DD HH24:MI:SS')as b_endtm,";
+		return dto;
+		
+	}
+	
 }

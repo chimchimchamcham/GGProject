@@ -59,6 +59,14 @@ public class BlackListService {
 		
 		return list;
 	}
+
+	public GGDto blackLstDetail() {
+		GGDto dto = new GGDto();
+		
+		return dto;
+		
+		
+	}
 	
 	
 }
