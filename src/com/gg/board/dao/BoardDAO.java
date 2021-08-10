@@ -49,14 +49,15 @@ public class BoardDAO {
 
 	public ArrayList<GGDto> mainpage_list_sold() throws SQLException {
 		
-		String sql = "SELECT P.P_NO, u.u_nname, P.P_TITLE,P.P_TM, P.P_VIEW,n.ns_pr, P.P_LIKECOUNT, I.I_NEWNAME ,u.U_newName FROM POST P, SALE S, N_SALE N, IMG I ,userinfo u WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = u.u_id and p.p_code = 'P002'  order BY p.p_likecount DESC";
+		String sql = "SELECT distinct P.P_NO, u.u_nname, P.P_TITLE,P.P_TM, P.P_VIEW,n.ns_pr, P.P_LIKECOUNT, I.I_NEWNAME ,u.U_newName FROM POST P, SALE S, N_SALE N, IMG I ,userinfo u WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = u.u_id and p.p_code = 'P002'  order BY p.p_likecount DESC";
 		
 			ps = conn.prepareStatement(sql);
 			
 			rs = ps.executeQuery();
 			ArrayList<GGDto> mainpagelistsold = new ArrayList<GGDto>();
-			rs.next();
+			
 			for (int i = 1; i <= 3; i++) {
+				rs.next();
 				GGDto dto = new GGDto();
 				dto.setP_no(rs.getInt("P_no"));
 				dto.setP_title(rs.getString("P_title"));
@@ -65,7 +66,7 @@ public class BoardDAO {
 				dto.setP_likeCount(rs.getInt("p_likecount"));
 				dto.setNs_pr(rs.getInt("NS_pr"));
 				dto.setI_newName(rs.getString("I_newName"));
-
+				dto.setU_newName(rs.getString("u_newName"));
 				mainpagelistsold.add(dto);
 			}
 			
@@ -79,8 +80,8 @@ public class BoardDAO {
 		ArrayList<GGDto> mainpagelistauction = new ArrayList<GGDto>();
 		ps = conn.prepareStatement(sql);
 		rs = ps.executeQuery();
-		rs.next();
 		for (int i = 1; i <= 3; i++) {
+			rs.next();
 			GGDto dto = new GGDto();
 			dto.setP_no(rs.getInt("P_NO"));
 			dto.setP_title(rs.getString("P_TITLE"));
@@ -98,12 +99,12 @@ public class BoardDAO {
 	
 	public ArrayList<GGDto> mainpage_list_communiti() throws SQLException {
 		
-		String sql = "SELECT p.p_no,pc.p_catename,p.p_title,p.p_tm,p.P_view,p.p_likecount FROM post p,Post_codes pc,Codes c,userinfo u where pc.p_cate = p.p_cate and p.p_code = c.c_code and p.p_id = u.u_id order BY p.p_likecount DESC";
+		String sql = "SELECT p.p_no,pc.p_catename,p.p_title,p.p_tm,p.P_view,p.p_likecount,u.u_nname FROM post p,Post_codes pc,Codes c,userinfo u where pc.p_cate = p.p_cate and p.p_code = c.c_code and p.p_id = u.u_id order BY p.p_likecount DESC";
 		ArrayList<GGDto> mainpagelistcomuniti = new ArrayList<GGDto>();
 		ps = conn.prepareStatement(sql);
 		rs = ps.executeQuery();
-		rs.next();
 		for (int i = 1; i <= 3; i++) {
+			rs.next();
 			GGDto dto = new GGDto();
 			dto.setP_no(rs.getInt("P_NO"));
 			dto.setP_cateName(rs.getString("p_catename"));
@@ -111,6 +112,7 @@ public class BoardDAO {
 			dto.setP_tm(rs.getDate("p_tm"));
 			dto.setP_view(rs.getInt("p_view"));
 			dto.setP_likeCount(rs.getInt("p_likecount"));
+			dto.setU_nname(rs.getString("u_nname"));
 			mainpagelistcomuniti.add(dto);
 		}
 

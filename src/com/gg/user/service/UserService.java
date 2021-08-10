@@ -192,7 +192,7 @@ public class UserService {
 				dto = dao.myPage(oppId);
 				dto.setMyYN(true);
 				System.out.println("관리자 회원 정보 조회 : " + dto.isMyYN());
-			} else if (id.equals(oppId) || oppId == null) { // 내글에서 내프로필 갈때 / 마이페이지
+			} else if (id.equals(oppId) || oppId == null) { //내글에서 내프로필 갈때 / 마이페이지
 				dto = dao.myPage(id);
 				dto.setMyYN(true);
 				System.out.println("마이 프로필 여부 : " + dto.isMyYN());
