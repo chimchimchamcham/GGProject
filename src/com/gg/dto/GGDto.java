@@ -24,6 +24,9 @@ public class GGDto {
    private String m_sendId;// 보낸아이디
    private String m_receiveId;// 받은아이디
    private String m_content;// 쪽지내용
+   private Date m_readTm;
+   private String m_receiveDelYN;
+   private String m_sendDelYN;
 
    // 알람 (잘모르겠어...)
    private int a_no; // 알람번호
@@ -1235,5 +1238,29 @@ public String getB_code() {
 
 public void setB_code(String b_code) {
 	this.b_code = b_code;
+}
+
+public Date getM_readTm() {
+	return m_readTm;
+}
+
+public void setM_readTm(Date m_readTm) {
+	this.m_readTm = m_readTm;
+}
+
+public String getM_receiveDelYN() {
+	return m_receiveDelYN;
+}
+
+public void setM_receiveDelYN(String m_receiveDelYN) {
+	this.m_receiveDelYN = m_receiveDelYN;
+}
+
+public String getM_sendDelYN() {
+	return m_sendDelYN;
+}
+
+public void setM_sendDelYN(String m_sendDelYN) {
+	this.m_sendDelYN = m_sendDelYN;
 }
 }
