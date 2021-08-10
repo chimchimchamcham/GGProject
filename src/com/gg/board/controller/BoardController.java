@@ -136,6 +136,10 @@ public class BoardController extends HttpServlet {
 		case "/soldlist":
 			System.out.println("판매 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
+			String id = req.getParameter("id");
+			if(!userid.equals(id)) { //타인프로필 일때
+				userid=id;
+			}
 
 			int listwhatadd = Integer.parseInt(req.getParameter("index1"));
 			int listhowaline = Integer.parseInt(req.getParameter("index2"));
@@ -415,7 +419,7 @@ public class BoardController extends HttpServlet {
 
 			System.out.println("걸러주는 디테일즈");
 			p_no = Integer.parseInt(req.getParameter("p_no"));
-			String id = req.getParameter("id");
+			id = req.getParameter("id");
 			System.out.println("이것이 번호다 : " + p_no);
 			System.out.println("이것이 아이디다 : " + id);
 			service = new BoardService(req, resp);
