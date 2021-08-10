@@ -528,6 +528,15 @@ li {
 					$("#description>div:nth-of-type(1)").hide();
 					$("#description>div:nth-of-type(2)").show();
 				}
+					
+				 //로그인이 안된 상태로 경매글 진입시, 모든 버튼과 팔로우 숨기기, 버튼 색상변경과 비활성화 시키기
+			    if("${sessionScope.loginId}" == ""){
+			    //if("user2" == "${dto.p_id}"){
+			    	$("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
+			    	$("#follow").css({"background-color":"gray"}).attr("disabled", true);
+			    	$("#description>a:nth-of-type(1)").hide();
+			    	$("#description>div:nth-of-type(1)").hide();
+			    }	
 			});
 </script>
 </head>
@@ -569,7 +578,7 @@ li {
 							</div>
 							<div>
 								<a href="./salesUpdateForm?p_no=${dto.p_no}">수정 /</a>&nbsp;<a
-									href="#">삭제</a>
+									href="#" onclick="delChk()">삭제</a>
 							</div>
 						</div>
 						<div id="threeButton">
@@ -658,8 +667,8 @@ li {
 						console.log(data);
 						if (data.success) {
 				var love = $(
-						"#description>p:nth-of-type(6)>span:nth-of-type(1)").text();
-							$("#description>p:nth-of-type(6)>span:nth-of-type(1)").text(++love);
+						"#description>p:nth-of-type(5)>span:nth-of-type(1)").text();
+							$("#description>p:nth-of-type(5)>span:nth-of-type(1)").text(++love);
 											alert('좋아요 등록 성공.');
 										} else {
 											alert('좋아요 등록 실패.');
@@ -687,10 +696,10 @@ li {
 										console.log(data);
 										if (data.success) {
 											var love = $(
-													"#description>p:nth-of-type(6)>span:nth-of-type(1)")
+													"#description>p:nth-of-type(5)>span:nth-of-type(1)")
 													.text();
 											$(
-													"#description>p:nth-of-type(6)>span:nth-of-type(1)")
+													"#description>p:nth-of-type(5)>span:nth-of-type(1)")
 													.text(--love);
 											alert('좋아요 해제 성공');
 										} else {
@@ -704,7 +713,27 @@ li {
 					});
 
 
-
+	//판매글 삭제 버튼 클릭시
+	function delChk(){
+		var delChk = confirm("글을 삭제하시겠습니까?");
+		if(delChk){
+			location.href = "./postDel?p_no="+${dto.p_no};
+			/* var delMsg = "${delMsg}";
+			alert(delMsg); */
+		}
+	}
+	
+	//판매글 블라인드 체크 여부 확인
+	var p_blindYN = "${dto.p_blindYN}";
+	if("${dto.p_blindYN}"=="Y"){
+			$("#mainHeader").hide();
+			$("#main").hide();
+			/* alert("삭제된 경매글 입니다."); */
+			location.href = "./index.jsp";
+			
+	};
+	
+	
 	//댓글 버튼 누르면 이상세 페이지에서 마지막에 쓴 댓글 보여주기
 	$("div#twoButton>button.board_button").click(function() {
 		commentListCall();
@@ -1037,5 +1066,7 @@ li {
 		}
 	});
 	// 경매 리스트 end
+	
+	
 </script>
 </html>
