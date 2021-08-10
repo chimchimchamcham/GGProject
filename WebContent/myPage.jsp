@@ -870,8 +870,7 @@ a:visited {
 		$(".alien_list_sold").hide();
 		$(".button-layout_auction").hide();
 
-		soldlist
-				.forEach(function(item, idx) {
+		soldlist.forEach(function(item, idx) {
 					console.log("idx:", idx, item);
 					content += "<div class='item-one'>";
 					content += "<div class='img-zoon'><img src=/photo/"+item.i_newName+"></div>";
