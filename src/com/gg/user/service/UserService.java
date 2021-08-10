@@ -8,7 +8,6 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.gg.board.dao.BoardDAO;
 import com.gg.dto.GGDto;
 import com.gg.user.dao.UserDAO;
 import com.google.gson.Gson;
