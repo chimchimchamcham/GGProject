@@ -54,7 +54,7 @@ public class BoardController extends HttpServlet {
 		GGDto bdto = null;
 		boolean success = false;
 		int p_no;
-		String userid;
+		String userid = "";
 		switch (addr) {
 
 		case "/mainpage":
@@ -133,8 +133,8 @@ public class BoardController extends HttpServlet {
 		 */
 		case "/soldlist":
 			System.out.println("판매 리스트 요청");
-			userid = (String) req.getSession().getAttribute("loginId");
 
+			userid = (String) req.getSession().getAttribute("loginId");
 			String id = req.getParameter("id");
 
 			
@@ -152,6 +152,7 @@ public class BoardController extends HttpServlet {
 			System.out.println("listhowaline:" + listhowaline);
 
 			service.sold_list(userid, listwhatadd, listhowaline);
+			
 
 			break;
 
