@@ -135,7 +135,8 @@ public class BoardController extends HttpServlet {
 		 */
 		case "/soldlist":
 			System.out.println("판매 리스트 요청");
-			userid = (String) req.getSession().getAttribute("loginId");
+			userid = (String)req.getSession().getAttribute("loginId");
+			System.out.println(userid);
 			String id = req.getParameter("id");
 			if(!userid.equals(id)) { //타인프로필 일때
 				userid=id;
@@ -143,7 +144,7 @@ public class BoardController extends HttpServlet {
 
 			int listwhatadd = Integer.parseInt(req.getParameter("index1"));
 			int listhowaline = Integer.parseInt(req.getParameter("index2"));
-
+			System.out.println("유저 아이디 : "+ userid);
 			System.out.println("listwhatadd:" + listwhatadd);
 			System.out.println("listhowaline:" + listhowaline);
 
