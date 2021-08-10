@@ -75,7 +75,7 @@ h2 {
 }
 
 /*알람번호, 읽음 여부 숨기기*/
-.a_no, .a_readYN, .a_path{
+.a_no, .a_readYN, .a_path,.a_code{
 	display:none;
 }
 
@@ -103,6 +103,7 @@ h2 {
 							<span class="a_no">${dto.a_no }</span>
 							<span class="a_readYN">${dto.a_readYN}</span>
 							<span class="a_path">${dto.a_path }</span>
+							<span class="a_code">${dto.a_code }</span>
 							<p  style="width:310px;  padding:0 20px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${dto.a_content}</p>
 						</td>
 				
@@ -148,17 +149,21 @@ h2 {
 	$(".tableWrap").click(function(){
 		console.log("알림클릭");
 		$(this).addClass("read"); //클릭했을 경우 읽음 표시로
-		
+		a_code = $(this)find('.a_code').text();
 		a_no=$(this).find('.a_no').text(); 	//자손에 있는 값 가져오기
 		a_readYN = $(this).find('.a_readYN').text();
 		a_path = $(this).find('.a_path').text();
 		console.log("알람번호 : ",a_no);
 		console.log("알람 읽음 여부 : ",a_readYN);
 		console.log("알람 경로 : ",a_path);
+		console.log("알람 코드:",a_code);
 		
 		//읽음여부 상관없이 클릭시 해당 페이지로 부모페이지 이동
-		opener.parent.location=a_path;
-		
+		if(a_code == "A004" && a_code == "A008"){
+			window.open(a_path, "거래페이지", "width=900px, height=650px");
+		}else{
+			opener.parent.location=a_path;
+		}
 		//읽음여부 확인하고 변경
 		if(a_readYN == "N"){
 			$.ajax({

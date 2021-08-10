@@ -42,29 +42,40 @@ textarea{
 	resize:none;
 	font-size:17px
 }
+button{
+	width:100px;
+	height:50px;
+	position:absolute;
+	left:700px;
+	top:550px;
+	border-radius:5px/5px;
+	font-size:17px;
+}
 </style>
 </head>
 <body>
 <div id="wrap">
 <div id="header"><h2>블랙리스트 등록</h2></div>
 <div id="content">
+<form action="" method="post" id="blackLstFrm">
 <table id="blackLstT">
 <tr><th >아이디</th><td><input type="text" name="blackLstId" style="width:300px;  text-align:center; font-size:18px" required></td></tr>
 <tr>
 	<th>분류코드</th>
 	<td>
-		<select style="text-align:center">
+		<select>
 		<option value="B001">댓글금지</option>
 		<option value="B002" >글작성금지</option>
 		<option value="B003">판매금지</option>
 		<option value="B004">활동금지</option></select>
 	</td>
 </tr>
-<tr><th>등록 종료 날짜</th><td><input type="date" id="blackLstEnd"/></td></tr>
+<tr><th>등록 종료 날짜</th><td><input type="date" id="blackLstEnd" name="blackLstEnd"/></td></tr>
 <tr><th>관리자 아이디</th><td id="blackLstMId"></td></tr>
-<tr><th>등록 사유</th><td><textarea  id="blackLstC"  placeholder="등록사유를 입력하세요" required></textarea></td></tr>
+<tr><th>등록 사유</th><td><textarea  id="blackLstC"  placeholder="등록사유를 입력하세요" name="blackLstC"></textarea></td></tr>
 </table>
-<button>등록</button>
+<button type="button">등록</button>
+</form>
 </div>
 </div>
 </body>
@@ -86,8 +97,23 @@ textarea{
 	{
 	  document.getElementById("blackLstC").select();
 	}
-
-
+	
+    //버튼 클릭시 항목이 구성되지 않으면 튕기는 기능
+	$("button").click(function(){
+		console.log("click!");
+		if($("input[name=blackLstId]").val()==""){
+			alert("블랙리스트 등록할 아이디를 입력하세요");
+			$("input[name=blackLstId]").focus();
+			return false;
+		}else if($("textarea[name=blackLstC]").val() ==""){
+    		alert("블랙리스트 등록 상세 사유를 입력하세요");
+    		$("textarea[name=blackLstC]").focus();
+    		return false;
+    	}else{
+			$("#blackLstFrm").submit();
+		}
+		
+	})
     
 </script>
 </html>
