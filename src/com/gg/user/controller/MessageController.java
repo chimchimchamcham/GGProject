@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet
+import com.gg.user.service.MessageService;
+
+@WebServlet({"/sendmsg"})
 public class MessageController extends HttpServlet {
 
 	
@@ -24,9 +26,19 @@ public class MessageController extends HttpServlet {
 		dual(req,resp);
 	}
 
-	private void dual(HttpServletRequest req, HttpServletResponse resp) {
+	private void dual(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		req.setCharacterEncoding("UTF-8");
+		String uri = req.getRequestURI();
+		String ctx = req.getContextPath();
+		String addr = uri.substring(ctx.length());
+		MessageService service = new MessageService(req);
 		
+		switch (addr) {
+		case "/sendmsg":
+			service.sendmsg();
+			break;
+		}
 	}
 
 }

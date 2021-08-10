@@ -48,38 +48,6 @@ h2 {
 	background-color: #F2F2F2;
 	cursor: pointer;
 }
-
-#Content {
-	clear: both;
-	padding: 10px 0;
-}
-
-#Content table {
-	width: 1050px;
-	margin: 0px auto;
-	/* border-top: 1px solid gray; */
-}
-
-#Content table th {
-	/* border: 1px solid black; */
-	padding: 10px 0;
-}
-
-#Content table td {
-	/* border: 1px solid black; */
-	padding: 8px 0;
-	text-align: center;
-}
-
-#Content table td a {
-	text-decoration: none;
-	color: #000;
-}
-
-#Content table td a:hover {
-	text-decoration: underline;
-}
-
 .hoverTr:hover {
 	background-color: #D8D8D8;
 	cursor: pointer;
@@ -106,7 +74,7 @@ h2 {
 			<hr>
 			</p>
 			<div id="userContent">
-			<c:if test="${f_ui eq null || f_ui eq ''}">
+			<c:if test="${ui_size eq '0'}">
 				<h3>사용자가 존재하지 않습니다.</h3>
 			</c:if>
 			<c:forEach items="${f_ui }" var ="dto">
@@ -117,7 +85,7 @@ h2 {
 								<img src="/photo/${dto.u_newName }" width="100">
 							</p>
 						</td>
-						<th><p style="width: 500px; padding: 0 20px; text-align: left; /* overflow: hidden;  */ /* text-overflow: ellipsis; white-space: nowrap; */ font-size: 1.5rem">${dto.u_id }</p></th>
+						<th><p style="width: 500px; padding: 0 20px; text-align: left; /* overflow: hidden;  */ /* text-overflow: ellipsis; white-space: nowrap; */ font-size: 1.5rem">${dto.u_nname }</p></th>
 					</tr>
 					<tr>
 						<td><p style="width: 500px; padding: 0 20px; text-align: left;">팔로워 ${dto.flow_count}명 &nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;총 게시글 ${dto.p_registCnt}개</p></td>
@@ -137,8 +105,8 @@ h2 {
 			</p>
 			<p><hr></p>
 			<div id="post_titleContent">
-			<c:if test="${f_pc eq null || f_pc eq ''}"><h3>해당 제목을 가진 게시글이 존재하지 않습니다.</h3></c:if>
-			<c:forEach items="${f_pc }" var ="dto">
+			<c:if test="${pt_size eq '0'}"><h3>해당 제목을 가진 게시글이 존재하지 않습니다.</h3></c:if>
+			<c:forEach items="${f_pt}" var ="dto">
 				<table class="hoverTr" onclick="location.href='${dto.p_path}'" style="padding: 0 100px; width: 1140px; height: 100px">
 					<tr>
 						<td rowspan="3">
@@ -167,8 +135,8 @@ h2 {
 			<hr>
 			</p>
 			<div id="post_contentC">
-			<c:if test="${f_pt eq null || f_pt eq ''}"><h3>해당 내용을 가진 게시글이 존재하지 않습니다.</h3></c:if>
-			<c:forEach items="${f_pt }" var ="dto">
+			<c:if test="${pc_size eq '0' }"><h3>해당 내용을 가진 게시글이 존재하지 않습니다.</h3></c:if>
+			<c:forEach items="${f_pc }" var ="dto">
 				<table class="hoverTr" onclick="location.href='${dto.p_path}'" style="padding: 0 100px; width: 1140px; height: 100px">
 					<tr>
 						<td rowspan="3">

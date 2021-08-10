@@ -60,6 +60,7 @@ body{width:100%;background-color:gray;}
 .commentBox{width:300px;margin:10px;background-color:white;border-radius:5px/5px;padding:5px;}
 .floatLeft{float:left;}
 .floatRight{float:right;}
+#date{text-align:right;font-size:0.8rem;}
 
 #writeWrap{height:280px;width:300px;float:left;position:relative;}
 #tradeNname{position:absolute;top:20px;left:40px;font-weight:700;font-size:1.5rem;}
@@ -215,28 +216,32 @@ body{width:100%;background-color:gray;}
 		<div id="comment_cnt"><span>구경톡 </span><span>10</span><button id="commentReload">톡읽어오기</button></div>
 		<div id="tradeCommentWrap">
 			<div id="viewWrap">
-				<div class="commentBox floatLeft">
+				<!-- <div class="commentBox floatLeft">
 					<p  class="tradeUser" ><span>유저2</span><span>(구매자)</span></p>
 					<p>안녕하세요? 혹시 네고 가능할까요? 5000원 네고 해주시면 감사하겠습니다.</p>
+					<p id="date">2021-07-27</p>
 				</div>
 				<div class="commentBox floatRight">
 					<p class="tradeUser"><span>유저1</span><span>(나)</span></p>
 					<p>안녕하세요? 3천원 까지는 가능합니다</p>
+					<p id="date">2021-07-27</p>
 				</div>
 				<div class="commentBox floatLeft">
 					<p class="tradeUser"><span>유저2</span><span>(구매자)</span></p>
 					<p>그럼 3천원 네고 해주세요 ㅋㅋ</p>
+					<p id="date">2021-07-27</p>
 				</div>
 				<div class="commentBox floatRight">
 					<p class="tradeUser"><span>유저1</span><span>(나)</span></p>
 					<p>넹, 포인트 보내주세용~</p>
-				</div>
+					<p id="date">2021-07-27</p>
+				</div> -->
 			</div>
 			
 			<div id="writeWrap">
-				<span id="tradeNname">유저1</span>
-				<textarea id="writeComment" cols="30" rows="10">안녕하세요.</textarea>
-				<button id="commentSubmit">등록</button>
+				<span id="tradeNname">톡 보내기</span>
+				<textarea id="writeComment" cols="30" rows="10" placeholder="메시지를 입력하세요"></textarea>
+				<input type="button" id="commentSubmit" value="등록">
 			</div>	
 		</div>
 		
@@ -299,7 +304,62 @@ $("#trade_cancel").click(function(){
 		$("form").submit(); 
 	}
 	
-})
+});
+
+/* 거래댓글 관련 */
+//처음에 무조건 실행
+showCommentList();
+$("#viewWrap").scrollTop($("#viewWrap")[0].scrollHeight);
+
+
+/* 댓글 창 보여주기 */
+function showCommentList(){
+	console.log("${dto.t_no}");
+	$.ajax({
+    	url:"tradeCommentList",
+    	data: {"t_no" : "${dto.t_no}"	
+    	},
+    	success: function(data){
+    		console.log("거래댓글 리스트 진입");
+    		$("#viewWrap").html(data);
+    		$("#viewWrap").scrollTop($("#viewWrap")[0].scrollHeight);
+    	},
+    	error: function(e){
+    		console.log("진입 실패");
+    	}
+
+    });
+}
+
+/* 톡 읽어오기를 클릭하면 댓글 목록을 다시 불러온다*/
+$("#commentReload").on("click",function(){
+	showCommentList();
+});
+
+/* 등록버튼을 누르면 댓글이 추가된다.*/
+$("#commentSubmit").on("click",function(){
+	var param = {};
+	param.t_no = "${dto.t_no}";
+	param.tc_content = $("#writeComment").val();
+	
+	console.log("t_no : "+param.t_no);
+	console.log("tc_content : "+param.tc_content);
+	
+	$.ajax({
+		type: "POST",
+		url : "insertTradeComment",
+		data: param,
+		dataType : "JSON",
+		success : function(data){
+			console.log("댓글 추가 완료");
+			showCommentList();
+		},
+		error : function(e){
+			console.log("에러");		
+			showCommentList();
+		}
+	});
+});
 
 </script>
 </html>
