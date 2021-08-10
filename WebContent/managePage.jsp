@@ -152,7 +152,7 @@ h3 {
 			<button class="userBtn">회원목록</button>
 			<button class="notifyBtn">신고</button>
 			<button class="blackBtn">블랙리스트</button>
-			<button class="myBtn">마이페이지</button>
+			<button class="myBtn">작성 글 목록</button>
 		</div>
 
 		<!-- ===========회원목록============= -->
