@@ -59,7 +59,7 @@ button{
 <div id="content">
 <form action="../blackLstPr" method="post" id="blackLstFrm">
 <table id="blackLstT">
-<tr><th >아이디</th><td><input type="text" name="b_Id" style="width:300px;  text-align:center; font-size:18px" required></td></tr>
+<tr><th >아이디</th><td><input type="text" name="b_Id" style="width:300px;  text-align:center; font-size:18px" value="${param.n_receiveid}"></td></tr>
 <tr>
 	<th>분류코드</th>
 	<td>
@@ -96,11 +96,7 @@ button{
     //버튼 클릭시 항목이 구성되지 않으면 튕기는 기능
 	$("button").click(function(){
 		console.log("click!");
-		if($("input[name=b_Id]").val()==""){
-			alert("블랙리스트 등록할 아이디를 입력하세요");
-			$("input[name=b_Id]").focus();
-			return false;
-		}else if($("textarea[name=b_content]").val() ==""){
+		 if($("textarea[name=b_content]").val() ==""){
     		alert("블랙리스트 등록 상세 사유를 입력하세요");
     		$("textarea[name=b_content]").focus();
     		return false;
@@ -109,6 +105,11 @@ button{
 		}
 		
 	})
-    
+	
+	var msg = "${msg}";
+	if("${success}" == true){
+  		alert(msg);
+	}
+	
 </script>
 </html>

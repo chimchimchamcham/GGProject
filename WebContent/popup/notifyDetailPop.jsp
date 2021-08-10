@@ -69,14 +69,14 @@ a:hover{
 			</tr>
 			<tr>
 				<td>신고받은 아이디</td>
-				<td><a href="#" class="receiverProfile"><b>${notifyDet.n_receiveId}</b></a></td>
+				<td><a href="#" class="receiverProfile" style="color:red"><b>${notifyDet.n_receiveId}</b></a></td>
 			</tr>
 			<tr>
 				<td>신고한 아이디</td>
 				<td><a href="#" class="senderProfile">${notifyDet.n_sendId}</a></td>
 			</tr>
 			<tr>
-				<td>날짜</td>
+				<td>신고 날짜</td>
 				<td>${notifyDet.n_tm}</td>
 			</tr>
 			<tr>
@@ -85,7 +85,7 @@ a:hover{
 			</tr>
 			<tr>
 				<td>관리자 아이디</td>
-				<td>${notifyDet.hn_adminid}</td>
+				<td  class="adminTd">${notifyDet.hn_adminid}</td>
 			</tr>
 			<tr>
 				<td>처리상태</td>
@@ -103,8 +103,8 @@ a:hover{
 			</tr>
 		</table>
 		<div id="button">
-			<button>저장</button>
-			<button>블랙리스트 처리</button>
+			<button id="save">저장</button>
+			<button id="blackBtn">블랙리스트 처리</button>
 		</div>
 	</div>
 </body>
@@ -123,7 +123,56 @@ $(document).on("click",".receiverProfile",function(){
 	 opener.parent.location="myPage?id=${notifyDet.n_receiveId}";
 });
 
+var param={};
+/*저장 버튼 클릭 시*/
+ $(document).on("click","#save",function(){
+	 
+	 param.n_no = "${notifyDet.n_no}";
+     param.hn_code = $("select[name=n_stateCat]:selected").val();
+     param.hn_admin = "${sessionScope.loginId}";
+     
+	 $.ajax({
+         type : 'POST',
+         url : 'notifyHistory',
+         data : param,
+         dataType : 'JSON',
+         success : function(data) {
+        	 console.log("신고 히스토리 등록 성공");
+        	 
+        	 var hn_admin = "${sessionScope.loginId}";
+        	 console.log("세션 아이디 : ",hn_admin);
+        	 console.log("성공한 처리상태 : ",data.sucHn_code);
+        	 
+        	 if(data.sucHn_code != null){
+	        	 $(".adminTd").empty();
+	        	 $(".adminTd").text(hn_admin);
+	        	 
+	        	 $("select[name=n_stateCat]").val(data.sucHn_code).prop("selected", true);
+        		alert("신고 처리상태가 저장되었습니다.");
+        	 }else{
+        		 alert("신고 처리상태 저장에 실패하였습니다! 다시 시도해 주세요");
+        	 }
+         },
+         error : function(e) {
+            console.log(e);
+         }
 
+      });
+ });
+ 
+	var newName, n=0;
+	 function newWindow(value)
+	    {
+	       n = n + 1;
+	       newName = value + n;     
+	    }
+	 
+	 var n_receiveid = "${notifyDet.n_receiveId}";
+ /*블랙리스트 처리 버튼 클릭 시*/
+ $(document).on("click","#blackBtn",function(){
+	 newWindow("MyWindow");
+	 window.open("./popup/blackListPr.jsp?n_receiveid="+n_receiveid , newName, "width=900, height=600, left=450, top=180");
+ })
 
 </script>
 </html>

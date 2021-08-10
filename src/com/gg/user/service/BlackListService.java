@@ -2,6 +2,7 @@ package com.gg.user.service;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,8 +30,9 @@ public class BlackListService {
 		return success;
 	}
 
-	public void blackLstPr() {
+	public ArrayList<Object> blackLstPr() {
 		GGDto dto = new GGDto();
+		ArrayList<Object>list = new ArrayList<Object>();
 		
 		String b_Id = req.getParameter("b_Id");
 		String b_code = req.getParameter("b_code");
@@ -47,7 +49,7 @@ public class BlackListService {
 		dto.setB_content(b_content);
 		
 		try {
-			dao.blackLstPr(dto);
+			list = dao.blackLstPr(dto);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,7 +57,7 @@ public class BlackListService {
 			dao.resClose();
 		}
 		
-		
+		return list;
 	}
 	
 	

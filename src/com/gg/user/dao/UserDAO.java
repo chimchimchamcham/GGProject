@@ -625,4 +625,26 @@ public class UserDAO {
 
 		return dto;
 	}
+
+	public String notifyHistory(String n_no, String hn_code, String hn_admin) {
+		String sql = "INSERT INTO his_notify VALUES (?,sysdate,?,?)";
+		String sucHn_code = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, n_no);
+			ps.setString(2, hn_admin);
+			ps.setString(3, hn_code);
+			
+			
+			if(ps.executeUpdate()>0) {
+				sucHn_code = hn_code;
+				System.out.println("신고 히스토리 성공 hn_code : "+sucHn_code);
+				}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return sucHn_code;
+	}
 }

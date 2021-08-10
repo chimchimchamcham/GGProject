@@ -400,7 +400,6 @@ h3 {
 	/*신고 상세보기*/
     $(document).on("click",".notifyFilter", function(){
     	console.log("신고 상세보기 팝업");
-     	var n_no = "";
     	 n_no = $(this).attr("id");
     	 console.log(n_no);
     	  newWindow("MyWindow");

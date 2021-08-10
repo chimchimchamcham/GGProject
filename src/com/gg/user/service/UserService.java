@@ -366,4 +366,21 @@ public class UserService {
 		return dto;
 	}
 
+	public String notifyHistory() {
+		
+		String n_no = req.getParameter("n_no");
+		String hn_code = req.getParameter("hn_code");
+		String hn_admin = req.getParameter("hn_admin");
+		System.out.println("n_no : "+n_no+"/ hn_code: "+hn_code+"/ hn_admin : "+hn_admin);
+		
+		UserDAO dao = new UserDAO();
+		
+		//히스토리 업데이트
+		String sucHn_code = dao.notifyHistory(n_no,hn_code,hn_admin);
+		
+		dao.resClose();
+		
+		return sucHn_code;
+	}
+
 }

@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 import sun.misc.Contended;
 
 @WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage", "/userUpdate",
-		"/userUpdateForm", "/chkpw", "/changePw", "/chkinfo", "/manageList", "/search", "/n_stateCatSel" ,"/notifyDetail"})
+		"/userUpdateForm", "/chkpw", "/changePw", "/chkinfo", "/manageList", "/search", "/n_stateCatSel" ,"/notifyDetail","/notifyHistory"})
 
 public class UserController extends HttpServlet {
 
@@ -241,6 +241,17 @@ public class UserController extends HttpServlet {
 			break;
 			
 			
+		case "/notifyHistory":
+			System.out.println("신고 히스토리 저장");
+
+			String sucHn_code = service.notifyHistory();
+			HashMap<String, Object>hnMap = new HashMap<String, Object>();
+
+			hnMap.put("sucHn_code", sucHn_code);
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().println(new Gson().toJson(hnMap));
+			
+			break;
 		}
 
 	}
