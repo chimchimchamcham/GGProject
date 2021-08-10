@@ -162,8 +162,7 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 							title = Aldao.cutTitle(title);
 							System.out.println("자른 게시글 제목 : "+title);
 							Aldao.insertAlarm(bidUsr, "A010", "["+title+"]입찰자가 변경되었습니다.", "Y", "./auctionDetail?p_no="+p_no);
-							Aldao.resClose();
-							Bdao.resClose();
+							
 						}
 					}
 				}
@@ -191,7 +190,8 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 		//입찰금액 입력 쿼리
 		System.out.println("경매 히스토리 입력여부 : "+success);
 	
-		
+		Aldao.resClose();
+		Bdao.resClose();
 		
 		map.put("success", success);
 		System.out.println("메세지 확인 : "+msg);

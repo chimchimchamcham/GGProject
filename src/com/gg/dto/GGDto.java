@@ -51,10 +51,10 @@ public class GGDto {
    private String n2_code; // 중분류코드
    private String n2_name; // 중분류코드 한글이름
    private String Pntcode;// 분류코드
-   private Date n_tm; //신고 접수 날짜
+   private String n_tm; //신고 접수 날짜
    
    //신고 히스토리
-   private Date hn_tm; //신고 시간
+   private String hn_tm; //신고 시간
    private String hn_code; //신고 처리 상태
    private String hn_adminid; //신고 담당자
 
@@ -66,6 +66,8 @@ public class GGDto {
    private Date b_endTm; // 블랙리스트 등록날짜
    private String b_adminId; // 관리자ID
    private String b_content; // 등록사유
+   private String b_id;//블랙리스트 등록ID
+   private String b_code;//블랙리스트 코드
 
    // 판매관련
    private String s_DeliveryYN; // 택배여부
@@ -493,11 +495,11 @@ public void setN2_code(String n2_code) {
 	this.n2_code = n2_code;
 }
 
-public Date getN_tm() {
+public String getN_tm() {
 	return n_tm;
 }
 
-public void setN_tm(Date n_tm) {
+public void setN_tm(String n_tm) {
 	this.n_tm = n_tm;
 }
 
@@ -509,11 +511,11 @@ public void setN2_name(String n2_name) {
 	this.n2_name = n2_name;
 }
 
-public Date getHn_tm() {
+public String getHn_tm() {
 	return hn_tm;
 }
 
-public void setHn_tm(Date hn_tm) {
+public void setHn_tm(String hn_tm) {
 	this.hn_tm = hn_tm;
 }
 
@@ -1217,5 +1219,21 @@ public String getTc_nname() {
 
 public void setTc_nname(String tc_nname) {
 	this.tc_nname = tc_nname;
+}
+
+public String getB_id() {
+	return b_id;
+}
+
+public void setB_id(String b_id) {
+	this.b_id = b_id;
+}
+
+public String getB_code() {
+	return b_code;
+}
+
+public void setB_code(String b_code) {
+	this.b_code = b_code;
 }
 }

@@ -99,9 +99,9 @@ a{
 	<h2>거래톡</h2>
 	<div id="tradeWrap">
 		<div id="buttonTwo">
-			<button id="wholeBtn" value="P000">전체</button>
+			<!-- <button id="wholeBtn" value="P000">전체</button>
 			<button id="auctionBtn" value="P001">경매</button>
-			<button id="saleBtn" value="P002">판매</button>
+			<button id="saleBtn" value="P002">판매</button> -->
 		</div>
 		<div class="tableWrap">
 			<!-- 여기에 거래페이지 목록이 들어간다 -->

@@ -702,7 +702,7 @@ public class BoardDAO {
 			dto.setN1_name(rs.getString("N1_name"));
 			dto.setN_content(rs.getString("N_content"));
 			dto.setHn_adminid(rs.getString("HN_adminId"));
-			dto.setHn_tm(rs.getDate("HN_tm"));
+			dto.setHn_tm(rs.getString("HN_tm"));
 			dto.setC_name(rs.getString("C_name"));
 			reportlist.add(dto);
 		}
@@ -1332,6 +1332,8 @@ public class BoardDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			resClose();
 		}
 		return success;
 	}
