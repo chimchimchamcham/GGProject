@@ -39,7 +39,6 @@ margin-top:20px;
 
 .tableWrap{
 	text-align:center;
-	overflow-y:scroll;
 }
 .content:hover{
 background-color: #f7f7f7;
@@ -111,8 +110,8 @@ a{
 			<!-- 여기에 페이징이 들어간다 -->
 			<span id="prev">prev </span>
 			<span id="pageNumList">	
-				<span class="selectPageNum">1</span>
-				<span>2</span>
+				<!-- <span class="selectPageNum">1</span>
+				<span>2</span> -->
 			</span>	
 			<span id="next"> next</span>	
 		</div>
@@ -156,7 +155,7 @@ a{
 				console.log("받아온 totalPage 확인 : ", data.totalPage);
 				
 				drawTradeList(data.list);
-				//drawPageNumList(data.currentPage, data.totalPage);
+				drawPageNumList(data.currentPage, data.totalPage);
 			},
 			error : function(e) {
 				console.log(e);
@@ -230,5 +229,37 @@ a{
 		window.open("../tradeDetail?t_no="+t_no, "tradeDetail", "width=900, height=650, left=700, top=400");
 	}
 
+	function drawPageNumList(currentPage, totalPage){
+		
+		console.log("페이징 그려주기 ");
+		var content = "";
+		for(var i=1;i<=totalPage;i++){
+			if(i == currentPage){
+				content += "<span class='selectPageNum'>"+i+"</span>";
+			}else{
+				content += "<span>"+i+"</span>";
+			}
+		}
+		$("#pageNumList").empty();
+		$("#pageNumList").append(content);
+		if(currentPage == 1){
+			$("#prev").hide();
+			$("#next").show();
+		}
+		if(currentPage == totalPage){
+			$("#prev").show();
+			$("#next").hide();
+		}
+	}
+	
+	//prev를 클릭하면 다음페이지로 넘어감
+	$("#prev").on("click",function(){
+		tradeListCall(p_code,--pageNum);
+	});
+	
+	//next를 클릭하면 다음페이지로 넘어감
+	$("#next").on("click",function(){
+		tradeListCall(p_code,++pageNum);
+	});
 </script>
 </html>
