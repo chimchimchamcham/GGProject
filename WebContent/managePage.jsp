@@ -236,6 +236,7 @@ h3 {
 						<td colspan="7" style="padding: 0; border-bottom: 1px solid gray"></td>
 					</tr>
 					<c:forEach items="${notifyList}" var="notifyList">
+					<form method="POST" action="notifyDetail">
 					<tr class="notifyFilter">
 						<td>${notifyList.n_no}</td>
 						<td>${notifyList.n_receiveId}</td>
@@ -249,6 +250,7 @@ h3 {
 						<td colspan="7"
 							style="padding: 0; border-bottom: 0.7px solid #e8e8e8"></td>
 					</tr>
+					</form>
 					</c:forEach>
 				</table>
 			</div>
