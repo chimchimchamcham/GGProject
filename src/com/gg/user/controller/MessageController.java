@@ -2,6 +2,7 @@ package com.gg.user.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gg.user.service.MessageService;
 
-@WebServlet({"/sendmsg"})
+@WebServlet({"/sendMsg"})
 public class MessageController extends HttpServlet {
 
 	
@@ -33,11 +34,13 @@ public class MessageController extends HttpServlet {
 		String ctx = req.getContextPath();
 		String addr = uri.substring(ctx.length());
 		MessageService service = new MessageService(req);
+		RequestDispatcher dis;
 		
 		switch (addr) {
-		case "/sendmsg":
-			service.sendmsg();
+		case "/sendMsg":
+			boolean success = service.sendMsg();
 			break;
+	
 		}
 	}
 
