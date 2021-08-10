@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,56 +16,64 @@ h2 {
 	padding: 5px 0 5px 0;
 }
 
-#wrap{
-	width:892px;
+#wrap {
+	width: 892px;
 	height: 592px;
-	float:left;
+	float: left;
 }
 
-#detailTb{
-	width:750px;
+#detailTb {
+	width: 750px;
 	height: 440px;
-	margin:0px auto;
-	
+	margin: 0px auto;
 }
 
-#detailTb, #detailTb td{
-	border:1px solid gray;
-	 border-collapse : collapse;
+#detailTb, #detailTb td {
+	border: 1px solid gray;
+	border-collapse: collapse;
 }
 
-#detailTb td{
-	padding-left:20px;
+#detailTb td {
+	padding-left: 20px;
 }
 
-#button{
-	width:750px;
-	margin:0px auto;
-/* 	border:1px solid black; */
-	clear:both;
+#button {
+	width: 750px;
+	margin: 0px auto;
+	/* 	border:1px solid black; */
+	clear: both;
 }
 
-#button button{
-	float:right;
-	margin:10px 5px;
+#button button {
+	float: right;
+	margin: 10px 5px;
+}
+
+a{
+	text-decoration: none;
+	color: black;
+}
+
+a:hover{
+	text-decoration: underline;
 }
 
 </style>
 <body>
-<div id="wrap">
-	<h2>신고 상세내용</h2>
-	<table id="detailTb">
+	<div id="wrap">
+		<h2>신고 상세내용</h2>
+		<table id="detailTb">
 			<tr>
 				<td>신고번호</td>
-				<td>1</td>
+				<td>${notifyDet.n_no}</td>
 			</tr>
 			<tr>
 				<td>신고받은 아이디</td>
-				<td><b>${notifyDet.n_receiveId}</b></td>
+				<td><a href="#" class="receiverProfile"><b>${notifyDet.n_receiveId}</b></a></td>
 			</tr>
 			<tr>
 				<td>신고한 아이디</td>
-				<td>${notifyDet.n_sendId}</td>
+				<td><a href="#" class="senderProfile">${notifyDet.n_sendId}</a></td>
 			</tr>
 			<tr>
 				<td>날짜</td>
@@ -72,7 +81,7 @@ h2 {
 			</tr>
 			<tr>
 				<td>신고분류</td>
-				<td>${notifyDet.n1_name} &gt; ${notifyDet.n2_name}</td>
+				<td>${notifyDet.n1_name}&gt; ${notifyDet.n2_name}</td>
 			</tr>
 			<tr>
 				<td>관리자 아이디</td>
@@ -80,17 +89,41 @@ h2 {
 			</tr>
 			<tr>
 				<td>처리상태</td>
-				<td><select><option value="hn_001">${notifyDet.n_receiveId}</option></select></td>
+				<td>
+					<select  name="n_stateCat">
+					<c:forEach items="${n_stateCat }" var="n_stateCategory">
+							<option value="${n_stateCategory.c_code }">${n_stateCategory.c_name }</option>
+					</c:forEach>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td>신고내용</td>
 				<td>${notifyDet.n_content}</td>
 			</tr>
-	</table>
-	<div id="button"><button>저장</button><button>블랙리스트 처리</button></div>
+		</table>
+		<div id="button">
+			<button>저장</button>
+			<button>블랙리스트 처리</button>
+		</div>
 	</div>
 </body>
 <script>
+console.log("hello");
+var c_code = "${notifyDet.c_code}";
+//카테고리 기존값 뿌려주기
+$("select[name=n_stateCat]").val("${notifyDet.hn_code}").prop("selected", true);
+
+/*부모페이지가 이동하도록 하기*/
+$(document).on("click",".senderProfile",function(){
+	 opener.parent.location="myPage?id=${notifyDet.n_sendId}";
+});
+
+$(document).on("click",".receiverProfile",function(){
+	 opener.parent.location="myPage?id=${notifyDet.n_receiveId}";
+});
+
+
 
 </script>
 </html>

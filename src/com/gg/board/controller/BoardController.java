@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/postDel", "/writeCommunity", "/auctionDetail",
 		"/commDetail", "/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist","/soldmainlist", "/commList",
 		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist","/mainsold","/mainauction","/report_list",
-		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail","/applyreqlist","/noticeList","/notifyDetail"})
+		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail","/applyreqlist","/noticeList"})
 
 
 public class BoardController extends HttpServlet {
