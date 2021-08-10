@@ -383,4 +383,9 @@ public class UserService {
 		return sucHn_code;
 	}
 
+	public ArrayList<GGDto> blackList() {
+		
+		return null;
+	}
+
 }
