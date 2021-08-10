@@ -143,7 +143,9 @@ $(document).ready(function() {
 			data:{},
 			dataType:'JSON',
 			success:function(data){
-				console.log("success");
+				console.log("data",data.mainpage_sold_list);
+				console.log("data",data.mainpage_auc_list);
+				console.log("data",data.mainpage_communiti_list);
 			},
 			error:function(e){
 				console.log(e);
