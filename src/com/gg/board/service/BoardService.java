@@ -972,15 +972,14 @@ public void updatereqlist(String rqno) throws IOException {
 	}
 
 	public GGDto notifyDetail() {
-		String n_no = req.getParameter(")
-		System.out.println("상세보기 p_no : " + p_no);
+		
+		String n_no = req.getParameter("n_no")
+		System.out.println("신고 상세보기 n_no : " + n_no);
 		BoardDAO dao = new BoardDAO();
-		GGDto dto = null;
+		GGDto dto = dao.notifyDetail(n_no);
+		
 		try {
 			dao.conn.setAutoCommit(false);
-			if (0 < dao.upP_view(Integer.parseInt(p_no))) {
-				dto = dao.commDetail(p_no);
-			}
 			if (dto == null) {
 				dao.conn.rollback();
 			} else {

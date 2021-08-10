@@ -238,7 +238,7 @@ h3 {
 					<c:forEach items="${notifyList}" var="notifyList">
 					<form method="POST" action="notifyDetail">
 					<tr class="notifyFilter">
-						<td>${notifyList.n_no}</td>
+						<td name="n_no">${notifyList.n_no}</td>
 						<td>${notifyList.n_receiveId}</td>
 						<td>${notifyList.n_sendId}</td>
 						<td>${notifyList.n1_name}</td>
