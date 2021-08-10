@@ -136,6 +136,10 @@ public class BoardController extends HttpServlet {
 		case "/soldlist":
 			System.out.println("판매 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
+			String id = req.getParameter("id");
+			if(!userid.equals(id)) { //타인프로필 일때
+				userid=id;
+			}
 
 			int listwhatadd = Integer.parseInt(req.getParameter("index1"));
 			int listhowaline = Integer.parseInt(req.getParameter("index2"));
@@ -166,6 +170,11 @@ public class BoardController extends HttpServlet {
 
 			String userid1 = (String) req.getSession().getAttribute("loginId");
 
+			id = req.getParameter("id");
+			if(!userid1.equals(id)) { //타인프로필 일때
+				userid=id;
+			}
+			
 			int auctionlistwhatadd = Integer.parseInt(req.getParameter("index1"));
 			int auctionlisthowaline = Integer.parseInt(req.getParameter("index2"));
 
@@ -200,13 +209,20 @@ public class BoardController extends HttpServlet {
 		case "/communitylist":
 			System.out.println("커뮤니티 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
-
+			id = req.getParameter("id");
+			if(!userid.equals(id)) { //타인프로필 일때
+				userid=id;
+			}
 			service.community_list(userid);
 
 			break;
 		case "/flowlist":
 			System.out.println("팔로잉리스트 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
+			id = req.getParameter("id");
+			if(!userid.equals(id)) { //타인프로필 일때
+				userid=id;
+			}
 			int flowORflowing = Integer.parseInt(req.getParameter("index1"));		
 			service.flow_list(userid,flowORflowing);
 			
@@ -256,7 +272,7 @@ public class BoardController extends HttpServlet {
 
 			break;
 		case "/report_list":
-			System.out.println("좋아요리스트 리스트 요청");
+			System.out.println("신고리스트 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
 			
 			service.report_list(userid);
@@ -415,7 +431,7 @@ public class BoardController extends HttpServlet {
 
 			System.out.println("걸러주는 디테일즈");
 			p_no = Integer.parseInt(req.getParameter("p_no"));
-			String id = req.getParameter("id");
+			id = req.getParameter("id");
 			System.out.println("이것이 번호다 : " + p_no);
 			System.out.println("이것이 아이디다 : " + id);
 			service = new BoardService(req, resp);

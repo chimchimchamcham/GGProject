@@ -265,9 +265,6 @@ a:visited {
 	color: #b7b7b7;
 	font-weight:bold;
 }
-
-
-
 </style>
 
 <%
@@ -1013,8 +1010,7 @@ a:visited {
 
 		console.log('flowlist:' + flowlist.length);
 
-		flowlist
-				.forEach(function(item, idx) {
+		flowlist.forEach(function(item, idx) {
 
 					content += "<div class='item-one-flow'>"
 					content += "<div class='img-zoon'><img src='/photo"+item.u_newname+"'></div>"
@@ -1022,8 +1018,7 @@ a:visited {
 							+ "</div>"
 					content += "<div class=''>팔로워:" + item.flow_count
 							+ "</div>"
-					content += "<a href='myPage?id=" + item.u_id
-							+ "'>프로필로가기</a>";
+					content += "<a href='myPage?id=" + item.u_id +"'>프로필로가기</a>";
 					content += item.thisuserFlowingYN;
 					content += " </div>"
 				});
@@ -1276,15 +1271,21 @@ a:visited {
 
 		reportlist.forEach(function(item, idx) {
 			console.log('idx:', idx, item);
-			content += "<td>" + item.n_sendId + "</td>";
+			
+			
+
+			
+			content += "<tr class='content-zoon_report'>"
+			content += "<td>" + item.n_receiveId + "</td>";
 			content += "<td>" + item.n1_name + "신고</td>";
 			content += "<td class='n1_name'>" + item.n_content + "</td>";
 			content += "<td>" + item.hn_adminid + "</td>";
 			content += "<td>" + item.hn_tm + "</td>";
 			content += "<td>" + item.c_name + "</td>";
+			content += "</tr>"
 		});
-		$("#alarm .content-zoon_report").empty();
-		$("#alarm .content-zoon_report").append(content);
+		$("#alarm #Content").empty();
+		$("#alarm #Content").append(content);
 	}//신고 리스트 end
 </script>
 <body>
@@ -1455,23 +1456,19 @@ a:visited {
 
 			<div id="twoButton">
 				<button>판매목록</button>
-				<button>경매목록</button>
-				<button>커뮤니티</button>
-				<button>팔로우</button>
+					<button>경매목록</button>
+					<button style="display:none">구매목록</button>
+					<button>커뮤니티</button>
+					<button>팔로우</button>
+					<button  style="display:none">구매요청</button>
+					<button  style="display:none">좋아요</button>
+					<button style="margin:0px; display:none;" >신고목록</button>
 			</div>
 
-			<div id="sale" class="categori"
-				style="background-color: red; padding: 20px;"><jsp:include
-					page="./mypage_list/sold.jsp"></jsp:include></div>
-			<div id="trade" class="categori"
-				style="background-color: orange; padding: 20px;"><jsp:include
-					page="./mypage_list/auction.jsp"></jsp:include></div>
-			<div id="commu" class="categori"
-				style="background-color: green; padding: 20px;"><jsp:include
-					page="./mypage_list/community.jsp"></jsp:include></div>
-			<div id="follow" class="categori"
-				style="background-color: blue; padding: 20px;"><jsp:include
-					page="./mypage_list/flows.jsp"></jsp:include></div>
+			<div id="sale" class="categori"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
+			<div id="trade" class="categori" ><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
+			<div id="commu" class="categori" ><jsp:include page="./mypage_list/community.jsp"></jsp:include></div>
+			<div id="follow" class="categori" ><jsp:include page="./mypage_list/flows.jsp"></jsp:include></div>
 		</c:if>
 
 	</div>

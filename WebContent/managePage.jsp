@@ -267,9 +267,6 @@ h3 {
 							<img src="img/search-icon.png" alt="search-icon">
 						</div>
 					</td>
-					<td style="text-align: right; width:160px;"><small>분류명  </small><select>
-							<option value="댓글금지">댓글금지</option>
-					</select></td>
 				</tr>
 			</table>
 			<div id="Content">

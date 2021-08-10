@@ -160,7 +160,7 @@ public class UserController extends HttpServlet {
 			resp.setContentType("text/html; charset=UTF-8");
 			req.setCharacterEncoding("UTF-8");
 
-			// 회원목록
+			/* ==회원목록== */
 			ArrayList<GGDto> userList = service.userList();
 			System.out.println("userList size : " + userList.size());
 			req.setAttribute("userList", userList);
@@ -182,6 +182,12 @@ public class UserController extends HttpServlet {
 			ArrayList<GGDto> notifyList = service.notifyList();
 			System.out.println("notifyList size : " + notifyList.size());
 			req.setAttribute("notifyList", notifyList);
+			
+			/* ==블랙리스트 목록== */
+			ArrayList<GGDto> blackList = service.blackList();
+			System.out.println("blackList size : " + blackList.size());
+			req.setAttribute("blackList", blackList);
+			
 
 			/* ====경로지정==== */
 			dis = req.getRequestDispatcher("managePage.jsp");
