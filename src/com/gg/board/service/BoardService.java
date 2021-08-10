@@ -48,7 +48,7 @@ public class BoardService {
 			mainpage_sold_list = dao.mainpage_list_sold();
 			mainpage_auc_list = dao.mainpage_list_auction();
 			mainpage_communiti_list = dao.mainpage_list_communiti();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			dao.resClose();
