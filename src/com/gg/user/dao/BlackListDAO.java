@@ -136,8 +136,8 @@ public class BlackListDAO {
 		
 		if(rs.next()) {
 			dto.setB_id(rs.getString("b_id"));
-			dto.setB_starthr(rs.getString("b_starttm"));
-			dto.setB_endhr(rs.getString("b_endtm"));
+			dto.setB_starthr(rs.getString("b_starthr"));
+			dto.setB_endhr(rs.getString("b_endhr"));
 			dto.setB_adminId(rs.getString("b_adminId"));
 			dto.setB_content(rs.getString("b_content"));
 			dto.setB_no(rs.getInt("b_no"));

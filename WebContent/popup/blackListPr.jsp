@@ -56,7 +56,7 @@ button{
 $(document).ready(function(){
 	//등록한 관리자 아이디 세션값에서 가져오기
 	var userId = "${sessionScope.loginId}";
-	document.getElementById('b_adminId').value=userId;
+	document.getElementById("b_adminId").value=userId;
 });
 </script>
 </head>
