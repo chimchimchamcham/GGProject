@@ -13,7 +13,7 @@
 	padding:0;
 }
 h2 {
-margin-top:20px;
+	margin-top:20px;
 	text-align: center;
 }
 #tradeWrap {
@@ -24,6 +24,7 @@ margin-top:20px;
 	display: inline-block;
 	width: 420px;
 	margin:30px;
+	border-top:1px solid black;
 }
 .content img:hover{
 	opacity:0.9;
@@ -42,7 +43,7 @@ a{
 textarea{
 	overflow:hidden;
 	width:380px;
-	height:230px;
+	height:200px;
 	resize:none;
 	padding:20px;
 }
@@ -51,13 +52,16 @@ textarea{
 	<h2>쪽지보내기</h2>
 	<div id="msgWrap">
 		<div class="tableWrap">
-		<form action="sendMsg" method="GET">
+		<form action="../sendMsg" method="GET">
 			<table class="content">
 				<tr>
-					<td style="text-align:left"><a href="#"><img src="../test/default-profile.png" width="60"><b id="receiveId" style="font-size:25px;">&nbsp;&nbsp;To : &nbsp;</b></a></td>
+					<td style="visibility:hidden"><input type="text" name="M_receiveId" value="${param.N_receiveId }"/></td>
 				</tr>
 				<tr>
-					<td><textarea id="m_content" maxlength="1000" placeholder="내용을 입력해 주세요♥"></textarea></td>
+					<td style="text-align:left"><a href="#"><img src="../test/default-profile.png" width="60"><b>&nbsp;&nbsp;To : &nbsp;${param.N_receiveNname}</b></a></td>
+				</tr>
+				<tr>
+					<td><textarea name="M_content" maxlength="1000" placeholder="내용을 입력해 주세요♥"></textarea></td>
 				</tr>
 				<tr>
 					<td style="text-align:right; margin-top:30px;"><button style="padding:3px 10px;">보내기</button></td>
