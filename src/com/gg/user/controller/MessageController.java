@@ -34,11 +34,18 @@ public class MessageController extends HttpServlet {
 		String ctx = req.getContextPath();
 		String addr = uri.substring(ctx.length());
 		MessageService service = new MessageService(req);
-		RequestDispatcher dis;
+		RequestDispatcher dis = null;
 		
 		switch (addr) {
 		case "/sendMsg":
+			String msg = "";
 			boolean success = service.sendMsg();
+			if(success) {
+				msg = "쪽지를 전송하였습니다.";
+				req.setAttribute("msg",msg);
+				dis = req.getRequestDispatcher("/popup/sendMsgPop.jsp");
+				dis.forward(req, resp);
+			}
 			break;
 	
 		}

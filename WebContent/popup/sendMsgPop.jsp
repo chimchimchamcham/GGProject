@@ -72,6 +72,10 @@ textarea{
 	</div>
 </body>
 <script>
-	
+var msg = "${msg}";
+if(msg != ""){
+	alert(msg);	
+	window.close();
+}
 </script>
 </html>

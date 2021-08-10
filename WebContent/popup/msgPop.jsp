@@ -109,10 +109,5 @@ a{
 		console.log("쪽지 삭제");
 	});
 	
-	var msg = ${"msg"};
-	if(msg != ""){
-		alert(msg);	
-	}
-	
 </script>
 </html>
