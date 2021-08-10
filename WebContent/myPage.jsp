@@ -296,7 +296,7 @@ a:visited {
 				"notifyPopup", "width=900, height=600, left=450, top=180");
 	}
 	function sendMsgPop() {
-		window.open("./popup/sendMsgPop.jsp?N_receiveId=${myPageInfo.u_id}&N_receiveNname=${myPageInfo.u_nname}",
+		window.open("./popup/sendMsgPop.jsp?N_receiveId=${myPageInfo.u_id}&N_receiveNname=${myPageInfo.u_nname}&u_newName=${myPageInfo.u_newName}",
 				"chargePop", "width=500, height=500, left=850, top=150");
 	}
 
