@@ -83,7 +83,7 @@ public class BoardService {
 		dao.resClose();
 		return isFollowed;
 	}
-	
+
 	// 찜 테이블에 정보 추가 + 게시글에 좋아요 수 추가
 	public boolean lovePlus() {
 		int p_no = Integer.parseInt(req.getParameter("p_no"));
@@ -363,19 +363,18 @@ public class BoardService {
 				e.printStackTrace();
 			} finally {
 				dao.resClose();
-				
+
 				HashMap<String, Object> map = new HashMap<>();
 				map.put("success", success);
-				
+
 				resp.setCharacterEncoding("UTF-8");
-				resp.setContentType("text/html; charset=UTF-8");		
+				resp.setContentType("text/html; charset=UTF-8");
 				resp.getWriter().println(new Gson().toJson(map));
 			}
 		} else {
 			System.out.println("null임");
 		}
-		
-		
+
 	}
 
 //구매요청리스트
@@ -402,9 +401,9 @@ public class BoardService {
 		dao.resClose();
 
 	}
-	
-public void updatereqlist(String rqno) throws IOException {
-		
+
+	public void updatereqlist(String rqno) throws IOException {
+
 		BoardDAO dao = new BoardDAO();
 		GGDto dto = null;
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -412,19 +411,18 @@ public void updatereqlist(String rqno) throws IOException {
 		try {
 			dto = dao.urllist(rqno);
 			success = true;
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			dao.resClose();
-			System.out.println("가져올 글의 번호 : "+dto.getP_no());
-			System.out.println("가져올 요청의 번호 : "+dto.getRq_no());
-			System.out.println("가져올 요청한 사람의 id : "+dto.getRq_id());
-			System.out.println("가져올 요청한 y/n여부 : "+dto.getRq_YN());
-			
+			System.out.println("가져올 글의 번호 : " + dto.getP_no());
+			System.out.println("가져올 요청의 번호 : " + dto.getRq_no());
+			System.out.println("가져올 요청한 사람의 id : " + dto.getRq_id());
+			System.out.println("가져올 요청한 y/n여부 : " + dto.getRq_YN());
+
 			map.put("info", dto);
 			map.put("success", success);
-			
-			
+
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().print(new Gson().toJson(map));
 
@@ -476,10 +474,9 @@ public void updatereqlist(String rqno) throws IOException {
 		resp.getWriter().println(new Gson().toJson(map));
 		map.clear();
 		dao.resClose();
-		
+
 	}
-	
-	
+
 ///////////////////////////////////////////////////////////////////////////////
 	public HashMap<String, ArrayList<GGDto>> category() {
 		BoardDAO dao = new BoardDAO();
@@ -680,15 +677,18 @@ public void updatereqlist(String rqno) throws IOException {
 
 						// 경매종료상태 메서드 실행
 						dto2 = t_dao.endAuction(p_no, au_code, ha_bidusr);
-						String successer = dto2.getAu_successer();//경매 낙찰자 가져오기
+						String successer = dto2.getAu_successer();// 경매 낙찰자 가져오기
 						String p_id = dto2.getP_id();
 						String p_title = dao.getTitle(p_no);
 						int t_no = dto2.getT_no();
-						//알람보내기
-						Aldao.insertAlarm(successer, "A004", "["+p_title+"..]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
-						Aldao.insertAlarm(p_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./auctionD?t_no="+t_no);//경매글 작성자
-						Aldao.insertAlarm(p_id, "A004", "["+p_title+"]"+successer+"님이 낙찰자로 선정되었습니다.", "Y",  "./tradeDetail?t_no="+t_no);//경매글 작성자
-						
+						// 알람보내기
+						Aldao.insertAlarm(successer, "A004", "[" + p_title + "..]낙찰자로 선정되었습니다.", "Y",
+								"./tradeDetail?t_no=" + t_no);// 경매글 낙찰자
+						Aldao.insertAlarm(p_id, "A011", "[" + p_title + "..]경매가 종료 되었습니다.", "Y",
+								"./auctionD?t_no=" + t_no);// 경매글 작성자
+						Aldao.insertAlarm(p_id, "A004", "[" + p_title + "]" + successer + "님이 낙찰자로 선정되었습니다.", "Y",
+								"./tradeDetail?t_no=" + t_no);// 경매글 작성자
+
 						// dto 내용 변경 dto.setAu_code(dto2.getAu_code());
 						dto.setAu_sucTm(dto2.getAu_sucTm());
 						dto.setAu_code(dto2.getAu_code());
@@ -832,7 +832,7 @@ public void updatereqlist(String rqno) throws IOException {
 		dao.resClose();
 
 	}
-	
+
 	public void mainsold_list(String soldmainlistwhatadd) throws IOException {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
@@ -853,7 +853,7 @@ public void updatereqlist(String rqno) throws IOException {
 		resp.getWriter().println(new Gson().toJson(map));
 		map.clear();
 		dao.resClose();
-		
+
 	}
 
 	public ArrayList<GGDto> commList() {
@@ -965,14 +965,11 @@ public void updatereqlist(String rqno) throws IOException {
 	public ArrayList<GGDto> noticeList(int paging, int currPageNum) {
 
 		BoardDAO dao = new BoardDAO();
-		ArrayList<GGDto> noticeList = dao.noticeList(paging,currPageNum);
+		ArrayList<GGDto> noticeList = dao.noticeList(paging, currPageNum);
 		dao.resClose();
 
 		return noticeList;
 	}
-
-
-
 
 
 	// 메서드 통합으로 인하여 주석처리

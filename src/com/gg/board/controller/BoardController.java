@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/postDel", "/writeCommunity", "/auctionDetail",
 		"/commDetail", "/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist","/soldmainlist", "/commList",
 		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist","/mainsold","/mainauction","/report_list",
-		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail","/applyreqlist","/noticeList"})
+		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail","/applyreqlist","/noticeList","/notifyDetail"})
 
 
 public class BoardController extends HttpServlet {
@@ -618,7 +618,7 @@ public class BoardController extends HttpServlet {
 			dis.forward(req, resp);
 
 			break;
-
+			
 		// 메서드 통합으로 인하여 주석처리
 		/*
 		 * case "/delAuction":

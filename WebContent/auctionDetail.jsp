@@ -768,14 +768,11 @@ var isFollowed = false;
 	});
 	//경매글 블라인드 체크 여부 확인
 	//판매자일경우 보이고 그 외의 사람들은 튕기기
-	/*var p_blindYN = "${dto.p_blindYN}";
+	var p_blindYN = "${dto.p_blindYN}";
 	if("${dto.p_blindYN}"=="Y"){
-		if("${sessionScope.loginId}"!="${dto.p_id}"){
-			$("#content_hide").show();
 			alert("삭제된 경매글 입니다.");
 			history.go(-1);
-		}
-	}*/
+	};
 	/*글자수 제한*/
 	$(document).on('keyup',".board_text", function() {
 		$('#board_text_controll').html("(" + $(this).val().length + " / 300)");
