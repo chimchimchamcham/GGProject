@@ -49,7 +49,7 @@ background-color: #f7f7f7;
 }
 
 .content td{
-	/* border: 1px solid black;  */
+	border: 1px solid black;
 }
 
 #buttonTwo {
@@ -75,6 +75,7 @@ a{
 .read {
 	opacity: 0.3;
 }
+
 </style>
 <body>
 	<h2>쪽지</h2>
@@ -108,6 +109,10 @@ a{
 		console.log("쪽지 삭제");
 	});
 	
+	var msg = ${"msg"};
+	if(msg != ""){
+		alert(msg);	
+	}
 	
 </script>
 </html>
