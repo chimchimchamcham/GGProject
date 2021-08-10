@@ -17,7 +17,7 @@ margin-top: 30vh;
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        margin: 5vh;
+        margin: 5px;
     }
 
     div.itemboxs,.itemboxs_sold,.itemboxs_auc{
@@ -32,15 +32,14 @@ margin-top: 30vh;
         flex-direction: column;
         align-items: center;
         flex-wrap: nowrap;
-        margin: 5px;
+        margin: 15px;
         border:1px solid black;
         padding: 5px;
-        width: 35vh;
+        width: 350px;
+        height:400px;
     }
    .itembox img{
    	border: 1px solid black;
-   	max-width: 200px;
-   	max-height: 200px;
    }
 </style>
 
@@ -128,11 +127,9 @@ function soled_list(mainpage_sold_list) {
 		
 		mainpage_sold_list.forEach(function(item, idx) {
 					console.log("idx:", idx, item);
-					content += "<div class='itembox'>";
-					content +=  "<h1>1</h1>";
-					content +=  "<img src='test.jpg' alt=''>";
+					content +="<div class='itembox'>";
+					content +="<div><img src='' style='width:360px;height:250px;'><div>dbwlgh</div></div>";
 					content +="<div>판매값:10000000</div>";
-					content +="<div><img src='' style='width: 40px;height: 40px;'><div>dbwlgh</div></div>";
 					content +="<div><div>♥:50</div><div>조회수</div><div>tm:2015</div></div>";
 					content +="</div>";
 				});
@@ -150,11 +147,9 @@ function auc_list(mainpage_auc_list) {
 	
 	mainpage_auc_list.forEach(function(item, idx) {
 				console.log("idx:", idx, item);
-				content += "<div class='itembox'>";
-				content +=  "<h1>1</h1>";
-				content +=  "<img src='test.jpg' alt=''>";
+				content +="<div class='itembox'>";
+				content +="<div><img src='' style='width:360px;height:250px;'><div>dbwlgh</div></div>";
 				content +="<div>판매값:10000000</div>";
-				content +="<div><img src='' style='width: 40px;height: 40px;'><div>dbwlgh</div></div>";
 				content +="<div><div>♥:50</div><div>조회수</div><div>tm:2015</div></div>";
 				content +="</div>";
 			});
@@ -170,11 +165,9 @@ function soled_list(mainpage_sold_list) {
 	
 	mainpage_sold_list.forEach(function(item, idx) {
 				console.log("idx:", idx, item);
-				content += "<div class='itembox'>";
-				content +=  "<h1>1</h1>";
-				content +=  "<img src='test.jpg' alt=''>";
+				content +="<div class='itembox'>";
+				content +="<div><img src='' style='width:360px;height:250px;'><div>dbwlgh</div></div>";
 				content +="<div>판매값:10000000</div>";
-				content +="<div><img src='' style='width: 40px;height: 40px;'><div>dbwlgh</div></div>";
 				content +="<div><div>♥:50</div><div>조회수</div><div>tm:2015</div></div>";
 				content +="</div>";
 			});
