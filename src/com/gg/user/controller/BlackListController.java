@@ -1,6 +1,7 @@
 package com.gg.user.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,7 +50,14 @@ public class BlackListController extends HttpServlet {
 			
 		case "/blackLstPr":
 			System.out.println("블랙리스트 등록 요청 ");
-			service.blackLstPr();
+			ArrayList<Object>list = new ArrayList<Object>();
+			list=service.blackLstPr();
+			msg = (String) list.get(0);
+			boolean success = (boolean) list.get(1);
+			req.setAttribute("msg", msg);
+			req.setAttribute("success", success);
+			dis = req.getRequestDispatcher("./popup/blackListPr.jsp");
+			dis.forward(req, resp);
 		}
 	}
 }

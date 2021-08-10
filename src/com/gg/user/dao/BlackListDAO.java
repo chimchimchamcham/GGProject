@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -65,7 +67,11 @@ public class BlackListDAO {
 		}
 	}
 
-	public void blackLstPr(GGDto dto) throws SQLException {
+	public ArrayList<Object> blackLstPr(GGDto dto) throws SQLException {
+		String msg = "블랙리스트 등록 실패하였습니다.";
+		boolean success= false;
+		int checker = 0;
+		ArrayList<Object> list = new ArrayList<Object>();
 		String sql = "INSERT INTO blacklist(b_id,b_starttm,b_endtm,b_adminid,b_content,b_code) VALUES(?,SYSDATE,?,?,?,?)";
 		
 		String b_id = dto.getB_id();
@@ -81,9 +87,16 @@ public class BlackListDAO {
 		ps.setString(4, b_content);
 		ps.setString(5, b_code);
 		
-		int success = ps.executeUpdate();
+		checker = ps.executeUpdate();
+		if(checker>0) {
+			msg = "블랙리스트 등록 실패하였습니다.";
+			success = true;
+		}
 		
-		System.out.println("블랙리스트 등록 갯수 : "+success);
+		list.add(msg);
+		list.add(success);
+		return list;
+		
 		
 		
 	}
