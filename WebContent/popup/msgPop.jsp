@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +53,6 @@ h2 {
 	display: inline-block;
 }
 
-
 #threeButton button {
 	width: 90px;
 	text-align: center;
@@ -68,36 +68,50 @@ a {
 .read {
 	opacity: 0.3;
 }
-#threeButton button{
-	margin:10px 10px;
-}
 
+#threeButton button {
+	margin: 10px 10px;
+}
 </style>
 <body>
 	<h2>쪽지</h2>
 	<div id="msgWrap">
 		<div class="tableWrap">
-				<div id="threeButton">
-					<button onclick="./msgList">전체보기</button>
-					<button onclick="./msgList?rOPs=s">보낸쪽지</button>
-					<button onclick="./msgList?rOPs=r">받은쪽지</button>
-				</div>
+			<div id="threeButton">
+				<button onclick="./msgList">전체보기</button>
+				<button onclick="./msgList?rOPs=s">보낸쪽지</button>
+				<button onclick="./msgList?rOPs=r">받은쪽지</button>
+			</div>
 			<table class="content">
-				<c:foreach>
+				<c:forEach var="item" items="${list }">
 					<tr>
-						<td rowspan="2"><a href="#"><img src="../test/default-profile.png" width="60"></a></td>
-						<th><a href="#"><p style="width: 280px; padding: 0 20px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">안녕하세요?이거 살려고하는데요^^하하하하하하하하</p></a></th>
-						<td rowspan="2"><button style="padding:3px" class="delBtn">삭제</button></td>
+						<td rowspan="2">
+							<a href="#"> 
+									<c:choose>
+									<c:when test="${item.u_newName  ne 'default-profile.png'}">
+										<img class="profile" src="./img/default-profile.png" width="60">
+									</c:when> 
+									<c:when test="${item.u_newName  eq 'default-profile.png'}">
+										<img class="profile" src="/photo/${item.u_newName }" width="60">
+									</c:when>
+									</c:choose>
+								</a>
+							</td>
+						<th><a href="#"><p style="width: 280px; padding: 0 20px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.m_content }</p></a></th>
+						<td rowspan="2"><button style="padding: 3px" class="delBtn">삭제</button></td>
 					</tr>
 					<tr>
 						<td>
-							<p style="width: 280px; padding: 0 20px; text-align: left;"><a href="#">날짜</a> | 2021.08.06 13:45</p>
+							<p style="width: 280px; padding: 0 20px; text-align: left;">
+								<a href="#">날짜</a> | ${item.m_sendTm }
+							</p>
 						</td>
 					</tr>
 					<tr>
-						<td style="border-bottom: 1px solid black; padding-top: 10px;" colspan="3"></td>
+						<td style="border-bottom: 1px solid black; padding-top: 10px;"
+							colspan="3"></td>
 					</tr>
-				</c:foreach>
+				</c:forEach>
 			</table>
 		</div>
 	</div>
