@@ -111,7 +111,7 @@ public class BoardDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("DAO upP_view4");
+		System.out.println("업 성공 여부 : " +  success);
 		return success;
 	}
 
@@ -1000,15 +1000,25 @@ public class BoardDAO {
 			ps.setString(1, p_no);
 			rs = ps.executeQuery();
 			if (rs.next()) {
+				
 				dto.setU_nname(rs.getString("u_nname"));
+				System.out.println("공지사항 u_nname : " + dto.getU_nname());
 				dto.setU_newName(rs.getString("u_newName"));
+				System.out.println("공지사항 u_newName : " + dto.getU_newName());
 				dto.setP_no(rs.getInt("p_no"));
+				System.out.println("공지사항 p_no : " + dto.getP_no());
 				dto.setP_title(rs.getString("p_title"));
+				System.out.println("공지사항 p_title : " + dto.getP_title());
 				dto.setP_content(rs.getString("p_content"));
+				System.out.println("공지사항 p_content : " + dto.getP_content());
 				dto.setP_tm(rs.getDate("p_tm"));
+				System.out.println("공지사항 p_tm : " + dto.getP_tm());
 				dto.setP_view(rs.getInt("p_view"));
+				System.out.println("공지사항 p_view : " + dto.getP_view());
 				dto.setI_newName(rs.getString("i_newName"));
+				System.out.println("공지사항 i_newName : " + dto.getI_newName());
 				dto.setU_id(rs.getString("u_id"));
+				System.out.println("공지사항  u_id : " + dto.getU_id());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

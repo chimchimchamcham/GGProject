@@ -949,4 +949,52 @@ public HashMap<String,Object> auctionBid(int p_no, int ha_bidPr, String ha_bidUs
 			}
 		}
 		
+		//거래댓글 목록 보기
+		public HashMap<String, Object> tradeCommentList(int t_no) {
+			HashMap<String,Object> map = new HashMap<String, Object>();
+			ArrayList<GGDto> list = new ArrayList<GGDto>();
+			GGDto dto = null;
+			String sql = "SELECT T.T_NO, T.T_SALER, T.T_BUYER, TC.TC_NO, TC.TC_CONTENT, TC.TC_TM, TC.TC_ID, (SELECT U_NNAME FROM USERINFO WHERE U_ID = TC.TC_ID) TC_NNAME FROM TRADE T, TRADE_COMMENT TC WHERE T.T_NO = TC.T_NO AND T.T_NO = ? ORDER BY TC_NO ASC";
+			
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, t_no);
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					dto = new GGDto();
+					dto.setT_no(rs.getInt("t_no"));
+					dto.setT_saler(rs.getString("t_saler"));
+					dto.setT_buyer(rs.getString("t_buyer"));
+					dto.setTc_id(rs.getString("tc_id"));
+					dto.setTc_content(rs.getString("tc_content"));
+					dto.setTc_tm(rs.getDate("tc_tm"));
+					dto.setTc_nname(rs.getString("tc_nname"));
+					list.add(dto);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			
+			map.put("list", list);
+			System.out.println("list size : "+list.size());
+			return map;
+		}
+		
+		//아이디로 닉네임을 알 수 있는 기능
+		public String selectUserinfoU_nname(String id) {
+			String sql = "SELECT U_NNAME FROM USERINFO WHERE U_ID = ?";
+			String u_nname = "";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, id);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					u_nname = rs.getString("u_nname");
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return u_nname;
+		}
+		
 }
