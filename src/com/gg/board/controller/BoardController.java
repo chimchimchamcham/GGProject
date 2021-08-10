@@ -18,13 +18,12 @@ import com.gg.board.service.BoardService;
 import com.gg.dto.GGDto;
 import com.google.gson.Gson;
 
-
-@WebServlet({ "/mainpage","/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist", "/auctionlist",
-		"/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/postDel", "/writeCommunity", "/auctionDetail",
-		"/commDetail", "/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist","/soldmainlist", "/commList",
-		"/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm", "/auctionUpdate", "/flowlist","/mainsold","/mainauction","/report_list",
-		"/requestlist", "/lovelist", "/delAuction", "/flowadddelect","/noticeDetail","/applyreqlist","/noticeList"})
-
+@WebServlet({ "/mainpage", "/salesDetail", "/loveMinus", "/lovePlus", "/loveMinus2", "/lovePlus2", "/soldlist",
+		"/auctionlist", "/maidelist", "/writeForm", "/writeSale", "/writeTrade", "/postDel", "/writeCommunity",
+		"/auctionDetail", "/commDetail", "/commUpdateForm", "/commUpdate", "/communitylist", "/auctionmainlist",
+		"/soldmainlist", "/commList", "/salesUpdateForm", "/salesUpdate", "/details", "/auctionUpdateForm",
+		"/auctionUpdate", "/flowlist", "/mainsold", "/mainauction", "/report_list", "/requestlist", "/lovelist",
+		"/delAuction", "/flowadddelect", "/noticeDetail", "/applyreqlist", "/noticeList" })
 
 public class BoardController extends HttpServlet {
 
@@ -32,13 +31,13 @@ public class BoardController extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-			dual(req, resp);
+		dual(req, resp);
 
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-			dual(req, resp);
+		dual(req, resp);
 
 	}
 
@@ -55,15 +54,15 @@ public class BoardController extends HttpServlet {
 		GGDto bdto = null;
 		boolean success = false;
 		int p_no;
-		String userid;
+		String userid = "";
 		switch (addr) {
-		
+
 		case "/mainpage":
 			System.out.println("hellow_word");
 			service.main_list();
-			
+
 			break;
-			
+
 		case "/salesDetail":
 			System.out.println("판매글 상세보기");
 			GGDto dto = service.salesDetail();
@@ -72,18 +71,17 @@ public class BoardController extends HttpServlet {
 			boolean isLiked = false;
 			isLiked = service.isLiked();
 			System.out.println("isLiked : " + isLiked);
-			
+
 			// 구매요청을 눌렀는지 확인
 			boolean isBuyRequested = false;
 			isBuyRequested = service.isBuyRequested();
 			System.out.println("isBuyRequested : " + isBuyRequested);
-			
+
 			// 팔로우를 했는지 안했는지 확인
 			boolean isFollowed = false;
 			isFollowed = service.isFollowed();
 			System.out.println("isFollowed : " + isFollowed);
-			
-			
+
 			// 판매자의 판매목록 3개를 가져오기
 			String p_id = dto.getP_id();
 			System.out.println("p_id : " + p_id);
@@ -135,19 +133,26 @@ public class BoardController extends HttpServlet {
 		 */
 		case "/soldlist":
 			System.out.println("판매 리스트 요청");
+
 			userid = (String) req.getSession().getAttribute("loginId");
 			String id = req.getParameter("id");
-			if(!userid.equals(id)) { //타인프로필 일때
-				userid=id;
-			}
+
+			
+			/*
+			 * if(!userid.equals(id)) { //타인프로필 일때 userid=id; }
+			 */
+			 
+			 
 
 			int listwhatadd = Integer.parseInt(req.getParameter("index1"));
 			int listhowaline = Integer.parseInt(req.getParameter("index2"));
 
+			System.out.println("userid:" + userid);
 			System.out.println("listwhatadd:" + listwhatadd);
 			System.out.println("listhowaline:" + listhowaline);
 
 			service.sold_list(userid, listwhatadd, listhowaline);
+			
 
 			break;
 
@@ -163,18 +168,17 @@ public class BoardController extends HttpServlet {
 			service.mainsold_list(soldmainlistwhatadd);
 
 			break;
-			
-			
+
 		case "/auctionlist":
 			System.out.println("경매 리스트 요청");
 
 			String userid1 = (String) req.getSession().getAttribute("loginId");
 
 			id = req.getParameter("id");
-			if(!userid1.equals(id)) { //타인프로필 일때
-				userid=id;
+			if (!userid1.equals(id)) { // 타인프로필 일때
+				userid = id;
 			}
-			
+
 			int auctionlistwhatadd = Integer.parseInt(req.getParameter("index1"));
 
 			System.out.println("listwhatadd:" + auctionlistwhatadd);
@@ -209,8 +213,8 @@ public class BoardController extends HttpServlet {
 			System.out.println("커뮤니티 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
 			id = req.getParameter("id");
-			if(!userid.equals(id)) { //타인프로필 일때
-				userid=id;
+			if (!userid.equals(id)) { // 타인프로필 일때
+				userid = id;
 			}
 			service.community_list(userid);
 
@@ -219,30 +223,29 @@ public class BoardController extends HttpServlet {
 			System.out.println("팔로잉리스트 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
 			id = req.getParameter("id");
-			if(!userid.equals(id)) { //타인프로필 일때
-				userid=id;
+			if (!userid.equals(id)) { // 타인프로필 일때
+				userid = id;
 			}
-			int flowORflowing = Integer.parseInt(req.getParameter("index1"));		
-			service.flow_list(userid,flowORflowing);
-			
-		case "/flowadddelect":
-            System.out.println("팔로워 버튼 처리 요청");
-            req.setCharacterEncoding("utf-8");
-            userid = (String) req.getSession().getAttribute("loginId");
-            String btntext = req.getParameter("btntext");
-            String nick = req.getParameter("nick");
-            
-            /*
-             * System.out.println("userid:"+userid);
-             * System.out.println("flow_addordelect:"+flow_addordelect);
-             * System.out.println("nick:"+nick);
-             */
-            
-            
-            service.flow_button(userid,btntext,nick);
+			int flowORflowing = Integer.parseInt(req.getParameter("index1"));
+			service.flow_list(userid, flowORflowing);
 
-            break;
-			
+		case "/flowadddelect":
+			System.out.println("팔로워 버튼 처리 요청");
+			req.setCharacterEncoding("utf-8");
+			userid = (String) req.getSession().getAttribute("loginId");
+			String btntext = req.getParameter("btntext");
+			String nick = req.getParameter("nick");
+
+			/*
+			 * System.out.println("userid:"+userid);
+			 * System.out.println("flow_addordelect:"+flow_addordelect);
+			 * System.out.println("nick:"+nick);
+			 */
+
+			service.flow_button(userid, btntext, nick);
+
+			break;
+
 		case "/requestlist":
 			System.out.println("거래요청리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
@@ -251,17 +254,17 @@ public class BoardController extends HttpServlet {
 			service.req_list(userid, reqindex);
 
 			break;
-			
+
 		case "/applyreqlist":
 			System.out.println("거래수락 or 거절 요청");
 			String rqnoval = req.getParameter("rqno_val");
 			String rqnotext = req.getParameter("rqno_text");
-			
-			System.out.println("rqnoval:"+rqnoval);
-			System.out.println("rqnotext:"+rqnotext);
+
+			System.out.println("rqnoval:" + rqnoval);
+			System.out.println("rqnotext:" + rqnotext);
 			service.updatereqlist(rqnoval);
 			break;
-			
+
 		case "/lovelist":
 			System.out.println("좋아요리스트 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
@@ -273,7 +276,7 @@ public class BoardController extends HttpServlet {
 		case "/report_list":
 			System.out.println("신고리스트 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
-			
+
 			service.report_list(userid);
 
 			break;
@@ -556,14 +559,14 @@ public class BoardController extends HttpServlet {
 			dis = req.getRequestDispatcher("commDetailForm.jsp");
 			dis.forward(req, resp);
 			break;
-			
+
 		case "/mainsold":
 
 			req.setAttribute("mainlist", 0);
 			dis = req.getRequestDispatcher("index.jsp");
 			dis.forward(req, resp);
 			break;
-			
+
 		case "/mainauction":
 
 			req.setAttribute("mainlist", 1);
@@ -580,14 +583,14 @@ public class BoardController extends HttpServlet {
 			break;
 
 		case "/commList":
-	         resp.setCharacterEncoding("UTF-8");
-	         ArrayList<GGDto> list = service.commList();
-	         HashMap<String, ArrayList<GGDto>> list_map = new HashMap<String, ArrayList<GGDto>>();
-	         list_map.put("list", list);
-	         resp.setContentType("text/html; charset=UTF-8");
-	         resp.getWriter().println(new Gson().toJson(list_map));
-	         break;
-			
+			resp.setCharacterEncoding("UTF-8");
+			ArrayList<GGDto> list = service.commList();
+			HashMap<String, ArrayList<GGDto>> list_map = new HashMap<String, ArrayList<GGDto>>();
+			list_map.put("list", list);
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().println(new Gson().toJson(list_map));
+			break;
+
 		case "/postDel":
 			System.out.println("게시글 삭제 요청");
 			success = false;
@@ -600,46 +603,45 @@ public class BoardController extends HttpServlet {
 			dis = req.getRequestDispatcher("index.jsp");
 			dis.forward(req, resp);
 			break;
-			
-			
-		//공지사항 목록
+
+		// 공지사항 목록
 		case "/noticeList":
 			System.out.println("공지사항 리스트 요청");
-			
+
 			/* int paging = 0; */
 			String currPageNum = req.getParameter("currPageNum");
-			System.out.println("처음 currPageNum : "+currPageNum);
+			System.out.println("처음 currPageNum : " + currPageNum);
 			String paging = req.getParameter("paging");
-			if(currPageNum == null || currPageNum.equals("0")) {
+			if (currPageNum == null || currPageNum.equals("0")) {
 				currPageNum = "1";
 			}
-			if(paging == null) {
+			if (paging == null) {
 				paging = "1";
 			}
-			System.out.println("currPageNum : "+currPageNum);
-			System.out.println("paging : "+paging);
-			
+			System.out.println("currPageNum : " + currPageNum);
+			System.out.println("paging : " + paging);
+
 			/* HashMap<String, Object> map = service. */
-			ArrayList<GGDto> lists =  service.noticeList(Integer.parseInt(paging),Integer.parseInt(currPageNum));
+			ArrayList<GGDto> lists = service.noticeList(Integer.parseInt(paging), Integer.parseInt(currPageNum));
 			BoardDAO dao = new BoardDAO();
 			int total = 0;
 			try {
 				total = dao.noticeCount();
-				System.out.println("게시글 총 갯수:"+total);
+				System.out.println("게시글 총 갯수:" + total);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}finally {
+			} finally {
 				dao.resClose();
 			}
-			
+
 			req.setAttribute("noticeList", lists);
-			req.setAttribute("noticeListSize",total);
+			req.setAttribute("noticeListSize", total);
 			dis = req.getRequestDispatcher("noticeList.jsp");
 			dis.forward(req, resp);
 
 			break;
-			
+
 		// 메서드 통합으로 인하여 주석처리
 		/*
 		 * case "/delAuction":
