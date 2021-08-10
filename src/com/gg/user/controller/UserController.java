@@ -243,18 +243,11 @@ public class UserController extends HttpServlet {
 			
 		case "/notifyHistory":
 			System.out.println("신고 히스토리 저장");
-			
-			System.out.println("신고 상세보기 리로드 요청");
-			categoryMap = service.category();
-			System.out.println("신고상태 카테고리 성공 : " + categoryMap);
-			n_stateCat = categoryMap.get("n_stateCat");
-			System.out.println("n_stateCat list size : " + n_stateCat.size());
-			req.setAttribute("n_stateCat", n_stateCat);
-			
-			GGDto dto = service.notifyDetail();
+
+			String sucHn_code = service.notifyHistory();
 			HashMap<String, Object>hnMap = new HashMap<String, Object>();
 
-			hnMap.put("hnDetail", dto);
+			hnMap.put("sucHn_code", sucHn_code);
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().println(new Gson().toJson(hnMap));
 			
