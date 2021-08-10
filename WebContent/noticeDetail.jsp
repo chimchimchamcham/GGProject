@@ -70,7 +70,7 @@ h2 {
 			<tr>
 				<th colspan="3"><h3>${dto.p_title}</h3></th>
 			</tr>
-
+	
 		</table>
 		<table id="infoTable">
 			<tr>

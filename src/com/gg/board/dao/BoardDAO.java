@@ -981,6 +981,7 @@ public class BoardDAO {
 			ps.setString(1, p_no);
 			rs = ps.executeQuery();
 			if (rs.next()) {
+				
 				dto.setU_nname(rs.getString("u_nname"));
 				System.out.println("공지사항 u_nname : " + dto.getU_nname());
 				dto.setU_newName(rs.getString("u_newName"));
