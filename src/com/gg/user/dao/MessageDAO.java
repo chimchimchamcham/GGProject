@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -43,6 +44,11 @@ public class MessageDAO {
 		}
 
 		return success;
+	}
+
+	public ArrayList<GGDto> msgList(String u_id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

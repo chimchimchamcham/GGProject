@@ -1,6 +1,7 @@
 package com.gg.user.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gg.dto.GGDto;
 import com.gg.user.service.MessageService;
 
 @WebServlet({"/sendMsg"})
@@ -46,6 +48,10 @@ public class MessageController extends HttpServlet {
 				dis = req.getRequestDispatcher("/popup/sendMsgPop.jsp");
 				dis.forward(req, resp);
 			}
+			
+		case "/msgList":
+			ArrayList<GGDto> list = new ArrayList<GGDto>();
+			list = service.msgList();
 			break;
 	
 		}
