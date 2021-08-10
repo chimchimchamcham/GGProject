@@ -31,26 +31,17 @@ public class MessageDAO {
 		boolean success = false;
 		String sql = "INSERT INTO message VALUES(SYSDATE,SYSDATE,?,?,?,'N','N')";
 		try {
-			ps = conn.prepareStatement(sql, new String[] {"M_receiveId"});
+			ps = conn.prepareStatement(sql, new String[] { "M_receiveId" });
 			ps.setString(1, dto.getM_sendId());
 			ps.setString(2, dto.getM_receiveId());
 			ps.setString(3, dto.getM_content());
-			ps.executeUpdate();
-			rs = ps.getGeneratedKeys();			
-			if(rs.next()) {
-				sql = "SELECT U_newName FROM userinfo WHERE u_id =?";
-				String pk = rs.getString(1);
-				ps.setString(1, pk);
-				rs = ps.executeQuery();
-				if(rs.next()) {
-					dto.setI_newName(rs.getString(1));
-					success = true;
-				}
+			if (ps.executeUpdate() > 0) {
+				success = true;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
-		
+		}
+
 		return success;
 	}
 
