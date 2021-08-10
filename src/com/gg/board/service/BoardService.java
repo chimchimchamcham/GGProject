@@ -622,6 +622,8 @@ public class BoardService {
 
 		int p_no = dao.writeSale(dto);
 
+		dao.resClose();
+		
 		return p_no;
 	}
 

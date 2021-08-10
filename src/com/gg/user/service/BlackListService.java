@@ -25,6 +25,7 @@ public class BlackListService {
 		dto.setN1_code(req.getParameter("N1_code"));
 		dto.setN2_code(req.getParameter("N2_code"));
 		boolean success = dao.notifyUser(dto);
+		
 		return success;
 	}
 
