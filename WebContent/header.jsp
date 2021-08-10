@@ -28,7 +28,7 @@
       
       /*거래톡 팝업*/
       $(".tradeA").click(function(){
-         window.open("./popup/tradeTalk.jsp", "chargePop", "width=500, height=500, left=850, top=150");
+         window.open("./popup/tradeTalk.jsp", "chargePop", "width=470, height=630, left=850, top=150");
       });
       
       /*쪽지 팝업*/
@@ -385,7 +385,7 @@ body {
             <div id="logo"><a href="index.jsp"><img src="test/logo2.png" width="80"></a></div>
             <div id="search">
                <input type="text" name="search" placeholder="찾고 싶은 상품을 검색해보세요!">
-               <img src="img/search-icon.png" alt="search-icon" onclick="clickevent()">
+               <img src="img/search-icon.png" alt="search-icon">
             </div>
             <div id="menu1">
             <!-- 로그인이 안되어있을 때 -->
