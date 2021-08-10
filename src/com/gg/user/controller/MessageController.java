@@ -36,7 +36,6 @@ public class MessageController extends HttpServlet {
 		MessageService service = new MessageService(req);
 		RequestDispatcher dis;
 		
-		
 		switch (addr) {
 		case "/sendMsg":
 			boolean success = service.sendMsg();
