@@ -32,7 +32,8 @@ public class MessageService {
 
 	public ArrayList<GGDto> msgList() {
 		String u_id = (String) req.getSession().getAttribute("loginId");
-		ArrayList<GGDto> list = dao.msgList(u_id);
+		String rORs = req.getParameter("rORs");
+		ArrayList<GGDto> list = dao.msgList(u_id, rORs);
 		return list;
 	}
 	

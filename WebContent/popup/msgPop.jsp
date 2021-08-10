@@ -45,23 +45,15 @@ h2 {
 	text-align: center;
 }
 
-.tableWrap:hover {
-	background-color: #f7f7f7;
-}
-
-.content td {
-	
-}
-
-#buttonTwo {
+#threeButton {
 	width: 500px;
 	/* background-color: green; */
 	text-align: center;
 	display: inline-block;
-	margin: 20px 0 30px 0;
 }
 
-#buttonTwo button {
+
+#threeButton button {
 	width: 90px;
 	text-align: center;
 	margin: 0px auto;
@@ -76,25 +68,30 @@ a {
 .read {
 	opacity: 0.3;
 }
+#threeButton button{
+	margin:10px 10px;
+}
+
 </style>
 <body>
 	<h2>쪽지</h2>
 	<div id="msgWrap">
-		<div id="buttonTwo">
-			<button id="receiveBtn" onclick="">받은 쪽지(20)</button>
-			<button id="sendBtn" onclick="">보낸 쪽지</button>
-		</div>
 		<div class="tableWrap">
+				<div id="threeButton">
+					<button onclick="./msgList">전체보기</button>
+					<button onclick="./msgList?rOPs=s">보낸쪽지</button>
+					<button onclick="./msgList?rOPs=r">받은쪽지</button>
+				</div>
 			<table class="content">
 				<c:foreach>
 					<tr>
 						<td rowspan="2"><a href="#"><img src="../test/default-profile.png" width="60"></a></td>
-						<th><a href="#"><p style="width: 310px; padding: 0 20px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">안녕하세요?이거 살려고하는데요^^하하하하하하하하</p></a></th>
-						<td rowspan="2"><button class="delBtn">삭제</button></td>
+						<th><a href="#"><p style="width: 280px; padding: 0 20px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">안녕하세요?이거 살려고하는데요^^하하하하하하하하</p></a></th>
+						<td rowspan="2"><button style="padding:3px" class="delBtn">삭제</button></td>
 					</tr>
 					<tr>
 						<td>
-							<p style="width: 310px; padding: 0 20px; text-align: left;"><a href="#">보낸자</a> | 2021.08.06 13:45</p>
+							<p style="width: 280px; padding: 0 20px; text-align: left;"><a href="#">날짜</a> | 2021.08.06 13:45</p>
 						</td>
 					</tr>
 					<tr>
@@ -108,7 +105,13 @@ a {
 <script>
 	/*쪽지 삭제*/
 	$(".delBtn").click(function() {
-		console.log("쪽지 삭제");
+		
+	});
+	$("#receiveBtn").click(function(){
+		
+	});
+	$("#sendBtn").click(function(){
+		
 	});
 </script>
 </html>
