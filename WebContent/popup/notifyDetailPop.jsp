@@ -23,15 +23,32 @@ h2 {
 
 #detailTb{
 	width:750px;
-	height: 500px;
+	height: 440px;
 	margin:0px auto;
 	
 }
 
-#detailTb td{
-	border:1px solid black;
-	border-collapse: collapse;
+#detailTb, #detailTb td{
+	border:1px solid gray;
+	 border-collapse : collapse;
 }
+
+#detailTb td{
+	padding-left:20px;
+}
+
+#button{
+	width:750px;
+	margin:0px auto;
+/* 	border:1px solid black; */
+	clear:both;
+}
+
+#button button{
+	float:right;
+	margin:10px 5px;
+}
+
 </style>
 <body>
 <div id="wrap">
@@ -63,19 +80,17 @@ h2 {
 			</tr>
 			<tr>
 				<td>처리상태</td>
-				<td>select</td>
+				<td><select><option value="hn_001">접수중</option></select></td>
 			</tr>
 			<tr>
 				<td>신고내용</td>
 				<td>신고합니다</td>
 			</tr>
-			<tr>
-				<td colspan="2">버튼</td>
-			</tr>
 	</table>
+	<div id="button"><button>저장</button><button>블랙리스트 처리</button></div>
 	</div>
 </body>
 <script>
-	
+
 </script>
 </html>

@@ -426,7 +426,7 @@ h3 {
 			 
 			 n_stateCatSel.forEach(function(item,idx){
 				 console.log("아이템 :", item , "idx : ", idx);
-				 re_comment += "<tr id='notifyFilter'>";
+				 re_comment += "<tr class='notifyFilter'>";
 				 re_comment +=		"<td>"+item.n_no+"</td>";
 				 re_comment +=		"<td>"+item.n_receiveId+"</td>";
 				 re_comment +=		"<td>"+item.n_sendId+"</td>";
@@ -435,7 +435,7 @@ h3 {
 				 re_comment +=		"<td>"+item.c_name+"</td>";
 				 re_comment +=		"<td>"+item.hn_adminid+"</td>";
 				 re_comment +=	"</tr>";
-				 re_comment +=	"<tr id='line'>";
+				 re_comment +=	"<tr class='notifyLine'>";
 				 re_comment +=		"<td colspan=7 style='padding: 0; border-bottom: 0.7px solid #e8e8e8'></td>";
 				 re_comment +=	"</tr>";
 			 });
@@ -451,8 +451,8 @@ h3 {
 
 	}
 	function delTr() {
-		$("table tr#notifyFilter").remove();
-		 $("table tr#line").remove();
+		$("table tr.notifyFilter").remove();
+		 $("table tr.notifyLine").remove();
 		
 	}
 </script>
