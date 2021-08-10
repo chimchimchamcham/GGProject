@@ -188,6 +188,9 @@ public class UserController extends HttpServlet {
 			System.out.println("blackList size : " + blackList.size());
 			req.setAttribute("blackList", blackList);
 			
+			/* ==마이페이지== */
+			
+			
 
 			/* ====경로지정==== */
 			dis = req.getRequestDispatcher("managePage.jsp");

@@ -143,8 +143,6 @@ public class BlackListDAO {
 			dto.setB_no(rs.getInt("b_no"));
 		}
 		
-		
-		
 		return dto;
 		
 	}
