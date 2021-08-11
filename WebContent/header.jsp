@@ -129,7 +129,7 @@
    });
    
    
-   $("#saleCat li a").click(function(){//카테고리
+   $(document).on("click",".header_nav ul#dropdown li a",function(){//카테고리
 	   console.log("클릭");
 	    $button1 = $(".header_nav ul#dropdown li a");
 	    $index1 = $button1.index(this);
