@@ -4,16 +4,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Document</title>
     <style>
+#mainHeader {
+	z-index: 1000;
+}
+
+#main {
+	/* background-color: gray; */
+	width: 1140px;
+	height: auto;
+	position: absolute;
+	top: 150px;
+	z-index: -1;
+	margin: 0px auto;
+	padding: 30px;
+}
+
+
         .sold-con{
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top:15%;
         }
         table{
             border: 1px solid black;
@@ -114,7 +129,8 @@
     </style>
 </head>
 <body>
-    
+    <div id="mainHeader"><jsp:include page="header.jsp" /></div>
+<div id="main">
 <div class="sold-con">
 <table class="categor">
     <tr><th>카테고리</th></tr>
@@ -140,7 +156,7 @@
     </div>
 </div>
 
-
+</div>
 </body>
 <script>
 

@@ -452,7 +452,7 @@ body {
       <nav class="header_nav">
          <div id="navWrap">
             <ul id="dropdown">
-               <li><a href="mainsold" class="sale">판매</a>
+               <li><a href="./sale_main_list.jsp" class="sale">판매</a>
                   <ul id="saleCat">
                      <li><a href="#">패션의류</a></li>
                      <li><a href="#">뷰티잡화</a></li>
