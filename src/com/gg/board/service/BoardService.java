@@ -367,7 +367,6 @@ public class BoardService {
 			map.put("flowlist", flowlist);
 		}
 		System.out.println("auc_map:" + map);
-
 		resp.setContentType("text/html; charset=UTF-8");
 		resp.getWriter().println(new Gson().toJson(map));
 		map.clear();

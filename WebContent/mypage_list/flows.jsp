@@ -150,7 +150,7 @@ border:  1px solid rgb(176 176 176);
 			url:'./flowlist',
 			data:{	
 				index1 : $index1,
-				"oppId": "${myPageInfo.u_id }"
+				oppId: "${myPageInfo.u_id }"
 					},
 			dataType:'JSON',
 			success:function(data){

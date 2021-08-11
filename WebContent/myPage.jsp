@@ -911,7 +911,7 @@ a:visited {
 			data : {
 				index1 : 0,
 				index2 : 0,
-				"oppId" : "${myPageInfo.u_id}"
+				oppId : "${myPageInfo.u_id}"
 			},
 			dataType : 'JSON',
 			success : function(data) {
