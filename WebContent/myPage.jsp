@@ -309,22 +309,23 @@ a:visited {
 
 	var allurl =
 <%=allurl%>
-	var isFollowed = false;
+	var isFollow = false;
 	$(document).ready(function() {
 		
+		console
 		//이전에 이용자가 판매자를 팔로우한 적이 있는지 확인
 		//팔로우를 했을 경우
-		<c:if test="${isFollowed eq true}">
+		<c:if test="${myPageInfo.isFollow eq true}">
 			$("#followBtn").css({"color" : "white", "background-color" : "gray"});
 			$("#followBtn").text("-팔로우");
-			isFollowed = true; //팔로우를 했다는 뜻
+			isFollow = true; //팔로우를 했다는 뜻
 		</c:if>
 
 		//팔로우 클릭시 버튼 변경
 		//false는 팔로우를 안했다는 뜻 기존값 그대로
 		$("#followBtn").click(function() {
 			//팔로우를 안한 상태에서 팔로우 하기
-			if (!isFollowed) {
+			if (!isFollow) {
 				
 				var param = {};
 				param.btntext = "+팔로우";
@@ -342,7 +343,7 @@ a:visited {
 							$("#followBtn").css({"color" : "white", "background-color" : "gray"});
 							$("#followBtn").text("-팔로우");
 							//팔로우 한 상태가 됨
-							isFollowed = true;
+							isFollow = true;
 							alert("팔로우 성공");			
 						}else{
 							alert("팔로우 실패");
@@ -370,7 +371,7 @@ a:visited {
 							//다시 팔로우를 할 수 있는 모양으로 바뀜
 							$("#followBtn").css({"color" : "black", "background-color" : "#E6E6E6"});
 							$("#followBtn").text("+팔로우");
-							isFollowed = false;
+							isFollow = false;
 							alert("팔로우 해제 성공");
 						}else{
 							alert("팔로우 해제 실패");
