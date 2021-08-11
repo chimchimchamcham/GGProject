@@ -116,7 +116,6 @@ public class UserController extends HttpServlet {
 
 		case "/myPage":
 			System.out.println("마이페이지 요청");
-
 			req.setAttribute("myPageInfo", service.myPage());
 			// req.setAttribute("allurl", "'./auctionlist'");
 			dis = req.getRequestDispatcher("myPage.jsp");

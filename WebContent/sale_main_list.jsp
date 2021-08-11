@@ -4,16 +4,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Document</title>
     <style>
+#mainHeader {
+	z-index: 1000;
+}
+
+#main {
+	/* background-color: gray; */
+	width: 1140px;
+	height: auto;
+	position: absolute;
+	top: 150px;
+	z-index: -1;
+	margin: 0px auto;
+	padding: 30px;
+}
+
+
         .sold-con{
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top:15%;
         }
         table{
             border: 1px solid black;
@@ -114,7 +129,8 @@
     </style>
 </head>
 <body>
-    
+    <div id="mainHeader"><jsp:include page="header.jsp" /></div>
+<div id="main">
 <div class="sold-con">
 <table class="categor">
     <tr><th>카테고리</th></tr>
@@ -140,16 +156,20 @@
     </div>
 </div>
 
-
+</div>
 </body>
 <script>
-
 $(document).ready(function() {
+	function getParameterByName(name) { name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search); return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " ")); }
+	
+	var cate = getParameterByName('cate');
+	console.log(cate);
 	
 	$.ajax({
 		type:'post',
 		url:'./soldmainlist',
-		data:{  index_button_sold : '패션의류'},
+		data:{  index_button_sold : cate},
 		dataType:'JSON',
 		success:function(data){
 			console.log("data",data);
@@ -169,7 +189,7 @@ $(".categor tr td").click(function(){//카테고리
 	    $index1 = $button1.index(this);
 	    
 	    $index_button_sold = $(".categor tr td:eq(" + $index1 + ")").text();
-	    
+
 	
 		console.log("$index_button_sold:"+$index_button_sold);
 		

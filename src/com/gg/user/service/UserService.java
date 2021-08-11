@@ -197,7 +197,7 @@ public class UserService {
 				dto.setMyYN(true);
 				System.out.println("마이 프로필 여부 : " + dto.isMyYN());
 			} else if (!id.equals(oppId)) { // 로그인했는데 타인프로필
-				dto = dao.myPage(oppId);
+				dto = dao.myPage(oppId,id);
 				dto.setMyYN(false);
 				System.out.println("마이 프로필 여부 : " + dto.isMyYN());
 			}

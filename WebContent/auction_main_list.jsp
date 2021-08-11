@@ -9,6 +9,22 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Document</title>
     <style>
+    
+    #mainHeader {
+	z-index: 1000;
+}
+
+#main {
+	/* background-color: gray; */
+	width: 1140px;
+	height: auto;
+	position: absolute;
+	top: 150px;
+	z-index: -1;
+	margin: 0px auto;
+	padding: 30px;
+}
+
         .auc-con{
             display: flex;
             align-items: center;
@@ -98,7 +114,8 @@
     </style>
 </head>
 <body>
-    
+       <div id="mainHeader"><jsp:include page="header.jsp" /></div>
+<div id="main">
 <div class="auc-con">
 <table class="categor">
     <tr><th>카테고리</th></tr>
@@ -127,7 +144,7 @@
     </div>
 </div>
 
-
+</div>
 </body>
 <script>
 
@@ -140,11 +157,14 @@ let $index2 = 0;
 
 
 $(document).ready(function() {
+	function getParameterByName(name) { name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search); return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " ")); }
 	
+	var cate = getParameterByName('cate');
 	$.ajax({
 		type:'post',
 		url:'./auctionmainlist',
-		data:{  index_button_auction : '패션의류',
+		data:{  index_button_auction :cate,
 				index2 : 0 },
 		dataType:'JSON',
 		success:function(data){
