@@ -502,5 +502,42 @@ a:hover {
 					+ N_receiveId, "notifyPopup",
 					"width=400, height=400, left=700, top=400");
 	});
+	var comment ={};
+	/* 댓글 등록 */
+	$(document).on("click",".enter",function() {
+
+		if ("${sessionScope.loginId}" == '') {
+			alert("로그인 해주세요!");
+		}else if($(".board_text").val==''){
+			alert("댓글을 입력해 주세요!");
+		}else {
+			comment.id = "${sessionScope.loginId}";
+			comment.p_no = "${dto.p_no}";
+			comment.pc_content = $(".board_text").val();
+			comment.pc_parentno = 0;
+			console.log("댓글 다는 아이디 : ", comment.id);
+			console.log("댓글 달리는 게시글 : ", comment.p_no);
+			console.log("댓글 내용 : ", comment.pc_content);
+			console.log("부모 댓글 번호 :", comment.pc_parentno);
+			console.log("댓글 등록")
+
+			$.ajax({
+				type : "POST",
+				url : "./pushComment",
+				data : comment,
+				dataType : "JSON",
+				success : function(data) {
+					console.log("반환 데이터 : ", data);
+					$(".board_text").empty();
+					showCommentList();
+
+				},
+				error : function(e) {
+					console.log("에러 발생 : ", e);
+				}
+
+			});
+		}
+	});
 </script>
 </html>
