@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.naming.Context;
@@ -73,10 +74,9 @@ public class BlackListDAO {
 		int checker = 0;
 		int pk = -10;
 		ArrayList<Object> list = new ArrayList<Object>();
-		String sql = "INSERT INTO blacklist(b_id,b_starttm,b_endtm,b_adminid,b_content,b_code,b_no) VALUES(?,SYSDATE,?,?,?,?,b_no_seq.nextval)";
+		String sql = "INSERT INTO blacklist(b_id,b_starttm,b_endtm,b_adminid,b_content,b_no,b_code) VALUES(?,SYSDATE,?,?,?,b_no_seq.nextval,'B004')";
 		
 		String b_id = dto.getB_id();
-		String b_code = dto.getB_code();
 		Date b_endtm = dto.getB_endTm();
 		String b_adminId = dto.getB_adminId();
 		String b_content = dto.getB_content();
@@ -86,7 +86,6 @@ public class BlackListDAO {
 		ps.setDate(2, b_endtm);
 		ps.setString(3, b_adminId);
 		ps.setString(4, b_content);
-		ps.setString(5, b_code);
 		
 		checker = ps.executeUpdate();
 		rs = ps.getGeneratedKeys();
@@ -96,11 +95,10 @@ public class BlackListDAO {
 		
 		if(checker>0) {
 			msg = "블랙리스트 등록 성공하였습니다.";
-			success = true;
+			
 		}
 		
 		list.add(msg);
-		list.add(success);
 		list.add(pk);
 		return list;
 		
@@ -109,29 +107,49 @@ public class BlackListDAO {
 	}
 	
 	//로그인 창에서 블랙리스트에 들어가 있는 아이디 인지 확인
-	public GGDto checkBLstYN(String u_id) {
-		GGDto dto = new GGDto();
-		String sql = "SELECT b_id, b_endtm,b_content,b_code from blacklist where b_id = ? order by b_endtm desc";
+	public ArrayList<String> checkBLstYN(String u_id) {
+		ArrayList<String> list = new ArrayList<String>();
+		String sql = "SELECT b_endtm,b_content from blacklist where b_id = ? order by b_endtm desc";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, u_id);
 			rs = ps.executeQuery();
 			if(rs.next()) {
-				dto.setB_content(rs.getString("b_content"));
-				dto.setB_code(rs.getString("b_code"));
-				dto.setB_endTm(rs.getDate("b_endtm"));
+				
+				String b_content = rs.getString("b_content");
+				Date b_endtm = rs.getDate("b_endtm");
+				
+				//현재시간
+				java.util.Date nowDate = new java.util.Date();
+				System.out.println("현재 시간 : " + nowDate);
+				
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+				SimpleDateFormat endFormat = new SimpleDateFormat("yyyy/MM/dd");
+				String endDateToStr = dateFormat.format(b_endtm);//종료시간 형식 변환
+				String nowDateToStr = dateFormat.format(nowDate);//현재 시간 형식 변환 
+				
+				Double result = Double.parseDouble(endDateToStr) - Double.parseDouble(nowDateToStr);
+				System.out.println("블랙리스트 종료시간 - 현재시간 = " + result);
+				
+				
 				
 				PointDAO Pdao = new PointDAO();
 				String u_nname = Pdao.getNname(u_id);
-				dto.setU_nname(u_nname);
-				
 				Pdao.resClose();
+				
+				String b_endTostr = endFormat.format(b_endtm);
+				
+				list.add(b_content);//내용
+				list.add(b_endTostr);//종료시간
+				list.add(u_nname);//닉네임
+				
+				
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		return dto;
+		return list;
 		
 	}
 	public GGDto blackLstDetail(int b_no) throws SQLException {

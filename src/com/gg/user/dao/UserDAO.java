@@ -137,6 +137,8 @@ public class UserDAO {
 				idYN.add(rs.getString(1)); // id값 저장
 				idYN.add(rs.getString(2)); // 관리자 여부 저장
 			}
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -27,6 +27,8 @@ public class BlackListService {
 		dto.setN2_code(req.getParameter("N2_code"));
 		boolean success = dao.notifyUser(dto);
 		
+		
+		
 		return success;
 	}
 
@@ -35,15 +37,13 @@ public class BlackListService {
 		ArrayList<Object>list = new ArrayList<Object>();
 		
 		String b_Id = req.getParameter("b_Id");
-		String b_code = req.getParameter("b_code");
 		Date b_endtm = Date.valueOf(req.getParameter("b_endtm"));
 		String b_adminId = (String) req.getSession().getAttribute("loginId");
 		String b_content = req.getParameter("b_content");
 		
-		System.out.println(b_Id+" / "+b_code+" / "+" / "+b_endtm+" / "+b_adminId+" / "+b_content);
+		System.out.println(b_Id+" / "+b_endtm+" / "+b_adminId+" / "+b_content);
 		
 		dto.setB_id(b_Id);
-		dto.setB_code(b_code);
 		dto.setB_endTm(b_endtm);
 		dto.setB_adminId(b_adminId);
 		dto.setB_content(b_content);
@@ -75,7 +75,7 @@ public class BlackListService {
 		}
 		return dto;
 		
-		
+		 
 	}
 	
 	
