@@ -417,9 +417,9 @@ public class BoardDAO {
 		if (listwhatadd == 0) {// 전체 Au001 Au003
 			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no and p.p_code ='P001' and (a.Au_code = 'Au001' or a.Au_code = 'Au003') and p.p_id = ? AND p.p_blindyn='N' ORDER BY p.p_no DESC";
 		} else if (listwhatadd == 1) {// 경매중 Au001
-			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no and p.p_code ='P001' and a.Au_code = 'Au001' and p.p_id = ? and p.p_blindyn = 'N'";
+			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no and p.p_code ='P001' and a.Au_code = 'Au001' and p.p_id = ? and p.p_blindyn = 'N' ORDER BY p.p_no DESC";
 		} else if (listwhatadd == 2) {// 경매완료 Au003
-			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no and p.p_code ='P001' and a.Au_code = 'Au003' and p.p_id = ? and p.p_blindyn = 'N'";
+			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no and p.p_code ='P001' and a.Au_code = 'Au003' and p.p_id = ? and p.p_blindyn = 'N' ORDER BY p.p_no DESC";
 		}
 //"SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and a.Au_code = 'Au003' and P.P_ID = u.u_id and p,p_id = ?"
 		ArrayList<GGDto> auctionlist = new ArrayList<GGDto>();
