@@ -97,7 +97,7 @@ console.log("오늘 날짜 : ",currDate);
 			</div>
 			<div id="saleForm">
 				<p id="salePr">
-					<input type="text" name="price" value="" maxlength='10'placeholder="가격 입력(숫자입력)" />&nbsp;Point
+					<input type="text" name="price" value="" maxlength='9'placeholder="가격 입력(숫자입력)" />&nbsp;Point
 				</p>
 				<p id='delivery'>
 					거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
@@ -131,11 +131,11 @@ console.log("오늘 날짜 : ",currDate);
 					<!--<p><input type="text" id="alternateFrom" size="30"> ~ <input type="text" id="alternateTo" size="30"></p>-->
 				</div>
 				<p>
-					시작가격&nbsp;<input type="text" name="startPrice" value="" maxlength='10'
+					시작가격&nbsp;<input type="text" name="startPrice" value="" maxlength='9'
 						placeholder="시작가격 입력(숫자입력)" />&nbsp;Point
 				</p>
 				<p> 
-					즉결가격&nbsp;<input type="text" name="promptPrice" value="" maxlength='10'
+					즉결가격&nbsp;<input type="text" name="promptPrice" value="" maxlength='9'
 						placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
 				</p>
 			</div>
