@@ -153,7 +153,7 @@ $(document).ready(function() {
 	$.ajax({
 		type:'post',
 		url:'./soldmainlist',
-		data:{  index_button_sold : '뷰티잡화'},
+		data:{  index_button_sold : '패션의류'},
 		dataType:'JSON',
 		success:function(data){
 			console.log("data",data);
