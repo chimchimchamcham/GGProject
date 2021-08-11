@@ -239,7 +239,7 @@ public class CommentDAO {
 			}else if(p_code.equals("P002")) {//판매글
 				path="./salesDetail?p_no="+p_no;
 			}else if(p_code.equals("P004")) {//커뮤니티글
-				path="./commDetail>p_no="+p_no;
+				path="./commDetail?p_no="+p_no;
 			}
 			System.out.println("알람경로 : "+path);
 			//댓글인지 대댓글인지에 따라 알람 구분
