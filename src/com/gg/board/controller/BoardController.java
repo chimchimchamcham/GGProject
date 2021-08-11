@@ -238,6 +238,9 @@ public class BoardController extends HttpServlet {
 		case "/flowlist":
 			System.out.println("팔로잉리스트 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
+			String myYN = req.getParameter("myYN");
+			String oppId = req.getParameter("oppId");
+			System.out.println("myYN:"+myYN+"/ oppId:"+oppId);
 			/*
 			 * id = req.getParameter("id"); if (!userid.equals(id)) { // 타인프로필 일때 userid =
 			 * id; }

@@ -101,6 +101,9 @@ border:  1px solid rgb(176 176 176);
         
 </body>
   <script>
+  console.log("${myPageInfo.u_nname}");
+  console.log("${myPageInfo.myYN}");
+  
 	//목록들 정보 변수
 	/* var $how_index = 0;
 	var $how_aline_list	= 0;
@@ -148,7 +151,9 @@ border:  1px solid rgb(176 176 176);
 		$.ajax({
 			type:'post',
 			url:'./flowlist',
-			data:{	index1 : $index1},
+			data:{	"index1" : $index1,
+				"myYN" : "${myPageInfo.myYN}",
+				"oppId" : "${myPageInfo.u_id}"},
 			dataType:'JSON',
 			success:function(data){
 				console.log("data:"+data);
