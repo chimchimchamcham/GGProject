@@ -417,41 +417,34 @@ public class BoardDAO {
 		String sql2 = "";
 		if (listwhatadd == 0) {// 전체 Au001 Au003
 			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no and p.p_code ='P001' and (a.Au_code = 'Au001' or a.Au_code = 'Au003') and p.p_id = ?";
-			sql2 = "";
 		} else if (listwhatadd == 1) {// 경매중 Au001
-			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and a.Au_code = 'Au001' and P.P_ID = u.u_id and p,p_id = ?";
+			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no and p.p_code ='P001' and a.Au_code = 'Au001' and p.p_id = ?";
 		} else if (listwhatadd == 2) {// 경매완료 Au003
-			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and a.Au_code = 'Au003' and P.P_ID = u.u_id and p,p_id = ?";
+			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no and p.p_code ='P001' and a.Au_code = 'Au003' and p.p_id = ?";
 		}
-
+//"SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and a.Au_code = 'Au003' and P.P_ID = u.u_id and p,p_id = ?"
 		ArrayList<GGDto> auctionlist = new ArrayList<GGDto>();
 
-		sql2 = "select max(ha_bid_pr) from his_auction where p_no =?";
-		
-		Context ctx = new InitialContext();
-		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle");
-		Connection conn2 = null;
-		conn2 = ds.getConnection();
-		
-		PreparedStatement ps2 = conn2.prepareStatement(sql2);
-		ps2.setInt(1, 741);
-		ResultSet rs2 = ps.executeQuery();
-		GGDto dto = new GGDto();
-		if(rs2.next()) {
-			dto.setHm(rs.getLong("max(ha_bid_pr)"));
-		}else {
-			dto.setHm(0);
-		}
+		/*
+		 * sql2 = "select max(ha_bid_pr) from his_auction where p_no =?";
+		 * 
+		 * Context ctx = new InitialContext(); DataSource ds = (DataSource)
+		 * ctx.lookup("java:comp/env/jdbc/Oracle"); Connection conn2 = null; conn2 =
+		 * ds.getConnection();
+		 * 
+		 * PreparedStatement ps2 = conn2.prepareStatement(sql2); ps2.setInt(1, 741);
+		 * ResultSet rs2 = ps.executeQuery(); GGDto dto = new GGDto(); if(rs2.next()) {
+		 * dto.setHm(rs.getLong("max(ha_bid_pr)")); }else { dto.setHm(0); }
+		 */
 
-
+		
 		ps = conn.prepareStatement(sql);
-		
 		ps.setString(1, userid);
 		rs = ps.executeQuery();
 		System.out.println("rs:" + rs);
 
 		while (rs.next()) {
-
+			GGDto dto = new GGDto();
 			dto.setP_no(rs.getInt("P_NO"));
 			dto.setP_id(rs.getString("P_ID"));
 			dto.setP_title(rs.getString("P_TITLE"));
@@ -461,7 +454,7 @@ public class BoardDAO {
 			dto.setAu_startPr(rs.getInt("Au_startPr"));
 			dto.setAu_instantPr(rs.getInt("Au_instantPr"));
 			dto.setP_tm(rs.getDate("P_TM"));
-			dto.setHa_bidPr(dto.getHm());
+			//dto.setHa_bidPr(dto.getHm());
 			auctionlist.add(dto);
 		}
 		
@@ -636,16 +629,16 @@ public class BoardDAO {
 		System.out.println("daouserID:" + userid);
 
 		if (reqindex == 0) {// 전체
-			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and (  s.s_saler = ? or r.rq_id = ? ) and r.rq_yn is null";
+			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and (  s.s_saler = ? or r.rq_id = ? ) and r.rq_yn = '0'";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 			ps.setString(2, userid);
 		} else if (reqindex == 1) {// 수신만
-			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and  s.s_saler = ? and r.rq_yn is null";
+			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and  s.s_saler = ? and r.rq_yn = '0'";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 		} else if (reqindex == 2) {// 발신만
-			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and r.rq_id = ? and r.rq_yn is null";
+			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and r.rq_id = ? and r.rq_yn = '0'";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 		}
