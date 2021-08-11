@@ -68,7 +68,7 @@ h2 {
 		</div>
 		<div id="user_result">
 			<p style="margin-top: 16px; color: #999999; font-size: 1.2rem">
-				<b>사용자 검색결과</b>
+				<b>사용자 검색결과 ${ui_size }개</b>
 			</p>
 			<p>
 			<hr>
@@ -101,7 +101,7 @@ h2 {
 		</div>
 		<div id="post_title_result">
 			<p style="margin-top: 16px; color: #999999; font-size: 1.2rem">
-				<b>제목 검색결과</b>
+				<b>제목 검색결과 ${pt_size}개</b>
 			</p>
 			<p><hr></p>
 			<div id="post_titleContent">
@@ -129,7 +129,7 @@ h2 {
 		</div>
 		<div id="post_content_result">
 			<p style="margin-top: 16px; color: #999999; font-size: 1.2rem">
-				<b>내용 검색결과</b>
+				<b>내용 검색결과 ${pc_size }개</b>
 			</p>
 			<p>
 			<hr>
