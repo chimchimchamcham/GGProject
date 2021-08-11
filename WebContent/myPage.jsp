@@ -311,11 +311,10 @@ a:visited {
 <%=allurl%>
 	var isFollow = false;
 	$(document).ready(function() {
-		
-		console
+
 		//이전에 이용자가 판매자를 팔로우한 적이 있는지 확인
 		//팔로우를 했을 경우
-		<c:if test="${myPageInfo.isFollow eq true}">
+		<c:if test="${myPageInfo.u_isFollow eq true}">
 			$("#followBtn").css({"color" : "white", "background-color" : "gray"});
 			$("#followBtn").text("-팔로우");
 			isFollow = true; //팔로우를 했다는 뜻
@@ -329,7 +328,7 @@ a:visited {
 				
 				var param = {};
 				param.btntext = "+팔로우";
-				param.nick = "${dto.u_nname }";
+				param.nick = "${myPageInfo.u_nname }";
 				
 				$.ajax({
 					type: "POST",
@@ -358,7 +357,7 @@ a:visited {
 				
 				var param = {};
 				param.btntext = "-팔로우";
-				param.nick = "${dto.u_nname }";
+				param.nick = "${myPageInfo.u_nname }";
 				
 				$.ajax({
 					type: "POST",
@@ -1001,9 +1000,9 @@ a:visited {
 					content += "<div class='dretion-zoon'>";
 					content += "<a href= auctionDetail?p_no=" + item.p_no + ">"
 							+ item.p_title + "</a>";
-					content += "<div class='xianzai'>현제 입찰가</div><div style='font-size: 25px;'>"
-							+ item.hm + "p</div><div class='auction'>";
-					content += "<div>시작:" + item.au_startPr + "</div>/<div>즉결:"
+					//content += "<div class='xianzai'>현제 입찰가</div><div style='font-size: 25px;'>"
+							//+ item.hm + "p</div>";
+					content += "<div class='auction'><div>시작:" + item.au_startPr + "</div>/<div>즉결:"
 							+ item.au_instantPr + "</div></div>";
 					content += "</div><div class='endtime-zoon'>종료시간:<div>"
 							+ item.au_endTm + "</div></div>";
