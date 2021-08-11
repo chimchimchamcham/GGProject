@@ -731,4 +731,80 @@ public class UserDAO {
 		
 		return list;
 	}
+
+	public GGDto myPage(String oppId, String id) {
+
+		GGDto dto = null;
+		sql = "SELECT * FROM userInfo WHERE u_id = ?";
+		try {
+			dto = new GGDto();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				dto.setU_id(rs.getString("u_id"));
+				dto.setU_pw(rs.getString("u_pw"));
+				dto.setU_nname(rs.getString("u_nname"));
+				dto.setU_name(rs.getString("u_name"));
+				dto.setU_intro(rs.getString("u_intro"));
+				dto.setU_addr(rs.getString("u_addr"));
+				dto.setU_detailAddr(rs.getString("u_detailAddr"));
+				dto.setU_newName(rs.getString("u_newName"));
+				dto.setU_phone(rs.getString("u_phone"));
+				dto.setU_email(rs.getString("u_email"));
+			}
+			System.out.println("닉네임 : " + dto.getU_nname());
+			System.out.println("비번 : " + dto.getU_pw());
+			System.out.println("이름 : " + dto.getU_name());
+			System.out.println("자기소개 : " + dto.getU_intro());
+			System.out.println("주소 : " + dto.getU_addr());
+			System.out.println("상세주소 : " + dto.getU_detailAddr());
+			System.out.println("사진경로 : " + dto.getU_newName());
+			System.out.println("전화번호 : " + dto.getU_phone());
+			System.out.println("이메일 : " + dto.getU_email());
+
+			int myPoint = 0;
+			int plusPoint = 0; // 수입
+			int minusPoint = 0; // 지출
+			// 지출 코드
+			sql = "SELECT SUM(pnt_point) FROM point WHERE pnt_id= ?" + "    AND ( pnt_code != 'PNT001'"
+					+ "    AND pnt_code != 'PNT004'" + "    AND pnt_code !='PNT005'" + "    AND pnt_code != 'PNT007'"
+					+ "    AND pnt_code != 'PNT008'" + "    AND pnt_code != 'PNT010')";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				minusPoint = rs.getInt(1);
+			} else {
+				minusPoint = 0;
+			}
+			// 수입 코드
+			sql = "SELECT SUM(pnt_point) FROM point" + "    WHERE pnt_id=?" + "    AND ( pnt_code = 'PNT001'"
+					+ "    OR pnt_code = 'PNT004'" + "    OR pnt_code = 'PNT005'" + "    OR pnt_code = 'PNT007'"
+					+ "    OR pnt_code = 'PNT008'" + "    OR pnt_code = 'PNT010')";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				plusPoint = rs.getInt(1);
+			} else {
+				plusPoint = 0;
+			}
+			myPoint = plusPoint - minusPoint;
+			dto.setPnt_point(myPoint);
+			System.out.println("포인트 : " + dto.getPnt_point());
+			
+			sql = "SELECT * FROM WHERE f_receiveid = ? AND f_sendid = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			ps.setString(2, oppId);
+			rs = ps.executeQuery();
+			dto.setFollow(rs.next());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return dto;
+	}
 }

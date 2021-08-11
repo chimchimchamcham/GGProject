@@ -157,11 +157,14 @@ let $index2 = 0;
 
 
 $(document).ready(function() {
+	function getParameterByName(name) { name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search); return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " ")); }
 	
+	var cate = getParameterByName('cate');
 	$.ajax({
 		type:'post',
 		url:'./auctionmainlist',
-		data:{  index_button_auction : '패션의류',
+		data:{  index_button_auction :cate,
 				index2 : 0 },
 		dataType:'JSON',
 		success:function(data){
