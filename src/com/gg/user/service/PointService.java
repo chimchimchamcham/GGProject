@@ -44,7 +44,7 @@ public class PointService {
 			int myPoint = dao.pointPop(id);
 			System.out.println("인트 최댓값 : " + (float)(Integer.MAX_VALUE));
 			System.out.println("합친 값 : " + (float)myPoint + (float)chargePoint);
-			if((float)(Integer.MAX_VALUE) <= (float)(myPoint + chargePoint)) {
+			if((float)(Integer.MAX_VALUE) <= (float)myPoint + (float)chargePoint) {
 				checker = false;
 			}else {
 				checker = true;
