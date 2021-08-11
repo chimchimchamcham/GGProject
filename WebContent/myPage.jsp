@@ -905,8 +905,7 @@ a:visited {
 		$(".alien_list_sold").hide();
 		$(".button-layout_auction").hide();
 
-		auctionlist
-				.forEach(function(item, idx) {
+		auctionlist.forEach(function(item, idx) {
 					console.log("idx:", idx, item);
 					content += "<div class='item-one'>";
 					content += "<div class='img-zoon'><img src=/photo"+item.i_newName+"></div>";
@@ -1203,7 +1202,9 @@ a:visited {
 						success : function(data) {
 							if (data.success) {
 								if (data.request) {
+									
 									alert("거래페이지가 생성 되었습니다");
+								
 								}
 							}
 
