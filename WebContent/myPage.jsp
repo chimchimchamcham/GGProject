@@ -1303,6 +1303,7 @@ a:visited {
 						dataType : 'JSON',
 						success : function(data) {
 							if (data.success) {
+								$remove_item_box.remove();
 								if (data.request) {
 									
 									$remove_item_box = $(".item-one .buttonarea button:eq(" + $itemboxindex + ")").parents('.item-one');
