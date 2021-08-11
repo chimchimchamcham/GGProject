@@ -311,10 +311,14 @@ a:visited {
 <%=allurl%>
 	var isFollow = false;
 	$(document).ready(function() {
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> 8a9ba83c5d900001a0a875e939cfebf984363a53
 		//이전에 이용자가 판매자를 팔로우한 적이 있는지 확인
 		//팔로우를 했을 경우
-		<c:if test="${myPageInfo.isFollow eq true}">
+		<c:if test="${myPageInfo.u_isFollow eq true}">
 			$("#followBtn").css({"color" : "white", "background-color" : "gray"});
 			$("#followBtn").text("-팔로우");
 			isFollow = true; //팔로우를 했다는 뜻
