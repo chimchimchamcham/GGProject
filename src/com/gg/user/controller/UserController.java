@@ -214,35 +214,12 @@ public class UserController extends HttpServlet {
 			ArrayList<GGDto> blackList = service.blackList();
 			System.out.println("blackList size : " + blackList.size());
 			req.setAttribute("blackList", blackList);
-
-			/* ==작성한 글 목록(공지사항)== */
-			String currPageNum = req.getParameter("currPageNum");
-			System.out.println("처음 currPageNum : " + currPageNum);
-			String paging = req.getParameter("paging");
-			if (currPageNum == null || currPageNum.equals("0")) {
-				currPageNum = "1";
-			}
-			if (paging == null) {
-				paging = "1";
-			}
-			System.out.println("currPageNum : " + currPageNum);
-			System.out.println("paging : " + paging);
-
-			BoardService service1 = new BoardService(req, resp);
-			ArrayList<GGDto> lists = service1.noticeList(Integer.parseInt(paging), Integer.parseInt(currPageNum));
-			BoardDAO dao = new BoardDAO();
-			int total = 0;
-			try {
-				total = dao.noticeCount();
-				System.out.println("게시글 총 갯수:" + total);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				dao.resClose();
-			}
-			req.setAttribute("noticeList", lists);
-			req.setAttribute("noticeListSize", total);
-
+			
+			/* ==작성한 글 목록== */
+			ArrayList<GGDto> list = new ArrayList<GGDto>();
+			list = service.postList();
+			req.setAttribute("noticeList", list);
+			
 			/* ====경로지정==== */
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher(page);

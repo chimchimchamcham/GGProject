@@ -145,7 +145,7 @@ td {
 			</tr>
 			<tr>
 			<td colspan="2">
-				<input type='text' name='phone1' maxlength='3' id='phone1' value="" />&nbsp;-
+				<input type='text' name='phone1' maxlength='3' id='phone1' value=""  />&nbsp;-
 				<input type='text' name='phone2' id='phone2' maxlength='4' value="" />&nbsp;-
 				<input type='text' name='phone3' id='phone3' maxlength='4' value="" />
 			</td>
@@ -154,7 +154,7 @@ td {
 				<th>이메일</th>
 			</tr>
 			<tr>
-				<td><input type="text" name="email" value="" placeholder="이메일">&nbsp;@ <select
+				<td><input type="text" name="email" value="" placeholder="이메일" maxlength="20">&nbsp;@ <select
 					name="mail">
 						<option value='naver.com'>naver.com</option>
 						<option value='daum.net'>daum.net</option>

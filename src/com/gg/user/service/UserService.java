@@ -388,4 +388,10 @@ public class UserService {
 		return dao.blackList();
 	}
 
+	public ArrayList<GGDto> postList() {
+		UserDAO dao = new UserDAO();
+		String adminId = (String) req.getSession().getAttribute("loginId");
+		return dao.postList(adminId);
+	}
+
 }
