@@ -700,7 +700,7 @@ public class UserDAO {
 
 	public ArrayList<GGDto> postList(String adminId) {
 		String sql = "SELECT rnum,p_no, p_title, p_id, p_tm, p_view, p_code, (select u_nname from userinfo where u_id = p_id) as u_nname FROM "
-				+ "(SELECT ROW_NUMBER() OVER(ORDER BY p_no DESC) AS rnum,p_no, p_title, p_id, p_tm, p_view, p_code FROM post WHERE p_code='P003' AND P_BLINDYN='N') AND p_id = ?";
+				+ "(SELECT ROW_NUMBER() OVER(ORDER BY p_no DESC) AS rnum,p_no, p_title, p_id, p_tm, p_view, p_code FROM post WHERE p_code='P003' AND P_BLINDYN='N') WHERE p_id = ?";
 		ArrayList<GGDto> list = new ArrayList<GGDto>();
 		GGDto dto = null;
 		try {

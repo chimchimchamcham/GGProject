@@ -20,15 +20,6 @@
 	z-index: -1;
 }
 
-body {
-	width: 100%;
-}
-
-div {
-	border: 1px solid black;
-	background-color: gray;
-}
-
 #wrap {
 	position: absolute;
 	top: 50%;
@@ -38,26 +29,24 @@ div {
 	width: 500px;
 	height: 400px;
 }
-
-#idarea, #pwarea {
-	background-color: aqua;
-}
-
 table {
 	text-align: left;
 	width: 500px;
-	padding: 10px;
+	padding: 5px;
 	border: 1px solid black;
 }
-
-tr, th, td {
-	padding: 10px;
-	border: 1px solid black;
+table *{
+	margin:10px;
 }
-
 #pwarea * {
 	padding: 3px;
-	font-size: 10px;
+}
+
+#idarea input, #idarea select, #pwarea input, #pwarea select {
+	border:1px solid gray;
+}
+input[type=button]{
+	cursor:pointer;
 }
 </style>
 </head>
@@ -133,17 +122,17 @@ tr, th, td {
 				<form id="change" action="changePw" method="post">
 					<table>
 						<tr>
-							<td>새 비밀번호</td>
+							<th>새 비밀번호</th>
 						</tr>
 						<tr>
 							<td><input type="password" id="pwchk1" name="newPw" /></td>
 						</tr>
 						<tr>
-							<td>새 비밀번호 확인</td>
+							<th>새 비밀번호 확인</th>
 						</tr>
 						<tr>
 							<td><input type="password" id="pwchk2" />&nbsp;<span id="alert"
-								style="color: red">*공란이거나, 비밀번호가 일치하지 않습니다.</span></td>
+								style="color: red"><p>*공란이거나, 비밀번호가 일치하지 않습니다.</p></span></td>
 						</tr>
 						<tr style="display: none">
 							<td><input type="text" name="id" value="" /></td>
