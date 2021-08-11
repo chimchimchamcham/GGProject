@@ -32,10 +32,11 @@
       });
       
       /*쪽지 팝업*/
-       $(".messageA").click(function(){
-          window.open("msgList", "chargePop", "width=500, height=500, left=850, top=150");
+      /*  $(".messageA").click(function(){
+          window.open("./popup/msgPop.jsp", "msgPop", "width=500, height=500, left=850, top=150");
       });
-
+ 		*/
+ 		
       /*알람 팝업*/
      $(".alarmA").click(function(){ //./popup/alarmPop.jsp
         window.open("./alarmlist?u_id="+loginId+"&a_impoyn=N", "alarmPop", "width=500, height=500, left=850, top=150");
@@ -67,11 +68,11 @@
       });
        */
       /*쪽지 로그인 체크*/
-       $(".messageA").click(function(){
+     /*   $(".messageA").click(function(){
       if(loginId == ""){
          $("#messageList").html("<h2>로그인이 필요한 서비스 입니다.</h2><br><a href='login.jsp'>로그인 하러가기</a>");
       }
-      });
+      }); */
 
       /*알람 로그인 체크*/
      $(".alarmA").click(function(){
@@ -301,7 +302,7 @@ body {
 
 
 /*쪽지함*/
-#messageList{
+/* #messageList{
    width: 420px;
    height:500px;
    position: fixed;
@@ -311,7 +312,7 @@ body {
    right:470px;
    text-align: center;
    overflow: scroll;
-   }
+   } */
 
 /*알람 목록*/
 #alarmList{
@@ -405,7 +406,7 @@ body {
               <a href="#"  class="myPageA">마이페이지</a>
                	<a href="#"  class="tradeA" title="거래톡"><img src="img/ggTalk.png" alt="거래톡" width="25" style="opacity:80%;  margin-right:30px; padding:0 5px;"></a>
                	<a href="#"  class="alarmA" title="알람"><img src="img/notify-icon.png" alt="알람" width="25" style="opacity:80%; padding:0 5px;" ></a>
-               	<a href="#"  class="messageA" title="쪽지"><img src="img/message-icon.png" alt="쪽지" width="25" style="opacity:80%; padding:0 5px;"></a>
+               	<!-- <a href="#"  class="messageA" title="쪽지"><img src="img/message-icon.png" alt="쪽지" width="25" style="opacity:80%; padding:0 5px;"></a> -->
             </c:if>
             </c:if>
             </div>
