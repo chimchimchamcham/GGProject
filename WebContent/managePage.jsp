@@ -162,8 +162,8 @@ h3 {
 				<tr>
 					<td>
 						<div id="searchBox">
-							<input type="text" name="search" placeholder="검색"> <img
-								src="img/search-icon.png" alt="search-icon">
+							<input type="text" name="search" placeholder="검색">
+							<img src="img/search-icon.png" alt="search-icon">
 						</div>
 					</td>
 				</tr>
@@ -497,5 +497,14 @@ h3 {
 		 $("table tr.notifyLine").remove();
 		
 	}
+	
+	var loginId = "${sessionScope.loginId}";
+	var adminYN = "${sessionScope.adminYN}";
+	
+	if(loginId != "" || loginId != null){
+		location.href='index.jsp';
+	}
+	
+	
 </script>
 </html>
