@@ -328,7 +328,7 @@ a:visited {
 				
 				var param = {};
 				param.btntext = "+팔로우";
-				param.nick = "${dto.u_nname }";
+				param.nick = "${myPageInfo.u_nname }";
 				
 				$.ajax({
 					type: "POST",
@@ -357,7 +357,7 @@ a:visited {
 				
 				var param = {};
 				param.btntext = "-팔로우";
-				param.nick = "${dto.u_nname }";
+				param.nick = "${myPageInfo.u_nname }";
 				
 				$.ajax({
 					type: "POST",

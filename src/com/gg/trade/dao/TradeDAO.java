@@ -264,8 +264,10 @@ public class TradeDAO {
 
 		boolean result = bidRecordYN(p_no, u_id);
 		System.out.println("시작금 인출 여부 : " + result);
+		// 시작가 조회
+		int startPr = selectAuctionAu_startPr(p_no);
 		// 입찰금 반환 메서드 실행
-		returnStartPr(p_no, au_instantpr);
+		returnStartPr(p_no, startPr);
 		// 해당 글번호로 판매자를 알아오기
 		String p_id = selectPostP_id(p_no);
 		System.out.println("p_id : " + p_id);
@@ -324,8 +326,10 @@ public class TradeDAO {
 
 			String successer = dto.getAu_successer();
 
+			// 시작가 조회
+			int startPr = selectAuctionAu_startPr(p_no);
 			// 입찰금 반환 메서드 실행
-			returnStartPr(p_no, instantpr);
+			returnStartPr(p_no, startPr);
 
 			// 해당 글번호로 판매자, 제목을 알아오기
 			String p_id = selectPostP_id(p_no);
@@ -375,7 +379,7 @@ public class TradeDAO {
 
 	}
 
-	public void returnStartPr(int p_no, int instantpr) throws SQLException {
+	public void returnStartPr(int p_no, int startPr) throws SQLException {
 
 		boolean insertRs = false;
 		PointDAO dao = new PointDAO();
@@ -400,10 +404,10 @@ public class TradeDAO {
 
 			// 경매종료 알람보내기
 			Aldao.insertAlarm(bid_id, "A011", "[" + p_title + "]경매가 종료 되었습니다.", "Y", "./auctionDetail?p_no=" + p_no);
-			insertRs = dao.insertPoint(bid_id, instantpr, "SYSTEM", "PNT007", p_no);
+			insertRs = dao.insertPoint(bid_id, startPr, "SYSTEM", "PNT007", p_no);
 
 			if (insertRs) {
-				System.out.println("입찰금 반환 id :" + bid_id + "/ 반환할 입찰금 : " + instantpr);
+				System.out.println("입찰금 반환 id :" + bid_id + "/ 반환할 입찰금 : " + startPr);
 			}
 
 		}
