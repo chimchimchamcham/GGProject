@@ -800,7 +800,7 @@ public class UserDAO {
 			ps.setString(1, id);
 			ps.setString(2, oppId);
 			rs = ps.executeQuery();
-			dto.setFollow(rs.next());
+			dto.setU_isFollow(rs.next());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
