@@ -114,7 +114,6 @@ border:  1px solid rgb(176 176 176);
                 margin: 1%;
                 padding: 2vh;
                 border: 1px solid black;
-              	background-color: aqua;
             }
             	/* 물건 이미지 틀,만약 이미지가 틀을 넘으면  넘은부분은 보이지않음 그리고 이미지를 가운데를 기준으로 보여짐*/
                 .img-zoon{
