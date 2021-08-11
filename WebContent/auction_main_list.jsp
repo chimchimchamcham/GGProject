@@ -9,6 +9,22 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Document</title>
     <style>
+    
+    #mainHeader {
+	z-index: 1000;
+}
+
+#main {
+	/* background-color: gray; */
+	width: 1140px;
+	height: auto;
+	position: absolute;
+	top: 150px;
+	z-index: -1;
+	margin: 0px auto;
+	padding: 30px;
+}
+
         .auc-con{
             display: flex;
             align-items: center;
@@ -98,7 +114,8 @@
     </style>
 </head>
 <body>
-    
+       <div id="mainHeader"><jsp:include page="header.jsp" /></div>
+<div id="main">
 <div class="auc-con">
 <table class="categor">
     <tr><th>카테고리</th></tr>
@@ -127,7 +144,7 @@
     </div>
 </div>
 
-
+</div>
 </body>
 <script>
 
