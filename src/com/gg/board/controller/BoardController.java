@@ -237,6 +237,7 @@ public class BoardController extends HttpServlet {
 			break;
 		case "/flowlist":
 			System.out.println("팔로잉리스트 리스트 요청");
+			
 			userid = (String) req.getSession().getAttribute("loginId");
 			String oppId = (String)req.getParameter("oppId");
 			if(!userid.equals(oppId) && oppId != null) {
@@ -246,7 +247,7 @@ public class BoardController extends HttpServlet {
 			service.flow_list(userid, flowORflowing);
 			
 			break;
-			
+
 		case "/flowadddelect":
 			System.out.println("팔로워 버튼 처리 요청");
 			req.setCharacterEncoding("utf-8");
