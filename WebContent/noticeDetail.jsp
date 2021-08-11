@@ -64,7 +64,6 @@ h2 {
 			<tr>
 				<td style="text-align: right" colspan="3">
 				<input type=button value="목록" onclick="location.href='./noticeList'">
-				<input type=button value="수정"  class="updatebutton" onclick="location.href='./commUpdateForm?p_no=${dto.p_no}'" >
 				<input type=button value="삭제"  class="updatebutton" onclick="location.href='./postDel?p_no=${dto.p_no}'"></td>
 			</tr>
 			<tr>

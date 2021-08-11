@@ -553,7 +553,9 @@ public class BoardService {
 			dto.setP_title(p_title);
 			dto.setP_content(p_content);
 			dto.setP_cate(p_cate);
+			dto.setU_adminYN(adminYN);
 			dto.setP_code(p_code);
+			//test
 		}
 
 		try {

@@ -236,6 +236,7 @@ public class BoardController extends HttpServlet {
 
 			break;
 		case "/flowlist":
+
 			System.out.println("팔로잉리스트 리스트 요청");
 			
 			userid = (String) req.getSession().getAttribute("loginId");
