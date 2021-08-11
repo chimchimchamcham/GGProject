@@ -498,11 +498,10 @@ h3 {
 		
 	}
 	
-	var loginId = "${sessionScope.loginId}";
-	var adminYN = "${sessionScope.adminYN}";
+	var msg = "${msg}";
 	
-	if(loginId != "" || loginId != null){
-		location.href='index.jsp';
+	if(msg != ""){
+		alert(msg);
 	}
 	
 	

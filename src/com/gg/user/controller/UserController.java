@@ -164,6 +164,21 @@ public class UserController extends HttpServlet {
 			req.setCharacterEncoding("UTF-8");
 			
 			String sessionId = (String)req.getSession().getAttribute("loginId");
+			String adminYN = (String)req.getSession().getAttribute("adminYN");
+			
+			System.out.println("sessionId : "+sessionId+"/ adminYN:"+adminYN);
+			
+			msg="";
+			page="managePage.jsp";
+			if(sessionId == null){
+				msg = "로그인이 필요한 서비스 입니다.";
+				page = "index.jsp";
+			}else{
+				if(adminYN.equals("N")){
+					msg = "관리자 전용 페이지입니다.";
+					page = "index.jsp";
+				}
+			}
 
 			/* ==회원목록== */
 			ArrayList<GGDto> userList = service.userList();
@@ -212,7 +227,8 @@ public class UserController extends HttpServlet {
 			 */
 			
 			/* ====경로지정==== */
-			dis = req.getRequestDispatcher("managePage.jsp");
+			req.setAttribute("msg", msg);
+			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);
 
 			break;
