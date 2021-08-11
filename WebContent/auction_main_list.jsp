@@ -144,7 +144,7 @@ $(document).ready(function() {
 	$.ajax({
 		type:'post',
 		url:'./auctionmainlist',
-		data:{  index_button_auction : '뷰티잡화',
+		data:{  index_button_auction : '패션의류',
 				index2 : 0 },
 		dataType:'JSON',
 		success:function(data){
