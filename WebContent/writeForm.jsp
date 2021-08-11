@@ -57,14 +57,16 @@ textarea {
 	width:100px; 
 	height:50px;
 	font-size:1.2rem;
-	border-radius: 5px;
+	border-radius: 5px; 
 	background-color:#EFEFEB;
 	font-color:#757676;
 /* 	margin-top:20px;
 	margin-right:20px; */
 	/* position:absolute; */
-	padding:0px;
-	margin:0px
+	/* padding:0px;
+	margin:0px; */
+	
+	
 }
 #sale:hover, #trade:hover, #community:hover{
 	background-color:#757676;
@@ -86,7 +88,7 @@ textarea {
 }
 
 #communityForm{
-	padding-top:20px;
+	padding-top:30px;
 } 
 /* #writeFormT tr,#writeFormT td{
 	border:1px solid black;
@@ -94,8 +96,9 @@ textarea {
 } */
 #selectForm{
 	/* height:900px; */
-	
-	
+	width:940px;
+	height:50px;
+	/* background-color:#EFEFEB; */
 	/* position:relative; */
 	
 }
@@ -266,7 +269,7 @@ console.log("오늘 날짜 : ",currDate);
 
 		$("#commuCategory,#salePr").hide();
 		
-		$("#trade").css({"background-color":"#757676","color":"white"});
+		$("#trade").css({"background-color":"white","color":"black"});
 		$("#community").css({"background-color":"#EFEFEB","color":"black"});
 		$("#sale").css({"background-color":"#EFEFEB","color":"black"});
 	});
@@ -280,7 +283,7 @@ console.log("오늘 날짜 : ",currDate);
 		
 		$("#trade").css({"background-color":"#EFEFEB","color":"black"});
 		$("#sale").css({"background-color":"#EFEFEB","color":"black"});
-		$("#community").css({"background-color":"#757676","color":"white"});
+		$("#community").css({"background-color":"white","color":"black"});
 		
 	});
 
@@ -292,7 +295,7 @@ console.log("오늘 날짜 : ",currDate);
 		$("#saleForm,#salePr").show();
 		
 		$("#trade").css({"background-color":"#EFEFEB","color":"black"});
-		$("#sale").css({"background-color":"#757676","color":"white"});
+		$("#sale").css({"background-color":"white","color":"black"});
 		$("#community").css({"background-color":"#EFEFEB","color":"black"});
 	});
 
