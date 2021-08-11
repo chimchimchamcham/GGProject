@@ -997,7 +997,7 @@ a:visited {
 		auctionlist.forEach(function(item, idx) {
 					console.log("idx:", idx, item);
 					content += "<div class='item-one'>";
-					content += "<div class='img-zoon'><img src=/photo"+item.i_newName+"></div>";
+					content += "<div class='img-zoon'><img src=/photo/"+item.i_newName+"></div>";
 					content += "<div class='dretion-zoon'>";
 					content += "<a href= auctionDetail?p_no=" + item.p_no + ">"
 							+ item.p_title + "</a>";
@@ -1031,7 +1031,7 @@ a:visited {
 		maidelist.forEach(function(item, idx) {
 			console.log("idx:", idx, item);
 			content += "<div class='item-one'>";
-			content += "<div class='img-zoon'><img src=/photo" + item.i_newName
+			content += "<div class='img-zoon'><img src=/photo/" + item.i_newName
 					+ " class='itemimg' style='margin:3%'></div>";
 			content += "<div class='dretion-zoon style='margin: 3%'>";
 			content += "		<a href = ./details?p_no=" + item.p_no + ">"
@@ -1100,7 +1100,7 @@ a:visited {
 		flowlist.forEach(function(item, idx) {
 
 					content += "<div class='item-one-flow'>"
-					content += "<div class='img-zoon'><img src='/photo"+item.u_newname+"'></div>"
+					content += "<div class='img-zoon'><img src='/photo/"+item.u_newname+"'></div>"
 					content += "<div class='flowerusername'>" + item.u_nname
 							+ "</div>"
 					content += "<div class=''>팔로워:" + item.flow_count
@@ -1353,7 +1353,7 @@ a:visited {
 			content += "	<div><a href = " + a + "?p_no=" + item.p_no + ">"
 					+ item.p_title + "</a></div>";
 			content += "</div>";
-			content += "<div class='img-zoon'><img src=/photo" + item.i_newName
+			content += "<div class='img-zoon'><img src=/photo/" + item.i_newName
 					+ " class='itemimg' style='margin:3%'></div>";
 			content += "<div class='c_zoon'>";
 			content += "	<div>" + price + "</div>";
