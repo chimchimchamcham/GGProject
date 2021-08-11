@@ -1202,7 +1202,9 @@ a:visited {
 						success : function(data) {
 							if (data.success) {
 								if (data.request) {
+									
 									alert("거래페이지가 생성 되었습니다");
+								
 								}
 							}
 

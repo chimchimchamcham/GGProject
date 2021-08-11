@@ -162,6 +162,7 @@ public class BoardController extends HttpServlet {
 			int listwhatadd = Integer.parseInt(req.getParameter("index1"));
 			int listhowaline = Integer.parseInt(req.getParameter("index2"));
 
+
 			System.out.println("userid:" + userid);
 			System.out.println("listwhatadd:" + listwhatadd);
 			System.out.println("listhowaline:" + listhowaline);
