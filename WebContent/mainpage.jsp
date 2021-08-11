@@ -68,6 +68,7 @@ margin-top: 30vh;
     
         <div class="contant"><!--인기판매글-->
         <div class="word"><h2>판매인기글</h2></div>
+        <div><a href="./sale_main_list.jsp?cate=패션의류">더보기></a></div>
 	        <div class="itemboxs_sold">
 	            
 	        </div>
@@ -82,6 +83,7 @@ margin-top: 30vh;
         <div class="word">
             <h2>인기 경매글</h2>
         </div>
+        <div><a href="auction_main_list.jsp?cate=패션의류">더보기></a></div>
         <div class="itemboxs_auc">
             
         </div>
@@ -94,6 +96,7 @@ margin-top: 30vh;
         <div class="contant"><!--인기경매글-->
         <div class="word">
             <h2>인기 커뮤니티글</h2>
+            <div><a href="commListForm.jsp">더보기></a></div>
         </div>
             <div class="itembox_com">
                 <table class="table">
@@ -151,10 +154,10 @@ function soled_list(mainpage_sold_list) {
 					var num = idx+1;
 					content += "<div class='itembox'>";
 					content +=  "<h1>"+num+"</h1>";
-					content +=  "<img src='"+item.i_newName+"' alt=''>";
+					content +=  "<img src='/photo/"+item.i_newName+"' alt=''>";
 					content +="<div>제목:"+item.p_title+"</div>";
 					content +="<div>판매값:"+item.ns_pr+"</div>";
-					content +="<div><img src='"+item.u_newName+"' style='width: 20px;height: 20px;'><div><a href='myPage?id="+item.p_id+"'>"+item.u_nname+"</a></div></div>";
+					content +="<div><img src='/photo/"+item.u_newName+"' style='width: 20px;height: 20px;'><div><a href='myPage?id="+item.p_id+"'>"+item.u_nname+"</a></div></div>";
 					content +="<div><div>♥:"+item.p_likeCount+"</div><div>"+item.p_view+"</div><div>tm:"+item.p_tm+"</div></div>";
 					content +="</div>";
 				});
@@ -175,7 +178,7 @@ function auc_list(mainpage_auc_list) {
 				var num = idx+1;
 				content += "<div class='itembox'>";
 				content +=  "<h1>"+num+"</h1>";
-				content +=  "<img src='"+item.i_newName+"' alt=''>";
+				content +=  "<img src='/photo/"+item.i_newName+"' alt=''>";
 				content +="<div>"+item.p_title+"</div>";
 				content +="<div>현재입찰갑:"+item.hm+"</div>";
 				content +="<div>"+item.au_startPr+"</div><div>"+item.au_instantPr+"</div>";
