@@ -536,14 +536,21 @@ var isFollowed = false;
 		});
 	});
 
+	//경매글 블라인드 체크 여부 확인
+	var p_blindYN = "${dto.p_blindYN}";
+	if("${dto.p_blindYN}"=="Y"){
+			$("#main").hide();
+			/* alert("삭제된 경매글 입니다."); */
+			location.href = "./index.jsp";
+	};
 	
 	//경매글 삭제 버튼 클릭시
 	function delChk(){
 		var delChk = confirm("글을 삭제하시겠습니까?");
 		if(delChk){
 			location.href = "./postDel?p_no="+${dto.p_no};
-			var delMsg = "${delMsg}";
-			alert(delMsg);
+			/* var delMsg = "${delMsg}";
+			alert(delMsg); */
 		}
 	}
 	
@@ -766,13 +773,7 @@ var isFollowed = false;
 			}
 		});
 	});
-	//경매글 블라인드 체크 여부 확인
-	//판매자일경우 보이고 그 외의 사람들은 튕기기
-	var p_blindYN = "${dto.p_blindYN}";
-	if("${dto.p_blindYN}"=="Y"){
-			alert("삭제된 경매글 입니다.");
-			history.go(-1);
-	};
+	
 	/*글자수 제한*/
 	$(document).on('keyup',".board_text", function() {
 		$('#board_text_controll').html("(" + $(this).val().length + " / 300)");
