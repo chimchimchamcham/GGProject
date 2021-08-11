@@ -245,7 +245,7 @@ public class BoardController extends HttpServlet {
 			}
 			System.out.println("loginid : "+loginid);
 			int flowORflowing = Integer.parseInt(req.getParameter("index1"));
-			service.flow_list(userid, flowORflowing);
+			service.flow_list(loginid, flowORflowing);
 
 		case "/flowadddelect":
 			System.out.println("팔로워 버튼 처리 요청");
