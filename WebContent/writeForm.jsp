@@ -84,7 +84,7 @@ textarea {
 	
 }
 #intro_cnt{
-	float:right;
+	/* float:right; */
 }
 
 #communityForm{
