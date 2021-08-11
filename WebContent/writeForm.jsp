@@ -41,8 +41,8 @@
 
 #wrap {
 	width:940px;
-	padding:0 100px;
-	height:1150px;
+	 padding:0 100px; 
+	 height:1500px; 
 	margin: 0 auto;
 	text-align: left;
 	
@@ -60,6 +60,9 @@ textarea {
 	border-radius: 5px;
 	background-color:#EFEFEB;
 	font-color:#757676;
+	margin-top:20px;
+	margin-right:20px;
+	/* position:absolute; */
 }
 #sale:hover, #trade:hover, #community:hover{
 	background-color:#757676;
@@ -81,9 +84,29 @@ textarea {
 }
 
 #communityForm{
-	padding-top:15px;
-}
+	padding-top:20px;
+} 
+/* #writeFormT tr,#writeFormT td{
+	border:1px solid black;
 
+} */
+#selectForm{
+	/* height:900px; */
+	/* width:125px; */
+	/* position:relative; */
+	
+}
+#submit, #cancelBtn{
+	border-width:0;
+	width:70px; 
+	height:40px;
+	font-size:0.8rem;
+	border-radius: 5px;
+	
+}
+#twoButton{
+	float:right;
+}
 </style>
 <script>
 // 오늘 날짜 설정
@@ -107,6 +130,7 @@ console.log("오늘 날짜 : ",currDate);
 					<button id="community">커뮤니티</button>
 				</div>
 			</c:if>
+			
 			<div id="communityForm">
 				<p>
 					<input type="text" name="title" value="" id="write_title" placeholder="제목을 입력해주세요" maxlength='30'
@@ -177,7 +201,7 @@ console.log("오늘 날짜 : ",currDate);
 			</div>
 			<div id="twoButton">
 				<input type="button" id="submit" value="등록" /> <input type="button"
-					onclick="location.href='./index.jsp'" value="취소" />
+					onclick="location.href='./index.jsp'" value="취소" id="cancelBtn"/>
 			</div>
 		</div>
 	</div>
