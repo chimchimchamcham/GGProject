@@ -870,8 +870,7 @@ a:visited {
 		$(".alien_list_sold").hide();
 		$(".button-layout_auction").hide();
 
-		soldlist
-				.forEach(function(item, idx) {
+		soldlist.forEach(function(item, idx) {
 					console.log("idx:", idx, item);
 					content += "<div class='item-one'>";
 					content += "<div class='img-zoon'><img src=/photo/"+item.i_newName+"></div>";
@@ -1151,7 +1150,7 @@ a:visited {
 
 	}//구매요청 리스트 end
 
-	//수락버튼을 누르면
+	//수락,거절버튼을 누르면
 	$(document).on("click", "div.buttonarea button", function() {
 
 		$par = $('.buttonarea button').parents('.buttonarea').index();
@@ -1168,6 +1167,7 @@ a:visited {
 		console.log('rqnoval:' + rqnoval);
 		console.log('rqnotext:' + rqnotext);
 
+		
 		$.ajax({
 			type : 'post',
 			url : './applyreqlist',

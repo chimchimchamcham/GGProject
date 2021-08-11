@@ -87,7 +87,7 @@
             flex-direction: column;
             justify-content: space-between;
             cursor: pointer;
-            margin:5px;
+            margin:0px auto;
         }
         .img-zoon,.index{
             margin: 5%;
@@ -100,6 +100,14 @@
                     flex-direction: row;
                     justify-content: space-between;
                 }
+	.wrapBox{
+		width:250px;
+		height:350px;
+	}
+	.imgBox{
+		width:230px;
+		height:230px;
+	}
     </style>
 </head>
 <body>
@@ -199,8 +207,8 @@ $(".categor tr td").click(function(){//카테고리
 			soldmainlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content+= "<div class='item-one' onclick="+"window.location.href='salesDetail?p_no=" + item.p_no  +"\'" +">"
-				content+= 	"<div width='250' style='text-align:center' class='img-zoon'>";
-				content+=		"<img width='230' src=/photo/"+item.i_newName+">";	
+				content+= 	"<div class='wrapBox' class='img-zoon'>";
+				content+=		"<img class='imgBox' src=/photo/"+item.i_newName+">";	
 				content+=	"</div>";
 				content+=	"<div class='index'>"+item.p_title+"</div>";
 				content+=	"<div class='bestcost'>가격:"+item.ns_pr+"p</div>";
