@@ -416,7 +416,7 @@ public class BoardDAO {
 		
 		if (listwhatadd == 0) {// 전체 Au001 Au003
 			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and (a.Au_code = 'Au001' or a.Au_code = 'Au003') and P.P_ID = u.u_id and p,p_id = ?";
-			sql2 = "SELECT max(ha.HA_bidPr) FROM HIS_AUCTION ha,auction a,post p,userinfo u where a.p_no = ha.p_no and a.p_no = p.p_no and p.p_id = u.u_id and u.u_id = 'user1'";
+			//sql2 = "SELECT max(ha.HA_bidPr) FROM HIS_AUCTION ha,auction a,post p,userinfo u where a.p_no = ha.p_no and a.p_no = p.p_no and p.p_id = u.u_id and u.u_id = 'user1'";
 		} else if (listwhatadd == 1) {// 경매중 Au001
 			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and a.Au_code = 'Au001' and P.P_ID = u.u_id and p,p_id = ?";
 		} else if (listwhatadd == 2) {// 경매완료 Au003
@@ -653,8 +653,8 @@ public class BoardDAO {
 			dto.setRq_id(rs.getString("rq_id"));
 			dto.setRq_tm(rs.getDate("rq_tm"));
 
-			sid = dto.getS_saler();
-			rid = dto.getRq_id();
+			sid = dto.getS_saler();//판매자아이디
+			rid = dto.getRq_id();//구매요청자 아이디
 
 			if (userid.equals(sid)) {
 				System.out.println("수신");
