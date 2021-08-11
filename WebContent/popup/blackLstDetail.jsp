@@ -51,7 +51,6 @@ textarea{
 <div id="content">
 <table id="blackLstT">
 <tr><th >아이디</th><td style="width:450px; text-align:center; font-size:17px">${dto.b_id }</td></tr>
-<tr><th>분류코드</th><td>${dto.b_code }</td></tr>
 <tr><th>등록 날짜</th><td>${dto.b_starthr }</td></tr>
 <tr><th>등록 종료 날짜</th><td>${dto.b_endhr }</td></tr>
 <tr><th>관리자 아이디</th><td>${dto.b_adminId }</td></tr>
@@ -61,9 +60,10 @@ textarea{
 </div>
 </body>
 <script>
-document.ready(function(){
-	alert("${msg}");
-})
+var msg = "${msg}";
+if(msg!=""){
+	alert(msg);
+}
 
 
 </script>

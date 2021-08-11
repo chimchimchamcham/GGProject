@@ -136,7 +136,25 @@ public class UserDAO {
 			if (rs.next()) {
 				idYN.add(rs.getString(1)); // id값 저장
 				idYN.add(rs.getString(2)); // 관리자 여부 저장
+				
+				/*
+				BlackListDAO BLstDAO = new BlackListDAO();
+				ArrayList<String> BLst = new ArrayList<String>();
+				BLst=BLstDAO.checkBLstYN(loginId);
+				System.out.println("블랙리스트 등록 여부 : "+BLst.size());
+				if(BLst != null) {
+					String b_content = BLst.get(0);
+					String b_endToStr = BLst.get(1);
+					String u_nname = BLst.get(2);
+					idYN.add(b_content);
+					idYN.add(b_endToStr);
+					idYN.add(u_nname);
+				}
+				BLstDAO.resClose();
+				*/
 			}
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

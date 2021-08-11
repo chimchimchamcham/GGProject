@@ -54,12 +54,9 @@ public class BlackListController extends HttpServlet {
 			ArrayList<Object>list = new ArrayList<Object>();
 			list=service.blackLstPr();
 			msg = (String) list.get(0);
-			boolean success = (boolean) list.get(1);
-			int pk = (int) list.get(2);
-			System.out.println("성공 여부 : "+ success);
+			int pk = (int) list.get(1);
 			System.out.println("출력 메세지:"+msg);
 			req.setAttribute("msg", msg);
-			req.setAttribute("success", success);
 			dis = req.getRequestDispatcher("/blackLstDet?b_no="+pk);
 			dis.forward(req, resp);
 			
