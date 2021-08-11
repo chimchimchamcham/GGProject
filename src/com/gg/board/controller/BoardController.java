@@ -658,7 +658,6 @@ public class BoardController extends HttpServlet {
 				total = dao.noticeCount();
 				System.out.println("게시글 총 갯수:" + total);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
 				dao.resClose();
