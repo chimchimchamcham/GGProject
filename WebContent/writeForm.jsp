@@ -7,8 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!--예약하기 달력 관련 링크-->
 <!-- jquery UI 링크 -->
@@ -30,23 +29,61 @@
 }
 
 #main {
-	background-color: gray;
-	width: 1200px;
-	height: 2000px;
-	position: absolute;
-	top: 150px;
-	z-index: -1;
+   /* background-color: gray; */
+   width: 1140px;
+   height: auto;
+   position: absolute;
+   top: 150px;
+   z-index: -1;
+   margin: 0px auto;
+   padding: 30px;
 }
 
 #wrap {
-	width: 1200px;
+	width:940px;
+	padding:0 100px;
+	height:1150px;
 	margin: 0 auto;
 	text-align: left;
+	
 }
 
 textarea {
 	resize: none;
 }
+
+#sale, #trade, #community{
+	border-width:0;
+	width:100px; 
+	height:50px;
+	font-size:1.2rem;
+	border-radius: 5px;
+	background-color:#EFEFEB;
+	font-color:#757676;
+}
+#sale:hover, #trade:hover, #community:hover{
+	background-color:#757676;
+	color:white;
+}
+
+#write_title{
+	width:940px;
+	height:30px;
+	font-size:18px;
+}
+#input{
+	width:940px;
+	height:500px;
+	
+}
+#intro_cnt{
+	float:right;
+}
+
+#communityForm{
+	padding-top:15px;
+}
+
 </style>
 <script>
 // 오늘 날짜 설정
@@ -62,7 +99,6 @@ console.log("오늘 날짜 : ",currDate);
 	<div id="main">
 
 		<div id="wrap">
-			<h2>글쓰기</h2>
 			<!--글쓰기 폼 선택 버튼-->
 			<c:if test="${sessionScope.adminYN eq 'N'}">
 				<div id="selectForm">
@@ -73,7 +109,7 @@ console.log("오늘 날짜 : ",currDate);
 			</c:if>
 			<div id="communityForm">
 				<p>
-					<input type="text" name="title" value="" placeholder="제목을 입력해주세요" maxlength='30'
+					<input type="text" name="title" value="" id="write_title" placeholder="제목을 입력해주세요" maxlength='30'
 						style='width: "1000px"' />
 				</p>
 				<form method='POST' enctype="multipart/form-date" id='uploadForm'>
@@ -83,7 +119,7 @@ console.log("오늘 날짜 : ",currDate);
 						name="imgFile" style="display: none" id="test" />
 				</form>
 				<p>
-					<textarea name="content" rows="30" cols="100" placeholder="내용입력"
+					<textarea name="content" placeholder="내용입력"
 						id="input" style="overflow-y: scroll"></textarea>
 				</p>
 				<div id="intro_cnt">(0 / 1000)</div>
@@ -97,7 +133,7 @@ console.log("오늘 날짜 : ",currDate);
 			</div>
 			<div id="saleForm">
 				<p id="salePr">
-					<input type="text" name="price" value="" maxlength='9'placeholder="가격 입력(숫자입력)" />&nbsp;Point
+					<input type="text" name="price" value="" maxlength='9' placeholder="가격 입력(숫자입력)" />&nbsp;Point
 				</p>
 				<p id='delivery'>
 					거래방식(필수선택) &nbsp;&nbsp;&nbsp;<input type="radio" name="deliveryYN"
@@ -198,12 +234,15 @@ console.log("오늘 날짜 : ",currDate);
 	//경매버튼클릭시
 	$("#trade").click(function() {
 		param.select = "P001";
-
+		
 		console.log(param.select);
 		$("#tradeForm,#reservForm,#saleForm").show();
 
 		$("#commuCategory,#salePr").hide();
-
+		
+		$("#trade").css({"background-color":"#757676","color":"white"});
+		$("#community").css({"background-color":"#EFEFEB","color":"black"});
+		$("#sale").css({"background-color":"#EFEFEB","color":"black"});
 	});
 
 	//커뮤니티버튼 클릭시
@@ -212,6 +251,11 @@ console.log("오늘 날짜 : ",currDate);
 		console.log(param.select);
 		$("#tradeForm,#saleForm,#reservForm").hide();
 		$("#commuCategory").show();
+		
+		$("#trade").css({"background-color":"#EFEFEB","color":"black"});
+		$("#sale").css({"background-color":"#EFEFEB","color":"black"});
+		$("#community").css({"background-color":"#757676","color":"white"});
+		
 	});
 
 	//판매버튼 클릭시
@@ -220,6 +264,10 @@ console.log("오늘 날짜 : ",currDate);
 		console.log(param.select);
 		$("#reservForm,#tradeForm,#commuCategory").hide();
 		$("#saleForm,#salePr").show();
+		
+		$("#trade").css({"background-color":"#EFEFEB","color":"black"});
+		$("#sale").css({"background-color":"#757676","color":"white"});
+		$("#community").css({"background-color":"#EFEFEB","color":"black"});
 	});
 
 	//경매폼에서 예약경매하기 버튼 클릭시
