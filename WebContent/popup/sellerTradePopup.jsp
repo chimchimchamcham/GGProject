@@ -36,7 +36,7 @@ body{width:100%;background-color:gray;}
 #view_pnt{display:inline-block; position:relative; top:40px;left:38px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;/* border:1px solid gray; */border-radius:5px/5px;padding-left:10px;padding-right:40px;}
 .p{font-size:2.0rem; position:absolute; top:65px;left:230px }
 
-#threeBtn{position:absolute; top:130px; background-color:pink;width:180px; left:75px}
+#threeBtn{position:absolute; top:130px; /* background-color:pink; */width:180px; left:75px}
 #threeBtn>button{width:80px; height:40px; border-radius:5px/5px;font-size:0.8rem; float:left;margin:5px}
 #sendOk{background-color:#0048FF;color:white}
 #sendRF{color:white;background-color:#FF7E00;}
