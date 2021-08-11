@@ -74,6 +74,12 @@ public class UserController extends HttpServlet {
 			if (!idYN.isEmpty()) {
 				req.getSession().setAttribute("loginId", idYN.get(0));
 				req.getSession().setAttribute("adminYN", idYN.get(1));
+				/*
+				 * if(idYN.get(2) != null) {
+				 * 
+				 * }
+				 */
+				
 				msg = null;
 				System.out.println(idYN.get(1));
 				page = "index.jsp";
