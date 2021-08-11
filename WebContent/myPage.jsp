@@ -961,8 +961,8 @@ a:visited {
 
 		soldlist.forEach(function(item, idx) {
 					console.log("idx:", idx, item);
-					content += "<div class='item-one'>";
-					content += "<div class='img-zoon'><img src=/photo/"+item.i_newName+"></div>";
+					content += "<div class='item-one-sold'>";
+					content += "<div class='img-zoon'><img class='sold_img' src=/photo/"+item.i_newName+"></div>";
 					content += "<div class='dretion-zoon'>";
 					content += "	<div class='itemindex'>" + "<a href="
 							+ "salesDetail?p_no=" + item.p_no + ">"
@@ -971,8 +971,7 @@ a:visited {
 							+ "</div>";
 					content += "</div>";
 					content += "<div class='love-time'>";
-					content += "	<div class='love'>" + item.p_likeCount
-							+ "</div>";
+					content += "	<div class='love'>" + item.p_likeCount+"</div>";
 					content += "	<div class='time'>" + item.p_tm + "</div>";
 					content += "</div>";
 					content += "</div>";
