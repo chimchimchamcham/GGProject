@@ -152,7 +152,7 @@ h3 {
 			<button class="userBtn">회원목록</button>
 			<button class="notifyBtn">신고</button>
 			<button class="blackBtn">블랙리스트</button>
-			<button class="myBtn">마이페이지</button>
+			<button class="myBtn">작성 글 목록</button>
 		</div>
 
 		<!-- ===========회원목록============= -->
@@ -162,8 +162,8 @@ h3 {
 				<tr>
 					<td>
 						<div id="searchBox">
-							<input type="text" name="search" placeholder="검색"> <img
-								src="img/search-icon.png" alt="search-icon">
+							<input type="text" name="search" placeholder="검색">
+							<img src="img/search-icon.png" alt="search-icon">
 						</div>
 					</td>
 				</tr>
@@ -497,5 +497,13 @@ h3 {
 		 $("table tr.notifyLine").remove();
 		
 	}
+	
+	var msg = "${msg}";
+	
+	if(msg != ""){
+		alert(msg);
+	}
+	
+	
 </script>
 </html>
