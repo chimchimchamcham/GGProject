@@ -153,9 +153,13 @@ public class BoardController extends HttpServlet {
 			String id = req.getParameter("id");
 
 			
+			System.out.println("판매리스트 요청 userid : "+userid);
+			System.out.println("판매리스트 요청 id : "+id);
+			
 			/*
-			 * if(!userid.equals(id)) { //타인프로필 일때 userid=id; }
+			 * if(!userid.equals(id)) { userid = id; }
 			 */
+			 
 			 
 			 
 
@@ -636,7 +640,10 @@ public class BoardController extends HttpServlet {
 			if (success) {
 				msg = "삭제에 성공했습니다.";
 			}
+			String ref = (String)req.getHeader("REFERER");
+			System.out.println(ref);
 			req.setAttribute("msg", msg);
+			
 			dis = req.getRequestDispatcher("index.jsp");
 			dis.forward(req, resp);
 			break;
