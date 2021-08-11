@@ -312,7 +312,6 @@ a:visited {
 	var isFollow = false;
 	$(document).ready(function() {
 		
-		console
 		//이전에 이용자가 판매자를 팔로우한 적이 있는지 확인
 		//팔로우를 했을 경우
 		<c:if test="${myPageInfo.isFollow eq true}">
