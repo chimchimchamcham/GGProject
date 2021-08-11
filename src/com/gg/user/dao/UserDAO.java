@@ -511,7 +511,7 @@ public class UserDAO {
 
 	
 	//검색처리
-	public HashMap<String,ArrayList<GGDto>> search(String search) throws SQLException {
+	public HashMap<String,ArrayList<GGDto>> search(String search,String u_adminyn) throws SQLException {
 		HashMap<String,ArrayList<GGDto>> map = new HashMap<String, ArrayList<GGDto>>();
 		ArrayList<GGDto> list = null;
 		ArrayList<GGDto> list1 = null;
@@ -519,9 +519,15 @@ public class UserDAO {
 		GGDto dto = null;
 		TradeDAO Tdao = null;
 		
-		String sql = "select  u_id, u_nname, u_intro, (select count(*) from post where p_id=u_id) as count_p, u_newname, (select count(*) from follow where f_receiveid = u_id) as f_cnt from userinfo where  u_nname like '%"+search+"%' ";
-		String sql1 ="select p.p_no, p.p_title, p.p_code, p.p_content, p.p_likecount, p.p_view, p.p_tm, (select i.i_newname from img i  where i.p_no = p.p_no) i_newname from post p where p.p_content like '%"+search+"%'";
-		String sql2 ="select p.p_no, p.p_title, p.p_code, p.p_content, p.p_likecount, p.p_view , p.p_tm, (select i.i_newname from img i  where i.p_no = p.p_no) i_newname from post p where p.p_title like '%"+search+"%'"; 
+		String editSql = null;
+		System.out.println("관리자 여부 : "+u_adminyn);
+		if(u_adminyn.equals("N")) {//관리자여부가 N이면 일반사용자만 사용되도록
+			editSql =  "u_adminyn='N' and";
+		}
+		
+		String sql = "select  u_id, u_nname, u_intro, (select count(*) from post where p_id=u_id) as count_p, u_newname, (select count(*) from follow where f_receiveid = u_id) as f_cnt from userinfo where "+editSql+" u_nname like '%"+search+"%' order by u_id asc";
+		String sql1 ="select p.p_no, p.p_title, p.p_code, p.p_content, p.p_likecount, p.p_view, p.p_tm, (select i.i_newname from img i  where i.p_no = p.p_no) i_newname from post p where p.p_content like '%"+search+"%' order by p_tm desc";
+		String sql2 ="select p.p_no, p.p_title, p.p_code, p.p_content, p.p_likecount, p.p_view , p.p_tm, (select i.i_newname from img i  where i.p_no = p.p_no) i_newname from post p where p.p_title like '%"+search+"%' order by p_tm desc"; 
 		
 		//회원정보 테이블에서 조회
 		ps = conn.prepareStatement(sql);
