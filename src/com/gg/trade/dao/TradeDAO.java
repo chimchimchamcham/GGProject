@@ -50,7 +50,7 @@ public class TradeDAO {
 
 	// 구매요청
 	public boolean buyRequest(int p_no, String u_id) {
-		String sql = "INSERT INTO REQUEST VALUES(RQ_no_seq.NEXTVAL,?,?,NULL,SYSDATE)";
+		String sql = "INSERT INTO REQUEST VALUES(RQ_no_seq.NEXTVAL,?,?,'0',SYSDATE)";
 		int success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
