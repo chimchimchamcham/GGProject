@@ -1009,5 +1009,58 @@ public class TradeDAO {
 		}
 		return u_nname;
 	}
-
+	
+	//거래페이지 판매자, 구매자 가져오는 기능
+	public ArrayList<String> selectSandB(int t_no) {
+		ArrayList<String> list = new ArrayList<String>();
+		
+		String sql = "SELECT t_saler, t_buyer from trade where t_no=?";
+		String t_saler = null;
+		String t_buyer = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, t_no);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				t_saler = rs.getString("t_saler");
+				t_buyer = rs.getString("t_buyer");
+				list.add(t_saler);
+				list.add(t_buyer);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("거래페이지 구매자 : "+list.get(0));
+		System.out.println("거래페이지 판매자 : "+list.get(1));
+		
+		return list;
+		
+	}
+	
+	//해당 거래페이지 번호를 가져다가 게시글 제목을 가져오는 기능
+	public String getTitleFromTno(int t_no) {
+		String title = null;
+		String sql = "select p_title from post where p_no=(select p_no from trade where t_no=?)";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, t_no);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				title = rs.getString("p_title");
+				System.out.println("해당 거래페이지의 게시글 제목 : "+title);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return title;
+		
+	}
+	//거래페이지 알람 보내는 기능
+	public void pushTradeAlarm(int t_no, int ht_point, String ht_code ) {
+		
+	}
 }
