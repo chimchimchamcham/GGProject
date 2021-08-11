@@ -137,12 +137,12 @@ public class UserDAO {
 				idYN.add(rs.getString(1)); // id값 저장
 				idYN.add(rs.getString(2)); // 관리자 여부 저장
 				
-				/*
+				//블랙리스트 등록여부 판단
 				BlackListDAO BLstDAO = new BlackListDAO();
 				ArrayList<String> BLst = new ArrayList<String>();
 				BLst=BLstDAO.checkBLstYN(loginId);
 				System.out.println("블랙리스트 등록 여부 : "+BLst.size());
-				if(BLst != null) {
+				if(BLst.size() > 0) {
 					String b_content = BLst.get(0);
 					String b_endToStr = BLst.get(1);
 					String u_nname = BLst.get(2);
@@ -151,7 +151,8 @@ public class UserDAO {
 					idYN.add(u_nname);
 				}
 				BLstDAO.resClose();
-				*/
+				
+				
 			}
 			
 			
@@ -518,7 +519,7 @@ public class UserDAO {
 		GGDto dto = null;
 		TradeDAO Tdao = null;
 		
-		String sql = "select  u_id, u_nname, u_intro, (select count(*) from post where p_id=u_id) as count_p, u_newname, (select count(*) from follow where f_receiveid = u_id) as f_cnt from userinfo where u_nname like '%"+search+"%' ";
+		String sql = "select  u_id, u_nname, u_intro, (select count(*) from post where p_id=u_id) as count_p, u_newname, (select count(*) from follow where f_receiveid = u_id) as f_cnt from userinfo where  u_nname like '%"+search+"%' ";
 		String sql1 ="select p.p_no, p.p_title, p.p_code, p.p_content, p.p_likecount, p.p_view, p.p_tm, (select i.i_newname from img i  where i.p_no = p.p_no) i_newname from post p where p.p_content like '%"+search+"%'";
 		String sql2 ="select p.p_no, p.p_title, p.p_code, p.p_content, p.p_likecount, p.p_view , p.p_tm, (select i.i_newname from img i  where i.p_no = p.p_no) i_newname from post p where p.p_title like '%"+search+"%'"; 
 		
