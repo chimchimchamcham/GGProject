@@ -99,7 +99,6 @@
             	/* 물건 이미지 틀,만약 이미지가 틀을 넘으면  넘은부분은 보이지않음 그리고 이미지를 가운데를 기준으로 보여짐*/
                 .img-zoon{
                     margin: 5px;
-                    border: 1px solid black;
                     overflow: hidden;
                     display: flex;
                     align-items: center;

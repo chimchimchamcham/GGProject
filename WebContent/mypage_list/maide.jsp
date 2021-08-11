@@ -80,7 +80,6 @@
             }
                 .img-zoon{
                     margin: 5px;
-                    border: 1px solid black;
                     overflow: hidden;
                     display: flex;
                 }
