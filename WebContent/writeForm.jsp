@@ -60,9 +60,11 @@ textarea {
 	border-radius: 5px;
 	background-color:#EFEFEB;
 	font-color:#757676;
-	margin-top:20px;
-	margin-right:20px;
+/* 	margin-top:20px;
+	margin-right:20px; */
 	/* position:absolute; */
+	padding:0px;
+	margin:0px
 }
 #sale:hover, #trade:hover, #community:hover{
 	background-color:#757676;
@@ -92,7 +94,8 @@ textarea {
 } */
 #selectForm{
 	/* height:900px; */
-	/* width:125px; */
+	
+	
 	/* position:relative; */
 	
 }
@@ -123,14 +126,13 @@ console.log("오늘 날짜 : ",currDate);
 
 		<div id="wrap">
 			<!--글쓰기 폼 선택 버튼-->
-			<c:if test="${sessionScope.adminYN eq 'N'}">
-				<div id="selectForm">
-					<button id="sale">판매</button>
-					<button id="trade">경매</button>
-					<button id="community">커뮤니티</button>
-				</div>
-			</c:if>
-			
+					<c:if test="${sessionScope.adminYN eq 'N'}">
+						<div id="selectForm">
+						<button id="sale">판매</button>
+						<button id="trade">경매</button>
+						<button id="community">커뮤니티</button>
+						</div>
+					</c:if>
 			<div id="communityForm">
 				<p>
 					<input type="text" name="title" value="" id="write_title" placeholder="제목을 입력해주세요" maxlength='30'
