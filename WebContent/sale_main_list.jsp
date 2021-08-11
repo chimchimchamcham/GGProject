@@ -169,7 +169,7 @@ $(".categor tr td").click(function(){//카테고리
 	    $index1 = $button1.index(this);
 	    
 	    $index_button_sold = $(".categor tr td:eq(" + $index1 + ")").text();
-	    
+
 	
 		console.log("$index_button_sold:"+$index_button_sold);
 		
