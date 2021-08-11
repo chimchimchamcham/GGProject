@@ -632,7 +632,10 @@ public class BoardController extends HttpServlet {
 			if (success) {
 				msg = "삭제에 성공했습니다.";
 			}
+			String ref = (String)req.getHeader("REFERER");
+			System.out.println(ref);
 			req.setAttribute("msg", msg);
+			
 			dis = req.getRequestDispatcher("index.jsp");
 			dis.forward(req, resp);
 			break;
