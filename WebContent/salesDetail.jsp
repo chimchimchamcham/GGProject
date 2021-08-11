@@ -724,14 +724,13 @@ li {
 	}
 	
 	//판매글 블라인드 체크 여부 확인
-	var p_blindYN = "${dto.p_blindYN}";
+	/*var p_blindYN = "${dto.p_blindYN}";
 	if("${dto.p_blindYN}"=="Y"){
 			$("#mainHeader").hide();
 			$("#main").hide();
-			/* alert("삭제된 경매글 입니다."); */
-			location.href = "./index.jsp";
-			
-	};
+			alert("삭제된 경매글 입니다.");
+			location.href = "./index.jsp";	
+	};*/
 	
 	
 	//댓글 버튼 누르면 이상세 페이지에서 마지막에 쓴 댓글 보여주기

@@ -1,6 +1,7 @@
 package com.gg.user.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gg.board.dao.BoardDAO;
+import com.gg.board.service.BoardService;
 import com.gg.dto.GGDto;
 import com.gg.user.service.UserService;
 import com.google.gson.Gson;
@@ -159,6 +162,23 @@ public class UserController extends HttpServlet {
 
 			resp.setContentType("text/html; charset=UTF-8");
 			req.setCharacterEncoding("UTF-8");
+			
+			String sessionId = (String)req.getSession().getAttribute("loginId");
+			String adminYN = (String)req.getSession().getAttribute("adminYN");
+			
+			System.out.println("sessionId : "+sessionId+"/ adminYN:"+adminYN);
+			
+			msg="";
+			page="managePage.jsp";
+			if(sessionId == null){
+				msg = "로그인이 필요한 서비스 입니다.";
+				page = "index.jsp";
+			}else{
+				if(adminYN.equals("N")){
+					msg = "관리자 전용 페이지입니다.";
+					page = "index.jsp";
+				}
+			}
 
 			/* ==회원목록== */
 			ArrayList<GGDto> userList = service.userList();
@@ -188,11 +208,27 @@ public class UserController extends HttpServlet {
 			System.out.println("blackList size : " + blackList.size());
 			req.setAttribute("blackList", blackList);
 			
-			/* ==작성한 글 목록== */
-			req.setAttribute("myPageBox", service.myPage());
+			/* ==작성한 글 목록(공지사항)== */
+			/*
+			 * String currPageNum = req.getParameter("currPageNum");
+			 * System.out.println("처음 currPageNum : " + currPageNum); String paging =
+			 * req.getParameter("paging"); if (currPageNum == null ||
+			 * currPageNum.equals("0")) { currPageNum = "1"; } if (paging == null) { paging
+			 * = "1"; } System.out.println("currPageNum : " + currPageNum);
+			 * System.out.println("paging : " + paging);
+			 * 
+			 * BoardService service1 = new BoardService(req, resp); ArrayList<GGDto> lists =
+			 * service1.noticeList(Integer.parseInt(paging), Integer.parseInt(currPageNum));
+			 * BoardDAO dao = new BoardDAO(); int total = 0; try { total =
+			 * dao.noticeCount(); System.out.println("게시글 총 갯수:" + total); } catch
+			 * (SQLException e) { e.printStackTrace(); } finally { dao.resClose(); }
+			 * req.setAttribute("noticeList", lists); req.setAttribute("noticeListSize",
+			 * total);
+			 */
 			
 			/* ====경로지정==== */
-			dis = req.getRequestDispatcher("managePage.jsp");
+			req.setAttribute("msg", msg);
+			dis = req.getRequestDispatcher(page);
 			dis.forward(req, resp);
 
 			break;

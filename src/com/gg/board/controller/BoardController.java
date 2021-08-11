@@ -1,6 +1,7 @@
 package com.gg.board.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -55,6 +56,7 @@ public class BoardController extends HttpServlet {
 		boolean success = false;
 		int p_no;
 		String userid = "";
+		String p_blindYN = "";
 		switch (addr) {
 
 		case "/mainpage":
@@ -93,9 +95,22 @@ public class BoardController extends HttpServlet {
 			req.setAttribute("isBuyRequested", isBuyRequested);
 			req.setAttribute("isFollowed", isFollowed);
 			req.setAttribute("sale3List", sale3List);
-
-			dis = req.getRequestDispatcher("salesDetail.jsp");
-			dis.forward(req, resp);
+			
+			//블라인드 여부 확인
+			p_blindYN = dto.getP_blindYN();
+			if(p_blindYN.equals("N")) {
+				dis = req.getRequestDispatcher("salesDetail.jsp");
+				dis.forward(req, resp);
+			}else {
+				resp.setCharacterEncoding("UTF-8");
+				resp.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = resp.getWriter();
+				out.print("<script>");
+				out.print("alert('접근할 수 없는 페이지 입니다.');");
+				out.print("location.href='index.jsp';");
+				out.print("</script>");
+			}
+			
 			break;
 
 		case "/lovePlus":
@@ -545,9 +560,22 @@ public class BoardController extends HttpServlet {
 
 			req.setAttribute("endTm", endTm);
 			req.setAttribute("startTm", startTm);
-
-			dis = req.getRequestDispatcher("auctionDetail.jsp");
-			dis.forward(req, resp);
+			
+			//블라인드 여부 확인
+			p_blindYN = dto.getP_blindYN();
+			if(p_blindYN.equals("N")) {
+				dis = req.getRequestDispatcher("auctionDetail.jsp");
+				dis.forward(req, resp);
+			}else {
+				resp.setCharacterEncoding("UTF-8");
+				resp.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = resp.getWriter();
+				out.print("<script>");
+				out.print("alert('접근할 수 없는 페이지 입니다.');");
+				out.print("location.href='index.jsp';");
+				out.print("</script>");
+			}
+			
 
 			break;
 
