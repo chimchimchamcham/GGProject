@@ -537,12 +537,12 @@ var isFollowed = false;
 	});
 
 	//경매글 블라인드 체크 여부 확인
-	var p_blindYN = "${dto.p_blindYN}";
+	/* var p_blindYN = "${dto.p_blindYN}";
 	if("${dto.p_blindYN}"=="Y"){
 			$("#main").hide();
-			/* alert("삭제된 경매글 입니다."); */
+			alert("삭제된 경매글 입니다.");
 			location.href = "./index.jsp";
-	};
+	}; */
 	
 	//경매글 삭제 버튼 클릭시
 	function delChk(){
