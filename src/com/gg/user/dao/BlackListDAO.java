@@ -131,15 +131,19 @@ public class BlackListDAO {
 				Double result = Double.parseDouble(endDateToStr) - Double.parseDouble(nowDateToStr);
 				System.out.println("블랙리스트 종료시간 - 현재시간 = " + result);
 				
+				
+				
 				PointDAO Pdao = new PointDAO();
 				String u_nname = Pdao.getNname(u_id);
 				Pdao.resClose();
 				
 				String b_endTostr = endFormat.format(b_endtm);
 				
-				list.add(b_content);//내용
-				list.add(b_endTostr);//종료시간
-				list.add(u_nname);//닉네임
+				if(result>0) {
+					list.add(b_content);//내용
+					list.add(b_endTostr);//종료시간
+					list.add(u_nname);//닉네임
+				}
 				
 			}
 		} catch (SQLException e) {

@@ -1,6 +1,7 @@
 package com.gg.user.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,17 +74,22 @@ public class UserController extends HttpServlet {
 			String msg = "아이디 또는 비밀번호를 확인 하세요";
 			String page = "login.jsp";
 			if (!idYN.isEmpty()) {
+				if(idYN.size()>2) {//블랙리스트임
+					String b_content = idYN.get(2);
+					String b_endToStr = idYN.get(3);
+					String u_nname = idYN.get(4);
+					
+					msg = u_nname+"님은 블랙리스트에 등록되어있습니다. \\n 종료시간 : "+b_endToStr+" \\n 사유 : "+b_content;
+					page = "index.jsp";
+				}else {//블랙리스트가 아님
+				
 				req.getSession().setAttribute("loginId", idYN.get(0));
 				req.getSession().setAttribute("adminYN", idYN.get(1));
-				/*
-				 * if(idYN.get(2) != null) {
-				 * 
-				 * }
-				 */
-				
+				 
 				msg = null;
 				System.out.println(idYN.get(1));
 				page = "index.jsp";
+				}
 			}
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher(page);
