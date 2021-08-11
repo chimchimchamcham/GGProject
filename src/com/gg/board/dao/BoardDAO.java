@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.gg.dto.GGDto;
@@ -411,12 +412,12 @@ public class BoardDAO {
 		return soldlist;
 	}
 
-	public ArrayList<GGDto> auction_list(String userid, int listwhatadd) throws SQLException {
+	public ArrayList<GGDto> auction_list(String userid, int listwhatadd) throws SQLException, NamingException {
 		String sql = "";
-		
+		String sql2 = "";
 		if (listwhatadd == 0) {// 전체 Au001 Au003
-			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and (a.Au_code = 'Au001' or a.Au_code = 'Au003') and P.P_ID = u.u_id and p,p_id = ?";
-			//sql2 = "SELECT max(ha.HA_bidPr) FROM HIS_AUCTION ha,auction a,post p,userinfo u where a.p_no = ha.p_no and a.p_no = p.p_no and p.p_id = u.u_id and u.u_id = 'user1'";
+			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no and p.p_code ='P001' and (a.Au_code = 'Au001' or a.Au_code = 'Au003') and p.p_id = ?";
+			sql2 = "";
 		} else if (listwhatadd == 1) {// 경매중 Au001
 			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and a.Au_code = 'Au001' and P.P_ID = u.u_id and p,p_id = ?";
 		} else if (listwhatadd == 2) {// 경매완료 Au003
@@ -425,36 +426,44 @@ public class BoardDAO {
 
 		ArrayList<GGDto> auctionlist = new ArrayList<GGDto>();
 
-		System.out.println("auctionlist:" + auctionlist);
+		sql2 = "select max(ha_bid_pr) from his_auction where p_no =?";
+		
+		Context ctx = new InitialContext();
+		DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle");
+		Connection conn2 = null;
+		conn2 = ds.getConnection();
+		
+		PreparedStatement ps2 = conn2.prepareStatement(sql2);
+		ps2.setInt(1, 741);
+		ResultSet rs2 = ps.executeQuery();
+		GGDto dto = new GGDto();
+		if(rs2.next()) {
+			dto.setHm(rs.getLong("max(ha_bid_pr)"));
+		}else {
+			dto.setHm(0);
+		}
+
 
 		ps = conn.prepareStatement(sql);
-
-		System.out.println("daouserID:" + userid);
-
+		
 		ps.setString(1, userid);
 		rs = ps.executeQuery();
 		System.out.println("rs:" + rs);
 
 		while (rs.next()) {
-			GGDto dto = new GGDto();
+
 			dto.setP_no(rs.getInt("P_NO"));
 			dto.setP_id(rs.getString("P_ID"));
 			dto.setP_title(rs.getString("P_TITLE"));
-			dto.setHa_bidUsr(rs.getString("HA_BIDUSR"));
 			dto.setAu_count(rs.getInt("au_count"));
 			dto.setAu_endTm(rs.getDate("au_endTm"));
-			dto.setHm(rs.getLong("TOPPR"));
 			dto.setI_newName(rs.getString("I_NEWNAME"));
 			dto.setAu_startPr(rs.getInt("Au_startPr"));
 			dto.setAu_instantPr(rs.getInt("Au_instantPr"));
 			dto.setP_tm(rs.getDate("P_TM"));
+			dto.setHa_bidPr(dto.getHm());
 			auctionlist.add(dto);
 		}
-		
-		
-		
-		
-		
 		
 		System.out.println("actionlist:" + auctionlist);
 		return auctionlist;

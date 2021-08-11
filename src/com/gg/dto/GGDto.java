@@ -115,7 +115,7 @@ public class GGDto {
    
    
    // 경매히스토리관련
-   private int ha_bidPr; // 입찰가격
+   private long ha_bidPr; // 입찰가격
 
    private long hm;
    
@@ -750,11 +750,11 @@ public void setAu_successer(String au_successer) {
 	this.au_successer = au_successer;
 }
 
-public int getHa_bidPr() {
+public long getHa_bidPr() {
 	return ha_bidPr;
 }
 
-public void setHa_bidPr(int ha_bidPr) {
+public void setHa_bidPr(long ha_bidPr) {
 	this.ha_bidPr = ha_bidPr;
 }
 
