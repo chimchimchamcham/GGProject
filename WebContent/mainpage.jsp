@@ -154,7 +154,7 @@ function soled_list(mainpage_sold_list) {
 					content +=  "<img src='"+item.i_newName+"' alt=''>";
 					content +="<div>제목:"+item.p_title+"</div>";
 					content +="<div>판매값:"+item.ns_pr+"</div>";
-					content +="<div><img src='"+item.u_nname+"' style='width: 40px;height: 40px;'><div>"+item.u_nname+"</div></div>";
+					content +="<div><img src='"+item.u_newName+"' style='width: 20px;height: 20px;'><div><a href='myPage?id="+item.p_id+"'>"+item.u_nname+"</a></div></div>";
 					content +="<div><div>♥:"+item.p_likeCount+"</div><div>"+item.p_view+"</div><div>tm:"+item.p_tm+"</div></div>";
 					content +="</div>";
 				});
@@ -199,7 +199,7 @@ function communiti_list(mainpage_communiti_list) {
 				content += "<td>"+num+"</td>";
 				content += "<td>"+item.p_cateName+"</td>";
 				content += "<td>"+item.p_title+"</td>";
-				content += "<td>"+item.u_nname+"</td>";
+				content += "<td><a href=myPage?id="+item.p_id+"'>"+item.u_nname+"<a></td>";
 				content += "<td>"+item.p_likeCount+"</td>";
 				content += "<td>"+item.p_tm+"</td>";
 				content += "</tr>";
