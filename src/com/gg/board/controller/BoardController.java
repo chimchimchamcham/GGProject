@@ -237,13 +237,14 @@ public class BoardController extends HttpServlet {
 			break;
 		case "/flowlist":
 			System.out.println("팔로잉리스트 리스트 요청");
+			
 			userid = (String) req.getSession().getAttribute("loginId");
 			String oppId = (String)req.getParameter("oppId");
 			if(!userid.equals(oppId) && oppId != null) {
 				userid = oppId;     // 타인의 프로필을 들어갈 경우 타인의 아이디의 팔로우 팔로워 리스트를 뽑아준다.
 			}
 			int flowORflowing = Integer.parseInt(req.getParameter("index1"));
-			service.flow_list(loginid, flowORflowing);
+			service.flow_list(userid, flowORflowing);
 
 		case "/flowadddelect":
 			System.out.println("팔로워 버튼 처리 요청");
