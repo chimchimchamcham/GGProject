@@ -679,7 +679,7 @@ public class UserDAO {
 	}
 
 	public ArrayList<GGDto> blackList() {
-		String sql = "SELECT b_id, b_starttm, b_endtm, b_adminid, b_no FROM blackList";
+		String sql = "SELECT b_id, b_starttm, b_endtm, b_adminid, b_no FROM blackList ORDER BY b_starttm DESC";
 		ArrayList<GGDto> blackList = new ArrayList<GGDto>();
 		GGDto dto = null;
 
