@@ -108,7 +108,7 @@
     <tr><td>가구생활</td></tr>
     <tr><td>취미/스타굿즈</td></tr>
     <tr><td>전자기기</td></tr>
-    <tr><td>스포트레져</td></tr>
+    <tr><td>스포트레저</td></tr>
     <tr><td>자동차</td></tr>
     <tr><td>생활가전</td></tr>
     <tr><td>도서기타</td></tr>
