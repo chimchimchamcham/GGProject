@@ -9,10 +9,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Document</title>
     <style>
-        *{
-            margin: 0;
-            padding: 0;
-        }
         .auc-con{
             display: flex;
             align-items: center;
@@ -148,7 +144,7 @@ $(document).ready(function() {
 	$.ajax({
 		type:'post',
 		url:'./auctionmainlist',
-		data:{  index_button_auction : '뷰티잡화',
+		data:{  index_button_auction : '패션의류',
 				index2 : 0 },
 		dataType:'JSON',
 		success:function(data){

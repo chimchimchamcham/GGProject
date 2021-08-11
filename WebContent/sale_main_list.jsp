@@ -9,10 +9,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Document</title>
     <style>
-        *{
-            margin: 0;
-            padding: 0;
-        }
         .sold-con{
             display: flex;
             align-items: center;
@@ -153,7 +149,7 @@ $(document).ready(function() {
 	$.ajax({
 		type:'post',
 		url:'./soldmainlist',
-		data:{  index_button_sold : '뷰티잡화'},
+		data:{  index_button_sold : '패션의류'},
 		dataType:'JSON',
 		success:function(data){
 			console.log("data",data);

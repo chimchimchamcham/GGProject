@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>충전 팝업</title>
+<title>신고 상세내용</title>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 </style>

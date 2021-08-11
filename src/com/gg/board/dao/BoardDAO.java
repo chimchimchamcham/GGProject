@@ -49,7 +49,7 @@ public class BoardDAO {
 
 	public ArrayList<GGDto> mainpage_list_sold() throws SQLException {
 		
-		String sql = "SELECT distinct P.P_NO, u.u_nname, P.P_TITLE,P.P_TM, P.P_VIEW,n.ns_pr, P.P_LIKECOUNT, I.I_NEWNAME ,u.U_newName FROM POST P, SALE S, N_SALE N, IMG I ,userinfo u WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = u.u_id and p.p_code = 'P002'  order BY p.p_likecount DESC";
+		String sql = "SELECT distinct P.P_NO,p.p_id,u.u_nname, P.P_TITLE,P.P_TM, P.P_VIEW,n.ns_pr, P.P_LIKECOUNT, I.I_NEWNAME ,u.U_newName FROM POST P, SALE S, N_SALE N, IMG I ,userinfo u WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO AND p.p_id = u.u_id and p.p_code = 'P002'  order BY p.p_likecount DESC";
 		
 			ps = conn.prepareStatement(sql);
 			
@@ -60,6 +60,7 @@ public class BoardDAO {
 				rs.next();
 				GGDto dto = new GGDto();
 				dto.setP_no(rs.getInt("P_no"));
+				dto.setP_id(rs.getString("p_id"));
 				dto.setP_title(rs.getString("P_title"));
 				dto.setU_nname(rs.getString("u_nname"));
 				dto.setP_tm(rs.getDate("p_tm"));
@@ -75,7 +76,7 @@ public class BoardDAO {
 	
 	public ArrayList<GGDto> mainpage_list_auction() throws SQLException {
 		
-		String sql = "SELECT P.P_NO,P.P_TITLE, H.HA_BIDUSR ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM, p.p_likecount  FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM, userinfo u WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND  p.p_code ='P001' and P.P_ID = u.u_id ORDER by p.p_likecount";
+		String sql = "SELECT P.P_NO,p.p_id,P.P_TITLE, H.HA_BIDUSR ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM, p.p_likecount  FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM, userinfo u WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND  p.p_code ='P001' and P.P_ID = u.u_id ORDER by p.p_likecount";
 			
 		ArrayList<GGDto> mainpagelistauction = new ArrayList<GGDto>();
 		ps = conn.prepareStatement(sql);
@@ -84,6 +85,7 @@ public class BoardDAO {
 			rs.next();
 			GGDto dto = new GGDto();
 			dto.setP_no(rs.getInt("P_NO"));
+			dto.setP_id(rs.getString("p_id"));
 			dto.setP_title(rs.getString("P_TITLE"));
 			dto.setHa_bidUsr(rs.getString("HA_BIDUSR"));
 			dto.setHm(rs.getLong("TOPPR"));
@@ -99,7 +101,7 @@ public class BoardDAO {
 	
 	public ArrayList<GGDto> mainpage_list_communiti() throws SQLException {
 		
-		String sql = "SELECT p.p_no,pc.p_catename,p.p_title,p.p_tm,p.P_view,p.p_likecount,u.u_nname FROM post p,Post_codes pc,Codes c,userinfo u where pc.p_cate = p.p_cate and p.p_code = c.c_code and p.p_id = u.u_id order BY p.p_likecount DESC";
+		String sql = "SELECT p.p_no,p.p_id,pc.p_catename,p.p_title,p.p_tm,p.P_view,p.p_likecount,u.u_nname FROM post p,Post_codes pc,Codes c,userinfo u where pc.p_cate = p.p_cate and p.p_code = c.c_code and p.p_id = u.u_id order BY p.p_likecount DESC";
 		ArrayList<GGDto> mainpagelistcomuniti = new ArrayList<GGDto>();
 		ps = conn.prepareStatement(sql);
 		rs = ps.executeQuery();
@@ -107,6 +109,7 @@ public class BoardDAO {
 			rs.next();
 			GGDto dto = new GGDto();
 			dto.setP_no(rs.getInt("P_NO"));
+			dto.setP_id(rs.getString("p_id"));
 			dto.setP_cateName(rs.getString("p_catename"));
 			dto.setP_title(rs.getString("P_title"));
 			dto.setP_tm(rs.getDate("p_tm"));
@@ -292,17 +295,27 @@ public class BoardDAO {
 	}
 
 	public boolean isBuyRequested(int p_no, String u_id) {
-		String sql = "SELECT * FROM REQUEST WHERE P_NO = ? AND RQ_ID = ?";
+		String sql = "SELECT * FROM REQUEST WHERE P_NO = ? AND RQ_ID = ? ORDER BY RQ_TM DESC";
+		//구매요청 이력이 없거나 N일 경우 false를 전달
+		String isBuyRequested = "";
 		boolean success = false;
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
 			ps.setString(2, u_id);
 			rs = ps.executeQuery();
-			success = rs.next();
+			
+			if(rs.next()) {
+				isBuyRequested = rs.getString("rq_yn");
+				System.out.println("구매요청여부 : "+isBuyRequested);
+				if(isBuyRequested.equals("Y") || isBuyRequested.equals("0")) {
+					success = true;
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("구매요청여부2 : "+isBuyRequested);
 		return success;
 	}
 
@@ -399,12 +412,14 @@ public class BoardDAO {
 
 	public ArrayList<GGDto> auction_list(String userid, int listwhatadd) throws SQLException {
 		String sql = "";
+		
 		if (listwhatadd == 0) {// 전체 Au001 Au003
-			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND  p.p_code ='P001' and (a.Au_code = 'Au001' or a.Au_code = 'Au003') and P.P_ID = ? ";
+			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and (a.Au_code = 'Au001' or a.Au_code = 'Au003') and P.P_ID = u.u_id and p,p_id = ?";
+			//sql2 = "SELECT max(ha.HA_bidPr) FROM HIS_AUCTION ha,auction a,post p,userinfo u where a.p_no = ha.p_no and a.p_no = p.p_no and p.p_id = u.u_id and u.u_id = 'user1'";
 		} else if (listwhatadd == 1) {// 경매중 Au001
-			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR AND  p.p_code ='P001' and a.Au_code = 'Au001' and P.P_ID = ? ";
+			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and a.Au_code = 'Au001' and P.P_ID = u.u_id and p,p_id = ?";
 		} else if (listwhatadd == 2) {// 경매완료 Au003
-			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR  and  p.p_code ='P001' and a.Au_code = 'Au003' and P.P_ID = ? ";
+			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and a.Au_code = 'Au003' and P.P_ID = u.u_id and p,p_id = ?";
 		}
 
 		ArrayList<GGDto> auctionlist = new ArrayList<GGDto>();
@@ -434,6 +449,12 @@ public class BoardDAO {
 			dto.setP_tm(rs.getDate("P_TM"));
 			auctionlist.add(dto);
 		}
+		
+		
+		
+		
+		
+		
 		System.out.println("actionlist:" + auctionlist);
 		return auctionlist;
 	}
@@ -605,16 +626,16 @@ public class BoardDAO {
 		System.out.println("daouserID:" + userid);
 
 		if (reqindex == 0) {// 전체
-			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and (  s.s_saler = ? or r.rq_id = ? ) and r.rq_yn is null";
+			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and (  s.s_saler = ? or r.rq_id = ? ) and r.rq_yn = 0";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 			ps.setString(2, userid);
 		} else if (reqindex == 1) {// 수신만
-			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and  s.s_saler = ? and r.rq_yn is null";
+			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and  s.s_saler = ? and r.rq_yn = 0";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 		} else if (reqindex == 2) {// 발신만
-			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and r.rq_id = ? and r.rq_yn is null";
+			sql = "select u.u_id,s.S_saler,p.P_no,r.rq_no,p.p_title,r.RQ_id,r.rq_tm,r.rq_yn from userinfo u,post p,sale s,N_sale ns,request r where  u.u_id = p.p_id and p.p_no = s.p_no and s.p_no = ns.p_no and p.p_no = ns.p_no and r.p_no = ns.p_no and r.p_no = s.p_no and r.p_no = p.p_no and r.rq_id = ? and r.rq_yn = 0";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, userid);
 		}
@@ -1227,9 +1248,9 @@ public class BoardDAO {
 		String sql = "";
 
 		if (auctionmainlisthowaline == 0) {// 신규등록 순
-			sql = "SELECT DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM,c.c_name FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_name = ? order by p.p_tm desc";
+			sql = "SELECT DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM,c.c_name FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_name = ? and a.Au_code = c.C_code and a.au_code = 'Au001' and P_blindYN = 'N' order by p.p_tm desc";
 		} else if (auctionmainlisthowaline == 1) {// 마감 임박순
-			sql = "SELECT DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM,c.c_name FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_name = ? order by a.au_endTm desc";
+			sql = "SELECT DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM,c.c_name FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_name = ? and a.Au_code = c.C_code and a.au_code = 'Au001' and P_blindYN = 'N' order by a.au_endTm desc";
 		}
 
 		ArrayList<GGDto> auctionmainlist = new ArrayList<GGDto>();
@@ -1267,7 +1288,7 @@ public class BoardDAO {
 	public ArrayList<GGDto> sold_main_list(String soldmainlistwhatadd) throws SQLException {
 		String sql = "";
 
-		sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME, S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME, N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME, I.I_NEWNAME, LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR FROM POST P, SALE S, N_SALE N, IMG I,codes c WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO  and p.p_code = 'P002' and c.c_code = s.s_code and c.c_name = ?";
+		sql = "SELECT P.P_NO, P.P_ID, P.P_TITLE, P.P_CONTENT, P.P_TM, P.P_VIEW, P.P_LIKECOUNT, P.P_BLINDYN, (SELECT C_NAME FROM CODES WHERE C_CODE = P.P_CODE) AS P_NAME, S.S_DELIVERYYN, S.S_FOLLOWLIMYN, (SELECT C_NAME FROM CODES WHERE C_CODE = S.S_CODE) AS S_NAME, N.NS_PR, (SELECT C_NAME FROM CODES WHERE C_CODE = N.NS_CODE) AS NS_NAME, I.I_NEWNAME, LPAD((SELECT U_ADDR FROM USERINFO WHERE U_ID = P.P_ID), 20, ' ') AS U_ADDR FROM POST P, SALE S, N_SALE N, IMG I,codes c WHERE P.P_NO=S.P_NO AND S.P_NO=N.P_NO AND N.P_NO=I.P_NO  and p.p_code = 'P002' and c.c_code = s.s_code and c.c_name = ? and P_blindYN = 'N' order by p.p_tm desc";
 
 		ArrayList<GGDto> soldmainlist = new ArrayList<GGDto>();
 

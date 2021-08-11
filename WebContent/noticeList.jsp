@@ -90,7 +90,6 @@ h2 {
 		</table>
 		
 		<div class="pageArea">
-		currPage : ${noticeList[0].currPage} / totalPage : ${noticeList[0].totalPage}
 		<a href="noticeList?currPageNum=${noticeList[0].currPageNum-1 }">이전</a>
 		<c:forEach var="i" begin="${noticeList[0].currPageStart }" end="${noticeList[0].currPageEnd }" step="1">
 		<span class="page">
