@@ -616,8 +616,12 @@ public class BoardController extends HttpServlet {
 
 		case "/commList":
 			resp.setCharacterEncoding("UTF-8");
-			ArrayList<GGDto> list = service.commList();
+			String[] categorys = req.getParameterValues("categorys[]");// ajax에서 배열 형태로 보낼때 받는 방법
 			HashMap<String, ArrayList<GGDto>> list_map = new HashMap<String, ArrayList<GGDto>>();
+			ArrayList<GGDto> list = null;
+			if(categorys != null) {
+				list = service.commList(categorys);
+			}
 			list_map.put("list", list);
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().println(new Gson().toJson(list_map));
