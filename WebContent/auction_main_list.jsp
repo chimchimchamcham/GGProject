@@ -24,7 +24,10 @@
 	margin: 0px auto;
 	padding: 30px;
 }
-
+		.auc_img{
+		max-width: 270px;
+		max-height: 200px;
+		}
         .auc-con{
             display: flex;
             align-items: center;
@@ -242,7 +245,7 @@ $(".categor tr td").click(function(){//카테고리
 				console.log("idx:",idx,item);
 				content+= "<div class='item-one' onclick="+"window.location.href='auctionDetail?p_no=" + item.p_no  +"\'" +">"
 				content+= 	"<div class='img-zoon'>";
-				content+=		"<img src='/photo/"+item.i_newName+"'>";	
+				content+=		"<img class='auc_img' src='/photo/"+item.i_newName+"'>";	
 				content+=	"</div>";
 				content+=	"<div class='index'>"+item.p_title+"</div>";
 				content+=	"<div class='bestcost'>현재 최고 입찰가:"+item.hm+"p</div>";
