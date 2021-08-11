@@ -189,7 +189,9 @@ public class UserController extends HttpServlet {
 			req.setAttribute("blackList", blackList);
 			
 			/* ==작성한 글 목록== */
-			req.setAttribute("myPageBox", service.myPage());
+			ArrayList<GGDto> list = new ArrayList<GGDto>();
+			list = service.postList();
+			req.setAttribute("myPageBox", list);
 			
 			/* ====경로지정==== */
 			dis = req.getRequestDispatcher("managePage.jsp");

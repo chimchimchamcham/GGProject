@@ -678,4 +678,32 @@ public class UserDAO {
 
 		return blackList;
 	}
+
+	public ArrayList<GGDto> postList(String adminId) {
+		String sql = "SELECT rnum,p_no, p_title, p_id, p_tm, p_view, p_code, (select u_nname from userinfo where u_id = p_id) as u_nname FROM "
+				+ "(SELECT ROW_NUMBER() OVER(ORDER BY p_no DESC) AS rnum,p_no, p_title, p_id, p_tm, p_view, p_code FROM post WHERE p_code='P003' AND P_BLINDYN='N') AND p_id = ?";
+		ArrayList<GGDto> list = new ArrayList<GGDto>();
+		GGDto dto = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, adminId);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				dto = new GGDto();
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setP_title(rs.getString("p_title"));
+				dto.setP_id(rs.getString("p_id"));
+				dto.setP_tm(rs.getDate("p_tm"));
+				dto.setP_view(rs.getInt("p_view"));
+				dto.setU_nname(rs.getString("u_nname"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		
+		return list;
+	}
 }
