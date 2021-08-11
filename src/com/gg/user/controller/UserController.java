@@ -74,14 +74,10 @@ public class UserController extends HttpServlet {
 			String msg = "아이디 또는 비밀번호를 확인 하세요";
 			String page = "login.jsp";
 			if (!idYN.isEmpty()) {
-				if(idYN.get(2) != null) {//블랙리스트임
+				if(idYN.size()>2) {//블랙리스트임
 					String b_content = idYN.get(2);
 					String b_endToStr = idYN.get(3);
 					String u_nname = idYN.get(4);
-					
-					System.out.println(b_content);
-					System.out.println(b_endToStr);
-					System.out.println(u_nname);
 					
 					msg = u_nname+"님은 블랙리스트에 등록되어있습니다. \\n 종료시간 : "+b_endToStr+" \\n 사유 : "+b_content;
 					page = "index.jsp";

@@ -314,11 +314,12 @@ public class UserService {
 
 	public HashMap<String, ArrayList<GGDto>> search() {
 		String search = req.getParameter("insert");
+		String u_adminyn = (String) req.getSession().getAttribute("adminYN");
 		System.out.println("검색요청한 값:"+search);
 		UserDAO dao = new UserDAO();
 		HashMap<String, ArrayList<GGDto>> map = new HashMap<String, ArrayList<GGDto>>();
 		try {
-			map = dao.search(search);
+			map = dao.search(search,u_adminyn);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
