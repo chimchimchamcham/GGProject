@@ -206,7 +206,7 @@ body{width:100%;background-color:gray;}
 		<span><b>거래후기</b></span>
 		<div id="reply_content">
 		<span><b>후기작성(선택사항)</b></span>
-		<div id="write_content"><textarea rows="5" cols="40">좋은 상품, 좋은 가격에 잘 구매하였습니다.</textarea></div>
+		<div id="write_content"><textarea rows="5" cols="40">매너 좋은 구매자였습니다.</textarea></div>
 		<input type="button" id="sendReply" value="작성완료">
 		</div>
 	</div>
@@ -303,6 +303,13 @@ $("#trade_cancel").click(function(){
 		$("form").submit(); 
 	}
 	
+});
+
+//후기작성완료버튼 클릭시 
+$("#sendReply").click(function(){
+	console.log("click!");
+	alert("후기 작성이 완료되었습니다.");
+	window.close();
 });
 
 /* 거래댓글 관련 */
