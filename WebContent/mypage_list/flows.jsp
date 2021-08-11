@@ -144,13 +144,13 @@ border:  1px solid rgb(176 176 176);
     function flowlistCall($index1){
 		
 		console.log("$index1:"+$index1);
-		console.log("myPageFollow : ${myPageInfo.u_nname}");
+		console.log("id : ${myPageInfo.u_id}");
 		$.ajax({
 			type:'post',
 			url:'./flowlist',
 			data:{	
 				index1 : $index1,
-				"oppId": "${myPageInfo.u_nname }"
+				"oppId": "${myPageInfo.u_id }"
 					},
 			dataType:'JSON',
 			success:function(data){
