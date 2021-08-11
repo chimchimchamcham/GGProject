@@ -636,7 +636,6 @@ public class BoardController extends HttpServlet {
 		// 공지사항 목록
 		case "/noticeList":
 			System.out.println("공지사항 리스트 요청");
-
 			/* int paging = 0; */
 			String currPageNum = req.getParameter("currPageNum");
 			System.out.println("처음 currPageNum : " + currPageNum);

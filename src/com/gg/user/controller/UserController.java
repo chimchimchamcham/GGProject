@@ -1,6 +1,7 @@
 package com.gg.user.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,11 +74,26 @@ public class UserController extends HttpServlet {
 			String msg = "아이디 또는 비밀번호를 확인 하세요";
 			String page = "login.jsp";
 			if (!idYN.isEmpty()) {
+				if(idYN.get(2) != null) {//블랙리스트임
+					String b_content = idYN.get(2);
+					String b_endToStr = idYN.get(3);
+					String u_nname = idYN.get(4);
+					
+					System.out.println(b_content);
+					System.out.println(b_endToStr);
+					System.out.println(u_nname);
+					
+					msg = u_nname+"님은 블랙리스트에 등록되어있습니다. \\n 종료시간 : "+b_endToStr+" \\n 사유 : "+b_content;
+					page = "index.jsp";
+				}else {//블랙리스트가 아님
+				
 				req.getSession().setAttribute("loginId", idYN.get(0));
 				req.getSession().setAttribute("adminYN", idYN.get(1));
+				 
 				msg = null;
 				System.out.println(idYN.get(1));
 				page = "index.jsp";
+				}
 			}
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher(page);
@@ -208,35 +224,12 @@ public class UserController extends HttpServlet {
 			ArrayList<GGDto> blackList = service.blackList();
 			System.out.println("blackList size : " + blackList.size());
 			req.setAttribute("blackList", blackList);
-
-			/* ==작성한 글 목록(공지사항)== */
-			String currPageNum = req.getParameter("currPageNum");
-			System.out.println("처음 currPageNum : " + currPageNum);
-			String paging = req.getParameter("paging");
-			if (currPageNum == null || currPageNum.equals("0")) {
-				currPageNum = "1";
-			}
-			if (paging == null) {
-				paging = "1";
-			}
-			System.out.println("currPageNum : " + currPageNum);
-			System.out.println("paging : " + paging);
-
-			BoardService service1 = new BoardService(req, resp);
-			ArrayList<GGDto> lists = service1.noticeList(Integer.parseInt(paging), Integer.parseInt(currPageNum));
-			BoardDAO dao = new BoardDAO();
-			int total = 0;
-			try {
-				total = dao.noticeCount();
-				System.out.println("게시글 총 갯수:" + total);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				dao.resClose();
-			}
-			req.setAttribute("noticeList", lists);
-			req.setAttribute("noticeListSize", total);
-
+			
+			/* ==작성한 글 목록== */
+			ArrayList<GGDto> list = new ArrayList<GGDto>();
+			list = service.postList();
+			req.setAttribute("noticeList", list);
+			
 			/* ====경로지정==== */
 			req.setAttribute("msg", msg);
 			dis = req.getRequestDispatcher(page);

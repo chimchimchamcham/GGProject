@@ -67,18 +67,8 @@ $(document).ready(function(){
 <form action="../blackLstPr" method="post" id="blackLstFrm">
 <table id="blackLstT">
 <tr><th >아이디</th><td><input type="text" name="b_Id" style="width:300px;  text-align:center; font-size:18px" value="${param.n_receiveid}"></td></tr>
-<tr>
-	<th>분류코드</th>
-	<td>
-		<select name="b_code">
-		<option value="B001">댓글금지</option>
-		<option value="B002" >글작성금지</option>
-		<option value="B003">판매금지</option>
-		<option value="B004">활동금지</option></select>
-	</td>
-</tr>
 <tr><th>등록 종료 날짜</th><td><input type="date" id="b_endtm" name="b_endtm"/></td></tr>
-<tr><th>관리자 아이디</th><td ><span id="b_adminId" name="b_adminId"></span></td></tr>
+<tr><th>관리자 아이디</th><td ><span id="b_adminId"><input type="hidden" name="b_adminId" value="${sessionScope.loginId}"/>${sessionScope.loginId}</span></td></tr>
 <tr><th>등록 사유</th><td><textarea  id="b_content"  placeholder="등록사유를 입력하세요" name="b_content"></textarea></td></tr>
 </table>
 <button type="button">등록</button>
@@ -88,10 +78,10 @@ $(document).ready(function(){
 </body>
 <script>
 
-	//등록한 관리자 아이디 세션값에서 가져오기
+	/* //등록한 관리자 아이디 세션값에서 가져오기
 	var userId = "${sessionScope.loginId}";
 	console.log(userId);
-	document.getElementById('b_adminId').innerHTML=userId;
+	document.getElementById('b_adminId').innerHTML=userId; */
 	
 	 //현재 날짜+1
     var setting = new Date();

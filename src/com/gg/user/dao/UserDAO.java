@@ -136,7 +136,26 @@ public class UserDAO {
 			if (rs.next()) {
 				idYN.add(rs.getString(1)); // id값 저장
 				idYN.add(rs.getString(2)); // 관리자 여부 저장
+				
+				//블랙리스트 등록여부 판단
+				BlackListDAO BLstDAO = new BlackListDAO();
+				ArrayList<String> BLst = new ArrayList<String>();
+				BLst=BLstDAO.checkBLstYN(loginId);
+				System.out.println("블랙리스트 등록 여부 : "+BLst.size());
+				if(BLst.size() > 0) {
+					String b_content = BLst.get(0);
+					String b_endToStr = BLst.get(1);
+					String u_nname = BLst.get(2);
+					idYN.add(b_content);
+					idYN.add(b_endToStr);
+					idYN.add(u_nname);
+				}
+				BLstDAO.resClose();
+				
+				
 			}
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -500,7 +519,7 @@ public class UserDAO {
 		GGDto dto = null;
 		TradeDAO Tdao = null;
 		
-		String sql = "select  u_id, u_nname, u_intro, (select count(*) from post where p_id=u_id) as count_p, u_newname, (select count(*) from follow where f_receiveid = u_id) as f_cnt from userinfo where u_nname like '%"+search+"%' ";
+		String sql = "select  u_id, u_nname, u_intro, (select count(*) from post where p_id=u_id) as count_p, u_newname, (select count(*) from follow where f_receiveid = u_id) as f_cnt from userinfo where  u_nname like '%"+search+"%' ";
 		String sql1 ="select p.p_no, p.p_title, p.p_code, p.p_content, p.p_likecount, p.p_view, p.p_tm, (select i.i_newname from img i  where i.p_no = p.p_no) i_newname from post p where p.p_content like '%"+search+"%'";
 		String sql2 ="select p.p_no, p.p_title, p.p_code, p.p_content, p.p_likecount, p.p_view , p.p_tm, (select i.i_newname from img i  where i.p_no = p.p_no) i_newname from post p where p.p_title like '%"+search+"%'"; 
 		
@@ -677,5 +696,33 @@ public class UserDAO {
 		}
 
 		return blackList;
+	}
+
+	public ArrayList<GGDto> postList(String adminId) {
+		String sql = "SELECT rnum,p_no, p_title, p_id, p_tm, p_view, p_code, (select u_nname from userinfo where u_id = p_id) as u_nname FROM "
+				+ "(SELECT ROW_NUMBER() OVER(ORDER BY p_no DESC) AS rnum,p_no, p_title, p_id, p_tm, p_view, p_code FROM post WHERE p_code='P003' AND P_BLINDYN='N') WHERE p_id = ?";
+		ArrayList<GGDto> list = new ArrayList<GGDto>();
+		GGDto dto = null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, adminId);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				dto = new GGDto();
+				dto.setP_no(rs.getInt("p_no"));
+				dto.setP_title(rs.getString("p_title"));
+				dto.setP_id(rs.getString("p_id"));
+				dto.setP_tm(rs.getDate("p_tm"));
+				dto.setP_view(rs.getInt("p_view"));
+				dto.setU_nname(rs.getString("u_nname"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		
+		return list;
 	}
 }

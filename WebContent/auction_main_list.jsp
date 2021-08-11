@@ -108,7 +108,7 @@
     <tr><td>가구생활</td></tr>
     <tr><td>취미/스타굿즈</td></tr>
     <tr><td>전자기기</td></tr>
-    <tr><td>스포트레져</td></tr>
+    <tr><td>스포트레저</td></tr>
     <tr><td>자동차</td></tr>
     <tr><td>생활가전</td></tr>
     <tr><td>도서기타</td></tr>
@@ -144,7 +144,7 @@ $(document).ready(function() {
 	$.ajax({
 		type:'post',
 		url:'./auctionmainlist',
-		data:{  index_button_auction : '뷰티잡화',
+		data:{  index_button_auction : '패션의류',
 				index2 : 0 },
 		dataType:'JSON',
 		success:function(data){
