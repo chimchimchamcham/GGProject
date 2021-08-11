@@ -25,6 +25,7 @@ margin-top:20px;
 	/* text-align: center; */
 	margin: 0px auto;
 	/* background-color: blue; */
+	overflow-y:scroll;
 }
 
 .content {
@@ -108,20 +109,20 @@ a{
 		</div>
 		<div id="pageNumWrap">
 			<!-- 여기에 페이징이 들어간다 -->
-			<span id="prev">prev </span>
+			<!-- <span id="prev">prev </span> -->
 			<span id="pageNumList">	
 				<!-- <span class="selectPageNum">1</span>
 				<span>2</span> -->
 			</span>	
-			<span id="next"> next</span>	
+			<!-- <span id="next"> next</span>	 -->
 		</div>
 	</div>
 </body>
 <script>
 /* ================페이징 처리 관련==================== */
-	var p_code = $("#wholeBtn").val();
+	var p_code = 'P000';
 	var pageNum = 1;
-	var totalPage = 2;
+	var totalPages = 1;
 	
 	//숫자를 클릭하면 반응
 	$(document).on("click","#pageNumList span",function(){
@@ -155,7 +156,7 @@ a{
 				console.log("받아온 totalPage 확인 : ", data.totalPage);
 				
 				drawTradeList(data.list);
-				drawPageNumList(data.currentPage, data.totalPage);
+				//drawPageNumList(Number(data.currentPage), Number(data.totalPage));
 			},
 			error : function(e) {
 				console.log(e);
@@ -232,6 +233,7 @@ a{
 	function drawPageNumList(currentPage, totalPage){
 		
 		console.log("페이징 그려주기 ");
+		totalPages = totalPage;
 		var content = "";
 		for(var i=1;i<=totalPage;i++){
 			if(i == currentPage){
@@ -250,6 +252,8 @@ a{
 			$("#prev").show();
 			$("#next").hide();
 		}
+		
+		
 	}
 	
 	//prev를 클릭하면 다음페이지로 넘어감
