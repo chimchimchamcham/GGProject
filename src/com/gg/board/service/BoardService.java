@@ -890,11 +890,10 @@ public class BoardService {
 
 	}
 
-	public ArrayList<GGDto> commList() {
+	public ArrayList<GGDto> commList(String[] categorys) {
 		int pagePerCnt = 14;
 		BoardDAO dao = new BoardDAO();
 		ArrayList<GGDto> arrayList = new ArrayList<GGDto>();
-		String[] categorys = req.getParameterValues("categorys[]");// ajax에서 배열 형태로 보낼때 받는 방법
 		ArrayList<GGDto> commList = dao.commList(categorys);
 		int totalPage = (int) Math.ceil((double) commList.size() / (double) pagePerCnt); // 전체 페이지 넘버를 반환. -나누는 값들을
 																							// double으로 명시해야 올림한 정확한 값이
@@ -920,18 +919,20 @@ public class BoardService {
 		if (commList.size() <= end) {
 			end = commList.size(); // 14개보다 적은 크기의 배열이면 끝까지만 잘라서 보여주기 위하여
 		}
-		// 전체 ArrayList에서 특정 페이지의 목록들을 잘라내는 과정 (ArrayList에서 잘라줌) - 이때 List로 반환됨.
-		List<GGDto> list = commList.subList(start - 1, end); // 14개의 리스트를 자르기 위하여 사용.
-		// List를 ArrayList로 변환.
-		arrayList.addAll(list);
-		arrayList.get(0).setTotalPage(totalPage); // 0번째 dto에 totalPage를 넣어줌.
-		if (currPage > currPageEnd) {
-			currPageEnd = currPage;
+			if(commList != null) { // commList가 null일 경우 오류가 발생함으로 이를 방지하기 위하여 설정
+			// 전체 ArrayList에서 특정 페이지의 목록들을 잘라내는 과정 (ArrayList에서 잘라줌) - 이때 List로 반환됨.
+			List<GGDto> list = commList.subList(start - 1, end); // 14개의 리스트를 자르기 위하여 사용.
+			// List를 ArrayList로 변환.
+			arrayList.addAll(list);
+			arrayList.get(0).setTotalPage(totalPage); // 0번째 dto에 totalPage를 넣어줌.
+			if (currPage > currPageEnd) {
+				currPageEnd = currPage;
+			}
+			arrayList.get(0).setCurrPage(currPage);
+			System.out.println("currPage : " + currPage);
+			arrayList.get(0).setCurrPageEnd(currPageEnd); // 0번째 dto에 currPage를 넣어줌.
+			arrayList.get(0).setCurrPageStart(currPageStart);
 		}
-		arrayList.get(0).setCurrPage(currPage);
-		System.out.println("currPage : " + currPage);
-		arrayList.get(0).setCurrPageEnd(currPageEnd); // 0번째 dto에 currPage를 넣어줌.
-		arrayList.get(0).setCurrPageStart(currPageStart);
 		return arrayList;
 	}
 

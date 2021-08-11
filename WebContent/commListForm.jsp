@@ -114,7 +114,6 @@
                   <th>작성자</th>
                   <th>작성일</th>
                   <th>조회수</th>
-                  <th>좋아요</th>
                </tr>
                <tr>
                   <hr></hr>
@@ -194,20 +193,23 @@
       console.log("드로우 리스트");
       console.log(list);
       var content = "";
-
+	  if(list == null || list == ""){
+		  content += "<tr><td colspan='5'><h1 style='text-align:center'>등록된 글이 없습니다.</h1></td></tr>"
+	  }else{
       console.log("forEach문");
       //자바스크립트 foreach문
-      list.forEach(function(item, idx) {
-         console.log(idx, item);
-         content += "<tr><td>" + item.c_name + "</td>";
-         content += "<td><a href='commDetail?p_no=" + item.p_no + "'>"
-               + item.p_title + "</td>";
-         content += "<td><a href='myPage?id=" + item.u_id + "'>"
-               + item.u_nname + "</td>";
-         content += "<td>" + item.p_tm + "</td>";
-         content += "<td>" + item.p_view + "</td>";
-         content += "<td>" + item.p_likecount + "</td></tr>";
-      });
+	      list.forEach(function(item, idx) {
+	         console.log(idx, item);
+	         content += "<tr><td>" + item.c_name + "</td>";
+	         content += "<td><a href='commDetail?p_no=" + item.p_no + "'>"
+	               + item.p_title + "</td>";
+	         content += "<td><a href='myPage?id=" + item.u_id + "'>"
+	               + item.u_nname + "</td>";
+	         content += "<td>" + item.p_tm + "</td>";
+	         content += "<td>" + item.p_view + "</td>";
+	  		
+	      });
+	  }
       // tbody에 아이디를 안하면 태그 두게에 달리는듯 그래서 아이디를 주고하자.
       $("tbody#listBody").empty();
       $("tbody#listBody").append(content);
