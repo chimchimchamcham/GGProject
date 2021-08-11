@@ -520,6 +520,7 @@ public class BoardDAO {
 
 	public ArrayList<GGDto> flowlist(String userid, int flowORflowing) throws SQLException {
 		String sql = "";
+		System.out.println("flowORflowing : "+flowORflowing);
 		if (flowORflowing == 0) {// 나를 팔로우 한
 			sql = "SELECT distinct f.f_receiveid,f.f_sendid,u.u_id,u.u_newname,u.u_nname,NVL(C.COUNT,0) COUNT FROM follow f,(SELECT F_RECEIVEID, COUNT(*) COUNT FROM FOLLOW GROUP BY F_RECEIVEID) C,userinfo u where F.F_SENDID = C.F_RECEIVEID(+) AND f.f_receiveid = ? and f.f_sendid = u.u_id";
 		} else if (flowORflowing == 1) {// 내가 팔로잉한
@@ -531,9 +532,6 @@ public class BoardDAO {
 		System.out.println("flowlist:" + flowlist);
 
 		ps = conn.prepareStatement(sql);
-
-		System.out.println("daouserID:" + userid);
-
 		ps.setString(1, userid);
 		rs = ps.executeQuery();
 		System.out.println("rs:" + rs);
@@ -559,7 +557,7 @@ public class BoardDAO {
 			}
 			flowlist.add(dto);
 		}
-		System.out.println("flowlist:" + flowlist);
+		System.out.println("flowlist :" + flowlist);
 		return flowlist;
 	}
 

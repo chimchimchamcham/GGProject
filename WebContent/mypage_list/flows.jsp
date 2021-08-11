@@ -147,13 +147,20 @@ border:  1px solid rgb(176 176 176);
     function flowlistCall($index1){
 		
 		console.log("$index1:"+$index1);
-		
+		console.log("id : ${myPageInfo.u_id}");
 		$.ajax({
 			type:'post',
 			url:'./flowlist',
+<<<<<<< HEAD
 			data:{	"index1" : $index1,
 				"myYN" : "${myPageInfo.myYN}",
 				"oppId" : "${myPageInfo.u_id}"},
+=======
+			data:{	
+				index1 : $index1,
+				oppId: "${myPageInfo.u_id }"
+					},
+>>>>>>> 77f38dd1b7bf4dfb05472bbe5d0a3034f376312f
 			dataType:'JSON',
 			success:function(data){
 				console.log("data:"+data);
