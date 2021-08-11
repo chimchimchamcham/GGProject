@@ -14,10 +14,10 @@
 </head>
 <script type="text/javascript">
 	$(document).ready(function() {
-		
+
 		$("#cancelBtn").click(function() {
 			alert("포인트 충전이 취소되었습니다.");
-			
+
 			window.close();
 		});
 
@@ -60,65 +60,73 @@ h2 {
 </style>
 <body>
 	<h2>포인트 충전</h2>
-		<table>
-			<tr>
-				<td>충전금액 : <input type="text" name="chargePoint" value=0 maxlength=9/>P <input
-					type='text' name='id' value=${loginId } hidden='hidden' />
-				</td>
-			</tr>
-			<tr>
-				<td><p id="myNname"></p>님의 현재 포인트 :
-					<p id="myPoint"></p>P
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<button type='button'>충전</button> <input type="button"
-					id="cancelBtn" value="취소" />
-				</td>
-			</tr>
-		</table>
+	<table>
+		<tr>
+			<td>충전금액 : <input type="text" name="chargePoint" value=0
+				maxlength=9 />P <input type='text' name='id' value=${loginId }
+				hidden='hidden' />
+			</td>
+		</tr>
+		<tr>
+			<td><p id="myNname"></p>님의 현재 포인트 :
+				<p id="myPoint"></p>P</td>
+		</tr>
+		<tr>
+			<td>
+				<button type='button'>충전</button> <input type="button"
+				id="cancelBtn" value="취소" />
+			</td>
+		</tr>
+	</table>
 </body>
 <script>
-var param = {};
-param.id = "${sessionScope.loginId}";
-
+	var param = {};
+	param.id = "${sessionScope.loginId}";
+	if (param.id == '' || param.id == null) {
+		alert("로그인이 필요한 서비스입니다!");
+		window.close();
+	}
 	$("input[name='chargePoint']").keyup(function(e) {
 		if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
 			var inputVal = $(this).val();
 			$(this).val(inputVal.replace(/[^0-9]/gi, ''));
 		}
 	});
-	$("button[type='button']").click(
-			function() {
-
-				if ($("input[name='chargePoint']").val() == ""
-						|| $("input[name='chargePoint']").val() == 0) {
-					alert("금액을 입력해 주세요!");
-					$("input[name='chargePoint']").focus();
+	$("button[type='button']").click(function() {
+				if ("${sessionScope.loginId}" == '' || "${sessionScope.loginId}" == null) {
+					console.log("${sessionScope.loginId}",${sessionScope.loginId});
+					alert("로그인이 필요한 서비스입니다!");
+					window.close();
 				} else {
-					param.chargePoint = $("input[name='chargePoint']").val();
-					console.log("충전할 포인트  :" , param.chargePoint);
-					$.ajax({
-						type : "POST",
-						url : "../charge",
-						data : param,
-						dataType : "JSON",
-						success : function(data) {
-							console.log(data.success);
-							if (data.success) {
-								alert("포인트 충전 여부 "+data.success);
-								opener.parent.location.reload();
-								window.close();
-							} else {
-								alert("충전에 실패하였습니다.");
+					if ($("input[name='chargePoint']").val() == ""
+							|| $("input[name='chargePoint']").val() == 0) {
+						alert("금액을 입력해 주세요!");
+						$("input[name='chargePoint']").focus();
+					} else {
+						param.chargePoint = $("input[name='chargePoint']")
+								.val();
+						console.log("충전할 포인트  :", param.chargePoint);
+						$.ajax({
+							type : "POST",
+							url : "../charge",
+							data : param,
+							dataType : "JSON",
+							success : function(data) {
+								console.log(data.success);
+								if (data.success) {
+									alert("포인트 충전 여부 " + data.success);
+									opener.parent.location.reload();
+									window.close();
+								} else {
+									alert("충전에 실패하였습니다.");
+								}
+							},
+							error : function(e) {
+								console.log(e);
 							}
-						},
-						error : function(e) {
-							console.log(e);
-						}
 
-					});
+						});
+					}
 				}
 
 			});
