@@ -269,7 +269,7 @@ console.log("오늘 날짜 : ",currDate);
 
 		$("#commuCategory,#salePr").hide();
 		
-		$("#trade").css({"background-color":"white","color":"black"});
+		$("#trade").css({"background-color":"gray","color":"white"});
 		$("#community").css({"background-color":"#EFEFEB","color":"black"});
 		$("#sale").css({"background-color":"#EFEFEB","color":"black"});
 	});
@@ -283,7 +283,7 @@ console.log("오늘 날짜 : ",currDate);
 		
 		$("#trade").css({"background-color":"#EFEFEB","color":"black"});
 		$("#sale").css({"background-color":"#EFEFEB","color":"black"});
-		$("#community").css({"background-color":"white","color":"black"});
+		$("#community").css({"background-color":"gray","color":"white"});
 		
 	});
 
@@ -295,7 +295,7 @@ console.log("오늘 날짜 : ",currDate);
 		$("#saleForm,#salePr").show();
 		
 		$("#trade").css({"background-color":"#EFEFEB","color":"black"});
-		$("#sale").css({"background-color":"white","color":"black"});
+		$("#sale").css({"background-color":"gray","color":"white"});
 		$("#community").css({"background-color":"#EFEFEB","color":"black"});
 	});
 

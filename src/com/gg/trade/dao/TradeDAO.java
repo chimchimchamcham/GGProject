@@ -1030,10 +1030,12 @@ public class TradeDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			resClose();
 		}
 		
-		System.out.println("거래페이지 구매자 : "+list.get(0));
-		System.out.println("거래페이지 판매자 : "+list.get(1));
+		System.out.println("거래페이지 판매자 : "+list.get(0));
+		System.out.println("거래페이지 구매자 : "+list.get(1));
 		
 		return list;
 		
@@ -1054,13 +1056,36 @@ public class TradeDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			resClose();
 		}
 		
 		return title;
 		
 	}
-	//거래페이지 알람 보내는 기능
-	public void pushTradeAlarm(int t_no, int ht_point, String ht_code ) {
+	/*
+	public void pushTradeAlarm(int t_no, int ht_point, String ht_code,String t_cancleId) {
+		AlarmDAO dao = new AlarmDAO();
+		String p_title = getTitleFromTno(t_no); //제목 가져오기
+		p_title = dao.cutTitle(p_title);
+		ArrayList<String>list = new ArrayList<String>();
+		list = selectSandB(t_no);
+		String t_saler = list.get(0);
+		String t_buyer = list.get(1);
+		if() {//HT002 : 송금
+			
+		}else if() { //HT003 : 승인거부
+			
+		}else if() { //HT004 : 승인
+			
+		}else if() { //HT005 : 배송
+			
+		}else if() { //HT006 : 수취확인
+			
+		}else if() { //HT007 : 거래취소
+		dao.insertAlarm(u_id, a_code, a_content, a_impoyn, a_path);
+		dao.insertAlarm(u_id, a_code, a_content, a_impoyn, a_path);
 		
-	}
+	}*/
+
 }
