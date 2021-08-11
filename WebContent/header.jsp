@@ -452,34 +452,34 @@ body {
       <nav class="header_nav">
          <div id="navWrap">
             <ul id="dropdown">
-               <li><a href="./sale_main_list.jsp" class="sale">판매</a>
+               <li><a href="./sale_main_list.jsp?cate=패션의류" class="sale">판매</a>
                   <ul id="saleCat">
-                     <li><a href="#">패션의류</a></li>
-                     <li><a href="#">뷰티잡화</a></li>
-                     <li><a href="#">유아용품</a></li>
-                     <li><a href="#">가구생활</a></li>
-                     <li><a href="#">취미/스타굿즈</a></li>
-                     <li><a href="#">전자기기</a></li>
-                     <li><a href="#">스포츠레져</a></li>
-                     <li><a href="#">자동차</a></li>
-                     <li><a href="#">생활가전</a></li>
-                     <li><a href="#">도서기타</a></li>
-                     <li><a href="#">기타</a></li>
+                     <li><a href="sale_main_list.jsp?cate=패션의류">패션의류</a></li>
+                     <li><a href="sale_main_list.jsp?cate=뷰티잡화">뷰티잡화</a></li>
+                     <li><a href="sale_main_list.jsp?cate=유아용품">유아용품</a></li>
+                     <li><a href="sale_main_list.jsp?cate=가구생활">가구생활</a></li>
+                     <li><a href="sale_main_list.jsp?cate=취미/스타굿즈">취미/스타굿즈</a></li>
+                     <li><a href="sale_main_list.jsp?cate=전자기기">전자기기</a></li>
+                     <li><a href="sale_main_list.jsp?cate=스포츠레져">스포츠레져</a></li>
+                     <li><a href="sale_main_list.jsp?cate=자동차">자동차</a></li>
+                     <li><a href="sale_main_list.jsp?cate=생활가전">생활가전</a></li>
+                     <li><a href="sale_main_list.jsp?cate=도서기타">도서기타</a></li>
+                     <li><a href="sale_main_list.jsp?cate=기타">기타</a></li>
                   </ul></li>
    
-               <li><a href="mainauction" class="action">경매</a>
+               <li><a href="auction_main_list.jsp?cate=패션의류" class="action">경매</a>
                   <ul id="auctionCat">
-                     <li><a href="#">패션의류</a></li>
-                     <li><a href="#">뷰티잡화</a></li>
-                     <li><a href="#">유아용품</a></li>
-                     <li><a href="#">가구생활</a></li>
-                     <li><a href="#">취미/스타굿즈</a></li>
-                     <li><a href="#">전자기기</a></li>
-                     <li><a href="#">스포츠레져</a></li>
-                     <li><a href="#">자동차</a></li>
-                     <li><a href="#">생활가전</a></li>
-                     <li><a href="#">도서기타</a></li>
-                     <li><a href="#">기타</a></li>
+                     <li><a href="auction_main_list.jsp?cate=패션의류">패션의류</a></li>
+                     <li><a href="auction_main_list.jsp?cate=뷰티잡화">뷰티잡화</a></li>
+                     <li><a href="auction_main_list.jsp?cate=유아용품">유아용품</a></li>
+                     <li><a href="auction_main_list.jsp?cate=가구생활">가구생활</a></li>
+                     <li><a href="auction_main_list.jsp?cate=취미/스타굿즈">취미/스타굿즈</a></li>
+                     <li><a href="auction_main_list.jsp?cate=전자기기">전자기기</a></li>
+                     <li><a href="auction_main_list.jsp?cate=스포츠레져">스포츠레져</a></li>
+                     <li><a href="auction_main_list.jsp?cate=자동차">자동차</a></li>
+                     <li><a href="auction_main_list.jsp?cate=생활가전">생활가전</a></li>
+                     <li><a href="auction_main_list.jsp?cate=도서기타">도서기타</a></li>
+                     <li><a href="auction_main_list.jsp?cate=기타">기타</a></li>
                   </ul></li>
                <li><a href="commListForm.jsp">커뮤니티</a></li>
                <li><a href="noticeList">공지사항</a></li>

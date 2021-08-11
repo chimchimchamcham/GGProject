@@ -159,13 +159,17 @@
 </div>
 </body>
 <script>
-
 $(document).ready(function() {
+	function getParameterByName(name) { name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search); return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " ")); }
+	
+	var cate = getParameterByName('cate');
+	console.log(cate);
 	
 	$.ajax({
 		type:'post',
 		url:'./soldmainlist',
-		data:{  index_button_sold : '패션의류'},
+		data:{  index_button_sold : cate},
 		dataType:'JSON',
 		success:function(data){
 			console.log("data",data);
