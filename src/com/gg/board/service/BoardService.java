@@ -553,9 +553,7 @@ public class BoardService {
 			dto.setP_title(p_title);
 			dto.setP_content(p_content);
 			dto.setP_cate(p_cate);
-			dto.setU_adminYN(adminYN);
 			dto.setP_code(p_code);
-			//test
 		}
 
 		try {
@@ -919,7 +917,7 @@ public class BoardService {
 		if (commList.size() <= end) {
 			end = commList.size(); // 14개보다 적은 크기의 배열이면 끝까지만 잘라서 보여주기 위하여
 		}
-			if(commList != null) { // commList가 null일 경우 오류가 발생함으로 이를 방지하기 위하여 설정
+		if(commList.size()!=0) { // commList가 사이즈가 0일 경우 list를 자르는 부분에서 오류가 발생함으로 조건을 걸어줌
 			// 전체 ArrayList에서 특정 페이지의 목록들을 잘라내는 과정 (ArrayList에서 잘라줌) - 이때 List로 반환됨.
 			List<GGDto> list = commList.subList(start - 1, end); // 14개의 리스트를 자르기 위하여 사용.
 			// List를 ArrayList로 변환.
