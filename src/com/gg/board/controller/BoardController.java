@@ -245,7 +245,8 @@ public class BoardController extends HttpServlet {
 			}
 			int flowORflowing = Integer.parseInt(req.getParameter("index1"));
 			service.flow_list(userid, flowORflowing);
-
+			
+			break;
 		case "/flowadddelect":
 			System.out.println("팔로워 버튼 처리 요청");
 			req.setCharacterEncoding("utf-8");
