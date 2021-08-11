@@ -61,7 +61,7 @@ var myPoint =0;
 	<h2>인출 팝업</h2>
 		<table>
 			<tr>
-				<td>인출 금액 : <input type="text" name="outPoint" value=0 />P <input
+				<td>인출 금액 : <input type="text" name="outPoint" value=0 maxlength=9/>P <input
 					type='text' name='id' value=${loginId } hidden='hidden' />
 				</td>
 			</tr>

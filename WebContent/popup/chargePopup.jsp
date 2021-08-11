@@ -62,7 +62,7 @@ h2 {
 	<h2>포인트 충전</h2>
 		<table>
 			<tr>
-				<td>충전금액 : <input type="text" name="chargePoint" value=0 />P <input
+				<td>충전금액 : <input type="text" name="chargePoint" value=0 maxlength=9/>P <input
 					type='text' name='id' value=${loginId } hidden='hidden' />
 				</td>
 			</tr>
