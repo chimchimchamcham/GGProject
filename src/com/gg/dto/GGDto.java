@@ -17,7 +17,7 @@ public class GGDto {
    private String u_followYN; // 팔로워공개여부
    private String u_newName; // 새사진 이름
    private String u_detailAddr; // 상세 주소
-   
+   private boolean isFollow;
 
    // 쪽지함
    private Date m_sendTm; // 보낸시간
@@ -1290,6 +1290,14 @@ public String getB_starthr() {
 
 public void setB_starthr(String b_starthr) {
 	this.b_starthr = b_starthr;
+}
+
+public boolean isFollow() {
+	return isFollow;
+}
+
+public void setFollow(boolean isFollow) {
+	this.isFollow = isFollow;
 }
 
 }
