@@ -1159,6 +1159,17 @@ a:visited {
 		$index = $rqno.index(this);
 		$rqnob = $(".buttonarea button:eq(" + $index + ")");
 
+		
+		
+		//$itembox = $('.item-one');
+		//$item_index = $itembox.index(this);
+		
+		
+
+		
+		
+		
+		
 		var rqnoval = $rqnob.val();
 		var rqnotext = $rqnob.text();
 
@@ -1166,8 +1177,8 @@ a:visited {
 		console.log('rqnoval:' + rqnoval);
 		console.log('rqnotext:' + rqnotext);
 
-		
-		$.ajax({
+
+		 $.ajax({
 			type : 'post',
 			url : './applyreqlist',
 			data : {
@@ -1181,11 +1192,13 @@ a:visited {
 					console.log('data1:' + data.info.rq_id);
 					console.log('data1:' + data.info.rq_no);
 					console.log('data1:' + data.info.Rq_YN);
+					
 					var param = {};
 					if (rqnotext == '수락') {
 						param.Rq_YN = 'Y';
 					} else if (rqnotext == '거절') {
 						param.Rq_YN = 'N';
+						
 					}
 					param.p_no = data.info.p_no;
 					param.rq_id = data.info.rq_id;
@@ -1194,6 +1207,7 @@ a:visited {
 					console.log('param2:' + param.rq_id);
 					console.log('param3:' + param.rq_no);
 					console.log('param4:' + param.Rq_YN);
+					
 					$.ajax({
 						type : 'post',
 						url : './buyRequestProcess',
@@ -1203,16 +1217,20 @@ a:visited {
 							if (data.success) {
 								if (data.request) {
 									
+									$remove_item_box = $(".item-one .buttonarea button:eq(" + $itemboxindex + ")").parents('.item-one');
+									
 									alert("거래페이지가 생성 되었습니다");
-								
+									$remove_item_box.remove();
 								}
 							}
 
 						},
 						error : function(e) {
 							console.log(e);
+							alert("error:취소 했습니다");
+							
 						}
-					});
+					}); 
 				}
 			},
 			error : function(e) {

@@ -653,8 +653,8 @@ public class BoardDAO {
 			dto.setRq_id(rs.getString("rq_id"));
 			dto.setRq_tm(rs.getDate("rq_tm"));
 
-			sid = dto.getS_saler();
-			rid = dto.getRq_id();
+			sid = dto.getS_saler();//판매자아이디
+			rid = dto.getRq_id();//구매요청자 아이디
 
 			if (userid.equals(sid)) {
 				System.out.println("수신");

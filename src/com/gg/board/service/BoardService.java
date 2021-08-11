@@ -882,7 +882,11 @@ public class BoardService {
 
 		resp.setContentType("text/html; charset=UTF-8");
 		resp.getWriter().println(new Gson().toJson(map));
+<<<<<<< HEAD
 		 map.clear(); 
+=======
+		//map.clear();
+>>>>>>> 2827ac357df432583907d7b59e225c0bf85892ee
 		dao.resClose();
 
 	}
