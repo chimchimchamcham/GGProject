@@ -148,13 +148,8 @@ public class BoardController extends HttpServlet {
 		 */
 		case "/soldlist":
 			System.out.println("판매 리스트 요청");
-<<<<<<< HEAD
-			userid = (String)req.getSession().getAttribute("loginId");
-			System.out.println(userid);
-=======
 
 			userid = (String) req.getSession().getAttribute("loginId");
->>>>>>> 27b2798564bcbb4d39409639859d8c4f7eee9475
 			String id = req.getParameter("id");
 
 			
@@ -166,12 +161,9 @@ public class BoardController extends HttpServlet {
 
 			int listwhatadd = Integer.parseInt(req.getParameter("index1"));
 			int listhowaline = Integer.parseInt(req.getParameter("index2"));
-<<<<<<< HEAD
-			System.out.println("유저 아이디 : "+ userid);
-=======
+
 
 			System.out.println("userid:" + userid);
->>>>>>> 27b2798564bcbb4d39409639859d8c4f7eee9475
 			System.out.println("listwhatadd:" + listwhatadd);
 			System.out.println("listhowaline:" + listhowaline);
 
