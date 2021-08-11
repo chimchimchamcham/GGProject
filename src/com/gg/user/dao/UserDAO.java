@@ -739,7 +739,7 @@ public class UserDAO {
 		try {
 			dto = new GGDto();
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, id);
+			ps.setString(1, oppId);
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
@@ -772,7 +772,7 @@ public class UserDAO {
 					+ "    AND pnt_code != 'PNT004'" + "    AND pnt_code !='PNT005'" + "    AND pnt_code != 'PNT007'"
 					+ "    AND pnt_code != 'PNT008'" + "    AND pnt_code != 'PNT010')";
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, id);
+			ps.setString(1, oppId);
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				minusPoint = rs.getInt(1);
@@ -784,7 +784,7 @@ public class UserDAO {
 					+ "    OR pnt_code = 'PNT004'" + "    OR pnt_code = 'PNT005'" + "    OR pnt_code = 'PNT007'"
 					+ "    OR pnt_code = 'PNT008'" + "    OR pnt_code = 'PNT010')";
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, id);
+			ps.setString(1, oppId);
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				plusPoint = rs.getInt(1);
@@ -795,10 +795,10 @@ public class UserDAO {
 			dto.setPnt_point(myPoint);
 			System.out.println("포인트 : " + dto.getPnt_point());
 			
-			sql = "SELECT * FROM WHERE f_receiveid = ? AND f_sendid = ?";
+			sql = "SELECT * FROM follow WHERE f_receiveid = ? AND f_sendid = ?";
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, id);
-			ps.setString(2, oppId);
+			ps.setString(2, id);
+			ps.setString(1, oppId);
 			rs = ps.executeQuery();
 			dto.setU_isFollow(rs.next());
 		} catch (SQLException e) {

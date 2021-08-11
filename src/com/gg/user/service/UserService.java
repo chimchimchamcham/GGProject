@@ -184,6 +184,7 @@ public class UserService {
 		String adminYN = (String) req.getSession().getAttribute("adminYN");
 		String oppId = req.getParameter("id");
 		System.out.println("서비스 진입 : " + id);
+		System.out.println("상대 프로필 아이디 : "+oppId);
 		UserDAO dao = new UserDAO();
 		GGDto dto = new GGDto();
 
