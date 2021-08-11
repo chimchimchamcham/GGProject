@@ -296,13 +296,22 @@ public class BoardDAO {
 
 	public boolean isBuyRequested(int p_no, String u_id) {
 		String sql = "SELECT * FROM REQUEST WHERE P_NO = ? AND RQ_ID = ?";
+		//구매요청 이력이 없거나 N일 경우 false를 전달
+		String isBuyRequested = "";
 		boolean success = false;
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
 			ps.setString(2, u_id);
 			rs = ps.executeQuery();
-			success = rs.next();
+			
+			if(rs.next()) {
+				isBuyRequested = rs.getString("rq_yn").equals("") || rs.getString("rq_yn") == null ? "" : rs.getString("rq_yn");
+				System.out.println("구매요청여부 : "+isBuyRequested);
+				if(isBuyRequested.equals("Y")) {
+					success = true;
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
