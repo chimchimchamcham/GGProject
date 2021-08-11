@@ -190,7 +190,9 @@ a{
 				/* 클릭했을 때 해당 거래페이지로 이동하는 기능 */
 				var dealId = (id == item.t_saler)? item.t_buyer : item.t_saler;
 				var dealNname = (id == item.t_saler)? item.t_buyer_nname : item.t_saler_nname;
-				console.log("dealId/dealNname : "+dealId+"/"+dealNname);
+				var dealNewname = (id == item.t_saler)? item.t_buyer_newName : item.t_saler_newName;
+				console.log("dealId/dealNname/dealNewname : "+dealId+"/"+dealNname+"/"+dealNewname);
+				
 				console.log("idx : ",idx);
 				
 				content +="<div class='tradeList' id='"+item.t_no+"'  >";
@@ -198,7 +200,7 @@ a{
 				content +=	"<input type='hidden' id='t_no' value='"+item.t_no+"'>";
 				content +="<table class='content'>";
 				content +=	"<tr>";
-				content +=		"<td rowspan='2'><a href='#'><img src='../test/default-profile.png' width='60' id='profile' ></a></td>";
+				content +=		"<td rowspan='2'><a href='#' onclick='moveProfile("+dealId+");'><img src='/photo/"+dealNewname+"' width='60' id='profile' ></a></td>";
 				content +=		"<th style='width:240px;  padding:0 20px; text-align: left;'><a href='#'>"+dealNname+"님과 거래중</a></th>";
 				content +=		"<td style='width:110px; text-align: right;'><a href='#'><small>"+item.ht_date+"</small></a></td>";
 				content +=	"</tr>";
@@ -224,6 +226,11 @@ a{
 		$(".tableWrap").append(content);
 	};
 	
+	//클릭시 해당 프로필로 이동
+	 function moveProfile(dealId){
+		console.log("dealId : "+dealId);
+		opener.parent.location = "../myPage?id="+dealId;
+	}
 	//클릭시 해당 거래페이지로 이동
 	 function moveTrade(t_no){
 		console.log("t_no : "+t_no);
