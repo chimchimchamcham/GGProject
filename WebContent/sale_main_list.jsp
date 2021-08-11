@@ -39,7 +39,7 @@
             cursor: pointer;
         }
         .main_sold{
-            width: 900px;
+            width: 1000px;
             height: 700px;
             margin-left:100px ;
             display: flex;
@@ -80,14 +80,18 @@
             margin-top: 20%;
         }
         .item-one{
-            width: 300px;
+            width: 270px;
             height: 400px;
             border: 1px solid black;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             cursor: pointer;
-            margin:0px auto;
+            text-align:left;
+            margin:15px;
+        }
+        .item-one:hover{
+        	background-color:#DDD9D9;
         }
         .img-zoon,.index{
             margin: 5%;
@@ -99,12 +103,15 @@
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
+                    margin-bottom:10px;
                 }
 	.wrapBox{
 		width:250px;
-		height:350px;
+		height:270px;
+		text-align:center;
 	}
 	.imgBox{
+		margin-top:10px;
 		width:230px;
 		height:230px;
 	}
@@ -209,13 +216,13 @@ $(".categor tr td").click(function(){//카테고리
 				content+= "<div class='item-one' onclick="+"window.location.href='salesDetail?p_no=" + item.p_no  +"\'" +">"
 				content+= 	"<div class='wrapBox' class='img-zoon'>";
 				content+=		"<img class='imgBox' src=/photo/"+item.i_newName+">";	
-				content+=	"</div>";
-				content+=	"<div class='index'>"+item.p_title+"</div>";
-				content+=	"<div class='bestcost'>가격:"+item.ns_pr+"p</div>";
-				content+=	"<div class='nowbuycost'>좋아요:"+item.p_likeCount+"p</div>";
-				content+=	"<div class='endtime-count'>";
-				content+=		"<div class='endtime'>생성시간:"+item.p_tm+"</div>";
-				content+=	"</div>";
+				content+=		"</div>";
+				content+=		"<div class='index'>"+item.p_title+"</div>";
+				content+=		"<div class='bestcost'>가격:"+item.ns_pr+"p</div>";
+				content+=		"<div class='nowbuycost'>좋아요:"+item.p_likeCount+"♥</div>";
+				content+=		"<div class='endtime-count'>";
+				content+=			"<div class='endtime'>생성시간:"+item.p_tm+"</div>";
+				content+=		"</div>";
 				content+= "</div>";
 			    });	
 			

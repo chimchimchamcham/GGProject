@@ -56,7 +56,7 @@ button{
 $(document).ready(function(){
 	//등록한 관리자 아이디 세션값에서 가져오기
 	var userId = "${sessionScope.loginId}";
-	document.getElementById('b_adminId').value=userId;
+	document.getElementById("b_adminId").value=userId;
 });
 </script>
 </head>
@@ -78,7 +78,7 @@ $(document).ready(function(){
 	</td>
 </tr>
 <tr><th>등록 종료 날짜</th><td><input type="date" id="b_endtm" name="b_endtm"/></td></tr>
-<tr><th>관리자 아이디</th><td id="b_adminId"></td></tr>
+<tr><th>관리자 아이디</th><td ><span id="b_adminId" name="b_adminId"></span></td></tr>
 <tr><th>등록 사유</th><td><textarea  id="b_content"  placeholder="등록사유를 입력하세요" name="b_content"></textarea></td></tr>
 </table>
 <button type="button">등록</button>
@@ -90,15 +90,16 @@ $(document).ready(function(){
 
 	//등록한 관리자 아이디 세션값에서 가져오기
 	var userId = "${sessionScope.loginId}";
-	document.getElementById('b_adminId').value=userId;
+	console.log(userId);
+	document.getElementById('b_adminId').innerHTML=userId;
 	
 	 //현재 날짜+1
     var setting = new Date();
-    setting.setDate(setting.getDate()+1);
+    setting.setDate(setting.getDate()+2);
     console.log("내일",setting);
 	
 	// 블랙리스트 등록날짜 오늘날짜로 초기 설정
-	document.getElementById('b_endtm').value = setting.toISOString().substring(0,10);
+
     document.getElementById('b_endtm').min = setting.toISOString().substring(0,10);
 	
     //버튼 클릭시 항목이 구성되지 않으면 튕기는 기능

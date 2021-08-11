@@ -71,6 +71,7 @@ public class BlackListDAO {
 		String msg = "블랙리스트 등록 실패하였습니다.";
 		boolean success= false;
 		int checker = 0;
+		int pk = -10;
 		ArrayList<Object> list = new ArrayList<Object>();
 		String sql = "INSERT INTO blacklist(b_id,b_starttm,b_endtm,b_adminid,b_content,b_code,b_no) VALUES(?,SYSDATE,?,?,?,?,b_no_seq.nextval)";
 		
@@ -80,7 +81,7 @@ public class BlackListDAO {
 		String b_adminId = dto.getB_adminId();
 		String b_content = dto.getB_content();
 		
-		ps = conn.prepareStatement(sql);
+		ps = conn.prepareStatement(sql, new String[] {"b_no"});
 		ps.setString(1,b_id);
 		ps.setDate(2, b_endtm);
 		ps.setString(3, b_adminId);
@@ -88,6 +89,11 @@ public class BlackListDAO {
 		ps.setString(5, b_code);
 		
 		checker = ps.executeUpdate();
+		rs = ps.getGeneratedKeys();
+		if(rs.next()) {
+			pk = rs.getInt(1);
+		}
+		
 		if(checker>0) {
 			msg = "블랙리스트 등록 성공하였습니다.";
 			success = true;
@@ -95,6 +101,7 @@ public class BlackListDAO {
 		
 		list.add(msg);
 		list.add(success);
+		list.add(pk);
 		return list;
 		
 		
@@ -136,14 +143,12 @@ public class BlackListDAO {
 		
 		if(rs.next()) {
 			dto.setB_id(rs.getString("b_id"));
-			dto.setB_starthr(rs.getString("b_starttm"));
-			dto.setB_endhr(rs.getString("b_endtm"));
+			dto.setB_starthr(rs.getString("b_starthr"));
+			dto.setB_endhr(rs.getString("b_endhr"));
 			dto.setB_adminId(rs.getString("b_adminId"));
 			dto.setB_content(rs.getString("b_content"));
 			dto.setB_no(rs.getInt("b_no"));
 		}
-		
-		
 		
 		return dto;
 		

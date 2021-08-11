@@ -60,4 +60,11 @@ textarea{
 </div>
 </div>
 </body>
+<script>
+document.ready(function(){
+	alert("${msg}");
+})
+
+
+</script>
 </html>
