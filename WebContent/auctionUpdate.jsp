@@ -43,7 +43,7 @@
 #wrap {
 	width:940px;
 	 padding:0 100px; 
-	 height:1500px; 
+	 height:auto;
 	margin: 0 auto;
 	text-align: left;
 	
