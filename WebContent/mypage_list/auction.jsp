@@ -62,6 +62,8 @@ border:  1px solid rgb(176 176 176);
     max-height: 150px;
 }
 
+
+
 .item-box *{
     text-align: center;
 }
@@ -98,6 +100,7 @@ border:  1px solid rgb(176 176 176);
 
        
     }   
+    
     /*물건들을 넣을 박스크기 900,그리고 물건들이 .content-zoon크기를 넘을때 줄을넘어서 생성*/
         .item-box{
             width: 900px;
@@ -106,6 +109,10 @@ border:  1px solid rgb(176 176 176);
             margin: 0 auto;
 			
             
+        }
+        .item-one{
+        	display: flex;
+        	flex-direction: column;
         }
             /*물건 정보 크기 200*300*/
             .item-one{
