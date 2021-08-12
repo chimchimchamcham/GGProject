@@ -608,7 +608,7 @@ li {
 								<p>상점정보</p>
 								<div>
 									<div>
-										<a href="myPage?id=${dto.p_id }"><img src="./img/profile.PNG" width="100"
+										<a href="myPage?id=${dto.p_id }"><img src="/photo/${dto.u_newName }" width="100"
 											height="100"></a>
 									</div>
 									<div>
