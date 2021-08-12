@@ -449,11 +449,11 @@ public class BoardDAO {
 			dto.setAu_instantPr(rs.getInt("Au_instantPr"));
 			//dto.setP_tm(rs.getDate("P_TM"));
 			dto.setHa_bidPr(rs.getInt("HA_BIDPR"));
-			auctionlist1.add(dto);
+			auctionlist.add(dto);
 		}
 		
-		System.out.println("actionlist:" + auctionlist1);
-		return auctionlist1;
+		System.out.println("auctionlist:" + auctionlist);
+		return auctionlist;
 	}
 
 	public ArrayList<GGDto> maide_list(String userid) throws SQLException {

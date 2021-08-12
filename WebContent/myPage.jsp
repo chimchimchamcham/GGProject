@@ -1252,10 +1252,7 @@ a:visited {
 	}//구매요청 리스트 end
 
 	//수락,거절버튼을 누르면
-	$(document).on(
-			"click",
-			"div.buttonarea button",
-			function() {
+	$(document).on("click","div.buttonarea button",function() {
 
 				$par = $('.buttonarea button').parents('.buttonarea').index();
 				console.log('parent:' + $par);
@@ -1264,12 +1261,14 @@ a:visited {
 				$index = $rqno.index(this);
 				$rqnob = $(".buttonarea button:eq(" + $index + ")");
 
-				$itembox = $('.item-one');
+				$itembox = $('.item-one .buttonarea');
 				$itemboxindex = $itembox.index();
 
-				$remove_item_box = $(
-						".item-one .buttonarea button:eq(" + $itemboxindex
-								+ ")").parents('.item-one');
+				console.log("dadada:"+$itemboxindex);
+				
+				
+				
+				$remove_item_box = $(".item-one .buttonarea:eq(" + $itemboxindex+ ")").parents('.item-one');
 				$remove_item_box.remove();
 
 				var rqnoval = $rqnob.val();
@@ -1279,7 +1278,7 @@ a:visited {
 				console.log('rqnoval:' + rqnoval);
 				console.log('rqnotext:' + rqnotext);
 
-				$.ajax({
+				/* $.ajax({
 					type : 'post',
 					url : './applyreqlist',
 					data : {
@@ -1336,7 +1335,7 @@ a:visited {
 					error : function(e) {
 						console.log(e);
 					}
-				});
+				}); */
 			});
 
 	//데이터 가져와서 뿌려주는 좋아요 리스트
