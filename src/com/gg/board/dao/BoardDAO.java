@@ -979,8 +979,9 @@ public class BoardDAO {
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, p_no);
 		rs = ps.executeQuery();
-
-		if (rs.next()) {
+		boolean rsNext = rs.next();
+		System.out.println("rsNext : "+rsNext);
+		if (rsNext) {
 			dto.setP_no(rs.getInt("p_no")); // 글번호
 			dto.setP_id(rs.getString("p_id")); // 글작성자
 			dto.setP_title(rs.getString("p_title")); // 글제목
@@ -1011,7 +1012,7 @@ public class BoardDAO {
 			// dto.setHa_bidUsr(rs.getString("ha_bidusr"));
 			dto.setI_newName(rs.getString("i_newname")); // 사진명
 
-			System.out.println(dto.getAu_count());
+			System.out.println("입찰횟수:"+ dto.getAu_count());
 			System.out.println(rs.getString("i_newname"));
 			System.out.println(dto.getP_title());
 			System.out.println(dto.getU_addr());
@@ -1029,6 +1030,7 @@ public class BoardDAO {
 		if (rs.next()) {// 입찰기록이 있을 경우
 			dto.setHa_bidPr(rs.getInt("toppr")); // 최고 입찰가
 			dto.setHa_bidUsr(rs.getString("u_nname"));// 최고 입찰자
+			System.out.println();
 		} else {// 입찰기록이 없을 경우
 			dto.setHa_bidPr(0);
 			dto.setHa_bidUsr("-");
