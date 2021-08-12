@@ -197,6 +197,7 @@ public class GGDto {
    private Date pc_tm;//작성날짜
    private int pc_parentno;// 나중에 물어봐야함 무엇이 댓글 대댓글인지
    private String pc_id;// 댓글 등록한 아이디.
+   private String pc_session_id;
    
    //팔로워
    private String f_receiveid;
@@ -1298,6 +1299,14 @@ public boolean isU_isFollow() {
 
 public void setU_isFollow(boolean u_isFollow) {
 	this.u_isFollow = u_isFollow;
+}
+
+public String getPc_session_id() {
+	return pc_session_id;
+}
+
+public void setPc_session_id(String pc_session_id) {
+	this.pc_session_id = pc_session_id;
 }
 
 }

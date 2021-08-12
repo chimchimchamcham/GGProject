@@ -51,7 +51,6 @@ public class CommentService {
 	public GGDto pushComment(GGDto dto) {
 		System.out.println("리스트 진입 완료.");
 		CommentDAO dao = new CommentDAO();
-		
 		try {
 			dto = dao.pushComment(dto);
 		} catch (Exception e) {
