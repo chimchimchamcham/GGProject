@@ -449,11 +449,13 @@ public class BoardDAO {
 			dto.setAu_instantPr(rs.getInt("Au_instantPr"));
 			//dto.setP_tm(rs.getDate("P_TM"));
 			dto.setHa_bidPr(rs.getInt("HA_BIDPR"));
-			auctionlist1.add(dto);
+			auctionlist.add(dto);
 		}
 		
-		System.out.println("actionlist:" + auctionlist1);
-		return auctionlist1;
+		
+		System.out.println("auctionlist:" + auctionlist);
+
+		return auctionlist;
 	}
 
 	public ArrayList<GGDto> maide_list(String userid) throws SQLException {
@@ -1249,10 +1251,9 @@ public class BoardDAO {
 				  " WHERE P.P_NO = S.P_NO AND S.P_NO = A.P_NO AND A.P_NO = I.P_NO AND I.P_NO = HA.P_NO(+)  AND P_BLINDYN = 'N' AND C.C_NAME = ?"+
 				  " AND A.AU_ENDTM > SYSDATE";
 		if (auctionmainlisthowaline == 0) {// 신규등록 순
-
-			sql = "SELECT DISTINCT P.P_NO,c.c_name, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,sale s ,AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND s.p_no = p.p_no and H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_code = s.s_code and c.c_name = ? order by p.p_tm desc";
+			sql += " ORDER BY P_NO DESC"; 
 		} else if (auctionmainlisthowaline == 1) {// 마감 임박순
-			sql = "SELECT DISTINCT P.P_NO,c.c_name, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,sale s ,AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND s.p_no = p.p_no and H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_code = s.s_code and c.c_name = ? order by a.Au_endTm desc";
+			sql += " ORDER BY AU_ENDTM";
 		}
 
 		ArrayList<GGDto> auctionmainlist = new ArrayList<GGDto>();
@@ -1280,9 +1281,7 @@ public class BoardDAO {
 			dto.setI_newName(rs.getString("I_NEWNAME"));
 			dto.setAu_startPr(rs.getInt("Au_startPr"));
 			dto.setAu_instantPr(rs.getInt("Au_instantPr"));
-			dto.setP_tm(rs.getDate("P_TM"));
-			dto.setC_name(rs.getString("c_name"));
-
+			//dto.setP_tm(rs.getDate("P_TM"));
 			auctionmainlist.add(dto);
 		}
 		System.out.println("auctionmainlist:" + auctionmainlist);

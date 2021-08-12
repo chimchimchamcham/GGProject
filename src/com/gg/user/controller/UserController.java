@@ -18,7 +18,6 @@ import com.gg.board.service.BoardService;
 import com.gg.dto.GGDto;
 import com.gg.user.service.UserService;
 import com.google.gson.Gson;
-import sun.misc.Contended;
 
 @WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage", "/userUpdate",
 		"/userUpdateForm", "/chkpw", "/changePw", "/chkinfo", "/manageList", "/search", "/n_stateCatSel",
