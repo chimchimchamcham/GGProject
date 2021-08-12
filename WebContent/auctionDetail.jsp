@@ -422,7 +422,7 @@ var isFollowed = false;
                 <article>
                     <div id="imgWrap">
                         <img src="/photo/${dto.i_newName}" width="400px" height="400px">
-                    	<p>i_newName ${dto.i_newName}</p>
+                    	<%-- <p>i_newName ${dto.i_newName}</p> --%>
                     </div>
                     <div id="description">
                         <h1>${dto.p_title}<sup>${dto.c_name }</sup></h1>

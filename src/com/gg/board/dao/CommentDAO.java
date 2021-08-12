@@ -95,7 +95,9 @@ public class CommentDAO {
 		int success = ps.executeUpdate();
 		if(success>0) {
 			System.out.println("댓글 등록 성공.");
+			
 			pushCommentAlarm(p_no, pc_id,true,-100);//댓글등록알람보내기
+			
 		}
 		
 		return dto;
@@ -230,7 +232,6 @@ public class CommentDAO {
 			String p_title = Bdao.getTitle(p_no);//댓글이 작성된 게시글 제목
 			p_title = Adao.cutTitle(p_title);//제목 자르기
 			String p_code = Tdao.selectPostP_code(p_no);
-			System.out.println("게시글 ");
 			String path = null;
 			String pc_parentId = null;
 			//댓글이 달린 글이 경매글인지 판매글인지 구분
@@ -242,14 +243,18 @@ public class CommentDAO {
 				path="./commDetail?p_no="+p_no;
 			}
 			System.out.println("알람경로 : "+path);
+		
 			//댓글인지 대댓글인지에 따라 알람 구분
 			if(commentYN) {//댓글알람
-				Adao.insertAlarm(p_id, "A001", "["+p_title+"]"+pc_nname+"이 댓글을 달았습니다.", "N", path);
+				if(!pc_id.equals(p_id)) { //댓글작성자와 게시글 작성자의 아이디가 다를 때 알림
+					Adao.insertAlarm(p_id, "A001", "["+p_title+"]"+pc_nname+"이 댓글을 달았습니다.", "N", path);
+				}
 			}else {//대댓글알람
-				pc_parentId = getParentCommentId(pc_parentno);
-				Adao.insertAlarm(pc_parentId, "A001", "["+p_title+"]"+pc_nname+"이 대댓글을 달았습니다.", "N", path);
+				pc_parentId = getParentCommentId(pc_parentno); //부모댓글아이디
+				if(!pc_parentId.equals(pc_id)) {//댓글 작성자와 부모댓글 작성자의 아이디가 다를 때 알림
+					Adao.insertAlarm(pc_parentId, "A001", "["+p_title+"]"+pc_nname+"이 대댓글을 달았습니다.", "N", path);
+				}
 			}
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

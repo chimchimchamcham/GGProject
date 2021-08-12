@@ -425,14 +425,18 @@ public class BoardDAO {
 		} else if (listwhatadd == 2) {// 경매완료 Au003
 			sql += " AND AU_CODE = 'A002'"; 
 		}
-		sql += " ORDER BY P_NO DESC";
+
+//"SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and a.Au_code = 'Au003' and P.P_ID = u.u_id and p,p_id = ?"
+		ArrayList<GGDto> auctionlist = new ArrayList<GGDto>();
+
+
+
 		
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, userid);
 		rs = ps.executeQuery();
 		System.out.println("rs:" + rs);
 		
-		ArrayList<GGDto> auctionlist = new ArrayList<>();
 		while (rs.next()) {
 			GGDto dto = new GGDto();
 			dto.setP_no(rs.getInt("P_NO"));
@@ -445,11 +449,11 @@ public class BoardDAO {
 			dto.setAu_instantPr(rs.getInt("Au_instantPr"));
 			//dto.setP_tm(rs.getDate("P_TM"));
 			dto.setHa_bidPr(rs.getInt("HA_BIDPR"));
-			auctionlist.add(dto);
+			auctionlist1.add(dto);
 		}
 		
-		System.out.println("actionlist:" + auctionlist);
-		return auctionlist;
+		System.out.println("actionlist:" + auctionlist1);
+		return auctionlist1;
 	}
 
 	public ArrayList<GGDto> maide_list(String userid) throws SQLException {
@@ -970,8 +974,9 @@ public class BoardDAO {
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, p_no);
 		rs = ps.executeQuery();
-
-		if (rs.next()) {
+		boolean rsNext = rs.next();
+		System.out.println("rsNext : "+rsNext);
+		if (rsNext) {
 			dto.setP_no(rs.getInt("p_no")); // 글번호
 			dto.setP_id(rs.getString("p_id")); // 글작성자
 			dto.setP_title(rs.getString("p_title")); // 글제목
@@ -1002,7 +1007,7 @@ public class BoardDAO {
 			// dto.setHa_bidUsr(rs.getString("ha_bidusr"));
 			dto.setI_newName(rs.getString("i_newname")); // 사진명
 
-			System.out.println(dto.getAu_count());
+			System.out.println("입찰횟수:"+ dto.getAu_count());
 			System.out.println(rs.getString("i_newname"));
 			System.out.println(dto.getP_title());
 			System.out.println(dto.getU_addr());
@@ -1020,6 +1025,7 @@ public class BoardDAO {
 		if (rs.next()) {// 입찰기록이 있을 경우
 			dto.setHa_bidPr(rs.getInt("toppr")); // 최고 입찰가
 			dto.setHa_bidUsr(rs.getString("u_nname"));// 최고 입찰자
+			System.out.println();
 		} else {// 입찰기록이 없을 경우
 			dto.setHa_bidPr(0);
 			dto.setHa_bidUsr("-");
@@ -1243,9 +1249,10 @@ public class BoardDAO {
 				  " WHERE P.P_NO = S.P_NO AND S.P_NO = A.P_NO AND A.P_NO = I.P_NO AND I.P_NO = HA.P_NO(+)  AND P_BLINDYN = 'N' AND C.C_NAME = ?"+
 				  " AND A.AU_ENDTM > SYSDATE";
 		if (auctionmainlisthowaline == 0) {// 신규등록 순
-			sql += " ORDER BY P_NO DESC"; 
+
+			sql = "SELECT DISTINCT P.P_NO,c.c_name, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,sale s ,AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND s.p_no = p.p_no and H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_code = s.s_code and c.c_name = ? order by p.p_tm desc";
 		} else if (auctionmainlisthowaline == 1) {// 마감 임박순
-			sql += " ORDER BY AU_ENDTM";
+			sql = "SELECT DISTINCT P.P_NO,c.c_name, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,sale s ,AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND s.p_no = p.p_no and H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_code = s.s_code and c.c_name = ? order by a.Au_endTm desc";
 		}
 
 		ArrayList<GGDto> auctionmainlist = new ArrayList<GGDto>();
@@ -1273,7 +1280,9 @@ public class BoardDAO {
 			dto.setI_newName(rs.getString("I_NEWNAME"));
 			dto.setAu_startPr(rs.getInt("Au_startPr"));
 			dto.setAu_instantPr(rs.getInt("Au_instantPr"));
-			//dto.setP_tm(rs.getDate("P_TM"));
+			dto.setP_tm(rs.getDate("P_TM"));
+			dto.setC_name(rs.getString("c_name"));
+
 			auctionmainlist.add(dto);
 		}
 		System.out.println("auctionmainlist:" + auctionmainlist);

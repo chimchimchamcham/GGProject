@@ -55,9 +55,10 @@
 }
 
 body {
-   width: 100%;
-   text-align: center;
-} 
+	width: 100%;
+	text-align: center;
+}
+
 #div1 {
 	width: 840px;
 	display: block;
@@ -231,51 +232,49 @@ a:visited {
 	color: black;
 }
 
-#followBtn{
-	width:80px;
-	height:30px;
+#followBtn {
+	width: 80px;
+	height: 30px;
 	background-color: white;
 	border: 1px solid gray;
 	cursor: pointer;
 }
 
-#followBtn:hover{
+#followBtn:hover {
 	background-color: #eaeaea;
 }
 
 /*====마이페이지 하단====*/
 #myBottom {
-	width:1140px;
-	height:auto;
-
+	width: 1140px;
+	height: auto;
 }
 
 /*탭메뉴*/
 #twoButton {
-	width:1140px;
+	width: 1140px;
 	margin: 0px auto;
-	padding : 10px 0;
-
+	padding: 10px 0;
 }
 
 #twoButton button {
 	width: 110px;
 	height: 40px;
-	padding:0px;
-	margin-right :31px;
+	padding: 0px;
+	margin-right: 31px;
 	border-bottom: 1px solid #d6d6d6;
 	border-top: 1px solid #d6d6d6;
 	/* color:#d6d6d6; */
 	border-left: 0px;
 	border-right: 0px;
-	background-color:#fff;
+	background-color: #fff;
 }
 
 #twoButton button:hover {
 	border-bottom: 1.7px solid #b7b7b7;
 	border-top: 1.7px solid #b7b7b7;
 	color: #b7b7b7;
-	font-weight:bold;
+	font-weight: bold;
 }
 </style>
 
@@ -303,8 +302,10 @@ a:visited {
 				"notifyPopup", "width=900, height=600, left=450, top=180");
 	}
 	function sendMsgPop() {
-		window.open("./popup/sendMsgPop.jsp?N_receiveId=${myPageInfo.u_id}&N_receiveNname=${myPageInfo.u_nname}&u_newName=${myPageInfo.u_newName}",
-				"chargePop", "width=500, height=500, left=850, top=150");
+		window
+				.open(
+						"./popup/sendMsgPop.jsp?N_receiveId=${myPageInfo.u_id}&N_receiveNname=${myPageInfo.u_nname}&u_newName=${myPageInfo.u_newName}",
+						"chargePop", "width=500, height=500, left=850, top=150");
 	}
 
 	var allurl =
@@ -315,9 +316,12 @@ a:visited {
 		//이전에 이용자가 판매자를 팔로우한 적이 있는지 확인
 		//팔로우를 했을 경우
 		<c:if test="${myPageInfo.u_isFollow eq true}">
-			$("#followBtn").css({"color" : "white", "background-color" : "gray"});
-			$("#followBtn").text("-팔로우");
-			isFollow = true; //팔로우를 했다는 뜻
+		$("#followBtn").css({
+			"color" : "white",
+			"background-color" : "gray"
+		});
+		$("#followBtn").text("-팔로우");
+		isFollow = true; //팔로우를 했다는 뜻
 		</c:if>
 
 		//팔로우 클릭시 버튼 변경
@@ -325,26 +329,29 @@ a:visited {
 		$("#followBtn").click(function() {
 			//팔로우를 안한 상태에서 팔로우 하기
 			if (!isFollow) {
-				
+
 				var param = {};
 				param.btntext = "+팔로우";
 				param.nick = "${myPageInfo.u_nname }";
-				
+
 				$.ajax({
-					type: "POST",
-					data: param,
-					dataType: "JSON",
-					url: "flowadddelect",
-					success : function(data){ 
-						if(data.success){
+					type : "POST",
+					data : param,
+					dataType : "JSON",
+					url : "flowadddelect",
+					success : function(data) {
+						if (data.success) {
 							//클릭함으로 인해 팔로우하게 됨
 							//팔로우 해제를 할 수 있는 모양으로 바뀜
-							$("#followBtn").css({"color" : "white", "background-color" : "gray"});
+							$("#followBtn").css({
+								"color" : "white",
+								"background-color" : "gray"
+							});
 							$("#followBtn").text("-팔로우");
 							//팔로우 한 상태가 됨
 							isFollow = true;
-							alert("팔로우 성공");			
-						}else{
+							alert("팔로우 성공");
+						} else {
 							alert("팔로우 실패");
 						}
 					},
@@ -352,27 +359,30 @@ a:visited {
 						console.log(e);
 					}
 				});
-			//팔로우한 상태에서 팔로우 해제	
+				//팔로우한 상태에서 팔로우 해제	
 			} else {
-				
+
 				var param = {};
 				param.btntext = "-팔로우";
 				param.nick = "${myPageInfo.u_nname }";
-				
+
 				$.ajax({
-					type: "POST",
-					data: param,
-					dataType: "JSON",
-					url: "flowadddelect",
-					success : function(data){ 
-						if(data.success){
+					type : "POST",
+					data : param,
+					dataType : "JSON",
+					url : "flowadddelect",
+					success : function(data) {
+						if (data.success) {
 							//클릭함으로 인해 팔로우 해제됨
 							//다시 팔로우를 할 수 있는 모양으로 바뀜
-							$("#followBtn").css({"color" : "black", "background-color" : "#E6E6E6"});
+							$("#followBtn").css({
+								"color" : "black",
+								"background-color" : "#E6E6E6"
+							});
 							$("#followBtn").text("+팔로우");
 							isFollow = false;
 							alert("팔로우 해제 성공");
-						}else{
+						} else {
 							alert("팔로우 해제 실패");
 						}
 					},
@@ -382,11 +392,7 @@ a:visited {
 				});
 			}
 		});
-		
-		
-		
-		
-		
+
 		if (allurl == undefined) {
 			allurl = './soldlist';
 		}
@@ -960,7 +966,8 @@ a:visited {
 		$(".alien_list_sold").hide();
 		$(".button-layout_auction").hide();
 
-		soldlist.forEach(function(item, idx) {
+		soldlist
+				.forEach(function(item, idx) {
 					console.log("idx:", idx, item);
 					content += "<div class='item-one-sold'>";
 					content += "<div class='img-zoon'><img class='sold_img' src=/photo/"+item.i_newName+"></div>";
@@ -972,7 +979,8 @@ a:visited {
 							+ "</div>";
 					content += "</div>";
 					content += "<div class='love-time'>";
-					content += "	<div class='love'>" + item.p_likeCount+"</div>";
+					content += "	<div class='love'>" + item.p_likeCount
+							+ "</div>";
 					content += "	<div class='time'>" + item.p_tm + "</div>";
 					content += "</div>";
 					content += "</div>";
@@ -994,7 +1002,8 @@ a:visited {
 		$(".alien_list_sold").hide();
 		$(".button-layout_auction").hide();
 
-		auctionlist.forEach(function(item, idx) {
+		auctionlist
+				.forEach(function(item, idx) {
 					console.log("idx:", idx, item);
 					content += "<div class='item-one'>";
 					content += "<div class='img-zoon'><img src=/photo/"+item.i_newName+"></div>";
@@ -1002,8 +1011,9 @@ a:visited {
 					content += "<a href= auctionDetail?p_no=" + item.p_no + ">"
 							+ item.p_title + "</a>";
 					//content += "<div class='xianzai'>현제 입찰가</div><div style='font-size: 25px;'>"
-							//+ item.hm + "p</div>";
-					content += "<div class='auction'><div>시작:" + item.au_startPr + "</div>/<div>즉결:"
+					//+ item.hm + "p</div>";
+					content += "<div class='auction'><div>시작:"
+							+ item.au_startPr + "</div>/<div>즉결:"
 							+ item.au_instantPr + "</div></div>";
 					content += "</div><div class='endtime-zoon'>종료시간:<div>"
 							+ item.au_endTm + "</div></div>";
@@ -1031,7 +1041,8 @@ a:visited {
 		maidelist.forEach(function(item, idx) {
 			console.log("idx:", idx, item);
 			content += "<div class='item-one'>";
-			content += "<div class='img-zoon'><img src=/photo/" + item.i_newName
+			content += "<div class='img-zoon'><img src=/photo/"
+					+ item.i_newName
 					+ " class='itemimg' style='margin:3%'></div>";
 			content += "<div class='dretion-zoon style='margin: 3%'>";
 			content += "		<a href = ./details?p_no=" + item.p_no + ">"
@@ -1097,7 +1108,8 @@ a:visited {
 
 		console.log('flowlist:' + flowlist.length);
 
-		flowlist.forEach(function(item, idx) {
+		flowlist
+				.forEach(function(item, idx) {
 
 					content += "<div class='item-one-flow'>"
 					content += "<div class='img-zoon'><img src='/photo/"+item.u_newname+"'></div>"
@@ -1105,7 +1117,8 @@ a:visited {
 							+ "</div>"
 					content += "<div class=''>팔로워:" + item.flow_count
 							+ "</div>"
-					content += "<a href='myPage?id=" + item.u_id +"'>프로필로가기</a>";
+					content += "<a href='myPage?id=" + item.u_id
+							+ "'>프로필로가기</a>";
 					content += item.thisuserFlowingYN;
 					content += " </div>"
 				});
@@ -1133,9 +1146,9 @@ a:visited {
 
 			var nick1 = $index_user_text;
 
-			console.log("index1:"+$index1);
-			console.log("btntext1:"+btntext1);
-			console.log("nick1:"+nick1);
+			console.log("index1:" + $index1);
+			console.log("btntext1:" + btntext1);
+			console.log("nick1:" + nick1);
 
 			$.ajax({
 				type : 'post',
@@ -1174,9 +1187,9 @@ a:visited {
 
 			var nick2 = $index_user_text;
 
-			console.log("index2:"+$index2);
-			console.log("btntext2:"+btntext2);
-			console.log("nick2:"+nick2);
+			console.log("index2:" + $index2);
+			console.log("btntext2:" + btntext2);
+			console.log("nick2:" + nick2);
 			$.ajax({
 				type : 'post',
 				url : './flowadddelect',
@@ -1189,11 +1202,11 @@ a:visited {
 					if ($index_button_f.text() == "+팔로우") {
 						console.log("-팔로우");
 						$index_button_f.text("-팔로우");
-						
-					}else if ($index_button_f.text() == "-팔로우") {
+
+					} else if ($index_button_f.text() == "-팔로우") {
 						console.log("+팔로우");
 						$index_button_f.text("+팔로우");
-					}  
+					}
 				},
 				error : function(e) {
 					console.log(e);
@@ -1239,33 +1252,30 @@ a:visited {
 	}//구매요청 리스트 end
 
 	//수락,거절버튼을 누르면
-	$(document).on("click", "div.buttonarea button", function() {
+	$(document).on(
+			"click",
+			"div.buttonarea button",
+			function() {
 
-		$par = $('.buttonarea button').parents('.buttonarea').index();
-		console.log('parent:' + $par);
+				$par = $('.buttonarea button').parents('.buttonarea').index();
+				console.log('parent:' + $par);
 
-		$rqno = $('.buttonarea button');
-		$index = $rqno.index(this);
-		$rqnob = $(".buttonarea button:eq(" + $index + ")");
+				$rqno = $('.buttonarea button');
+				$index = $rqno.index(this);
+				$rqnob = $(".buttonarea button:eq(" + $index + ")");
 
-		
-		
-		//$itembox = $('.item-one');
-		//$item_index = $itembox.index(this);
-		
-		
+				$itembox = $('.item-one');
+				$itemboxindex = $itembox.index();
 
-		
-		
-		
-		
-		var rqnoval = $rqnob.val();
-		var rqnotext = $rqnob.text();
+				$remove_item_box = $(
+						".item-one .buttonarea button:eq(" + $itemboxindex
+								+ ")").parents('.item-one');
+				$remove_item_box.remove();
 
-		console.log('.buttonarea button:' + $index);
-		console.log('rqnoval:' + rqnoval);
-		console.log('rqnotext:' + rqnotext);
+				var rqnoval = $rqnob.val();
+				var rqnotext = $rqnob.text();
 
+<<<<<<< HEAD
 		$remove_item_box.remove();
 		 $.ajax({
 			type : 'post',
@@ -1312,22 +1322,71 @@ a:visited {
 									alert("거래페이지가 생성 되었습니다");
 									
 								}
+=======
+				console.log('.buttonarea button:' + $index);
+				console.log('rqnoval:' + rqnoval);
+				console.log('rqnotext:' + rqnotext);
+
+				$.ajax({
+					type : 'post',
+					url : './applyreqlist',
+					data : {
+						rqno_val : rqnoval,
+						rqno_text : rqnotext
+					},
+					dataType : 'JSON',
+					success : function(data) {
+						if (data != null) {
+							console.log('data1:' + data.info.p_no);
+							console.log('data1:' + data.info.rq_id);
+							console.log('data1:' + data.info.rq_no);
+							console.log('data1:' + data.info.Rq_YN);
+
+							var param = {};
+							if (rqnotext == '수락') {
+								param.Rq_YN = 'Y';
+							} else if (rqnotext == '거절') {
+								param.Rq_YN = 'N';
+
+>>>>>>> 559d6d1c9bbbdfc51f58f4073e6ef45ea057919b
 							}
 
-						},
-						error : function(e) {
-							console.log(e);
-							alert("error:취소 했습니다");
-							
+							param.p_no = data.info.p_no;
+							param.rq_id = data.info.rq_id;
+							param.rq_no = data.info.rq_no;
+							console.log('param1:' + param.p_no);
+							console.log('param2:' + param.rq_id);
+							console.log('param3:' + param.rq_no);
+							console.log('param4:' + param.Rq_YN);
+
+							$.ajax({
+								type : 'post',
+								url : './buyRequestProcess',
+								data : param,
+								dataType : 'JSON',
+								success : function(data) {
+									if (data.success) {
+										if (data.request) {
+
+											alert("거래페이지가 생성 되었습니다");
+
+										}
+									}
+
+								},
+								error : function(e) {
+									console.log(e);
+									alert("error:취소 했습니다");
+
+								}
+							});
 						}
-					}); 
-				}
-			},
-			error : function(e) {
-				console.log(e);
-			}
-		});
-	});
+					},
+					error : function(e) {
+						console.log(e);
+					}
+				});
+			});
 
 	//데이터 가져와서 뿌려주는 좋아요 리스트
 	function love_list(lovelist) {
@@ -1353,7 +1412,8 @@ a:visited {
 			content += "	<div><a href = " + a + "?p_no=" + item.p_no + ">"
 					+ item.p_title + "</a></div>";
 			content += "</div>";
-			content += "<div class='img-zoon'><img src=/photo/" + item.i_newName
+			content += "<div class='img-zoon'><img src=/photo/"
+					+ item.i_newName
 					+ " class='itemimg' style='margin:3%'></div>";
 			content += "<div class='c_zoon'>";
 			content += "	<div>" + price + "</div>";
@@ -1380,10 +1440,7 @@ a:visited {
 
 		reportlist.forEach(function(item, idx) {
 			console.log('idx:', idx, item);
-			
-			
 
-			
 			content += "<tr class='content-zoon_report'>"
 			content += "<td>" + item.n_receiveId + "</td>";
 			content += "<td>" + item.n1_name + "신고</td>";
@@ -1480,33 +1537,25 @@ a:visited {
 					<button>팔로우</button>
 					<button>구매요청</button>
 					<button>좋아요</button>
-					<button style="margin:0px;">신고목록</button>
+					<button style="margin: 0px;">신고목록</button>
 				</div>
 
-				<div id="sale" class="categori"
-					>
+				<div id="sale" class="categori">
 					<jsp:include page="./mypage_list/sold.jsp"></jsp:include>
 				</div>
-				<div id="trade" class="categori"
-					><jsp:include
+				<div id="trade" class="categori"><jsp:include
 						page="./mypage_list/auction.jsp"></jsp:include></div>
-				<div id="sell" class="categori"
-					><jsp:include
+				<div id="sell" class="categori"><jsp:include
 						page="./mypage_list/maide.jsp"></jsp:include></div>
-				<div id="commu" class="categori"
-					><jsp:include
+				<div id="commu" class="categori"><jsp:include
 						page="./mypage_list/community.jsp"></jsp:include></div>
-				<div id="follow" class="categori"
-					><jsp:include
+				<div id="follow" class="categori"><jsp:include
 						page="./mypage_list/flows.jsp"></jsp:include></div>
-				<div id="want" class="categori"
-					><jsp:include
+				<div id="want" class="categori"><jsp:include
 						page="./mypage_list/request.jsp"></jsp:include></div>
-				<div id="like" class="categori"
-					><jsp:include
+				<div id="like" class="categori"><jsp:include
 						page="./mypage_list/loving.jsp"></jsp:include></div>
-				<div id="alarm" class="categori"
-					><jsp:include
+				<div id="alarm" class="categori"><jsp:include
 						page="./mypage_list/report.jsp"></jsp:include></div>
 			</div>
 		</c:if>
@@ -1548,8 +1597,8 @@ a:visited {
 						<td colspan="2" class="addrBg">${myPageInfo.u_addr}&nbsp;${myPageInfo.u_detailAddr}</td>
 					</tr>
 					<tr id="f_mBtn">
-					<c:if test="${sessionScope.loginId ne null}">
-						<td><button id="followBtn">+팔로우</button></td>
+						<c:if test="${sessionScope.loginId ne null}">
+							<td><button id="followBtn">+팔로우</button></td>
 						</c:if>
 					</tr>
 					<tr>
@@ -1566,19 +1615,23 @@ a:visited {
 
 			<div id="twoButton">
 				<button>판매목록</button>
-					<button>경매목록</button>
-					<button style="display:none">구매목록</button>
-					<button>커뮤니티</button>
-					<button>팔로우</button>
-					<button  style="display:none">구매요청</button>
-					<button  style="display:none">좋아요</button>
-					<button style="margin:0px; display:none;" >신고목록</button>
+				<button>경매목록</button>
+				<button style="display: none">구매목록</button>
+				<button>커뮤니티</button>
+				<button>팔로우</button>
+				<button style="display: none">구매요청</button>
+				<button style="display: none">좋아요</button>
+				<button style="margin: 0px; display: none;">신고목록</button>
 			</div>
 
-			<div id="sale" class="categori"><jsp:include page="./mypage_list/sold.jsp"></jsp:include></div>
-			<div id="trade" class="categori" ><jsp:include page="./mypage_list/auction.jsp"></jsp:include></div>
-			<div id="commu" class="categori" ><jsp:include page="./mypage_list/community.jsp"></jsp:include></div>
-			<div id="follow" class="categori" ><jsp:include page="./mypage_list/flows.jsp"></jsp:include></div>
+			<div id="sale" class="categori"><jsp:include
+					page="./mypage_list/sold.jsp"></jsp:include></div>
+			<div id="trade" class="categori"><jsp:include
+					page="./mypage_list/auction.jsp"></jsp:include></div>
+			<div id="commu" class="categori"><jsp:include
+					page="./mypage_list/community.jsp"></jsp:include></div>
+			<div id="follow" class="categori"><jsp:include
+					page="./mypage_list/flows.jsp"></jsp:include></div>
 		</c:if>
 
 	</div>
