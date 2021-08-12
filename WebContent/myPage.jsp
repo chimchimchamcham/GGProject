@@ -1275,6 +1275,54 @@ a:visited {
 				var rqnoval = $rqnob.val();
 				var rqnotext = $rqnob.text();
 
+<<<<<<< HEAD
+		$remove_item_box.remove();
+		 $.ajax({
+			type : 'post',
+			url : './applyreqlist',
+			data : {
+				rqno_val : rqnoval,
+				rqno_text : rqnotext
+			},
+			dataType : 'JSON',
+			success : function(data) {
+				if (data != null) {
+					console.log('data1:' + data.info.p_no);
+					console.log('data1:' + data.info.rq_id);
+					console.log('data1:' + data.info.rq_no);
+					console.log('data1:' + data.info.Rq_YN);
+					
+					var param = {};
+					if (rqnotext == '수락') {
+						param.Rq_YN = 'Y';
+					} else if (rqnotext == '거절') {
+						param.Rq_YN = 'N';
+						
+					}
+					param.p_no = data.info.p_no;
+					param.rq_id = data.info.rq_id;
+					param.rq_no = data.info.rq_no;
+					console.log('param1:' + param.p_no);
+					console.log('param2:' + param.rq_id);
+					console.log('param3:' + param.rq_no);
+					console.log('param4:' + param.Rq_YN);
+					
+					$.ajax({
+						type : 'post',
+						url : './buyRequestProcess',
+						data : param,
+						dataType : 'JSON',
+						success : function(data) {
+							if (data.success) {
+								$remove_item_box.remove();
+								if (data.request) {
+									
+									$remove_item_box = $(".item-one .buttonarea button:eq(" + $itemboxindex + ")").parents('.item-one');
+									
+									alert("거래페이지가 생성 되었습니다");
+									
+								}
+=======
 				console.log('.buttonarea button:' + $index);
 				console.log('rqnoval:' + rqnoval);
 				console.log('rqnotext:' + rqnotext);
@@ -1300,6 +1348,7 @@ a:visited {
 							} else if (rqnotext == '거절') {
 								param.Rq_YN = 'N';
 
+>>>>>>> 559d6d1c9bbbdfc51f58f4073e6ef45ea057919b
 							}
 
 							param.p_no = data.info.p_no;
