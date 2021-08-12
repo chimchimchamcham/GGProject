@@ -281,15 +281,6 @@ $(".categor tr td").click(function(){//카테고리
 				content +=	"<td><small>작성일   "+item.p_tm+" </small></td>";
 				content +="</tr>";
 				content +="</table>";
-				
-				/* content+=		"<div class='index'>"+item.p_title+"</div>";
-				content+=		"<div class='bestcost'>가격:"+item.ns_pr+"p</div>";
-				content+=		"<div class='nowbuycost'>좋아요:"+item.p_likeCount+"♥</div>";
-				content+=		"<div class='endtime-count'>";
-				content+=			"<div class='endtime'>생성시간:"+item.p_tm+"</div>";
-				content+=		"</div>"; */
-				
-				
 				content+= "</div>";
 				content+= "</div>";
 				
