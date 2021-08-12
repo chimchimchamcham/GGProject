@@ -388,15 +388,25 @@ var isFollowed = false;
     }
 
     //양수 = 경매완료
+    var au_code = "${dto.au_code}";
+    console.log("au_code : "+au_code);
     var endTm = "${endTm}";
     var endTime = strToDate(endTm);
     console.log(endTm);
     console.log(endTime);
     console.log(now.getTime()-endTime.getTime());
     if(now.getTime()-endTime.getTime()>0){
-        console.log("경매완료");
-        $("#description>h1>sup").text("경매완료");
-        $("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
+        //endAuction 보다 auctionDetail을 먼저 실행하기 때문에 Au001일 때 거래중으로 뜨게 한다
+    	if(au_code == 'Au001' ||au_code == 'Au002' ){
+        	console.log("거래중");
+            $("#description>h1>sup").text("거래중");
+            $("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
+        }else{
+        	console.log("경매완료");
+            $("#description>h1>sup").text("경매완료");
+            $("#threeButton>button").css({"background-color":"gray"}).attr("disabled", true);
+        }
+    	
     }
     
     //문자열을 날짜로 변경해주는 메서드
