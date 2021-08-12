@@ -468,8 +468,20 @@ public void buyNow(){
 				if(insertHisTradeSuccess) {
 					updateTradeT_cancleIdSuccess = dao.updateTradeT_cancleId(t_cancleId, t_no);
 					System.out.println("[TRADESERVICE]/CANCELTRADE UPDATETRADET_CANCLEIDSUCCESS : "+updateTradeT_cancleIdSuccess);
+					if(updateTradeT_cancleIdSuccess) {
+						//p_no로  p_code를 알아오는 기능
+						String p_code = dao.selectPostP_code(p_no);
+						boolean endTrade = false;
+						if(p_code.equals("P001")) {
+							endTrade = dao.updateAuctionAu_code(p_no, "Au003");
+						}else {
+							endTrade = dao.updateNsaleNscode(p_no, "NS_003");
+						}
+						System.out.println("[TRADESERVICE]/CANCELTRADE ENDTRADE : "+endTrade);
+					}
 				}
 			}
+			
 			if(updateTradeT_cancleIdSuccess) {
 				
 				//알람 보내기 (거래취소)
