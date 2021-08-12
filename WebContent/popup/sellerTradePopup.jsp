@@ -58,7 +58,7 @@ body{width:100%;background-color:white;}
 #commentReload{margin-left:20px;}
 #commentReload:hover{cursor:pointer;}
 
-.tradeUser{font-weight:700;font-size:1rem;background-color:#9B9898;}
+.tradeUser{font-weight:700;font-size:1rem;background-color:#AFAEAE;color:white;}
 .commentBox{width:300px;margin:10px;background-color:white;border-radius:5px/5px;padding:5px;}
 .floatLeft{float:left;}
 .floatRight{float:right;}
@@ -139,7 +139,7 @@ body{width:100%;background-color:white;}
 		$("#sendOk,#sendRF").hide();
 		$("#replyBtn,#shippingOK").css({"background-color":"white"});
 		$("#replyBtn,#shippingOK").attr("disabled",true);
-		$("#trade_cancel").css({"background-color":"#919999"});
+		$("#trade_cancel").css({"background-color":"#F0B6B6"});
 		 $("#trade_cancel").attr("disabled",true);
 		$("#view_pnt").hide();
 		$(".p").hide();
@@ -148,13 +148,13 @@ body{width:100%;background-color:white;}
 	}else if(trade_con == "HT006"){//거래페이지 수취확인 상태의 경우 
 		$("#send,#approval,#shipping,#receive").css({"color":"black"}); 
 		$("#trade_cancel").attr("disabled",true);
-		$("#trade_cancel").css({"background-color":"#919999"});
+		$("#trade_cancel").css({"background-color":"#F0B6B6"});
 		$("#reply").show();
 		$("#content").hide();
 		$("#sendOk,#sendRF").hide();
 	 }else if(trade_con == "HT007"){//거래페이지 거래취소인 상태의 경우
 		 $("#trade_cancel").attr("disabled",true);
-		 $("#trade_cancel").css({"background-color":"#919999"});
+		 $("#trade_cancel").css({"background-color":"#F0B6B6"});
 	 }
 		
 

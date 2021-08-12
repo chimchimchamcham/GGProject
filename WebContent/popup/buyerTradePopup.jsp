@@ -56,7 +56,7 @@ body{width:100%;background-color:white;}
 #commentReload{margin-left:20px;}
 #commentReload:hover{cursor:pointer;}
 
-.tradeUser{font-weight:700;font-size:1rem;background-color:#9B9898;}
+.tradeUser{font-weight:700;font-size:1rem;background-color:#AFAEAE;font-color:white;}
 .commentBox{width:300px;margin:10px;background-color:white;border-radius:5px/5px;padding:5px;}
 .floatLeft{float:left;}
 .floatRight{float:right;}
