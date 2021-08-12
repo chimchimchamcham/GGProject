@@ -25,7 +25,7 @@ margin-top:20px;
 	/* text-align: center; */
 	margin: 0px auto;
 	/* background-color: blue; */
-	overflow-y:scroll;
+	/* overflow-y:scroll; */
 }
 
 .content {
