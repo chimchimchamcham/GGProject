@@ -223,13 +223,6 @@ $(document).ready(function() {
 })
 
 $(".categor tr td").click(function(){//카테고리
-		$(this).css({"text-decoration":"underline","font-weight":"bold"});
-		var $list = $(".categor tr td a").not(this);
-		
-		for(var i in $list){
-			$list[i].css({"text-decoration":"none"});
-		}
-
 	    $button1 = $(".categor tr td");
 	    $index1 = $button1.index(this);
 	    
