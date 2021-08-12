@@ -424,17 +424,6 @@ public class BoardDAO {
 //"SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and a.Au_code = 'Au003' and P.P_ID = u.u_id and p,p_id = ?"
 		ArrayList<GGDto> auctionlist = new ArrayList<GGDto>();
 
-		/*
-		 * sql2 = "select max(ha_bid_pr) from his_auction where p_no =?";
-		 * 
-		 * Context ctx = new InitialContext(); DataSource ds = (DataSource)
-		 * ctx.lookup("java:comp/env/jdbc/Oracle"); Connection conn2 = null; conn2 =
-		 * ds.getConnection();
-		 * 
-		 * PreparedStatement ps2 = conn2.prepareStatement(sql2); ps2.setInt(1, 741);
-		 * ResultSet rs2 = ps.executeQuery(); GGDto dto = new GGDto(); if(rs2.next()) {
-		 * dto.setHm(rs.getLong("max(ha_bid_pr)")); }else { dto.setHm(0); }
-		 */
 
 		
 		ps = conn.prepareStatement(sql);
@@ -1248,9 +1237,9 @@ public class BoardDAO {
 		String sql = "";
 
 		if (auctionmainlisthowaline == 0) {// 신규등록 순
-			sql = "SELECT DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM,c.c_name FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_name = ? order by p.p_tm desc";
+			sql = "SELECT DISTINCT P.P_NO,c.c_name, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,sale s ,AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND s.p_no = p.p_no and H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_code = s.s_code and c.c_name = ? order by p.p_tm desc";
 		} else if (auctionmainlisthowaline == 1) {// 마감 임박순
-			sql = "SELECT DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM,c.c_name FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_name = ? order by a.au_endTm desc";
+			sql = "SELECT DISTINCT P.P_NO,c.c_name, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,sale s ,AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND s.p_no = p.p_no and H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_code = s.s_code and c.c_name = ? order by a.Au_endTm desc";
 		}
 
 		ArrayList<GGDto> auctionmainlist = new ArrayList<GGDto>();
@@ -1278,6 +1267,7 @@ public class BoardDAO {
 			dto.setAu_startPr(rs.getInt("Au_startPr"));
 			dto.setAu_instantPr(rs.getInt("Au_instantPr"));
 			dto.setP_tm(rs.getDate("P_TM"));
+			dto.setC_name(rs.getString("c_name"));
 			auctionmainlist.add(dto);
 		}
 		System.out.println("auctionmainlist:" + auctionmainlist);
