@@ -311,8 +311,8 @@ public class TradeDAO {
 			sql = "select au_code,au_successer,au_suctm,au_instantpr from auction where p_no=?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
-			ps.setInt(2, p_no);
-			ps.setInt(3, p_no);
+			//ps.setInt(2, p_no);
+			//ps.setInt(3, p_no);
 
 			rs = ps.executeQuery();
 
@@ -321,7 +321,11 @@ public class TradeDAO {
 				dto.setAu_successer(rs.getString("au_successer"));
 				dto.setAu_sucTm(rs.getDate("au_suctm"));
 				instantpr = rs.getInt("au_instantpr");
-
+				
+				System.out.println("endauction aucode : "+dto.getAu_code());
+				System.out.println("endauction ausuccesser : "+dto.getAu_successer());
+				System.out.println("endauction ausuctm : "+dto.getAu_sucTm());
+				
 			}
 
 			String successer = dto.getAu_successer();
