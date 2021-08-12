@@ -230,7 +230,6 @@ public class CommentDAO {
 			String p_title = Bdao.getTitle(p_no);//댓글이 작성된 게시글 제목
 			p_title = Adao.cutTitle(p_title);//제목 자르기
 			String p_code = Tdao.selectPostP_code(p_no);
-			System.out.println("게시글 ");
 			String path = null;
 			String pc_parentId = null;
 			//댓글이 달린 글이 경매글인지 판매글인지 구분
