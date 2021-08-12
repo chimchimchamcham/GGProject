@@ -413,35 +413,30 @@ public class BoardDAO {
 	}
 
 	public ArrayList<GGDto> auction_list(String userid, int listwhatadd) throws SQLException, NamingException {
-		String sql = "";
-		if (listwhatadd == 0) {// 전체 Au001 Au003
-			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no and p.p_code ='P001' and (a.Au_code = 'Au001' or a.Au_code = 'Au003') and p.p_id = ? AND p.p_blindyn='N' ORDER BY p.p_no DESC";
+		String sql = "SELECT P.P_NO, P.P_ID, NVL(HA.HA_BIDPR, 0) HA_BIDPR,P.P_TITLE, P.P_VIEW, P.P_LIKECOUNT," + 
+					 " A.AU_STARTPR, A.AU_INSTANTPR, A.AU_STARTTM, A.AU_ENDTM, A.AU_COUNT," + 
+					 " I.I_NEWNAME" + 
+					 " FROM POST P, SALE S, AUCTION A, IMG I, (SELECT P_NO, MAX(HA_BIDPR) HA_BIDPR FROM HIS_AUCTION GROUP BY P_NO) HA" + 
+					 " WHERE P.P_NO = S.P_NO AND S.P_NO = A.P_NO AND A.P_NO = I.P_NO AND I.P_NO = HA.P_NO(+) AND P_ID = ? AND P_BLINDYN = 'N'";
+		if (listwhatadd == 0) {
+			sql += ""; 
 		} else if (listwhatadd == 1) {// 경매중 Au001
-			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no and p.p_code ='P001' and a.Au_code = 'Au001' and p.p_id = ? and p.p_blindyn = 'N' ORDER BY p.p_no DESC";
+			sql += " AND AU_CODE = 'A001'"; 
 		} else if (listwhatadd == 2) {// 경매완료 Au003
-			sql = "SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P, AUCTION A,IMG I WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no and p.p_code ='P001' and a.Au_code = 'Au003' and p.p_id = ? and p.p_blindyn = 'N' ORDER BY p.p_no DESC";
+			sql += " AND AU_CODE = 'A002'"; 
 		}
+
 //"SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and a.Au_code = 'Au003' and P.P_ID = u.u_id and p,p_id = ?"
 		ArrayList<GGDto> auctionlist = new ArrayList<GGDto>();
 
-		/*
-		 * sql2 = "select max(ha_bid_pr) from his_auction where p_no =?";
-		 * 
-		 * Context ctx = new InitialContext(); DataSource ds = (DataSource)
-		 * ctx.lookup("java:comp/env/jdbc/Oracle"); Connection conn2 = null; conn2 =
-		 * ds.getConnection();
-		 * 
-		 * PreparedStatement ps2 = conn2.prepareStatement(sql2); ps2.setInt(1, 741);
-		 * ResultSet rs2 = ps.executeQuery(); GGDto dto = new GGDto(); if(rs2.next()) {
-		 * dto.setHm(rs.getLong("max(ha_bid_pr)")); }else { dto.setHm(0); }
-		 */
+
 
 		
 		ps = conn.prepareStatement(sql);
 		ps.setString(1, userid);
 		rs = ps.executeQuery();
 		System.out.println("rs:" + rs);
-
+		
 		while (rs.next()) {
 			GGDto dto = new GGDto();
 			dto.setP_no(rs.getInt("P_NO"));
@@ -452,13 +447,13 @@ public class BoardDAO {
 			dto.setI_newName(rs.getString("I_NEWNAME"));
 			dto.setAu_startPr(rs.getInt("Au_startPr"));
 			dto.setAu_instantPr(rs.getInt("Au_instantPr"));
-			dto.setP_tm(rs.getDate("P_TM"));
-			//dto.setHa_bidPr(dto.getHm());
-			auctionlist.add(dto);
+			//dto.setP_tm(rs.getDate("P_TM"));
+			dto.setHa_bidPr(rs.getInt("HA_BIDPR"));
+			auctionlist1.add(dto);
 		}
 		
-		System.out.println("actionlist:" + auctionlist);
-		return auctionlist;
+		System.out.println("actionlist:" + auctionlist1);
+		return auctionlist1;
 	}
 
 	public ArrayList<GGDto> maide_list(String userid) throws SQLException {
@@ -979,8 +974,9 @@ public class BoardDAO {
 		ps = conn.prepareStatement(sql);
 		ps.setInt(1, p_no);
 		rs = ps.executeQuery();
-
-		if (rs.next()) {
+		boolean rsNext = rs.next();
+		System.out.println("rsNext : "+rsNext);
+		if (rsNext) {
 			dto.setP_no(rs.getInt("p_no")); // 글번호
 			dto.setP_id(rs.getString("p_id")); // 글작성자
 			dto.setP_title(rs.getString("p_title")); // 글제목
@@ -1011,7 +1007,7 @@ public class BoardDAO {
 			// dto.setHa_bidUsr(rs.getString("ha_bidusr"));
 			dto.setI_newName(rs.getString("i_newname")); // 사진명
 
-			System.out.println(dto.getAu_count());
+			System.out.println("입찰횟수:"+ dto.getAu_count());
 			System.out.println(rs.getString("i_newname"));
 			System.out.println(dto.getP_title());
 			System.out.println(dto.getU_addr());
@@ -1029,6 +1025,7 @@ public class BoardDAO {
 		if (rs.next()) {// 입찰기록이 있을 경우
 			dto.setHa_bidPr(rs.getInt("toppr")); // 최고 입찰가
 			dto.setHa_bidUsr(rs.getString("u_nname"));// 최고 입찰자
+			System.out.println();
 		} else {// 입찰기록이 없을 경우
 			dto.setHa_bidPr(0);
 			dto.setHa_bidUsr("-");
@@ -1245,12 +1242,17 @@ public class BoardDAO {
 
 	public ArrayList<GGDto> auction_main_list(String auctionmainlistwhatadd, int auctionmainlisthowaline)
 			throws SQLException {// 경매목록
-		String sql = "";
-
+		String sql = "SELECT P.P_NO, P.P_ID, NVL(HA.HA_BIDPR, 0) HA_BIDPR,P.P_TITLE, P.P_VIEW, P.P_LIKECOUNT," + 
+				  " A.AU_STARTPR, A.AU_INSTANTPR, A.AU_STARTTM, A.AU_ENDTM, A.AU_COUNT," + 
+				  " I.I_NEWNAME" + 
+				  " FROM POST P, SALE S, AUCTION A, IMG I, (SELECT P_NO, MAX(HA_BIDPR) HA_BIDPR FROM HIS_AUCTION GROUP BY P_NO) HA, CODES C" + 
+				  " WHERE P.P_NO = S.P_NO AND S.P_NO = A.P_NO AND A.P_NO = I.P_NO AND I.P_NO = HA.P_NO(+)  AND P_BLINDYN = 'N' AND C.C_NAME = ?"+
+				  " AND A.AU_ENDTM > SYSDATE";
 		if (auctionmainlisthowaline == 0) {// 신규등록 순
-			sql = "SELECT DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM,c.c_name FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_name = ? order by p.p_tm desc";
+
+			sql = "SELECT DISTINCT P.P_NO,c.c_name, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,sale s ,AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND s.p_no = p.p_no and H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_code = s.s_code and c.c_name = ? order by p.p_tm desc";
 		} else if (auctionmainlisthowaline == 1) {// 마감 임박순
-			sql = "SELECT DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM,c.c_name FROM POST P, AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_name = ? order by a.au_endTm desc";
+			sql = "SELECT DISTINCT P.P_NO,c.c_name, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,HM.TOPPR,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,sale s ,AUCTION A,IMG I,HIS_AUCTION H,codes c,(SELECT P_NO, MAX(HA_BIDPR) TOPPR FROM HIS_AUCTION GROUP BY P_NO) HM WHERE P.P_NO = A.P_NO AND A.P_NO = HM.P_NO AND HM.P_NO = H.P_NO AND a.p_no = i.p_no AND s.p_no = p.p_no and H.HA_BIDPR = HM.TOPPR and p.p_code ='P001' and c.c_code = s.s_code and c.c_name = ? order by a.Au_endTm desc";
 		}
 
 		ArrayList<GGDto> auctionmainlist = new ArrayList<GGDto>();
@@ -1270,14 +1272,17 @@ public class BoardDAO {
 			dto.setP_no(rs.getInt("P_NO"));
 			dto.setP_id(rs.getString("P_ID"));
 			dto.setP_title(rs.getString("P_TITLE"));
-			dto.setHa_bidUsr(rs.getString("HA_BIDUSR"));
+			//dto.setHa_bidUsr(rs.getString("HA_BIDUSR"));
+			dto.setHa_bidPr(rs.getInt("ha_bidPr"));
 			dto.setAu_count(rs.getInt("au_count"));
 			dto.setAu_endTm(rs.getDate("au_endTm"));
-			dto.setHm(rs.getLong("TOPPR"));
+			//dto.setHm(rs.getLong("TOPPR"));
 			dto.setI_newName(rs.getString("I_NEWNAME"));
 			dto.setAu_startPr(rs.getInt("Au_startPr"));
 			dto.setAu_instantPr(rs.getInt("Au_instantPr"));
 			dto.setP_tm(rs.getDate("P_TM"));
+			dto.setC_name(rs.getString("c_name"));
+
 			auctionmainlist.add(dto);
 		}
 		System.out.println("auctionmainlist:" + auctionmainlist);
@@ -1321,7 +1326,7 @@ public class BoardDAO {
 		String sql = "SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code "
 				+ "INNER JOIN userinfo u on p.p_id = u.u_id " + "LEFT OUTER JOIN love l ON p.p_no = l.p_no "
 				+ "LEFT OUTER JOIN img i ON p.p_no = i.p_no "
-				+ "WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_cate = ?";
+				+ "WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_cate = ? ORDER BY p.p_tm DESC";
 		ArrayList<GGDto> list = new ArrayList<GGDto>();
 		GGDto dto = null;
 

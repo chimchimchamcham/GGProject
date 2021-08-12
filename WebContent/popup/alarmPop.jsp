@@ -104,7 +104,7 @@ h2 {
 							<span class="a_readYN">${dto.a_readYN}</span>
 							<span class="a_path">${dto.a_path }</span>
 							<span class="a_code">${dto.a_code }</span>
-							<p  style="width:310px;  padding:0 20px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${dto.a_content}</p>
+							<p id="detail_content" style="width:310px;  padding:0 20px; text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${dto.a_content}</p>
 						</td>
 				
 						<td></td>

@@ -554,6 +554,7 @@ public class BoardService {
 			dto.setP_content(p_content);
 			dto.setP_cate(p_cate);
 			dto.setP_code(p_code);
+			dto.setU_adminYN(adminYN);
 		}
 
 		try {

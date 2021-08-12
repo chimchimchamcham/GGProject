@@ -422,7 +422,7 @@ var isFollowed = false;
                 <article>
                     <div id="imgWrap">
                         <img src="/photo/${dto.i_newName}" width="400px" height="400px">
-                    	<p>i_newName ${dto.i_newName}</p>
+                    	<%-- <p>i_newName ${dto.i_newName}</p> --%>
                     </div>
                     <div id="description">
                         <h1>${dto.p_title}<sup>${dto.c_name }</sup></h1>
@@ -556,13 +556,12 @@ var isFollowed = false;
 	
 	 /*========================== 댓글 영역  ===================================== */
 	 /* 대댓글 불러오기 */
-	 var re_call = true;
+	 
 	 $(document).on("click",".re_Arrow", function() {
 		console.log("대댓글 보기 버튼 클릭");
 		var pc_parentno = $(this).attr("id");
 		console.log("보여줄 대댓글 부모 번호 :", pc_parentno);
-	 
-	 	re_show(pc_parentno);
+	 		re_show(pc_parentno); 	
 	 
 	 });
 	 var re_drawChecker = true;
@@ -580,7 +579,6 @@ var isFollowed = false;
 				success : function(data){ 
 					console.log("대댓글 리스트 보여주기.");
 					console.log(data.list);
-					re_drawChecker =true;
 					re_draw(data.list,pc_parentno);	
 					
 				},
