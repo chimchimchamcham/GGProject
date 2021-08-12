@@ -9,13 +9,15 @@
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 *{margin:0;padding:0;border-width:0;list-style-type:none;}
-body{width:100%;background-color:gray;}
-#wrap{width:900px;height:650px;background-color:#F2F2F2;position:relative;}
+body{width:100%;background-color:white;}
+#wrap{width:900px;height:650px;background-color:white;position:relative;}
 
 #twoButton{position:absolute; left:10px;top:15px; width:200px; /* background-color:orange; */ height:45px}
 #twoButton>input{ width:65px; height:30px; border-radius:5px/5px;font-size:0.8rem; float:left;margin:5px}
 #trade_cancel{background-color:#919999;color:white;}
-
+#report{background-color:#919999;color:white;}
+#trade_cancel:hover{background-color:#666565; cursor:pointer;}
+#report:hover{background-color:#666565; cursor:pointer;}
 #condition{position:absolute; left: 280px; top:20px; color:#C1C6C6; /* background-color:purple; */ width:400px; height:45px}
 #send,#approval,#shipping,#receive{display:inline-block; position:absolute;} 
 #approval{left:100px}
@@ -32,10 +34,10 @@ body{width:100%;background-color:gray;}
 
 #top_content{position:relative; /* background-color:yellow; */ width:200px; top:15px;left:60px;text-align:center;}
 
-#send_price{display:inline-block; position:relative; top:25px;left:38px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;border:1px solid gray;border-radius:5px/5px;padding-left:10px;padding-right:40px;}
+#send_price{display:inline-block; position:relative; top:25px;left:38px;width:190px;height:50px;text-align:center;font-weight:500;font-size:2.5rem;border:1px solid white;border-radius:5px/5px;padding-left:10px;padding-right:40px;}
 .p{font-size:2.5rem; position:absolute; top:46px;left:240px }
 #remainPoint{position:relative;top:36px;left:45px;width:230px; height:25px; background-color:#C1C6C6;border-radius:5px/5px;text-align:center;font-size:0.9rem}
-#threeBtn{position:absolute; top:140px; /* background-color:blue; */width:180px; left:75px}
+#threeBtn{position:absolute; top:140px; background-color:#F9F9F4; width:180px; left:75px}
 #threeBtn>button{width:80px; height:40px; border-radius:5px/5px;font-size:0.8rem; float:left;margin:5px}
 #sendY{background-color:#FF7E00;color:white}
 #chargeBtn{color:white;background-color:#0048FF;}
@@ -45,16 +47,16 @@ body{width:100%;background-color:gray;}
 #reply>span{position:relative; left:110px; top:10px;font-size:1.5rem;}
 #reply_content>span{position:relative; top:10px; left:10px; font-size:0.8rem}
 #write_content{position:relative; top:20px; left:10px;}
-#sendReply{position:relative; top:25px;left:130px; width:60px;height:35px;border-radius:5px/5px;font-size:0.7rem;background-color:#0048FF; color:white}
+#sendReply{position:relative; top:25px;left:130px; width:60px;height:35px;border-radius:5px/5px;font-size:0.7rem;background-color:#9B9898; color:white}
 
 /* 구경톡 UI */
-#comment{position:absolute; background-color:#A9E2F3;top:350px; width:900px; height:300px}
-#comment_cnt{height:20px;padding-left:20px;background-color:gray;}
+#comment{position:absolute; background-color:#E9E7E7;top:350px; width:900px; height:300px}
+#comment_cnt{height:20px;padding-left:20px;background-color:#9B9898;}
 #viewWrap{height:280px;width:600px;float:left;overflow-y:scroll;}
 #commentReload{margin-left:20px;}
 #commentReload:hover{cursor:pointer;}
 
-.tradeUser{font-weight:700;font-size:1.1rem;background-color:yellow;}
+.tradeUser{font-weight:700;font-size:1rem;background-color:#9B9898;}
 .commentBox{width:300px;margin:10px;background-color:white;border-radius:5px/5px;padding:5px;}
 .floatLeft{float:left;}
 .floatRight{float:right;}
@@ -63,7 +65,7 @@ body{width:100%;background-color:gray;}
 #writeWrap{height:280px;width:300px;float:left;position:relative;}
 #tradeNname{position:absolute;top:20px;left:40px;font-weight:700;font-size:1.5rem;}
 #writeComment{padding:5px;resize:none;border-radius:5px/5px;position:absolute;display:block;top:60px;left:30px;}
-#commentSubmit{position:absolute;top:230px;left:150px;border-radius:5px/5px;display:block;height:30px;width:100px;background-color:#BDBDBD;color:black;font-weight:700;font-size:1.5rem;}
+#commentSubmit{position:absolute;top:230px;left:150px;border-radius:5px/5px;display:block;height:30px;width:100px;background-color:#BDBDBD;color:black;font-weight:700;font-size:1rem;}
 #commentSubmit:hover{cursor:pointer;}
 </style>
 
@@ -73,7 +75,7 @@ var loginId = "${sessionScope.loginId}";
 		
 	 //초기상태 
 	$("#condition").css({"color":"#C1C6C6"});
-	$("#sendY").css({"background-color":"#FF7E00"});
+	$("#sendY").css({"background-color":"#919999"});
 	$("#chargeBtn").css({"backgroud-color":"#0048FF"});
 	$("#top_content_1").show();
 	$("#top_content_2,#top_content_3").hide(); 
@@ -105,36 +107,36 @@ var loginId = "${sessionScope.loginId}";
 	//거래페이지 송금상태인 경우
 	//dto.c_code ="HT002"
 	 if(trade_con == "HT002"){ 
-		$("#send").css({"color":"#3BC312"}); //송금상태 불들어오는거
-		$("#sendY,#chargeBtn").css({"background-color":"gray"});
+		$("#send").css({"color":"black"}); //송금상태 불들어오는거
+		$("#sendY,#chargeBtn").css({"background-color":"#F0B6B6"});
 		$("#sendY,#chargeBtn").attr("disabled",true);
 	}else if(trade_con == "HT003"){//거래페이지 승인거부인 경우 -> 송금 전 상태와 동일
 		$("#condition").css({"color":"#C1C6C6"});
-		$("#sendY").css({"background-color":"#FF7E00"});
+		$("#sendY").css({"background-color":"#919999"});
 		$("#chargeBtn").css({"backgroud-color":"#0048FF"});
 		$("#sendY,#chargeBtn").attr("disabled",false);	
 	}else if(trade_con == "HT004"){//거래페이지 배송대기의 경우
 		$("#send_price").attr('readonly',true);
-		$("#send,#approval").css({"color":"#3BC312"}); 
-		$("#sendY,#chargeBtn").css({"background-color":"gray"});
+		$("#send,#approval").css({"color":"black"}); 
+		$("#sendY,#chargeBtn").css({"background-color":"#919999"});
 		$("#sendY,#chargeBtn").attr("disabled",true);
 		$("#top_content_2").show();
 		$("#top_content_1,#top_content_3").hide();
 	}else if(trade_con == "HT005"){//거래페이지 수취대기 상태의 경우
 		$("#send_price").attr('readonly',true);
-		$("#send,#approval,#shipping").css({"color":"#3BC312"}); 
-		$("#chargeBtn").css({"background-color":"gray"});
+		$("#send,#approval,#shipping").css({"color":"black"}); 
+		$("#chargeBtn").css({"background-color":"white"});
 		$("#chargeBtn").attr("disabled",true);
 		$("#sendY").hide();
 		$("#receiveY").show();
 	}else if(trade_con == "HT006"){//거래페이지 수취확인 상태의 경우 
-		$("#send,#approval,#shipping,#receive").css({"color":"#3BC312"}); 
+		$("#send,#approval,#shipping,#receive").css({"color":"black"}); 
 		$("#reply").show();
 		$("#content,#chargeBtn").hide();
 		$("#sendY").hide();
 		$("#reply").show();
 	 }else if(trade_con == "HT007"){//거래페이지 거래취소인 상태의 경우
-		 $("#sendY,#chargeBtn").css({"background-color":"gray"});
+		 $("#sendY,#chargeBtn").css({"background-color":"#F0B6B6"});
 		 $("#sendY,#chargeBtn,#trade_cancel,#report").attr("disabled",true);
 		 $("#send_price").attr('readonly',true);
 	 }
@@ -271,9 +273,9 @@ $("#send_price").on("propertychange change keyup paste input",function(){
 	var $bidpr = $("#send_price").val();
 	var $wallet = $("#wallet").text();
 	if(Number($bidpr)>Number($wallet)){
-		$("#sendY").attr("disabled", true).css({"background-color":"gray"});
+		$("#sendY").attr("disabled", true).css({"background-color":"#9B9898"});
 	}else{
-		$("#sendY").attr("disabled", false).css({"background-color":"#FF7E00"});
+		$("#sendY").attr("disabled", false).css({"background-color":"#9B9898"});
 	}
 });
 //팝업창에서 실행할 함수 >수취확인시

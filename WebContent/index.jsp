@@ -62,7 +62,6 @@ z-index: 2;
 	var msg = "${msg}";
 	if(msg != ""){
 		alert(msg);
-		msg = "";
 	};
 </script>
 </html>
