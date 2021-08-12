@@ -52,6 +52,23 @@ h2 {
 	text-align: center;
 	padding-bottom: 30px;
 }
+
+.pageArea{
+	margin: 0px auto;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	padding-top:20px;
+}
+
+.pageArea a,b{
+	text-decoration: none;
+	color: black;
+/* 	background-color: gray; */
+	padding:2px 10px;
+	
+}
+
 </style>
 </head>
 <body>
@@ -93,7 +110,7 @@ h2 {
 		<a href="noticeList?currPageNum=${noticeList[0].currPageNum-1 }">이전</a>
 		<c:forEach var="i" begin="${noticeList[0].currPageStart }" end="${noticeList[0].currPageEnd }" step="1">
 		<span class="page">
-			<c:if test="${i ne noticeList[0].currPage}"><a href="noticeList?paging=${i}&currPageNum=${noticeList[0].currPageNum }">${i}</a></c:if>
+			<c:if test="${i ne noticeList[0].currPage}"><a href="noticeList?paging=${i}&currPageNum=${noticeList[0].currPageNum }" style="background-color: #F2F2F2;">${i}</a></c:if>
 			<c:if test="${i eq noticeList[0].currPage}"><b>${i}</b></c:if>
 		</span>	
 		</c:forEach>

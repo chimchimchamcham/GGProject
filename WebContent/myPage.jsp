@@ -276,6 +276,10 @@ a:visited {
    color: #b7b7b7;
    font-weight: bold;
 }
+
+.contents{
+	border:1px solid #eaeaea;
+}
 </style>
 
 <%
