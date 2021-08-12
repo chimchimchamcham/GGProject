@@ -1266,7 +1266,7 @@ a:visited {
 		console.log('rqnoval:' + rqnoval);
 		console.log('rqnotext:' + rqnotext);
 
-
+		$remove_item_box.remove();
 		 $.ajax({
 			type : 'post',
 			url : './applyreqlist',
@@ -1296,7 +1296,7 @@ a:visited {
 					console.log('param2:' + param.rq_id);
 					console.log('param3:' + param.rq_no);
 					console.log('param4:' + param.Rq_YN);
-					$remove_item_box.remove();
+					
 					$.ajax({
 						type : 'post',
 						url : './buyRequestProcess',
