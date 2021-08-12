@@ -311,8 +311,7 @@ public class TradeDAO {
 			sql = "select au_code,au_successer,au_suctm,au_instantpr from auction where p_no=?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, p_no);
-			ps.setInt(2, p_no);
-			ps.setInt(3, p_no);
+			//ps.setInt(2, p_no);
 
 			rs = ps.executeQuery();
 
@@ -337,14 +336,13 @@ public class TradeDAO {
 			p_title = Aldao.cutTitle(p_title);
 			// 글번호, 판매자, 구매자를 인자값으로 넣어서, 거래페이지 생성과, 거래히스토리에 "0원" "생성" 추가
 			int t_no = insertTrade(p_no, p_id, ha_bidusr);
+			dto.setT_no(t_no);
 			
 			 //알람보내기
 			Aldao.insertAlarm(successer, "A004", "["+p_title+"..]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
 			Aldao.insertAlarm(p_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 작성자
 			Aldao.resClose();
 			Bdao.resClose();
-			          
-
 			
 		}
 
