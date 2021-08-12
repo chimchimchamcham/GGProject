@@ -96,7 +96,7 @@ public class UserController extends HttpServlet {
 			break;
 
 		case "/logout":
-			msg = "";
+			msg = "세션이 만료되었습니다.";
 			success = service.logout();
 			System.out.println("로그아웃 요청");
 			if (success) {
