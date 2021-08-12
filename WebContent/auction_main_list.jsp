@@ -23,6 +23,7 @@
 	margin: 0px auto;
 	/* padding: 30px; */
 }
+<<<<<<< HEAD
 
 h2.bbb {
 	text-align: center;
@@ -55,6 +56,47 @@ h2.bbb {
 
 .itembox {
 	/*  justify-self: center;
+=======
+		.auc_img{
+		max-width: 270px;
+		max-height: 200px;
+		}
+        .auc-con{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        table{
+            border: 1px solid black;
+        }
+        h2.bbb{
+        margin-right:25vh;
+        }
+		.categor{
+		margin-top:10vh;
+		white-space: nowrap;
+			
+		}
+        .categor th,td{
+            padding: 15px;
+            padding-right: 200px;
+        }
+        .categor td:hover{
+            text-decoration:underline black;
+            cursor: pointer;
+        }
+        .main_auc{
+            width: 900px;
+            height: 700px;
+            margin-left:100px ;
+            display: flex;
+            align-items: center;
+            /*justify-content: center;*/
+            flex-direction: column;
+        }
+        .itembox{
+            justify-self: center;
+>>>>>>> 36784c8a6c43e2725b7c7545839fde44cf6c15f0
             display: flex;
             justify-content: center;
             flex-direction: column; */
@@ -300,6 +342,45 @@ h2.bbb {
 			error : function(e) {
 				console.log(e);
 			}
+<<<<<<< HEAD
+=======
+		});	
+		
+		}
+	
+	
+		
+		//데이터 가져와서 뿌려주는 경매 리스트
+		function auction_list(auctionmainlist){	
+			console.log("auc=="+auctionmainlist)
+			var content="";
+			
+			auctionmainlist.forEach(function(item,idx){
+				console.log("idx:",idx,item);
+				content+= "<div class='item-one' onclick="+"window.location.href='auctionDetail?p_no=" + item.p_no  +"\'" +">"
+				content+= 	"<div class='img-zoon'>";
+				content+=		"<img class='auc_img' src='/photo/"+item.i_newName+"'>";	
+				content+=	"</div>";
+				content+=	"<div class='index'>"+item.p_title+"</div>";
+				content+=	"<div class='bestcost'>현재 최고 입찰가:"+item.hm+"p</div>";
+				content+=	"<div class='nowbuycost'>즉시구매가:"+item.au_instantPr+"p</div>";
+				content+=	"<div class='endtime-count'>";
+				content+=		"<div class='endtime'>종료시간:"+item.au_endTm+"</div>";
+				content+=		"<div class='count'>입찰자:"+item.au_count+"명</div>";
+				content+=	"</div>";
+				content+= "</div>";
+			    });	
+			
+			$('.main_auc div.items').empty();
+			$('.main_auc div.items').append(content);
+		}// 경매 리스트 end	
+	
+		 
+				
+		////////////////////////////////////////////////////////////
+		$(".alinebutton button").click(function(){
+		    $(".alinebutton button").toggleClass("checked");
+>>>>>>> 36784c8a6c43e2725b7c7545839fde44cf6c15f0
 		});
 
 	}

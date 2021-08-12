@@ -1009,5 +1009,80 @@ public class TradeDAO {
 		}
 		return u_nname;
 	}
+	
+	//거래페이지 판매자, 구매자 가져오는 기능
+	public ArrayList<String> selectSandB(int t_no) {
+		ArrayList<String> list = new ArrayList<String>();
+		
+		String sql = "SELECT t_saler, t_buyer from trade where t_no=?";
+		String t_saler = "";
+		String t_buyer = "";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, t_no);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				t_saler = rs.getString("t_saler");
+				t_buyer = rs.getString("t_buyer");
+				System.out.println(t_saler);
+				System.out.println(t_buyer);
+				list.add(t_saler);
+				list.add(t_buyer);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("거래페이지 판매자 : "+list.get(0));
+		System.out.println("거래페이지 구매자 : "+list.get(1));
+		
+		return list;
+		
+	}
+	
+	//해당 거래페이지 번호를 가져다가 게시글 제목을 가져오는 기능
+	public String getTitleFromTno(int t_no) {
+		String title = null;
+		String sql = "select p_title from post where p_no=(select p_no from trade where t_no=?)";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, t_no);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				title = rs.getString("p_title");
+				System.out.println("해당 거래페이지의 게시글 제목 : "+title);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return title;
+		
+	}
+	/*
+	public void pushTradeAlarm(int t_no, int ht_point, String ht_code,String t_cancleId) {
+		AlarmDAO dao = new AlarmDAO();
+		String p_title = getTitleFromTno(t_no); //제목 가져오기
+		p_title = dao.cutTitle(p_title);
+		ArrayList<String>list = new ArrayList<String>();
+		list = selectSandB(t_no);
+		String t_saler = list.get(0);
+		String t_buyer = list.get(1);
+		if() {//HT002 : 송금
+			
+		}else if() { //HT003 : 승인거부
+			
+		}else if() { //HT004 : 승인
+			
+		}else if() { //HT005 : 배송
+			
+		}else if() { //HT006 : 수취확인
+			
+		}else if() { //HT007 : 거래취소
+		dao.insertAlarm(u_id, a_code, a_content, a_impoyn, a_path);
+		dao.insertAlarm(u_id, a_code, a_content, a_impoyn, a_path);
+		
+	}*/
 
 }

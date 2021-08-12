@@ -160,7 +160,7 @@ h2 {
 		console.log("알람 코드:",a_code);
 		
 		//읽음여부 상관없이 클릭시 해당 페이지로 부모페이지 이동
-		if(a_code == 'A004' || a_code == "A008"){
+		if(a_code == 'A004' || a_code == "A008" || a_code == "A012" || a_code == "A013" || a_code == "A014" || a_code =="A015" || a_code == "A016" || a_code == "A017"){
 			window.open(a_path, "거래페이지", "width=900px, height=650px");
 		}else{
 			opener.parent.location=a_path;
