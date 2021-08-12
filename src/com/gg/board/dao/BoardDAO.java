@@ -421,9 +421,9 @@ public class BoardDAO {
 		if (listwhatadd == 0) {
 			sql += ""; 
 		} else if (listwhatadd == 1) {// 경매중 Au001
-			sql += " AND AU_CODE = 'A001'"; 
+			sql += " AND AU_CODE = 'Au001'"; 
 		} else if (listwhatadd == 2) {// 경매완료 Au003
-			sql += " AND AU_CODE = 'A002'"; 
+			sql += " AND AU_CODE = 'Au003'"; 
 		}
 
 //"SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and a.Au_code = 'Au003' and P.P_ID = u.u_id and p,p_id = ?"
