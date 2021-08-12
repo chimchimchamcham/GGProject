@@ -1321,7 +1321,7 @@ public class BoardDAO {
 		String sql = "SELECT * FROM post p INNER JOIN codes c ON p.p_cate = c.c_code "
 				+ "INNER JOIN userinfo u on p.p_id = u.u_id " + "LEFT OUTER JOIN love l ON p.p_no = l.p_no "
 				+ "LEFT OUTER JOIN img i ON p.p_no = i.p_no "
-				+ "WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_cate = ?";
+				+ "WHERE p.p_code = 'P004' AND p.p_blindyn = 'N' AND p.p_cate = ? ORDER BY p.p_tm DESC";
 		ArrayList<GGDto> list = new ArrayList<GGDto>();
 		GGDto dto = null;
 
