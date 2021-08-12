@@ -1264,12 +1264,10 @@ a:visited {
             $index = $rqno.index(this);
             $rqnob = $(".buttonarea button:eq(" + $index + ")");
 
-            $itembox = $('.item-one');
+            $itembox = $('.item-one .buttonarea').parents('.item-one');
             $itemboxindex = $itembox.index();
 
-            $remove_item_box = $(
-                  ".item-one .buttonarea button:eq(" + $itemboxindex
-                        + ")").parents('.item-one');
+            $remove_item_box = $(".item-one .buttonarea button:eq(" + $itemboxindex+ ")").parents('.item-one');
             $remove_item_box.remove();
 
             var rqnoval = $rqnob.val();
@@ -1279,7 +1277,7 @@ a:visited {
             console.log('rqnoval:' + rqnoval);
             console.log('rqnotext:' + rqnotext);
 
-            $.ajax({
+          /*   $.ajax({
                type : 'post',
                url : './applyreqlist',
                data : {
@@ -1336,7 +1334,7 @@ a:visited {
                error : function(e) {
                   console.log(e);
                }
-            });
+            }); */
          });
 
    //데이터 가져와서 뿌려주는 좋아요 리스트
