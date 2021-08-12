@@ -16,10 +16,10 @@
 	<c:forEach items="${list}" var="comments">
 		<tr id="${comments.pc_no }">
 			<c:if test="${comments.u_newName eq 'default-profile.png' }">
-				<td id='profile'><a href="./myPage?id=${comments.pc_id }"><img src="./img/default-profile.png" id='comments_img'><br/>${comments.u_nname } </a></td>
+				<td id='profile'><a href="./myPage?id=${comments.pc_id }" class='pro'><img src="./img/default-profile.png" id='comments_img'><br/>${comments.u_nname } </a></td>
 			</c:if>
 			<c:if test="${comments.u_newName ne 'default-profile.png' }">
-				<td id='profile'><a href="./myPage?id=${comments.pc_id }"><img src="/photo/${comments.u_newName }" id='comments_img'><br/>${comments.u_nname } </a></td>
+				<td id='profile'><a href="./myPage?id=${comments.pc_id }" class='pro'><img src="/photo/${comments.u_newName }" id='comments_img'><br/>${comments.u_nname } </a></td>
 			</c:if>
 			<td id="content" >
 				<p>${comments.pc_content }</p>

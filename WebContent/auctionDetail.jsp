@@ -130,12 +130,12 @@ td {
 	margin: 0px;
 	padding: 0px;
 }
-a {
+a.pro {
 	text-decoration: none;
 	color : black;
 	font-weight: bold;
 }
-a:hover {
+a.pro:hover {
 	color: pink;
 }
 .comm_del, .update_comment {
