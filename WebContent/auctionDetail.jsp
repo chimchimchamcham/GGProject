@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <style type="text/css">
 	#mainHeader{position: relative;z-index: 1}
-    *{margin:0;padding:0;border-width:0;list-style-type:none;}
+    *{margin:0;/* padding:0; */border-width:0;list-style-type:none;}
     body{width:100%;background-color:white;}
 	#wrap{position: absolute;top:150px;}
 	

@@ -283,11 +283,10 @@ $(".categor tr td").click(function(){//카테고리
 				content +="</table>";
 				content+= "</div>";
 				content+= "</div>";
-				
-				
-				
-				
 			    });	
+			
+			/* $("select[name=saleCat]").val("${salesUpdate.s_code}").prop("selected", true);
+			$('').css("text-decoration":"underline","font-weight":"bold"); */
 			
 			$('.main_sold div.items').empty();
 			$('.main_sold div.items').append(content);
