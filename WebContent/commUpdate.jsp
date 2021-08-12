@@ -109,7 +109,16 @@ $("select[name=commuCat]").val("${commUpdate.p_cate}").prop("selected", true);
 		var data = $("#test")[0].files[0]; // input type='file'의 id 인 test 에서 첫 번째 파일데이터를 가져온다.
 		form.append("imgFile",data); // form 데이터에 key value 형식으로 넣어준다.
 		console.log(data);
-
+		if($("input[name='title']").val() ==""){
+			alert("제목을 입력해주세요!");
+			$("input[name='title']").focus();
+			return false;
+		}else if($("textarea[name='content']").val() ==""){
+			alert("내용을 입력해주세요!");
+			$("textarea[name='content']").focus();
+			return false;
+		}else{
+		
 			param.p_no = ${commUpdate.p_no};
 			param.title = $("input[name='title']").val();
 			param.content = $("textarea[name='content']").val();
@@ -138,8 +147,9 @@ $("select[name=commuCat]").val("${commUpdate.p_cate}").prop("selected", true);
 				error : function(e) {
 					console.log(e);
 				}
-				
+			
 			});
+		}
 	});
 	///////사진 선택시 미리보기 변경/////////
 	function readImage(input) {

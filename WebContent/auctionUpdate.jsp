@@ -30,22 +30,91 @@
 }
 
 #main {
-	background-color: gray;
-	width: 1200px;
-	height: auto;
-	position: absolute;
-	top: 150px;
-	z-index: -1;
+   /* background-color: gray; */
+   width: 1140px;
+   height: auto;
+   position: absolute;
+   top: 150px;
+   z-index: -1;
+   margin: 0px auto;
+   padding: 30px;
 }
 
 #wrap {
+	width:940px;
+	 padding:0 100px; 
+	 height:1500px; 
 	margin: 0 auto;
 	text-align: left;
+	
 }
 
 textarea {
 	resize: none;
 }
+
+#sale, #trade, #community{
+	border-width:0;
+	width:100px; 
+	height:50px;
+	font-size:1.2rem;
+	border-radius: 5px; 
+	background-color:#EFEFEB;
+	font-color:#757676;
+/* 	margin-top:20px;
+	margin-right:20px; */
+	/* position:absolute; */
+	/* padding:0px;
+	margin:0px; */
+	
+	
+}
+#sale:hover, #trade:hover, #community:hover{
+	background-color:#757676;
+	color:white;
+}
+
+#write_title{
+	width:940px;
+	height:30px;
+	font-size:18px;
+}
+#input{
+	width:940px;
+	height:500px;
+	
+}
+#intro_cnt{
+	/* float:right; */
+}
+
+#communityForm{
+	padding-top:30px;
+} 
+/* #writeFormT tr,#writeFormT td{
+	border:1px solid black;
+
+} */
+#selectForm{
+	/* height:900px; */
+	width:940px;
+	height:50px;
+	/* background-color:#EFEFEB; */
+	/* position:relative; */
+	
+}
+#submit, #cancelBtn{
+	border-width:0;
+	width:70px; 
+	height:40px;
+	font-size:0.8rem;
+	border-radius: 5px;
+	
+}
+#twoButton{
+	float:right;
+}
+
 </style>
 <script>
 // 오늘 날짜 설정
@@ -72,7 +141,7 @@ var currDate = new Date().toISOString().substring(0,10);
 			</form>
 			<p>
 				<textarea name="content" rows="30" cols="100" id="update"
-					style="overflow-y: scroll" placeholder="내용입력">
+					style="overflow-y: scroll;" placeholder="내용입력" >
 					${auctionUpdate.p_content}</textarea>
 			</p>
 			<div id="update_cnt">( 0 / 1000)</div>
@@ -112,11 +181,12 @@ var currDate = new Date().toISOString().substring(0,10);
 				즉결가격&nbsp;<input type="text" name="promptPrice"
 					value="${auctionUpdate.au_instantPr}" placeholder="즉결가격 입력(숫자입력)" />&nbsp;Point
 			</p>
-		</div>
-		<div id="twoButton">
+			<div id="twoButton">
 			<input type="button" id="submit" value="등록" /> <input type="button"
-				onclick="location.href='./index.jsp'" value="취소" />
+				onclick="location.href='./index.jsp'" value="취소" id="cancelBtn"/>
 		</div>
+		</div>
+		
 	</div>
 	<!-- main div end -->
 
@@ -203,9 +273,9 @@ $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked"
 			alert("제목을 입력해주세요!");
 			$("input[name='title']").focus();
 			return false;
-		}else if($("input[name='content']").val() ==""){
+		}else if($("textarea[name='content']").val() ==""){
 			alert("내용을 입력해주세요!");
-			$("input[name='startPrice']").focus();
+			$("textarea[name='content']").focus();
 			return false;
 		}else if($("input[name='startPrice']").val() ==""){
 				alert("시작 가격을 설정해주세요!");
@@ -319,5 +389,19 @@ $("input[name=disclosure]").val("${auctionUpdate.s_followLimYN}").prop("checked"
 	       }
 	   });
 
+	//시작가, 즉결가 숫자만 들어가게
+	    $("input[name='startPrice']").keyup(function(e){
+			if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
+				var inputVal = $(this).val();
+				$(this).val(inputVal.replace(/[^0-9]/gi, ''));
+			}
+		});
+	    $("input[name='promptPrice']").keyup(function(e){
+			if (!(e.keyCode >= 37 && e.keyCode <= 40)) {
+				var inputVal = $(this).val();
+				$(this).val(inputVal.replace(/[^0-9]/gi, ''));
+			}
+		});
+	    
 </script>
 </html>
