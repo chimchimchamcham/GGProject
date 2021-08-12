@@ -130,12 +130,12 @@ td {
 	margin: 0px;
 	padding: 0px;
 }
-a {
+a.pro {
 	text-decoration: none;
 	color : black;
 	font-weight: bold;
 }
-a:hover {
+a.pro:hover {
 	color: pink;
 }
 .comm_del, .update_comment {
@@ -556,13 +556,12 @@ var isFollowed = false;
 	
 	 /*========================== 댓글 영역  ===================================== */
 	 /* 대댓글 불러오기 */
-	 var re_call = true;
+	 
 	 $(document).on("click",".re_Arrow", function() {
 		console.log("대댓글 보기 버튼 클릭");
 		var pc_parentno = $(this).attr("id");
 		console.log("보여줄 대댓글 부모 번호 :", pc_parentno);
-	 
-	 	re_show(pc_parentno);
+	 		re_show(pc_parentno); 	
 	 
 	 });
 	 var re_drawChecker = true;
@@ -580,7 +579,6 @@ var isFollowed = false;
 				success : function(data){ 
 					console.log("대댓글 리스트 보여주기.");
 					console.log(data.list);
-					re_drawChecker =true;
 					re_draw(data.list,pc_parentno);	
 					
 				},

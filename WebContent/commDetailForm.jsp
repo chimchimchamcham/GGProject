@@ -126,12 +126,12 @@ td#content {
 	width: 710px;
 	border-bottom : 0.5px solid lightgray;
 }
-a {
+a.pro {
 	text-decoration: none;
 	color : black;
 	font-weight: bold;
 }
-a:hover {
+a.pro:hover {
 	color: pink;
 }
 .re_Arrow, .reporter {
