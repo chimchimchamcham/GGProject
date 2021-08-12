@@ -40,12 +40,15 @@ h2.bbb {
 	background-color: #F2F2F2;
 }
 
-.categor td:hover {
+.categor td a:hover {
 	text-decoration: underline black;
 	cursor: pointer;
 	/*  background-color: gray; */
 }
-
+.categor td a{
+	text-decoration: none;
+	color: black;
+}
 .main_sold {
 	margin-top: 50px;
 	width: 990px;
@@ -122,13 +125,14 @@ h2.bbb {
 	padding-top:30px;
 }
 
-.item-one table td{
+.item-one table td a{
 	/* border: 1px solid black;  */
 	color:#555;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	width:260px;
+
 }
 
 .img-zoon {
@@ -168,17 +172,17 @@ h2.bbb {
 <h2 class="bbb">판매</h2>
 <table class="categor">
     <!-- <tr><th>카테고리</th></tr> -->
-    <tr><td>패션의류</td></tr>
-    <tr><td>뷰티잡화</td></tr>
-    <tr><td>유아용품</td></tr>
-    <tr><td>가구생활</td></tr>
-    <tr><td>취미/스타굿즈</td></tr>
-    <tr><td>전자기기</td></tr>
-    <tr><td>스포트레저</td></tr>
-    <tr><td>자동차</td></tr>
-    <tr><td>생활가전</td></tr>
-    <tr><td>도서기타</td></tr>
-    <tr><td>기타</td></tr>
+    <tr><td><a href="#">패션의류</a></td></tr>
+    <tr><td><a href="#">뷰티잡화</a></td></tr>
+    <tr><td><a href="#">유아용품</a></td></tr>
+    <tr><td><a href="#">가구생활</a></td></tr>
+    <tr><td><a href="#">취미/스타굿즈</a></td></tr>
+    <tr><td><a href="#">전자기기</a></td></tr>
+    <tr><td><a href="#">스포트레저</a></td></tr>
+    <tr><td><a href="#">자동차</a></td></tr>
+    <tr><td><a href="#">생활가전</a></td></tr>
+    <tr><td><a href="#">도서기타</a></td></tr>
+    <tr><td><a href="#">기타</a></td></tr>
 </table>
     <div class="main_sold">
         <div class="itembox">
@@ -197,7 +201,8 @@ $(document).ready(function() {
 	var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search); return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " ")); }
 	
 	var cate = getParameterByName('cate');
-	console.log(cate);
+	console.log("cate",cate);
+
 	
 	$.ajax({
 		type:'post',
@@ -218,10 +223,14 @@ $(document).ready(function() {
 })
 
 $(".categor tr td").click(function(){//카테고리
+		$(this).css({"text-decoration":"underline","font-weight":"bold"});
+		$(".categor tr td a").not(this).foreach(
+				$(this).attr("style","text-decoration:none !important")
+		 );
 	    $button1 = $(".categor tr td");
 	    $index1 = $button1.index(this);
 	    
-	    $index_button_sold = $(".categor tr td:eq(" + $index1 + ")").text();
+	    $index_button_sold = $(".categor tr td a:eq(" + $index1 + ")").text();
 
 	
 		console.log("$index_button_sold:"+$index_button_sold);
@@ -283,14 +292,14 @@ $(".categor tr td").click(function(){//카테고리
 				content +="</table>";
 				content+= "</div>";
 				content+= "</div>";
-			    });	
-			
-			/* $("select[name=saleCat]").val("${salesUpdate.s_code}").prop("selected", true);
-			$('').css("text-decoration":"underline","font-weight":"bold"); */
+			    });
 			
 			$('.main_sold div.items').empty();
 			$('.main_sold div.items').append(content);
 		}// 경매 리스트 end
 
+		/* var test = $(".categor tr td a").text(cate);
+		console.log("test",test); */
+		
 </script>
 </html>

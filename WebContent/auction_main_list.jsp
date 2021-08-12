@@ -336,9 +336,6 @@ h2.bbb {
 					content += "</div>";
 				});
 
-		/* $("select[name=saleCat]").val("${salesUpdate.s_code}").prop("selected", true);
-
-		$('').css("text-decoration":"underline","font-weight":"bold"); */
 		$('.main_auc div.items').empty();
 		$('.main_auc div.items').append(content);
 	}// 경매 리스트 end	
