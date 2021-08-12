@@ -154,7 +154,7 @@ public class UserService {
 	}
 
 	public boolean logout() {
-		success = false;
+		success =false;
 		if (req.getSession().getAttribute("loginId") != null) {
 			req.getSession().removeAttribute("loginId");
 			success = true;

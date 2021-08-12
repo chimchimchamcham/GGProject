@@ -18,7 +18,6 @@ import com.gg.board.service.BoardService;
 import com.gg.dto.GGDto;
 import com.gg.user.service.UserService;
 import com.google.gson.Gson;
-import sun.misc.Contended;
 
 @WebServlet({ "/id_overlay", "/nname_overlay", "/join", "/login", "/logout", "/idsearch", "/myPage", "/userUpdate",
 		"/userUpdateForm", "/chkpw", "/changePw", "/chkinfo", "/manageList", "/search", "/n_stateCatSel",
@@ -97,7 +96,7 @@ public class UserController extends HttpServlet {
 			break;
 
 		case "/logout":
-			msg = "";
+			msg = "세션이 만료되었습니다.";
 			success = service.logout();
 			System.out.println("로그아웃 요청");
 			if (success) {
