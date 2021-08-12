@@ -276,6 +276,10 @@ a:visited {
    color: #b7b7b7;
    font-weight: bold;
 }
+
+.contents{
+	border:1px solid #eaeaea;
+}
 </style>
 
 <%
@@ -1018,8 +1022,7 @@ a:visited {
                content += "</div><div class='endtime-zoon'>종료시간:<div>"
                      + item.au_endTm + "</div></div>";
                content += "<div class='love-time'><div>입찰수:"
-                     + item.au_count + "</div><div>" + item.p_tm
-                     + "</div></div>";
+                     + item.au_count + "</div><div>" + item.au_endTm+ "</div></div>";
                content += "</div>";
             });
 

@@ -101,8 +101,9 @@ margin-top: 30vh;
             <div class="itembox_com">
                 <table class="table">
  					<tr>
+ 						<th>idx</th>
 						<th>카테고리</th>
-						<th colspan="2">제목</th>
+						<th>제목</th>
 						<th>작성자</th>
 						<th>좋아요</th>
 						<th>작성일</th>
@@ -155,7 +156,7 @@ function soled_list(mainpage_sold_list) {
 					content += "<div class='itembox'>";
 					content +=  "<h1>"+num+"</h1>";
 					content +=  "<img src='/photo/"+item.i_newName+"' alt=''>";
-					content +="<div>제목:"+item.p_title+"</div>";
+					content +="<div>제목:<a href='salesDetail?p_no="+item.p_no+"'>"+item.p_title+"</a></div>";
 					content +="<div>판매값:"+item.ns_pr+"</div>";
 					content +="<div><img src='/photo/"+item.u_newName+"' style='width: 20px;height: 20px;'><div><a href='myPage?id="+item.p_id+"'>"+item.u_nname+"</a></div></div>";
 					content +="<div><div>♥:"+item.p_likeCount+"</div><div>"+item.p_view+"</div><div>tm:"+item.p_tm+"</div></div>";
@@ -179,7 +180,7 @@ function auc_list(mainpage_auc_list) {
 				content += "<div class='itembox'>";
 				content +=  "<h1>"+num+"</h1>";
 				content +=  "<img src='/photo/"+item.i_newName+"' alt=''>";
-				content +="<div>"+item.p_title+"</div>";
+				content +="<div><a href='auctionDetail?p_no="+item.p_no+"'>"+item.p_title+"</a></div>";
 				content +="<div>현재입찰갑:"+item.hm+"</div>";
 				content +="<div>"+item.au_startPr+"</div><div>"+item.au_instantPr+"</div>";
 				content +="<div><div>♥:"+item.au_count+"</div><div>tm:"+item.p_tm+"</div></div>";
@@ -201,7 +202,7 @@ function communiti_list(mainpage_communiti_list) {
 				content += "<tr class='opo'>";
 				content += "<td>"+num+"</td>";
 				content += "<td>"+item.p_cateName+"</td>";
-				content += "<td>"+item.p_title+"</td>";
+				content += "<td><a href='commDetail?p_no="+item.p_no+"'>"+item.p_title+"</a></td>";
 				content += "<td><a href=myPage?id="+item.p_id+"'>"+item.u_nname+"<a></td>";
 				content += "<td>"+item.p_likeCount+"</td>";
 				content += "<td>"+item.p_tm+"</td>";

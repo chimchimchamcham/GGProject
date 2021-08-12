@@ -421,9 +421,9 @@ public class BoardDAO {
 		if (listwhatadd == 0) {
 			sql += ""; 
 		} else if (listwhatadd == 1) {// 경매중 Au001
-			sql += " AND AU_CODE = 'A001'"; 
+			sql += " AND AU_CODE = 'Au001'"; 
 		} else if (listwhatadd == 2) {// 경매완료 Au003
-			sql += " AND AU_CODE = 'A002'"; 
+			sql += " AND AU_CODE = 'Au003'"; 
 		}
 
 //"SELECT  DISTINCT P.P_NO, P.P_ID, P.P_TITLE, a.au_endTm, H.HA_BIDUSR,a.au_count ,I.I_NEWNAME,A.Au_startPr,A.Au_instantPr,P.P_TM FROM POST P,userinfo u, AUCTION A,IMG I,HIS_AUCTION H WHERE P.P_NO = A.P_NO AND a.p_no = i.p_no AND  p.p_code ='P001' and a.Au_code = 'Au003' and P.P_ID = u.u_id and p,p_id = ?"
@@ -1248,8 +1248,8 @@ public class BoardDAO {
 				  " A.AU_STARTPR, A.AU_INSTANTPR, A.AU_STARTTM, A.AU_ENDTM, A.AU_COUNT," + 
 				  " I.I_NEWNAME" + 
 				  " FROM POST P, SALE S, AUCTION A, IMG I, (SELECT P_NO, MAX(HA_BIDPR) HA_BIDPR FROM HIS_AUCTION GROUP BY P_NO) HA, CODES C" + 
-				  " WHERE P.P_NO = S.P_NO AND S.P_NO = A.P_NO AND A.P_NO = I.P_NO AND I.P_NO = HA.P_NO(+)  AND P_BLINDYN = 'N' AND C.C_NAME = ?"+
-				  " AND A.AU_ENDTM > SYSDATE";
+				  " WHERE P.P_NO = S.P_NO AND S.P_NO = A.P_NO AND A.P_NO = I.P_NO AND I.P_NO = HA.P_NO(+)  AND P_BLINDYN = 'N' AND C_code=s.S_code and C.C_NAME = ?"+
+				  " AND A.AU_ENDTM > SYSDATE ";
 		if (auctionmainlisthowaline == 0) {// 신규등록 순
 			sql += " ORDER BY P_NO DESC"; 
 		} else if (auctionmainlisthowaline == 1) {// 마감 임박순
