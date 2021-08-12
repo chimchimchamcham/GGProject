@@ -425,7 +425,8 @@ a:visited {
 			url : allurl,
 			data : {
 				index1 : 0,
-				index2 : 0
+				index2 : 0,
+				oppId:"${myPageInfo.u_id}"
 			},
 			dataType : 'JSON',
 			success : function(data) {

@@ -150,11 +150,12 @@ public class BoardController extends HttpServlet {
 			System.out.println("판매 리스트 요청");
 
 			userid = (String) req.getSession().getAttribute("loginId");
-			String id = req.getParameter("id");
-
+			String oppId = req.getParameter("oppId");
+			if(oppId!=null&&!oppId.equals(userid)) {
+				userid = oppId;
+			}
 			
 			System.out.println("판매리스트 요청 userid : "+userid);
-			System.out.println("판매리스트 요청 id : "+id);
 			
 			/*
 			 * if(!userid.equals(id)) { userid = id; }
@@ -194,11 +195,11 @@ public class BoardController extends HttpServlet {
 
 			String userid1 = (String) req.getSession().getAttribute("loginId");
 
-			id = req.getParameter("id");
-			if (!userid1.equals(id)) { // 타인프로필 일때
-				userid = id;
+			oppId = req.getParameter("oppId");
+			if (!userid1.equals(oppId)&&oppId!=null) { // 타인프로필 일때
+				userid1 = oppId;
 			}
-
+			System.out.println("oppId : "+oppId);
 			int auctionlistwhatadd = Integer.parseInt(req.getParameter("index1"));
 
 			System.out.println("listwhatadd:" + auctionlistwhatadd);
@@ -232,10 +233,11 @@ public class BoardController extends HttpServlet {
 		case "/communitylist":
 			System.out.println("커뮤니티 리스트 요청");
 			userid = (String) req.getSession().getAttribute("loginId");
-			id = req.getParameter("id");
-			if (!userid.equals(id)) { // 타인프로필 일때
-				userid = id;
+			oppId = req.getParameter("oppId");
+			if (!userid.equals(oppId)&&oppId!=null) { // 타인프로필 일때
+				userid = oppId;
 			}
+			System.out.println("oppId : "+oppId);
 			service.community_list(userid);
 
 			break;
@@ -244,7 +246,7 @@ public class BoardController extends HttpServlet {
 			System.out.println("팔로잉리스트 리스트 요청");
 			
 			userid = (String) req.getSession().getAttribute("loginId");
-			String oppId = (String)req.getParameter("oppId");
+			oppId = (String)req.getParameter("oppId");
 			if(!userid.equals(oppId) && oppId != null) {
 				userid = oppId;     // 타인의 프로필을 들어갈 경우 타인의 아이디의 팔로우 팔로워 리스트를 뽑아준다.
 			}
@@ -457,7 +459,7 @@ public class BoardController extends HttpServlet {
 
 			System.out.println("걸러주는 디테일즈");
 			p_no = Integer.parseInt(req.getParameter("p_no"));
-			id = req.getParameter("id");
+			String id = req.getParameter("id");
 			System.out.println("이것이 번호다 : " + p_no);
 			System.out.println("이것이 아이디다 : " + id);
 			service = new BoardService(req, resp);
