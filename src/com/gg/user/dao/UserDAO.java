@@ -127,15 +127,15 @@ public class UserDAO {
 
 	public ArrayList<String> login(String loginId, String loginPw) {
 		ArrayList<String> idYN = new ArrayList<String>();
-		String sql = "SELECT U_id,U_adminYN  FROM UserInfo WHERE U_id=? AND U_pw=?";
+		String sql = "SELECT u_id, u_adminyn  FROM UserInfo WHERE U_id=? AND U_pw=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, loginId);
 			ps.setString(2, loginPw);
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				idYN.add(rs.getString(1)); // id값 저장
-				idYN.add(rs.getString(2)); // 관리자 여부 저장
+				idYN.add(rs.getString("u_id")); // id값 저장
+				idYN.add(rs.getString("u_adminyn")); // 관리자 여부 저장
 				
 				//블랙리스트 등록여부 판단
 				BlackListDAO BLstDAO = new BlackListDAO();
