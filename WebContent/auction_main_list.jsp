@@ -34,9 +34,10 @@ h2.bbb {
 	padding-left: 20px;
 	white-space: nowrap;
 	float: left;
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	width: 180px;
 	height: 700px;
+	background-color: #F2F2F2;
 }
 
 .categor td:hover {
