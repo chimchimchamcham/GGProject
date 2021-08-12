@@ -605,9 +605,9 @@ public class UserDAO {
 			p_path="./auctionDetail?p_no="+p_no;
 		}else if(p_code.equals("P002")) {
 			p_path = "./salesDetail?p_no="+p_no;
-		}else if(p_code.equals("P003")) {
+		}else if(p_code.equals("P004")) {
 			p_path = "./commDetail?p_no="+p_no;
-		}else {
+		}else if(p_code.equals("P003")){
 			p_path = "./noticeDetail?p_no="+p_no;
 		}
 		
