@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.gg.board.dao.CommentDAO;
 import com.gg.dto.GGDto;
 import com.gg.trade.dao.TradeDAO;
+import com.gg.user.dao.AlarmDAO;
 import com.gg.user.dao.PointDAO;
 import com.google.gson.Gson;
 
@@ -186,6 +187,24 @@ public void buyNow(){
 				pdao.conn.commit();
 				dao.conn.commit();
 				System.out.println("[TRADESERVICE]/SENDPOINT INSERTPOINTSUCCESS COMMIT");
+				
+				/////////알람 보내기 (송금)
+				AlarmDAO Aldao = new AlarmDAO();
+				String p_title = dao.getTitleFromTno(t_no); //제목 가져오기
+				p_title = Aldao.cutTitle(p_title);
+							
+				String t_bnname= null;
+				try {
+						t_bnname = pdao.getNname(t_buyer);
+						//판매자한테만 알람
+						Aldao.insertAlarm(t_saler, "A013", "["+p_title+"]"+t_bnname+"님이 송금하였습니다.", "Y", "./tradeDetail?t_no=" + t_no);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				Aldao.resClose();
+					
+				////////////////////////////////
+				
 			}else {
 				pdao.conn.rollback();
 				dao.conn.rollback();
@@ -211,7 +230,33 @@ public void buyNow(){
 		
 		insertHisTradeSuccess = dao.insertHisTrade(t_no,ht_point,"HT004");
 		System.out.println("[TRADESERVICE]/POINTAPPROVAL INSERTHISTRADESUCCESS : "+insertHisTradeSuccess);
-				
+			
+		if(insertHisTradeSuccess) {
+			/////////알람 보내기 (승인)
+			AlarmDAO Aldao = new AlarmDAO();
+			String p_title = dao.getTitleFromTno(t_no); //제목 가져오기
+			p_title = Aldao.cutTitle(p_title);
+			ArrayList<String> list = new ArrayList<String>();
+			list = dao.selectSandB(t_no);
+			
+			String t_saler = list.get(0);
+			String t_buyer = list.get(1);
+			PointDAO pdao = new PointDAO();
+			String t_snname;
+			try {
+				t_snname = pdao.getNname(t_saler);
+				//구매자한테만 알람
+				Aldao.insertAlarm(t_buyer, "A017", "["+p_title+"]"+t_snname+"님이 승인하였습니다.", "Y", "./tradeDetail?t_no=" + t_no);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pdao.resClose();
+			Aldao.resClose();
+			
+			////////////////////////////////
+		}
+		
 		dao.resClose();
 		System.out.println("[TRADESERVICE]/POINTAPPROVAL END");
 		return insertHisTradeSuccess;
@@ -242,6 +287,23 @@ public void buyNow(){
 				if(insertHisTradeSuccess) {
 					pdao.conn.commit();
 					dao.conn.commit();
+					
+					/////////알람 보내기 (송금거절)
+					AlarmDAO Aldao = new AlarmDAO();
+					String p_title = dao.getTitleFromTno(t_no); //제목 가져오기
+					p_title = Aldao.cutTitle(p_title);
+					
+					String t_snname= "";
+					try {
+						t_snname = pdao.getNname(t_saler);
+						//구매자한테만 알람
+						Aldao.insertAlarm(t_buyer, "A016", "["+p_title+"]"+t_snname+"님이 승인거부하였습니다.", "Y", "./tradeDetail?t_no=" + t_no);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					Aldao.resClose();
+				
+					////////////////////////////////
 					System.out.println("[TRADESERVICE]/POINTDENY INSERTPOINTSUCCESS COMMIT");
 				}else {
 					pdao.conn.rollback();
@@ -269,7 +331,33 @@ public void buyNow(){
 		
 		insertHisTradeSuccess = dao.insertHisTrade(t_no,ht_point,"HT005");
 		System.out.println("[TRADESERVICE]/PRODUCTSHIPPING INSERTHISTRADESUCCESS : "+insertHisTradeSuccess);
-				
+	
+		if(insertHisTradeSuccess) {
+			/////////알람 보내기 (배송)
+			AlarmDAO Aldao = new AlarmDAO();
+			String p_title = dao.getTitleFromTno(t_no); //제목 가져오기
+			p_title = Aldao.cutTitle(p_title);
+			ArrayList<String> list = new ArrayList<String>();
+			list = dao.selectSandB(t_no);
+			
+			String t_saler = list.get(0);
+			String t_buyer = list.get(1);
+			PointDAO pdao = new PointDAO();
+			String t_snname;
+			try {
+				t_snname = pdao.getNname(t_saler);
+				//구매자한테만 알람
+				Aldao.insertAlarm(t_buyer, "A014", "["+p_title+"]"+t_snname+"님이 배송하였습니다.", "Y", "./tradeDetail?t_no=" + t_no);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pdao.resClose();
+			Aldao.resClose();
+			
+			////////////////////////////////
+		}
+		
 		dao.resClose();
 		System.out.println("[TRADESERVICE]/PRODUCTSHIPPING END");
 		return insertHisTradeSuccess;
@@ -323,6 +411,19 @@ public void buyNow(){
 			}
 			
 			if(endTrade) {
+				
+				//알람 보내기 (수취확인)
+				AlarmDAO Aldao = new AlarmDAO();
+				String p_title = dao.getTitleFromTno(t_no); //제목 가져오기
+				p_title = Aldao.cutTitle(p_title);
+				
+				String t_bnname = pdao.getNname(t_buyer);
+				//판매자한테만 알람
+				Aldao.insertAlarm(t_saler, "A015", "["+p_title+"]"+t_bnname+"님 수취확인하였습니다.", "Y", "./tradeDetail?t_no=" + t_no);
+				
+				Aldao.resClose();
+				////////////////////////////////
+				
 				pdao.conn.commit();
 				dao.conn.commit();
 				System.out.println("[TRADESERVICE]/PRODUCTRECEIVE INSERTPOINTSUCCESS COMMIT");
@@ -370,8 +471,29 @@ public void buyNow(){
 				}
 			}
 			if(updateTradeT_cancleIdSuccess) {
+				
+				//알람 보내기 (거래취소)
+				AlarmDAO Aldao = new AlarmDAO();
+				String p_title = dao.getTitleFromTno(t_no); //제목 가져오기
+				p_title = Aldao.cutTitle(p_title);
+				ArrayList<String>list = new ArrayList<String>();
+				list = dao.selectSandB(t_no);
+				String t_saler = list.get(0);
+				if(t_saler.equals(t_cancleId)) {//판매자가 취소한 경우
+					String t_snname = pdao.getNname(t_saler);
+					Aldao.insertAlarm(t_buyer, "A012", "["+p_title+"]"+t_snname+"님이 거래취소하였습니다.", "Y", "./tradeDetail?t_no=" + t_no);
+					Aldao.insertAlarm(t_saler, "A012", "["+p_title+"]거래취소되었습니다.", "Y", "./tradeDetail?t_no=" + t_no);
+				}else {//구매자가 취소한 경우
+					String t_bnname = pdao.getNname(t_buyer);
+					Aldao.insertAlarm(t_saler, "A012", "["+p_title+"]"+t_bnname+"님이 거래취소하였습니다.", "Y", "./tradeDetail?t_no=" + t_no);
+					Aldao.insertAlarm(t_buyer, "A012", "["+p_title+"]거래취소되었습니다.", "Y", "./tradeDetail?t_no=" + t_no);
+				}
+				Aldao.resClose();
+				////////////////////////////////
+				
 				pdao.conn.commit();
 				dao.conn.commit();
+				
 				System.out.println("[TRADESERVICE]/CANCELTRADE INSERTPOINTSUCCESS COMMIT");
 			}else {
 				pdao.conn.rollback();

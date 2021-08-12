@@ -295,6 +295,13 @@ $("#trade_cancel").click(function(){
 	
 })
 
+//후기작성완료버튼 클릭시 
+$("#sendReply").click(function(){
+	console.log("click!");
+	alert("후기 작성이 완료되었습니다.");
+	window.close();
+});
+
 //포인트버튼 클릭시 알람 뜸
 $("#chargeBtn").click(function(){
 	/* alert("포인트 충전 팝업 이동"); */

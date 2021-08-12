@@ -961,8 +961,8 @@ a:visited {
 
 		soldlist.forEach(function(item, idx) {
 					console.log("idx:", idx, item);
-					content += "<div class='item-one'>";
-					content += "<div class='img-zoon'><img src=/photo/"+item.i_newName+"></div>";
+					content += "<div class='item-one-sold'>";
+					content += "<div class='img-zoon'><img class='sold_img' src=/photo/"+item.i_newName+"></div>";
 					content += "<div class='dretion-zoon'>";
 					content += "	<div class='itemindex'>" + "<a href="
 							+ "salesDetail?p_no=" + item.p_no + ">"
@@ -971,8 +971,7 @@ a:visited {
 							+ "</div>";
 					content += "</div>";
 					content += "<div class='love-time'>";
-					content += "	<div class='love'>" + item.p_likeCount
-							+ "</div>";
+					content += "	<div class='love'>" + item.p_likeCount+"</div>";
 					content += "	<div class='time'>" + item.p_tm + "</div>";
 					content += "</div>";
 					content += "</div>";
@@ -1296,7 +1295,7 @@ a:visited {
 					console.log('param2:' + param.rq_id);
 					console.log('param3:' + param.rq_no);
 					console.log('param4:' + param.Rq_YN);
-					
+					$remove_item_box.remove();
 					$.ajax({
 						type : 'post',
 						url : './buyRequestProcess',
@@ -1310,7 +1309,7 @@ a:visited {
 									$remove_item_box = $(".item-one .buttonarea button:eq(" + $itemboxindex + ")").parents('.item-one');
 									
 									alert("거래페이지가 생성 되었습니다");
-									$remove_item_box.remove();
+									
 								}
 							}
 
