@@ -8,132 +8,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Document</title>
-    <style>
+   <style>
 #mainHeader {
 	z-index: 1000;
 }
 
 #main {
 	/* background-color: gray; */
-	width: 1140px;
+	width: 1200px;
 	height: auto;
 	position: absolute;
 	top: 150px;
 	z-index: -1;
 	margin: 0px auto;
-	padding: 30px;
+	/* padding: 30px; */
+}
+
+h2.bbb {
+	text-align: center;
+	padding-top: 30px;
+}
+
+.categor {
+	margin: 50px 30px 0 0;
+	padding-left: 20px;
+	white-space: nowrap;
+	float: left;
+	/* border: 1px solid black; */
+	width: 180px;
+	height: 700px;
+	background-color: #F2F2F2;
+}
+
+.categor td:hover {
+	text-decoration: underline black;
+	cursor: pointer;
+	/*  background-color: gray; */
+}
+
+.main_sold {
+	margin-top: 50px;
+	width: 990px;
+	height: auto;
+	float: left;
+}
+
+.itembox {
+	/*  justify-self: center;
+            display: flex;
+            justify-content: center;
+            flex-direction: column; */
+	
+}
+
+.alinebutton {
+	margin-bottom: 30px;
+}
+
+.alinebutton button {
+	border-color: gray;
+	background-color: transparent;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+	border-left: 0px;
+	border-right:  0px;
+	cursor: pointer;
+	padding:5px 10px;
+}
+
+.alinebutton button:hover {
+	/*   border-color: gray;
+            background-color: gray;
+            color: white;
+            cursor: pointer; */
+	
+}
+
+.alinebutton button.checked {
+	border-color: gray;
+	background-color: #E6E6E6;
+	border:0px;
+	padding:5px 10px;
+}
+
+.items {
+	/* display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            margin-top: 20%; */
+	margin: 0px auto;
+}
+
+.item-one {
+	width: 325px;
+	height: 400px;
+	border: 1px solid #F2F2F2;
+	/* display: flex; */
+	/* flex-direction: column;
+            justify-content: space-between; */
+	cursor: pointer;
+	margin:;
+	float: left;
+}
+
+.item-one:hover {
+	background-color: #F2F2F2;
 }
 
 
-        .sold-con{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        table{
-            border: 1px solid black;
-        }
-        h2.bbb{
-        margin-right:25vh;
-        }
-		.categor{
-		margin-top:10vh;
-		white-space: nowrap;
-			
-		}
-        .categor th,td{
-            padding: 15px;
-            padding-right: 200px;
-        }
-        .categor td:hover{
-            text-decoration:underline black;
-            cursor: pointer;
-        }
-        .main_sold{
-            width: 1000px;
-            height: 700px;
-            margin-left:100px ;
-            display: flex;
-            align-items: center;
-            /*justify-content: center;*/
-            flex-direction: column;
-        }
-        .itembox{
-            justify-self: center;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-        }
-        .alinebutton{
-            align-self: flex-start;
-        }
-        .alinebutton button{
-            border-color: gray;
-            background-color: transparent;
-        }
-        .alinebutton button:hover{
-            border-color: gray;
-            background-color: gray;
-            color: white;
-            cursor: pointer;
-        }
-        .alinebutton button.checked{
-            border-color: gray;
-            background-color: gray;
-            color: white;
-            cursor: pointer;
-        }
+.item-one table{
+	width: 280px;
+	margin: 0px auto;
+	padding-top:30px;
+}
 
-        .items{
-            display: flex;
-            flex-wrap: wrap;
-            flex-direction: row;
-            margin-top: 20%;
-        }
-        .item-one{
-            width: 270px;
-            height: 400px;
-            border: 1px solid black;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            cursor: pointer;
-            text-align:left;
-            margin:15px;
-        }
-        .item-one:hover{
-        	background-color:#DDD9D9;
-        }
-        .img-zoon,.index{
-            margin: 5%;
-        }
-        .index,.bestcost,.nowbuycost,.endtime,.count{
-            margin-left: 5%;
-        }
-        .endtime-count{
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-between;
-                    margin-bottom:10px;
-                }
-	.wrapBox{
-		width:250px;
-		height:270px;
-		text-align:center;
-	}
-	.imgBox{
-		margin-top:10px;
-		width:230px;
-		height:230px;
-	}
-    </style>
+.item-one table td{
+	/* border: 1px solid black;  */
+	color:#555;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width:260px;
+}
+
+.img-zoon {
+	width: 280px;
+	height: 200px;
+	overflow: hidden;
+	margin: 0px auto;
+	padding-top: 20px;
+	/*  text-align: center; */
+/* 	border:1px solid red; */
+}
+
+.index {
+	
+}
+
+.img-zoon img {
+	width: 100%;
+}
+
+.index, .bestcost, .nowbuycost, .endtime, .count {
+	margin-left: 5%;
+}
+
+.endtime-count {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+</style>
 </head>
 <body>
     <div id="mainHeader"><jsp:include page="header.jsp" /></div>
 <div id="main">
 <div class="sold-con">
+<h2 class="bbb">판매</h2>
 <table class="categor">
-    <tr><th>카테고리</th></tr>
+    <!-- <tr><th>카테고리</th></tr> -->
     <tr><td>패션의류</td></tr>
     <tr><td>뷰티잡화</td></tr>
     <tr><td>유아용품</td></tr>
@@ -147,7 +181,6 @@
     <tr><td>기타</td></tr>
 </table>
     <div class="main_sold">
-        <h2 class= "bbb">판매</h2>
         <div class="itembox">
             <div class="items">
 
@@ -230,16 +263,30 @@ $(".categor tr td").click(function(){//카테고리
 			soldmainlist.forEach(function(item,idx){
 				console.log("idx:",idx,item);
 				content+= "<div class='item-one' onclick="+"window.location.href='salesDetail?p_no=" + item.p_no  +"\'" +">"
-				content+= 	"<div class='wrapBox' class='img-zoon'>";
-				content+=		"<img class='imgBox' src=/photo/"+item.i_newName+">";	
+				content+= 	"<div class='wrapBox' >";
+				content+= 	"<div class='img-zoon'>"
+				content+=		"<img src=/photo/"+item.i_newName+">";	
 				content+=		"</div>";
-				content+=		"<div class='index'>"+item.p_title+"</div>";
-				content+=		"<div class='bestcost'>가격:"+item.ns_pr+"p</div>";
-				content+=		"<div class='nowbuycost'>좋아요:"+item.p_likeCount+"♥</div>";
-				content+=		"<div class='endtime-count'>";
-				content+=			"<div class='endtime'>생성시간:"+item.p_tm+"</div>";
-				content+=		"</div>";
+				content +="<table class='content-box'>";
+				content +="<tr>";
+				content +=	"<td style='padding-bottom:10px; font-size:18px; color:black; '><b>"+item.p_title+"</b></td>";
+				content +="</tr>";
+				content +="<tr>";
+				content +=	"<td> <b>가격   "+item.ns_pr+" P</b></td>";
+				content +="</tr>";
+				content +="<tr>";
+				content +=	"<td>♥ "+item.p_likeCount+"</td>";
+				content +="</tr>";
+				content +="<tr>";
+				content +=	"<td><small>작성일   "+item.p_tm+" </small></td>";
+				content +="</tr>";
+				content +="</table>";
 				content+= "</div>";
+				content+= "</div>";
+				
+				
+				
+				
 			    });	
 			
 			$('.main_sold div.items').empty();
