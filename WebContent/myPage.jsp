@@ -1277,7 +1277,7 @@ a:visited {
             console.log('rqnoval:' + rqnoval);
             console.log('rqnotext:' + rqnotext);
 
-          /*   $.ajax({
+             $.ajax({
                type : 'post',
                url : './applyreqlist',
                data : {
@@ -1334,7 +1334,7 @@ a:visited {
                error : function(e) {
                   console.log(e);
                }
-            }); */
+            }); 
          });
 
    //데이터 가져와서 뿌려주는 좋아요 리스트
