@@ -1015,8 +1015,8 @@ public class TradeDAO {
 		ArrayList<String> list = new ArrayList<String>();
 		
 		String sql = "SELECT t_saler, t_buyer from trade where t_no=?";
-		String t_saler = null;
-		String t_buyer = null;
+		String t_saler = "";
+		String t_buyer = "";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, t_no);
@@ -1024,16 +1024,15 @@ public class TradeDAO {
 			if(rs.next()) {
 				t_saler = rs.getString("t_saler");
 				t_buyer = rs.getString("t_buyer");
+				System.out.println(t_saler);
+				System.out.println(t_buyer);
 				list.add(t_saler);
 				list.add(t_buyer);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			resClose();
 		}
-		
 		System.out.println("거래페이지 판매자 : "+list.get(0));
 		System.out.println("거래페이지 구매자 : "+list.get(1));
 		
@@ -1056,8 +1055,6 @@ public class TradeDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			resClose();
 		}
 		
 		return title;

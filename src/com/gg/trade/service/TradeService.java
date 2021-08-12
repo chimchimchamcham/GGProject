@@ -230,7 +230,7 @@ public void buyNow(){
 		
 		insertHisTradeSuccess = dao.insertHisTrade(t_no,ht_point,"HT004");
 		System.out.println("[TRADESERVICE]/POINTAPPROVAL INSERTHISTRADESUCCESS : "+insertHisTradeSuccess);
-		/*		
+			
 		if(insertHisTradeSuccess) {
 			/////////알람 보내기 (승인)
 			AlarmDAO Aldao = new AlarmDAO();
@@ -256,7 +256,7 @@ public void buyNow(){
 			
 			////////////////////////////////
 		}
-		*/
+		
 		dao.resClose();
 		System.out.println("[TRADESERVICE]/POINTAPPROVAL END");
 		return insertHisTradeSuccess;
@@ -285,13 +285,15 @@ public void buyNow(){
 				insertHisTradeSuccess = dao.insertHisTrade(t_no,ht_point,"HT003");
 				System.out.println("[TRADESERVICE]/POINTDENY INSERTHISTRADESUCCESS : "+insertHisTradeSuccess);
 				if(insertHisTradeSuccess) {
-					/*
+					pdao.conn.commit();
+					dao.conn.commit();
+					
 					/////////알람 보내기 (송금거절)
 					AlarmDAO Aldao = new AlarmDAO();
 					String p_title = dao.getTitleFromTno(t_no); //제목 가져오기
 					p_title = Aldao.cutTitle(p_title);
 					
-					String t_snname= null;
+					String t_snname= "";
 					try {
 						t_snname = pdao.getNname(t_saler);
 						//구매자한테만 알람
@@ -302,9 +304,6 @@ public void buyNow(){
 					Aldao.resClose();
 				
 					////////////////////////////////
-					 */
-					pdao.conn.commit();
-					dao.conn.commit();
 					System.out.println("[TRADESERVICE]/POINTDENY INSERTPOINTSUCCESS COMMIT");
 				}else {
 					pdao.conn.rollback();
@@ -332,7 +331,7 @@ public void buyNow(){
 		
 		insertHisTradeSuccess = dao.insertHisTrade(t_no,ht_point,"HT005");
 		System.out.println("[TRADESERVICE]/PRODUCTSHIPPING INSERTHISTRADESUCCESS : "+insertHisTradeSuccess);
-		/*
+	
 		if(insertHisTradeSuccess) {
 			/////////알람 보내기 (배송)
 			AlarmDAO Aldao = new AlarmDAO();
@@ -358,7 +357,7 @@ public void buyNow(){
 			
 			////////////////////////////////
 		}
-		*/
+		
 		dao.resClose();
 		System.out.println("[TRADESERVICE]/PRODUCTSHIPPING END");
 		return insertHisTradeSuccess;
@@ -412,7 +411,7 @@ public void buyNow(){
 			}
 			
 			if(endTrade) {
-				/*
+				
 				//알람 보내기 (수취확인)
 				AlarmDAO Aldao = new AlarmDAO();
 				String p_title = dao.getTitleFromTno(t_no); //제목 가져오기
@@ -424,7 +423,7 @@ public void buyNow(){
 				
 				Aldao.resClose();
 				////////////////////////////////
-				*/
+				
 				pdao.conn.commit();
 				dao.conn.commit();
 				System.out.println("[TRADESERVICE]/PRODUCTRECEIVE INSERTPOINTSUCCESS COMMIT");
@@ -472,7 +471,7 @@ public void buyNow(){
 				}
 			}
 			if(updateTradeT_cancleIdSuccess) {
-				/*
+				
 				//알람 보내기 (거래취소)
 				AlarmDAO Aldao = new AlarmDAO();
 				String p_title = dao.getTitleFromTno(t_no); //제목 가져오기
@@ -491,7 +490,7 @@ public void buyNow(){
 				}
 				Aldao.resClose();
 				////////////////////////////////
-				*/
+				
 				pdao.conn.commit();
 				dao.conn.commit();
 				
