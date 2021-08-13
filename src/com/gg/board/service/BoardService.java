@@ -977,10 +977,10 @@ public class BoardService {
 				des = "auctionDetail.jsp?p_no=" + p_no;
 			} else if (code.equals("P002")) {
 				des = "salesDetail.jsp?p_no=" + p_no;
-			} else if (code.equals("P003")) {
+			} else if (code.equals("P004")) {
 				des = "commDetailForm.jsp?p_no=" + p_no;
 			} else {
-				des = "";
+				des = "noticeDetail.jsp?p_no="+p_no;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

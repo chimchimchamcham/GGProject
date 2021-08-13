@@ -344,13 +344,11 @@ console.log("오늘 날짜 : ",currDate);
 				success : function(data) {
 					if (data.p_no > 0) {
 						form.append("p_no",data.p_no);
-						FileUpload();
 						alert("글 작성 성공했습니다.");
-						//향후 변경사항 커뮤니티 글 상세보기 완성 후 변경
-						location.href = "./commDetail?p_no="+data.p_no;
-						
+						FileUpload(data.p_no)
 					} else {
 						alert("커뮤니티 글 작성을 실패하였습니다! ");
+						location.href = "./writeForm";
 					}
 				},
 				error : function(e) {
@@ -360,7 +358,7 @@ console.log("오늘 날짜 : ",currDate);
 			});
 			
 		} else if (param.select == "P002") { //판매글 선택시
-
+			var cc = false;
 			param.title = $("input[name='title']").val();
 			param.content = $("textarea[name='content']").val();
 			if(data==null){
@@ -392,11 +390,12 @@ console.log("오늘 날짜 : ",currDate);
 				success : function(data) {
 					if (data.p_no>0) {
 						form.append("p_no",data.p_no);
-						FileUpload();
 						alert("판매글 작성 성공했습니다.");
-						location.href="./salesDetail?p_no="+data.p_no;
-					} else {
-						alert("판매 글 작성을 실패하였습니다! ");
+						FileUpload(data.p_no);
+						
+					}else{
+						alert("판매글 작성 실패했습니다.");
+						location.href = "./writeForm";
 					}
 				},
 				error : function(e) {
@@ -455,9 +454,8 @@ console.log("오늘 날짜 : ",currDate);
 					success : function(data) {
 						console.log("글 작성 번호 :",data.p_no);
 						form.append("p_no",data.p_no);
-						FileUpload();
-						//향후 변경사항 경매상세보기 만들고 보내주는 페이지 편집
-						location.href='./auctionDetail?p_no='+data.p_no;
+						FileUpload(data.p_no);						
+						
 					},
 					error : function(e) {
 						console.log(e);
@@ -480,10 +478,7 @@ console.log("오늘 날짜 : ",currDate);
 			      success : function(data) {
 			         if (data.p_no > 0) {
 			            form.append("p_no",data.p_no);
-			            FileUpload();
-			            alert("공지사항 글 작성 성공했습니다.");
-			            location.href = "./noticeDetail?p_no="+data.p_no;
-			            
+			            FileUpload(data.p_no)
 			         } else {
 			            alert("공지사항 글 작성을 실패하였습니다! ");
 			            location.href = "./writeForm";
@@ -523,21 +518,21 @@ console.log("오늘 날짜 : ",currDate);
 	});
 	
 	// ajax로 파일 보내기 formdata()
-	function FileUpload(){
+	function FileUpload(p_no){
+		var getP_no = p_no;
 		$.ajax({
 			type : 'POST',
 			url : 'upload',
 			data : form,
 			asynsc:true,
 			contentType:false,
+			dataType:"json",
 			cache:false,
 			processData:false,
 			success : function(data) {
-				if(data!=null){ // 들어오는게 String[] 이라 null인지만 판단.
-					alert("사진 등록 성공");
-				}else{
-					alert("사진 등록 실패");
-				}
+					console.log(data);
+					location.href="./details?p_no="+getP_no;
+				
 			},
 			error : function(e) {
 				console.log(e);

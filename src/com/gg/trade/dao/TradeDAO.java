@@ -295,9 +295,9 @@ public class TradeDAO {
 	public GGDto endAuction(int p_no, String au_code, String ha_bidusr) throws SQLException {
 
 		GGDto dto = new GGDto();
-		int instantpr = 0;
-		AlarmDAO Aldao = new AlarmDAO();
-		BoardDAO Bdao = new BoardDAO();
+		//int instantpr = 0;
+		//AlarmDAO Aldao = new AlarmDAO();
+		//BoardDAO Bdao = new BoardDAO();
 		// 낙찰시간,경매상태,낙찰자 변경
 		String sql = "update auction set au_suctm = SYSDATE, au_code= 'Au002' ,au_successer = (select u_id from userinfo where u_nname= ?) where p_no=? ";
 		ps = conn.prepareStatement(sql);
@@ -321,7 +321,7 @@ public class TradeDAO {
 				dto.setAu_code(rs.getString("au_code"));
 				dto.setAu_successer(rs.getString("au_successer"));
 				dto.setAu_sucTm(rs.getDate("au_suctm"));
-				instantpr = rs.getInt("au_instantpr");
+				//instantpr = rs.getInt("au_instantpr");
 				
 				System.out.println("endauction aucode : "+dto.getAu_code());
 				System.out.println("endauction ausuccesser : "+dto.getAu_successer());
@@ -338,17 +338,19 @@ public class TradeDAO {
 
 			// 해당 글번호로 판매자, 제목을 알아오기
 			String p_id = selectPostP_id(p_no);
-			String p_title = Bdao.getTitle(p_no);
-			p_title = Aldao.cutTitle(p_title);
+			//String p_title = Bdao.getTitle(p_no);
+			//p_title = Aldao.cutTitle(p_title);
 			// 글번호, 판매자, 구매자를 인자값으로 넣어서, 거래페이지 생성과, 거래히스토리에 "0원" "생성" 추가
 			int t_no = insertTrade(p_no, p_id, ha_bidusr);
 			dto.setT_no(t_no);
 			
+			/*
 			 //알람보내기
 			Aldao.insertAlarm(successer, "A004", "["+p_title+"..]낙찰자로 선정되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 낙찰자
 			Aldao.insertAlarm(p_id, "A011", "["+p_title+"..]경매가 종료 되었습니다.", "Y", "./tradeDetail?t_no="+t_no);//경매글 작성자
 			Aldao.resClose();
 			Bdao.resClose();
+			*/
 			
 		}
 
