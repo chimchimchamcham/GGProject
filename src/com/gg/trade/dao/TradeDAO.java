@@ -341,7 +341,7 @@ public class TradeDAO {
 			String p_title = Bdao.getTitle(p_no);
 			p_title = Aldao.cutTitle(p_title);
 			// 글번호, 판매자, 구매자를 인자값으로 넣어서, 거래페이지 생성과, 거래히스토리에 "0원" "생성" 추가
-			int t_no = insertTrade(p_no, p_id, ha_bidusr);
+			int t_no = insertTrade(p_no, p_id, dto.getAu_successer());
 			dto.setT_no(t_no);
 			
 			 //알람보내기
